@@ -59,6 +59,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "handshake": {
         "headers": [
           {
+            "availability": null,
             "description": "Authenticate using your AssemblyAI API key.",
             "env": null,
             "name": "Authentication",
@@ -89,6 +90,7 @@ exports[`open api parser assembly parse open api 1`] = `
         ],
         "pathParameters": [
           {
+            "availability": null,
             "description": "The ID of the user.",
             "name": "userId",
             "schema": {
@@ -111,6 +113,7 @@ exports[`open api parser assembly parse open api 1`] = `
         ],
         "queryParameters": [
           {
+            "availability": null,
             "description": "The sample rate of the streamed audio.",
             "name": "sample_rate",
             "parameterNameOverride": null,
@@ -139,6 +142,7 @@ exports[`open api parser assembly parse open api 1`] = `
             },
           },
           {
+            "availability": null,
             "description": "Add up to 2500 characters of custom vocabulary.
 The parameter should map to a JSON encoded list of strings.
 ",
@@ -172,6 +176,7 @@ The parameter should map to a JSON encoded list of strings.
             },
           },
           {
+            "availability": null,
             "description": "Authenticate using a [generated temporary token](https://www.assemblyai.com/docs/Guides/real-time_streaming_transcription#creating-temporary-authentication-tokens)",
             "name": "token",
             "parameterNameOverride": null,
@@ -642,6 +647,7 @@ The parameter should map to a JSON encoded list of strings.
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": "Maximum amount of transcripts to retrieve",
           "name": "limit",
           "parameterNameOverride": null,
@@ -677,6 +683,7 @@ The parameter should map to a JSON encoded list of strings.
           },
         },
         {
+          "availability": null,
           "description": "Filter by transcript status",
           "name": "status",
           "parameterNameOverride": null,
@@ -753,6 +760,7 @@ The parameter should map to a JSON encoded list of strings.
           },
         },
         {
+          "availability": null,
           "description": "Only get transcripts created on this date",
           "name": "created_on",
           "parameterNameOverride": null,
@@ -787,6 +795,7 @@ The parameter should map to a JSON encoded list of strings.
           },
         },
         {
+          "availability": null,
           "description": "Get transcripts that were created before this transcript ID",
           "name": "before_id",
           "parameterNameOverride": null,
@@ -821,6 +830,7 @@ The parameter should map to a JSON encoded list of strings.
           },
         },
         {
+          "availability": null,
           "description": "Get transcripts that were created after this transcript ID",
           "name": "after_id",
           "parameterNameOverride": null,
@@ -855,6 +865,7 @@ The parameter should map to a JSON encoded list of strings.
           },
         },
         {
+          "availability": null,
           "description": "Only get throttled transcripts, overrides the status filter",
           "name": "throttled_only",
           "parameterNameOverride": null,
@@ -2946,6 +2957,7 @@ The parameter should map to a JSON encoded list of strings.
       "path": "/v2/transcript/{transcript_id}",
       "pathParameters": [
         {
+          "availability": null,
           "description": "ID of the transcript",
           "name": "transcript_id",
           "schema": {
@@ -3991,6 +4003,7 @@ The parameter should map to a JSON encoded list of strings.
       "path": "/v2/transcript/{transcript_id}",
       "pathParameters": [
         {
+          "availability": null,
           "description": "ID of the transcript",
           "name": "transcript_id",
           "schema": {
@@ -4149,6 +4162,7 @@ The parameter should map to a JSON encoded list of strings.
       "path": "/v2/transcript/{transcript_id}/{subtitle_format}",
       "pathParameters": [
         {
+          "availability": null,
           "description": "ID of the transcript",
           "name": "transcript_id",
           "schema": {
@@ -4169,6 +4183,7 @@ The parameter should map to a JSON encoded list of strings.
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": "The format of the captions.",
           "name": "subtitle_format",
           "schema": {
@@ -4184,6 +4199,7 @@ The parameter should map to a JSON encoded list of strings.
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": "The maximum number of characters per caption",
           "name": "chars_per_caption",
           "parameterNameOverride": null,
@@ -4464,6 +4480,7 @@ The parameter should map to a JSON encoded list of strings.
       "path": "/v2/transcript/{transcript_id}/sentences",
       "pathParameters": [
         {
+          "availability": null,
           "description": "ID of the transcript",
           "name": "transcript_id",
           "schema": {
@@ -4746,6 +4763,7 @@ The parameter should map to a JSON encoded list of strings.
       "path": "/v2/transcript/{transcript_id}/paragraphs",
       "pathParameters": [
         {
+          "availability": null,
           "description": "ID of the transcript",
           "name": "transcript_id",
           "schema": {
@@ -4904,6 +4922,7 @@ The parameter should map to a JSON encoded list of strings.
       "path": "/v2/transcript/{transcript_id}/word-search",
       "pathParameters": [
         {
+          "availability": null,
           "description": "ID of the transcript",
           "name": "transcript_id",
           "schema": {
@@ -4926,6 +4945,7 @@ The parameter should map to a JSON encoded list of strings.
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": "Keywords to search for",
           "name": "words",
           "parameterNameOverride": null,
@@ -5131,6 +5151,7 @@ The parameter should map to a JSON encoded list of strings.
       "path": "/v2/transcript/{transcript_id}/redacted-audio",
       "pathParameters": [
         {
+          "availability": null,
           "description": "ID of the transcript",
           "name": "transcript_id",
           "schema": {
@@ -6348,6 +6369,7 @@ The LLM response data, as well as any context provided in the original request w
       "path": "/lemur/v3/{request_id}",
       "pathParameters": [
         {
+          "availability": null,
           "description": "The ID of the LeMUR request whose data you want to delete. This would be found in the response of the original request.",
           "name": "request_id",
           "schema": {
@@ -6465,6 +6487,7 @@ The LLM response data, as well as any context provided in the original request w
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "AudioData",
       "groupName": null,
@@ -6472,6 +6495,7 @@ The LLM response data, as well as any context provided in the original request w
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "audioDataAudioData",
           "key": "audio_data",
@@ -6532,6 +6556,7 @@ The LLM response data, as well as any context provided in the original request w
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "AutoHighlightResult",
       "groupName": null,
@@ -6539,6 +6564,7 @@ The LLM response data, as well as any context provided in the original request w
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "autoHighlightResultCount",
           "key": "count",
@@ -6562,6 +6588,7 @@ The LLM response data, as well as any context provided in the original request w
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "autoHighlightResultRank",
           "key": "rank",
@@ -6579,6 +6606,7 @@ The LLM response data, as well as any context provided in the original request w
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "autoHighlightResultText",
           "key": "text",
@@ -6601,6 +6629,7 @@ The LLM response data, as well as any context provided in the original request w
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "autoHighlightResultTimestamps",
           "key": "timestamps",
@@ -6636,6 +6665,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
         "additionalProperties": false,
         "allOf": [],
         "allOfPropertyConflicts": [],
+        "availability": null,
         "description": "An array of results for the Key Phrases model, if it was enabled during the transcription request.
 See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more information.
 ",
@@ -6645,6 +6675,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
         "properties": [
           {
             "audiences": [],
+            "availability": null,
             "conflict": {},
             "generatedName": "autoHighlightsResultResults",
             "key": "results",
@@ -6673,6 +6704,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Chapter of the audio file",
       "generatedName": "Chapter",
       "groupName": null,
@@ -6680,6 +6712,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "chapterGist",
           "key": "gist",
@@ -6702,6 +6735,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "chapterHeadline",
           "key": "headline",
@@ -6724,6 +6758,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "chapterSummary",
           "key": "summary",
@@ -6746,6 +6781,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "chapterStart",
           "key": "start",
@@ -6769,6 +6805,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "chapterEnd",
           "key": "end",
@@ -6797,6 +6834,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ContentSafetyLabel",
       "groupName": null,
@@ -6804,6 +6842,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "contentSafetyLabelLabel",
           "key": "label",
@@ -6826,6 +6865,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "contentSafetyLabelConfidence",
           "key": "confidence",
@@ -6849,6 +6889,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "contentSafetyLabelSeverity",
           "key": "severity",
@@ -6877,6 +6918,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ContentSafetyLabelResult",
       "groupName": null,
@@ -6884,6 +6926,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "contentSafetyLabelResultText",
           "key": "text",
@@ -6906,6 +6949,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "contentSafetyLabelResultLabels",
           "key": "labels",
@@ -6928,6 +6972,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "contentSafetyLabelResultSentencesIdxStart",
           "key": "sentences_idx_start",
@@ -6951,6 +6996,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "contentSafetyLabelResultSentencesIdxEnd",
           "key": "sentences_idx_end",
@@ -6974,6 +7020,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "contentSafetyLabelResultTimestamp",
           "key": "timestamp",
@@ -6989,6 +7036,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "contentSafetyLabelResultSummary",
           "key": "summary",
@@ -7033,6 +7081,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "contentSafetyLabelResultSeverityScoreSummary",
           "key": "severity_score_summary",
@@ -7074,6 +7123,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "CreateRealtimeTemporaryTokenParameters",
       "groupName": null,
@@ -7081,6 +7131,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createRealtimeTemporaryTokenParametersExpiresIn",
           "key": "expires_in",
@@ -7109,6 +7160,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The parameters for creating a transcript",
       "generatedName": "CreateTranscriptOptionalParameters",
       "groupName": null,
@@ -7116,6 +7168,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersLanguageCode",
           "key": "language_code",
@@ -7140,6 +7193,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersPunctuate",
           "key": "punctuate",
@@ -7165,6 +7219,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersFormatText",
           "key": "format_text",
@@ -7190,6 +7245,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersDualChannel",
           "key": "dual_channel",
@@ -7215,6 +7271,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersWebhookUrl",
           "key": "webhook_url",
@@ -7244,6 +7301,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersWebhookAuthHeaderName",
           "key": "webhook_auth_header_name",
@@ -7280,6 +7338,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersWebhookAuthHeaderValue",
           "key": "webhook_auth_header_value",
@@ -7316,6 +7375,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersAutoHighlights",
           "key": "auto_highlights",
@@ -7341,6 +7401,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersAudioStartFrom",
           "key": "audio_start_from",
@@ -7371,6 +7432,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersAudioEndAt",
           "key": "audio_end_at",
@@ -7401,6 +7463,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersWordBoost",
           "key": "word_boost",
@@ -7437,6 +7500,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersBoostParam",
           "key": "boost_param",
@@ -7459,6 +7523,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersFilterProfanity",
           "key": "filter_profanity",
@@ -7484,6 +7549,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersRedactPii",
           "key": "redact_pii",
@@ -7509,6 +7575,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersRedactPiiAudio",
           "key": "redact_pii_audio",
@@ -7534,6 +7601,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersRedactPiiAudioQuality",
           "key": "redact_pii_audio_quality",
@@ -7563,6 +7631,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersRedactPiiPolicies",
           "key": "redact_pii_policies",
@@ -7592,6 +7661,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersRedactPiiSub",
           "key": "redact_pii_sub",
@@ -7614,6 +7684,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersSpeakerLabels",
           "key": "speaker_labels",
@@ -7639,6 +7710,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersSpeakersExpected",
           "key": "speakers_expected",
@@ -7676,6 +7748,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersContentSafety",
           "key": "content_safety",
@@ -7701,6 +7774,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersIabCategories",
           "key": "iab_categories",
@@ -7726,6 +7800,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersLanguageDetection",
           "key": "language_detection",
@@ -7751,6 +7826,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersCustomSpelling",
           "key": "custom_spelling",
@@ -7780,6 +7856,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersDisfluencies",
           "key": "disfluencies",
@@ -7805,6 +7882,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersSentimentAnalysis",
           "key": "sentiment_analysis",
@@ -7830,6 +7908,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersAutoChapters",
           "key": "auto_chapters",
@@ -7855,6 +7934,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersEntityDetection",
           "key": "entity_detection",
@@ -7880,6 +7960,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersSpeechThreshold",
           "key": "speech_threshold",
@@ -7915,6 +7996,7 @@ Valid values are in the range [0, 1] inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersSummarization",
           "key": "summarization",
@@ -7940,6 +8022,7 @@ Valid values are in the range [0, 1] inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersSummaryModel",
           "key": "summary_model",
@@ -7962,6 +8045,7 @@ Valid values are in the range [0, 1] inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersSummaryType",
           "key": "summary_type",
@@ -7984,6 +8068,7 @@ Valid values are in the range [0, 1] inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersCustomTopics",
           "key": "custom_topics",
@@ -8009,6 +8094,7 @@ Valid values are in the range [0, 1] inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersTopics",
           "key": "topics",
@@ -8058,6 +8144,7 @@ Valid values are in the range [0, 1] inclusive.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The parameters for creating a transcript",
       "generatedName": "CreateTranscriptParameters",
       "groupName": null,
@@ -8065,6 +8152,7 @@ Valid values are in the range [0, 1] inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createTranscriptParametersAudioUrl",
           "key": "audio_url",
@@ -8092,6 +8180,7 @@ Valid values are in the range [0, 1] inclusive.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "A detected entity",
       "generatedName": "Entity",
       "groupName": null,
@@ -8099,6 +8188,7 @@ Valid values are in the range [0, 1] inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "entityEntityType",
           "key": "entity_type",
@@ -8114,6 +8204,7 @@ Valid values are in the range [0, 1] inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "entityText",
           "key": "text",
@@ -8136,6 +8227,7 @@ Valid values are in the range [0, 1] inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "entityStart",
           "key": "start",
@@ -8159,6 +8251,7 @@ Valid values are in the range [0, 1] inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "entityEnd",
           "key": "end",
@@ -8547,6 +8640,7 @@ Valid values are in the range [0, 1] inclusive.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Error",
       "groupName": null,
@@ -8554,6 +8648,7 @@ Valid values are in the range [0, 1] inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "errorError",
           "key": "error",
@@ -8576,6 +8671,7 @@ Valid values are in the range [0, 1] inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "errorStatus",
           "key": "status",
@@ -8614,6 +8710,7 @@ Valid values are in the range [0, 1] inclusive.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "FinalTranscript",
       "groupName": null,
@@ -8621,6 +8718,7 @@ Valid values are in the range [0, 1] inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "finalTranscriptMessageType",
           "key": "message_type",
@@ -8639,6 +8737,7 @@ Valid values are in the range [0, 1] inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "finalTranscriptPunctuated",
           "key": "punctuated",
@@ -8657,6 +8756,7 @@ Valid values are in the range [0, 1] inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "finalTranscriptTextFormatted",
           "key": "text_formatted",
@@ -8696,6 +8796,7 @@ Valid values are in the range [0, 1] inclusive.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "LemurActionItemsResponse",
       "groupName": null,
@@ -8703,6 +8804,7 @@ Valid values are in the range [0, 1] inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lemurActionItemsResponseResponse",
           "key": "response",
@@ -8730,6 +8832,7 @@ Valid values are in the range [0, 1] inclusive.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "LemurBaseParameters",
       "groupName": null,
@@ -8737,6 +8840,7 @@ Valid values are in the range [0, 1] inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lemurBaseParametersTranscriptIds",
           "key": "transcript_ids",
@@ -8766,6 +8870,7 @@ Valid values are in the range [0, 1] inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lemurBaseParametersContext",
           "key": "context",
@@ -8833,6 +8938,7 @@ Valid values are in the range [0, 1] inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lemurBaseParametersFinalModel",
           "key": "final_model",
@@ -8855,6 +8961,7 @@ Valid values are in the range [0, 1] inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lemurBaseParametersMaxOutputSize",
           "key": "max_output_size",
@@ -8885,6 +8992,7 @@ Valid values are in the range [0, 1] inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lemurBaseParametersTemperature",
           "key": "temperature",
@@ -8917,6 +9025,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "LemurBaseResponse",
       "groupName": null,
@@ -8924,6 +9033,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lemurBaseResponseRequestId",
           "key": "request_id",
@@ -8985,6 +9095,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "LemurQuestion",
       "groupName": null,
@@ -8992,6 +9103,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lemurQuestionQuestion",
           "key": "question",
@@ -9014,6 +9126,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lemurQuestionContext",
           "key": "context",
@@ -9081,6 +9194,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lemurQuestionAnswerFormat",
           "key": "answer_format",
@@ -9111,6 +9225,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lemurQuestionAnswerOptions",
           "key": "answer_options",
@@ -9153,6 +9268,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "An answer generated by LeMUR and its question.",
       "generatedName": "LemurQuestionAnswer",
       "groupName": null,
@@ -9160,6 +9276,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lemurQuestionAnswerQuestion",
           "key": "question",
@@ -9182,6 +9299,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lemurQuestionAnswerAnswer",
           "key": "answer",
@@ -9217,6 +9335,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "LemurQuestionAnswerParameters",
       "groupName": null,
@@ -9224,6 +9343,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lemurQuestionAnswerParametersQuestions",
           "key": "questions",
@@ -9259,6 +9379,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "LemurQuestionAnswerResponse",
       "groupName": null,
@@ -9266,6 +9387,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lemurQuestionAnswerResponseResponse",
           "key": "response",
@@ -9301,6 +9423,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "LemurSummaryParameters",
       "groupName": null,
@@ -9308,6 +9431,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lemurSummaryParametersAnswerFormat",
           "key": "answer_format",
@@ -9351,6 +9475,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "LemurSummaryResponse",
       "groupName": null,
@@ -9358,6 +9483,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lemurSummaryResponseResponse",
           "key": "response",
@@ -9393,6 +9519,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "LemurTaskParameters",
       "groupName": null,
@@ -9400,6 +9527,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lemurTaskParametersPrompt",
           "key": "prompt",
@@ -9435,6 +9563,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "LemurTaskResponse",
       "groupName": null,
@@ -9442,6 +9571,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lemurTaskResponseResponse",
           "key": "response",
@@ -9526,6 +9656,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PageDetails",
       "groupName": null,
@@ -9533,6 +9664,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "pageDetailsLimit",
           "key": "limit",
@@ -9556,6 +9688,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "pageDetailsResultCount",
           "key": "result_count",
@@ -9579,6 +9712,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "pageDetailsCurrentUrl",
           "key": "current_url",
@@ -9601,6 +9735,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "pageDetailsPrevUrl",
           "key": "prev_url",
@@ -9623,6 +9758,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "pageDetailsNextUrl",
           "key": "next_url",
@@ -9664,6 +9800,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ParagraphsResponse",
       "groupName": null,
@@ -9671,6 +9808,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "paragraphsResponseId",
           "key": "id",
@@ -9693,6 +9831,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "paragraphsResponseConfidence",
           "key": "confidence",
@@ -9716,6 +9855,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "paragraphsResponseAudioDuration",
           "key": "audio_duration",
@@ -9739,6 +9879,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "paragraphsResponseParagraphs",
           "key": "paragraphs",
@@ -9774,6 +9915,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PartialTranscript",
       "groupName": null,
@@ -9781,6 +9923,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "partialTranscriptMessageType",
           "key": "message_type",
@@ -10137,6 +10280,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PurgeLemurRequestDataResponse",
       "groupName": null,
@@ -10144,6 +10288,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "purgeLemurRequestDataResponseRequestId",
           "key": "request_id",
@@ -10166,6 +10311,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "purgeLemurRequestDataResponseRequestIdToPurge",
           "key": "request_id_to_purge",
@@ -10188,6 +10334,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "purgeLemurRequestDataResponseDeleted",
           "key": "deleted",
@@ -10211,6 +10358,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "RealtimeBaseMessage",
       "groupName": null,
@@ -10218,6 +10366,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "realtimeBaseMessageMessageType",
           "key": "message_type",
@@ -10238,6 +10387,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "RealtimeBaseTranscript",
       "groupName": null,
@@ -10245,6 +10395,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "realtimeBaseTranscriptAudioStart",
           "key": "audio_start",
@@ -10268,6 +10419,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "realtimeBaseTranscriptAudioEnd",
           "key": "audio_end",
@@ -10291,6 +10443,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "realtimeBaseTranscriptConfidence",
           "key": "confidence",
@@ -10314,6 +10467,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "realtimeBaseTranscriptText",
           "key": "text",
@@ -10336,6 +10490,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "realtimeBaseTranscriptWords",
           "key": "words",
@@ -10358,6 +10513,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "realtimeBaseTranscriptCreated",
           "key": "created",
@@ -10380,6 +10536,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "RealtimeError",
       "groupName": null,
@@ -10387,6 +10544,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "realtimeErrorError",
           "key": "error",
@@ -10466,6 +10624,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "RealtimeTemporaryTokenResponse",
       "groupName": null,
@@ -10473,6 +10632,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "realtimeTemporaryTokenResponseToken",
           "key": "token",
@@ -10561,6 +10721,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "RedactedAudioResponse",
       "groupName": null,
@@ -10568,6 +10729,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "redactedAudioResponseStatus",
           "key": "status",
@@ -10583,6 +10745,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "redactedAudioResponseRedactedAudioUrl",
           "key": "redacted_audio_url",
@@ -10621,6 +10784,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SentencesResponse",
       "groupName": null,
@@ -10628,6 +10792,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "sentencesResponseId",
           "key": "id",
@@ -10650,6 +10815,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "sentencesResponseConfidence",
           "key": "confidence",
@@ -10673,6 +10839,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "sentencesResponseAudioDuration",
           "key": "audio_duration",
@@ -10696,6 +10863,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "sentencesResponseSentences",
           "key": "sentences",
@@ -10768,6 +10936,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The result of the sentiment analysis model.",
       "generatedName": "SentimentAnalysisResult",
       "groupName": null,
@@ -10775,6 +10944,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "sentimentAnalysisResultText",
           "key": "text",
@@ -10797,6 +10967,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "sentimentAnalysisResultStart",
           "key": "start",
@@ -10820,6 +10991,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "sentimentAnalysisResultEnd",
           "key": "end",
@@ -10843,6 +11015,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "sentimentAnalysisResultSentiment",
           "key": "sentiment",
@@ -10858,6 +11031,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "sentimentAnalysisResultConfidence",
           "key": "confidence",
@@ -10881,6 +11055,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "sentimentAnalysisResultSpeaker",
           "key": "speaker",
@@ -10930,6 +11105,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SessionBegins",
       "groupName": null,
@@ -10937,6 +11113,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {
             "RealtimeBaseMessage": {
               "differentSchema": true,
@@ -10959,6 +11136,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "sessionBeginsSessionId",
           "key": "session_id",
@@ -10981,6 +11159,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "sessionBeginsExpiresAt",
           "key": "expires_at",
@@ -11011,6 +11190,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SessionTerminated",
       "groupName": null,
@@ -11018,6 +11198,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {
             "RealtimeBaseMessage": {
               "differentSchema": true,
@@ -11045,6 +11226,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SeverityScoreSummary",
       "groupName": null,
@@ -11052,6 +11234,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "severityScoreSummaryLow",
           "key": "low",
@@ -11075,6 +11258,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "severityScoreSummaryMedium",
           "key": "medium",
@@ -11098,6 +11282,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "severityScoreSummaryHigh",
           "key": "high",
@@ -11321,6 +11506,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "TerminateSession",
       "groupName": null,
@@ -11328,6 +11514,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "terminateSessionTerminateSession",
           "key": "terminate_session",
@@ -11351,6 +11538,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Timestamp containing a start and end property in milliseconds.",
       "generatedName": "Timestamp",
       "groupName": null,
@@ -11358,6 +11546,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "timestampStart",
           "key": "start",
@@ -11381,6 +11570,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "timestampEnd",
           "key": "end",
@@ -11409,6 +11599,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "THe result of the topic detection model.",
       "generatedName": "TopicDetectionResult",
       "groupName": null,
@@ -11416,6 +11607,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "topicDetectionResultText",
           "key": "text",
@@ -11438,6 +11630,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "topicDetectionResultLabels",
           "key": "labels",
@@ -11458,6 +11651,7 @@ Can be any value between 0.0 and 1.0 inclusive.
                 "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
+                "availability": null,
                 "description": null,
                 "generatedName": "TopicDetectionResultLabelsItem",
                 "groupName": null,
@@ -11465,6 +11659,7 @@ Can be any value between 0.0 and 1.0 inclusive.
                 "properties": [
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "topicDetectionResultLabelsItemRelevance",
                     "key": "relevance",
@@ -11488,6 +11683,7 @@ Can be any value between 0.0 and 1.0 inclusive.
                   },
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "topicDetectionResultLabelsItemLabel",
                     "key": "label",
@@ -11516,6 +11712,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "topicDetectionResultTimestamp",
           "key": "timestamp",
@@ -11543,6 +11740,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "A transcript object",
       "generatedName": "Transcript",
       "groupName": null,
@@ -11550,6 +11748,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptId",
           "key": "id",
@@ -11572,6 +11771,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": "Deprecated",
           "conflict": {},
           "generatedName": "transcriptLanguageModel",
           "key": "language_model",
@@ -11594,6 +11794,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": "Deprecated",
           "conflict": {},
           "generatedName": "transcriptAcousticModel",
           "key": "acoustic_model",
@@ -11616,6 +11817,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptStatus",
           "key": "status",
@@ -11631,6 +11833,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptLanguageCode",
           "key": "language_code",
@@ -11656,6 +11859,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptAudioUrl",
           "key": "audio_url",
@@ -11678,6 +11882,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptText",
           "key": "text",
@@ -11714,6 +11919,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptWords",
           "key": "words",
@@ -11754,6 +11960,7 @@ See [Speech recognition](https://www.assemblyai.com/docs/Models/speech_recogniti
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptUtterances",
           "key": "utterances",
@@ -11794,6 +12001,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptConfidence",
           "key": "confidence",
@@ -11831,6 +12039,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptAudioDuration",
           "key": "audio_duration",
@@ -11862,6 +12071,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptPunctuate",
           "key": "punctuate",
@@ -11894,6 +12104,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptFormatText",
           "key": "format_text",
@@ -11926,6 +12137,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptDualChannel",
           "key": "dual_channel",
@@ -11958,6 +12170,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptWebhookUrl",
           "key": "webhook_url",
@@ -11994,6 +12207,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptWebhookStatusCode",
           "key": "webhook_status_code",
@@ -12031,6 +12245,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptWebhookAuth",
           "key": "webhook_auth",
@@ -12049,6 +12264,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptWebhookAuthHeaderName",
           "key": "webhook_auth_header_name",
@@ -12085,6 +12301,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
         },
         {
           "audiences": [],
+          "availability": "Deprecated",
           "conflict": {},
           "generatedName": "transcriptSpeedBoost",
           "key": "speed_boost",
@@ -12117,6 +12334,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptAutoHighlights",
           "key": "auto_highlights",
@@ -12135,6 +12353,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptAutoHighlightsResult",
           "key": "auto_highlights_result",
@@ -12159,6 +12378,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptAudioStartFrom",
           "key": "audio_start_from",
@@ -12196,6 +12416,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptAudioEndAt",
           "key": "audio_end_at",
@@ -12233,6 +12454,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptWordBoost",
           "key": "word_boost",
@@ -12269,6 +12491,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptBoostParam",
           "key": "boost_param",
@@ -12305,6 +12528,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptFilterProfanity",
           "key": "filter_profanity",
@@ -12337,6 +12561,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptRedactPii",
           "key": "redact_pii",
@@ -12355,6 +12580,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptRedactPiiAudio",
           "key": "redact_pii_audio",
@@ -12391,6 +12617,7 @@ either true or false. See [PII redaction](https://www.assemblyai.com/docs/Models
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptRedactPiiAudioQuality",
           "key": "redact_pii_audio_quality",
@@ -12431,6 +12658,7 @@ See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for mo
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptRedactPiiPolicies",
           "key": "redact_pii_policies",
@@ -12471,6 +12699,7 @@ See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for mo
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptRedactPiiSub",
           "key": "redact_pii_sub",
@@ -12493,6 +12722,7 @@ See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for mo
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptSpeakerLabels",
           "key": "speaker_labels",
@@ -12525,6 +12755,7 @@ See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for mo
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptSpeakersExpected",
           "key": "speakers_expected",
@@ -12562,6 +12793,7 @@ See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for mo
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptContentSafety",
           "key": "content_safety",
@@ -12594,6 +12826,7 @@ See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for mo
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptContentSafetyLabels",
           "key": "content_safety_labels",
@@ -12616,6 +12849,7 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
                 "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
+                "availability": null,
                 "description": "An array of results for the Content Moderation model, if it was enabled during the transcription request.
 See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderation) for more information.
 ",
@@ -12625,6 +12859,7 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
                 "properties": [
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "transcriptContentSafetyLabelsStatus",
                     "key": "status",
@@ -12640,6 +12875,7 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
                   },
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "transcriptContentSafetyLabelsResults",
                     "key": "results",
@@ -12668,6 +12904,7 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptIabCategories",
           "key": "iab_categories",
@@ -12700,6 +12937,7 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptIabCategoriesResult",
           "key": "iab_categories_result",
@@ -12722,6 +12960,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
                 "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
+                "availability": null,
                 "description": "An array of results for the Topic Detection model, if it was enabled during the transcription request.
 See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification) for more information.
 ",
@@ -12731,6 +12970,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
                 "properties": [
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "transcriptIabCategoriesResultStatus",
                     "key": "status",
@@ -12746,6 +12986,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
                   },
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "transcriptIabCategoriesResultResults",
                     "key": "results",
@@ -12768,6 +13009,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
                   },
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "transcriptIabCategoriesResultSummary",
                     "key": "summary",
@@ -12818,6 +13060,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptLanguageDetection",
           "key": "language_detection",
@@ -12850,6 +13093,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptCustomSpelling",
           "key": "custom_spelling",
@@ -12886,6 +13130,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptAutoChapters",
           "key": "auto_chapters",
@@ -12918,6 +13163,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptChapters",
           "key": "chapters",
@@ -12954,6 +13200,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptSummarization",
           "key": "summarization",
@@ -12972,6 +13219,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptSummaryType",
           "key": "summary_type",
@@ -13008,6 +13256,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptSummaryModel",
           "key": "summary_model",
@@ -13048,6 +13297,7 @@ if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was ena
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptSummary",
           "key": "summary",
@@ -13084,6 +13334,7 @@ if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was ena
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptCustomTopics",
           "key": "custom_topics",
@@ -13116,6 +13367,7 @@ if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was ena
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptTopics",
           "key": "topics",
@@ -13152,6 +13404,7 @@ if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was ena
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptDisfluencies",
           "key": "disfluencies",
@@ -13184,6 +13437,7 @@ if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was ena
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptSentimentAnalysis",
           "key": "sentiment_analysis",
@@ -13216,6 +13470,7 @@ if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was ena
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptSentimentAnalysisResults",
           "key": "sentiment_analysis_results",
@@ -13256,6 +13511,7 @@ See [Sentiment analysis](https://www.assemblyai.com/docs/Models/sentiment_analys
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptEntityDetection",
           "key": "entity_detection",
@@ -13288,6 +13544,7 @@ See [Sentiment analysis](https://www.assemblyai.com/docs/Models/sentiment_analys
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptEntities",
           "key": "entities",
@@ -13328,6 +13585,7 @@ See [Entity detection](https://www.assemblyai.com/docs/Models/entity_detection) 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptSpeechThreshold",
           "key": "speech_threshold",
@@ -13363,6 +13621,7 @@ Valid values are in the range [0, 1] inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptThrottled",
           "key": "throttled",
@@ -13395,6 +13654,7 @@ Valid values are in the range [0, 1] inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptError",
           "key": "error",
@@ -13474,6 +13734,7 @@ Valid values are in the range [0, 1] inclusive.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Object containing words or phrases to replace, and the word or phrase to replace with",
       "generatedName": "TranscriptCustomSpelling",
       "groupName": null,
@@ -13481,6 +13742,7 @@ Valid values are in the range [0, 1] inclusive.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptCustomSpellingFrom",
           "key": "from",
@@ -13510,6 +13772,7 @@ Valid values are in the range [0, 1] inclusive.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptCustomSpellingTo",
           "key": "to",
@@ -13797,6 +14060,7 @@ The default value is 'en_us'.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "TranscriptList",
       "groupName": null,
@@ -13804,6 +14068,7 @@ The default value is 'en_us'.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptListPageDetails",
           "key": "page_details",
@@ -13819,6 +14084,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptListTranscripts",
           "key": "transcripts",
@@ -13846,6 +14112,7 @@ The default value is 'en_us'.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "TranscriptListItem",
       "groupName": null,
@@ -13853,6 +14120,7 @@ The default value is 'en_us'.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptListItemId",
           "key": "id",
@@ -13875,6 +14143,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptListItemResourceUrl",
           "key": "resource_url",
@@ -13897,6 +14166,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptListItemStatus",
           "key": "status",
@@ -13912,6 +14182,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptListItemCreated",
           "key": "created",
@@ -13929,6 +14200,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptListItemCompleted",
           "key": "completed",
@@ -13953,6 +14225,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptListItemAudioUrl",
           "key": "audio_url",
@@ -13980,6 +14253,7 @@ The default value is 'en_us'.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "TranscriptListParameters",
       "groupName": null,
@@ -13987,6 +14261,7 @@ The default value is 'en_us'.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptListParametersLimit",
           "key": "limit",
@@ -14017,6 +14292,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptListParametersStatus",
           "key": "status",
@@ -14039,6 +14315,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptListParametersCreatedOn",
           "key": "created_on",
@@ -14068,6 +14345,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptListParametersBeforeId",
           "key": "before_id",
@@ -14097,6 +14375,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptListParametersAfterId",
           "key": "after_id",
@@ -14126,6 +14405,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptListParametersThrottledOnly",
           "key": "throttled_only",
@@ -14156,6 +14436,7 @@ The default value is 'en_us'.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "TranscriptParagraph",
       "groupName": null,
@@ -14163,6 +14444,7 @@ The default value is 'en_us'.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptParagraphText",
           "key": "text",
@@ -14185,6 +14467,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptParagraphStart",
           "key": "start",
@@ -14208,6 +14491,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptParagraphEnd",
           "key": "end",
@@ -14231,6 +14515,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptParagraphConfidence",
           "key": "confidence",
@@ -14254,6 +14539,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptParagraphWords",
           "key": "words",
@@ -14281,6 +14567,7 @@ The default value is 'en_us'.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "TranscriptSentence",
       "groupName": null,
@@ -14288,6 +14575,7 @@ The default value is 'en_us'.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptSentenceText",
           "key": "text",
@@ -14310,6 +14598,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptSentenceStart",
           "key": "start",
@@ -14333,6 +14622,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptSentenceEnd",
           "key": "end",
@@ -14356,6 +14646,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptSentenceConfidence",
           "key": "confidence",
@@ -14379,6 +14670,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptSentenceWords",
           "key": "words",
@@ -14463,6 +14755,7 @@ The default value is 'en_us'.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "TranscriptUtterance",
       "groupName": null,
@@ -14470,6 +14763,7 @@ The default value is 'en_us'.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptUtteranceChannel",
           "key": "channel",
@@ -14492,6 +14786,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptUtteranceConfidence",
           "key": "confidence",
@@ -14515,6 +14810,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptUtteranceStart",
           "key": "start",
@@ -14538,6 +14834,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptUtteranceEnd",
           "key": "end",
@@ -14561,6 +14858,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptUtteranceText",
           "key": "text",
@@ -14583,6 +14881,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptUtteranceWords",
           "key": "words",
@@ -14610,6 +14909,7 @@ The default value is 'en_us'.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "TranscriptWord",
       "groupName": null,
@@ -14617,6 +14917,7 @@ The default value is 'en_us'.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptWordConfidence",
           "key": "confidence",
@@ -14640,6 +14941,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptWordStart",
           "key": "start",
@@ -14663,6 +14965,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptWordEnd",
           "key": "end",
@@ -14686,6 +14989,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptWordText",
           "key": "text",
@@ -14708,6 +15012,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptWordSpeaker",
           "key": "speaker",
@@ -14749,6 +15054,7 @@ The default value is 'en_us'.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "UploadedFile",
       "groupName": null,
@@ -14756,6 +15062,7 @@ The default value is 'en_us'.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "uploadedFileUploadUrl",
           "key": "upload_url",
@@ -14783,6 +15090,7 @@ The default value is 'en_us'.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Word",
       "groupName": null,
@@ -14790,6 +15098,7 @@ The default value is 'en_us'.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "wordStart",
           "key": "start",
@@ -14813,6 +15122,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "wordEnd",
           "key": "end",
@@ -14836,6 +15146,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "wordConfidence",
           "key": "confidence",
@@ -14859,6 +15170,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "wordText",
           "key": "text",
@@ -14886,6 +15198,7 @@ The default value is 'en_us'.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WordSearchMatch",
       "groupName": null,
@@ -14893,6 +15206,7 @@ The default value is 'en_us'.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "wordSearchMatchText",
           "key": "text",
@@ -14915,6 +15229,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "wordSearchMatchCount",
           "key": "count",
@@ -14938,6 +15253,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "wordSearchMatchTimestamps",
           "key": "timestamps",
@@ -14960,6 +15276,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "wordSearchMatchIndexes",
           "key": "indexes",
@@ -14995,6 +15312,7 @@ The default value is 'en_us'.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WordSearchResponse",
       "groupName": null,
@@ -15002,6 +15320,7 @@ The default value is 'en_us'.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "wordSearchResponseId",
           "key": "id",
@@ -15024,6 +15343,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "wordSearchResponseTotalCount",
           "key": "total_count",
@@ -15047,6 +15367,7 @@ The default value is 'en_us'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "wordSearchResponseMatches",
           "key": "matches",

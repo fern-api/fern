@@ -186,6 +186,7 @@ exports[`examples examples parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The PropertySearchResponse object is returned by the /properties/search endpoint.
 It is a very simple property object that can then be used to query the /properties/:id endpoint",
       "generatedName": "PropertySearchResponse",
@@ -194,6 +195,7 @@ It is a very simple property object that can then be used to query the /properti
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "propertySearchResponseId",
           "key": "id",
@@ -216,6 +218,7 @@ It is a very simple property object that can then be used to query the /properti
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "propertySearchResponseLat",
           "key": "lat",
@@ -246,6 +249,7 @@ It is a very simple property object that can then be used to query the /properti
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "propertySearchResponseLon",
           "key": "lon",
@@ -276,6 +280,7 @@ It is a very simple property object that can then be used to query the /properti
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "propertySearchResponseBuildingName",
           "key": "building_name",
@@ -305,6 +310,7 @@ It is a very simple property object that can then be used to query the /properti
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "propertySearchResponseBuildingNameAlias",
           "key": "building_name_alias",
@@ -334,6 +340,7 @@ It is a very simple property object that can then be used to query the /properti
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "propertySearchResponseStreetAddress",
           "key": "street_address",
@@ -356,6 +363,7 @@ It is a very simple property object that can then be used to query the /properti
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "propertySearchResponseStreetAddressAlias",
           "key": "street_address_alias",
@@ -385,6 +393,7 @@ It is a very simple property object that can then be used to query the /properti
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "propertySearchResponseCity",
           "key": "city",
@@ -407,6 +416,7 @@ It is a very simple property object that can then be used to query the /properti
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "propertySearchResponseState",
           "key": "state",
@@ -429,6 +439,7 @@ It is a very simple property object that can then be used to query the /properti
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "propertySearchResponseZipCode",
           "key": "zip_code",
@@ -451,6 +462,7 @@ It is a very simple property object that can then be used to query the /properti
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "propertySearchResponseNumberUnits",
           "key": "number_units",
@@ -488,6 +500,7 @@ It is a very simple property object that can then be used to query the /properti
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "propertySearchResponseYearBuilt",
           "key": "year_built",
@@ -525,6 +538,7 @@ It is a very simple property object that can then be used to query the /properti
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "propertySearchResponseScore",
           "key": "score",

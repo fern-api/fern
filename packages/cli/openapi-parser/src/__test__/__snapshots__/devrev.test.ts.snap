@@ -165,6 +165,7 @@ exports[`open api parser devrev parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": "The ID of the artifact to get the URL for.",
           "name": "id",
           "parameterNameOverride": null,
@@ -1000,6 +1001,7 @@ given Dev organization.
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": "The unique identifier of the token under a given Dev organization.
 ",
           "name": "token_id",
@@ -1271,6 +1273,7 @@ token type issued for a given subject.
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": "An identifier that represents the application, which requested the
 token. Only relevant for application access tokens.
 ",
@@ -1300,6 +1303,7 @@ token. Only relevant for application access tokens.
           },
         },
         {
+          "availability": null,
           "description": "The type of the requested token. If no value is specified, the
 response will include tokens of all the types.
 ",
@@ -1322,6 +1326,7 @@ response will include tokens of all the types.
           },
         },
         {
+          "availability": null,
           "description": "The subject associated with the token. In the absence of this
 parameter, the ID of the authenticated entity is treated as the
 subject.
@@ -2232,6 +2237,7 @@ connections can not be deleted using this method.
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": "ID of the authentication connection.",
           "name": "id",
           "parameterNameOverride": null,
@@ -2973,6 +2979,7 @@ disabled.
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": "The cursor to resume iteration from. If not provided, then iteration
 starts from the beginning.
 ",
@@ -3002,6 +3009,7 @@ starts from the beginning.
           },
         },
         {
+          "availability": null,
           "description": "Filters Dev users based on email addresses.",
           "name": "email",
           "parameterNameOverride": null,
@@ -3036,6 +3044,7 @@ starts from the beginning.
           },
         },
         {
+          "availability": null,
           "description": "The maximum number of Dev users to return. The default is '50'.
 ",
           "name": "limit",
@@ -3065,6 +3074,7 @@ starts from the beginning.
           },
         },
         {
+          "availability": null,
           "description": "The iteration mode to use, otherwise if not set, then "after" is
 used.
 ",
@@ -3087,6 +3097,7 @@ used.
           },
         },
         {
+          "availability": null,
           "description": "Fields to sort the Dev users by and the direction to sort them.
 ",
           "name": "sort_by",
@@ -3122,6 +3133,7 @@ used.
           },
         },
         {
+          "availability": null,
           "description": "Filters Dev users based on state.",
           "name": "state",
           "parameterNameOverride": null,
@@ -3866,6 +3878,7 @@ used.
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": "The ID of the part to retrieve.",
           "name": "id",
           "parameterNameOverride": null,
@@ -4046,6 +4059,7 @@ used.
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": "Filters for parts created by any of these users.",
           "name": "created_by",
           "parameterNameOverride": null,
@@ -4080,6 +4094,7 @@ used.
           },
         },
         {
+          "availability": null,
           "description": "The cursor to resume iteration from. If not provided, then iteration
 starts from the beginning.
 ",
@@ -4109,6 +4124,7 @@ starts from the beginning.
           },
         },
         {
+          "availability": null,
           "description": "The maximum number of parts to return. The default is '50'.
 ",
           "name": "limit",
@@ -4138,6 +4154,7 @@ starts from the beginning.
           },
         },
         {
+          "availability": null,
           "description": "The iteration mode to use, otherwise if not set, then "after" is
 used.
 ",
@@ -4160,6 +4177,7 @@ used.
           },
         },
         {
+          "availability": null,
           "description": "Filters for parts of the provided name(s).",
           "name": "name",
           "parameterNameOverride": null,
@@ -4194,6 +4212,7 @@ used.
           },
         },
         {
+          "availability": null,
           "description": "Filters for parts owned by any of these users.",
           "name": "owned_by",
           "parameterNameOverride": null,
@@ -4228,6 +4247,7 @@ used.
           },
         },
         {
+          "availability": null,
           "description": "Filters for parts of the provided type(s).",
           "name": "type",
           "parameterNameOverride": null,
@@ -5063,6 +5083,7 @@ organization.
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": "The ID of the required Rev organization.",
           "name": "id",
           "parameterNameOverride": null,
@@ -5321,6 +5342,7 @@ to access.
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": "Filters by creator.",
           "name": "created_by",
           "parameterNameOverride": null,
@@ -5355,6 +5377,7 @@ to access.
           },
         },
         {
+          "availability": null,
           "description": "Filters for objects created after the provided timestamp (inclusive).
 ",
           "name": "created_date.after",
@@ -5378,6 +5401,7 @@ to access.
           },
         },
         {
+          "availability": null,
           "description": "Filters for objects created before the provided timestamp
 (inclusive).
 ",
@@ -5402,6 +5426,7 @@ to access.
           },
         },
         {
+          "availability": null,
           "description": "The cursor to resume iteration from. If not provided, then iteration
 starts from the beginning.
 ",
@@ -5431,6 +5456,7 @@ starts from the beginning.
           },
         },
         {
+          "availability": null,
           "description": "List of external refs to filter Rev organizations for.",
           "name": "external_ref",
           "parameterNameOverride": null,
@@ -5465,6 +5491,7 @@ starts from the beginning.
           },
         },
         {
+          "availability": null,
           "description": "The maximum number of Rev organizations to be retrieved per page.
 ",
           "name": "limit",
@@ -5494,6 +5521,7 @@ starts from the beginning.
           },
         },
         {
+          "availability": null,
           "description": "The iteration mode to use, otherwise if not set, then "after" is
 used.
 ",
@@ -5516,6 +5544,7 @@ used.
           },
         },
         {
+          "availability": null,
           "description": "Filters for objects created after the provided timestamp (inclusive).
 ",
           "name": "modified_date.after",
@@ -5539,6 +5568,7 @@ used.
           },
         },
         {
+          "availability": null,
           "description": "Filters for objects created before the provided timestamp
 (inclusive).
 ",
@@ -5563,6 +5593,7 @@ used.
           },
         },
         {
+          "availability": null,
           "description": "Fields to sort the Rev organizations by and the direction to sort
 them.
 ",
@@ -6490,6 +6521,7 @@ and a logical concept denoted by the tag's name.
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": "The requested tag's ID.",
           "name": "id",
           "parameterNameOverride": null,
@@ -6729,6 +6761,7 @@ and a logical concept denoted by the tag's name.
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": "The cursor to resume iteration from. If not provided, then iteration
 starts from the beginning.
 ",
@@ -6758,6 +6791,7 @@ starts from the beginning.
           },
         },
         {
+          "availability": null,
           "description": "The maximum number of tags to return. The default is '50'.",
           "name": "limit",
           "parameterNameOverride": null,
@@ -6786,6 +6820,7 @@ starts from the beginning.
           },
         },
         {
+          "availability": null,
           "description": "The iteration mode to use, otherwise if not set, then "after" is
 used.
 ",
@@ -7321,6 +7356,7 @@ used.
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": "The ID of the timeline entry to get.",
           "name": "id",
           "parameterNameOverride": null,
@@ -7525,6 +7561,7 @@ used.
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": "The ID of the object to list timeline entries for.",
           "name": "object",
           "parameterNameOverride": null,
@@ -7545,6 +7582,7 @@ used.
           },
         },
         {
+          "availability": null,
           "description": "The cursor to resume iteration from. If not provided, then iteration
 starts from the beginning.
 ",
@@ -7574,6 +7612,7 @@ starts from the beginning.
           },
         },
         {
+          "availability": null,
           "description": "The maximum number of entries to return. If not set, then this
 defaults to \`50\`.
 ",
@@ -7604,6 +7643,7 @@ defaults to \`50\`.
           },
         },
         {
+          "availability": null,
           "description": "The iteration mode to use, otherwise if not set, then "after" is
 used.
 ",
@@ -8415,6 +8455,7 @@ used.
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": "ID for the webhook.",
           "name": "id",
           "parameterNameOverride": null,
@@ -9364,6 +9405,7 @@ used.
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": "Filters for work belonging to any of the provided parts.",
           "name": "applies_to_part",
           "parameterNameOverride": null,
@@ -9398,6 +9440,7 @@ used.
           },
         },
         {
+          "availability": null,
           "description": "Filters for work created by any of these users.",
           "name": "created_by",
           "parameterNameOverride": null,
@@ -9432,6 +9475,7 @@ used.
           },
         },
         {
+          "availability": null,
           "description": "The number of work items to return. The default is '50', the maximum
 is '5000'.
 ",
@@ -9462,6 +9506,7 @@ is '5000'.
           },
         },
         {
+          "availability": null,
           "description": "Filters for issues with any of the provided priorities.",
           "name": "issue.priority",
           "parameterNameOverride": null,
@@ -9489,6 +9534,7 @@ is '5000'.
           },
         },
         {
+          "availability": null,
           "description": "Filters for issues with any of the provided Rev organizations.
 ",
           "name": "issue.rev_orgs",
@@ -9524,6 +9570,7 @@ is '5000'.
           },
         },
         {
+          "availability": null,
           "description": "Filters for work owned by any of these users.",
           "name": "owned_by",
           "parameterNameOverride": null,
@@ -9558,6 +9605,7 @@ is '5000'.
           },
         },
         {
+          "availability": null,
           "description": "Filters for records in the provided stage(s).",
           "name": "stage.name",
           "parameterNameOverride": null,
@@ -9592,6 +9640,7 @@ is '5000'.
           },
         },
         {
+          "availability": null,
           "description": "Filters for tickets that are associated with any of the provided Rev
 organizations.
 ",
@@ -9628,6 +9677,7 @@ organizations.
           },
         },
         {
+          "availability": null,
           "description": "Filters for tickets with any of the provided severities.",
           "name": "ticket.severity",
           "parameterNameOverride": null,
@@ -9655,6 +9705,7 @@ organizations.
           },
         },
         {
+          "availability": null,
           "description": "Filters for work of the provided types.",
           "name": "type",
           "parameterNameOverride": null,
@@ -9821,6 +9872,7 @@ organizations.
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": "The work's ID.",
           "name": "id",
           "parameterNameOverride": null,
@@ -10000,6 +10052,7 @@ organizations.
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": "Filters for work belonging to any of the provided parts.",
           "name": "applies_to_part",
           "parameterNameOverride": null,
@@ -10034,6 +10087,7 @@ organizations.
           },
         },
         {
+          "availability": null,
           "description": "Filters for work created by any of these users.",
           "name": "created_by",
           "parameterNameOverride": null,
@@ -10068,6 +10122,7 @@ organizations.
           },
         },
         {
+          "availability": null,
           "description": "The cursor to resume iteration from. If not provided, then iteration
 starts from the beginning.
 ",
@@ -10097,6 +10152,7 @@ starts from the beginning.
           },
         },
         {
+          "availability": null,
           "description": "Filters for issues with any of the provided priorities.",
           "name": "issue.priority",
           "parameterNameOverride": null,
@@ -10124,6 +10180,7 @@ starts from the beginning.
           },
         },
         {
+          "availability": null,
           "description": "Filters for issues with any of the provided Rev organizations.
 ",
           "name": "issue.rev_orgs",
@@ -10159,6 +10216,7 @@ starts from the beginning.
           },
         },
         {
+          "availability": null,
           "description": "The maximum number of works to return. The default is '50'.
 ",
           "name": "limit",
@@ -10188,6 +10246,7 @@ starts from the beginning.
           },
         },
         {
+          "availability": null,
           "description": "The iteration mode to use, otherwise if not set, then "after" is
 used.
 ",
@@ -10210,6 +10269,7 @@ used.
           },
         },
         {
+          "availability": null,
           "description": "Filters for work owned by any of these users.",
           "name": "owned_by",
           "parameterNameOverride": null,
@@ -10244,6 +10304,7 @@ used.
           },
         },
         {
+          "availability": null,
           "description": "Filters for records in the provided stage(s).",
           "name": "stage.name",
           "parameterNameOverride": null,
@@ -10278,6 +10339,7 @@ used.
           },
         },
         {
+          "availability": null,
           "description": "Filters for tickets that are associated with any of the provided Rev
 organizations.
 ",
@@ -10314,6 +10376,7 @@ organizations.
           },
         },
         {
+          "availability": null,
           "description": "Filters for tickets with any of the provided severities.",
           "name": "ticket.severity",
           "parameterNameOverride": null,
@@ -10341,6 +10404,7 @@ organizations.
           },
         },
         {
+          "availability": null,
           "description": "Filters for work of the provided types.",
           "name": "type",
           "parameterNameOverride": null,
@@ -10691,6 +10755,7 @@ organizations.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The response to getting an artifact's download URL.",
       "generatedName": "ArtifactsLocateResponse",
       "groupName": null,
@@ -10698,6 +10763,7 @@ organizations.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "artifactsLocateResponseExpiresAt",
           "key": "expires_at",
@@ -10722,6 +10788,7 @@ organizations.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "artifactsLocateResponseUrl",
           "key": "url",
@@ -10749,6 +10816,7 @@ organizations.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The request to prepare a URL to upload a file.",
       "generatedName": "ArtifactsPrepareRequest",
       "groupName": null,
@@ -10756,6 +10824,7 @@ organizations.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "artifactsPrepareRequestFileName",
           "key": "file_name",
@@ -10783,6 +10852,7 @@ organizations.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The response to preparing a URL to upload a file.",
       "generatedName": "ArtifactsPrepareResponse",
       "groupName": null,
@@ -10790,6 +10860,7 @@ organizations.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "artifactsPrepareResponseFormData",
           "key": "form_data",
@@ -10812,6 +10883,7 @@ organizations.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "artifactsPrepareResponseId",
           "key": "id",
@@ -10834,6 +10906,7 @@ organizations.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "artifactsPrepareResponseUrl",
           "key": "url",
@@ -10861,6 +10934,7 @@ organizations.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ArtifactsPrepareResponseFormData",
       "groupName": null,
@@ -10868,6 +10942,7 @@ organizations.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "artifactsPrepareResponseFormDataKey",
           "key": "key",
@@ -10890,6 +10965,7 @@ organizations.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "artifactsPrepareResponseFormDataValue",
           "key": "value",
@@ -10917,6 +10993,7 @@ organizations.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "AtomBase",
       "groupName": null,
@@ -10924,6 +11001,7 @@ organizations.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "atomBaseCreatedBy",
           "key": "created_by",
@@ -10946,6 +11024,7 @@ organizations.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "atomBaseCreatedDate",
           "key": "created_date",
@@ -10970,6 +11049,7 @@ organizations.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "atomBaseDisplayId",
           "key": "display_id",
@@ -10999,6 +11079,7 @@ organizations.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "atomBaseId",
           "key": "id",
@@ -11021,6 +11102,7 @@ organizations.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "atomBaseModifiedBy",
           "key": "modified_by",
@@ -11043,6 +11125,7 @@ organizations.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "atomBaseModifiedDate",
           "key": "modified_date",
@@ -11072,6 +11155,7 @@ organizations.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "AtomBaseSummary",
       "groupName": null,
@@ -11079,6 +11163,7 @@ organizations.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "atomBaseSummaryDisplayId",
           "key": "display_id",
@@ -11108,6 +11193,7 @@ organizations.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "atomBaseSummaryId",
           "key": "id",
@@ -11270,6 +11356,7 @@ authentication connection that is set up for a Dev organization.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Object encapsulating the configuration parameters for an Azure AD
 authentication connection.
 ",
@@ -11279,6 +11366,7 @@ authentication connection.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authConnectionOptionsAzureAdClientId",
           "key": "client_id",
@@ -11308,6 +11396,7 @@ authentication connection.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authConnectionOptionsAzureAdClientSecret",
           "key": "client_secret",
@@ -11337,6 +11426,7 @@ authentication connection.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authConnectionOptionsAzureAdDomain",
           "key": "domain",
@@ -11371,6 +11461,7 @@ authentication connection.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Object encapsulating the configuration parameters for a Google Apps
 authentication connection.
 ",
@@ -11380,6 +11471,7 @@ authentication connection.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authConnectionOptionsGoogleAppsClientId",
           "key": "client_id",
@@ -11409,6 +11501,7 @@ authentication connection.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authConnectionOptionsGoogleAppsClientSecret",
           "key": "client_secret",
@@ -11439,6 +11532,7 @@ authentication connection.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authConnectionOptionsGoogleAppsTenantDomain",
           "key": "tenant_domain",
@@ -11474,6 +11568,7 @@ authentication connection.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Object encapsulating the configuration parameters for an OIDC
 authentication connection.
 ",
@@ -11483,6 +11578,7 @@ authentication connection.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authConnectionOptionsOidcClientId",
           "key": "client_id",
@@ -11512,6 +11608,7 @@ authentication connection.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authConnectionOptionsOidcClientSecret",
           "key": "client_secret",
@@ -11541,6 +11638,7 @@ authentication connection.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authConnectionOptionsOidcIssuer",
           "key": "issuer",
@@ -11575,6 +11673,7 @@ authentication connection.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Object encapsulating the configuration parameters for a SAML
 authentication connection.
 ",
@@ -11584,6 +11683,7 @@ authentication connection.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authConnectionOptionsSamlSignInEndpoint",
           "key": "sign_in_endpoint",
@@ -11613,6 +11713,7 @@ authentication connection.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authConnectionOptionsSamlSigningCert",
           "key": "signing_cert",
@@ -11786,6 +11887,7 @@ for each authentication connection will depend on the type value.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "AuthToken",
       "groupName": null,
@@ -11793,6 +11895,7 @@ for each authentication connection will depend on the type value.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokenClientId",
           "key": "client_id",
@@ -11824,6 +11927,7 @@ token. Only applicable for application access tokens.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokenExpiresAt",
           "key": "expires_at",
@@ -11848,6 +11952,7 @@ token. Only applicable for application access tokens.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokenIssuedAt",
           "key": "issued_at",
@@ -11872,6 +11977,7 @@ token. Only applicable for application access tokens.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokenRequestedTokenType",
           "key": "requested_token_type",
@@ -11894,6 +12000,7 @@ token. Only applicable for application access tokens.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokenScopes",
           "key": "scopes",
@@ -11930,6 +12037,7 @@ token. Only applicable for application access tokens.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokenStatus",
           "key": "status",
@@ -11952,6 +12060,7 @@ token. Only applicable for application access tokens.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokenSubject",
           "key": "subject",
@@ -11981,6 +12090,7 @@ token. Only applicable for application access tokens.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokenTokenHint",
           "key": "token_hint",
@@ -12315,6 +12425,7 @@ token. Only applicable for application access tokens.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "A request to create a new token corresponding to the requested token
 type.
 ",
@@ -12324,6 +12435,7 @@ type.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensCreateRequestAud",
           "key": "aud",
@@ -12360,6 +12472,7 @@ type.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensCreateRequestClientId",
           "key": "client_id",
@@ -12393,6 +12506,7 @@ This client_id is only associated with an AAT.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensCreateRequestExpiresIn",
           "key": "expires_in",
@@ -12424,6 +12538,7 @@ This client_id is only associated with an AAT.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensCreateRequestGrantType",
           "key": "grant_type",
@@ -12446,6 +12561,7 @@ This client_id is only associated with an AAT.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensCreateRequestRequestedTokenType",
           "key": "requested_token_type",
@@ -12468,6 +12584,7 @@ This client_id is only associated with an AAT.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensCreateRequestRevInfo",
           "key": "rev_info",
@@ -12490,6 +12607,7 @@ This client_id is only associated with an AAT.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensCreateRequestScope",
           "key": "scope",
@@ -12522,6 +12640,7 @@ not matter.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensCreateRequestSubjectToken",
           "key": "subject_token",
@@ -12553,6 +12672,7 @@ requesting an application access token (AAT).
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensCreateRequestSubjectTokenType",
           "key": "subject_token_type",
@@ -12575,6 +12695,7 @@ requesting an application access token (AAT).
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensCreateRequestTokenHint",
           "key": "token_hint",
@@ -12609,6 +12730,7 @@ requesting an application access token (AAT).
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Response for the request to create a new token corresponding to the
 requested token type.
 ",
@@ -12618,6 +12740,7 @@ requested token type.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensCreateResponseAccessToken",
           "key": "access_token",
@@ -12642,6 +12765,7 @@ token type.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensCreateResponseClientId",
           "key": "client_id",
@@ -12674,6 +12798,7 @@ application access token (AAT).
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensCreateResponseExpiresIn",
           "key": "expires_in",
@@ -12699,6 +12824,7 @@ epoch.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensCreateResponseRefreshToken",
           "key": "refresh_token",
@@ -12728,6 +12854,7 @@ epoch.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensCreateResponseScope",
           "key": "scope",
@@ -12759,6 +12886,7 @@ of values in which the order of values does not matter.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensCreateResponseTokenType",
           "key": "token_type",
@@ -12779,6 +12907,7 @@ of values in which the order of values does not matter.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The request to revoke the token.",
       "generatedName": "AuthTokensDeleteRequest",
       "groupName": null,
@@ -12786,6 +12915,7 @@ of values in which the order of values does not matter.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensDeleteRequestTokenId",
           "key": "token_id",
@@ -12823,6 +12953,7 @@ JTI claim of the token in the authorization header.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The response to get the token metadata.",
       "generatedName": "AuthTokensGetResponse",
       "groupName": null,
@@ -12830,6 +12961,7 @@ JTI claim of the token in the authorization header.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensGetResponseToken",
           "key": "token",
@@ -12850,6 +12982,7 @@ JTI claim of the token in the authorization header.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The response to list the token metadata.",
       "generatedName": "AuthTokensListResponse",
       "groupName": null,
@@ -12857,6 +12990,7 @@ JTI claim of the token in the authorization header.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensListResponseTokens",
           "key": "tokens",
@@ -12884,6 +13018,7 @@ JTI claim of the token in the authorization header.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Carries Rev org info.",
       "generatedName": "AuthTokensOrgTraits",
       "groupName": null,
@@ -12891,6 +13026,7 @@ JTI claim of the token in the authorization header.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensOrgTraitsDisplayName",
           "key": "display_name",
@@ -12920,6 +13056,7 @@ JTI claim of the token in the authorization header.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensOrgTraitsDomain",
           "key": "domain",
@@ -12954,6 +13091,7 @@ JTI claim of the token in the authorization header.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Carries info corresponding to the Rev user to be provisioned and/or
 issue a Rev session token.
 ",
@@ -12963,6 +13101,7 @@ issue a Rev session token.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensRevInfoOrgRef",
           "key": "org_ref",
@@ -12992,6 +13131,7 @@ issue a Rev session token.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensRevInfoOrgTraits",
           "key": "org_traits",
@@ -13014,6 +13154,7 @@ issue a Rev session token.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensRevInfoRevUserId",
           "key": "rev_user_id",
@@ -13043,6 +13184,7 @@ issue a Rev session token.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensRevInfoUserRef",
           "key": "user_ref",
@@ -13065,6 +13207,7 @@ issue a Rev session token.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensRevInfoUserTraits",
           "key": "user_traits",
@@ -13092,6 +13235,7 @@ issue a Rev session token.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The request to delete all the tokens created by the authenticated user,
 that match with the provided token type.
 ",
@@ -13101,6 +13245,7 @@ that match with the provided token type.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensSelfDeleteRequestRequestedTokenType",
           "key": "requested_token_type",
@@ -13128,6 +13273,7 @@ that match with the provided token type.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "A request to update the token metadata.",
       "generatedName": "AuthTokensUpdateRequest",
       "groupName": null,
@@ -13135,6 +13281,7 @@ that match with the provided token type.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensUpdateRequestTokenHint",
           "key": "token_hint",
@@ -13157,6 +13304,7 @@ that match with the provided token type.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensUpdateRequestTokenId",
           "key": "token_id",
@@ -13185,6 +13333,7 @@ that match with the provided token type.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Response for the request to update the token metadata.",
       "generatedName": "AuthTokensUpdateResponse",
       "groupName": null,
@@ -13192,6 +13341,7 @@ that match with the provided token type.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensUpdateResponseToken",
           "key": "token",
@@ -13212,6 +13362,7 @@ that match with the provided token type.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Carries Rev user info.",
       "generatedName": "AuthTokensUserTraits",
       "groupName": null,
@@ -13219,6 +13370,7 @@ that match with the provided token type.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensUserTraitsDisplayName",
           "key": "display_name",
@@ -13248,6 +13400,7 @@ that match with the provided token type.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensUserTraitsEmail",
           "key": "email",
@@ -13277,6 +13430,7 @@ that match with the provided token type.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "authTokensUserTraitsFullName",
           "key": "full_name",
@@ -13467,6 +13621,7 @@ authentication connections have different configuration parameters.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Response for the request to create a new enterprise authentication
 connection.
 ",
@@ -13476,6 +13631,7 @@ connection.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "devOrgAuthConnectionsCreateResponseAuthConnection",
           "key": "auth_connection",
@@ -13496,6 +13652,7 @@ connection.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Request to delete an enterprise authentication connection for a Dev
 organization. A default connection and a connection which is currently
 enabled cannot be deleted.
@@ -13506,6 +13663,7 @@ enabled cannot be deleted.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "devOrgAuthConnectionsDeleteRequestId",
           "key": "id",
@@ -13533,6 +13691,7 @@ enabled cannot be deleted.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Response object encapsulating the configuration details of an
 authentication connection.
 ",
@@ -13542,6 +13701,7 @@ authentication connection.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "devOrgAuthConnectionsGetResponseAuthConnection",
           "key": "auth_connection",
@@ -13562,6 +13722,7 @@ authentication connection.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Response object for the request to list all the social and enterprise
 authentication connections configured for a Dev organization.
 ",
@@ -13571,6 +13732,7 @@ authentication connections configured for a Dev organization.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "devOrgAuthConnectionsListResponseAuthConnections",
           "key": "auth_connections",
@@ -13600,6 +13762,7 @@ a Dev organization.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Request to enable or disable an authentication connection for a Dev
 organization.
 ",
@@ -13609,6 +13772,7 @@ organization.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "devOrgAuthConnectionsToggleRequestId",
           "key": "id",
@@ -13631,6 +13795,7 @@ organization.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "devOrgAuthConnectionsToggleRequestToggle",
           "key": "toggle",
@@ -13839,6 +14004,7 @@ that can be updated.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Response for the request to update an enterprise authentication
 connection.
 ",
@@ -13848,6 +14014,7 @@ connection.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "devOrgAuthConnectionsUpdateResponseAuthConnection",
           "key": "auth_connection",
@@ -13876,6 +14043,7 @@ connection.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "DevUser",
       "groupName": null,
@@ -13883,6 +14051,7 @@ connection.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "devUserExternalIdentities",
           "key": "external_identities",
@@ -13925,6 +14094,7 @@ connection.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The response to listing the Dev users.",
       "generatedName": "DevUsersListResponse",
       "groupName": null,
@@ -13932,6 +14102,7 @@ connection.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "devUsersListResponseDevUsers",
           "key": "dev_users",
@@ -13954,6 +14125,7 @@ connection.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "devUsersListResponseNextCursor",
           "key": "next_cursor",
@@ -13985,6 +14157,7 @@ sort order. If not set, then no later elements exist.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "devUsersListResponsePrevCursor",
           "key": "prev_cursor",
@@ -14021,6 +14194,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The response to getting the information for the authenticated user.
 ",
       "generatedName": "DevUsersSelfResponse",
@@ -14029,6 +14203,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "devUsersSelfResponseDevUser",
           "key": "dev_user",
@@ -14083,6 +14258,7 @@ sort order. If not set, then no prior elements exist.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Enhancement",
       "groupName": null,
@@ -14090,6 +14266,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "enhancementTargetCloseDate",
           "key": "target_close_date",
@@ -14135,6 +14312,7 @@ sort order. If not set, then no prior elements exist.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ErrorBadRequest",
       "groupName": null,
@@ -14172,6 +14350,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ErrorBadRequestInvalidEnumValue",
       "groupName": null,
@@ -14179,6 +14358,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "errorBadRequestInvalidEnumValueAllowedValues",
           "key": "allowed_values",
@@ -14208,6 +14388,7 @@ sort order. If not set, then no prior elements exist.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "errorBadRequestInvalidEnumValueFieldName",
           "key": "field_name",
@@ -14230,6 +14411,7 @@ sort order. If not set, then no prior elements exist.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "errorBadRequestInvalidEnumValueValue",
           "key": "value",
@@ -14257,6 +14439,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ErrorBadRequestMissingRequiredField",
       "groupName": null,
@@ -14264,6 +14447,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "errorBadRequestMissingRequiredFieldFieldName",
           "key": "field_name",
@@ -14386,6 +14570,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ErrorBadRequestValueNotPermitted",
       "groupName": null,
@@ -14393,6 +14578,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "errorBadRequestValueNotPermittedFieldName",
           "key": "field_name",
@@ -14415,6 +14601,7 @@ sort order. If not set, then no prior elements exist.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "errorBadRequestValueNotPermittedReason",
           "key": "reason",
@@ -14449,6 +14636,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ErrorBase",
       "groupName": null,
@@ -14456,6 +14644,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "errorBaseMessage",
           "key": "message",
@@ -14498,6 +14687,7 @@ sort order. If not set, then no prior elements exist.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ErrorForbidden",
       "groupName": null,
@@ -14554,6 +14744,7 @@ sort order. If not set, then no prior elements exist.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ErrorInternalServerError",
       "groupName": null,
@@ -14610,6 +14801,7 @@ sort order. If not set, then no prior elements exist.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ErrorNotFound",
       "groupName": null,
@@ -14666,6 +14858,7 @@ sort order. If not set, then no prior elements exist.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ErrorServiceUnavailable",
       "groupName": null,
@@ -14722,6 +14915,7 @@ sort order. If not set, then no prior elements exist.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ErrorTooManyRequests",
       "groupName": null,
@@ -14778,6 +14972,7 @@ sort order. If not set, then no prior elements exist.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ErrorUnauthorized",
       "groupName": null,
@@ -14826,6 +15021,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "EventPartCreated",
       "groupName": null,
@@ -14833,6 +15029,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "eventPartCreatedPart",
           "key": "part",
@@ -14853,6 +15050,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "EventPartDeleted",
       "groupName": null,
@@ -14860,6 +15058,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "eventPartDeletedId",
           "key": "id",
@@ -14887,6 +15086,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "EventPartUpdated",
       "groupName": null,
@@ -14894,6 +15094,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "eventPartUpdatedPart",
           "key": "part",
@@ -14914,6 +15115,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "EventRevOrgCreated",
       "groupName": null,
@@ -14921,6 +15123,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "eventRevOrgCreatedRevOrg",
           "key": "rev_org",
@@ -14941,6 +15144,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "EventRevOrgDeleted",
       "groupName": null,
@@ -14948,6 +15152,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "eventRevOrgDeletedId",
           "key": "id",
@@ -14975,6 +15180,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "EventRevOrgUpdated",
       "groupName": null,
@@ -14982,6 +15188,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "eventRevOrgUpdatedRevOrg",
           "key": "rev_org",
@@ -15002,6 +15209,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "EventTagCreated",
       "groupName": null,
@@ -15009,6 +15217,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "eventTagCreatedTag",
           "key": "tag",
@@ -15029,6 +15238,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "EventTagDeleted",
       "groupName": null,
@@ -15036,6 +15246,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "eventTagDeletedId",
           "key": "id",
@@ -15063,6 +15274,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "EventTagUpdated",
       "groupName": null,
@@ -15070,6 +15282,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "eventTagUpdatedTag",
           "key": "tag",
@@ -15090,6 +15303,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "EventTimelineEntryCreated",
       "groupName": null,
@@ -15097,6 +15311,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "eventTimelineEntryCreatedEntry",
           "key": "entry",
@@ -15117,6 +15332,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "EventTimelineEntryDeleted",
       "groupName": null,
@@ -15124,6 +15340,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "eventTimelineEntryDeletedId",
           "key": "id",
@@ -15151,6 +15368,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "EventTimelineEntryUpdated",
       "groupName": null,
@@ -15158,6 +15376,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "eventTimelineEntryUpdatedEntry",
           "key": "entry",
@@ -15178,6 +15397,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "EventWebhookCreated",
       "groupName": null,
@@ -15185,6 +15405,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "eventWebhookCreatedWebhook",
           "key": "webhook",
@@ -15205,6 +15426,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "EventWebhookDeleted",
       "groupName": null,
@@ -15212,6 +15434,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "eventWebhookDeletedId",
           "key": "id",
@@ -15239,6 +15462,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "EventWebhookUpdated",
       "groupName": null,
@@ -15246,6 +15470,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "eventWebhookUpdatedWebhook",
           "key": "webhook",
@@ -15266,6 +15491,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "EventWorkCreated",
       "groupName": null,
@@ -15273,6 +15499,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "eventWorkCreatedWork",
           "key": "work",
@@ -15293,6 +15520,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "EventWorkDeleted",
       "groupName": null,
@@ -15300,6 +15528,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "eventWorkDeletedId",
           "key": "id",
@@ -15327,6 +15556,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "EventWorkUpdated",
       "groupName": null,
@@ -15334,6 +15564,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "eventWorkUpdatedWork",
           "key": "work",
@@ -15412,6 +15643,7 @@ sort order. If not set, then no prior elements exist.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Issue",
       "groupName": null,
@@ -15419,6 +15651,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "issuePriority",
           "key": "priority",
@@ -15549,6 +15782,7 @@ always be returned in the specified sort-by order.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "OrgBase",
       "groupName": null,
@@ -15556,6 +15790,7 @@ always be returned in the specified sort-by order.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "orgBaseDisplayName",
           "key": "display_name",
@@ -15598,6 +15833,7 @@ always be returned in the specified sort-by order.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "OrgBaseSummary",
       "groupName": null,
@@ -15605,6 +15841,7 @@ always be returned in the specified sort-by order.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "orgBaseSummaryDisplayName",
           "key": "display_name",
@@ -15772,6 +16009,7 @@ always be returned in the specified sort-by order.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PartBase",
       "groupName": null,
@@ -15779,6 +16017,7 @@ always be returned in the specified sort-by order.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "partBaseArtifacts",
           "key": "artifacts",
@@ -15808,6 +16047,7 @@ always be returned in the specified sort-by order.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "partBaseDescription",
           "key": "description",
@@ -15837,6 +16077,7 @@ always be returned in the specified sort-by order.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "partBaseName",
           "key": "name",
@@ -15859,6 +16100,7 @@ always be returned in the specified sort-by order.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "partBaseOwnedBy",
           "key": "owned_by",
@@ -15881,6 +16123,7 @@ always be returned in the specified sort-by order.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "partBaseTags",
           "key": "tags",
@@ -15923,6 +16166,7 @@ always be returned in the specified sort-by order.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PartBaseSummary",
       "groupName": null,
@@ -15930,6 +16174,7 @@ always be returned in the specified sort-by order.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "partBaseSummaryName",
           "key": "name",
@@ -16175,6 +16420,7 @@ always be returned in the specified sort-by order.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PartsCreateRequestCapability",
       "groupName": null,
@@ -16182,6 +16428,7 @@ always be returned in the specified sort-by order.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "partsCreateRequestCapabilityParentPart",
           "key": "parent_part",
@@ -16216,6 +16463,7 @@ always be returned in the specified sort-by order.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PartsCreateRequestEnhancement",
       "groupName": null,
@@ -16223,6 +16471,7 @@ always be returned in the specified sort-by order.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "partsCreateRequestEnhancementParentPart",
           "key": "parent_part",
@@ -16253,6 +16502,7 @@ always be returned in the specified sort-by order.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "partsCreateRequestEnhancementTargetCloseDate",
           "key": "target_close_date",
@@ -16283,6 +16533,7 @@ always be returned in the specified sort-by order.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PartsCreateRequestFeature",
       "groupName": null,
@@ -16290,6 +16541,7 @@ always be returned in the specified sort-by order.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "partsCreateRequestFeatureParentPart",
           "key": "parent_part",
@@ -16350,6 +16602,7 @@ always be returned in the specified sort-by order.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PartsCreateResponse",
       "groupName": null,
@@ -16357,6 +16610,7 @@ always be returned in the specified sort-by order.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "partsCreateResponsePart",
           "key": "part",
@@ -16377,6 +16631,7 @@ always be returned in the specified sort-by order.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PartsDeleteRequest",
       "groupName": null,
@@ -16384,6 +16639,7 @@ always be returned in the specified sort-by order.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "partsDeleteRequestId",
           "key": "id",
@@ -16437,6 +16693,7 @@ always be returned in the specified sort-by order.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PartsGetResponse",
       "groupName": null,
@@ -16444,6 +16701,7 @@ always be returned in the specified sort-by order.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "partsGetResponsePart",
           "key": "part",
@@ -16464,6 +16722,7 @@ always be returned in the specified sort-by order.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PartsListResponse",
       "groupName": null,
@@ -16471,6 +16730,7 @@ always be returned in the specified sort-by order.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "partsListResponseNextCursor",
           "key": "next_cursor",
@@ -16502,6 +16762,7 @@ sort order. If not set, then no later elements exist.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "partsListResponseParts",
           "key": "parts",
@@ -16524,6 +16785,7 @@ sort order. If not set, then no later elements exist.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "partsListResponsePrevCursor",
           "key": "prev_cursor",
@@ -16727,6 +16989,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PartsUpdateRequestEnhancement",
       "groupName": null,
@@ -16734,6 +16997,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "partsUpdateRequestEnhancementTargetCloseDate",
           "key": "target_close_date",
@@ -16789,6 +17053,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PartsUpdateRequestOwnedBy",
       "groupName": null,
@@ -16796,6 +17061,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "partsUpdateRequestOwnedBySet",
           "key": "set",
@@ -16865,6 +17131,7 @@ empty.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PartsUpdateResponse",
       "groupName": null,
@@ -16872,6 +17139,7 @@ empty.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "partsUpdateResponsePart",
           "key": "part",
@@ -16916,6 +17184,7 @@ empty.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "RevOrg",
       "groupName": null,
@@ -16923,6 +17192,7 @@ empty.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "revOrgDescription",
           "key": "description",
@@ -16952,6 +17222,7 @@ empty.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "revOrgDomain",
           "key": "domain",
@@ -16981,6 +17252,7 @@ empty.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "revOrgExternalRef",
           "key": "external_ref",
@@ -17027,6 +17299,7 @@ organization.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Request object to create a new Rev organization in the Dev
 organization.
 ",
@@ -17036,6 +17309,7 @@ organization.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "revOrgsCreateRequestDescription",
           "key": "description",
@@ -17065,6 +17339,7 @@ organization.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "revOrgsCreateRequestDisplayName",
           "key": "display_name",
@@ -17087,6 +17362,7 @@ organization.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "revOrgsCreateRequestDomain",
           "key": "domain",
@@ -17116,6 +17392,7 @@ organization.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "revOrgsCreateRequestEnvironment",
           "key": "environment",
@@ -17138,6 +17415,7 @@ organization.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "revOrgsCreateRequestExternalRef",
           "key": "external_ref",
@@ -17170,6 +17448,7 @@ records.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "revOrgsCreateRequestTier",
           "key": "tier",
@@ -17204,6 +17483,7 @@ records.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Response object for request to create a new Rev organization.
 ",
       "generatedName": "RevOrgsCreateResponse",
@@ -17212,6 +17492,7 @@ records.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "revOrgsCreateResponseRevOrg",
           "key": "rev_org",
@@ -17232,6 +17513,7 @@ records.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Request object to delete a Rev organization.",
       "generatedName": "RevOrgsDeleteRequest",
       "groupName": null,
@@ -17239,6 +17521,7 @@ records.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "revOrgsDeleteRequestId",
           "key": "id",
@@ -17292,6 +17575,7 @@ records.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The response to getting a Rev organization's information.",
       "generatedName": "RevOrgsGetResponse",
       "groupName": null,
@@ -17299,6 +17583,7 @@ records.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "revOrgsGetResponseRevOrg",
           "key": "rev_org",
@@ -17319,6 +17604,7 @@ records.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The response to getting a list of Rev organizations' information.
 ",
       "generatedName": "RevOrgsListResponse",
@@ -17327,6 +17613,7 @@ records.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "revOrgsListResponseNextCursor",
           "key": "next_cursor",
@@ -17358,6 +17645,7 @@ sort order. If not set, then no later elements exist.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "revOrgsListResponsePrevCursor",
           "key": "prev_cursor",
@@ -17389,6 +17677,7 @@ sort order. If not set, then no prior elements exist.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "revOrgsListResponseRevOrgs",
           "key": "rev_orgs",
@@ -17416,6 +17705,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Request object to update information of the Rev organization.
 ",
       "generatedName": "RevOrgsUpdateRequest",
@@ -17424,6 +17714,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "revOrgsUpdateRequestDescription",
           "key": "description",
@@ -17453,6 +17744,7 @@ sort order. If not set, then no prior elements exist.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "revOrgsUpdateRequestDisplayName",
           "key": "display_name",
@@ -17482,6 +17774,7 @@ sort order. If not set, then no prior elements exist.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "revOrgsUpdateRequestDomain",
           "key": "domain",
@@ -17511,6 +17804,7 @@ sort order. If not set, then no prior elements exist.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "revOrgsUpdateRequestEnvironment",
           "key": "environment",
@@ -17533,6 +17827,7 @@ sort order. If not set, then no prior elements exist.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "revOrgsUpdateRequestExternalRef",
           "key": "external_ref",
@@ -17565,6 +17860,7 @@ records.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "revOrgsUpdateRequestId",
           "key": "id",
@@ -17587,6 +17883,7 @@ records.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "revOrgsUpdateRequestTier",
           "key": "tier",
@@ -17621,6 +17918,7 @@ records.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Response object to updating Rev organization's information.",
       "generatedName": "RevOrgsUpdateResponse",
       "groupName": null,
@@ -17628,6 +17926,7 @@ records.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "revOrgsUpdateResponseRevOrg",
           "key": "rev_org",
@@ -17656,6 +17955,7 @@ records.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "RevUserSummary",
       "groupName": null,
@@ -17663,6 +17963,7 @@ records.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "revUserSummaryExternalRef",
           "key": "external_ref",
@@ -17697,6 +17998,7 @@ system-generated identifier will be assigned to the user.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "revUserSummaryRevOrg",
           "key": "rev_org",
@@ -17724,6 +18026,7 @@ system-generated identifier will be assigned to the user.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SetTagWithValue",
       "groupName": null,
@@ -17731,6 +18034,7 @@ system-generated identifier will be assigned to the user.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "setTagWithValueId",
           "key": "id",
@@ -17753,6 +18057,7 @@ system-generated identifier will be assigned to the user.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "setTagWithValueValue",
           "key": "value",
@@ -17789,6 +18094,7 @@ the value must be one that's specified in the tag's allowed values.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Describes the current stage of a work item.",
       "generatedName": "Stage",
       "groupName": null,
@@ -17796,6 +18102,7 @@ the value must be one that's specified in the tag's allowed values.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "stageName",
           "key": "name",
@@ -17823,6 +18130,7 @@ the value must be one that's specified in the tag's allowed values.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Sets an object's initial stage.",
       "generatedName": "StageInit",
       "groupName": null,
@@ -17830,6 +18138,7 @@ the value must be one that's specified in the tag's allowed values.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "stageInitName",
           "key": "name",
@@ -17864,6 +18173,7 @@ the value must be one that's specified in the tag's allowed values.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Updates an object's stage.",
       "generatedName": "StageUpdate",
       "groupName": null,
@@ -17871,6 +18181,7 @@ the value must be one that's specified in the tag's allowed values.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "stageUpdateName",
           "key": "name",
@@ -17922,6 +18233,7 @@ the value must be one that's specified in the tag's allowed values.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Tag",
       "groupName": null,
@@ -17929,6 +18241,7 @@ the value must be one that's specified in the tag's allowed values.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "tagAllowedValues",
           "key": "allowed_values",
@@ -17968,6 +18281,7 @@ provided when the association is made.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "tagDescription",
           "key": "description",
@@ -17999,6 +18313,7 @@ on the tag's purpose and usage.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "tagName",
           "key": "name",
@@ -18037,6 +18352,7 @@ unique.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "TagSummary",
       "groupName": null,
@@ -18044,6 +18360,7 @@ unique.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "tagSummaryName",
           "key": "name",
@@ -18074,6 +18391,7 @@ unique.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "TagWithValue",
       "groupName": null,
@@ -18081,6 +18399,7 @@ unique.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "tagWithValueTag",
           "key": "tag",
@@ -18096,6 +18415,7 @@ unique.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "tagWithValueValue",
           "key": "value",
@@ -18130,6 +18450,7 @@ unique.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The request to create a new tag.",
       "generatedName": "TagsCreateRequest",
       "groupName": null,
@@ -18137,6 +18458,7 @@ unique.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "tagsCreateRequestAllowedValues",
           "key": "allowed_values",
@@ -18175,6 +18497,7 @@ permitted.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "tagsCreateRequestDescription",
           "key": "description",
@@ -18204,6 +18527,7 @@ permitted.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "tagsCreateRequestName",
           "key": "name",
@@ -18232,6 +18556,7 @@ permitted.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The response to creating a new tag.",
       "generatedName": "TagsCreateResponse",
       "groupName": null,
@@ -18239,6 +18564,7 @@ permitted.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "tagsCreateResponseTag",
           "key": "tag",
@@ -18259,6 +18585,7 @@ permitted.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The request to delete a tag.",
       "generatedName": "TagsDeleteRequest",
       "groupName": null,
@@ -18266,6 +18593,7 @@ permitted.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "tagsDeleteRequestId",
           "key": "id",
@@ -18319,6 +18647,7 @@ permitted.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The response to getting a tag's information.",
       "generatedName": "TagsGetResponse",
       "groupName": null,
@@ -18326,6 +18655,7 @@ permitted.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "tagsGetResponseTag",
           "key": "tag",
@@ -18346,6 +18676,7 @@ permitted.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The response to listing the tags.",
       "generatedName": "TagsListResponse",
       "groupName": null,
@@ -18353,6 +18684,7 @@ permitted.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "tagsListResponseNextCursor",
           "key": "next_cursor",
@@ -18384,6 +18716,7 @@ sort order. If not set, then no later elements exist.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "tagsListResponsePrevCursor",
           "key": "prev_cursor",
@@ -18415,6 +18748,7 @@ sort order. If not set, then no prior elements exist.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "tagsListResponseTags",
           "key": "tags",
@@ -18442,6 +18776,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Specifies an update to a tag's allowed values.",
       "generatedName": "TagsUpdateAllowedValues",
       "groupName": null,
@@ -18449,6 +18784,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "tagsUpdateAllowedValuesSet",
           "key": "set",
@@ -18490,6 +18826,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The request to update a tag.",
       "generatedName": "TagsUpdateRequest",
       "groupName": null,
@@ -18497,6 +18834,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "tagsUpdateRequestAllowedValues",
           "key": "allowed_values",
@@ -18519,6 +18857,7 @@ sort order. If not set, then no prior elements exist.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "tagsUpdateRequestDescription",
           "key": "description",
@@ -18548,6 +18887,7 @@ sort order. If not set, then no prior elements exist.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "tagsUpdateRequestId",
           "key": "id",
@@ -18570,6 +18910,7 @@ sort order. If not set, then no prior elements exist.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "tagsUpdateRequestName",
           "key": "name",
@@ -18606,6 +18947,7 @@ tags.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The response for updating a tag.",
       "generatedName": "TagsUpdateResponse",
       "groupName": null,
@@ -18613,6 +18955,7 @@ tags.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "tagsUpdateResponseTag",
           "key": "tag",
@@ -18641,6 +18984,7 @@ tags.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Ticket",
       "groupName": null,
@@ -18648,6 +18992,7 @@ tags.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "ticketGroup",
           "key": "group",
@@ -18670,6 +19015,7 @@ tags.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "ticketRevOrg",
           "key": "rev_org",
@@ -18692,6 +19038,7 @@ tags.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "ticketSeverity",
           "key": "severity",
@@ -18784,6 +19131,7 @@ tags.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "TimelineComment",
       "groupName": null,
@@ -18791,6 +19139,7 @@ tags.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "timelineCommentArtifacts",
           "key": "artifacts",
@@ -18820,6 +19169,7 @@ tags.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "timelineCommentBody",
           "key": "body",
@@ -18851,6 +19201,7 @@ will appear in the response.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "timelineCommentBodyType",
           "key": "body_type",
@@ -18873,6 +19224,7 @@ will appear in the response.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "timelineCommentSnapKitBody",
           "key": "snap_kit_body",
@@ -19010,6 +19362,7 @@ will appear in the response.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "TimelineEntriesCreateRequestTimelineComment",
       "groupName": null,
@@ -19017,6 +19370,7 @@ will appear in the response.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "timelineEntriesCreateRequestTimelineCommentArtifacts",
           "key": "artifacts",
@@ -19053,6 +19407,7 @@ will appear in the response.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "timelineEntriesCreateRequestTimelineCommentBody",
           "key": "body",
@@ -19082,6 +19437,7 @@ will appear in the response.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "timelineEntriesCreateRequestTimelineCommentBodyType",
           "key": "body_type",
@@ -19104,6 +19460,7 @@ will appear in the response.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "timelineEntriesCreateRequestTimelineCommentSnapKitBody",
           "key": "snap_kit_body",
@@ -19160,6 +19517,7 @@ will appear in the response.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The response to creating a timeline entry for an object.",
       "generatedName": "TimelineEntriesCreateResponse",
       "groupName": null,
@@ -19167,6 +19525,7 @@ will appear in the response.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "timelineEntriesCreateResponseTimelineEntry",
           "key": "timeline_entry",
@@ -19187,6 +19546,7 @@ will appear in the response.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The request to getting a timeline entry.",
       "generatedName": "TimelineEntriesGetResponse",
       "groupName": null,
@@ -19194,6 +19554,7 @@ will appear in the response.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "timelineEntriesGetResponseTimelineEntry",
           "key": "timeline_entry",
@@ -19214,6 +19575,7 @@ will appear in the response.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The response to listing timeline entries for an object.",
       "generatedName": "TimelineEntriesListResponse",
       "groupName": null,
@@ -19221,6 +19583,7 @@ will appear in the response.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "timelineEntriesListResponseNextCursor",
           "key": "next_cursor",
@@ -19252,6 +19615,7 @@ sort order. If not set, then no later elements exist.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "timelineEntriesListResponsePrevCursor",
           "key": "prev_cursor",
@@ -19283,6 +19647,7 @@ sort order. If not set, then no prior elements exist.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "timelineEntriesListResponseTimelineEntries",
           "key": "timeline_entries",
@@ -19351,6 +19716,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "TimelineEntriesUpdateRequestTimelineComment",
       "groupName": null,
@@ -19358,6 +19724,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "timelineEntriesUpdateRequestTimelineCommentArtifacts",
           "key": "artifacts",
@@ -19380,6 +19747,7 @@ sort order. If not set, then no prior elements exist.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "timelineEntriesUpdateRequestTimelineCommentBody",
           "key": "body",
@@ -19409,6 +19777,7 @@ sort order. If not set, then no prior elements exist.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "timelineEntriesUpdateRequestTimelineCommentBodyType",
           "key": "body_type",
@@ -19431,6 +19800,7 @@ sort order. If not set, then no prior elements exist.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "timelineEntriesUpdateRequestTimelineCommentSnapKitBody",
           "key": "snap_kit_body",
@@ -19476,6 +19846,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "TimelineEntriesUpdateRequestTimelineCommentArtifacts",
       "groupName": null,
@@ -19483,6 +19854,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "timelineEntriesUpdateRequestTimelineCommentArtifactsAdd",
           "key": "add",
@@ -19522,6 +19894,7 @@ already attached. Mutually exclusive with \`set\`.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "timelineEntriesUpdateRequestTimelineCommentArtifactsRemove",
           "key": "remove",
@@ -19560,6 +19933,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "timelineEntriesUpdateRequestTimelineCommentArtifactsSet",
           "key": "set",
@@ -19612,6 +19986,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The response to updating a timeline entry.",
       "generatedName": "TimelineEntriesUpdateResponse",
       "groupName": null,
@@ -19619,6 +19994,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "timelineEntriesUpdateResponseTimelineEntry",
           "key": "timeline_entry",
@@ -19702,6 +20078,7 @@ default visibility.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "UserBase",
       "groupName": null,
@@ -19709,6 +20086,7 @@ default visibility.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "userBaseDisplayName",
           "key": "display_name",
@@ -19739,6 +20117,7 @@ default visibility.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "userBaseDisplayPicture",
           "key": "display_picture",
@@ -19761,6 +20140,7 @@ default visibility.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "userBaseEmail",
           "key": "email",
@@ -19790,6 +20170,7 @@ default visibility.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "userBaseFullName",
           "key": "full_name",
@@ -19819,6 +20200,7 @@ default visibility.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "userBasePhoneNumbers",
           "key": "phone_numbers",
@@ -19855,6 +20237,7 @@ default visibility.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "userBaseState",
           "key": "state",
@@ -19890,6 +20273,7 @@ default visibility.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "UserBaseSummary",
       "groupName": null,
@@ -19897,6 +20281,7 @@ default visibility.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "userBaseSummaryDisplayName",
           "key": "display_name",
@@ -19927,6 +20312,7 @@ default visibility.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "userBaseSummaryDisplayPicture",
           "key": "display_picture",
@@ -19949,6 +20335,7 @@ default visibility.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "userBaseSummaryEmail",
           "key": "email",
@@ -19978,6 +20365,7 @@ default visibility.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "userBaseSummaryFullName",
           "key": "full_name",
@@ -20007,6 +20395,7 @@ default visibility.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "userBaseSummaryState",
           "key": "state",
@@ -20194,6 +20583,7 @@ default visibility.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Webhook",
       "groupName": null,
@@ -20201,6 +20591,7 @@ default visibility.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookEventTypes",
           "key": "event_types",
@@ -20230,6 +20621,7 @@ default visibility.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookSecret",
           "key": "secret",
@@ -20252,6 +20644,7 @@ default visibility.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookStatus",
           "key": "status",
@@ -20267,6 +20660,7 @@ default visibility.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookUrl",
           "key": "url",
@@ -20294,6 +20688,7 @@ default visibility.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WebhookEventRequest",
       "groupName": null,
@@ -20301,6 +20696,7 @@ default visibility.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookEventRequestId",
           "key": "id",
@@ -20323,6 +20719,7 @@ default visibility.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookEventRequestPartCreated",
           "key": "part_created",
@@ -20345,6 +20742,7 @@ default visibility.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookEventRequestPartDeleted",
           "key": "part_deleted",
@@ -20367,6 +20765,7 @@ default visibility.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookEventRequestPartUpdated",
           "key": "part_updated",
@@ -20389,6 +20788,7 @@ default visibility.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookEventRequestRevOrgCreated",
           "key": "rev_org_created",
@@ -20411,6 +20811,7 @@ default visibility.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookEventRequestRevOrgDeleted",
           "key": "rev_org_deleted",
@@ -20433,6 +20834,7 @@ default visibility.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookEventRequestRevOrgUpdated",
           "key": "rev_org_updated",
@@ -20455,6 +20857,7 @@ default visibility.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookEventRequestTagCreated",
           "key": "tag_created",
@@ -20477,6 +20880,7 @@ default visibility.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookEventRequestTagDeleted",
           "key": "tag_deleted",
@@ -20499,6 +20903,7 @@ default visibility.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookEventRequestTagUpdated",
           "key": "tag_updated",
@@ -20521,6 +20926,7 @@ default visibility.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookEventRequestTimelineEntryCreated",
           "key": "timeline_entry_created",
@@ -20543,6 +20949,7 @@ default visibility.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookEventRequestTimelineEntryDeleted",
           "key": "timeline_entry_deleted",
@@ -20565,6 +20972,7 @@ default visibility.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookEventRequestTimelineEntryUpdated",
           "key": "timeline_entry_updated",
@@ -20587,6 +20995,7 @@ default visibility.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookEventRequestTimestamp",
           "key": "timestamp",
@@ -20615,6 +21024,7 @@ seconds.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookEventRequestType",
           "key": "type",
@@ -20637,6 +21047,7 @@ seconds.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookEventRequestVerify",
           "key": "verify",
@@ -20659,6 +21070,7 @@ seconds.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookEventRequestWebhookCreated",
           "key": "webhook_created",
@@ -20681,6 +21093,7 @@ seconds.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookEventRequestWebhookDeleted",
           "key": "webhook_deleted",
@@ -20703,6 +21116,7 @@ seconds.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookEventRequestWebhookId",
           "key": "webhook_id",
@@ -20725,6 +21139,7 @@ seconds.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookEventRequestWebhookUpdated",
           "key": "webhook_updated",
@@ -20747,6 +21162,7 @@ seconds.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookEventRequestWorkCreated",
           "key": "work_created",
@@ -20769,6 +21185,7 @@ seconds.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookEventRequestWorkDeleted",
           "key": "work_deleted",
@@ -20791,6 +21208,7 @@ seconds.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookEventRequestWorkUpdated",
           "key": "work_updated",
@@ -20818,6 +21236,7 @@ seconds.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WebhookEventResponse",
       "groupName": null,
@@ -20825,6 +21244,7 @@ seconds.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookEventResponseChallenge",
           "key": "challenge",
@@ -21098,6 +21518,7 @@ be set for other request types.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WebhookEventVerify",
       "groupName": null,
@@ -21105,6 +21526,7 @@ be set for other request types.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookEventVerifyChallenge",
           "key": "challenge",
@@ -21177,6 +21599,7 @@ be set for other request types.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The request to create a new webhook.",
       "generatedName": "WebhooksCreateRequest",
       "groupName": null,
@@ -21184,6 +21607,7 @@ be set for other request types.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhooksCreateRequestEventTypes",
           "key": "event_types",
@@ -21213,6 +21637,7 @@ be set for other request types.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhooksCreateRequestSecret",
           "key": "secret",
@@ -21246,6 +21671,7 @@ response.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhooksCreateRequestUrl",
           "key": "url",
@@ -21273,6 +21699,7 @@ response.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The response to creating a new webhook.",
       "generatedName": "WebhooksCreateResponse",
       "groupName": null,
@@ -21280,6 +21707,7 @@ response.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhooksCreateResponseWebhook",
           "key": "webhook",
@@ -21300,6 +21728,7 @@ response.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The request to delete a webhook.",
       "generatedName": "WebhooksDeleteRequest",
       "groupName": null,
@@ -21307,6 +21736,7 @@ response.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhooksDeleteRequestId",
           "key": "id",
@@ -21360,6 +21790,7 @@ response.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The response to getting the information for the webhook.",
       "generatedName": "WebhooksGetResponse",
       "groupName": null,
@@ -21367,6 +21798,7 @@ response.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhooksGetResponseWebhook",
           "key": "webhook",
@@ -21387,6 +21819,7 @@ response.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The response to listing the webhooks.",
       "generatedName": "WebhooksListResponse",
       "groupName": null,
@@ -21394,6 +21827,7 @@ response.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhooksListResponseWebhooks",
           "key": "webhooks",
@@ -21454,6 +21888,7 @@ response.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The request to update a webhook.",
       "generatedName": "WebhooksUpdateRequest",
       "groupName": null,
@@ -21461,6 +21896,7 @@ response.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhooksUpdateRequestAction",
           "key": "action",
@@ -21483,6 +21919,7 @@ response.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhooksUpdateRequestEventTypes",
           "key": "event_types",
@@ -21505,6 +21942,7 @@ response.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhooksUpdateRequestId",
           "key": "id",
@@ -21527,6 +21965,7 @@ response.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhooksUpdateRequestSecret",
           "key": "secret",
@@ -21561,6 +22000,7 @@ won't receive any object events until successfully verified.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhooksUpdateRequestUrl",
           "key": "url",
@@ -21598,6 +22038,7 @@ won't receive any object events until successfully verified.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WebhooksUpdateRequestEventTypes",
       "groupName": null,
@@ -21605,6 +22046,7 @@ won't receive any object events until successfully verified.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhooksUpdateRequestEventTypesAdd",
           "key": "add",
@@ -21637,6 +22079,7 @@ with 'set'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhooksUpdateRequestEventTypesRemove",
           "key": "remove",
@@ -21669,6 +22112,7 @@ with 'set'.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhooksUpdateRequestEventTypesSet",
           "key": "set",
@@ -21706,6 +22150,7 @@ event types. Note this is mutually exclusive with 'add' and
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The response to updating the webhook.",
       "generatedName": "WebhooksUpdateResponse",
       "groupName": null,
@@ -21713,6 +22158,7 @@ event types. Note this is mutually exclusive with 'add' and
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhooksUpdateResponseWebhook",
           "key": "webhook",
@@ -21771,6 +22217,7 @@ event types. Note this is mutually exclusive with 'add' and
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WorkBase",
       "groupName": null,
@@ -21778,6 +22225,7 @@ event types. Note this is mutually exclusive with 'add' and
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workBaseAppliesToPart",
           "key": "applies_to_part",
@@ -21800,6 +22248,7 @@ event types. Note this is mutually exclusive with 'add' and
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workBaseArtifacts",
           "key": "artifacts",
@@ -21829,6 +22278,7 @@ event types. Note this is mutually exclusive with 'add' and
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workBaseBody",
           "key": "body",
@@ -21858,6 +22308,7 @@ event types. Note this is mutually exclusive with 'add' and
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workBaseOwnedBy",
           "key": "owned_by",
@@ -21880,6 +22331,7 @@ event types. Note this is mutually exclusive with 'add' and
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workBaseReportedBy",
           "key": "reported_by",
@@ -21909,6 +22361,7 @@ event types. Note this is mutually exclusive with 'add' and
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workBaseStage",
           "key": "stage",
@@ -21931,6 +22384,7 @@ event types. Note this is mutually exclusive with 'add' and
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workBaseTags",
           "key": "tags",
@@ -21960,6 +22414,7 @@ event types. Note this is mutually exclusive with 'add' and
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workBaseTargetCloseDate",
           "key": "target_close_date",
@@ -21984,6 +22439,7 @@ event types. Note this is mutually exclusive with 'add' and
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workBaseTitle",
           "key": "title",
@@ -22293,6 +22749,7 @@ issues.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WorksCreateRequestIssue",
       "groupName": null,
@@ -22300,6 +22757,7 @@ issues.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "worksCreateRequestIssuePriority",
           "key": "priority",
@@ -22322,6 +22780,7 @@ issues.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "worksCreateRequestIssueSprint",
           "key": "sprint",
@@ -22356,6 +22815,7 @@ issues.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WorksCreateRequestTicket",
       "groupName": null,
@@ -22363,6 +22823,7 @@ issues.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "worksCreateRequestTicketGroup",
           "key": "group",
@@ -22392,6 +22853,7 @@ issues.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "worksCreateRequestTicketRevOrg",
           "key": "rev_org",
@@ -22421,6 +22883,7 @@ issues.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "worksCreateRequestTicketSeverity",
           "key": "severity",
@@ -22448,6 +22911,7 @@ issues.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WorksCreateResponse",
       "groupName": null,
@@ -22455,6 +22919,7 @@ issues.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "worksCreateResponseWork",
           "key": "work",
@@ -22475,6 +22940,7 @@ issues.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WorksDeleteRequest",
       "groupName": null,
@@ -22482,6 +22948,7 @@ issues.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "worksDeleteRequestId",
           "key": "id",
@@ -22535,6 +23002,7 @@ issues.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WorksExportResponse",
       "groupName": null,
@@ -22542,6 +23010,7 @@ issues.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "worksExportResponseWorks",
           "key": "works",
@@ -22569,6 +23038,7 @@ issues.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WorksGetResponse",
       "groupName": null,
@@ -22576,6 +23046,7 @@ issues.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "worksGetResponseWork",
           "key": "work",
@@ -22596,6 +23067,7 @@ issues.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WorksListResponse",
       "groupName": null,
@@ -22603,6 +23075,7 @@ issues.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "worksListResponseNextCursor",
           "key": "next_cursor",
@@ -22634,6 +23107,7 @@ sort order. If not set, then no later elements exist.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "worksListResponsePrevCursor",
           "key": "prev_cursor",
@@ -22665,6 +23139,7 @@ sort order. If not set, then no prior elements exist.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "worksListResponseWorks",
           "key": "works",
@@ -22940,6 +23415,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WorksUpdateRequestArtifactIds",
       "groupName": null,
@@ -22947,6 +23423,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "worksUpdateRequestArtifactIdsSet",
           "key": "set",
@@ -22988,6 +23465,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WorksUpdateRequestIssue",
       "groupName": null,
@@ -22995,6 +23473,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "worksUpdateRequestIssuePriority",
           "key": "priority",
@@ -23017,6 +23496,7 @@ sort order. If not set, then no prior elements exist.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "worksUpdateRequestIssueSprint",
           "key": "sprint",
@@ -23058,6 +23538,7 @@ sort order. If not set, then no prior elements exist.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WorksUpdateRequestOwnedBy",
       "groupName": null,
@@ -23065,6 +23546,7 @@ sort order. If not set, then no prior elements exist.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "worksUpdateRequestOwnedBySet",
           "key": "set",
@@ -23108,6 +23590,7 @@ empty.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WorksUpdateRequestReportedBy",
       "groupName": null,
@@ -23115,6 +23598,7 @@ empty.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "worksUpdateRequestReportedBySet",
           "key": "set",
@@ -23157,6 +23641,7 @@ empty.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WorksUpdateRequestTags",
       "groupName": null,
@@ -23164,6 +23649,7 @@ empty.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "worksUpdateRequestTagsSet",
           "key": "set",
@@ -23198,6 +23684,7 @@ empty.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WorksUpdateRequestTicket",
       "groupName": null,
@@ -23205,6 +23692,7 @@ empty.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "worksUpdateRequestTicketGroup",
           "key": "group",
@@ -23234,6 +23722,7 @@ empty.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "worksUpdateRequestTicketRevOrg",
           "key": "rev_org",
@@ -23272,6 +23761,7 @@ empty.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "worksUpdateRequestTicketSeverity",
           "key": "severity",
@@ -23299,6 +23789,7 @@ empty.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WorksUpdateResponse",
       "groupName": null,
@@ -23306,6 +23797,7 @@ empty.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "worksUpdateResponseWork",
           "key": "work",

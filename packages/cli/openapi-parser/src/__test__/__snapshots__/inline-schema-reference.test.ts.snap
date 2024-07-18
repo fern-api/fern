@@ -64,6 +64,7 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
                 "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
+                "availability": null,
                 "description": null,
                 "generatedName": "NotFound",
                 "groupName": null,
@@ -71,6 +72,7 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
                 "properties": [
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "notFoundMessage",
                     "key": "message",
@@ -121,6 +123,7 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
                 "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
+                "availability": null,
                 "description": null,
                 "generatedName": "GetExampleResponseMessage",
                 "groupName": null,
@@ -128,6 +131,7 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
                 "properties": [
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "getExampleResponseMessageMessage",
                     "key": "message",
@@ -183,6 +187,7 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Schema1",
       "groupName": null,
@@ -190,6 +195,7 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "schema1Id",
           "key": "id",
@@ -220,6 +226,7 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "schema1Name",
           "key": "name",
@@ -254,6 +261,7 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Schema2",
       "groupName": null,
@@ -261,6 +269,7 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "schema2Email",
           "key": "email",
@@ -290,6 +299,7 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "schema2Age",
           "key": "age",

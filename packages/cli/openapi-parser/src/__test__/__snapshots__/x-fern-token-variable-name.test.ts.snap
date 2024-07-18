@@ -109,6 +109,7 @@ exports[`x-fern-token-variable-name x-fern-token-variable-name parse open api 1`
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Completion",
       "groupName": null,
@@ -116,6 +117,7 @@ exports[`x-fern-token-variable-name x-fern-token-variable-name parse open api 1`
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "completionText",
           "key": "text",
@@ -150,6 +152,7 @@ exports[`x-fern-token-variable-name x-fern-token-variable-name parse open api 1`
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "CompletionChunk",
       "groupName": null,
@@ -157,6 +160,7 @@ exports[`x-fern-token-variable-name x-fern-token-variable-name parse open api 1`
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "completionChunkText",
           "key": "text",
@@ -191,6 +195,7 @@ exports[`x-fern-token-variable-name x-fern-token-variable-name parse open api 1`
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "CreateCompletionRequest",
       "groupName": null,
@@ -198,6 +203,7 @@ exports[`x-fern-token-variable-name x-fern-token-variable-name parse open api 1`
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createCompletionRequestStream",
           "key": "stream",
@@ -223,6 +229,7 @@ exports[`x-fern-token-variable-name x-fern-token-variable-name parse open api 1`
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createCompletionRequestPrompt",
           "key": "prompt",

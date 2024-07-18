@@ -86,6 +86,7 @@ exports[`rules rules parse open api 1`] = `
                 "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
+                "availability": null,
                 "description": null,
                 "generatedName": "GetExampleResponseMessage",
                 "groupName": null,
@@ -93,6 +94,7 @@ exports[`rules rules parse open api 1`] = `
                 "properties": [
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "getExampleResponseMessageMessage",
                     "key": "message",
@@ -147,6 +149,7 @@ exports[`rules rules parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Schema",
       "groupName": null,
@@ -154,6 +157,7 @@ exports[`rules rules parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "schemaId",
           "key": "id",
@@ -184,6 +188,7 @@ exports[`rules rules parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "schemaName",
           "key": "name",
@@ -213,6 +218,7 @@ exports[`rules rules parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "schemaValue",
           "key": "value",

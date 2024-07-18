@@ -89,6 +89,7 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Farewell",
       "groupName": null,
@@ -96,6 +97,7 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "farewellMessage",
           "key": "message",
@@ -163,6 +165,7 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Greeting",
       "groupName": null,
@@ -170,6 +173,7 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "greetingMessage",
           "key": "message",

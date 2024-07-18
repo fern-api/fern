@@ -17,6 +17,7 @@ exports[`open api parser webhooks parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Pet",
       "groupName": null,
@@ -24,6 +25,7 @@ exports[`open api parser webhooks parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "petId",
           "key": "id",
@@ -47,6 +49,7 @@ exports[`open api parser webhooks parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "petName",
           "key": "name",
@@ -69,6 +72,7 @@ exports[`open api parser webhooks parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "petTag",
           "key": "tag",

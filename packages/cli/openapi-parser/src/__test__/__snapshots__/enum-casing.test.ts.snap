@@ -102,6 +102,7 @@ exports[`examples enum-casing parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ExampleResponse",
       "groupName": null,
@@ -109,6 +110,7 @@ exports[`examples enum-casing parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "exampleResponseStatus",
           "key": "status",
@@ -156,6 +158,7 @@ exports[`examples enum-casing parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "exampleResponseMessage",
           "key": "message",
@@ -185,6 +188,7 @@ exports[`examples enum-casing parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "exampleResponseCustomFields",
           "key": "custom_fields",

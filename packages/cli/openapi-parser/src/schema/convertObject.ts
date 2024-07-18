@@ -13,6 +13,7 @@ import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../getExtension";
 import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions";
 import { isAdditionalPropertiesAny } from "./convertAdditionalProperties";
+import { convertAvailability } from "./convertAvailability";
 import { convertSchema, convertToReferencedSchema, getSchemaIdFromReference } from "./convertSchemas";
 import { SchemaParserContext } from "./SchemaParserContext";
 import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
@@ -151,12 +152,7 @@ export function convertObject({
         ([propertyName, propertySchema]) => {
             const isRequired = allRequired.includes(propertyName);
             const audiences = getExtension<string[]>(propertySchema, FernOpenAPIExtension.AUDIENCES) ?? [];
-            // TODO: Fix style, map more availability types later
-            const availability =
-                getExtension<string>(propertySchema, FernOpenAPIExtension.AVAILABILITY) === "deprecated" ||
-                (!isReferenceObject(propertySchema) ?? (propertySchema as OpenAPIV3.SchemaObject).deprecated)
-                    ? Availability.Deprecated
-                    : undefined;
+            const availability = convertAvailability(propertySchema);
 
             const propertyNameOverride = getExtension<string | undefined>(
                 propertySchema,

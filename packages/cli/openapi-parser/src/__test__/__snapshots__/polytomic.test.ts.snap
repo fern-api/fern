@@ -315,6 +315,7 @@ exports[`polytomic polytomic parse open api 1`] = `
       "generatedRequestName": "ConnectionsCreateRequest",
       "headers": [
         {
+          "availability": null,
           "description": null,
           "env": null,
           "name": "X-Polytomic-Version",
@@ -408,6 +409,7 @@ exports[`polytomic polytomic parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ApiError",
       "groupName": null,
@@ -415,6 +417,7 @@ exports[`polytomic polytomic parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "apiErrorMessage",
           "key": "message",
@@ -444,6 +447,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "apiErrorMetadata",
           "key": "metadata",
@@ -463,6 +467,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "apiErrorStatus",
           "key": "status",
@@ -498,6 +503,7 @@ exports[`polytomic polytomic parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "BulkItemizedSchedule",
       "groupName": null,
@@ -505,6 +511,7 @@ exports[`polytomic polytomic parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "bulkItemizedScheduleItem",
           "key": "item",
@@ -520,6 +527,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "bulkItemizedScheduleSchedule",
           "key": "schedule",
@@ -540,6 +548,7 @@ exports[`polytomic polytomic parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "BulkMultiScheduleConfiguration",
       "groupName": null,
@@ -547,6 +556,7 @@ exports[`polytomic polytomic parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "bulkMultiScheduleConfigurationSchedules",
           "key": "schedules",
@@ -576,6 +586,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "bulkMultiScheduleConfigurationType",
           "key": "type",
@@ -603,6 +614,7 @@ exports[`polytomic polytomic parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "BulkSchedule",
       "groupName": null,
@@ -610,6 +622,7 @@ exports[`polytomic polytomic parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "bulkScheduleDayOfMonth",
           "key": "day_of_month",
@@ -639,6 +652,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "bulkScheduleDayOfWeek",
           "key": "day_of_week",
@@ -668,6 +682,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "bulkScheduleFrequency",
           "key": "frequency",
@@ -683,6 +698,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "bulkScheduleHour",
           "key": "hour",
@@ -712,6 +728,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "bulkScheduleMinute",
           "key": "minute",
@@ -741,6 +758,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "bulkScheduleMonth",
           "key": "month",
@@ -770,6 +788,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "bulkScheduleMulti",
           "key": "multi",
@@ -842,6 +861,7 @@ exports[`polytomic polytomic parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "RestErrResponse",
       "groupName": null,
@@ -849,6 +869,7 @@ exports[`polytomic polytomic parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "restErrResponseCode",
           "key": "code",
@@ -879,6 +900,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "restErrResponseContext",
           "key": "context",
@@ -919,6 +941,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "restErrResponseError",
           "key": "error",
@@ -948,6 +971,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "restErrResponseStatus",
           "key": "status",
@@ -1111,6 +1135,7 @@ exports[`polytomic polytomic parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "V2ConnectionTypeSchema",
       "groupName": null,
@@ -1118,6 +1143,7 @@ exports[`polytomic polytomic parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "v2ConnectionTypeSchemaId",
           "key": "id",
@@ -1147,6 +1173,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "v2ConnectionTypeSchemaName",
           "key": "name",
@@ -1176,6 +1203,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "v2ConnectionTypeSchemaOperations",
           "key": "operations",
@@ -1224,6 +1252,7 @@ exports[`polytomic polytomic parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "V2CreateConnectionRequestSchema",
       "groupName": null,
@@ -1231,6 +1260,7 @@ exports[`polytomic polytomic parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "v2CreateConnectionRequestSchemaConfiguration",
           "key": "configuration",
@@ -1271,6 +1301,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "v2CreateConnectionRequestSchemaName",
           "key": "name",
@@ -1293,6 +1324,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "v2CreateConnectionRequestSchemaOrganizationId",
           "key": "organization_id",
@@ -1329,6 +1361,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "v2CreateConnectionRequestSchemaPolicies",
           "key": "policies",
@@ -1372,6 +1405,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "v2CreateConnectionRequestSchemaRedirectUrl",
           "key": "redirect_url",
@@ -1401,6 +1435,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "v2CreateConnectionRequestSchemaType",
           "key": "type",
@@ -1423,6 +1458,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "v2CreateConnectionRequestSchemaValidate",
           "key": "validate",
@@ -1453,6 +1489,7 @@ exports[`polytomic polytomic parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "V2CreateConnectionResponseEnvelope",
       "groupName": null,
@@ -1460,6 +1497,7 @@ exports[`polytomic polytomic parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "v2CreateConnectionResponseEnvelopeData",
           "key": "data",
@@ -1487,6 +1525,7 @@ exports[`polytomic polytomic parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "V2CreateConnectionResponseSchema",
       "groupName": null,
@@ -1494,6 +1533,7 @@ exports[`polytomic polytomic parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "v2CreateConnectionResponseSchemaAuthCode",
           "key": "auth_code",
@@ -1523,6 +1563,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "v2CreateConnectionResponseSchemaAuthUrl",
           "key": "auth_url",
@@ -1552,6 +1593,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "v2CreateConnectionResponseSchemaConfiguration",
           "key": "configuration",
@@ -1599,6 +1641,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "v2CreateConnectionResponseSchemaId",
           "key": "id",
@@ -1628,6 +1671,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "v2CreateConnectionResponseSchemaName",
           "key": "name",
@@ -1657,6 +1701,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "v2CreateConnectionResponseSchemaOrganizationId",
           "key": "organization_id",
@@ -1686,6 +1731,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "v2CreateConnectionResponseSchemaPolicies",
           "key": "policies",
@@ -1722,6 +1768,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "v2CreateConnectionResponseSchemaStatus",
           "key": "status",
@@ -1751,6 +1798,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "v2CreateConnectionResponseSchemaStatusError",
           "key": "status_error",
@@ -1780,6 +1828,7 @@ exports[`polytomic polytomic parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "v2CreateConnectionResponseSchemaType",
           "key": "type",

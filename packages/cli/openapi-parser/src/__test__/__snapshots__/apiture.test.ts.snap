@@ -381,6 +381,7 @@ This error response may have one of the following \`type\` values:
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": "Include only accounts whose \`product.type\` is in pipe-delimited set. For example, to list only savings, checking, and CD accounts, use <br>\`?productType=savings|checking|cd\`.",
           "name": "productType",
           "parameterNameOverride": null,
@@ -408,6 +409,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "Filter accounts to just a subset of \`internal\` or \`external\` accounts (per the \`location\` property on the [\`accountItem\`](#schema-accountItem) schema).",
           "name": "location",
           "parameterNameOverride": null,
@@ -453,6 +455,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "Filter the result to accounts that have corresponding \`true\` values in \`account.allows\`. For example \`?allows=transferTo,transferFrom,view\` returns only accounts where \`account.allows.transferTo\`, \`account.allows.transferFrom\`, and \`account.allows.view\` are all \`true\` for the caller.",
           "name": "allows",
           "parameterNameOverride": null,
@@ -480,6 +483,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the \`?start=\` parameter on the \`nextPage_url\`.",
           "name": "start",
           "parameterNameOverride": null,
@@ -507,6 +511,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "The maximum number of items to return in this paged response.",
           "name": "limit",
           "parameterNameOverride": null,
@@ -842,6 +847,7 @@ This error response may have one of the following \`type\` values:
       "path": "/accounts/{accountId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": "The unique identifier of this account resource. This is an opaque string.",
           "name": "accountId",
           "schema": {
@@ -1258,6 +1264,7 @@ This error response may have one of the following \`type\` values:
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": "The unique account identifiers of one or more internal accounts. (Internal accounts are those with \`location\` value of \`internal\`.) If omitted, this operation uses the accounts for which the customer has view permissions but is limited to at most 1000 accounts. Note: The account IDs are unrelated to the account number.",
           "name": "accounts",
           "parameterNameOverride": null,
@@ -1278,6 +1285,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "When retrying the operation, pass the \`retryCount\` from the \`incompleteAccountBalances\` response.",
           "name": "retryCount",
           "parameterNameOverride": null,
@@ -1526,6 +1534,7 @@ This error response may have one of the following \`type\` values:
       "path": "/accounts/{accountId}/jointOwners",
       "pathParameters": [
         {
+          "availability": null,
           "description": "The unique identifier of this account resource. This is an opaque string.",
           "name": "accountId",
           "schema": {
@@ -1712,6 +1721,7 @@ This error response may have one of the following \`type\` values:
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": "Filter the result to accounts that have corresponding \`true\` values in \`account.allows\`. For example \`?allows=transferTo,transferFrom,view\` returns only accounts where \`account.allows.transferTo\`, \`account.allows.transferFrom\`, and \`account.allows.view\` are all \`true\` for the caller.",
           "name": "allows",
           "parameterNameOverride": null,
@@ -1732,6 +1742,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "Filter the result to accounts that allow ACH transfers of the given Standard Entry Class (SEC) codes.",
           "name": "secCode",
           "parameterNameOverride": null,
@@ -1745,6 +1756,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "The optional identifier of a business customer. This is an opaque string. An agent who is operating on behalf of a business can use this to access the resources of that business customer. The agent must have entitlements to act on behalf of the business; if not, the operation returns a 403 Forbidden response. For other situations, omit this value, else this _must_ match the authenticated caller's customer ID (not their access ID).",
           "name": "customerId",
           "parameterNameOverride": null,
@@ -1765,6 +1777,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the \`?start=\` parameter on the \`nextPage_url\`.",
           "name": "start",
           "parameterNameOverride": null,
@@ -1792,6 +1805,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "The maximum number of items to return in this paged response.",
           "name": "limit",
           "parameterNameOverride": null,
@@ -2158,6 +2172,7 @@ This error response may have one of the following \`type\` values:
       "path": "/accounts/{accountId}/eligibleOverdraftAccounts",
       "pathParameters": [
         {
+          "availability": null,
           "description": "The unique identifier of this account resource. This is an opaque string.",
           "name": "accountId",
           "schema": {
@@ -2173,6 +2188,7 @@ This error response may have one of the following \`type\` values:
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the \`?start=\` parameter on the \`nextPage_url\`.",
           "name": "start",
           "parameterNameOverride": null,
@@ -2200,6 +2216,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "The maximum number of items to return in this paged response.",
           "name": "limit",
           "parameterNameOverride": null,
@@ -2429,6 +2446,7 @@ This error response may have one of the following \`type\` values:
       "path": "/accounts/{accountId}/overdraftProtection",
       "pathParameters": [
         {
+          "availability": null,
           "description": "The unique identifier of this account resource. This is an opaque string.",
           "name": "accountId",
           "schema": {
@@ -2695,6 +2713,7 @@ This error response may have one of the following \`type\` values:
       "path": "/accounts/{accountId}/overdraftProtection",
       "pathParameters": [
         {
+          "availability": null,
           "description": "The unique identifier of this account resource. This is an opaque string.",
           "name": "accountId",
           "schema": {
@@ -3022,6 +3041,7 @@ This error response may have one of the following \`type\` values:
       "path": "/accounts/{accountId}/jointOwnerInvitations",
       "pathParameters": [
         {
+          "availability": null,
           "description": "The unique identifier of this account resource. This is an opaque string.",
           "name": "accountId",
           "schema": {
@@ -3422,6 +3442,7 @@ This error response may have one of the following \`type\` values:
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": "The financial institution lookup key (routing number, IBAN, or SWIFT/BIC), as indicated by the \`locatorType\` query parameter.",
           "name": "locator",
           "parameterNameOverride": null,
@@ -3442,6 +3463,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "Indicates what type of value the \`locator\` query parameter is.",
           "name": "locatorType",
           "parameterNameOverride": null,
@@ -3455,6 +3477,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "The country code in which to search for institutions. For the US, the \`locatorType\` must be \`abaRoutingNumber\`. For non-US countries, the \`locatorType\` must be \`swiftBicCode\` or \`ibanAccountNumber\`.",
           "name": "countryCode",
           "parameterNameOverride": null,
@@ -3475,6 +3498,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "If looking up a beneficiary institution for a wire transfer beneficiary institution, request the response also include a list of intermediary institutions.",
           "name": "includeIntermediaryInstitutions",
           "parameterNameOverride": null,
@@ -3862,6 +3886,7 @@ This error response may have one of the following \`type\` values:
       "path": "/institutions/{institutionId}/transferSchedule",
       "pathParameters": [
         {
+          "availability": null,
           "description": "The unique identifier of a financial institution.",
           "name": "institutionId",
           "schema": {
@@ -3877,6 +3902,7 @@ This error response may have one of the following \`type\` values:
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": "The date to use to begin calculations of the transfer schedule in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format.",
           "name": "startsOn",
           "parameterNameOverride": null,
@@ -3897,6 +3923,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "The date to use to conclude calculations of the transfer schedule in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format.",
           "name": "endsOn",
           "parameterNameOverride": null,
@@ -3924,6 +3951,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "The direction of the transfer from the institution to the customer used for adjusting transfer dates due to banking holidays. For \`debit\`, dates are adjusted to the next business day. For \`credit\`, dates are adjusted to the previous business day.",
           "name": "direction",
           "parameterNameOverride": null,
@@ -3937,6 +3965,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "The maximum amount of dates to calculate and include in the response. If an end date is provided, the total count may be lower than the requested count.",
           "name": "count",
           "parameterNameOverride": null,
@@ -3965,6 +3994,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "The interval at which the money movement recurs.",
           "name": "frequency",
           "parameterNameOverride": null,
@@ -4279,6 +4309,7 @@ This error response may have one of the following \`type\` values:
       "generatedRequestName": "InstitutionsGetCutoffTimesRequest",
       "headers": [
         {
+          "availability": null,
           "description": "The entity tag that was returned in the \`ETag\` response header of a previous call. If the resource's current entity tag value matches this header value, the \`GET\` will return 304 (Not Modified) and no response body, else the current resource representation and updated \`ETag\` is returned.",
           "env": null,
           "name": "If-None-Match",
@@ -4315,6 +4346,7 @@ This error response may have one of the following \`type\` values:
       "path": "/institutions/{institutionId}/cutoffTimes",
       "pathParameters": [
         {
+          "availability": null,
           "description": "The unique identifier of a financial institution.",
           "name": "institutionId",
           "schema": {
@@ -4330,6 +4362,7 @@ This error response may have one of the following \`type\` values:
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": "Identifies the time zone for formatting time values in the response. If omitted, time values are formatting in the local timezone of the financial institution.",
           "name": "timeZoneId",
           "parameterNameOverride": null,
@@ -5085,6 +5118,7 @@ This error response may have one of the following \`type\` values:
       "path": "/institutions/{institutionId}/transferDateRestrictions",
       "pathParameters": [
         {
+          "availability": null,
           "description": "The unique identifier of a financial institution.",
           "name": "institutionId",
           "schema": {
@@ -5100,6 +5134,7 @@ This error response may have one of the following \`type\` values:
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": "The start of the range of dates to include in the response, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. While start dates far in the future are allowed, bank holiday schedules are only available for a small number of years ahead. The default is the current date.",
           "name": "startsOn",
           "parameterNameOverride": null,
@@ -5127,6 +5162,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "The end of the range of dates to include in the response. in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. The default is at least one year from the \`startOn\` date and is limited to a four year interval.",
           "name": "endsOn",
           "parameterNameOverride": null,
@@ -5154,6 +5190,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "Describes the type of transfer. This determines what business rules and adjustments to make to the date restrictions. Note ACH transfers (including CTX and PPD), that \`Credit\` and \`Debit\` here are relative to the account at the _external_ financial institution.",
           "name": "type",
           "parameterNameOverride": null,
@@ -5174,6 +5211,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "The primary account's risk level. This determines what business rules and adjustments to make to the date restrictions. This parameter only applies to ACH credit transfers (funds credited to an external account) and is ignored for others.",
           "name": "risk",
           "parameterNameOverride": null,
@@ -5735,6 +5773,7 @@ This error response may have one of the following \`type\` values:
       "path": "/accounts/{accountId}/transactions",
       "pathParameters": [
         {
+          "availability": null,
           "description": "The unique identifier of this account resource. This is an opaque string.",
           "name": "accountId",
           "schema": {
@@ -5750,6 +5789,7 @@ This error response may have one of the following \`type\` values:
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the \`?start=\` parameter on the \`nextPage_url\`.",
           "name": "start",
           "parameterNameOverride": null,
@@ -5777,6 +5817,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "The maximum number of items to return in this paged response.",
           "name": "limit",
           "parameterNameOverride": null,
@@ -5805,6 +5846,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "Return only transactions whose \`occurredOn\` date is in this date range. Dates ranges use dates expressed in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. Each account has an implicit default transaction history range of _n_ days. This is normally 30 days but may be shorter for accounts with high activity. This _n_ day period is applied to any unbounded date ranges. The default date range is the most recent _n_ days. Example date ranges: <ul> <li> \`2023-05-19\` match transactions occurring on May 19, 2023.</li> <li> \`[2023-05-01,2023-05-31]\` match transactions occurring between May 1 and 31, 2023, inclusive</li> <li> \`[2023-05-01,2023-06-01)\` match transactions occurring in May, 2023 (on or after May 1, but before June 1)</li> <li> \`[2023-05-09,]\` match transactions _n_ days on or after May 9, 2023</li> <li> \`(2023-05-09,)\` match transactions _n_ days after May 9, 2023</li> <li> \`[,2023-05-09]\` match transactions _n_ days on or before May 9, 2023</li> <li> \`(,2023-05-09)\` match transactions _n_ days before but excluding May 9, 2023</li> </ul>",
           "name": "occurredOn",
           "parameterNameOverride": null,
@@ -5832,6 +5874,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "Limit transactions in the response based on the transaction's \`posted\` value. If \`true\`, include only posted transactions. If \`false\`, include only non-posted transactions. If omitted, do not filter based on \`posted\`. Note that using this filter excludes balance transactions because the \`posted\` property is not set on balance transactions, so neither \`true\` or \`false\` match them.",
           "name": "posted",
           "parameterNameOverride": null,
@@ -5855,6 +5898,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": "Deprecated",
           "description": "Return only transactions whose \`createdOn\` date is in this date range. Example date ranges are the same format as the \`occurredOn\` query parameter.<br>**Warning**: The parameter \`createdOn\` was deprecated on version \`v0.6.0\` of the API. Use the \`?occurredOn=\` query parameter instead. \`createdOn\` will be removed on version \`v0.9.0\` of the API.",
           "name": "createdOn",
           "parameterNameOverride": null,
@@ -5875,6 +5919,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": "Deprecated",
           "description": "Return only transactions whose \`postedOn\` date is in this date range. Example date ranges are the same format as the \`occurredOn\` query parameter.<br>**Warning**: The parameter \`postedOn\` was deprecated on version \`v0.6.0\` of the API. Use the \`?occurredOn=\` query parameter instead. \`postedOn\` will be removed on version \`v0.9.0\` of the API.",
           "name": "postedOn",
           "parameterNameOverride": null,
@@ -5895,6 +5940,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "Filter transactions to only those whose \`category\` is in this pipe-separated list. Categories are set by a transaction cleansing service or assigned by the account holder. Categories can include names such as \`"Shopping"\`, \`"Deposit"\`, \`"Bill"\`, \`"Transfer"\`, or \`"Other"\`.",
           "name": "category",
           "parameterNameOverride": null,
@@ -5922,6 +5968,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "Filter transactions to only those whose \`type\` is in this pipe-separated list.",
           "name": "type",
           "parameterNameOverride": null,
@@ -5949,6 +5996,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "Filter transactions to only those whose \`subtype\` is in this pipe-separated list.",
           "name": "subtype",
           "parameterNameOverride": null,
@@ -5976,6 +6024,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "Return only transactions whose \`amount\` is in this numeric range. This compares only the absolute value of the transaction. That is, the value \`[1000.00,1100.00)\` matches either a debit of \`-1070.25\` or a credit of \`1021.90\`.<br> Some examples of specifying an amount range: <ul> <li>\`1200.50\` match the dollar amount 1,200.50 exactly</li> <li>\`[1000.00,1200.00)\` matches items where \`1000.00 <= amount < 1200.00\`</li> <li>\`[1000.00,1199.99]\` matches items where \`1000.00 <= amount <= 1199.99\`</li> <li>\`(999.99,1200.00]\` matches items where \`999.99 < amount <= 1200.00\`</li> <li>\`[1200.50,]\` matches items where \`amount >= 1200.50\`</li> <li>\`(1200.50,)\` matches items where \`amount > 1200.50\`</li> <li>\`[,1200.50]\` matches items where \`amount <= 1200.50\`</li> <li>\`(,1200.50)\` matches items where \`amount < 1200.50\`</li> </ul>",
           "name": "amount",
           "parameterNameOverride": null,
@@ -5996,6 +6045,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "Return only transactions whose \`check.number\` is in this integer range. Examples: <ul> <li>\`1200\` match the integer 1,200 exactly</li> <li>\`[1000,1200)\` matches items where \`1000 <= number < 1200\`</li> <li>\`[1000,1199]\` matches items where \`1000 <= number <= 1199\`</li> <li>\`(999,1200]\` matches items where \`999 < number <= 1200\`</li> <li>\`[1200,]\` matches items where \`number >= 1200\`</li> <li>\`(1200,)\` matches items where \`number > 1200\`</li> <li>\`[,1200]\` matches items where \`number <= 1200\`</li> <li>\`(,1200)\` matches items where \`number < 1200\`</li> </ul>",
           "name": "checkNumber",
           "parameterNameOverride": null,
@@ -6016,6 +6066,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "When retrying the operation, pass the \`retryCount\` from the \`incompleteTransactions\` response.",
           "name": "retryCount",
           "parameterNameOverride": null,
@@ -6246,6 +6297,7 @@ This error response may have one of the following \`type\` values:
       "generatedRequestName": "TransactionCategoriesListTransactionCategoriesRequest",
       "headers": [
         {
+          "availability": null,
           "description": "The entity tag that was returned in the \`ETag\` response header of a previous call. If the resource's current entity tag value matches this header value, the \`GET\` will return 304 (Not Modified) and no response body, else the current resource representation and updated \`ETag\` is returned.",
           "env": null,
           "name": "If-None-Match",
@@ -6800,6 +6852,7 @@ This error response may have one of the following \`type\` values:
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": "Return only transactions whose \`schedule.scheduledOn\` date is in this date range. Excludes any transfers that do not have a \`scheduledOn\` date. Dates ranges use dates expressed in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. Example date ranges: <ul> <li> \`2022-05-19\` match only transfers scheduled on May 19, 2022.</li> <li> \`[2022-05-01,2022-06-01)\` in May, 2022: on or after May 1, but _before_ June 1</li> <li> \`(2022-05-01,2022-06-01)\` in May, 2022 (on or after May 1, but before June 1)</li> <li> \`[2022-05-09,]\` on or after May 9, 2022</li> <li> \`(2022-05-09,)\` after May 9, 2022</li> <li> \`[,2022-05-09]\` on or before May 9, 2022</li> <li> \`(,2022-05-09)\` before May 9, 2022</li> </ul>",
           "name": "scheduledOn",
           "parameterNameOverride": null,
@@ -6820,6 +6873,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "Return only transactions whose \`schedule.debitsOn\` date (when the funds are debited from the source account) is in this date range. Excludes any transfers that do not have a \`scheduledOn\` date. Dates ranges use dates expressed in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. See the \`scheduledOn\` query parameter for examples.",
           "name": "debitsOn",
           "parameterNameOverride": null,
@@ -6840,6 +6894,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "Return only transactions whose \`schedule.creditsOn\` (when the funds are credited to  the target account) is in this date range. Excludes any transfers that do not have a \`scheduledOn\` date. Dates ranges use dates expressed in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. See the \`scheduledOn\` query parameter for examples.",
           "name": "creditsOn",
           "parameterNameOverride": null,
@@ -6860,6 +6915,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "If \`true\`, list only historical (\`state\` is \`processed\`) transfers. If \`false\`, list only transfers that have not yet finished processing. If omitted, list all transfers.",
           "name": "historical",
           "parameterNameOverride": null,
@@ -6883,6 +6939,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the \`?start=\` parameter on the \`nextPage_url\`.",
           "name": "start",
           "parameterNameOverride": null,
@@ -6910,6 +6967,7 @@ This error response may have one of the following \`type\` values:
           },
         },
         {
+          "availability": null,
           "description": "The maximum number of items to return in this paged response.",
           "name": "limit",
           "parameterNameOverride": null,
@@ -7362,6 +7420,7 @@ This error response may have one of the following \`type\` values:
       "generatedRequestName": "TransfersCreateTransferRequest",
       "headers": [
         {
+          "availability": null,
           "description": "This operation may require a completed challenge. If the first attempt calling this operation fails with a 401 \`challengeRequired\` error, the client should complete the challenge flow as described in the Challenges API, then retry the operation with this \`Challenge\` request header using the \`challengeToken\` returned at the end of that flow. If this is passed but the value is invalid, the operation fails with a 401 status code and the \`invalidChallengeHeader\` problem type.",
           "env": null,
           "name": "Challenge",
@@ -7736,6 +7795,7 @@ This error response may have one of the following \`type\` values:
       "path": "/transfers/{transferId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": "The unique identifier of this transfer. This is an opaque string.",
           "name": "transferId",
           "schema": {
@@ -7936,6 +7996,7 @@ This error response may have one of the following \`type\` values:
       "path": "/transfers/{transferId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": "The unique identifier of this transfer. This is an opaque string.",
           "name": "transferId",
           "schema": {
@@ -8360,6 +8421,7 @@ This error response may have one of the following \`type\` values:
       "generatedRequestName": "TransfersPatchTransferRequest",
       "headers": [
         {
+          "availability": null,
           "description": "This operation may require a completed challenge. If the first attempt calling this operation fails with a 401 \`challengeRequired\` error, the client should complete the challenge flow as described in the Challenges API, then retry the operation with this \`Challenge\` request header using the \`challengeToken\` returned at the end of that flow. If this is passed but the value is invalid, the operation fails with a 401 status code and the \`invalidChallengeHeader\` problem type.",
           "env": null,
           "name": "Challenge",
@@ -8389,6 +8451,7 @@ This error response may have one of the following \`type\` values:
       "path": "/transfers/{transferId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": "The unique identifier of this transfer. This is an opaque string.",
           "name": "transferId",
           "schema": {
@@ -8540,6 +8603,7 @@ This error response may have one of the following \`type\` values:
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "An abstract schema used to define other request and response body model schemas.",
       "generatedName": "AbstractBody",
       "groupName": null,
@@ -8566,6 +8630,7 @@ This error response may have one of the following \`type\` values:
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "An abstract schema used to define paginated collections of resources. Collection classes which extend this schema define an array of \`items\` which represent a page of data.",
       "generatedName": "AbstractPagedBody",
       "groupName": null,
@@ -8573,6 +8638,7 @@ This error response may have one of the following \`type\` values:
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "abstractPagedBodyStart",
           "key": "start",
@@ -8607,6 +8673,7 @@ This error response may have one of the following \`type\` values:
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Common properties of collection page responses.",
       "generatedName": "AbstractPagedBodyFields",
       "groupName": null,
@@ -8614,6 +8681,7 @@ This error response may have one of the following \`type\` values:
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "abstractPagedBodyFieldsLimit",
           "key": "limit",
@@ -8637,6 +8705,7 @@ This error response may have one of the following \`type\` values:
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "abstractPagedBodyFieldsNextPageUrl",
           "key": "nextPage_url",
@@ -8686,6 +8755,7 @@ This error response may have one of the following \`type\` values:
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "An internal customer account.",
       "generatedName": "Account",
       "groupName": null,
@@ -8693,6 +8763,7 @@ This error response may have one of the following \`type\` values:
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "accountAllows",
           "key": "allows",
@@ -8708,6 +8779,7 @@ This error response may have one of the following \`type\` values:
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "accountElectronicStatements",
           "key": "electronicStatements",
@@ -8864,6 +8936,7 @@ This error response may have one of the following \`type\` values:
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The current balances of the given account.",
       "generatedName": "AccountBalance",
       "groupName": null,
@@ -8871,6 +8944,7 @@ This error response may have one of the following \`type\` values:
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "accountBalanceId",
           "key": "id",
@@ -8886,6 +8960,7 @@ This error response may have one of the following \`type\` values:
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "accountBalanceAvailable",
           "key": "available",
@@ -8908,6 +8983,7 @@ This error response may have one of the following \`type\` values:
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "accountBalanceCurrent",
           "key": "current",
@@ -8930,6 +9006,7 @@ This error response may have one of the following \`type\` values:
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "accountBalanceUpdatedAt",
           "key": "updatedAt",
@@ -8952,6 +9029,7 @@ This error response may have one of the following \`type\` values:
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "accountBalanceCurrentWithPending",
           "key": "currentWithPending",
@@ -8974,6 +9052,7 @@ This error response may have one of the following \`type\` values:
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "accountBalanceIncomplete",
           "key": "incomplete",
@@ -9005,6 +9084,7 @@ This error response may have one of the following \`type\` values:
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "An array of account balances by account ID.",
       "generatedName": "AccountBalances",
       "groupName": null,
@@ -9012,6 +9092,7 @@ This error response may have one of the following \`type\` values:
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "accountBalancesItems",
           "key": "items",
@@ -9039,6 +9120,7 @@ This error response may have one of the following \`type\` values:
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Fragment schema use to build other account schemas.",
       "generatedName": "AccountFields",
       "groupName": null,
@@ -9046,6 +9128,7 @@ This error response may have one of the following \`type\` values:
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "accountFieldsId",
           "key": "id",
@@ -9061,6 +9144,7 @@ This error response may have one of the following \`type\` values:
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "accountFieldsLabel",
           "key": "label",
@@ -9083,6 +9167,7 @@ This error response may have one of the following \`type\` values:
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "accountFieldsNickname",
           "key": "nickname",
@@ -9105,6 +9190,7 @@ This error response may have one of the following \`type\` values:
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "accountFieldsMaskedNumber",
           "key": "maskedNumber",
@@ -9120,6 +9206,7 @@ This error response may have one of the following \`type\` values:
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "accountFieldsProduct",
           "key": "product",
@@ -9135,6 +9222,7 @@ This error response may have one of the following \`type\` values:
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "accountFieldsLocation",
           "key": "location",
@@ -9178,6 +9266,7 @@ This error response may have one of the following \`type\` values:
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "An account item in a list items in the \`accounts\` schema.",
       "generatedName": "AccountItem",
       "groupName": null,
@@ -9185,6 +9274,7 @@ This error response may have one of the following \`type\` values:
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {
             "accountFields": {
               "differentSchema": true,
@@ -9211,6 +9301,7 @@ This error response may have one of the following \`type\` values:
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {
             "accountFields": {
               "differentSchema": true,
@@ -9244,6 +9335,7 @@ This error response may have one of the following \`type\` values:
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {
             "accountFields": {
               "differentSchema": true,
@@ -9270,6 +9362,7 @@ This error response may have one of the following \`type\` values:
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {
             "accountFields": {
               "differentSchema": true,
@@ -9296,6 +9389,7 @@ This error response may have one of the following \`type\` values:
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "accountItemAllows",
           "key": "allows",
@@ -9311,6 +9405,7 @@ This error response may have one of the following \`type\` values:
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {
             "accountFields": {
               "differentSchema": true,
@@ -9337,6 +9432,7 @@ This error response may have one of the following \`type\` values:
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {
             "accountFields": {
               "differentSchema": true,
@@ -9376,6 +9472,7 @@ This error response may have one of the following \`type\` values:
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Representation of account joint owner resources.",
       "generatedName": "AccountJointOwner",
       "groupName": null,
@@ -9383,6 +9480,7 @@ This error response may have one of the following \`type\` values:
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "accountJointOwnerId",
           "key": "id",
@@ -9398,6 +9496,7 @@ This error response may have one of the following \`type\` values:
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "accountJointOwnerName",
           "key": "name",
@@ -9425,6 +9524,7 @@ This error response may have one of the following \`type\` values:
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "AccountJointOwners",
       "groupName": null,
@@ -9432,6 +9532,7 @@ This error response may have one of the following \`type\` values:
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "accountJointOwnersItems",
           "key": "items",
@@ -9523,6 +9624,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Flags which indicate the permissions the current authorized user has on this account item resource. Most of these properties may only be \`true\` for internal accounts. These permissions are available in account items in the [\`accounts\`](#schema-accounts) list. See [\`fullAccountPermissions\`](#schema-fullAccountPermissions) for all capabilities a customer has on an account (the \`account.allows\` object in the [\`account\`](#schema-account) object response from [\`getAccount\`](#op-getAccount).)",
       "generatedName": "AccountPermissions",
       "groupName": null,
@@ -9530,6 +9632,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "accountPermissionsBillPay",
           "key": "billPay",
@@ -9548,6 +9651,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "accountPermissionsMobileCheckDeposit",
           "key": "mobileCheckDeposit",
@@ -9566,6 +9670,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "accountPermissionsTransferFrom",
           "key": "transferFrom",
@@ -9584,6 +9689,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "accountPermissionsTransferTo",
           "key": "transferTo",
@@ -9602,6 +9708,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "accountPermissionsView",
           "key": "view",
@@ -9620,6 +9727,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "accountPermissionsViewCards",
           "key": "viewCards",
@@ -9638,6 +9746,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "accountPermissionsManageCards",
           "key": "manageCards",
@@ -9684,6 +9793,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "A paginated list of the customer's accounts. This list contains internal banking accounts and external banking accounts. and outside fund accounts. The \`location\` property indicates where the account is held. Items in the list contain \`url\` links to the actual account resource which are in the \`accounts\`, \`externalAccounts\` or \`outsideAccounts\` collections.",
       "generatedName": "Accounts",
       "groupName": null,
@@ -9691,6 +9801,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "accountsItems",
           "key": "items",
@@ -9713,6 +9824,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "accountsCount",
           "key": "count",
@@ -9743,6 +9855,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "accountsPrimaryAccountId",
           "key": "primaryAccountId",
@@ -9765,6 +9878,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {
             "abstractPagedBody": {
               "differentSchema": true,
@@ -10067,6 +10181,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "A postal address that can hold a US address or an international (non-US) postal addresses.",
       "generatedName": "Address",
       "groupName": null,
@@ -10074,6 +10189,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "addressRegionName",
           "key": "regionName",
@@ -10103,6 +10219,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "addressRegionCode",
           "key": "regionCode",
@@ -10132,6 +10249,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "addressPostalCode",
           "key": "postalCode",
@@ -10154,6 +10272,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {
             "addressFields": {
               "differentSchema": false,
@@ -10185,6 +10304,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Properties of a simple address, used to compose other addresses.",
       "generatedName": "AddressFields",
       "groupName": null,
@@ -10192,6 +10312,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "addressFieldsAddress1",
           "key": "address1",
@@ -10214,6 +10335,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "addressFieldsAddress2",
           "key": "address2",
@@ -10243,6 +10365,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "addressFieldsLocality",
           "key": "locality",
@@ -10265,6 +10388,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "addressFieldsCountryCode",
           "key": "countryCode",
@@ -10307,6 +10431,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "API problem or error, as per [RFC 7807 application/problem+json](https://tools.ietf.org/html/rfc7807).",
       "generatedName": "ApiProblem",
       "groupName": null,
@@ -10314,6 +10439,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "apiProblemType",
           "key": "type",
@@ -10344,6 +10470,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "apiProblemTitle",
           "key": "title",
@@ -10374,6 +10501,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "apiProblemStatus",
           "key": "status",
@@ -10405,6 +10533,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "apiProblemDetail",
           "key": "detail",
@@ -10435,6 +10564,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "apiProblemInstance",
           "key": "instance",
@@ -10465,6 +10595,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "apiProblemId",
           "key": "id",
@@ -10487,6 +10618,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "apiProblemOccurredAt",
           "key": "occurredAt",
@@ -10509,6 +10641,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "apiProblemProblems",
           "key": "problems",
@@ -10538,6 +10671,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "apiProblemAttributes",
           "key": "attributes",
@@ -10583,6 +10717,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "An challenge factor. See [\`requiredIdentityChallenge\`](#schema-requiredIdentityChallenge) for multiple examples.",
       "generatedName": "ChallengeFactor",
       "groupName": null,
@@ -10590,6 +10725,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "challengeFactorType",
           "key": "type",
@@ -10605,6 +10741,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "challengeFactorLabels",
           "key": "labels",
@@ -10641,6 +10778,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "challengeFactorSecurityQuestions",
           "key": "securityQuestions",
@@ -10784,6 +10922,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "A single security question within the \`questions\` array of the [\`challengeSecurityQuestions\`](#schema-challengeSecurityQuestions)",
       "generatedName": "ChallengeSecurityQuestion",
       "groupName": null,
@@ -10791,6 +10930,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "challengeSecurityQuestionId",
           "key": "id",
@@ -10806,6 +10946,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "challengeSecurityQuestionPrompt",
           "key": "prompt",
@@ -10833,6 +10974,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Describes a \`securityQuestions\` challenge. This is omitted if the challenge \`type\` is not \`securityQuestions\`.",
       "generatedName": "ChallengeSecurityQuestions",
       "groupName": null,
@@ -10840,6 +10982,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "challengeSecurityQuestionsQuestions",
           "key": "questions",
@@ -10905,6 +11048,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "A representation of a cutoff time for a money movement process at a financial institution.",
       "generatedName": "CutoffTime",
       "groupName": null,
@@ -10912,6 +11056,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "cutoffTimeType",
           "key": "type",
@@ -10927,6 +11072,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "cutoffTimeTime",
           "key": "time",
@@ -11090,6 +11236,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "A representation of financial institution cutoff times for different money movement processes. A money movement process can have multiple cutoff times. The cutoff times are sorted in ascending chronological order by money movement process.",
       "generatedName": "CutoffTimes",
       "groupName": null,
@@ -11097,6 +11244,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "cutoffTimesTimeZoneId",
           "key": "timeZoneId",
@@ -11113,6 +11261,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "cutoffTimesItems",
           "key": "items",
@@ -11171,6 +11320,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "A page of zero or more accounts that are eligible to be assigned as an overdraft protection account for another account.",
       "generatedName": "EligibleOverdraftAccounts",
       "groupName": null,
@@ -11178,6 +11328,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "eligibleOverdraftAccountsItems",
           "key": "items",
@@ -11190,6 +11341,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "eligibleOverdraftAccountsMaximumOverdraftAccounts",
           "key": "maximumOverdraftAccounts",
@@ -11213,6 +11365,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {
             "abstractPagedBody": {
               "differentSchema": true,
@@ -11343,6 +11496,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Flags which indicate the permissions the current authorized user has on this account resource. Most of these properties may only be \`true\` for internal accounts. These permissions are available in [\`account\`](#schema-account) response from the [\`getAccount\`](#op-getAccount) operation. See [\`accountPermissions\`](#schema-accountPermissions) for the subset of permission in \`account.allows\` flags in the [\`listAccounts\`](#op-listAccounts) response.",
       "generatedName": "FullAccountPermissions",
       "groupName": null,
@@ -11350,6 +11504,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fullAccountPermissionsManageJointOwners",
           "key": "manageJointOwners",
@@ -11368,6 +11523,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fullAccountPermissionsManageOverdraftAccounts",
           "key": "manageOverdraftAccounts",
@@ -11399,6 +11555,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "An array of account balances by account ID, some of which are incomplete. Use the values in \`incompleteAccounts\` and \`retryCount\` to retry the [\`listAccountBalances\`](#op-listAccountBalances) operation.",
       "generatedName": "IncompleteAccountBalances",
       "groupName": null,
@@ -11406,6 +11563,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "incompleteAccountBalancesItems",
           "key": "items",
@@ -11428,6 +11586,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "incompleteAccountBalancesIncompleteAccounts",
           "key": "incompleteAccounts",
@@ -11443,6 +11602,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "incompleteAccountBalancesRetryCount",
           "key": "retryCount",
@@ -11479,6 +11639,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Response when requesting transactions that are not yet available.",
       "generatedName": "IncompleteTransactions",
       "groupName": null,
@@ -11486,6 +11647,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "incompleteTransactionsRetryCount",
           "key": "retryCount",
@@ -11606,6 +11768,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Successful institution lookup result.",
       "generatedName": "InstitutionLookupResult",
       "groupName": null,
@@ -11613,6 +11776,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "institutionLookupResultFound",
           "key": "found",
@@ -11631,6 +11795,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "institutionLookupResultInstitution",
           "key": "institution",
@@ -11653,6 +11818,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "institutionLookupResultIntermediaryInstitutions",
           "key": "intermediaryInstitutions",
@@ -11702,6 +11868,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "A joint owner invitation.",
       "generatedName": "JointOwnerInvitation",
       "groupName": null,
@@ -11709,6 +11876,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "jointOwnerInvitationId",
           "key": "id",
@@ -11729,6 +11897,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Fields used to compose other joint owner invitation schemas.",
       "generatedName": "JointOwnerInvitationFields",
       "groupName": null,
@@ -11736,6 +11905,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "jointOwnerInvitationFieldsFirstName",
           "key": "firstName",
@@ -11758,6 +11928,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "jointOwnerInvitationFieldsLastName",
           "key": "lastName",
@@ -11780,6 +11951,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "jointOwnerInvitationFieldsTaxId",
           "key": "taxId",
@@ -11809,6 +11981,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "jointOwnerInvitationFieldsSharedSecret",
           "key": "sharedSecret",
@@ -11831,6 +12004,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "jointOwnerInvitationFieldsEmailAddress",
           "key": "emailAddress",
@@ -11853,6 +12027,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "jointOwnerInvitationFieldsDisallowDebitCardAccess",
           "key": "disallowDebitCardAccess",
@@ -11928,6 +12103,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "A request to create an invitation to add a new joint owner to an account.",
       "generatedName": "NewJointOwnerInvitation",
       "groupName": null,
@@ -11954,6 +12130,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Representation used to create a new transfer.",
       "generatedName": "NewTransfer",
       "groupName": null,
@@ -11961,6 +12138,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "newTransferSchedule",
           "key": "schedule",
@@ -11988,6 +12166,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Fields of an overdraft protection account, used to compose other schemas.",
       "generatedName": "OverdraftAccountFields",
       "groupName": null,
@@ -11995,6 +12174,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "overdraftAccountFieldsId",
           "key": "id",
@@ -12017,6 +12197,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "overdraftAccountFieldsLabel",
           "key": "label",
@@ -12046,6 +12227,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "overdraftAccountFieldsMaskedNumber",
           "key": "maskedNumber",
@@ -12096,6 +12278,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Representation of the overdraft protection settings, consisting of a list of overdraft protection accounts linked to the account identified by the \`{accountId}\`.",
       "generatedName": "OverdraftProtection",
       "groupName": null,
@@ -12103,6 +12286,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "overdraftProtectionMaximumOverdraftAccounts",
           "key": "maximumOverdraftAccounts",
@@ -12131,6 +12315,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Fields used to compose other overdraft protection schemas.",
       "generatedName": "OverdraftProtectionFields",
       "groupName": null,
@@ -12138,6 +12323,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "overdraftProtectionFieldsAccounts",
           "key": "accounts",
@@ -12177,6 +12363,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Representation of request used to patch the overdraft protection settings consisting of a list of overdraft protection accounts linked to the account identified by the \`{accountId}\`.",
       "generatedName": "OverdraftProtectionPatch",
       "groupName": null,
@@ -12218,6 +12405,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "API problem or error response, as per [RFC 7807 application/problem+json](https://tools.ietf.org/html/rfc7807).",
       "generatedName": "ProblemResponse",
       "groupName": null,
@@ -12229,6 +12417,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "A reference to a banking product.",
       "generatedName": "ProductReference",
       "groupName": null,
@@ -12236,6 +12425,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "productReferenceType",
           "key": "type",
@@ -12251,6 +12441,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "productReferenceCode",
           "key": "code",
@@ -12273,6 +12464,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "productReferenceLabel",
           "key": "label",
@@ -12295,6 +12487,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "productReferenceDescription",
           "key": "description",
@@ -12457,6 +12650,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "A request from the service for the user to verify their identity. This contains a challenge ID, the corresponding operation ID, and a list of challenge factors for identity verification. The user must complete one of these challenge factors to satisfy the challenge. This schema defines the attributes in the 401 [Unauthorized problem response](#schema-apiProblem) when the 401 problem type name is \`challengeRequired\`. See the "Challenge API" for details.",
       "generatedName": "RequiredIdentityChallenge",
       "groupName": null,
@@ -12464,6 +12658,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "requiredIdentityChallengeXFernSdkMethodName",
           "key": "x-fern-sdk-method-name",
@@ -12479,6 +12674,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "requiredIdentityChallengeChallengeId",
           "key": "challengeId",
@@ -12494,6 +12690,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "requiredIdentityChallengeFactors",
           "key": "factors",
@@ -12536,6 +12733,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "A simple representation of a financial institution.",
       "generatedName": "SimpleInstitution",
       "groupName": null,
@@ -12543,6 +12741,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "simpleInstitutionName",
           "key": "name",
@@ -12565,6 +12764,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "simpleInstitutionAddress",
           "key": "address",
@@ -12580,6 +12780,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "simpleInstitutionLocator",
           "key": "locator",
@@ -12602,6 +12803,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "simpleInstitutionLocatorType",
           "key": "locatorType",
@@ -12637,6 +12839,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Timestamps which describe when a resource was created or last updated.",
       "generatedName": "TimestampFields",
       "groupName": null,
@@ -12644,6 +12847,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "timestampFieldsCreatedAt",
           "key": "createdAt",
@@ -12668,6 +12872,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "timestampFieldsUpdatedAt",
           "key": "updatedAt",
@@ -12697,6 +12902,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "TransactionCategories",
       "groupName": null,
@@ -12704,6 +12910,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transactionCategoriesItems",
           "key": "items",
@@ -12731,6 +12938,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The transaction categorization.",
       "generatedName": "TransactionCategorization",
       "groupName": null,
@@ -12738,6 +12946,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transactionCategorizationLabel",
           "key": "label",
@@ -12753,6 +12962,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transactionCategorizationId",
           "key": "id",
@@ -12795,6 +13005,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Representation of transaction category resources.",
       "generatedName": "TransactionCategory",
       "groupName": null,
@@ -12802,6 +13013,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transactionCategoryType",
           "key": "type",
@@ -12890,6 +13102,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Describes a check associated with a transaction for a checking account. This object is only present if the transaction \`type\` is \`debit\` and the \`subtype\` is \`check\`.",
       "generatedName": "TransactionCheck",
       "groupName": null,
@@ -12897,6 +13110,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transactionCheckNumber",
           "key": "number",
@@ -12920,6 +13134,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transactionCheckImageFrontUrl",
           "key": "imageFront_url",
@@ -12949,6 +13164,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transactionCheckImageBackUrl",
           "key": "imageBack_url",
@@ -12983,6 +13199,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Common fields of the transaction resource used to build other model schemas.",
       "generatedName": "TransactionFields",
       "groupName": null,
@@ -12990,6 +13207,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transactionFieldsId",
           "key": "id",
@@ -13012,6 +13230,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transactionFieldsType",
           "key": "type",
@@ -13027,6 +13246,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transactionFieldsSubtype",
           "key": "subtype",
@@ -13042,6 +13262,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transactionFieldsOccurredOn",
           "key": "occurredOn",
@@ -13064,6 +13285,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": "Deprecated",
           "conflict": {},
           "generatedName": "transactionFieldsCreatedOn",
           "key": "createdOn",
@@ -13093,6 +13315,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": "Deprecated",
           "conflict": {},
           "generatedName": "transactionFieldsPostedOn",
           "key": "postedOn",
@@ -13122,6 +13345,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transactionFieldsAmount",
           "key": "amount",
@@ -13137,6 +13361,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transactionFieldsPosted",
           "key": "posted",
@@ -13162,6 +13387,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transactionFieldsBalance",
           "key": "balance",
@@ -13184,6 +13410,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transactionFieldsMemo",
           "key": "memo",
@@ -13213,6 +13440,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transactionFieldsDescription",
           "key": "description",
@@ -13242,6 +13470,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transactionFieldsCategory",
           "key": "category",
@@ -13264,6 +13493,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transactionFieldsMerchant",
           "key": "merchant",
@@ -13286,6 +13516,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transactionFieldsCheck",
           "key": "check",
@@ -13328,6 +13559,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Summary representation of a transaction resource in transactions collections.",
       "generatedName": "TransactionItem",
       "groupName": null,
@@ -13339,6 +13571,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Describes the merchant associated with a transaction.",
       "generatedName": "TransactionMerchant",
       "groupName": null,
@@ -13346,6 +13579,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transactionMerchantName",
           "key": "name",
@@ -13375,6 +13609,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transactionMerchantWebsiteUrl",
           "key": "website_url",
@@ -13404,6 +13639,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transactionMerchantLogoUrl",
           "key": "logo_url",
@@ -13568,6 +13804,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Collection of transactions. The items in the collection are ordered in the \`items\` array. The response object may contain the \`nextPage_url\` pagination link.",
       "generatedName": "Transactions",
       "groupName": null,
@@ -13575,6 +13812,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transactionsItems",
           "key": "items",
@@ -13604,6 +13842,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transactionsCount",
           "key": "count",
@@ -13654,6 +13893,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Representation of a transfer resource.",
       "generatedName": "Transfer",
       "groupName": null,
@@ -13665,6 +13905,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "A reference to a banking account used within an account to account transfer. This object may be set from an account's \`account.reference\` object.",
       "generatedName": "TransferAccountReference",
       "groupName": null,
@@ -13672,6 +13913,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferAccountReferenceId",
           "key": "id",
@@ -13687,6 +13929,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferAccountReferenceLabel",
           "key": "label",
@@ -13716,6 +13959,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferAccountReferenceType",
           "key": "type",
@@ -13738,6 +13982,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferAccountReferenceLocation",
           "key": "location",
@@ -13765,6 +14010,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "A date where a transfer restriction occurs, and the \`reason\` it is restricted. If the \`reason\` is \`holiday\`, \`closure\` and the transfer is an ACH transfer, the object also contains either a \`debitOn\` or \`creditOn\` date or both.",
       "generatedName": "TransferDateRestriction",
       "groupName": null,
@@ -13772,6 +14018,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferDateRestrictionOccursOn",
           "key": "occursOn",
@@ -13794,6 +14041,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferDateRestrictionReason",
           "key": "reason",
@@ -13809,6 +14057,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferDateRestrictionCreditOn",
           "key": "creditOn",
@@ -13838,6 +14087,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferDateRestrictionDebitOn",
           "key": "debitOn",
@@ -13997,6 +14247,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "A list of the financial institution's transfer date restrictions. This is a list of weekdays and specific dates when the institution cannot perform the requested transfers.
 The response may include dates prior to requested the start date, as that is useful for populating a calendar that shows the current month and the last few days of the previous month.",
       "generatedName": "TransferDateRestrictions",
@@ -14005,6 +14256,7 @@ The response may include dates prior to requested the start date, as that is use
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferDateRestrictionsRestrictedDates",
           "key": "restrictedDates",
@@ -14034,6 +14286,7 @@ The response may include dates prior to requested the start date, as that is use
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferDateRestrictionsAccuracyEndsOn",
           "key": "accuracyEndsOn",
@@ -14068,6 +14321,7 @@ The response may include dates prior to requested the start date, as that is use
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Common fields of the transfer resource used to build other model schemas.",
       "generatedName": "TransferFields",
       "groupName": null,
@@ -14075,6 +14329,7 @@ The response may include dates prior to requested the start date, as that is use
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferFieldsAmount",
           "key": "amount",
@@ -14097,6 +14352,7 @@ The response may include dates prior to requested the start date, as that is use
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferFieldsSourceAccount",
           "key": "sourceAccount",
@@ -14119,6 +14375,7 @@ The response may include dates prior to requested the start date, as that is use
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferFieldsTargetAccount",
           "key": "targetAccount",
@@ -14141,6 +14398,7 @@ The response may include dates prior to requested the start date, as that is use
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferFieldsMemo",
           "key": "memo",
@@ -14419,6 +14677,7 @@ The response may include dates prior to requested the start date, as that is use
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Summary representation of a transfer resource in transfers collections. To fetch the full representation of this transfer, use the [\`getTransfer\`](#op-getTransfer) operation, passing this item's \`id\` field as the \`transferId\` path parameter.",
       "generatedName": "TransferItem",
       "groupName": null,
@@ -14426,6 +14685,7 @@ The response may include dates prior to requested the start date, as that is use
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferItemId",
           "key": "id",
@@ -14441,6 +14701,7 @@ The response may include dates prior to requested the start date, as that is use
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferItemSchedule",
           "key": "schedule",
@@ -14456,6 +14717,7 @@ The response may include dates prior to requested the start date, as that is use
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferItemState",
           "key": "state",
@@ -14471,6 +14733,7 @@ The response may include dates prior to requested the start date, as that is use
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferItemProcessedAt",
           "key": "processedAt",
@@ -14495,6 +14758,7 @@ The response may include dates prior to requested the start date, as that is use
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferItemUpdatedBy",
           "key": "updatedBy",
@@ -14537,6 +14801,7 @@ The response may include dates prior to requested the start date, as that is use
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "A transfer's schedule: when the transfer is scheduled, its recurrence properties, and derived credit and debit dates.",
       "generatedName": "TransferItemSchedule",
       "groupName": null,
@@ -14544,6 +14809,7 @@ The response may include dates prior to requested the start date, as that is use
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferItemScheduleDebitsOn",
           "key": "debitsOn",
@@ -14573,6 +14839,7 @@ The response may include dates prior to requested the start date, as that is use
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferItemScheduleCreditsOn",
           "key": "creditsOn",
@@ -14622,6 +14889,7 @@ The response may include dates prior to requested the start date, as that is use
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Representation used to patch an existing transfer using the [JSON Merge Patch](https://datatracker.ietf.org/doc/html/rfc7396) format and processing rules.",
       "generatedName": "TransferPatch",
       "groupName": null,
@@ -14629,6 +14897,7 @@ The response may include dates prior to requested the start date, as that is use
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferPatchSchedule",
           "key": "schedule",
@@ -14709,6 +14978,7 @@ The response may include dates prior to requested the start date, as that is use
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "The scheduled date when the transfer should be completed, the recurrence, if any, and other derived dates based on the scheduled date.
 
 For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are mutually exclusive.",
@@ -14718,6 +14988,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferScheduleScheduledOn",
           "key": "scheduledOn",
@@ -14747,6 +15018,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferScheduleRecurrenceType",
           "key": "recurrenceType",
@@ -14769,6 +15041,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferScheduleFrequency",
           "key": "frequency",
@@ -14784,6 +15057,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferScheduleEndsOn",
           "key": "endsOn",
@@ -14813,6 +15087,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferScheduleCount",
           "key": "count",
@@ -14843,6 +15118,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferScheduleAmountLimit",
           "key": "amountLimit",
@@ -14939,6 +15215,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Summary representation of a transfer schedule resource in transfer schedule list.",
       "generatedName": "TransferScheduleItem",
       "groupName": null,
@@ -14946,6 +15223,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferScheduleItemScheduledOn",
           "key": "scheduledOn",
@@ -14968,6 +15246,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferScheduleItemEffectiveOn",
           "key": "effectiveOn",
@@ -15003,6 +15282,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "List of transfer methods. The items in the list are ordered in the \`items\` array.",
       "generatedName": "TransferSchedules",
       "groupName": null,
@@ -15010,6 +15290,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferSchedulesItems",
           "key": "items",
@@ -15293,6 +15574,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Collection of transfers. The items in the collection are ordered in the \`items\` array. The response object may contain the \`nextPage_url\` pagination link..",
       "generatedName": "Transfers",
       "groupName": null,
@@ -15300,6 +15582,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transfersItems",
           "key": "items",
@@ -15322,6 +15605,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transfersCount",
           "key": "count",
@@ -15365,6 +15649,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "A representation of a financial institution used for wire transfers.",
       "generatedName": "WireTransferInstitution",
       "groupName": null,
@@ -15372,6 +15657,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "wireTransferInstitutionLocalClearingCode",
           "key": "localClearingCode",

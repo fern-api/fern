@@ -17,6 +17,7 @@ exports[`open api parser gen-yml-use-title parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SchemaWithALongNameIsRightHereAndNotSomewhereElse",
       "groupName": null,
@@ -24,6 +25,7 @@ exports[`open api parser gen-yml-use-title parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "schemaWithALongNameIsRightHereAndNotSomewhereElseId",
           "key": "id",

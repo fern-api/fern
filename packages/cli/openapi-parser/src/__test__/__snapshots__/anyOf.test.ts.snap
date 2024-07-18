@@ -96,6 +96,7 @@ exports[`open api parser anyOf parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "A generic request type used throughout the API.
 ",
       "generatedName": "Request",
@@ -104,6 +105,7 @@ exports[`open api parser anyOf parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "requestId",
           "key": "id",
@@ -146,6 +148,7 @@ exports[`open api parser anyOf parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "A generic response type used throughout the API.
 ",
       "generatedName": "Response",
@@ -154,6 +157,7 @@ exports[`open api parser anyOf parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "responseValue",
           "key": "value",

@@ -1,5 +1,4 @@
 import {
-    Availability,
     HeaderWithExample,
     PathParameterWithExample,
     PrimitiveSchemaValueWithExample,
@@ -14,6 +13,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../getExtension";
 import { ParseOpenAPIOptions } from "../options";
+import { convertAvailability } from "../schema/convertAvailability";
 import { convertSchema } from "../schema/convertSchemas";
 import { convertUndiscriminatedOneOf } from "../schema/convertUndiscriminatedOneOf";
 import { convertSchemaWithExampleToSchema } from "../schema/utils/convertSchemaWithExampleToSchema";
@@ -92,8 +92,7 @@ export function parseAsyncAPI({
                                   nameOverride: undefined
                               }),
                     variableReference: undefined,
-                    // TODO: fix style, getExtension
-                    availability: parameter.deprecated ? Availability.Deprecated : undefined
+                    availability: convertAvailability(parameter)
                 });
             }
         }
@@ -109,8 +108,7 @@ export function parseAsyncAPI({
                     description: resolvedHeader.description,
                     parameterNameOverride: undefined,
                     env: undefined,
-                    // TODO: fix style, getExtension
-                    availability: resolvedHeader.deprecated ? Availability.Deprecated : undefined
+                    availability: convertAvailability(resolvedHeader)
                 });
             }
         }
@@ -127,8 +125,7 @@ export function parseAsyncAPI({
                     schema: convertSchema(resolvedQueryParameter, !required.includes(name), context, breadcrumbs),
                     description: resolvedQueryParameter.description,
                     parameterNameOverride: undefined,
-                    // TODO: fix style, getExtension
-                    availability: resolvedQueryParameter.deprecated ? Availability.Deprecated : undefined
+                    availability: convertAvailability(resolvedQueryParameter)
                 });
             }
         }

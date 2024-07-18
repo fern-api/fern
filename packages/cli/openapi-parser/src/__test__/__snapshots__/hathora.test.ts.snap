@@ -419,6 +419,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "CreateAppRequest",
           "groupName": null,
@@ -426,6 +427,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "createAppRequestAuthConfiguration",
               "key": "authConfiguration",
@@ -434,6 +436,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
+                "availability": null,
                 "description": null,
                 "generatedName": "CreateAppRequestAuthConfiguration",
                 "groupName": null,
@@ -441,6 +444,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "properties": [
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "createAppRequestAuthConfigurationGoogle",
                     "key": "google",
@@ -455,6 +459,7 @@ exports[`open api parser hathora parse open api 1`] = `
                         "additionalProperties": false,
                         "allOf": [],
                         "allOfPropertyConflicts": [],
+                        "availability": null,
                         "description": null,
                         "generatedName": "CreateAppRequestAuthConfigurationGoogle",
                         "groupName": null,
@@ -462,6 +467,7 @@ exports[`open api parser hathora parse open api 1`] = `
                         "properties": [
                           {
                             "audiences": [],
+                            "availability": null,
                             "conflict": {},
                             "generatedName": "createAppRequestAuthConfigurationGoogleClientId",
                             "key": "clientId",
@@ -489,6 +495,7 @@ exports[`open api parser hathora parse open api 1`] = `
                   },
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "createAppRequestAuthConfigurationNickname",
                     "key": "nickname",
@@ -511,6 +518,7 @@ exports[`open api parser hathora parse open api 1`] = `
                   },
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "createAppRequestAuthConfigurationAnonymous",
                     "key": "anonymous",
@@ -537,6 +545,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "createAppRequestAppName",
               "key": "appName",
@@ -779,6 +788,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/apps/v1/update/{appId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -801,6 +811,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "UpdateAppRequest",
           "groupName": null,
@@ -808,6 +819,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "updateAppRequestAuthConfiguration",
               "key": "authConfiguration",
@@ -816,6 +828,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
+                "availability": null,
                 "description": null,
                 "generatedName": "UpdateAppRequestAuthConfiguration",
                 "groupName": null,
@@ -823,6 +836,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "properties": [
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "updateAppRequestAuthConfigurationGoogle",
                     "key": "google",
@@ -837,6 +851,7 @@ exports[`open api parser hathora parse open api 1`] = `
                         "additionalProperties": false,
                         "allOf": [],
                         "allOfPropertyConflicts": [],
+                        "availability": null,
                         "description": null,
                         "generatedName": "UpdateAppRequestAuthConfigurationGoogle",
                         "groupName": null,
@@ -844,6 +859,7 @@ exports[`open api parser hathora parse open api 1`] = `
                         "properties": [
                           {
                             "audiences": [],
+                            "availability": null,
                             "conflict": {},
                             "generatedName": "updateAppRequestAuthConfigurationGoogleClientId",
                             "key": "clientId",
@@ -871,6 +887,7 @@ exports[`open api parser hathora parse open api 1`] = `
                   },
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "updateAppRequestAuthConfigurationNickname",
                     "key": "nickname",
@@ -893,6 +910,7 @@ exports[`open api parser hathora parse open api 1`] = `
                   },
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "updateAppRequestAuthConfigurationAnonymous",
                     "key": "anonymous",
@@ -919,6 +937,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "updateAppRequestAppName",
               "key": "appName",
@@ -1104,6 +1123,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/apps/v1/info/{appId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -1223,6 +1243,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/apps/v1/delete/{appId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -1320,6 +1341,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/auth/v1/{appId}/login/anonymous",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -1343,6 +1365,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "LoginAnonymousResponse",
           "groupName": null,
@@ -1350,6 +1373,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "loginAnonymousResponseToken",
               "key": "token",
@@ -1466,6 +1490,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/auth/v1/{appId}/login/nickname",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -1488,6 +1513,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "LoginNicknameRequest",
           "groupName": null,
@@ -1495,6 +1521,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "loginNicknameRequestNickname",
               "key": "nickname",
@@ -1528,6 +1555,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "LoginNicknameResponse",
           "groupName": null,
@@ -1535,6 +1563,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "loginNicknameResponseToken",
               "key": "token",
@@ -1672,6 +1701,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/auth/v1/{appId}/login/google",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -1694,6 +1724,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "LoginGoogleRequest",
           "groupName": null,
@@ -1701,6 +1732,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "loginGoogleRequestIdToken",
               "key": "idToken",
@@ -1734,6 +1766,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "LoginGoogleResponse",
           "groupName": null,
@@ -1741,6 +1774,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "loginGoogleResponseToken",
               "key": "token",
@@ -1925,6 +1959,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/builds/v1/{appId}/list",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -2125,6 +2160,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/builds/v1/{appId}/info/{buildId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -2138,6 +2174,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "buildId",
           "schema": {
@@ -2363,6 +2400,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/builds/v1/{appId}/create",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -2459,6 +2497,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/builds/v1/{appId}/run/{buildId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -2472,6 +2511,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "buildId",
           "schema": {
@@ -2628,6 +2668,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/builds/v1/{appId}/delete/{buildId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -2641,6 +2682,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "buildId",
           "schema": {
@@ -2831,6 +2873,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/deployments/v1/{appId}/list",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -3045,6 +3088,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/deployments/v1/{appId}/info/{deploymentId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -3058,6 +3102,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "deploymentId",
           "schema": {
@@ -3357,6 +3402,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/deployments/v1/{appId}/create/{buildId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -3370,6 +3416,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "buildId",
           "schema": {
@@ -3653,6 +3700,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "generatedRequestName": "CreatePrivateLobbyDeprecatedRequest",
       "headers": [
         {
+          "availability": null,
           "description": null,
           "env": null,
           "name": "Authorization",
@@ -3682,6 +3730,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/lobby/v1/{appId}/create/private",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -3697,6 +3746,7 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "region",
           "parameterNameOverride": null,
@@ -3717,6 +3767,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": null,
           "name": "local",
           "parameterNameOverride": null,
@@ -3918,6 +3969,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "generatedRequestName": "CreatePublicLobbyDeprecatedRequest",
       "headers": [
         {
+          "availability": null,
           "description": null,
           "env": null,
           "name": "Authorization",
@@ -3947,6 +3999,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/lobby/v1/{appId}/create/public",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -3962,6 +4015,7 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "region",
           "parameterNameOverride": null,
@@ -3982,6 +4036,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": null,
           "name": "local",
           "parameterNameOverride": null,
@@ -4224,6 +4279,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "generatedRequestName": "ListActivePublicLobbiesDeprecatedRequest",
       "headers": [
         {
+          "availability": null,
           "description": null,
           "env": null,
           "name": "Authorization",
@@ -4253,6 +4309,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/lobby/v1/{appId}/list",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -4268,6 +4325,7 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "local",
           "parameterNameOverride": null,
@@ -4291,6 +4349,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": null,
           "name": "region",
           "parameterNameOverride": null,
@@ -4607,6 +4666,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "generatedRequestName": "CreatePrivateLobbyRequest",
       "headers": [
         {
+          "availability": null,
           "description": null,
           "env": null,
           "name": "Authorization",
@@ -4636,6 +4696,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/lobby/v2/{appId}/create/private",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -4651,6 +4712,7 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "roomId",
           "parameterNameOverride": null,
@@ -4679,6 +4741,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "CreatePrivateLobbyRequest",
           "groupName": null,
@@ -4686,6 +4749,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "createPrivateLobbyRequestInitialConfig",
               "key": "initialConfig",
@@ -4719,6 +4783,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "createPrivateLobbyRequestRegion",
               "key": "region",
@@ -5025,6 +5090,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "generatedRequestName": "CreatePublicLobbyRequest",
       "headers": [
         {
+          "availability": null,
           "description": null,
           "env": null,
           "name": "Authorization",
@@ -5054,6 +5120,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/lobby/v2/{appId}/create/public",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -5069,6 +5136,7 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "roomId",
           "parameterNameOverride": null,
@@ -5097,6 +5165,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "CreatePublicLobbyRequest",
           "groupName": null,
@@ -5104,6 +5173,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "createPublicLobbyRequestInitialConfig",
               "key": "initialConfig",
@@ -5137,6 +5207,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "createPublicLobbyRequestRegion",
               "key": "region",
@@ -5443,6 +5514,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "generatedRequestName": "CreateLocalLobbyRequest",
       "headers": [
         {
+          "availability": null,
           "description": null,
           "env": null,
           "name": "Authorization",
@@ -5472,6 +5544,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/lobby/v2/{appId}/create/local",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -5487,6 +5560,7 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "roomId",
           "parameterNameOverride": null,
@@ -5515,6 +5589,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "CreateLocalLobbyRequest",
           "groupName": null,
@@ -5522,6 +5597,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "createLocalLobbyRequestInitialConfig",
               "key": "initialConfig",
@@ -5555,6 +5631,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "createLocalLobbyRequestRegion",
               "key": "region",
@@ -5865,6 +5942,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "generatedRequestName": "CreateLobbyRequest",
       "headers": [
         {
+          "availability": null,
           "description": null,
           "env": null,
           "name": "Authorization",
@@ -5894,6 +5972,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/lobby/v2/{appId}/create",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -5909,6 +5988,7 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "roomId",
           "parameterNameOverride": null,
@@ -5937,6 +6017,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "CreateLobbyRequest",
           "groupName": null,
@@ -5944,6 +6025,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "createLobbyRequestVisibility",
               "key": "visibility",
@@ -5996,6 +6078,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "createLobbyRequestInitialConfig",
               "key": "initialConfig",
@@ -6029,6 +6112,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "createLobbyRequestRegion",
               "key": "region",
@@ -6218,6 +6302,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/lobby/v2/{appId}/list/public",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -6233,6 +6318,7 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "region",
           "parameterNameOverride": null,
@@ -6459,6 +6545,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/lobby/v2/{appId}/info/{roomId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -6472,6 +6559,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "roomId",
           "schema": {
@@ -6714,6 +6802,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/lobby/v2/{appId}/setState/{roomId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -6727,6 +6816,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "roomId",
           "schema": {
@@ -6749,6 +6839,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "SetLobbyStateRequest",
           "groupName": null,
@@ -6756,6 +6847,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "setLobbyStateRequestState",
               "key": "state",
@@ -6852,6 +6944,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/logs/v1/{appId}/all",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -6867,6 +6960,7 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "follow",
           "parameterNameOverride": null,
@@ -6890,6 +6984,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": null,
           "name": "tailLines",
           "parameterNameOverride": null,
@@ -6918,6 +7013,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": null,
           "name": "region",
           "parameterNameOverride": null,
@@ -6990,6 +7086,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/logs/v1/{appId}/process/{processId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -7003,6 +7100,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "processId",
           "schema": {
@@ -7018,6 +7116,7 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "follow",
           "parameterNameOverride": null,
@@ -7041,6 +7140,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": null,
           "name": "tailLines",
           "parameterNameOverride": null,
@@ -7121,6 +7221,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/logs/v1/{appId}/deployment/{deploymentId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -7134,6 +7235,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "deploymentId",
           "schema": {
@@ -7149,6 +7251,7 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "follow",
           "parameterNameOverride": null,
@@ -7172,6 +7275,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": null,
           "name": "tailLines",
           "parameterNameOverride": null,
@@ -7406,6 +7510,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/metrics/v1/{appId}/process/{processId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -7419,6 +7524,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "processId",
           "schema": {
@@ -7434,6 +7540,7 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "metrics",
           "parameterNameOverride": null,
@@ -7461,6 +7568,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": null,
           "name": "end",
           "parameterNameOverride": null,
@@ -7489,6 +7597,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": null,
           "name": "start",
           "parameterNameOverride": null,
@@ -7517,6 +7626,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": null,
           "name": "step",
           "parameterNameOverride": null,
@@ -7782,6 +7892,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/processes/v1/{appId}/list/running",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -7797,6 +7908,7 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "region",
           "parameterNameOverride": null,
@@ -8026,6 +8138,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/processes/v1/{appId}/list/stopped",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -8041,6 +8154,7 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "region",
           "parameterNameOverride": null,
@@ -8275,6 +8389,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/processes/v1/{appId}/info/{processId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -8288,6 +8403,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "processId",
           "schema": {
@@ -8421,6 +8537,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/rooms/v1/{appId}/create",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -8443,6 +8560,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "CreateRoomRequest",
           "groupName": null,
@@ -8450,6 +8568,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "createRoomRequestRegion",
               "key": "region",
@@ -8654,6 +8773,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/rooms/v1/{appId}/info/{roomId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -8667,6 +8787,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "roomId",
           "schema": {
@@ -8835,6 +8956,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/rooms/v1/{appId}/list/{processId}/active",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -8848,6 +8970,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "processId",
           "schema": {
@@ -9023,6 +9146,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/rooms/v1/{appId}/list/{processId}/inactive",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -9036,6 +9160,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "processId",
           "schema": {
@@ -9172,6 +9297,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/rooms/v1/{appId}/destroy/{roomId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -9185,6 +9311,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "roomId",
           "schema": {
@@ -9302,6 +9429,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/rooms/v1/{appId}/suspend/{roomId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -9315,6 +9443,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "roomId",
           "schema": {
@@ -9420,6 +9549,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/rooms/v1/{appId}/connectioninfo/{roomId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
@@ -9433,6 +9563,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "roomId",
           "schema": {
@@ -9512,6 +9643,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ActiveConnectionInfo",
       "groupName": null,
@@ -9519,6 +9651,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "activeConnectionInfoTransportType",
           "key": "transportType",
@@ -9534,6 +9667,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "activeConnectionInfoPort",
           "key": "port",
@@ -9557,6 +9691,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "activeConnectionInfoHost",
           "key": "host",
@@ -9579,6 +9714,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "activeConnectionInfoRoomId",
           "key": "roomId",
@@ -9614,6 +9750,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Application",
       "groupName": null,
@@ -9621,6 +9758,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "applicationDeletedBy",
           "key": "deletedBy",
@@ -9650,6 +9788,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "applicationDeletedAt",
           "key": "deletedAt",
@@ -9674,6 +9813,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "applicationCreatedAt",
           "key": "createdAt",
@@ -9691,6 +9831,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "applicationCreatedBy",
           "key": "createdBy",
@@ -9713,6 +9854,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "applicationOrgId",
           "key": "orgId",
@@ -9728,6 +9870,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "applicationAuthConfiguration",
           "key": "authConfiguration",
@@ -9736,6 +9879,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
+            "availability": null,
             "description": null,
             "generatedName": "ApplicationAuthConfiguration",
             "groupName": null,
@@ -9743,6 +9887,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "properties": [
               {
                 "audiences": [],
+                "availability": null,
                 "conflict": {},
                 "generatedName": "applicationAuthConfigurationGoogle",
                 "key": "google",
@@ -9757,6 +9902,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
+                    "availability": null,
                     "description": null,
                     "generatedName": "ApplicationAuthConfigurationGoogle",
                     "groupName": null,
@@ -9764,6 +9910,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "properties": [
                       {
                         "audiences": [],
+                        "availability": null,
                         "conflict": {},
                         "generatedName": "applicationAuthConfigurationGoogleClientId",
                         "key": "clientId",
@@ -9791,6 +9938,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
               {
                 "audiences": [],
+                "availability": null,
                 "conflict": {},
                 "generatedName": "applicationAuthConfigurationNickname",
                 "key": "nickname",
@@ -9813,6 +9961,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
               {
                 "audiences": [],
+                "availability": null,
                 "conflict": {},
                 "generatedName": "applicationAuthConfigurationAnonymous",
                 "key": "anonymous",
@@ -9839,6 +9988,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "applicationAppSecret",
           "key": "appSecret",
@@ -9861,6 +10011,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "applicationAppId",
           "key": "appId",
@@ -9883,6 +10034,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "applicationAppName",
           "key": "appName",
@@ -9918,6 +10070,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ApplicationWithDeployment",
       "groupName": null,
@@ -9925,6 +10078,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "applicationWithDeploymentDeployment",
           "key": "deployment",
@@ -9945,6 +10099,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Build",
       "groupName": null,
@@ -9952,6 +10107,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "buildRegionalContainerTags",
           "key": "regionalContainerTags",
@@ -9966,6 +10122,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
+              "availability": null,
               "description": null,
               "generatedName": "BuildRegionalContainerTagsItem",
               "groupName": null,
@@ -9973,6 +10130,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "properties": [
                 {
                   "audiences": [],
+                  "availability": null,
                   "conflict": {},
                   "generatedName": "buildRegionalContainerTagsItemContainerTag",
                   "key": "containerTag",
@@ -9995,6 +10153,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 },
                 {
                   "audiences": [],
+                  "availability": null,
                   "conflict": {},
                   "generatedName": "buildRegionalContainerTagsItemRegion",
                   "key": "region",
@@ -10015,6 +10174,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "buildImageSize",
           "key": "imageSize",
@@ -10038,6 +10198,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "buildStatus",
           "key": "status",
@@ -10102,6 +10263,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "buildDeletedAt",
           "key": "deletedAt",
@@ -10126,6 +10288,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "buildFinishedAt",
           "key": "finishedAt",
@@ -10150,6 +10313,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "buildStartedAt",
           "key": "startedAt",
@@ -10174,6 +10338,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "buildCreatedAt",
           "key": "createdAt",
@@ -10191,6 +10356,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "buildCreatedBy",
           "key": "createdBy",
@@ -10213,6 +10379,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "buildBuildId",
           "key": "buildId",
@@ -10228,6 +10395,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "buildAppId",
           "key": "appId",
@@ -10302,6 +10470,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Deployment",
       "groupName": null,
@@ -10309,6 +10478,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentCreatedAt",
           "key": "createdAt",
@@ -10326,6 +10496,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentCreatedBy",
           "key": "createdBy",
@@ -10348,6 +10519,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentRequestedMemoryMb",
           "key": "requestedMemoryMB",
@@ -10371,6 +10543,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentRequestedCpu",
           "key": "requestedCPU",
@@ -10394,6 +10567,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentDeploymentId",
           "key": "deploymentId",
@@ -10409,6 +10583,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentBuildId",
           "key": "buildId",
@@ -10424,6 +10599,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentAppId",
           "key": "appId",
@@ -10444,6 +10620,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "DeploymentConfig",
       "groupName": null,
@@ -10451,6 +10628,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentConfigEnv",
           "key": "env",
@@ -10465,6 +10643,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
+              "availability": null,
               "description": null,
               "generatedName": "DeploymentConfigEnvItem",
               "groupName": null,
@@ -10472,6 +10651,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "properties": [
                 {
                   "audiences": [],
+                  "availability": null,
                   "conflict": {},
                   "generatedName": "deploymentConfigEnvItemValue",
                   "key": "value",
@@ -10494,6 +10674,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 },
                 {
                   "audiences": [],
+                  "availability": null,
                   "conflict": {},
                   "generatedName": "deploymentConfigEnvItemName",
                   "key": "name",
@@ -10521,6 +10702,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentConfigRoomsPerProcess",
           "key": "roomsPerProcess",
@@ -10544,6 +10726,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentConfigPlanName",
           "key": "planName",
@@ -10559,6 +10742,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentConfigTransportType",
           "key": "transportType",
@@ -10574,6 +10758,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentConfigContainerPort",
           "key": "containerPort",
@@ -10624,6 +10809,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "additionalProperties": false,
         "allOf": [],
         "allOfPropertyConflicts": [],
+        "availability": null,
         "description": null,
         "generatedName": "DiscoveryResponseItem",
         "groupName": null,
@@ -10631,6 +10817,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "properties": [
           {
             "audiences": [],
+            "availability": null,
             "conflict": {},
             "generatedName": "discoveryResponseItemPort",
             "key": "port",
@@ -10654,6 +10841,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
           {
             "audiences": [],
+            "availability": null,
             "conflict": {},
             "generatedName": "discoveryResponseItemHost",
             "key": "host",
@@ -10676,6 +10864,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
           {
             "audiences": [],
+            "availability": null,
             "conflict": {},
             "generatedName": "discoveryResponseItemRegion",
             "key": "region",
@@ -10697,6 +10886,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Lobby",
       "groupName": null,
@@ -10704,6 +10894,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lobbyState",
           "key": "state",
@@ -10744,6 +10935,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lobbyInitialConfig",
           "key": "initialConfig",
@@ -10777,6 +10969,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lobbyCreatedAt",
           "key": "createdAt",
@@ -10794,6 +10987,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lobbyCreatedBy",
           "key": "createdBy",
@@ -10816,6 +11010,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lobbyLocal",
           "key": "local",
@@ -10834,6 +11029,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lobbyVisibility",
           "key": "visibility",
@@ -10886,6 +11082,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lobbyRegion",
           "key": "region",
@@ -10901,6 +11098,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lobbyRoomId",
           "key": "roomId",
@@ -10916,6 +11114,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lobbyAppId",
           "key": "appId",
@@ -10993,6 +11192,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "MetricValue",
       "groupName": null,
@@ -11000,6 +11200,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "metricValueValue",
           "key": "value",
@@ -11023,6 +11224,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "metricValueTimestamp",
           "key": "timestamp",
@@ -11082,6 +11284,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "From T, pick a set of properties whose keys are in the union K",
       "generatedName": "PickRoomExcludeKeyofRoomAllocations",
       "groupName": null,
@@ -11089,6 +11292,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "pickRoomExcludeKeyofRoomAllocationsAppId",
           "key": "appId",
@@ -11104,6 +11308,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "pickRoomExcludeKeyofRoomAllocationsRoomId",
           "key": "roomId",
@@ -11119,6 +11324,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "pickRoomExcludeKeyofRoomAllocationsStatus",
           "key": "status",
@@ -11134,6 +11340,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "pickRoomExcludeKeyofRoomAllocationsCurrentAllocation",
           "key": "currentAllocation",
@@ -11218,6 +11425,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Process",
       "groupName": null,
@@ -11225,6 +11433,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processEgressedBytes",
           "key": "egressedBytes",
@@ -11248,6 +11457,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processIdleSince",
           "key": "idleSince",
@@ -11272,6 +11482,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processActiveConnections",
           "key": "activeConnections",
@@ -11295,6 +11506,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processRoomSlotsAvailable",
           "key": "roomSlotsAvailable",
@@ -11318,6 +11530,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processDraining",
           "key": "draining",
@@ -11336,6 +11549,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processTerminatedAt",
           "key": "terminatedAt",
@@ -11360,6 +11574,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processStoppingAt",
           "key": "stoppingAt",
@@ -11384,6 +11599,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processStartedAt",
           "key": "startedAt",
@@ -11408,6 +11624,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processStartingAt",
           "key": "startingAt",
@@ -11425,6 +11642,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processRoomsPerProcess",
           "key": "roomsPerProcess",
@@ -11448,6 +11666,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processPort",
           "key": "port",
@@ -11471,6 +11690,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processHost",
           "key": "host",
@@ -11493,6 +11713,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processRegion",
           "key": "region",
@@ -11508,6 +11729,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processProcessId",
           "key": "processId",
@@ -11523,6 +11745,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processDeploymentId",
           "key": "deploymentId",
@@ -11538,6 +11761,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processAppId",
           "key": "appId",
@@ -11581,6 +11805,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ProcessWithRooms",
       "groupName": null,
@@ -11588,6 +11813,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processWithRoomsRooms",
           "key": "rooms",
@@ -11610,6 +11836,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processWithRoomsTotalRooms",
           "key": "totalRooms",
@@ -11638,6 +11865,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Construct a type with a set of properties K of type T",
       "generatedName": "RecordPartialMetricNameMetricValueArray",
       "groupName": null,
@@ -11645,6 +11873,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "recordPartialMetricNameMetricValueArrayCpu",
           "key": "cpu",
@@ -11674,6 +11903,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "recordPartialMetricNameMetricValueArrayMemory",
           "key": "memory",
@@ -11703,6 +11933,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "recordPartialMetricNameMetricValueArrayRateEgress",
           "key": "rate_egress",
@@ -11732,6 +11963,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "recordPartialMetricNameMetricValueArrayTotalEgress",
           "key": "total_egress",
@@ -11766,6 +11998,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Construct a type with a set of properties K of type T",
       "generatedName": "RecordStringNever",
       "groupName": null,
@@ -11906,6 +12139,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Room",
       "groupName": null,
@@ -11913,6 +12147,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "roomCurrentAllocation",
           "key": "currentAllocation",
@@ -11935,6 +12170,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "roomStatus",
           "key": "status",
@@ -11950,6 +12186,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "roomAllocations",
           "key": "allocations",
@@ -11972,6 +12209,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "roomRoomId",
           "key": "roomId",
@@ -11987,6 +12225,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "roomAppId",
           "key": "appId",
@@ -12007,6 +12246,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "RoomAllocation",
       "groupName": null,
@@ -12014,6 +12254,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "roomAllocationUnscheduledAt",
           "key": "unscheduledAt",
@@ -12038,6 +12279,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "roomAllocationScheduledAt",
           "key": "scheduledAt",
@@ -12055,6 +12297,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "roomAllocationProcessId",
           "key": "processId",
@@ -12070,6 +12313,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "roomAllocationRoomAllocationId",
           "key": "roomAllocationId",
@@ -12185,6 +12429,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "StartingConnectionInfo",
       "groupName": null,
@@ -12192,6 +12437,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "startingConnectionInfoRoomId",
           "key": "roomId",

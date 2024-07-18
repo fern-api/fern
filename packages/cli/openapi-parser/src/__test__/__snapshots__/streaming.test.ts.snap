@@ -32,6 +32,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "UserStreamRequest",
           "groupName": null,
@@ -39,6 +40,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "userStreamRequestId",
               "key": "id",
@@ -68,6 +70,7 @@ exports[`open api parser streaming parse open api 1`] = `
             },
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "userStreamRequestStream",
               "key": "stream",
@@ -167,6 +170,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "UserRequest",
           "groupName": null,
@@ -174,6 +178,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "userRequestId",
               "key": "id",
@@ -203,6 +208,7 @@ exports[`open api parser streaming parse open api 1`] = `
             },
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "userRequestStream",
               "key": "stream",
@@ -268,6 +274,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "UserV2StreamRequest",
           "groupName": null,
@@ -275,6 +282,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "userV2StreamRequestId",
               "key": "id",
@@ -304,6 +312,7 @@ exports[`open api parser streaming parse open api 1`] = `
             },
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "userV2StreamRequestStream",
               "key": "stream",
@@ -417,6 +426,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "UserV2Request",
           "groupName": null,
@@ -424,6 +434,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "userV2RequestId",
               "key": "id",
@@ -453,6 +464,7 @@ exports[`open api parser streaming parse open api 1`] = `
             },
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "userV2RequestStream",
               "key": "stream",
@@ -518,6 +530,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "UserV3StreamRequest",
           "groupName": null,
@@ -525,6 +538,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "userV3StreamRequestId",
               "key": "id",
@@ -554,6 +568,7 @@ exports[`open api parser streaming parse open api 1`] = `
             },
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "userV3StreamRequestStream",
               "key": "stream",
@@ -583,6 +598,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "UserV3StreamResponse",
           "groupName": null,
@@ -590,6 +606,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "userV3StreamResponseId",
               "key": "id",
@@ -619,6 +636,7 @@ exports[`open api parser streaming parse open api 1`] = `
             },
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "userV3StreamResponseInline",
               "key": "inline",
@@ -644,6 +662,7 @@ exports[`open api parser streaming parse open api 1`] = `
             },
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "userV3StreamResponseStreamed",
               "key": "streamed",
@@ -743,6 +762,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "UserV3Request",
           "groupName": null,
@@ -750,6 +770,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "userV3RequestId",
               "key": "id",
@@ -779,6 +800,7 @@ exports[`open api parser streaming parse open api 1`] = `
             },
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "userV3RequestStream",
               "key": "stream",
@@ -808,6 +830,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "UserV3Response",
           "groupName": null,
@@ -815,6 +838,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "userV3ResponseId",
               "key": "id",
@@ -844,6 +868,7 @@ exports[`open api parser streaming parse open api 1`] = `
             },
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "userV3ResponseInline",
               "key": "inline",
@@ -893,6 +918,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "BaseStreamUser",
       "groupName": null,
@@ -900,6 +926,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "baseStreamUserId",
           "key": "id",
@@ -934,6 +961,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "BaseUser",
       "groupName": null,
@@ -941,6 +969,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "baseUserId",
           "key": "id",
@@ -975,6 +1004,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "StreamUser",
       "groupName": null,
@@ -982,6 +1012,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "streamUserId",
           "key": "id",
@@ -1011,6 +1042,7 @@ exports[`open api parser streaming parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "streamUserName",
           "key": "name",
@@ -1040,6 +1072,7 @@ exports[`open api parser streaming parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "streamUserStreamed",
           "key": "streamed",
@@ -1070,6 +1103,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "User",
       "groupName": null,
@@ -1077,6 +1111,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "userId",
           "key": "id",
@@ -1106,6 +1141,7 @@ exports[`open api parser streaming parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "userName",
           "key": "name",
@@ -1135,6 +1171,7 @@ exports[`open api parser streaming parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "userStreamed",
           "key": "streamed",

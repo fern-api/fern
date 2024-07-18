@@ -24,6 +24,7 @@ exports[`open api parser default-content parse open api 1`] = `
       "path": "/generateContent",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "model",
           "schema": {

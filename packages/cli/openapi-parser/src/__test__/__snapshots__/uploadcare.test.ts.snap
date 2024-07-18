@@ -968,6 +968,7 @@ Log.d("TAG", file.toString())
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": "JSON object where the key is the file name of the uploaded file and
 the value is the unique ID of the file on our systems.
 ",
@@ -977,6 +978,7 @@ the value is the unique ID of the file on our systems.
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "baseUploadResponseFilename",
               "key": "filename",
@@ -2137,6 +2139,7 @@ to us as a value of the \`part_size\` parameter (in bytes).
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "MultipartFileUploadStartResponse",
           "groupName": null,
@@ -2144,6 +2147,7 @@ to us as a value of the \`part_size\` parameter (in bytes).
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "multipartFileUploadStartResponseUuid",
               "key": "uuid",
@@ -2166,6 +2170,7 @@ to us as a value of the \`part_size\` parameter (in bytes).
             },
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "multipartFileUploadStartResponseParts",
               "key": "parts",
@@ -6523,6 +6528,7 @@ Log.d("TAG", status.toString())
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": "Token returned by the \`/from_url/\` endpoint that identifies a request to fetch/upload a file from a URL.",
           "name": "token",
           "parameterNameOverride": null,
@@ -7450,6 +7456,7 @@ Log.d("TAG", file.toString())
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "pub_key",
           "parameterNameOverride": null,
@@ -7463,6 +7470,7 @@ Log.d("TAG", file.toString())
           },
         },
         {
+          "availability": null,
           "description": "File's unique ID.",
           "name": "file_id",
           "parameterNameOverride": null,
@@ -9674,6 +9682,7 @@ Log.d("TAG", group.toString())
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "pub_key",
           "parameterNameOverride": null,
@@ -9687,6 +9696,7 @@ Log.d("TAG", group.toString())
           },
         },
         {
+          "availability": null,
           "description": "Group's unique ID. Group IDs look like \`UUID~N\`, where the \`~N\` part reflects the number of the files in the group.
 ",
           "name": "group_id",
@@ -9889,6 +9899,7 @@ Log.d("TAG", group.toString())
         "additionalProperties": false,
         "allOf": [],
         "allOfPropertyConflicts": [],
+        "availability": null,
         "description": "Information about file content.",
         "generatedName": "ContentInfo",
         "groupName": null,
@@ -9896,6 +9907,7 @@ Log.d("TAG", group.toString())
         "properties": [
           {
             "audiences": [],
+            "availability": null,
             "conflict": {},
             "generatedName": "contentInfoMime",
             "key": "mime",
@@ -9910,6 +9922,7 @@ Log.d("TAG", group.toString())
                 "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
+                "availability": null,
                 "description": "MIME type.",
                 "generatedName": "ContentInfoMime",
                 "groupName": null,
@@ -9917,6 +9930,7 @@ Log.d("TAG", group.toString())
                 "properties": [
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "contentInfoMimeMime",
                     "key": "mime",
@@ -9939,6 +9953,7 @@ Log.d("TAG", group.toString())
                   },
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "contentInfoMimeType",
                     "key": "type",
@@ -9961,6 +9976,7 @@ Log.d("TAG", group.toString())
                   },
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "contentInfoMimeSubtype",
                     "key": "subtype",
@@ -9988,6 +10004,7 @@ Log.d("TAG", group.toString())
           },
           {
             "audiences": [],
+            "availability": null,
             "conflict": {},
             "generatedName": "contentInfoImage",
             "key": "image",
@@ -10010,6 +10027,7 @@ Log.d("TAG", group.toString())
           },
           {
             "audiences": [],
+            "availability": null,
             "conflict": {},
             "generatedName": "contentInfoVideo",
             "key": "video",
@@ -10267,6 +10285,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Information about an uploaded file.",
       "generatedName": "FileUploadInfo",
       "groupName": null,
@@ -10274,6 +10293,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fileUploadInfoUuid",
           "key": "uuid",
@@ -10296,6 +10316,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fileUploadInfoFileId",
           "key": "file_id",
@@ -10318,6 +10339,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fileUploadInfoSize",
           "key": "size",
@@ -10341,6 +10363,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fileUploadInfoTotal",
           "key": "total",
@@ -10364,6 +10387,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fileUploadInfoDone",
           "key": "done",
@@ -10387,6 +10411,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fileUploadInfoOriginalFilename",
           "key": "original_filename",
@@ -10409,6 +10434,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fileUploadInfoFilename",
           "key": "filename",
@@ -10431,6 +10457,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fileUploadInfoMimeType",
           "key": "mime_type",
@@ -10453,6 +10480,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fileUploadInfoImageInfo",
           "key": "image_info",
@@ -10468,6 +10496,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fileUploadInfoVideoInfo",
           "key": "video_info",
@@ -10483,6 +10512,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fileUploadInfoContentInfo",
           "key": "content_info",
@@ -10498,6 +10528,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fileUploadInfoMetadata",
           "key": "metadata",
@@ -10513,6 +10544,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fileUploadInfoIsImage",
           "key": "is_image",
@@ -10531,6 +10563,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fileUploadInfoIsStored",
           "key": "is_stored",
@@ -10549,6 +10582,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fileUploadInfoIsReady",
           "key": "is_ready",
@@ -10567,6 +10601,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fileUploadInfoS3Bucket",
           "key": "s3_bucket",
@@ -10608,6 +10643,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "FileUploadInfoErrorStatus",
       "groupName": null,
@@ -10615,6 +10651,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fileUploadInfoErrorStatusStatus",
           "key": "status",
@@ -10641,6 +10678,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fileUploadInfoErrorStatusError",
           "key": "error",
@@ -10671,6 +10709,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fileUploadInfoErrorStatusErrorCode",
           "key": "error_code",
@@ -10717,6 +10756,7 @@ page for a full list of all possible error codes.
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "FileUploadInfoFromUrl",
       "groupName": null,
@@ -10724,6 +10764,7 @@ page for a full list of all possible error codes.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fileUploadInfoFromUrlType",
           "key": "type",
@@ -10754,6 +10795,7 @@ page for a full list of all possible error codes.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "FileUploadInfoProgressStatus",
       "groupName": null,
@@ -10761,6 +10803,7 @@ page for a full list of all possible error codes.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fileUploadInfoProgressStatusStatus",
           "key": "status",
@@ -10787,6 +10830,7 @@ page for a full list of all possible error codes.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fileUploadInfoProgressStatusTotal",
           "key": "total",
@@ -10834,6 +10878,7 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fileUploadInfoProgressStatusDone",
           "key": "done",
@@ -10878,6 +10923,7 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "FileUploadInfoSuccessStatus",
       "groupName": null,
@@ -10885,6 +10931,7 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fileUploadInfoSuccessStatusStatus",
           "key": "status",
@@ -10915,6 +10962,7 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "FileUploadInfoUnknownStatus",
       "groupName": null,
@@ -10922,6 +10970,7 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fileUploadInfoUnknownStatusStatus",
           "key": "status",
@@ -10957,6 +11006,7 @@ that are tool old (or that have not been created at all).
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "FileUploadInfoWaitingStatus",
       "groupName": null,
@@ -10964,6 +11014,7 @@ that are tool old (or that have not been created at all).
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fileUploadInfoWaitingStatusStatus",
           "key": "status",
@@ -11010,6 +11061,7 @@ that are tool old (or that have not been created at all).
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "\`/from_url/\` upload response.",
       "generatedName": "FromUrlUploadResponseSchema",
       "groupName": null,
@@ -11017,6 +11069,7 @@ that are tool old (or that have not been created at all).
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fromUrlUploadResponseSchemaType",
           "key": "type",
@@ -11042,6 +11095,7 @@ that are tool old (or that have not been created at all).
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fromUrlUploadResponseSchemaToken",
           "key": "token",
@@ -11136,6 +11190,7 @@ that are tool old (or that have not been created at all).
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "File group information object.",
       "generatedName": "GroupInfo",
       "groupName": null,
@@ -11143,6 +11198,7 @@ that are tool old (or that have not been created at all).
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "groupInfoId",
           "key": "id",
@@ -11172,6 +11228,7 @@ that are tool old (or that have not been created at all).
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "groupInfoDatetimeCreated",
           "key": "datetime_created",
@@ -11196,6 +11253,7 @@ that are tool old (or that have not been created at all).
         },
         {
           "audiences": [],
+          "availability": "Deprecated",
           "conflict": {},
           "generatedName": "groupInfoDatetimeStored",
           "key": "datetime_stored",
@@ -11227,6 +11285,7 @@ that are tool old (or that have not been created at all).
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "groupInfoFilesCount",
           "key": "files_count",
@@ -11257,6 +11316,7 @@ that are tool old (or that have not been created at all).
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "groupInfoCdnUrl",
           "key": "cdn_url",
@@ -11286,6 +11346,7 @@ that are tool old (or that have not been created at all).
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "groupInfoUrl",
           "key": "url",
@@ -11315,6 +11376,7 @@ that are tool old (or that have not been created at all).
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "groupInfoFiles",
           "key": "files",
@@ -11391,6 +11453,7 @@ that are tool old (or that have not been created at all).
         "additionalProperties": false,
         "allOf": [],
         "allOfPropertyConflicts": [],
+        "availability": null,
         "description": "Image metadata.",
         "generatedName": "ImageInfo",
         "groupName": null,
@@ -11398,6 +11461,7 @@ that are tool old (or that have not been created at all).
         "properties": [
           {
             "audiences": [],
+            "availability": null,
             "conflict": {},
             "generatedName": "imageInfoColorMode",
             "key": "color_mode",
@@ -11570,6 +11634,7 @@ that are tool old (or that have not been created at all).
           },
           {
             "audiences": [],
+            "availability": null,
             "conflict": {},
             "generatedName": "imageInfoOrientation",
             "key": "orientation",
@@ -11600,6 +11665,7 @@ that are tool old (or that have not been created at all).
           },
           {
             "audiences": [],
+            "availability": null,
             "conflict": {},
             "generatedName": "imageInfoFormat",
             "key": "format",
@@ -11622,6 +11688,7 @@ that are tool old (or that have not been created at all).
           },
           {
             "audiences": [],
+            "availability": null,
             "conflict": {},
             "generatedName": "imageInfoSequence",
             "key": "sequence",
@@ -11640,6 +11707,7 @@ that are tool old (or that have not been created at all).
           },
           {
             "audiences": [],
+            "availability": null,
             "conflict": {},
             "generatedName": "imageInfoHeight",
             "key": "height",
@@ -11663,6 +11731,7 @@ that are tool old (or that have not been created at all).
           },
           {
             "audiences": [],
+            "availability": null,
             "conflict": {},
             "generatedName": "imageInfoWidth",
             "key": "width",
@@ -11686,6 +11755,7 @@ that are tool old (or that have not been created at all).
           },
           {
             "audiences": [],
+            "availability": null,
             "conflict": {},
             "generatedName": "imageInfoGeoLocation",
             "key": "geo_location",
@@ -11700,6 +11770,7 @@ that are tool old (or that have not been created at all).
                 "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
+                "availability": null,
                 "description": "Geo-location of image from EXIF.",
                 "generatedName": "ImageInfoGeoLocation",
                 "groupName": null,
@@ -11707,6 +11778,7 @@ that are tool old (or that have not been created at all).
                 "properties": [
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "imageInfoGeoLocationLatitude",
                     "key": "latitude",
@@ -11730,6 +11802,7 @@ that are tool old (or that have not been created at all).
                   },
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "imageInfoGeoLocationLongitude",
                     "key": "longitude",
@@ -11758,6 +11831,7 @@ that are tool old (or that have not been created at all).
           },
           {
             "audiences": [],
+            "availability": null,
             "conflict": {},
             "generatedName": "imageInfoDatetimeOriginal",
             "key": "datetime_original",
@@ -11782,6 +11856,7 @@ that are tool old (or that have not been created at all).
           },
           {
             "audiences": [],
+            "availability": null,
             "conflict": {},
             "generatedName": "imageInfoDpi",
             "key": "dpi",
@@ -11831,6 +11906,7 @@ that are tool old (or that have not been created at all).
         "additionalProperties": false,
         "allOf": [],
         "allOfPropertyConflicts": [],
+        "availability": null,
         "description": "Video metadata.",
         "generatedName": "LegacyVideoInfo",
         "groupName": null,
@@ -11838,6 +11914,7 @@ that are tool old (or that have not been created at all).
         "properties": [
           {
             "audiences": [],
+            "availability": null,
             "conflict": {},
             "generatedName": "legacyVideoInfoDuration",
             "key": "duration",
@@ -11868,6 +11945,7 @@ that are tool old (or that have not been created at all).
           },
           {
             "audiences": [],
+            "availability": null,
             "conflict": {},
             "generatedName": "legacyVideoInfoFormat",
             "key": "format",
@@ -11897,6 +11975,7 @@ that are tool old (or that have not been created at all).
           },
           {
             "audiences": [],
+            "availability": null,
             "conflict": {},
             "generatedName": "legacyVideoInfoBitrate",
             "key": "bitrate",
@@ -11927,6 +12006,7 @@ that are tool old (or that have not been created at all).
           },
           {
             "audiences": [],
+            "availability": null,
             "conflict": {},
             "generatedName": "legacyVideoInfoAudio",
             "key": "audio",
@@ -11947,6 +12027,7 @@ that are tool old (or that have not been created at all).
                   "additionalProperties": false,
                   "allOf": [],
                   "allOfPropertyConflicts": [],
+                  "availability": null,
                   "description": "Audio stream's metadata.",
                   "generatedName": "LegacyVideoInfoAudio",
                   "groupName": null,
@@ -11954,6 +12035,7 @@ that are tool old (or that have not been created at all).
                   "properties": [
                     {
                       "audiences": [],
+                      "availability": null,
                       "conflict": {},
                       "generatedName": "legacyVideoInfoAudioBitrate",
                       "key": "bitrate",
@@ -11991,6 +12073,7 @@ that are tool old (or that have not been created at all).
                     },
                     {
                       "audiences": [],
+                      "availability": null,
                       "conflict": {},
                       "generatedName": "legacyVideoInfoAudioCodec",
                       "key": "codec",
@@ -12027,6 +12110,7 @@ that are tool old (or that have not been created at all).
                     },
                     {
                       "audiences": [],
+                      "availability": null,
                       "conflict": {},
                       "generatedName": "legacyVideoInfoAudioSampleRate",
                       "key": "sample_rate",
@@ -12064,6 +12148,7 @@ that are tool old (or that have not been created at all).
                     },
                     {
                       "audiences": [],
+                      "availability": null,
                       "conflict": {},
                       "generatedName": "legacyVideoInfoAudioChannels",
                       "key": "channels",
@@ -12106,6 +12191,7 @@ that are tool old (or that have not been created at all).
           },
           {
             "audiences": [],
+            "availability": null,
             "conflict": {},
             "generatedName": "legacyVideoInfoVideo",
             "key": "video",
@@ -12120,6 +12206,7 @@ that are tool old (or that have not been created at all).
                 "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
+                "availability": null,
                 "description": "Video stream's metadata.",
                 "generatedName": "LegacyVideoInfoVideo",
                 "groupName": null,
@@ -12127,6 +12214,7 @@ that are tool old (or that have not been created at all).
                 "properties": [
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "legacyVideoInfoVideoHeight",
                     "key": "height",
@@ -12157,6 +12245,7 @@ that are tool old (or that have not been created at all).
                   },
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "legacyVideoInfoVideoWidth",
                     "key": "width",
@@ -12187,6 +12276,7 @@ that are tool old (or that have not been created at all).
                   },
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "legacyVideoInfoVideoFrameRate",
                     "key": "frame_rate",
@@ -12217,6 +12307,7 @@ that are tool old (or that have not been created at all).
                   },
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "legacyVideoInfoVideoBitrate",
                     "key": "bitrate",
@@ -12247,6 +12338,7 @@ that are tool old (or that have not been created at all).
                   },
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "legacyVideoInfoVideoCodec",
                     "key": "codec",
@@ -12622,6 +12714,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Image metadata.",
       "generatedName": "SchemasImageInfo",
       "groupName": null,
@@ -12629,6 +12722,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "schemasImageInfoColorMode",
           "key": "color_mode",
@@ -12801,6 +12895,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "schemasImageInfoOrientation",
           "key": "orientation",
@@ -12831,6 +12926,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "schemasImageInfoFormat",
           "key": "format",
@@ -12853,6 +12949,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "schemasImageInfoSequence",
           "key": "sequence",
@@ -12871,6 +12968,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "schemasImageInfoHeight",
           "key": "height",
@@ -12894,6 +12992,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "schemasImageInfoWidth",
           "key": "width",
@@ -12917,6 +13016,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "schemasImageInfoGeoLocation",
           "key": "geo_location",
@@ -12931,6 +13031,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
               "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
+              "availability": null,
               "description": "Geo-location of image from EXIF.",
               "generatedName": "SchemasImageInfoGeoLocation",
               "groupName": null,
@@ -12938,6 +13039,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
               "properties": [
                 {
                   "audiences": [],
+                  "availability": null,
                   "conflict": {},
                   "generatedName": "schemasImageInfoGeoLocationLatitude",
                   "key": "latitude",
@@ -12961,6 +13063,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
                 },
                 {
                   "audiences": [],
+                  "availability": null,
                   "conflict": {},
                   "generatedName": "schemasImageInfoGeoLocationLongitude",
                   "key": "longitude",
@@ -12989,6 +13092,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "schemasImageInfoDatetimeOriginal",
           "key": "datetime_original",
@@ -13013,6 +13117,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "schemasImageInfoDpi",
           "key": "dpi",
@@ -13406,6 +13511,7 @@ change the value to \`auto\`.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Video metadata.",
       "generatedName": "VideoInfo",
       "groupName": null,
@@ -13413,6 +13519,7 @@ change the value to \`auto\`.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "videoInfoDuration",
           "key": "duration",
@@ -13443,6 +13550,7 @@ change the value to \`auto\`.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "videoInfoFormat",
           "key": "format",
@@ -13465,6 +13573,7 @@ change the value to \`auto\`.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "videoInfoBitrate",
           "key": "bitrate",
@@ -13495,6 +13604,7 @@ change the value to \`auto\`.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "videoInfoAudio",
           "key": "audio",
@@ -13509,6 +13619,7 @@ change the value to \`auto\`.
               "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
+              "availability": null,
               "description": "Audio stream's metadata.",
               "generatedName": "VideoInfoAudioItem",
               "groupName": null,
@@ -13516,6 +13627,7 @@ change the value to \`auto\`.
               "properties": [
                 {
                   "audiences": [],
+                  "availability": null,
                   "conflict": {},
                   "generatedName": "videoInfoAudioItemBitrate",
                   "key": "bitrate",
@@ -13546,6 +13658,7 @@ change the value to \`auto\`.
                 },
                 {
                   "audiences": [],
+                  "availability": null,
                   "conflict": {},
                   "generatedName": "videoInfoAudioItemCodec",
                   "key": "codec",
@@ -13575,6 +13688,7 @@ change the value to \`auto\`.
                 },
                 {
                   "audiences": [],
+                  "availability": null,
                   "conflict": {},
                   "generatedName": "videoInfoAudioItemSampleRate",
                   "key": "sample_rate",
@@ -13605,6 +13719,7 @@ change the value to \`auto\`.
                 },
                 {
                   "audiences": [],
+                  "availability": null,
                   "conflict": {},
                   "generatedName": "videoInfoAudioItemChannels",
                   "key": "channels",
@@ -13640,6 +13755,7 @@ change the value to \`auto\`.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "videoInfoVideo",
           "key": "video",
@@ -13654,6 +13770,7 @@ change the value to \`auto\`.
               "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
+              "availability": null,
               "description": "Video stream's metadata.",
               "generatedName": "VideoInfoVideoItem",
               "groupName": null,
@@ -13661,6 +13778,7 @@ change the value to \`auto\`.
               "properties": [
                 {
                   "audiences": [],
+                  "availability": null,
                   "conflict": {},
                   "generatedName": "videoInfoVideoItemHeight",
                   "key": "height",
@@ -13684,6 +13802,7 @@ change the value to \`auto\`.
                 },
                 {
                   "audiences": [],
+                  "availability": null,
                   "conflict": {},
                   "generatedName": "videoInfoVideoItemWidth",
                   "key": "width",
@@ -13707,6 +13826,7 @@ change the value to \`auto\`.
                 },
                 {
                   "audiences": [],
+                  "availability": null,
                   "conflict": {},
                   "generatedName": "videoInfoVideoItemFrameRate",
                   "key": "frame_rate",
@@ -13730,6 +13850,7 @@ change the value to \`auto\`.
                 },
                 {
                   "audiences": [],
+                  "availability": null,
                   "conflict": {},
                   "generatedName": "videoInfoVideoItemBitrate",
                   "key": "bitrate",
@@ -13760,6 +13881,7 @@ change the value to \`auto\`.
                 },
                 {
                   "audiences": [],
+                  "availability": null,
                   "conflict": {},
                   "generatedName": "videoInfoVideoItemCodec",
                   "key": "codec",

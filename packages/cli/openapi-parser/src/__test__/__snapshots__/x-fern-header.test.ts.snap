@@ -24,6 +24,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       "path": "/user/{userId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "userId",
           "schema": {
@@ -53,6 +54,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "UserGetStreamRequest",
           "groupName": null,
@@ -62,6 +64,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
               "audiences": [
                 "public",
               ],
+              "availability": null,
               "conflict": {},
               "generatedName": "userGetStreamRequestStream",
               "key": "stream",
@@ -176,6 +179,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       "path": "/user/{userId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "userId",
           "schema": {
@@ -205,6 +209,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "UserGetRequest",
           "groupName": null,
@@ -214,6 +219,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
               "audiences": [
                 "public",
               ],
+              "availability": null,
               "conflict": {},
               "generatedName": "userGetRequestStream",
               "key": "stream",
@@ -273,6 +279,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "StreamUser",
       "groupName": null,
@@ -280,6 +287,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "streamUserId",
           "key": "id",
@@ -309,6 +317,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "streamUserStreamed",
           "key": "streamed",
@@ -339,6 +348,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "User",
       "groupName": null,
@@ -346,6 +356,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "userId",
           "key": "id",
@@ -375,6 +386,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "userStreamed",
           "key": "streamed",

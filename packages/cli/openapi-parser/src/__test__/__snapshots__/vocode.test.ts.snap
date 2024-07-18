@@ -139,6 +139,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "page",
           "parameterNameOverride": null,
@@ -167,6 +168,7 @@ exports[`open api parser vocode parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": null,
           "name": "size",
           "parameterNameOverride": null,
@@ -250,6 +252,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "phone_number",
           "parameterNameOverride": null,
@@ -364,6 +367,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "phone_number",
           "parameterNameOverride": null,
@@ -452,6 +456,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "phone_number",
           "parameterNameOverride": null,
@@ -655,6 +660,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "page",
           "parameterNameOverride": null,
@@ -683,6 +689,7 @@ exports[`open api parser vocode parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": null,
           "name": "size",
           "parameterNameOverride": null,
@@ -766,6 +773,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "id",
           "parameterNameOverride": null,
@@ -841,6 +849,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "id",
           "parameterNameOverride": null,
@@ -1023,6 +1032,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "id",
           "parameterNameOverride": null,
@@ -1175,6 +1185,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "id",
           "parameterNameOverride": null,
@@ -1321,6 +1332,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "page",
           "parameterNameOverride": null,
@@ -1349,6 +1361,7 @@ exports[`open api parser vocode parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": null,
           "name": "size",
           "parameterNameOverride": null,
@@ -1529,6 +1542,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "id",
           "parameterNameOverride": null,
@@ -1647,6 +1661,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "id",
           "parameterNameOverride": null,
@@ -1838,6 +1853,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "page",
           "parameterNameOverride": null,
@@ -1866,6 +1882,7 @@ exports[`open api parser vocode parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": null,
           "name": "size",
           "parameterNameOverride": null,
@@ -2016,6 +2033,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "id",
           "parameterNameOverride": null,
@@ -2104,6 +2122,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "id",
           "parameterNameOverride": null,
@@ -2258,6 +2277,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "page",
           "parameterNameOverride": null,
@@ -2286,6 +2306,7 @@ exports[`open api parser vocode parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": null,
           "name": "size",
           "parameterNameOverride": null,
@@ -2474,6 +2495,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "id",
           "parameterNameOverride": null,
@@ -2661,6 +2683,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "id",
           "parameterNameOverride": null,
@@ -2817,6 +2840,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "page",
           "parameterNameOverride": null,
@@ -2845,6 +2869,7 @@ exports[`open api parser vocode parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": null,
           "name": "size",
           "parameterNameOverride": null,
@@ -3129,6 +3154,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "id",
           "parameterNameOverride": null,
@@ -3228,6 +3254,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ActionPage",
       "groupName": null,
@@ -3235,6 +3262,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "actionPageItems",
           "key": "items",
@@ -3287,6 +3315,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "actionPagePage",
           "key": "page",
@@ -3310,6 +3339,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "actionPageSize",
           "key": "size",
@@ -3333,6 +3363,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "actionPageHasMore",
           "key": "has_more",
@@ -3432,6 +3463,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Agent",
       "groupName": null,
@@ -3439,6 +3471,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentId",
           "key": "id",
@@ -3461,6 +3494,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentUserId",
           "key": "user_id",
@@ -3483,6 +3517,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentPrompt",
           "key": "prompt",
@@ -3505,6 +3540,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentLanguage",
           "key": "language",
@@ -3527,6 +3563,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentActions",
           "key": "actions",
@@ -3579,6 +3616,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentVoice",
           "key": "voice",
@@ -3632,6 +3670,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentInitialMessage",
           "key": "initial_message",
@@ -3661,6 +3700,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentWebhook",
           "key": "webhook",
@@ -3683,6 +3723,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentVectorDatabase",
           "key": "vector_database",
@@ -3705,6 +3746,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentInterruptSensitivity",
           "key": "interrupt_sensitivity",
@@ -3732,6 +3774,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "AgentPage",
       "groupName": null,
@@ -3739,6 +3782,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentPageItems",
           "key": "items",
@@ -3761,6 +3805,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentPagePage",
           "key": "page",
@@ -3784,6 +3829,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentPageSize",
           "key": "size",
@@ -3807,6 +3853,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentPageHasMore",
           "key": "has_more",
@@ -3830,6 +3877,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "AgentParams",
       "groupName": null,
@@ -3837,6 +3885,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentParamsPrompt",
           "key": "prompt",
@@ -3859,6 +3908,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentParamsLanguage",
           "key": "language",
@@ -3881,6 +3931,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentParamsActions",
           "key": "actions",
@@ -3967,6 +4018,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentParamsVoice",
           "key": "voice",
@@ -4047,6 +4099,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentParamsInitialMessage",
           "key": "initial_message",
@@ -4076,6 +4129,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentParamsWebhook",
           "key": "webhook",
@@ -4125,6 +4179,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentParamsVectorDatabase",
           "key": "vector_database",
@@ -4174,6 +4229,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentParamsInterruptSensitivity",
           "key": "interrupt_sensitivity",
@@ -4201,6 +4257,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "AgentUpdateParams",
       "groupName": null,
@@ -4208,6 +4265,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentUpdateParamsPrompt",
           "key": "prompt",
@@ -4257,6 +4315,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentUpdateParamsLanguage",
           "key": "language",
@@ -4299,6 +4358,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentUpdateParamsActions",
           "key": "actions",
@@ -4405,6 +4465,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentUpdateParamsVoice",
           "key": "voice",
@@ -4500,6 +4561,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentUpdateParamsInitialMessage",
           "key": "initial_message",
@@ -4549,6 +4611,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentUpdateParamsWebhook",
           "key": "webhook",
@@ -4606,6 +4669,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentUpdateParamsVectorDatabase",
           "key": "vector_database",
@@ -4663,6 +4727,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "agentUpdateParamsInterruptSensitivity",
           "key": "interrupt_sensitivity",
@@ -4710,6 +4775,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "AzureVoice",
       "groupName": null,
@@ -4717,6 +4783,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "azureVoiceId",
           "key": "id",
@@ -4739,6 +4806,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "azureVoiceUserId",
           "key": "user_id",
@@ -4761,6 +4829,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "azureVoiceVoiceName",
           "key": "voice_name",
@@ -4783,6 +4852,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "azureVoicePitch",
           "key": "pitch",
@@ -4813,6 +4883,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "azureVoiceRate",
           "key": "rate",
@@ -4848,6 +4919,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "AzureVoiceParams",
       "groupName": null,
@@ -4855,6 +4927,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "azureVoiceParamsVoiceName",
           "key": "voice_name",
@@ -4877,6 +4950,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "azureVoiceParamsPitch",
           "key": "pitch",
@@ -4907,6 +4981,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "azureVoiceParamsRate",
           "key": "rate",
@@ -4942,6 +5017,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "AzureVoiceUpdateParams",
       "groupName": null,
@@ -4949,6 +5025,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "azureVoiceUpdateParamsVoiceName",
           "key": "voice_name",
@@ -4998,6 +5075,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "azureVoiceUpdateParamsPitch",
           "key": "pitch",
@@ -5048,6 +5126,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "azureVoiceUpdateParamsRate",
           "key": "rate",
@@ -5103,6 +5182,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Call",
       "groupName": null,
@@ -5110,6 +5190,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "callId",
           "key": "id",
@@ -5132,6 +5213,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "callUserId",
           "key": "user_id",
@@ -5154,6 +5236,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "callStatus",
           "key": "status",
@@ -5176,6 +5259,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "callErrorMessage",
           "key": "error_message",
@@ -5205,6 +5289,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "callRecordingAvailable",
           "key": "recording_available",
@@ -5230,6 +5315,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "callTranscript",
           "key": "transcript",
@@ -5259,6 +5345,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "callToNumber",
           "key": "to_number",
@@ -5281,6 +5368,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "callFromNumber",
           "key": "from_number",
@@ -5303,6 +5391,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "callAgent",
           "key": "agent",
@@ -5318,6 +5407,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "callAgentPhoneNumber",
           "key": "agent_phone_number",
@@ -5340,6 +5430,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "callStartTime",
           "key": "start_time",
@@ -5364,6 +5455,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "callEndTime",
           "key": "end_time",
@@ -5393,6 +5485,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "CallPage",
       "groupName": null,
@@ -5400,6 +5493,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "callPageItems",
           "key": "items",
@@ -5422,6 +5516,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "callPagePage",
           "key": "page",
@@ -5445,6 +5540,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "callPageSize",
           "key": "size",
@@ -5468,6 +5564,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "callPageHasMore",
           "key": "has_more",
@@ -5548,6 +5645,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "CreateCallAgentParams",
       "groupName": null,
@@ -5555,6 +5653,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createCallAgentParamsPrompt",
           "key": "prompt",
@@ -5577,6 +5676,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createCallAgentParamsLanguage",
           "key": "language",
@@ -5599,6 +5699,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createCallAgentParamsActions",
           "key": "actions",
@@ -5685,6 +5786,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createCallAgentParamsVoice",
           "key": "voice",
@@ -5772,6 +5874,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createCallAgentParamsInitialMessage",
           "key": "initial_message",
@@ -5801,6 +5904,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createCallAgentParamsWebhook",
           "key": "webhook",
@@ -5850,6 +5954,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createCallAgentParamsVectorDatabase",
           "key": "vector_database",
@@ -5899,6 +6004,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createCallAgentParamsInterruptSensitivity",
           "key": "interrupt_sensitivity",
@@ -5926,6 +6032,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "CreateCallRequest",
       "groupName": null,
@@ -5933,6 +6040,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createCallRequestFromNumber",
           "key": "from_number",
@@ -5955,6 +6063,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createCallRequestToNumber",
           "key": "to_number",
@@ -5977,6 +6086,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createCallRequestAgent",
           "key": "agent",
@@ -6024,6 +6134,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "DtmfAction",
       "groupName": null,
@@ -6031,6 +6142,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "dtmfActionId",
           "key": "id",
@@ -6053,6 +6165,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "dtmfActionUserId",
           "key": "user_id",
@@ -6075,6 +6188,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "dtmfActionConfig",
           "key": "config",
@@ -6102,6 +6216,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "DtmfActionParams",
       "groupName": null,
@@ -6109,6 +6224,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "dtmfActionParamsConfig",
           "key": "config",
@@ -6136,6 +6252,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "DtmfActionUpdateParams",
       "groupName": null,
@@ -6143,6 +6260,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "dtmfActionUpdateParamsConfig",
           "key": "config",
@@ -6190,6 +6308,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ElevenLabsVoice",
       "groupName": null,
@@ -6197,6 +6316,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "elevenLabsVoiceId",
           "key": "id",
@@ -6219,6 +6339,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "elevenLabsVoiceUserId",
           "key": "user_id",
@@ -6241,6 +6362,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "elevenLabsVoiceVoiceId",
           "key": "voice_id",
@@ -6263,6 +6385,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "elevenLabsVoiceStability",
           "key": "stability",
@@ -6293,6 +6416,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "elevenLabsVoiceSimilarityBoost",
           "key": "similarity_boost",
@@ -6323,6 +6447,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "elevenLabsVoiceApiKey",
           "key": "api_key",
@@ -6350,6 +6475,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ElevenLabsVoiceParams",
       "groupName": null,
@@ -6357,6 +6483,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "elevenLabsVoiceParamsVoiceId",
           "key": "voice_id",
@@ -6379,6 +6506,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "elevenLabsVoiceParamsStability",
           "key": "stability",
@@ -6409,6 +6537,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "elevenLabsVoiceParamsSimilarityBoost",
           "key": "similarity_boost",
@@ -6439,6 +6568,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "elevenLabsVoiceParamsApiKey",
           "key": "api_key",
@@ -6466,6 +6596,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ElevenLabsVoiceUpdateParams",
       "groupName": null,
@@ -6473,6 +6604,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "elevenLabsVoiceUpdateParamsVoiceId",
           "key": "voice_id",
@@ -6522,6 +6654,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "elevenLabsVoiceUpdateParamsStability",
           "key": "stability",
@@ -6572,6 +6705,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "elevenLabsVoiceUpdateParamsSimilarityBoost",
           "key": "similarity_boost",
@@ -6622,6 +6756,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "elevenLabsVoiceUpdateParamsApiKey",
           "key": "api_key",
@@ -6676,6 +6811,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "EmptyActionConfig",
       "groupName": null,
@@ -6687,6 +6823,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "EndConversationAction",
       "groupName": null,
@@ -6694,6 +6831,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "endConversationActionId",
           "key": "id",
@@ -6716,6 +6854,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "endConversationActionUserId",
           "key": "user_id",
@@ -6738,6 +6877,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "endConversationActionConfig",
           "key": "config",
@@ -6765,6 +6905,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "EndConversationActionParams",
       "groupName": null,
@@ -6772,6 +6913,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "endConversationActionParamsConfig",
           "key": "config",
@@ -6799,6 +6941,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "EndConversationActionUpdateParams",
       "groupName": null,
@@ -6806,6 +6949,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "endConversationActionUpdateParamsConfig",
           "key": "config",
@@ -6967,6 +7111,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "HttpValidationError",
       "groupName": null,
@@ -6974,6 +7119,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "httpValidationErrorDetail",
           "key": "detail",
@@ -7086,6 +7232,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "NormalizedAgent",
       "groupName": null,
@@ -7093,6 +7240,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedAgentId",
           "key": "id",
@@ -7115,6 +7263,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedAgentUserId",
           "key": "user_id",
@@ -7137,6 +7286,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedAgentPrompt",
           "key": "prompt",
@@ -7159,6 +7309,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedAgentLanguage",
           "key": "language",
@@ -7181,6 +7332,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedAgentActions",
           "key": "actions",
@@ -7210,6 +7362,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedAgentVoice",
           "key": "voice",
@@ -7232,6 +7385,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedAgentInitialMessage",
           "key": "initial_message",
@@ -7261,6 +7415,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedAgentWebhook",
           "key": "webhook",
@@ -7290,6 +7445,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedAgentVectorDatabase",
           "key": "vector_database",
@@ -7339,6 +7495,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedAgentInterruptSensitivity",
           "key": "interrupt_sensitivity",
@@ -7366,6 +7523,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "NormalizedCall",
       "groupName": null,
@@ -7373,6 +7531,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedCallId",
           "key": "id",
@@ -7395,6 +7554,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedCallUserId",
           "key": "user_id",
@@ -7417,6 +7577,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedCallStatus",
           "key": "status",
@@ -7439,6 +7600,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedCallErrorMessage",
           "key": "error_message",
@@ -7468,6 +7630,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedCallRecordingAvailable",
           "key": "recording_available",
@@ -7493,6 +7656,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedCallTranscript",
           "key": "transcript",
@@ -7522,6 +7686,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedCallToNumber",
           "key": "to_number",
@@ -7544,6 +7709,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedCallFromNumber",
           "key": "from_number",
@@ -7566,6 +7732,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedCallAgent",
           "key": "agent",
@@ -7588,6 +7755,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedCallAgentPhoneNumber",
           "key": "agent_phone_number",
@@ -7610,6 +7778,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedCallStartTime",
           "key": "start_time",
@@ -7634,6 +7803,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedCallEndTime",
           "key": "end_time",
@@ -7663,6 +7833,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "NormalizedPhoneNumber",
       "groupName": null,
@@ -7670,6 +7841,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedPhoneNumberId",
           "key": "id",
@@ -7692,6 +7864,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedPhoneNumberUserId",
           "key": "user_id",
@@ -7714,6 +7887,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedPhoneNumberActive",
           "key": "active",
@@ -7739,6 +7913,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedPhoneNumberLabel",
           "key": "label",
@@ -7768,6 +7943,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedPhoneNumberInboundAgent",
           "key": "inbound_agent",
@@ -7790,6 +7966,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedPhoneNumberNumber",
           "key": "number",
@@ -7817,6 +7994,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PhoneNumber",
       "groupName": null,
@@ -7824,6 +8002,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "phoneNumberId",
           "key": "id",
@@ -7846,6 +8025,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "phoneNumberUserId",
           "key": "user_id",
@@ -7868,6 +8048,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "phoneNumberActive",
           "key": "active",
@@ -7893,6 +8074,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "phoneNumberLabel",
           "key": "label",
@@ -7922,6 +8104,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "phoneNumberInboundAgent",
           "key": "inbound_agent",
@@ -7937,6 +8120,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "phoneNumberNumber",
           "key": "number",
@@ -7964,6 +8148,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PhoneNumberPage",
       "groupName": null,
@@ -7971,6 +8156,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "phoneNumberPageItems",
           "key": "items",
@@ -7993,6 +8179,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "phoneNumberPagePage",
           "key": "page",
@@ -8016,6 +8203,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "phoneNumberPageSize",
           "key": "size",
@@ -8039,6 +8227,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "phoneNumberPageHasMore",
           "key": "has_more",
@@ -8062,6 +8251,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PineconeVectorDatabase",
       "groupName": null,
@@ -8069,6 +8259,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "pineconeVectorDatabaseId",
           "key": "id",
@@ -8091,6 +8282,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "pineconeVectorDatabaseUserId",
           "key": "user_id",
@@ -8113,6 +8305,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "pineconeVectorDatabaseType",
           "key": "type",
@@ -8131,6 +8324,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "pineconeVectorDatabaseIndex",
           "key": "index",
@@ -8153,6 +8347,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "pineconeVectorDatabaseApiKey",
           "key": "api_key",
@@ -8175,6 +8370,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "pineconeVectorDatabaseApiEnvironment",
           "key": "api_environment",
@@ -8202,6 +8398,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PineconeVectorDatabaseParams",
       "groupName": null,
@@ -8209,6 +8406,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "pineconeVectorDatabaseParamsType",
           "key": "type",
@@ -8227,6 +8425,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "pineconeVectorDatabaseParamsIndex",
           "key": "index",
@@ -8249,6 +8448,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "pineconeVectorDatabaseParamsApiKey",
           "key": "api_key",
@@ -8271,6 +8471,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "pineconeVectorDatabaseParamsApiEnvironment",
           "key": "api_environment",
@@ -8298,6 +8499,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PineconeVectorDatabaseUpdateParams",
       "groupName": null,
@@ -8305,6 +8507,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "pineconeVectorDatabaseUpdateParamsType",
           "key": "type",
@@ -8323,6 +8526,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "pineconeVectorDatabaseUpdateParamsIndex",
           "key": "index",
@@ -8372,6 +8576,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "pineconeVectorDatabaseUpdateParamsApiKey",
           "key": "api_key",
@@ -8421,6 +8626,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "pineconeVectorDatabaseUpdateParamsApiEnvironment",
           "key": "api_environment",
@@ -8520,6 +8726,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PlayHtVoice",
       "groupName": null,
@@ -8527,6 +8734,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "playHtVoiceId",
           "key": "id",
@@ -8549,6 +8757,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "playHtVoiceUserId",
           "key": "user_id",
@@ -8571,6 +8780,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "playHtVoiceVoiceId",
           "key": "voice_id",
@@ -8593,6 +8803,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "playHtVoiceApiUserId",
           "key": "api_user_id",
@@ -8615,6 +8826,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "playHtVoiceApiKey",
           "key": "api_key",
@@ -8642,6 +8854,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PlayHtVoiceParams",
       "groupName": null,
@@ -8649,6 +8862,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "playHtVoiceParamsVoiceId",
           "key": "voice_id",
@@ -8671,6 +8885,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "playHtVoiceParamsApiUserId",
           "key": "api_user_id",
@@ -8693,6 +8908,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "playHtVoiceParamsApiKey",
           "key": "api_key",
@@ -8720,6 +8936,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PlayHtVoiceUpdateParams",
       "groupName": null,
@@ -8727,6 +8944,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "playHtVoiceUpdateParamsVoiceId",
           "key": "voice_id",
@@ -8776,6 +8994,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "playHtVoiceUpdateParamsApiUserId",
           "key": "api_user_id",
@@ -8825,6 +9044,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "playHtVoiceUpdateParamsApiKey",
           "key": "api_key",
@@ -8879,6 +9099,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "RimeVoice",
       "groupName": null,
@@ -8886,6 +9107,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "rimeVoiceId",
           "key": "id",
@@ -8908,6 +9130,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "rimeVoiceUserId",
           "key": "user_id",
@@ -8930,6 +9153,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "rimeVoiceSpeaker",
           "key": "speaker",
@@ -8957,6 +9181,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "RimeVoiceParams",
       "groupName": null,
@@ -8964,6 +9189,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "rimeVoiceParamsSpeaker",
           "key": "speaker",
@@ -8991,6 +9217,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "RimeVoiceUpdateParams",
       "groupName": null,
@@ -8998,6 +9225,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "rimeVoiceUpdateParamsSpeaker",
           "key": "speaker",
@@ -9052,6 +9280,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "TransferCallAction",
       "groupName": null,
@@ -9059,6 +9288,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferCallActionId",
           "key": "id",
@@ -9081,6 +9311,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferCallActionUserId",
           "key": "user_id",
@@ -9103,6 +9334,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferCallActionConfig",
           "key": "config",
@@ -9123,6 +9355,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "TransferCallActionParams",
       "groupName": null,
@@ -9130,6 +9363,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferCallActionParamsConfig",
           "key": "config",
@@ -9150,6 +9384,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "TransferCallActionUpdateParams",
       "groupName": null,
@@ -9157,6 +9392,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferCallActionUpdateParamsConfig",
           "key": "config",
@@ -9204,6 +9440,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "TransferCallConfig",
       "groupName": null,
@@ -9211,6 +9448,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transferCallConfigPhoneNumber",
           "key": "phone_number",
@@ -9238,6 +9476,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Undefined",
       "groupName": null,
@@ -9249,6 +9488,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "UpdateNumberRequest",
       "groupName": null,
@@ -9256,6 +9496,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "updateNumberRequestLabel",
           "key": "label",
@@ -9305,6 +9546,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "updateNumberRequestInboundAgent",
           "key": "inbound_agent",
@@ -9367,6 +9609,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Usage",
       "groupName": null,
@@ -9374,6 +9617,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "usageUserId",
           "key": "user_id",
@@ -9396,6 +9640,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "usagePlanType",
           "key": "plan_type",
@@ -9411,6 +9656,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "usageMonthlyUsageMinutes",
           "key": "monthly_usage_minutes",
@@ -9434,6 +9680,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "usageMonthlyUsageLimitMinutes",
           "key": "monthly_usage_limit_minutes",
@@ -9462,6 +9709,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ValidationError",
       "groupName": null,
@@ -9469,6 +9717,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "validationErrorLoc",
           "key": "loc",
@@ -9526,6 +9775,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "validationErrorMsg",
           "key": "msg",
@@ -9548,6 +9798,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "validationErrorType",
           "key": "type",
@@ -9575,6 +9826,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "VoicePage",
       "groupName": null,
@@ -9582,6 +9834,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "voicePageItems",
           "key": "items",
@@ -9642,6 +9895,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "voicePagePage",
           "key": "page",
@@ -9665,6 +9919,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "voicePageSize",
           "key": "size",
@@ -9688,6 +9943,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "voicePageHasMore",
           "key": "has_more",
@@ -9803,6 +10059,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Webhook",
       "groupName": null,
@@ -9810,6 +10067,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookId",
           "key": "id",
@@ -9832,6 +10090,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookUserId",
           "key": "user_id",
@@ -9854,6 +10113,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookSubscriptions",
           "key": "subscriptions",
@@ -9876,6 +10136,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookUrl",
           "key": "url",
@@ -9898,6 +10159,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookMethod",
           "key": "method",
@@ -9925,6 +10187,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WebhookPage",
       "groupName": null,
@@ -9932,6 +10195,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookPageItems",
           "key": "items",
@@ -9954,6 +10218,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookPagePage",
           "key": "page",
@@ -9977,6 +10242,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookPageSize",
           "key": "size",
@@ -10000,6 +10266,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookPageHasMore",
           "key": "has_more",
@@ -10023,6 +10290,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WebhookParams",
       "groupName": null,
@@ -10030,6 +10298,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookParamsSubscriptions",
           "key": "subscriptions",
@@ -10052,6 +10321,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookParamsUrl",
           "key": "url",
@@ -10074,6 +10344,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookParamsMethod",
           "key": "method",
@@ -10101,6 +10372,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WebhookUpdateParams",
       "groupName": null,
@@ -10108,6 +10380,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookUpdateParamsSubscriptions",
           "key": "subscriptions",
@@ -10157,6 +10430,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookUpdateParamsUrl",
           "key": "url",
@@ -10206,6 +10480,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "webhookUpdateParamsMethod",
           "key": "method",

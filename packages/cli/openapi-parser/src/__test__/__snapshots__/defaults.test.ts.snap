@@ -17,6 +17,7 @@ exports[`open api parser defaults parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Fields used to compose other joint owner invitation schemas.",
       "generatedName": "JointOwnerInvitationFields",
       "groupName": null,
@@ -24,6 +25,7 @@ exports[`open api parser defaults parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "jointOwnerInvitationFieldsFirstName",
           "key": "firstName",
@@ -46,6 +48,7 @@ exports[`open api parser defaults parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "jointOwnerInvitationFieldsLastName",
           "key": "lastName",
@@ -68,6 +71,7 @@ exports[`open api parser defaults parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "jointOwnerInvitationFieldsAge",
           "key": "age",
@@ -91,6 +95,7 @@ exports[`open api parser defaults parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "jointOwnerInvitationFieldsDisallowDebitCardAccess",
           "key": "disallowDebitCardAccess",

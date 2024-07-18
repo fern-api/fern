@@ -142,6 +142,7 @@ Used to retrieve a deployment given its ID or name.
       "path": "/v1/deployments/{id}",
       "pathParameters": [
         {
+          "availability": null,
           "description": "Either the Deployment's ID or its unique name",
           "name": "id",
           "schema": {
@@ -1057,6 +1058,7 @@ Used to list documents. Optionally filter on supported fields.
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": "Filter down to only those documents that are included in the specified index. You may provide either the Vellum-generated ID or the unique name of the index specified upon initial creation.",
           "name": "document_index_id",
           "parameterNameOverride": null,
@@ -1084,6 +1086,7 @@ Used to list documents. Optionally filter on supported fields.
           },
         },
         {
+          "availability": null,
           "description": "Number of results to return per page.",
           "name": "limit",
           "parameterNameOverride": null,
@@ -1112,6 +1115,7 @@ Used to list documents. Optionally filter on supported fields.
           },
         },
         {
+          "availability": null,
           "description": "The initial index from which to return the results.",
           "name": "offset",
           "parameterNameOverride": null,
@@ -1140,6 +1144,7 @@ Used to list documents. Optionally filter on supported fields.
           },
         },
         {
+          "availability": null,
           "description": "Which field to use when ordering the results.",
           "name": "ordering",
           "parameterNameOverride": null,
@@ -1844,6 +1849,7 @@ Used to retrieve a model version given its ID.
       "path": "/v1/model-versions/{id}",
       "pathParameters": [
         {
+          "availability": null,
           "description": "A UUID string identifying this model version.",
           "name": "id",
           "schema": {
@@ -1960,6 +1966,7 @@ Compiles the prompt backing the model version using the provided input values.",
       "path": "/v1/model-versions/{id}/compile-prompt",
       "pathParameters": [
         {
+          "availability": null,
           "description": "A UUID string identifying this model version.",
           "name": "id",
           "schema": {
@@ -2696,6 +2703,7 @@ or overwritten with default values.",
       "path": "/v1/sandboxes/{id}/scenarios",
       "pathParameters": [
         {
+          "availability": null,
           "description": "A UUID string identifying this sandbox.",
           "name": "id",
           "schema": {
@@ -2804,6 +2812,7 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
       "path": "/v1/sandboxes/{id}/scenarios/{scenario_id}",
       "pathParameters": [
         {
+          "availability": null,
           "description": "A UUID string identifying this sandbox.",
           "name": "id",
           "schema": {
@@ -2824,6 +2833,7 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": "An id identifying the scenario that you'd like to delete",
           "name": "scenario_id",
           "schema": {
@@ -3279,6 +3289,7 @@ or overwritten with default values.",
       "path": "/v1/test-suites/{id}/test-cases",
       "pathParameters": [
         {
+          "availability": null,
           "description": "A UUID string identifying this test suite.",
           "name": "id",
           "schema": {
@@ -3387,6 +3398,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
       "path": "/v1/test-suites/{id}/test-cases/{test_case_id}",
       "pathParameters": [
         {
+          "availability": null,
           "description": "A UUID string identifying this test suite.",
           "name": "id",
           "schema": {
@@ -3407,6 +3419,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": "An id identifying the test case that you'd like to delete",
           "name": "test_case_id",
           "schema": {
@@ -3891,6 +3904,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ChatMessage",
       "groupName": null,
@@ -3898,6 +3912,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "chatMessageText",
           "key": "text",
@@ -3920,6 +3935,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "chatMessageRole",
           "key": "role",
@@ -3940,6 +3956,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ChatMessageRequest",
       "groupName": null,
@@ -3947,6 +3964,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "chatMessageRequestText",
           "key": "text",
@@ -3969,6 +3987,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "chatMessageRequestRole",
           "key": "role",
@@ -4049,6 +4068,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ConditionalNodeResult",
       "groupName": null,
@@ -4056,6 +4076,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "conditionalNodeResultData",
           "key": "data",
@@ -4076,6 +4097,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ConditionalNodeResultData",
       "groupName": null,
@@ -4083,6 +4105,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "conditionalNodeResultDataSourceHandleId",
           "key": "source_handle_id",
@@ -4158,6 +4181,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "DeploymentNodeResult",
       "groupName": null,
@@ -4165,6 +4189,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentNodeResultData",
           "key": "data",
@@ -4185,6 +4210,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "DeploymentNodeResultData",
       "groupName": null,
@@ -4192,6 +4218,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentNodeResultDataOutputId",
           "key": "output_id",
@@ -4214,6 +4241,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentNodeResultDataText",
           "key": "text",
@@ -4250,6 +4278,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentNodeResultDataDelta",
           "key": "delta",
@@ -4291,6 +4320,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "DeploymentRead",
       "groupName": null,
@@ -4298,6 +4328,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentReadId",
           "key": "id",
@@ -4320,6 +4351,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentReadCreated",
           "key": "created",
@@ -4337,6 +4369,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentReadLabel",
           "key": "label",
@@ -4359,6 +4392,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentReadName",
           "key": "name",
@@ -4381,6 +4415,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentReadStatus",
           "key": "status",
@@ -4407,6 +4442,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentReadEnvironment",
           "key": "environment",
@@ -4433,6 +4469,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentReadModelType",
           "key": "model_type",
@@ -4451,6 +4488,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentReadActiveModelVersionIds",
           "key": "active_model_version_ids",
@@ -4480,6 +4518,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentReadLastDeployedOn",
           "key": "last_deployed_on",
@@ -4549,6 +4588,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Document",
       "groupName": null,
@@ -4556,6 +4596,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "documentId",
           "key": "id",
@@ -4578,6 +4619,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "documentLabel",
           "key": "label",
@@ -4600,6 +4642,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "documentExternalId",
           "key": "external_id",
@@ -4641,6 +4684,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "DocumentDocumentToDocumentIndex",
       "groupName": null,
@@ -4648,6 +4692,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "documentDocumentToDocumentIndexId",
           "key": "id",
@@ -4670,6 +4715,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "documentDocumentToDocumentIndexDocumentIndexId",
           "key": "document_index_id",
@@ -4692,6 +4738,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "documentDocumentToDocumentIndexIndexingState",
           "key": "indexing_state",
@@ -4725,6 +4772,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "DocumentIndexCreateRequest",
       "groupName": null,
@@ -4732,6 +4780,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "documentIndexCreateRequestLabel",
           "key": "label",
@@ -4754,6 +4803,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "documentIndexCreateRequestName",
           "key": "name",
@@ -4776,6 +4826,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "documentIndexCreateRequestStatus",
           "key": "status",
@@ -4801,6 +4852,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "documentIndexCreateRequestEnvironment",
           "key": "environment",
@@ -4827,6 +4879,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "documentIndexCreateRequestIndexingConfig",
           "key": "indexing_config",
@@ -4860,6 +4913,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "documentIndexCreateRequestCopyDocumentsFromIndexId",
           "key": "copy_documents_from_index_id",
@@ -4894,6 +4948,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "DocumentIndexRead",
       "groupName": null,
@@ -4901,6 +4956,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "documentIndexReadId",
           "key": "id",
@@ -4923,6 +4979,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "documentIndexReadCreated",
           "key": "created",
@@ -4940,6 +4997,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "documentIndexReadLabel",
           "key": "label",
@@ -4962,6 +5020,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "documentIndexReadName",
           "key": "name",
@@ -4984,6 +5043,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "documentIndexReadStatus",
           "key": "status",
@@ -5009,6 +5069,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "documentIndexReadEnvironment",
           "key": "environment",
@@ -5035,6 +5096,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "documentIndexReadIndexingConfig",
           "key": "indexing_config",
@@ -5107,6 +5169,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "EnrichedNormalizedCompletion",
       "groupName": null,
@@ -5114,6 +5177,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "enrichedNormalizedCompletionId",
           "key": "id",
@@ -5136,6 +5200,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "enrichedNormalizedCompletionExternalId",
           "key": "external_id",
@@ -5172,6 +5237,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "enrichedNormalizedCompletionText",
           "key": "text",
@@ -5194,6 +5260,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "enrichedNormalizedCompletionFinishReason",
           "key": "finish_reason",
@@ -5220,6 +5287,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "enrichedNormalizedCompletionLogprobs",
           "key": "logprobs",
@@ -5249,6 +5317,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "enrichedNormalizedCompletionModelVersionId",
           "key": "model_version_id",
@@ -5271,6 +5340,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "enrichedNormalizedCompletionType",
           "key": "type",
@@ -5345,6 +5415,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "EvaluationParams",
       "groupName": null,
@@ -5352,6 +5423,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "evaluationParamsTarget",
           "key": "target",
@@ -5386,6 +5458,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "EvaluationParamsRequest",
       "groupName": null,
@@ -5393,6 +5466,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "evaluationParamsRequestTarget",
           "key": "target",
@@ -5427,6 +5501,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ExecuteWorkflowStreamRequest",
       "groupName": null,
@@ -5434,6 +5509,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "executeWorkflowStreamRequestWorkflowDeploymentId",
           "key": "workflow_deployment_id",
@@ -5470,6 +5546,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "executeWorkflowStreamRequestWorkflowDeploymentName",
           "key": "workflow_deployment_name",
@@ -5506,6 +5583,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "executeWorkflowStreamRequestReleaseTag",
           "key": "release_tag",
@@ -5542,6 +5620,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "executeWorkflowStreamRequestInputs",
           "key": "inputs",
@@ -5564,6 +5643,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "executeWorkflowStreamRequestExternalId",
           "key": "external_id",
@@ -5652,6 +5732,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "GenerateBodyRequest",
       "groupName": null,
@@ -5659,6 +5740,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "generateBodyRequestDeploymentId",
           "key": "deployment_id",
@@ -5695,6 +5777,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "generateBodyRequestDeploymentName",
           "key": "deployment_name",
@@ -5731,6 +5814,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "generateBodyRequestRequests",
           "key": "requests",
@@ -5753,6 +5837,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "generateBodyRequestOptions",
           "key": "options",
@@ -5787,6 +5872,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "GenerateErrorResponse",
       "groupName": null,
@@ -5794,6 +5880,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "generateErrorResponseDetail",
           "key": "detail",
@@ -5821,6 +5908,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "GenerateOptionsRequest",
       "groupName": null,
@@ -5828,6 +5916,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "generateOptionsRequestLogprobs",
           "key": "logprobs",
@@ -5858,6 +5947,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "GenerateRequest",
       "groupName": null,
@@ -5865,6 +5955,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "generateRequestInputValues",
           "key": "input_values",
@@ -5898,6 +5989,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "generateRequestChatHistory",
           "key": "chat_history",
@@ -5927,6 +6019,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "generateRequestExternalIds",
           "key": "external_ids",
@@ -5975,6 +6068,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "GenerateResponse",
       "groupName": null,
@@ -5982,6 +6076,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "generateResponseResults",
           "key": "results",
@@ -6009,6 +6104,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "GenerateResult",
       "groupName": null,
@@ -6016,6 +6112,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "generateResultData",
           "key": "data",
@@ -6038,6 +6135,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "generateResultError",
           "key": "error",
@@ -6065,6 +6163,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "GenerateResultData",
       "groupName": null,
@@ -6072,6 +6171,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "generateResultDataCompletions",
           "key": "completions",
@@ -6099,6 +6199,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "GenerateResultError",
       "groupName": null,
@@ -6106,6 +6207,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "generateResultErrorMessage",
           "key": "message",
@@ -6133,6 +6235,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "GenerateStreamBodyRequest",
       "groupName": null,
@@ -6140,6 +6243,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "generateStreamBodyRequestDeploymentId",
           "key": "deployment_id",
@@ -6176,6 +6280,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "generateStreamBodyRequestDeploymentName",
           "key": "deployment_name",
@@ -6212,6 +6317,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "generateStreamBodyRequestRequests",
           "key": "requests",
@@ -6234,6 +6340,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "generateStreamBodyRequestOptions",
           "key": "options",
@@ -6268,6 +6375,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "GenerateStreamResponse",
       "groupName": null,
@@ -6275,6 +6383,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "generateStreamResponseDelta",
           "key": "delta",
@@ -6295,6 +6404,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "GenerateStreamResult",
       "groupName": null,
@@ -6302,6 +6412,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "generateStreamResultRequestIndex",
           "key": "request_index",
@@ -6325,6 +6436,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "generateStreamResultData",
           "key": "data",
@@ -6347,6 +6459,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "generateStreamResultError",
           "key": "error",
@@ -6374,6 +6487,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "GenerateStreamResultData",
       "groupName": null,
@@ -6381,6 +6495,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "generateStreamResultDataCompletionIndex",
           "key": "completion_index",
@@ -6404,6 +6519,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "generateStreamResultDataCompletion",
           "key": "completion",
@@ -6565,6 +6681,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ModelVersionBuildConfig",
       "groupName": null,
@@ -6572,6 +6689,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionBuildConfigBaseModel",
           "key": "base_model",
@@ -6594,6 +6712,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionBuildConfigSandboxSnapshot",
           "key": "sandbox_snapshot",
@@ -6628,6 +6747,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ModelVersionCompilePromptRequestRequest",
       "groupName": null,
@@ -6635,6 +6755,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionCompilePromptRequestRequestInputValues",
           "key": "input_values",
@@ -6673,6 +6794,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ModelVersionCompilePromptResponse",
       "groupName": null,
@@ -6680,6 +6802,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionCompilePromptResponsePrompt",
           "key": "prompt",
@@ -6700,6 +6823,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ModelVersionCompiledPrompt",
       "groupName": null,
@@ -6707,6 +6831,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionCompiledPromptText",
           "key": "text",
@@ -6729,6 +6854,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionCompiledPromptNumTokens",
           "key": "num_tokens",
@@ -6757,6 +6883,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ModelVersionExecConfig",
       "groupName": null,
@@ -6764,6 +6891,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionExecConfigParameters",
           "key": "parameters",
@@ -6779,6 +6907,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionExecConfigInputVariables",
           "key": "input_variables",
@@ -6801,6 +6930,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionExecConfigPromptTemplate",
           "key": "prompt_template",
@@ -6830,6 +6960,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionExecConfigPromptBlockData",
           "key": "prompt_block_data",
@@ -6852,6 +6983,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionExecConfigPromptSyntaxVersion",
           "key": "prompt_syntax_version",
@@ -6887,6 +7019,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ModelVersionExecConfigParameters",
       "groupName": null,
@@ -6894,6 +7027,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionExecConfigParametersTemperature",
           "key": "temperature",
@@ -6917,6 +7051,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionExecConfigParametersMaxTokens",
           "key": "max_tokens",
@@ -6940,6 +7075,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionExecConfigParametersTopP",
           "key": "top_p",
@@ -6963,6 +7099,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionExecConfigParametersFrequencyPenalty",
           "key": "frequency_penalty",
@@ -6986,6 +7123,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionExecConfigParametersPresencePenalty",
           "key": "presence_penalty",
@@ -7009,6 +7147,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionExecConfigParametersLogitBias",
           "key": "logit_bias",
@@ -7074,6 +7213,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionExecConfigParametersStop",
           "key": "stop",
@@ -7117,6 +7257,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionExecConfigParametersTopK",
           "key": "top_k",
@@ -7152,6 +7293,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ModelVersionRead",
       "groupName": null,
@@ -7159,6 +7301,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionReadId",
           "key": "id",
@@ -7181,6 +7324,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionReadCreated",
           "key": "created",
@@ -7198,6 +7342,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionReadLabel",
           "key": "label",
@@ -7220,6 +7365,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionReadModelType",
           "key": "model_type",
@@ -7238,6 +7384,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionReadProvider",
           "key": "provider",
@@ -7262,6 +7409,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionReadExternalId",
           "key": "external_id",
@@ -7284,6 +7432,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionReadBuildConfig",
           "key": "build_config",
@@ -7299,6 +7448,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionReadExecConfig",
           "key": "exec_config",
@@ -7314,6 +7464,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionReadStatus",
           "key": "status",
@@ -7401,6 +7552,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ModelVersionSandboxSnapshot",
       "groupName": null,
@@ -7408,6 +7560,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionSandboxSnapshotId",
           "key": "id",
@@ -7430,6 +7583,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionSandboxSnapshotPromptIndex",
           "key": "prompt_index",
@@ -7460,6 +7614,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionSandboxSnapshotPromptId",
           "key": "prompt_id",
@@ -7489,6 +7644,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelVersionSandboxSnapshotSandboxId",
           "key": "sandbox_id",
@@ -7523,6 +7679,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "NormalizedLogProbs",
       "groupName": null,
@@ -7530,6 +7687,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedLogProbsTokens",
           "key": "tokens",
@@ -7552,6 +7710,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedLogProbsLikelihood",
           "key": "likelihood",
@@ -7587,6 +7746,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "NormalizedTokenLogProbs",
       "groupName": null,
@@ -7594,6 +7754,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedTokenLogProbsToken",
           "key": "token",
@@ -7616,6 +7777,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedTokenLogProbsLogprob",
           "key": "logprob",
@@ -7646,6 +7808,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedTokenLogProbsTopLogprobs",
           "key": "top_logprobs",
@@ -7704,6 +7867,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "normalizedTokenLogProbsTextOffset",
           "key": "text_offset",
@@ -7732,6 +7896,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PaginatedSlimDocumentList",
       "groupName": null,
@@ -7739,6 +7904,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "paginatedSlimDocumentListCount",
           "key": "count",
@@ -7769,6 +7935,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "paginatedSlimDocumentListNext",
           "key": "next",
@@ -7805,6 +7972,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "paginatedSlimDocumentListPrevious",
           "key": "previous",
@@ -7841,6 +8009,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "paginatedSlimDocumentListResults",
           "key": "results",
@@ -7946,6 +8115,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PromptNodeResult",
       "groupName": null,
@@ -7953,6 +8123,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptNodeResultData",
           "key": "data",
@@ -7973,6 +8144,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PromptNodeResultData",
       "groupName": null,
@@ -7980,6 +8152,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptNodeResultDataOutputId",
           "key": "output_id",
@@ -8002,6 +8175,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptNodeResultDataText",
           "key": "text",
@@ -8038,6 +8212,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptNodeResultDataDelta",
           "key": "delta",
@@ -8079,6 +8254,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PromptTemplateBlock",
       "groupName": null,
@@ -8086,6 +8262,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptTemplateBlockId",
           "key": "id",
@@ -8108,6 +8285,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptTemplateBlockBlockType",
           "key": "block_type",
@@ -8123,6 +8301,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptTemplateBlockProperties",
           "key": "properties",
@@ -8143,6 +8322,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PromptTemplateBlockData",
       "groupName": null,
@@ -8150,6 +8330,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptTemplateBlockDataVersion",
           "key": "version",
@@ -8173,6 +8354,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptTemplateBlockDataBlocks",
           "key": "blocks",
@@ -8200,6 +8382,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PromptTemplateBlockDataRequest",
       "groupName": null,
@@ -8207,6 +8390,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptTemplateBlockDataRequestVersion",
           "key": "version",
@@ -8230,6 +8414,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptTemplateBlockDataRequestBlocks",
           "key": "blocks",
@@ -8257,6 +8442,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PromptTemplateBlockProperties",
       "groupName": null,
@@ -8264,6 +8450,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesChatRole",
           "key": "chat_role",
@@ -8293,6 +8480,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesChatMessageUnterminated",
           "key": "chat_message_unterminated",
@@ -8318,6 +8506,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesTemplate",
           "key": "template",
@@ -8354,6 +8543,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesTemplateType",
           "key": "template_type",
@@ -8383,6 +8573,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesFunctionName",
           "key": "function_name",
@@ -8419,6 +8610,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesFunctionDescription",
           "key": "function_description",
@@ -8455,6 +8647,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesFunctionParameters",
           "key": "function_parameters",
@@ -8502,6 +8695,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesBlocks",
           "key": "blocks",
@@ -8543,6 +8737,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PromptTemplateBlockPropertiesRequest",
       "groupName": null,
@@ -8550,6 +8745,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesRequestChatRole",
           "key": "chat_role",
@@ -8579,6 +8775,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesRequestChatMessageUnterminated",
           "key": "chat_message_unterminated",
@@ -8604,6 +8801,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesRequestTemplate",
           "key": "template",
@@ -8640,6 +8838,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesRequestTemplateType",
           "key": "template_type",
@@ -8669,6 +8868,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesRequestFunctionName",
           "key": "function_name",
@@ -8705,6 +8905,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesRequestFunctionDescription",
           "key": "function_description",
@@ -8741,6 +8942,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesRequestFunctionParameters",
           "key": "function_parameters",
@@ -8788,6 +8990,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesRequestBlocks",
           "key": "blocks",
@@ -8829,6 +9032,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PromptTemplateBlockRequest",
       "groupName": null,
@@ -8836,6 +9040,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptTemplateBlockRequestId",
           "key": "id",
@@ -8858,6 +9063,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptTemplateBlockRequestBlockType",
           "key": "block_type",
@@ -8873,6 +9079,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptTemplateBlockRequestProperties",
           "key": "properties",
@@ -8893,6 +9100,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PromptTemplateInputVariable",
       "groupName": null,
@@ -8900,6 +9108,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptTemplateInputVariableKey",
           "key": "key",
@@ -8927,6 +9136,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PromptTemplateInputVariableRequest",
       "groupName": null,
@@ -8934,6 +9144,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "promptTemplateInputVariableRequestKey",
           "key": "key",
@@ -9073,6 +9284,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "RegisterPromptErrorResponse",
       "groupName": null,
@@ -9080,6 +9292,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registerPromptErrorResponseDetail",
           "key": "detail",
@@ -9107,6 +9320,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "RegisterPromptModelParametersRequest",
       "groupName": null,
@@ -9114,6 +9328,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registerPromptModelParametersRequestTemperature",
           "key": "temperature",
@@ -9137,6 +9352,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registerPromptModelParametersRequestMaxTokens",
           "key": "max_tokens",
@@ -9160,6 +9376,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registerPromptModelParametersRequestStop",
           "key": "stop",
@@ -9196,6 +9413,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registerPromptModelParametersRequestTopP",
           "key": "top_p",
@@ -9219,6 +9437,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registerPromptModelParametersRequestTopK",
           "key": "top_k",
@@ -9249,6 +9468,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registerPromptModelParametersRequestFrequencyPenalty",
           "key": "frequency_penalty",
@@ -9272,6 +9492,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registerPromptModelParametersRequestPresencePenalty",
           "key": "presence_penalty",
@@ -9295,6 +9516,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registerPromptModelParametersRequestLogitBias",
           "key": "logit_bias",
@@ -9365,6 +9587,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "RegisterPromptPrompt",
       "groupName": null,
@@ -9372,6 +9595,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registerPromptPromptId",
           "key": "id",
@@ -9394,6 +9618,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registerPromptPromptLabel",
           "key": "label",
@@ -9421,6 +9646,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "RegisterPromptPromptInfoRequest",
       "groupName": null,
@@ -9428,6 +9654,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registerPromptPromptInfoRequestPromptSyntaxVersion",
           "key": "prompt_syntax_version",
@@ -9458,6 +9685,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registerPromptPromptInfoRequestPromptBlockData",
           "key": "prompt_block_data",
@@ -9473,6 +9701,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registerPromptPromptInfoRequestInputVariables",
           "key": "input_variables",
@@ -9500,6 +9729,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "RegisterPromptRequestRequest",
       "groupName": null,
@@ -9507,6 +9737,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registerPromptRequestRequestLabel",
           "key": "label",
@@ -9529,6 +9760,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registerPromptRequestRequestName",
           "key": "name",
@@ -9551,6 +9783,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registerPromptRequestRequestPrompt",
           "key": "prompt",
@@ -9566,6 +9799,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registerPromptRequestRequestProvider",
           "key": "provider",
@@ -9590,6 +9824,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registerPromptRequestRequestModel",
           "key": "model",
@@ -9612,6 +9847,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registerPromptRequestRequestParameters",
           "key": "parameters",
@@ -9627,6 +9863,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registerPromptRequestRequestMeta",
           "key": "meta",
@@ -9672,6 +9909,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "RegisterPromptResponse",
       "groupName": null,
@@ -9679,6 +9917,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registerPromptResponsePrompt",
           "key": "prompt",
@@ -9694,6 +9933,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registerPromptResponseSandboxSnapshot",
           "key": "sandbox_snapshot",
@@ -9709,6 +9949,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registerPromptResponseSandbox",
           "key": "sandbox",
@@ -9724,6 +9965,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registerPromptResponseModelVersion",
           "key": "model_version",
@@ -9739,6 +9981,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registerPromptResponseDeployment",
           "key": "deployment",
@@ -9759,6 +10002,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "RegisteredPromptDeployment",
       "groupName": null,
@@ -9766,6 +10010,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registeredPromptDeploymentId",
           "key": "id",
@@ -9788,6 +10033,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registeredPromptDeploymentName",
           "key": "name",
@@ -9810,6 +10056,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registeredPromptDeploymentLabel",
           "key": "label",
@@ -9837,6 +10084,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "RegisteredPromptModelVersion",
       "groupName": null,
@@ -9844,6 +10092,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registeredPromptModelVersionId",
           "key": "id",
@@ -9866,6 +10115,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registeredPromptModelVersionLabel",
           "key": "label",
@@ -9893,6 +10143,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "RegisteredPromptSandbox",
       "groupName": null,
@@ -9900,6 +10151,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registeredPromptSandboxId",
           "key": "id",
@@ -9922,6 +10174,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registeredPromptSandboxLabel",
           "key": "label",
@@ -9949,6 +10202,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "RegisteredPromptSandboxSnapshot",
       "groupName": null,
@@ -9956,6 +10210,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "registeredPromptSandboxSnapshotId",
           "key": "id",
@@ -9983,6 +10238,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SandboxMetricInputParams",
       "groupName": null,
@@ -9990,6 +10246,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "sandboxMetricInputParamsParams",
           "key": "params",
@@ -10024,6 +10281,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SandboxMetricInputParamsRequest",
       "groupName": null,
@@ -10031,6 +10289,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "sandboxMetricInputParamsRequestParams",
           "key": "params",
@@ -10065,6 +10324,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SandboxNodeResult",
       "groupName": null,
@@ -10072,6 +10332,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "sandboxNodeResultData",
           "key": "data",
@@ -10092,6 +10353,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SandboxNodeResultData",
       "groupName": null,
@@ -10099,6 +10361,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "sandboxNodeResultDataOutputId",
           "key": "output_id",
@@ -10121,6 +10384,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "sandboxNodeResultDataText",
           "key": "text",
@@ -10157,6 +10421,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "sandboxNodeResultDataDelta",
           "key": "delta",
@@ -10198,6 +10463,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SandboxScenario",
       "groupName": null,
@@ -10205,6 +10471,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "sandboxScenarioLabel",
           "key": "label",
@@ -10234,6 +10501,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "sandboxScenarioInputs",
           "key": "inputs",
@@ -10256,6 +10524,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "sandboxScenarioId",
           "key": "id",
@@ -10278,6 +10547,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "sandboxScenarioMetricInputParams",
           "key": "metric_input_params",
@@ -10298,6 +10568,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ScenarioInput",
       "groupName": null,
@@ -10305,6 +10576,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "scenarioInputKey",
           "key": "key",
@@ -10327,6 +10599,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "scenarioInputType",
           "key": "type",
@@ -10356,6 +10629,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "scenarioInputValue",
           "key": "value",
@@ -10385,6 +10659,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "scenarioInputChatHistory",
           "key": "chat_history",
@@ -10419,6 +10694,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ScenarioInputRequest",
       "groupName": null,
@@ -10426,6 +10702,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "scenarioInputRequestKey",
           "key": "key",
@@ -10448,6 +10725,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "scenarioInputRequestType",
           "key": "type",
@@ -10477,6 +10755,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "scenarioInputRequestValue",
           "key": "value",
@@ -10506,6 +10785,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "scenarioInputRequestChatHistory",
           "key": "chat_history",
@@ -10574,6 +10854,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SearchErrorResponse",
       "groupName": null,
@@ -10581,6 +10862,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "searchErrorResponseDetail",
           "key": "detail",
@@ -10608,6 +10890,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SearchFiltersRequest",
       "groupName": null,
@@ -10615,6 +10898,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "searchFiltersRequestExternalIds",
           "key": "external_ids",
@@ -10663,6 +10947,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SearchNodeResult",
       "groupName": null,
@@ -10670,6 +10955,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "searchNodeResultData",
           "key": "data",
@@ -10690,6 +10976,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SearchNodeResultData",
       "groupName": null,
@@ -10697,6 +10984,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "searchNodeResultDataResultsOutputId",
           "key": "results_output_id",
@@ -10719,6 +11007,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "searchNodeResultDataResults",
           "key": "results",
@@ -10759,6 +11048,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "searchNodeResultDataTextOutputId",
           "key": "text_output_id",
@@ -10795,6 +11085,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "searchNodeResultDataText",
           "key": "text",
@@ -10836,6 +11127,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SearchRequestBodyRequest",
       "groupName": null,
@@ -10843,6 +11135,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "searchRequestBodyRequestIndexId",
           "key": "index_id",
@@ -10879,6 +11172,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "searchRequestBodyRequestIndexName",
           "key": "index_name",
@@ -10915,6 +11209,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "searchRequestBodyRequestQuery",
           "key": "query",
@@ -10937,6 +11232,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "searchRequestBodyRequestOptions",
           "key": "options",
@@ -10971,6 +11267,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SearchRequestOptionsRequest",
       "groupName": null,
@@ -10978,6 +11275,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "searchRequestOptionsRequestLimit",
           "key": "limit",
@@ -11015,6 +11313,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "searchRequestOptionsRequestWeights",
           "key": "weights",
@@ -11044,6 +11343,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "searchRequestOptionsRequestResultMerging",
           "key": "result_merging",
@@ -11073,6 +11373,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "searchRequestOptionsRequestFilters",
           "key": "filters",
@@ -11107,6 +11408,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SearchResponse",
       "groupName": null,
@@ -11114,6 +11416,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "searchResponseResults",
           "key": "results",
@@ -11141,6 +11444,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SearchResult",
       "groupName": null,
@@ -11148,6 +11452,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "searchResultDocument",
           "key": "document",
@@ -11163,6 +11468,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "searchResultText",
           "key": "text",
@@ -11185,6 +11491,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "searchResultKeywords",
           "key": "keywords",
@@ -11214,6 +11521,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "searchResultScore",
           "key": "score",
@@ -11242,6 +11550,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SearchResultMergingRequest",
       "groupName": null,
@@ -11249,6 +11558,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "searchResultMergingRequestEnabled",
           "key": "enabled",
@@ -11272,6 +11582,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SearchWeightsRequest",
       "groupName": null,
@@ -11279,6 +11590,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "searchWeightsRequestSemanticSimilarity",
           "key": "semantic_similarity",
@@ -11302,6 +11614,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "searchWeightsRequestKeywords",
           "key": "keywords",
@@ -11330,6 +11643,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SlimDocument",
       "groupName": null,
@@ -11337,6 +11651,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "slimDocumentId",
           "key": "id",
@@ -11359,6 +11674,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "slimDocumentExternalId",
           "key": "external_id",
@@ -11395,6 +11711,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "slimDocumentLastUploadedAt",
           "key": "last_uploaded_at",
@@ -11412,6 +11729,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "slimDocumentLabel",
           "key": "label",
@@ -11434,6 +11752,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "slimDocumentProcessingState",
           "key": "processing_state",
@@ -11461,6 +11780,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "slimDocumentProcessingFailureReason",
           "key": "processing_failure_reason",
@@ -11492,6 +11812,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "slimDocumentStatus",
           "key": "status",
@@ -11516,6 +11837,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "slimDocumentKeywords",
           "key": "keywords",
@@ -11552,6 +11874,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "slimDocumentDocumentToDocumentIndexes",
           "key": "document_to_document_indexes",
@@ -11590,6 +11913,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SubmitCompletionActualRequest",
       "groupName": null,
@@ -11597,6 +11921,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "submitCompletionActualRequestId",
           "key": "id",
@@ -11633,6 +11958,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "submitCompletionActualRequestExternalId",
           "key": "external_id",
@@ -11669,6 +11995,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "submitCompletionActualRequestText",
           "key": "text",
@@ -11705,6 +12032,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "submitCompletionActualRequestQuality",
           "key": "quality",
@@ -11742,6 +12070,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "submitCompletionActualRequestTimestamp",
           "key": "timestamp",
@@ -11778,6 +12107,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SubmitCompletionActualsErrorResponse",
       "groupName": null,
@@ -11785,6 +12115,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "submitCompletionActualsErrorResponseDetail",
           "key": "detail",
@@ -11812,6 +12143,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SubmitCompletionActualsRequest",
       "groupName": null,
@@ -11819,6 +12151,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "submitCompletionActualsRequestDeploymentId",
           "key": "deployment_id",
@@ -11855,6 +12188,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "submitCompletionActualsRequestDeploymentName",
           "key": "deployment_name",
@@ -11891,6 +12225,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "submitCompletionActualsRequestActuals",
           "key": "actuals",
@@ -11918,6 +12253,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "TerminalNodeChatHistoryResult",
       "groupName": null,
@@ -11925,6 +12261,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "terminalNodeChatHistoryResultName",
           "key": "name",
@@ -11947,6 +12284,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "terminalNodeChatHistoryResultValue",
           "key": "value",
@@ -11974,6 +12312,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "TerminalNodeJsonResult",
       "groupName": null,
@@ -11981,6 +12320,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "terminalNodeJsonResultName",
           "key": "name",
@@ -12003,6 +12343,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "terminalNodeJsonResultValue",
           "key": "value",
@@ -12041,6 +12382,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "TerminalNodeResult",
       "groupName": null,
@@ -12048,6 +12390,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "terminalNodeResultData",
           "key": "data",
@@ -12068,6 +12411,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "TerminalNodeResultData",
       "groupName": null,
@@ -12075,6 +12419,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "terminalNodeResultDataOutput",
           "key": "output",
@@ -12133,6 +12478,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "TerminalNodeStringResult",
       "groupName": null,
@@ -12140,6 +12486,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "terminalNodeStringResultName",
           "key": "name",
@@ -12162,6 +12509,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "terminalNodeStringResultValue",
           "key": "value",
@@ -12189,6 +12537,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "TestSuiteTestCase",
       "groupName": null,
@@ -12196,6 +12545,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "testSuiteTestCaseTestCaseId",
           "key": "test_case_id",
@@ -12225,6 +12575,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "testSuiteTestCaseLabel",
           "key": "label",
@@ -12261,6 +12612,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "testSuiteTestCaseInputValues",
           "key": "input_values",
@@ -12294,6 +12646,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "testSuiteTestCaseEvaluationParams",
           "key": "evaluation_params",
@@ -12314,6 +12667,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "TestSuiteTestCaseRequest",
       "groupName": null,
@@ -12321,6 +12675,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "testSuiteTestCaseRequestTestCaseId",
           "key": "test_case_id",
@@ -12350,6 +12705,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "testSuiteTestCaseRequestLabel",
           "key": "label",
@@ -12386,6 +12742,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "testSuiteTestCaseRequestInputValues",
           "key": "input_values",
@@ -12419,6 +12776,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "testSuiteTestCaseRequestEvaluationParams",
           "key": "evaluation_params",
@@ -12439,6 +12797,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "UploadDocumentBodyRequest",
       "groupName": null,
@@ -12446,6 +12805,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "uploadDocumentBodyRequestAddToIndexNames",
           "key": "add_to_index_names",
@@ -12489,6 +12849,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "uploadDocumentBodyRequestExternalId",
           "key": "external_id",
@@ -12525,6 +12886,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "uploadDocumentBodyRequestLabel",
           "key": "label",
@@ -12547,6 +12909,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "uploadDocumentBodyRequestContents",
           "key": "contents",
@@ -12569,6 +12932,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "uploadDocumentBodyRequestKeywords",
           "key": "keywords",
@@ -12617,6 +12981,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "UploadDocumentErrorResponse",
       "groupName": null,
@@ -12624,6 +12989,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "uploadDocumentErrorResponseDetail",
           "key": "detail",
@@ -12651,6 +13017,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "UploadDocumentResponse",
       "groupName": null,
@@ -12658,6 +13025,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "uploadDocumentResponseDocumentId",
           "key": "document_id",
@@ -12685,6 +13053,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "UpsertSandboxScenarioRequestRequest",
       "groupName": null,
@@ -12692,6 +13061,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "upsertSandboxScenarioRequestRequestLabel",
           "key": "label",
@@ -12721,6 +13091,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "upsertSandboxScenarioRequestRequestInputs",
           "key": "inputs",
@@ -12743,6 +13114,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "upsertSandboxScenarioRequestRequestScenarioId",
           "key": "scenario_id",
@@ -12772,6 +13144,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "upsertSandboxScenarioRequestRequestMetricInputParams",
           "key": "metric_input_params",
@@ -12799,6 +13172,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WorkflowEventError",
       "groupName": null,
@@ -12806,6 +13180,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowEventErrorMessage",
           "key": "message",
@@ -12828,6 +13203,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowEventErrorCode",
           "key": "code",
@@ -12882,6 +13258,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WorkflowExecutionNodeResultEvent",
       "groupName": null,
@@ -12889,6 +13266,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowExecutionNodeResultEventRunId",
           "key": "run_id",
@@ -12911,6 +13289,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowExecutionNodeResultEventExternalId",
           "key": "external_id",
@@ -12947,6 +13326,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowExecutionNodeResultEventData",
           "key": "data",
@@ -12967,6 +13347,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WorkflowExecutionWorkflowResultEvent",
       "groupName": null,
@@ -12974,6 +13355,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowExecutionWorkflowResultEventRunId",
           "key": "run_id",
@@ -12996,6 +13378,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowExecutionWorkflowResultEventExternalId",
           "key": "external_id",
@@ -13032,6 +13415,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowExecutionWorkflowResultEventData",
           "key": "data",
@@ -13114,6 +13498,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WorkflowNodeResultEvent",
       "groupName": null,
@@ -13121,6 +13506,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowNodeResultEventId",
           "key": "id",
@@ -13143,6 +13529,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowNodeResultEventNodeId",
           "key": "node_id",
@@ -13165,6 +13552,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowNodeResultEventNodeResultId",
           "key": "node_result_id",
@@ -13187,6 +13575,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowNodeResultEventState",
           "key": "state",
@@ -13202,6 +13591,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowNodeResultEventTs",
           "key": "ts",
@@ -13233,6 +13623,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowNodeResultEventData",
           "key": "data",
@@ -13255,6 +13646,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowNodeResultEventError",
           "key": "error",
@@ -13349,6 +13741,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WorkflowRequestChatHistoryInputRequest",
       "groupName": null,
@@ -13356,6 +13749,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowRequestChatHistoryInputRequestName",
           "key": "name",
@@ -13378,6 +13772,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowRequestChatHistoryInputRequestValue",
           "key": "value",
@@ -13443,6 +13838,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WorkflowRequestJsonInputRequest",
       "groupName": null,
@@ -13450,6 +13846,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowRequestJsonInputRequestName",
           "key": "name",
@@ -13472,6 +13869,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowRequestJsonInputRequestValue",
           "key": "value",
@@ -13510,6 +13908,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WorkflowRequestStringInputRequest",
       "groupName": null,
@@ -13517,6 +13916,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowRequestStringInputRequestName",
           "key": "name",
@@ -13539,6 +13939,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowRequestStringInputRequestValue",
           "key": "value",
@@ -13566,6 +13967,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WorkflowResultEvent",
       "groupName": null,
@@ -13573,6 +13975,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowResultEventId",
           "key": "id",
@@ -13595,6 +13998,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowResultEventState",
           "key": "state",
@@ -13610,6 +14014,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowResultEventTs",
           "key": "ts",
@@ -13627,6 +14032,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowResultEventOutput",
           "key": "output",
@@ -13649,6 +14055,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowResultEventError",
           "key": "error",
@@ -13721,6 +14128,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WorkflowResultEventOutputDataChatHistory",
       "groupName": null,
@@ -13728,6 +14136,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataChatHistoryName",
           "key": "name",
@@ -13750,6 +14159,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataChatHistoryState",
           "key": "state",
@@ -13765,6 +14175,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataChatHistoryNodeId",
           "key": "node_id",
@@ -13787,6 +14198,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataChatHistoryDelta",
           "key": "delta",
@@ -13816,6 +14228,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataChatHistoryValue",
           "key": "value",
@@ -13857,6 +14270,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WorkflowResultEventOutputDataJson",
       "groupName": null,
@@ -13864,6 +14278,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataJsonName",
           "key": "name",
@@ -13886,6 +14301,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataJsonState",
           "key": "state",
@@ -13901,6 +14317,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataJsonNodeId",
           "key": "node_id",
@@ -13923,6 +14340,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataJsonDelta",
           "key": "delta",
@@ -13952,6 +14370,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataJsonValue",
           "key": "value",
@@ -13997,6 +14416,7 @@ Upload a document to be indexed and used for search.
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "WorkflowResultEventOutputDataString",
       "groupName": null,
@@ -14004,6 +14424,7 @@ Upload a document to be indexed and used for search.
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataStringName",
           "key": "name",
@@ -14026,6 +14447,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataStringState",
           "key": "state",
@@ -14041,6 +14463,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataStringNodeId",
           "key": "node_id",
@@ -14063,6 +14486,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataStringDelta",
           "key": "delta",
@@ -14092,6 +14516,7 @@ Upload a document to be indexed and used for search.
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataStringValue",
           "key": "value",

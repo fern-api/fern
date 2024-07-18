@@ -1,5 +1,4 @@
 import {
-    Availability,
     HeaderWithExample,
     HttpMethod,
     LiteralSchemaValue,
@@ -9,13 +8,12 @@ import {
     SchemaWithExample
 } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
-import { getExtension } from "../../../../getExtension";
+import { convertAvailability } from "../../../../schema/convertAvailability";
 import { convertSchema } from "../../../../schema/convertSchemas";
 import { getExamplesString } from "../../../../schema/examples/getExample";
 import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
-import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 import { getParameterName } from "../../extensions/getParameterName";
 import { getVariableReference } from "../../extensions/getVariableReference";
 
@@ -49,12 +47,7 @@ export function convertParameters({
             : parameter;
 
         const isRequired = resolvedParameter.required ?? false;
-        // TODO: fix style
-        const availability =
-            getExtension<string>(resolvedParameter, FernOpenAPIExtension.AVAILABILITY) === "deprecated" ||
-            resolvedParameter.deprecated
-                ? Availability.Deprecated
-                : undefined;
+        const availability = convertAvailability(resolvedParameter);
 
         const parameterBreadcrumbs = [...requestBreadcrumbs, resolvedParameter.name];
         const generatedName = getGeneratedTypeName(parameterBreadcrumbs);
