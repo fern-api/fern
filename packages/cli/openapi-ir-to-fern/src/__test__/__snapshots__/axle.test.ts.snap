@@ -711,12 +711,12 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       "x-client-id": {
         "docs": "Your client ID. This will be shared with you during onboarding.",
         "name": "clientId",
-        "type": "string",
+        "type": "optional<string>",
       },
       "x-client-secret": {
         "docs": "Your secret API key. This will be shared with you during onboarding and should be considered sensitive - it’s a password after all!",
         "name": "clientSecret",
-        "type": "string",
+        "type": "optional<string>",
       },
     },
     "name": "api",
@@ -1435,12 +1435,12 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       "x-client-id": {
         "docs": "Your client ID. This will be shared with you during onboarding.",
         "name": "clientId",
-        "type": "string",
+        "type": "optional<string>",
       },
       "x-client-secret": {
         "docs": "Your secret API key. This will be shared with you during onboarding and should be considered sensitive - it’s a password after all!",
         "name": "clientSecret",
-        "type": "string",
+        "type": "optional<string>",
       },
     },
     "name": "api",
