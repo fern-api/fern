@@ -96,5 +96,6 @@ export declare namespace Fetcher {
         maxRetries?: ts.Expression;
         requestType?: "json" | "file" | "bytes" | "other";
         responseType?: "json" | "blob" | "streaming" | "text";
+        duplex?: ts.Expression;
     }
 }

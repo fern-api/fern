@@ -1,9 +1,11 @@
+import { Blob } from "buffer";
 import express from "express";
 import fs from "fs";
 import { Server } from "http";
 import multer from "multer";
 import { newFormData } from "../..";
 import { getFetchFn } from "../../fetcher/getFetchFn";
+import { RUNTIME } from "../../runtime";
 
 describe("Multipart Form Data Tests", () => {
     let app = express();
@@ -39,17 +41,55 @@ describe("Multipart Form Data Tests", () => {
         expect(await b.text).toBe(await c.text);
     });
 
-    it("should return a 200 status code", async () => {
+    it("should return a 200 status code for Blob", async () => {
         const fdw = await newFormData();
 
         const y = fs.readFileSync("package.json");
-        await fdw.appendFile("file", y, "package.json");
+
+        await fdw.appendFile("file", new Blob([y]), "asda");
+
+        let fetch = await getFetchFn();
+        const response = await fetch("http://localhost:4567/upload", {
+            method: "POST",
+            ...(await fdw.getRequest()),
+            ...(RUNTIME.parsedVersion && RUNTIME.parsedVersion < 18 ? {} : { duplex: "half" })
+        });
+
+        expect(response.status).toBe(200);
+    });
+
+    it("should return a 200 status code for File", async () => {
+        // File does not exist in Node < 20
+        if (RUNTIME.parsedVersion && RUNTIME.parsedVersion >= 20) {
+            const fdw = await newFormData();
+
+            const y = fs.readFileSync("package.json");
+            await fdw.appendFile("file", new File([y], "package.json"));
+
+            let fetch = await getFetchFn();
+
+            const response = await fetch("http://localhost:4567/upload", {
+                method: "POST",
+                ...(await fdw.getRequest()),
+                ...(RUNTIME.parsedVersion && RUNTIME.parsedVersion < 18 ? {} : { duplex: "half" })
+            });
+
+            expect(response.status).toBe(200);
+        }
+    });
+
+    it("should return a 200 status code for fs.ReadStream", async () => {
+        const fdw = await newFormData();
+
+        const y = fs.createReadStream("package.json");
+        await fdw.appendFile("file", y);
 
         let fetch = await getFetchFn();
 
         const response = await fetch("http://localhost:4567/upload", {
             method: "POST",
-            ...(await fdw.getRequest())
+            ...(await fdw.getRequest()),
+            ...(RUNTIME.parsedVersion && RUNTIME.parsedVersion < 18 ? {} : { duplex: "half" })
         });
 
         expect(response.status).toBe(200);

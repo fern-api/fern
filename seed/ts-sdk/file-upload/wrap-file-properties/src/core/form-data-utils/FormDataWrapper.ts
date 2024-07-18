@@ -5,6 +5,7 @@ export type MaybePromise<T> = Promise<T> | T;
 type FormDataRequest<Body> = {
     body: Body;
     headers: Record<string, string>;
+    duplex?: "half";
 };
 
 export interface CrossPlatformFormData {
@@ -19,8 +20,8 @@ export interface CrossPlatformFormData {
 
 export async function newFormData(): Promise<CrossPlatformFormData> {
     let formdata: CrossPlatformFormData;
-    if (RUNTIME.type === "node" && RUNTIME.parsedVersion != null && RUNTIME.parsedVersion > 18) {
-        formdata = new Node19FormData();
+    if (RUNTIME.type === "node" && RUNTIME.parsedVersion != null && RUNTIME.parsedVersion >= 18) {
+        formdata = new Node18FormData();
     } else if (RUNTIME.type === "node") {
         formdata = new Node16FormData();
     } else {
@@ -33,7 +34,7 @@ export async function newFormData(): Promise<CrossPlatformFormData> {
 /**
  * Form Data Implementation for Node.js 18+
  */
-class Node19FormData implements CrossPlatformFormData {
+class Node18FormData implements CrossPlatformFormData {
     private fd:
         | {
               append(name: string, value: unknown, fileName?: string): void;
@@ -48,15 +49,27 @@ class Node19FormData implements CrossPlatformFormData {
         this.fd?.append(key, value);
     }
 
-    public async appendFile(key: string, value: any, fileName?: string): Promise<void> {
-        this.fd?.append(key, new (await import("buffer")).Blob([value]), fileName);
+    public async appendFile(key: string, value: unknown, fileName?: string): Promise<void> {
+        if (value instanceof (await import("stream")).Readable) {
+            this.fd?.append(key, {
+                type: undefined,
+                name: fileName,
+                [Symbol.toStringTag]: "File",
+                stream() {
+                    return value;
+                },
+            });
+        } else {
+            this.fd?.append(key, value, fileName);
+        }
     }
 
     public async getRequest(): Promise<FormDataRequest<unknown>> {
         const encoder = new (await import("form-data-encoder")).FormDataEncoder(this.fd as any);
         return {
-            body: (await import("stream")).Readable.from(encoder),
+            body: await (await import("stream")).Readable.from(encoder),
             headers: encoder.headers,
+            duplex: "half",
         };
     }
 }
@@ -70,13 +83,15 @@ class Node16FormData implements CrossPlatformFormData {
               append(
                   name: string,
                   value: unknown,
-                  options?: {
-                      header?: string | Headers;
-                      knownLength?: number;
-                      filename?: string;
-                      filepath?: string;
-                      contentType?: string;
-                  }
+                  options?:
+                      | string
+                      | {
+                            header?: string | Headers;
+                            knownLength?: number;
+                            filename?: string;
+                            filepath?: string;
+                            contentType?: string;
+                        }
               ): void;
 
               getHeaders(): Record<string, string>;
@@ -91,11 +106,18 @@ class Node16FormData implements CrossPlatformFormData {
         this.fd?.append(key, value);
     }
 
-    public async appendFile(key: string, value: any, fileName?: string): Promise<void> {
-        if (fileName == null) {
-            this.fd?.append(key, value);
+    public async appendFile(key: string, value: unknown, fileName?: string): Promise<void> {
+        let bufferedValue;
+        if (!(value instanceof (await import("stream")).Readable)) {
+            bufferedValue = Buffer.from(await (value as any).arrayBuffer());
         } else {
-            this.fd?.append(key, value, { filename: fileName });
+            bufferedValue = value;
+        }
+
+        if (fileName == null) {
+            this.fd?.append(key, bufferedValue);
+        } else {
+            this.fd?.append(key, bufferedValue, { filename: fileName });
         }
     }
 

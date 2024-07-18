@@ -158,6 +158,14 @@ exports[`x-fern-global-headers x-fern-global-headers docs 1`] = `
       },
     },
     "name": "api",
+    "version": {
+      "default": "1.0",
+      "header": "my-api-version",
+      "values": [
+        "1.0",
+        "latest",
+      ],
+    },
   },
 }
 `;
@@ -320,6 +328,14 @@ exports[`x-fern-global-headers x-fern-global-headers simple 1`] = `
       },
     },
     "name": "api",
+    "version": {
+      "default": "1.0",
+      "header": "my-api-version",
+      "values": [
+        "1.0",
+        "latest",
+      ],
+    },
   },
 }
 `;
