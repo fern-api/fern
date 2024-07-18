@@ -1,4 +1,3 @@
-import * as fs from "fs";
 import { RUNTIME } from "../runtime";
 
 export type MaybePromise<T> = Promise<T> | T;
@@ -50,8 +49,8 @@ class Node18FormData implements CrossPlatformFormData {
         this.fd?.append(key, value);
     }
 
-    public async appendFile(key: string, value: Blob | File | fs.ReadStream, fileName?: string): Promise<void> {
-        if (value instanceof fs.ReadStream) {
+    public async appendFile(key: string, value: unknown, fileName?: string): Promise<void> {
+        if (value instanceof (await import("stream")).Readable) {
             this.fd?.append(key, {
                 type: undefined,
                 name: fileName,
@@ -107,10 +106,10 @@ class Node16FormData implements CrossPlatformFormData {
         this.fd?.append(key, value);
     }
 
-    public async appendFile(key: string, value: Blob | File | fs.ReadStream, fileName?: string): Promise<void> {
-        let bufferedValue: Buffer | fs.ReadStream;
-        if (!(value instanceof fs.ReadStream)) {
-            bufferedValue = Buffer.from(await value.arrayBuffer());
+    public async appendFile(key: string, value: unknown, fileName?: string): Promise<void> {
+        let bufferedValue;
+        if (!(value instanceof (await import("stream")).Readable)) {
+            bufferedValue = Buffer.from(((await value) as any).arrayBuffer());
         } else {
             bufferedValue = value;
         }

@@ -17,8 +17,7 @@
         "formdata-node": "^6.0.3",
         "node-fetch": "2.7.0",
         "qs": "6.11.2",
-        "form-data-encoder": "^4.0.2",
-        "stream-mime-type": "^2.0.0"
+        "form-data-encoder": "^4.0.2"
     },
     "devDependencies": {
         "@types/url-join": "4.0.1",

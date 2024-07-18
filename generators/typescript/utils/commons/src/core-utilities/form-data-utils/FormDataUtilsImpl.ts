@@ -16,7 +16,6 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
             dependencyManager.addDependency("form-data", "^4.0.0");
             dependencyManager.addDependency("form-data-encoder", "^4.0.2");
             dependencyManager.addDependency("formdata-node", "^6.0.3");
-            dependencyManager.addDependency("stream-mime-type", "^2.0.0");
         }
     };
 
