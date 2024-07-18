@@ -3,6 +3,7 @@ import { PathParameter } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { convertAvailability } from "./utils/convertAvailability";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export function buildPathParameter({
@@ -34,5 +35,9 @@ export function buildPathParameter({
     if (pathParameter.description != null) {
         pathParameterSchema.docs = pathParameter.description;
     }
+    if (pathParameter.availability != null) {
+        pathParameterSchema.availability = convertAvailability(pathParameter.availability);
+    }
+
     return pathParameterSchema;
 }

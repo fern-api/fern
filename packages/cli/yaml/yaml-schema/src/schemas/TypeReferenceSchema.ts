@@ -2,6 +2,7 @@ import { z } from "zod";
 import { DeclarationSchema } from "./DeclarationSchema";
 import { DeclarationWithNameSchema } from "./DeclarationWithNameSchema";
 import { ValidationSchema } from "./ValidationSchema";
+import { WithDocsAndAvailabilitySchema } from "./WithDocsAndAvailability";
 import { WithDocsSchema } from "./WithDocsSchema";
 
 // This return type is too crazy to write explicitly!
@@ -24,6 +25,11 @@ export type TypeReferenceSchema = z.infer<typeof TypeReferenceSchema>;
 
 export const TypeReferenceWithDocsSchema = extendTypeReferenceSchema(WithDocsSchema.shape);
 export type TypeReferenceWithDocsSchema = z.infer<typeof TypeReferenceWithDocsSchema>;
+
+export const TypeReferenceWithDocsAndAvailabilitySchema = extendTypeReferenceSchema(
+    WithDocsAndAvailabilitySchema.shape
+);
+export type TypeReferenceWithDocsAndAvailabilitySchema = z.infer<typeof TypeReferenceWithDocsAndAvailabilitySchema>;
 
 export const TypeReferenceDeclarationSchema = extendTypeReferenceSchema(DeclarationSchema.shape);
 export type TypeReferenceDeclarationSchema = z.infer<typeof TypeReferenceDeclarationSchema>;

@@ -5,6 +5,7 @@ import { generateEnumNameFromValue, VALID_ENUM_NAME_REGEX } from "@fern-api/open
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { convertAvailability } from "./utils/convertAvailability";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export function buildQueryParameter({
@@ -56,6 +57,10 @@ export function buildQueryParameter({
 
     if (queryParameter.parameterNameOverride != null) {
         queryParameterSchema.name = queryParameter.parameterNameOverride;
+    }
+
+    if (queryParameter.availability != null) {
+        queryParameterSchema.availability = convertAvailability(queryParameter.availability);
     }
 
     return queryParameterSchema;

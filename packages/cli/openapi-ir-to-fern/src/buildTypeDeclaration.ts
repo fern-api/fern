@@ -27,6 +27,7 @@ import {
     buildUnknownTypeReference
 } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { convertAvailability } from "./utils/convertAvailability";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export interface ConvertedTypeDeclaration {
@@ -207,6 +208,10 @@ export function buildObjectTypeDeclaration({
     }
     if (schema.additionalProperties) {
         objectTypeDeclaration["extra-properties"] = true;
+    }
+
+    if (schema.availability != null) {
+        objectTypeDeclaration.availability = convertAvailability(schema.availability);
     }
 
     return {

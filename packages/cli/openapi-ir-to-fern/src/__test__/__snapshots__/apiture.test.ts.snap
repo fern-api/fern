@@ -1173,6 +1173,7 @@ The default response lists only recent transactions. Normally, this is transacti
                   "type": "optional<root.CheckNumberRange>",
                 },
                 "createdOn": {
+                  "availability": "deprecated",
                   "docs": "Return only transactions whose \`createdOn\` date is in this date range. Example date ranges are the same format as the \`occurredOn\` query parameter.<br>**Warning**: The parameter \`createdOn\` was deprecated on version \`v0.6.0\` of the API. Use the \`?occurredOn=\` query parameter instead. \`createdOn\` will be removed on version \`v0.9.0\` of the API.",
                   "type": "optional<root.DateRange>",
                 },
@@ -1189,6 +1190,7 @@ The default response lists only recent transactions. Normally, this is transacti
                   "type": "optional<boolean>",
                 },
                 "postedOn": {
+                  "availability": "deprecated",
                   "docs": "Return only transactions whose \`postedOn\` date is in this date range. Example date ranges are the same format as the \`occurredOn\` query parameter.<br>**Warning**: The parameter \`postedOn\` was deprecated on version \`v0.6.0\` of the API. Use the \`?occurredOn=\` query parameter instead. \`postedOn\` will be removed on version \`v0.9.0\` of the API.",
                   "type": "optional<root.DateRange>",
                 },
@@ -7094,6 +7096,7 @@ The default response lists only recent transactions. Normally, this is transacti
                   "type": "optional<root.CheckNumberRange>",
                 },
                 "createdOn": {
+                  "availability": "deprecated",
                   "docs": "Return only transactions whose \`createdOn\` date is in this date range. Example date ranges are the same format as the \`occurredOn\` query parameter.<br>**Warning**: The parameter \`createdOn\` was deprecated on version \`v0.6.0\` of the API. Use the \`?occurredOn=\` query parameter instead. \`createdOn\` will be removed on version \`v0.9.0\` of the API.",
                   "type": "optional<root.DateRange>",
                 },
@@ -7110,6 +7113,7 @@ The default response lists only recent transactions. Normally, this is transacti
                   "type": "optional<boolean>",
                 },
                 "postedOn": {
+                  "availability": "deprecated",
                   "docs": "Return only transactions whose \`postedOn\` date is in this date range. Example date ranges are the same format as the \`occurredOn\` query parameter.<br>**Warning**: The parameter \`postedOn\` was deprecated on version \`v0.6.0\` of the API. Use the \`?occurredOn=\` query parameter instead. \`postedOn\` will be removed on version \`v0.9.0\` of the API.",
                   "type": "optional<root.DateRange>",
                 },

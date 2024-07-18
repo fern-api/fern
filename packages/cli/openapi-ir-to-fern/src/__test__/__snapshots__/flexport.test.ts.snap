@@ -5469,6 +5469,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "type": "optional<boolean>",
                 },
                 "f.client_id": {
+                  "availability": "deprecated",
                   "docs": "[DEPRECATED] Filters the list for invoices billed directly to a client",
                   "type": "optional<integer>",
                 },
@@ -5505,6 +5506,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "type": "optional<integer>",
                 },
                 "f.shipment_id": {
+                  "availability": "deprecated",
                   "docs": "[DEPRECATED] Filters the list for invoices associated with a shipment",
                   "type": "optional<integer>",
                 },
@@ -20758,6 +20760,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "type": "optional<boolean>",
                 },
                 "f.client_id": {
+                  "availability": "deprecated",
                   "docs": "[DEPRECATED] Filters the list for invoices billed directly to a client",
                   "type": "optional<integer>",
                 },
@@ -20794,6 +20797,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "type": "optional<integer>",
                 },
                 "f.shipment_id": {
+                  "availability": "deprecated",
                   "docs": "[DEPRECATED] Filters the list for invoices associated with a shipment",
                   "type": "optional<integer>",
                 },

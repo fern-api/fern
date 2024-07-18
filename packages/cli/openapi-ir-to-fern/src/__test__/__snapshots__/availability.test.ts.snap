@@ -17,10 +17,39 @@ exports[`availability availability docs 1`] = `
           "method": "GET",
           "pagination": undefined,
           "path": "/collection",
+          "path-parameters": {
+            "active_id": "optional<string>",
+            "deprecated_ref_id": "optional<WholeDeprecatedSettings>",
+            "id": "optional<string>",
+            "x-fern-availability_path_param": "optional<string>",
+          },
           "request": {
+            "headers": {
+              "X-Active-Header": {
+                "name": "activeHeader",
+                "type": "optional<string>",
+              },
+              "X-Deprecated-Header": {
+                "availability": "deprecated",
+                "name": "deprecatedHeader",
+                "type": "optional<string>",
+              },
+              "X-Deprecated-Ref-Header": {
+                "name": "deprecatedRefHeader",
+                "type": "optional<WholeDeprecatedSettings>",
+              },
+              "x-fern-availability_header": {
+                "availability": "pre-release",
+                "name": "fernAvailabilityHeader",
+                "type": "optional<string>",
+              },
+            },
             "name": "GetCollectionRequest",
             "query-parameters": {
-              "lang": "optional<string>",
+              "active_lang": "optional<string>",
+              "deprecated_lang": "optional<string>",
+              "deprecated_ref_lang": "optional<WholeDeprecatedSettings>",
+              "x-fern-availability_query_param": "optional<string>",
             },
           },
         },
@@ -32,8 +61,7 @@ exports[`availability availability docs 1`] = `
               "request": {},
               "response": {
                 "body": {
-                  "new_setting": true,
-                  "old_setting": true,
+                  "not_deprecated_setting": true,
                 },
               },
             },
@@ -42,21 +70,35 @@ exports[`availability availability docs 1`] = `
           "pagination": undefined,
           "path": "/settings",
           "request": {
-            "body": "Settings",
+            "body": {
+              "properties": {
+                "deprecated_setting": "optional<boolean>",
+                "new_setting": "optional<boolean>",
+              },
+            },
+            "headers": undefined,
+            "name": "Settings",
+            "query-parameters": undefined,
           },
           "response": {
             "docs": "OK",
-            "type": "Settings",
+            "type": "NotDeprecatedSettings",
           },
         },
       },
     },
     "types": {
-      "Settings": {
+      "NotDeprecatedSettings": {
         "docs": undefined,
         "properties": {
-          "new_setting": "optional<boolean>",
-          "old_setting": "optional<boolean>",
+          "not_deprecated_setting": "optional<boolean>",
+        },
+      },
+      "WholeDeprecatedSettings": {
+        "availability": "deprecated",
+        "docs": undefined,
+        "properties": {
+          "fine_setting": "optional<boolean>",
         },
       },
     },
@@ -65,6 +107,9 @@ exports[`availability availability docs 1`] = `
     "display-name": "Deprecated params and fields",
     "error-discrimination": {
       "strategy": "status-code",
+    },
+    "imports": {
+      "root": "__package__.yml",
     },
     "name": "api",
   },
@@ -88,10 +133,39 @@ exports[`availability availability simple 1`] = `
           "method": "GET",
           "pagination": undefined,
           "path": "/collection",
+          "path-parameters": {
+            "active_id": "optional<string>",
+            "deprecated_ref_id": "optional<WholeDeprecatedSettings>",
+            "id": "optional<string>",
+            "x-fern-availability_path_param": "optional<string>",
+          },
           "request": {
+            "headers": {
+              "X-Active-Header": {
+                "name": "activeHeader",
+                "type": "optional<string>",
+              },
+              "X-Deprecated-Header": {
+                "availability": "deprecated",
+                "name": "deprecatedHeader",
+                "type": "optional<string>",
+              },
+              "X-Deprecated-Ref-Header": {
+                "name": "deprecatedRefHeader",
+                "type": "optional<WholeDeprecatedSettings>",
+              },
+              "x-fern-availability_header": {
+                "availability": "pre-release",
+                "name": "fernAvailabilityHeader",
+                "type": "optional<string>",
+              },
+            },
             "name": "GetCollectionRequest",
             "query-parameters": {
-              "lang": "optional<string>",
+              "active_lang": "optional<string>",
+              "deprecated_lang": "optional<string>",
+              "deprecated_ref_lang": "optional<WholeDeprecatedSettings>",
+              "x-fern-availability_query_param": "optional<string>",
             },
           },
         },
@@ -103,8 +177,7 @@ exports[`availability availability simple 1`] = `
               "request": {},
               "response": {
                 "body": {
-                  "new_setting": true,
-                  "old_setting": true,
+                  "not_deprecated_setting": true,
                 },
               },
             },
@@ -113,21 +186,35 @@ exports[`availability availability simple 1`] = `
           "pagination": undefined,
           "path": "/settings",
           "request": {
-            "body": "Settings",
+            "body": {
+              "properties": {
+                "deprecated_setting": "optional<boolean>",
+                "new_setting": "optional<boolean>",
+              },
+            },
+            "headers": undefined,
+            "name": "Settings",
+            "query-parameters": undefined,
           },
           "response": {
             "docs": "OK",
-            "type": "Settings",
+            "type": "NotDeprecatedSettings",
           },
         },
       },
     },
     "types": {
-      "Settings": {
+      "NotDeprecatedSettings": {
         "docs": undefined,
         "properties": {
-          "new_setting": "optional<boolean>",
-          "old_setting": "optional<boolean>",
+          "not_deprecated_setting": "optional<boolean>",
+        },
+      },
+      "WholeDeprecatedSettings": {
+        "availability": "deprecated",
+        "docs": undefined,
+        "properties": {
+          "fine_setting": "optional<boolean>",
         },
       },
     },
@@ -136,6 +223,9 @@ exports[`availability availability simple 1`] = `
     "display-name": "Deprecated params and fields",
     "error-discrimination": {
       "strategy": "status-code",
+    },
+    "imports": {
+      "root": "__package__.yml",
     },
     "name": "api",
   },

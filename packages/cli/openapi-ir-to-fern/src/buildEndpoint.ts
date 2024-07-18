@@ -1,7 +1,7 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { assertNever, MediaType } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { Availability, Endpoint, EndpointExample, Request, Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
+import { Endpoint, EndpointExample, Request, Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { buildEndpointExample } from "./buildEndpointExample";
 import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefinition";
@@ -10,6 +10,7 @@ import { buildPathParameter } from "./buildPathParameter";
 import { buildQueryParameter } from "./buildQueryParameter";
 import { buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { convertAvailability } from "./utils/convertAvailability";
 import { convertFullExample } from "./utils/convertFullExample";
 import { convertToHttpMethod } from "./utils/convertToHttpMethod";
 import { getDocsFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
@@ -215,12 +216,8 @@ export function buildEndpoint({
         convertedEndpoint.idempotent = true;
     }
 
-    if (endpoint.availability === Availability.Beta) {
-        convertedEndpoint.availability = "pre-release";
-    } else if (endpoint.availability === Availability.GenerallyAvailable) {
-        convertedEndpoint.availability = "generally-available";
-    } else if (endpoint.availability === Availability.Deprecated) {
-        convertedEndpoint.availability = "deprecated";
+    if (endpoint.availability != null) {
+        convertedEndpoint.availability = convertAvailability(endpoint.availability);
     }
 
     Object.entries(endpoint.errors).forEach(([statusCode, httpError]) => {

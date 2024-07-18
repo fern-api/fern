@@ -4,6 +4,7 @@ import { RawSchemas } from "@fern-api/yaml-schema";
 import { camelCase } from "lodash-es";
 import { buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { convertAvailability } from "./utils/convertAvailability";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export function buildHeader({
@@ -39,5 +40,9 @@ export function buildHeader({
     if (header.env != null) {
         headerSchema.env = header.env;
     }
+    if (header.availability != null) {
+        headerSchema.availability = convertAvailability(header.availability);
+    }
+
     return headerSchema;
 }
