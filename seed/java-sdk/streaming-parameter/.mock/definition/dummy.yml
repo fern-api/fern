@@ -1,0 +1,35 @@
+types:
+  RegularResponse:
+    properties:
+      id: string
+      name: optional<string>
+  StreamResponse:
+    properties:
+      id: string
+      name: optional<string>
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:    
+    generate:
+      path: /generate
+      method: POST
+      stream-condition: $request.stream
+      request:
+        name: GenerateRequest
+        body:
+          properties:
+            stream: boolean
+            num_events: integer
+      response: RegularResponse
+      response-stream: StreamResponse
+      examples:
+        - name: Default 
+          request:
+            stream: false
+            num_events: 5
+          response: 
+            body: 
+              id: id
+              name: name
