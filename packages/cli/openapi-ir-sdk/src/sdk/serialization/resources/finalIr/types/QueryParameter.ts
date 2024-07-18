@@ -14,15 +14,14 @@ export const QueryParameter: core.serialization.ObjectSchema<
         name: core.serialization.string(),
         schema: core.serialization.lazy(async () => (await import("../../..")).Schema),
         parameterNameOverride: core.serialization.string().optional(),
-        availability: core.serialization.lazy(async () => (await import("../../..")).Availability).optional(),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAvailability));
 
 export declare namespace QueryParameter {
-    interface Raw extends serializers.WithDescription.Raw {
+    interface Raw extends serializers.WithDescription.Raw, serializers.WithAvailability.Raw {
         name: string;
         schema: serializers.Schema.Raw;
         parameterNameOverride?: string | null;
-        availability?: serializers.Availability.Raw | null;
     }
 }

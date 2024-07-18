@@ -4,7 +4,7 @@
 
 import * as FernOpenapiIr from "../../..";
 
-export interface ObjectProperty {
+export interface ObjectProperty extends FernOpenapiIr.WithAvailability {
     key: string;
     schema: FernOpenapiIr.Schema;
     /** The schemas that conflict with this property */
@@ -14,5 +14,4 @@ export interface ObjectProperty {
     /** An optional name override populated via `x-fern-property-name`. */
     nameOverride: string | undefined;
     audiences: string[];
-    availability: FernOpenapiIr.Availability | undefined;
 }

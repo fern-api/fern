@@ -393,7 +393,9 @@ function getRequest({
                     context
                 });
 
+                // TODO: clean up conditional logic
                 const name = property.nameOverride ?? property.key;
+                const availability = convertAvailability(property.availability);
                 if (!usedNames.has(name) && property.audiences.length <= 0) {
                     usedNames.add(name);
                     if (property.nameOverride != null) {
@@ -402,11 +404,20 @@ function getRequest({
                             {
                                 type: getTypeFromTypeReference(propertyTypeReference),
                                 docs: getDocsFromTypeReference(propertyTypeReference),
-                                name: property.nameOverride
+                                name: property.nameOverride,
+                                availability
                             }
                         ];
                     }
-                    return [property.key, propertyTypeReference];
+                    return [
+                        property.key,
+                        availability
+                            ? {
+                                  type: getTypeFromTypeReference(propertyTypeReference),
+                                  availability
+                              }
+                            : propertyTypeReference
+                    ];
                 }
 
                 const typeReference: RawSchemas.ObjectPropertySchema = {
@@ -420,6 +431,10 @@ function getRequest({
 
                 if (property.audiences.length > 0) {
                     typeReference.audiences = property.audiences;
+                }
+
+                if (availability != null) {
+                    typeReference.availability = availability;
                 }
 
                 usedNames.add(name);

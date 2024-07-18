@@ -7,6 +7,7 @@ import { wrapTypeReferenceAsOptional } from "./utils/wrapTypeReferenceAsOptional
 
 const STRING_SCHEMA = Schema.primitive({
     description: undefined,
+    availability: undefined,
     generatedName: "",
     groupName: undefined,
     nameOverride: undefined,

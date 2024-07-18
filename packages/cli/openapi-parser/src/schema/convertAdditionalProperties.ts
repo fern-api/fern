@@ -1,4 +1,5 @@
 import {
+    Availability,
     PrimitiveSchemaValueWithExample,
     PrimitiveSchemaWithExample,
     SchemaWithExample,
@@ -15,6 +16,7 @@ export function convertAdditionalProperties({
     breadcrumbs,
     additionalProperties,
     description,
+    availability,
     wrapAsNullable,
     context,
     groupName,
@@ -25,6 +27,7 @@ export function convertAdditionalProperties({
     breadcrumbs: string[];
     additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
     description: string | undefined;
+    availability: Availability | undefined;
     wrapAsNullable: boolean;
     context: SchemaParserContext;
     groupName: SdkGroupName | undefined;
@@ -36,10 +39,12 @@ export function convertAdditionalProperties({
             generatedName,
             wrapAsNullable,
             description,
+            availability,
             keySchema: {
                 nameOverride: undefined,
                 generatedName: `${generatedName}Key`,
                 description: undefined,
+                availability: undefined,
                 schema: PrimitiveSchemaValueWithExample.string({
                     default: undefined,
                     pattern: undefined,
@@ -54,6 +59,7 @@ export function convertAdditionalProperties({
                 nameOverride: undefined,
                 generatedName: `${generatedName}Value`,
                 description: undefined,
+                availability: undefined,
                 example: undefined,
                 groupName: undefined
             }),
@@ -66,10 +72,12 @@ export function convertAdditionalProperties({
         generatedName,
         wrapAsNullable,
         description,
+        availability,
         keySchema: {
             nameOverride: undefined,
             generatedName: `${generatedName}Key`,
             description: undefined,
+            availability: undefined,
             schema: PrimitiveSchemaValueWithExample.string({
                 default: undefined,
                 pattern: undefined,
@@ -93,6 +101,7 @@ export function wrapMap({
     valueSchema,
     wrapAsNullable,
     description,
+    availability,
     groupName,
     example
 }: {
@@ -102,6 +111,7 @@ export function wrapMap({
     valueSchema: SchemaWithExample;
     wrapAsNullable: boolean;
     description: string | undefined;
+    availability: Availability | undefined;
     groupName: SdkGroupName | undefined;
     example: unknown | undefined;
 }): SchemaWithExample {
@@ -113,12 +123,14 @@ export function wrapMap({
                 nameOverride,
                 generatedName,
                 description,
+                availability: keySchema.availability,
                 key: keySchema,
                 value: valueSchema,
                 groupName,
                 example
             }),
             description,
+            availability,
             groupName
         });
     }
@@ -126,6 +138,7 @@ export function wrapMap({
         nameOverride,
         generatedName,
         description,
+        availability,
         key: keySchema,
         value: valueSchema,
         groupName,

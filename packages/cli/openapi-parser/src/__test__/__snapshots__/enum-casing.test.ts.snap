@@ -75,6 +75,7 @@ exports[`examples enum-casing parse open api 1`] = `
         "description": "Successful response",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "GetExampleResponse",
           "groupName": null,
@@ -116,12 +117,14 @@ exports[`examples enum-casing parse open api 1`] = `
           "key": "status",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "exampleResponseStatus",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ExampleResponseStatus",
               "groupName": null,
@@ -129,6 +132,7 @@ exports[`examples enum-casing parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "availability": null,
                   "casing": {
                     "camel": null,
                     "pascal": null,
@@ -141,6 +145,7 @@ exports[`examples enum-casing parse open api 1`] = `
                   "value": "success",
                 },
                 {
+                  "availability": null,
                   "casing": {
                     "camel": null,
                     "pascal": null,
@@ -164,12 +169,14 @@ exports[`examples enum-casing parse open api 1`] = `
           "key": "message",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "exampleResponseMessage",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ExampleResponseMessage",
               "groupName": null,
@@ -194,16 +201,19 @@ exports[`examples enum-casing parse open api 1`] = `
           "key": "custom_fields",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "exampleResponseCustomFields",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ExampleResponseCustomFields",
               "groupName": null,
               "key": {
+                "availability": null,
                 "description": null,
                 "generatedName": "ExampleResponseCustomFieldsKey",
                 "groupName": null,
@@ -220,6 +230,7 @@ exports[`examples enum-casing parse open api 1`] = `
               "nameOverride": null,
               "type": "map",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "ExampleResponseCustomFieldsValue",
                 "groupName": null,
@@ -241,6 +252,7 @@ exports[`examples enum-casing parse open api 1`] = `
       "type": "object",
     },
     "GrantTypeEnum": {
+      "availability": null,
       "description": null,
       "generatedName": "GrantTypeEnum",
       "groupName": null,
@@ -248,6 +260,7 @@ exports[`examples enum-casing parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -260,6 +273,7 @@ exports[`examples enum-casing parse open api 1`] = `
           "value": "urn:devrev:params:oauth:grant-type:token-issue",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,

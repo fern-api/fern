@@ -11103,7 +11103,10 @@ The actions represents the ways you can interact with a protected resource.",
               "pattern": undefined,
             },
           },
-          "roles": "optional<list<UserRole>>",
+          "roles": {
+            "availability": "deprecated",
+            "type": "optional<list<UserRole>>",
+          },
         },
       },
       "UserReplaceBulkOperationResult": {
@@ -21766,7 +21769,10 @@ The actions represents the ways you can interact with a protected resource.",
               "pattern": undefined,
             },
           },
-          "roles": "optional<list<UserRole>>",
+          "roles": {
+            "availability": "deprecated",
+            "type": "optional<list<UserRole>>",
+          },
         },
       },
       "UserReplaceBulkOperationResult": {

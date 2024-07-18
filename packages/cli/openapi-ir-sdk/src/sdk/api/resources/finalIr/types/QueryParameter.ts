@@ -4,10 +4,9 @@
 
 import * as FernOpenapiIr from "../../..";
 
-export interface QueryParameter extends FernOpenapiIr.WithDescription {
+export interface QueryParameter extends FernOpenapiIr.WithDescription, FernOpenapiIr.WithAvailability {
     name: string;
     schema: FernOpenapiIr.Schema;
     /** Populated by `x-fern-parameter-name` on a parameter object. */
     parameterNameOverride: string | undefined;
-    availability: FernOpenapiIr.Availability | undefined;
 }

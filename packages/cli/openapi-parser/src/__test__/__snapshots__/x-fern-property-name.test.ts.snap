@@ -31,12 +31,14 @@ exports[`x-fern-property-name x-fern-property-name parse open api 1`] = `
           "key": "id",
           "nameOverride": "renamed_id",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "baseUserId",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "BaseUserId",
               "groupName": null,

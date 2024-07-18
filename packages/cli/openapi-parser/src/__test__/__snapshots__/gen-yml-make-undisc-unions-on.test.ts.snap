@@ -16,12 +16,14 @@ exports[`open api parser gen-yml-make-undisc-unions parse open api 1`] = `
     "UnionJob": {
       "type": "oneOf",
       "value": {
+        "availability": null,
         "description": null,
         "generatedName": "UnionJob",
         "groupName": null,
         "nameOverride": null,
         "schemas": [
           {
+            "availability": null,
             "description": null,
             "generatedName": "ComponentsSchemasUnionJobJobEmbeddingGeneration",
             "groupName": null,
@@ -30,6 +32,7 @@ exports[`open api parser gen-yml-make-undisc-unions parse open api 1`] = `
             "type": "reference",
           },
           {
+            "availability": null,
             "description": null,
             "generatedName": "ComponentsSchemasUnionJobJobInference",
             "groupName": null,
@@ -38,6 +41,7 @@ exports[`open api parser gen-yml-make-undisc-unions parse open api 1`] = `
             "type": "reference",
           },
           {
+            "availability": null,
             "description": null,
             "generatedName": "ComponentsSchemasUnionJobJobTlInference",
             "groupName": null,
@@ -46,6 +50,7 @@ exports[`open api parser gen-yml-make-undisc-unions parse open api 1`] = `
             "type": "reference",
           },
           {
+            "availability": null,
             "description": null,
             "generatedName": "ComponentsSchemasUnionJobJobTraining",
             "groupName": null,

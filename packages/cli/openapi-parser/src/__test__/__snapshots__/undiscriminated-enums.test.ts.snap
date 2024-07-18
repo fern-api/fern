@@ -30,6 +30,7 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
         "description": "Successful response",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "GetExampleResponse",
           "groupName": null,
@@ -58,6 +59,7 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
     "Conversation": {
       "type": "oneOf",
       "value": {
+        "availability": null,
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "type",
@@ -66,6 +68,7 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
         "nameOverride": null,
         "schemas": {
           "goodbye": {
+            "availability": null,
             "description": null,
             "generatedName": "ComponentsSchemasFarewell",
             "groupName": null,
@@ -74,6 +77,7 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
             "type": "reference",
           },
           "hello": {
+            "availability": null,
             "description": null,
             "generatedName": "ComponentsSchemasGreeting",
             "groupName": null,
@@ -103,12 +107,14 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
           "key": "message",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "farewellMessage",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "FarewellMessage",
               "groupName": null,
@@ -129,6 +135,7 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
       "type": "object",
     },
     "FarewellEnum": {
+      "availability": null,
       "description": null,
       "generatedName": "FarewellEnum",
       "groupName": null,
@@ -136,6 +143,7 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -148,6 +156,7 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
           "value": "goodbye",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -179,12 +188,14 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
           "key": "message",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "greetingMessage",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "GreetingMessage",
               "groupName": null,
@@ -205,6 +216,7 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
       "type": "object",
     },
     "GreetingEnum": {
+      "availability": null,
       "description": null,
       "generatedName": "GreetingEnum",
       "groupName": null,
@@ -212,6 +224,7 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -224,6 +237,7 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
           "value": "hello",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,

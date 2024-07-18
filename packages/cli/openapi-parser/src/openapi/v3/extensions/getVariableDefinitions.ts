@@ -31,6 +31,7 @@ export function getVariableDefinitions(document: OpenAPIV3.Document): Record<str
                             maxLength: schema.maxLength
                         }),
                         description: schema.description,
+                        availability: undefined,
                         groupName: undefined
                     }
                 ];

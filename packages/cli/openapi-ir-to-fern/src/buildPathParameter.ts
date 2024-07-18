@@ -20,7 +20,11 @@ export function buildPathParameter({
         context,
         fileContainingReference
     });
-    if (pathParameter.variableReference == null && pathParameter.description == null) {
+    if (
+        pathParameter.variableReference == null &&
+        pathParameter.description == null &&
+        pathParameter.availability == null
+    ) {
         return getTypeFromTypeReference(typeReference);
     }
     const pathParameterSchema: RawSchemas.HttpPathParameterSchema =

@@ -7,7 +7,8 @@ import * as FernOpenapiIr from "../../..";
 export interface DiscriminatedOneOfSchemaWithExample
     extends FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithName,
-        FernOpenapiIr.WithSdkGroupName {
+        FernOpenapiIr.WithSdkGroupName,
+        FernOpenapiIr.WithAvailability {
     discriminantProperty: string;
     commonProperties: FernOpenapiIr.CommonPropertyWithExample[];
     schemas: Record<string, FernOpenapiIr.SchemaWithExample>;

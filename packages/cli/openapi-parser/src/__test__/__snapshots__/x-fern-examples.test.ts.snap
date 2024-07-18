@@ -54,6 +54,7 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
         "schema": {
           "type": "oneOf",
           "value": {
+            "availability": null,
             "description": null,
             "generatedName": "GetExampleResponse",
             "groupName": null,
@@ -77,12 +78,14 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
                     "key": "message",
                     "nameOverride": null,
                     "schema": {
+                      "availability": null,
                       "description": null,
                       "generatedName": "notFoundMessage",
                       "groupName": null,
                       "nameOverride": null,
                       "type": "optional",
                       "value": {
+                        "availability": null,
                         "description": null,
                         "generatedName": "NotFoundMessage",
                         "groupName": null,
@@ -103,6 +106,7 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
                 "type": "object",
               },
               {
+                "availability": null,
                 "description": null,
                 "generatedName": "GetExampleResponseOne",
                 "groupName": null,
@@ -111,6 +115,7 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
                 "type": "reference",
               },
               {
+                "availability": null,
                 "description": null,
                 "generatedName": "GetExampleResponseTwo",
                 "groupName": null,
@@ -136,12 +141,14 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
                     "key": "message",
                     "nameOverride": null,
                     "schema": {
+                      "availability": null,
                       "description": null,
                       "generatedName": "getExampleResponseMessageMessage",
                       "groupName": null,
                       "nameOverride": null,
                       "type": "optional",
                       "value": {
+                        "availability": null,
                         "description": null,
                         "generatedName": "GetExampleResponseMessageMessage",
                         "groupName": null,
@@ -200,12 +207,14 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
           "key": "id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "schema1Id",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "Schema1Id",
               "groupName": null,
@@ -231,12 +240,14 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
           "key": "name",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "schema1Name",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "Schema1Name",
               "groupName": null,
@@ -274,12 +285,14 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
           "key": "email",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "schema2Email",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "Schema2Email",
               "groupName": null,
@@ -304,12 +317,14 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
           "key": "age",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "schema2Age",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "Schema2Age",
               "groupName": null,

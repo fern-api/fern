@@ -4,12 +4,11 @@
 
 import * as FernOpenapiIr from "../../..";
 
-export interface EndpointWithExample extends FernOpenapiIr.WithDescription {
+export interface EndpointWithExample extends FernOpenapiIr.WithDescription, FernOpenapiIr.WithAvailability {
     authed: boolean;
     internal: boolean | undefined;
     idempotent: boolean | undefined;
     method: FernOpenapiIr.HttpMethod;
-    availability: FernOpenapiIr.Availability | undefined;
     audiences: string[];
     /**
      * This string includes templated path parameters.

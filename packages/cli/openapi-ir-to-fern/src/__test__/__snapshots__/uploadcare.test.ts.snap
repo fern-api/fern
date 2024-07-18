@@ -3824,6 +3824,7 @@ that are tool old (or that have not been created at all).
             "validation": undefined,
           },
           "datetime_stored": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "ISO-8601 date and time when the group was marked as stored.",
             "type": "optional<datetime>",
@@ -7424,6 +7425,7 @@ that are tool old (or that have not been created at all).
             "validation": undefined,
           },
           "datetime_stored": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "ISO-8601 date and time when the group was marked as stored.",
             "type": "optional<datetime>",

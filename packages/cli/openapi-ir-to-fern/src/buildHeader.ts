@@ -25,7 +25,12 @@ export function buildHeader({
     const headerWithoutXPrefix = header.name.replace(/^x-|^X-/, "");
     const headerVariableName =
         header.parameterNameOverride != null ? header.parameterNameOverride : camelCase(headerWithoutXPrefix);
-    if (header.description == null && header.name === headerVariableName) {
+    if (
+        header.description == null &&
+        header.name === headerVariableName &&
+        header.env == null &&
+        header.availability == null
+    ) {
         return headerType;
     }
     const headerSchema: RawSchemas.HttpHeaderSchema = {

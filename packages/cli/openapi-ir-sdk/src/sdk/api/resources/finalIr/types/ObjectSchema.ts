@@ -7,10 +7,10 @@ import * as FernOpenapiIr from "../../..";
 export interface ObjectSchema
     extends FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithName,
-        FernOpenapiIr.WithSdkGroupName {
+        FernOpenapiIr.WithSdkGroupName,
+        FernOpenapiIr.WithAvailability {
     allOf: FernOpenapiIr.ReferencedSchema[];
     properties: FernOpenapiIr.ObjectProperty[];
     allOfPropertyConflicts: FernOpenapiIr.AllOfPropertyConflict[];
     additionalProperties: boolean;
-    availability: FernOpenapiIr.Availability | undefined;
 }

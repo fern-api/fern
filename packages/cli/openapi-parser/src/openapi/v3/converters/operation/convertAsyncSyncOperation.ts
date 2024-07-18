@@ -67,6 +67,7 @@ export function convertAsyncSyncOperation({
             nameOverride: undefined,
             generatedName: getGeneratedTypeName([headerToIgnore]),
             description: undefined,
+            availability: undefined,
             value: LiteralSchemaValue.string(headerValue),
             groupName: undefined
         }),

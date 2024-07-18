@@ -392,7 +392,8 @@ function maybeAddBackDiscriminantsFromSchemas(
                             generatedName: getGeneratedTypeName([schema.generatedName, discriminantValue]),
                             value: LiteralSchemaValue.string(discriminantValue),
                             groupName: undefined,
-                            description: undefined
+                            description: undefined,
+                            availability: schema.availability
                         })
                     });
                 }

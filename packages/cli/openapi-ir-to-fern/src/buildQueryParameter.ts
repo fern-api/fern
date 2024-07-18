@@ -38,7 +38,8 @@ export function buildQueryParameter({
     if (
         queryParameter.description == null &&
         !typeReference.allowMultiple &&
-        queryParameter.parameterNameOverride == null
+        queryParameter.parameterNameOverride == null &&
+        queryParameter.availability == null
     ) {
         return queryParameterType;
     }
@@ -94,6 +95,7 @@ function getQueryParameterTypeReference({
                         generatedName: schema.generatedName,
                         value: resolvedSchema.value,
                         description: schema.description ?? resolvedSchema.description,
+                        availability: schema.availability,
                         groupName: undefined
                     }),
                     context,
@@ -143,6 +145,7 @@ function getQueryParameterTypeReference({
                                 generatedName: schema.generatedName,
                                 value: secondSchema,
                                 description: schema.description,
+                                availability: schema.availability,
                                 groupName: undefined
                             }),
                             context,
@@ -163,6 +166,7 @@ function getQueryParameterTypeReference({
                                 generatedName: schema.generatedName,
                                 value: firstSchema,
                                 description: schema.description,
+                                availability: schema.availability,
                                 groupName: undefined
                             }),
                             context,
@@ -199,6 +203,7 @@ function getQueryParameterTypeReference({
                             generatedName: schema.generatedName,
                             value: resolvedSchema.value,
                             description: schema.description ?? resolvedSchema.description,
+                            availability: schema.availability,
                             groupName: undefined
                         }),
                         context,
@@ -217,6 +222,7 @@ function getQueryParameterTypeReference({
                         generatedName: schema.generatedName,
                         value: schema.value.value,
                         description: schema.description,
+                        availability: schema.availability,
                         groupName: undefined
                     }),
                     context,
@@ -265,6 +271,7 @@ function getQueryParameterTypeReference({
                                 generatedName: schema.generatedName,
                                 value: secondSchema,
                                 description: schema.description,
+                                availability: schema.availability,
                                 groupName: undefined
                             }),
                             context,
@@ -285,6 +292,7 @@ function getQueryParameterTypeReference({
                                 generatedName: schema.generatedName,
                                 value: firstSchema,
                                 description: schema.description,
+                                availability: schema.availability,
                                 groupName: undefined
                             }),
                             context,
@@ -303,6 +311,8 @@ function getQueryParameterTypeReference({
                         generatedName: schema.generatedName,
                         value: oneOfSchema,
                         description: undefined,
+                        // TODO (rohin): not sure about this:
+                        availability: undefined,
                         groupName: undefined
                     }),
                     context,
@@ -330,6 +340,7 @@ function getQueryParameterTypeReference({
                     generatedName: schema.generatedName,
                     value: schema.value,
                     description: schema.description,
+                    availability: schema.availability,
                     groupName: undefined
                 }),
                 context,

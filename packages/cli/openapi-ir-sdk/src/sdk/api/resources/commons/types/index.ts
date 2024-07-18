@@ -1,4 +1,5 @@
 export * from "./WithDescription";
+export * from "./WithAvailability";
 export * from "./WithName";
 export * from "./SchemaId";
 export * from "./TagId";

@@ -152,12 +152,14 @@ exports[`examples examples parse open api 1`] = `
         "description": "A simplified list of properties.",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "SearchResponse",
           "groupName": null,
           "nameOverride": null,
           "type": "array",
           "value": {
+            "availability": null,
             "description": null,
             "generatedName": "SearchResponseItem",
             "groupName": null,
@@ -201,6 +203,7 @@ It is a very simple property object that can then be used to query the /properti
           "key": "id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "PropertySearchResponseId",
             "groupName": null,
@@ -224,12 +227,14 @@ It is a very simple property object that can then be used to query the /properti
           "key": "lat",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "propertySearchResponseLat",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "PropertySearchResponseLat",
               "groupName": null,
@@ -255,12 +260,14 @@ It is a very simple property object that can then be used to query the /properti
           "key": "lon",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "propertySearchResponseLon",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "PropertySearchResponseLon",
               "groupName": null,
@@ -286,12 +293,14 @@ It is a very simple property object that can then be used to query the /properti
           "key": "building_name",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "PropertySearchResponseBuildingName",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "PropertySearchResponseBuildingName",
               "groupName": null,
@@ -316,12 +325,14 @@ It is a very simple property object that can then be used to query the /properti
           "key": "building_name_alias",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "PropertySearchResponseBuildingNameAlias",
             "groupName": null,
             "nameOverride": null,
             "type": "array",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "PropertySearchResponseBuildingNameAliasItem",
               "groupName": null,
@@ -346,6 +357,7 @@ It is a very simple property object that can then be used to query the /properti
           "key": "street_address",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "PropertySearchResponseStreetAddress",
             "groupName": null,
@@ -369,12 +381,14 @@ It is a very simple property object that can then be used to query the /properti
           "key": "street_address_alias",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "PropertySearchResponseStreetAddressAlias",
             "groupName": null,
             "nameOverride": null,
             "type": "array",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "PropertySearchResponseStreetAddressAliasItem",
               "groupName": null,
@@ -399,6 +413,7 @@ It is a very simple property object that can then be used to query the /properti
           "key": "city",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "PropertySearchResponseCity",
             "groupName": null,
@@ -422,6 +437,7 @@ It is a very simple property object that can then be used to query the /properti
           "key": "state",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "PropertySearchResponseState",
             "groupName": null,
@@ -445,6 +461,7 @@ It is a very simple property object that can then be used to query the /properti
           "key": "zip_code",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "PropertySearchResponseZipCode",
             "groupName": null,
@@ -468,18 +485,21 @@ It is a very simple property object that can then be used to query the /properti
           "key": "number_units",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "propertySearchResponseNumberUnits",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "PropertySearchResponseNumberUnits",
               "groupName": null,
               "nameOverride": null,
               "type": "nullable",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "PropertySearchResponseNumberUnits",
                 "groupName": null,
@@ -506,18 +526,21 @@ It is a very simple property object that can then be used to query the /properti
           "key": "year_built",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "propertySearchResponseYearBuilt",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "PropertySearchResponseYearBuilt",
               "groupName": null,
               "nameOverride": null,
               "type": "nullable",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "PropertySearchResponseYearBuilt",
                 "groupName": null,
@@ -544,12 +567,14 @@ It is a very simple property object that can then be used to query the /properti
           "key": "score",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "propertySearchResponseScore",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "PropertySearchResponseScore",
               "groupName": null,

@@ -89,6 +89,7 @@ export function convertObject({
                                             generatedName: "",
                                             value: property.schema,
                                             description: undefined,
+                                            availability: property.availability,
                                             groupName: undefined
                                         })
                                     };
@@ -166,6 +167,7 @@ export function convertObject({
                       nameOverride,
                       generatedName,
                       description: undefined,
+                      availability,
                       value: convertSchema(propertySchema, false, context, propertyBreadcrumbs),
                       groupName
                   });
@@ -266,9 +268,10 @@ export function wrapObject({
                 groupName,
                 fullExamples,
                 additionalProperties: isAdditionalPropertiesAny(additionalProperties),
-                availability
+                availability: undefined
             }),
             description,
+            availability,
             groupName
         });
     }

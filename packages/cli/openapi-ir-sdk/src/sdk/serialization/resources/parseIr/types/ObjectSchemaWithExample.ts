@@ -24,19 +24,22 @@ export const ObjectSchemaWithExample: core.serialization.ObjectSchema<
             .list(core.serialization.lazyObject(async () => (await import("../../..")).NamedFullExample))
             .optional(),
         additionalProperties: core.serialization.boolean(),
-        availability: core.serialization.lazy(async () => (await import("../../..")).Availability).optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithName))
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSdkGroupName));
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSdkGroupName))
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAvailability));
 
 export declare namespace ObjectSchemaWithExample {
-    interface Raw extends serializers.WithDescription.Raw, serializers.WithName.Raw, serializers.WithSdkGroupName.Raw {
+    interface Raw
+        extends serializers.WithDescription.Raw,
+            serializers.WithName.Raw,
+            serializers.WithSdkGroupName.Raw,
+            serializers.WithAvailability.Raw {
         allOf: serializers.ReferencedSchema.Raw[];
         properties: serializers.ObjectPropertyWithExample.Raw[];
         allOfPropertyConflicts: serializers.AllOfPropertyConflict.Raw[];
         fullExamples?: serializers.NamedFullExample.Raw[] | null;
         additionalProperties: boolean;
-        availability?: serializers.Availability.Raw | null;
     }
 }

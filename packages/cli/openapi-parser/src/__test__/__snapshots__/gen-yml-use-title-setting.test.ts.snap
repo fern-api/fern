@@ -31,12 +31,14 @@ exports[`open api parser gen-yml-use-title parse open api 1`] = `
           "key": "id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "schemaWithALongNameIsRightHereAndNotSomewhereElseId",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "SchemaWithALongNameIsRightHereAndNotSomewhereElseId",
               "groupName": null,

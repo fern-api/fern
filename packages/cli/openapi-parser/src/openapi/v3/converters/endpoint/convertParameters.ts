@@ -68,6 +68,7 @@ export function convertParameters({
                           example: getExamplesString(resolvedParameter.example)
                       }),
                       description: undefined,
+                      availability,
                       groupName: undefined
                   })
                 : SchemaWithExample.optional({
@@ -85,9 +86,11 @@ export function convertParameters({
                               example: getExamplesString(resolvedParameter.example)
                           }),
                           description: undefined,
+                          availability: undefined,
                           groupName: undefined
                       }),
                       description: undefined,
+                      availability,
                       groupName: undefined
                   });
         if (
@@ -105,6 +108,7 @@ export function convertParameters({
                     generatedName,
                     value: LiteralSchemaValue.string(defaultValue),
                     description: undefined,
+                    availability,
                     groupName: undefined
                 });
             }

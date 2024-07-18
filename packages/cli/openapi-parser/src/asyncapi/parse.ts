@@ -87,6 +87,7 @@ export function parseAsyncAPI({
                                       example: undefined
                                   }),
                                   description: undefined,
+                                  availability: undefined,
                                   generatedName: "",
                                   groupName: undefined,
                                   nameOverride: undefined
@@ -248,6 +249,7 @@ function convertMessageToSchema({
         }
         return convertUndiscriminatedOneOf({
             description: event.description ?? event.message.description,
+            availability: convertAvailability(event.message),
             subtypes,
             nameOverride: event.operationId,
             generatedName,

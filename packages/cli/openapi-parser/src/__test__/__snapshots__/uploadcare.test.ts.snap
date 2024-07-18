@@ -261,12 +261,14 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
           "schema": {
             "type": "oneOf",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "BadRequestErrorBody",
               "groupName": null,
               "nameOverride": null,
               "schemas": [
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyZero",
                   "groupName": null,
@@ -275,6 +277,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyOne",
                   "groupName": null,
@@ -283,6 +286,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyTwo",
                   "groupName": null,
@@ -291,6 +295,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyThree",
                   "groupName": null,
@@ -299,6 +304,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyFour",
                   "groupName": null,
@@ -307,6 +313,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyFive",
                   "groupName": null,
@@ -315,6 +322,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodySix",
                   "groupName": null,
@@ -323,6 +331,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodySeven",
                   "groupName": null,
@@ -331,6 +340,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyEight",
                   "groupName": null,
@@ -339,6 +349,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyNine",
                   "groupName": null,
@@ -347,6 +358,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyTen",
                   "groupName": null,
@@ -355,6 +367,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyEleven",
                   "groupName": null,
@@ -363,6 +376,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyTwelve",
                   "groupName": null,
@@ -371,6 +385,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyThirteen",
                   "groupName": null,
@@ -379,6 +394,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyFourteen",
                   "groupName": null,
@@ -387,6 +403,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyFifteen",
                   "groupName": null,
@@ -395,6 +412,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodySixteen",
                   "groupName": null,
@@ -403,6 +421,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodySeventeen",
                   "groupName": null,
@@ -534,12 +553,14 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
           "schema": {
             "type": "oneOf",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ForbiddenErrorBody",
               "groupName": null,
               "nameOverride": null,
               "schemas": [
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyZero",
                   "groupName": null,
@@ -548,6 +569,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyOne",
                   "groupName": null,
@@ -556,6 +578,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyTwo",
                   "groupName": null,
@@ -564,6 +587,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyThree",
                   "groupName": null,
@@ -572,6 +596,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyFour",
                   "groupName": null,
@@ -580,6 +605,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyFive",
                   "groupName": null,
@@ -588,6 +614,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodySix",
                   "groupName": null,
@@ -596,6 +623,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodySeven",
                   "groupName": null,
@@ -604,6 +632,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyEight",
                   "groupName": null,
@@ -612,6 +641,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyNine",
                   "groupName": null,
@@ -642,6 +672,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
           "generatedName": "ContentTooLargeError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ContentTooLargeErrorBody",
             "groupName": null,
@@ -675,6 +706,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
           "generatedName": "TooManyRequestsError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
@@ -851,6 +883,7 @@ Log.d("TAG", file.toString())
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "BaseUploadRequestUploadcarePubKey",
                 "groupName": null,
@@ -866,12 +899,14 @@ Log.d("TAG", file.toString())
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "baseUploadRequestUploadcareStore",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BaseUploadRequestUploadcareStore",
                   "groupName": null,
@@ -897,12 +932,14 @@ Log.d("TAG", file.toString())
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "baseUploadRequestMetadataKey",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BaseUploadRequestMetadataKey",
                   "groupName": null,
@@ -919,12 +956,14 @@ Log.d("TAG", file.toString())
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "baseUploadRequestSignature",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BaseUploadRequestSignature",
                   "groupName": null,
@@ -941,12 +980,14 @@ Log.d("TAG", file.toString())
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "baseUploadRequestExpire",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BaseUploadRequestExpire",
                   "groupName": null,
@@ -984,12 +1025,14 @@ the value is the unique ID of the file on our systems.
               "key": "filename",
               "nameOverride": null,
               "schema": {
+                "availability": null,
                 "description": null,
                 "generatedName": "baseUploadResponseFilename",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BaseUploadResponseFilename",
                   "groupName": null,
@@ -1274,12 +1317,14 @@ To upload large files, 3 requests are sent in sequence:
           "schema": {
             "type": "oneOf",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "BadRequestErrorBody",
               "groupName": null,
               "nameOverride": null,
               "schemas": [
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyZero",
                   "groupName": null,
@@ -1288,6 +1333,7 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyOne",
                   "groupName": null,
@@ -1296,6 +1342,7 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyTwo",
                   "groupName": null,
@@ -1304,6 +1351,7 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyThree",
                   "groupName": null,
@@ -1312,6 +1360,7 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyFour",
                   "groupName": null,
@@ -1320,6 +1369,7 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyFive",
                   "groupName": null,
@@ -1328,6 +1378,7 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodySix",
                   "groupName": null,
@@ -1336,6 +1387,7 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodySeven",
                   "groupName": null,
@@ -1344,6 +1396,7 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyEight",
                   "groupName": null,
@@ -1352,6 +1405,7 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyNine",
                   "groupName": null,
@@ -1360,6 +1414,7 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyTen",
                   "groupName": null,
@@ -1368,6 +1423,7 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyEleven",
                   "groupName": null,
@@ -1376,6 +1432,7 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyTwelve",
                   "groupName": null,
@@ -1384,6 +1441,7 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyThirteen",
                   "groupName": null,
@@ -1392,6 +1450,7 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyFourteen",
                   "groupName": null,
@@ -1400,6 +1459,7 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyFifteen",
                   "groupName": null,
@@ -1408,6 +1468,7 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodySixteen",
                   "groupName": null,
@@ -1416,6 +1477,7 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodySeventeen",
                   "groupName": null,
@@ -1424,6 +1486,7 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyEighteen",
                   "groupName": null,
@@ -1432,6 +1495,7 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyNineteen",
                   "groupName": null,
@@ -1440,6 +1504,7 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyTwenty",
                   "groupName": null,
@@ -1571,12 +1636,14 @@ To upload large files, 3 requests are sent in sequence:
           "schema": {
             "type": "oneOf",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ForbiddenErrorBody",
               "groupName": null,
               "nameOverride": null,
               "schemas": [
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyZero",
                   "groupName": null,
@@ -1585,6 +1652,7 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyOne",
                   "groupName": null,
@@ -1593,6 +1661,7 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyTwo",
                   "groupName": null,
@@ -1601,6 +1670,7 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyThree",
                   "groupName": null,
@@ -1609,6 +1679,7 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyFour",
                   "groupName": null,
@@ -1617,6 +1688,7 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyFive",
                   "groupName": null,
@@ -1625,6 +1697,7 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodySix",
                   "groupName": null,
@@ -1633,6 +1706,7 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodySeven",
                   "groupName": null,
@@ -1641,6 +1715,7 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyEight",
                   "groupName": null,
@@ -1649,6 +1724,7 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyNine",
                   "groupName": null,
@@ -1679,6 +1755,7 @@ To upload large files, 3 requests are sent in sequence:
           "generatedName": "TooManyRequestsError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
@@ -1925,6 +2002,7 @@ Log.d("TAG", file.toString())
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "MultipartFileUploadStartRequestUploadcarePubKey",
                 "groupName": null,
@@ -1940,12 +2018,14 @@ Log.d("TAG", file.toString())
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "multipartFileUploadStartRequestUploadcareStore",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "availability": null,
                   "description": null,
                   "generatedName": "MultipartFileUploadStartRequestUploadcareStore",
                   "groupName": null,
@@ -1962,6 +2042,7 @@ Log.d("TAG", file.toString())
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": "Original file name of the uploaded file",
                 "generatedName": "MultipartFileUploadStartRequestFilename",
                 "groupName": null,
@@ -1984,6 +2065,7 @@ Log.d("TAG", file.toString())
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": "Precise file size of the uploaded file (in bytes).
 **Note**: The size should not exceed max file size cap for your project.
 ",
@@ -2009,12 +2091,14 @@ Log.d("TAG", file.toString())
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "multipartFileUploadStartRequestPartSize",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "availability": null,
                   "description": "Multipart Uploads expect that you will split the uploaded file into equally sized
 parts (except for the last part) and then will upload them to AWS S3 (possibly in parallel).
 By default, we assume that you will upload the files in 5 megabyte chunks,
@@ -2046,6 +2130,7 @@ to us as a value of the \`part_size\` parameter (in bytes).
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": "File's MIME-type.",
                 "generatedName": "MultipartFileUploadStartRequestContentType",
                 "groupName": null,
@@ -2068,12 +2153,14 @@ to us as a value of the \`part_size\` parameter (in bytes).
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "multipartFileUploadStartRequestMetadataKey",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "availability": null,
                   "description": null,
                   "generatedName": "MultipartFileUploadStartRequestMetadataKey",
                   "groupName": null,
@@ -2090,12 +2177,14 @@ to us as a value of the \`part_size\` parameter (in bytes).
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "multipartFileUploadStartRequestSignature",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "availability": null,
                   "description": null,
                   "generatedName": "MultipartFileUploadStartRequestSignature",
                   "groupName": null,
@@ -2112,12 +2201,14 @@ to us as a value of the \`part_size\` parameter (in bytes).
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "multipartFileUploadStartRequestExpire",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "availability": null,
                   "description": null,
                   "generatedName": "MultipartFileUploadStartRequestExpire",
                   "groupName": null,
@@ -2153,6 +2244,7 @@ to us as a value of the \`part_size\` parameter (in bytes).
               "key": "uuid",
               "nameOverride": null,
               "schema": {
+                "availability": null,
                 "description": "File's UUID.",
                 "generatedName": "MultipartFileUploadStartResponseUuid",
                 "groupName": null,
@@ -2176,12 +2268,14 @@ to us as a value of the \`part_size\` parameter (in bytes).
               "key": "parts",
               "nameOverride": null,
               "schema": {
+                "availability": null,
                 "description": null,
                 "generatedName": "MultipartFileUploadStartResponseParts",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "array",
                 "value": {
+                  "availability": null,
                   "description": "Upload file parts here.",
                   "generatedName": "MultipartFileUploadStartResponsePartsItem",
                   "groupName": null,
@@ -2493,12 +2587,14 @@ upload session to assemble all the file parts into a single resulting file.
           "schema": {
             "type": "oneOf",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "BadRequestErrorBody",
               "groupName": null,
               "nameOverride": null,
               "schemas": [
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyZero",
                   "groupName": null,
@@ -2507,6 +2603,7 @@ upload session to assemble all the file parts into a single resulting file.
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyOne",
                   "groupName": null,
@@ -2515,6 +2612,7 @@ upload session to assemble all the file parts into a single resulting file.
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyTwo",
                   "groupName": null,
@@ -2523,6 +2621,7 @@ upload session to assemble all the file parts into a single resulting file.
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyThree",
                   "groupName": null,
@@ -2531,6 +2630,7 @@ upload session to assemble all the file parts into a single resulting file.
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyFour",
                   "groupName": null,
@@ -2539,6 +2639,7 @@ upload session to assemble all the file parts into a single resulting file.
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyFive",
                   "groupName": null,
@@ -2547,6 +2648,7 @@ upload session to assemble all the file parts into a single resulting file.
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodySix",
                   "groupName": null,
@@ -2555,6 +2657,7 @@ upload session to assemble all the file parts into a single resulting file.
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodySeven",
                   "groupName": null,
@@ -2563,6 +2666,7 @@ upload session to assemble all the file parts into a single resulting file.
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyEight",
                   "groupName": null,
@@ -2571,6 +2675,7 @@ upload session to assemble all the file parts into a single resulting file.
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyNine",
                   "groupName": null,
@@ -2579,6 +2684,7 @@ upload session to assemble all the file parts into a single resulting file.
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyTen",
                   "groupName": null,
@@ -2622,12 +2728,14 @@ upload session to assemble all the file parts into a single resulting file.
           "schema": {
             "type": "oneOf",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ForbiddenErrorBody",
               "groupName": null,
               "nameOverride": null,
               "schemas": [
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyZero",
                   "groupName": null,
@@ -2636,6 +2744,7 @@ upload session to assemble all the file parts into a single resulting file.
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyOne",
                   "groupName": null,
@@ -2666,6 +2775,7 @@ upload session to assemble all the file parts into a single resulting file.
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -3375,6 +3485,7 @@ Log.d("TAG", file.toString())
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "MultipartFileUploadCompleteRequestUploadcarePubKey",
                 "groupName": null,
@@ -3390,6 +3501,7 @@ Log.d("TAG", file.toString())
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": "File's UUID from the \`/multipart/start/\` endpoint.",
                 "generatedName": "MultipartFileUploadCompleteRequestUuid",
                 "groupName": null,
@@ -3414,6 +3526,7 @@ Log.d("TAG", file.toString())
         "description": "The file was uploaded successfully.",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "MultipartFileUploadCompleteResponse",
           "groupName": null,
@@ -3715,12 +3828,14 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
           "schema": {
             "type": "oneOf",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "BadRequestErrorBody",
               "groupName": null,
               "nameOverride": null,
               "schemas": [
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyZero",
                   "groupName": null,
@@ -3729,6 +3844,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyOne",
                   "groupName": null,
@@ -3737,6 +3853,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyTwo",
                   "groupName": null,
@@ -3745,6 +3862,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyThree",
                   "groupName": null,
@@ -3753,6 +3871,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyFour",
                   "groupName": null,
@@ -3761,6 +3880,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyFive",
                   "groupName": null,
@@ -3769,6 +3889,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodySix",
                   "groupName": null,
@@ -3777,6 +3898,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodySeven",
                   "groupName": null,
@@ -3785,6 +3907,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyEight",
                   "groupName": null,
@@ -3793,6 +3916,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyNine",
                   "groupName": null,
@@ -3801,6 +3925,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyTen",
                   "groupName": null,
@@ -3809,6 +3934,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyEleven",
                   "groupName": null,
@@ -3817,6 +3943,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyTwelve",
                   "groupName": null,
@@ -3825,6 +3952,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyThirteen",
                   "groupName": null,
@@ -3833,6 +3961,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyFourteen",
                   "groupName": null,
@@ -3841,6 +3970,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyFifteen",
                   "groupName": null,
@@ -3849,6 +3979,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodySixteen",
                   "groupName": null,
@@ -3857,6 +3988,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodySeventeen",
                   "groupName": null,
@@ -3865,6 +3997,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyEighteen",
                   "groupName": null,
@@ -3873,6 +4006,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyNineteen",
                   "groupName": null,
@@ -3881,6 +4015,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyTwenty",
                   "groupName": null,
@@ -3889,6 +4024,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyTwentyOne",
                   "groupName": null,
@@ -3897,6 +4033,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyTwentyTwo",
                   "groupName": null,
@@ -4028,12 +4165,14 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
           "schema": {
             "type": "oneOf",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ForbiddenErrorBody",
               "groupName": null,
               "nameOverride": null,
               "schemas": [
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyZero",
                   "groupName": null,
@@ -4042,6 +4181,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyOne",
                   "groupName": null,
@@ -4050,6 +4190,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyTwo",
                   "groupName": null,
@@ -4058,6 +4199,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyThree",
                   "groupName": null,
@@ -4066,6 +4208,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyFour",
                   "groupName": null,
@@ -4074,6 +4217,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyFive",
                   "groupName": null,
@@ -4082,6 +4226,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodySix",
                   "groupName": null,
@@ -4090,6 +4235,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodySeven",
                   "groupName": null,
@@ -4098,6 +4244,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyEight",
                   "groupName": null,
@@ -4106,6 +4253,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyNine",
                   "groupName": null,
@@ -4136,6 +4284,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
           "generatedName": "TooManyRequestsError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
@@ -5013,6 +5162,7 @@ Log.d("TAG", file.toString())
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "FromUrlUploadRequestPubKey",
                 "groupName": null,
@@ -5028,6 +5178,7 @@ Log.d("TAG", file.toString())
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": "Source URL of the file to fetch and upload.
 
 **Note**: The URL should point to a resource publicly available via HTTP/HTTPS.
@@ -5053,12 +5204,14 @@ Log.d("TAG", file.toString())
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "fromUrlUploadRequestStore",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "availability": null,
                   "description": null,
                   "generatedName": "FromUrlUploadRequestStore",
                   "groupName": null,
@@ -5075,12 +5228,14 @@ Log.d("TAG", file.toString())
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "fromUrlUploadRequestFilename",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "availability": null,
                   "description": "Sets the file name of the resource fetched from the source URL.
 If not defined, the file name is obtained from either HTTP
 response headers or the \`source_url\`'s path.
@@ -5110,12 +5265,14 @@ response headers or the \`source_url\`'s path.
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "fromUrlUploadRequestCheckUrlDuplicates",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "availability": null,
                   "description": "If set to "1", enables the \`source_url\` duplicates prevention.
 Specifically, if the \`source_url\` had already been fetched and uploaded previously,
 this request will return information about the already uploaded file.
@@ -5126,6 +5283,7 @@ this request will return information about the already uploaded file.
                   "type": "enum",
                   "values": [
                     {
+                      "availability": null,
                       "casing": {
                         "camel": null,
                         "pascal": null,
@@ -5138,6 +5296,7 @@ this request will return information about the already uploaded file.
                       "value": "0",
                     },
                     {
+                      "availability": null,
                       "casing": {
                         "camel": null,
                         "pascal": null,
@@ -5160,12 +5319,14 @@ this request will return information about the already uploaded file.
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "fromUrlUploadRequestSaveUrlDuplicates",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "availability": null,
                   "description": "Determines if the requested \`source_url\` should be kept in the history of
 fetched/uploaded URLs. If the value is not defined explicitly, it is set
 to the value of the \`check_URL_duplicates\` parameter.
@@ -5176,6 +5337,7 @@ to the value of the \`check_URL_duplicates\` parameter.
                   "type": "enum",
                   "values": [
                     {
+                      "availability": null,
                       "casing": {
                         "camel": null,
                         "pascal": null,
@@ -5188,6 +5350,7 @@ to the value of the \`check_URL_duplicates\` parameter.
                       "value": "0",
                     },
                     {
+                      "availability": null,
                       "casing": {
                         "camel": null,
                         "pascal": null,
@@ -5210,12 +5373,14 @@ to the value of the \`check_URL_duplicates\` parameter.
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "fromUrlUploadRequestMetadataKey",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "availability": null,
                   "description": null,
                   "generatedName": "FromUrlUploadRequestMetadataKey",
                   "groupName": null,
@@ -5232,12 +5397,14 @@ to the value of the \`check_URL_duplicates\` parameter.
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "fromUrlUploadRequestSignature",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "availability": null,
                   "description": null,
                   "generatedName": "FromUrlUploadRequestSignature",
                   "groupName": null,
@@ -5254,12 +5421,14 @@ to the value of the \`check_URL_duplicates\` parameter.
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "fromUrlUploadRequestExpire",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "availability": null,
                   "description": null,
                   "generatedName": "FromUrlUploadRequestExpire",
                   "groupName": null,
@@ -5280,12 +5449,14 @@ to the value of the \`check_URL_duplicates\` parameter.
         "schema": {
           "type": "oneOf",
           "value": {
+            "availability": null,
             "description": null,
             "generatedName": "FromUrlUploadResponse",
             "groupName": null,
             "nameOverride": null,
             "schemas": [
               {
+                "availability": null,
                 "description": null,
                 "generatedName": "FromUrlUploadResponseZero",
                 "groupName": null,
@@ -5294,6 +5465,7 @@ to the value of the \`check_URL_duplicates\` parameter.
                 "type": "reference",
               },
               {
+                "availability": null,
                 "description": null,
                 "generatedName": "FromUrlUploadResponseOne",
                 "groupName": null,
@@ -5345,6 +5517,7 @@ to the value of the \`check_URL_duplicates\` parameter.
           "generatedName": "BadRequestError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "BadRequestErrorBody",
             "groupName": null,
@@ -6533,6 +6706,7 @@ Log.d("TAG", status.toString())
           "name": "token",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "FromUrlUploadStatusRequestToken",
             "groupName": null,
@@ -6558,12 +6732,14 @@ Log.d("TAG", status.toString())
         "schema": {
           "type": "oneOf",
           "value": {
+            "availability": null,
             "description": null,
             "generatedName": "FromUrlUploadStatusResponse",
             "groupName": null,
             "nameOverride": null,
             "schemas": [
               {
+                "availability": null,
                 "description": null,
                 "generatedName": "FromUrlUploadStatusResponseZero",
                 "groupName": null,
@@ -6572,6 +6748,7 @@ Log.d("TAG", status.toString())
                 "type": "reference",
               },
               {
+                "availability": null,
                 "description": null,
                 "generatedName": "FromUrlUploadStatusResponseOne",
                 "groupName": null,
@@ -6580,6 +6757,7 @@ Log.d("TAG", status.toString())
                 "type": "reference",
               },
               {
+                "availability": null,
                 "description": null,
                 "generatedName": "FromUrlUploadStatusResponseTwo",
                 "groupName": null,
@@ -6588,6 +6766,7 @@ Log.d("TAG", status.toString())
                 "type": "reference",
               },
               {
+                "availability": null,
                 "description": null,
                 "generatedName": "FromUrlUploadStatusResponseThree",
                 "groupName": null,
@@ -6596,6 +6775,7 @@ Log.d("TAG", status.toString())
                 "type": "reference",
               },
               {
+                "availability": null,
                 "description": null,
                 "generatedName": "FromUrlUploadStatusResponseFour",
                 "groupName": null,
@@ -6665,12 +6845,14 @@ Log.d("TAG", status.toString())
           "schema": {
             "type": "oneOf",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "BadRequestErrorBody",
               "groupName": null,
               "nameOverride": null,
               "schemas": [
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyZero",
                   "groupName": null,
@@ -6679,6 +6861,7 @@ Log.d("TAG", status.toString())
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyOne",
                   "groupName": null,
@@ -6687,6 +6870,7 @@ Log.d("TAG", status.toString())
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyTwo",
                   "groupName": null,
@@ -6730,12 +6914,14 @@ Log.d("TAG", status.toString())
           "schema": {
             "type": "oneOf",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ForbiddenErrorBody",
               "groupName": null,
               "nameOverride": null,
               "schemas": [
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyZero",
                   "groupName": null,
@@ -6744,6 +6930,7 @@ Log.d("TAG", status.toString())
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyOne",
                   "groupName": null,
@@ -6774,6 +6961,7 @@ Log.d("TAG", status.toString())
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -7461,6 +7649,7 @@ Log.d("TAG", file.toString())
           "name": "pub_key",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "FileUploadInfoRequestPubKey",
             "groupName": null,
@@ -7475,6 +7664,7 @@ Log.d("TAG", file.toString())
           "name": "file_id",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "FileUploadInfoRequestFileId",
             "groupName": null,
@@ -7497,6 +7687,7 @@ Log.d("TAG", file.toString())
         "description": "File information was retrieved successfully.",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "FileUploadInfoResponse",
           "groupName": null,
@@ -7636,12 +7827,14 @@ is to create a new one.
           "schema": {
             "type": "oneOf",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "BadRequestErrorBody",
               "groupName": null,
               "nameOverride": null,
               "schemas": [
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyZero",
                   "groupName": null,
@@ -7650,6 +7843,7 @@ is to create a new one.
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyOne",
                   "groupName": null,
@@ -7658,6 +7852,7 @@ is to create a new one.
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyTwo",
                   "groupName": null,
@@ -7666,6 +7861,7 @@ is to create a new one.
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyThree",
                   "groupName": null,
@@ -7674,6 +7870,7 @@ is to create a new one.
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyFour",
                   "groupName": null,
@@ -7682,6 +7879,7 @@ is to create a new one.
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyFive",
                   "groupName": null,
@@ -7690,6 +7888,7 @@ is to create a new one.
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodySix",
                   "groupName": null,
@@ -7698,6 +7897,7 @@ is to create a new one.
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodySeven",
                   "groupName": null,
@@ -7706,6 +7906,7 @@ is to create a new one.
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyEight",
                   "groupName": null,
@@ -7826,12 +8027,14 @@ is to create a new one.
           "schema": {
             "type": "oneOf",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ForbiddenErrorBody",
               "groupName": null,
               "nameOverride": null,
               "schemas": [
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyZero",
                   "groupName": null,
@@ -7840,6 +8043,7 @@ is to create a new one.
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyOne",
                   "groupName": null,
@@ -7848,6 +8052,7 @@ is to create a new one.
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyTwo",
                   "groupName": null,
@@ -7856,6 +8061,7 @@ is to create a new one.
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyThree",
                   "groupName": null,
@@ -7864,6 +8070,7 @@ is to create a new one.
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyFour",
                   "groupName": null,
@@ -7872,6 +8079,7 @@ is to create a new one.
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyFive",
                   "groupName": null,
@@ -7880,6 +8088,7 @@ is to create a new one.
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodySix",
                   "groupName": null,
@@ -7888,6 +8097,7 @@ is to create a new one.
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodySeven",
                   "groupName": null,
@@ -7896,6 +8106,7 @@ is to create a new one.
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyEight",
                   "groupName": null,
@@ -8677,6 +8888,7 @@ Log.d("TAG", group.toString())
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "CreateFilesGroupRequestPubKey",
                 "groupName": null,
@@ -8692,6 +8904,7 @@ Log.d("TAG", group.toString())
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": "Set of files you want to add to the group.
 Each element can be a file UUID with or without the applied image
 processing operations.
@@ -8701,6 +8914,7 @@ processing operations.
                 "nameOverride": null,
                 "type": "array",
                 "value": {
+                  "availability": null,
                   "description": null,
                   "generatedName": "CreateFilesGroupRequestFilesItem",
                   "groupName": null,
@@ -8724,12 +8938,14 @@ processing operations.
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "createFilesGroupRequestSignature",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "availability": null,
                   "description": null,
                   "generatedName": "CreateFilesGroupRequestSignature",
                   "groupName": null,
@@ -8746,12 +8962,14 @@ processing operations.
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "createFilesGroupRequestExpire",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "availability": null,
                   "description": null,
                   "generatedName": "CreateFilesGroupRequestExpire",
                   "groupName": null,
@@ -8770,6 +8988,7 @@ processing operations.
         "description": "The group was created successfully.",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "CreateFilesGroupResponse",
           "groupName": null,
@@ -8825,12 +9044,14 @@ number of the files in the group, etc).
           "schema": {
             "type": "oneOf",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "BadRequestErrorBody",
               "groupName": null,
               "nameOverride": null,
               "schemas": [
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyZero",
                   "groupName": null,
@@ -8839,6 +9060,7 @@ number of the files in the group, etc).
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyOne",
                   "groupName": null,
@@ -8882,12 +9104,14 @@ number of the files in the group, etc).
           "schema": {
             "type": "oneOf",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ForbiddenErrorBody",
               "groupName": null,
               "nameOverride": null,
               "schemas": [
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyZero",
                   "groupName": null,
@@ -8896,6 +9120,7 @@ number of the files in the group, etc).
                   "type": "reference",
                 },
                 {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ForbiddenErrorBodyOne",
                   "groupName": null,
@@ -8926,6 +9151,7 @@ number of the files in the group, etc).
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -9687,6 +9913,7 @@ Log.d("TAG", group.toString())
           "name": "pub_key",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "FilesGroupInfoRequestPubKey",
             "groupName": null,
@@ -9702,6 +9929,7 @@ Log.d("TAG", group.toString())
           "name": "group_id",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "FilesGroupInfoRequestGroupId",
             "groupName": null,
@@ -9724,6 +9952,7 @@ Log.d("TAG", group.toString())
         "description": "File group information was retrieved successfully.",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "FilesGroupInfoResponse",
           "groupName": null,
@@ -9830,6 +10059,7 @@ Log.d("TAG", group.toString())
   ],
   "schemas": {
     "accountBlockedError": {
+      "availability": null,
       "description": null,
       "generatedName": "AccountBlockedError",
       "groupName": null,
@@ -9845,6 +10075,7 @@ Log.d("TAG", group.toString())
       "type": "primitive",
     },
     "accountLimitsExceededError": {
+      "availability": null,
       "description": null,
       "generatedName": "AccountLimitsExceededError",
       "groupName": null,
@@ -9860,6 +10091,7 @@ Log.d("TAG", group.toString())
       "type": "primitive",
     },
     "accountUnpaidError": {
+      "availability": null,
       "description": null,
       "generatedName": "AccountUnpaidError",
       "groupName": null,
@@ -9875,6 +10107,7 @@ Log.d("TAG", group.toString())
       "type": "primitive",
     },
     "autoStoreDisabledError": {
+      "availability": null,
       "description": null,
       "generatedName": "AutoStoreDisabledError",
       "groupName": null,
@@ -9890,6 +10123,7 @@ Log.d("TAG", group.toString())
       "type": "primitive",
     },
     "contentInfo": {
+      "availability": null,
       "description": "Information about file content.",
       "generatedName": "ContentInfo",
       "groupName": null,
@@ -9913,6 +10147,7 @@ Log.d("TAG", group.toString())
             "key": "mime",
             "nameOverride": null,
             "schema": {
+              "availability": null,
               "description": null,
               "generatedName": "contentInfoMime",
               "groupName": null,
@@ -9936,6 +10171,7 @@ Log.d("TAG", group.toString())
                     "key": "mime",
                     "nameOverride": null,
                     "schema": {
+                      "availability": null,
                       "description": "Full MIME type.",
                       "generatedName": "ContentInfoMimeMime",
                       "groupName": null,
@@ -9959,6 +10195,7 @@ Log.d("TAG", group.toString())
                     "key": "type",
                     "nameOverride": null,
                     "schema": {
+                      "availability": null,
                       "description": "Type of MIME type.",
                       "generatedName": "ContentInfoMimeType",
                       "groupName": null,
@@ -9982,6 +10219,7 @@ Log.d("TAG", group.toString())
                     "key": "subtype",
                     "nameOverride": null,
                     "schema": {
+                      "availability": null,
                       "description": "Subtype of MIME type.",
                       "generatedName": "ContentInfoMimeSubtype",
                       "groupName": null,
@@ -10010,12 +10248,14 @@ Log.d("TAG", group.toString())
             "key": "image",
             "nameOverride": null,
             "schema": {
+              "availability": null,
               "description": null,
               "generatedName": "contentInfoImage",
               "groupName": null,
               "nameOverride": null,
               "type": "optional",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "ContentInfoImage",
                 "groupName": null,
@@ -10033,12 +10273,14 @@ Log.d("TAG", group.toString())
             "key": "video",
             "nameOverride": null,
             "schema": {
+              "availability": null,
               "description": null,
               "generatedName": "contentInfoVideo",
               "groupName": null,
               "nameOverride": null,
               "type": "optional",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "ContentInfoVideo",
                 "groupName": null,
@@ -10053,6 +10295,7 @@ Log.d("TAG", group.toString())
       },
     },
     "expireType": {
+      "availability": null,
       "description": "\`expire\` must be sent along with your upload request if you would like to use signed uploads.
 The parameter defines the time during which your signature is valid. It's a UNIX timestamp.
 See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for details.
@@ -10072,6 +10315,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "type": "primitive",
     },
     "fileIdInvalidError": {
+      "availability": null,
       "description": null,
       "generatedName": "FileIdInvalidError",
       "groupName": null,
@@ -10087,6 +10331,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "type": "primitive",
     },
     "fileIdRequiredError": {
+      "availability": null,
       "description": null,
       "generatedName": "FileIdRequiredError",
       "groupName": null,
@@ -10102,6 +10347,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "type": "primitive",
     },
     "fileInfectedError": {
+      "availability": null,
       "description": null,
       "generatedName": "FileInfectedError",
       "groupName": null,
@@ -10117,6 +10363,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "type": "primitive",
     },
     "fileMetadataKeyDuplicatedError": {
+      "availability": null,
       "description": null,
       "generatedName": "FileMetadataKeyDuplicatedError",
       "groupName": null,
@@ -10132,6 +10379,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "type": "primitive",
     },
     "fileMetadataKeyEmptyError": {
+      "availability": null,
       "description": null,
       "generatedName": "FileMetadataKeyEmptyError",
       "groupName": null,
@@ -10147,6 +10395,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "type": "primitive",
     },
     "fileMetadataKeyForbiddenError": {
+      "availability": null,
       "description": null,
       "generatedName": "FileMetadataKeyForbiddenError",
       "groupName": null,
@@ -10162,6 +10411,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "type": "primitive",
     },
     "fileMetadataKeyLengthTooBigError": {
+      "availability": null,
       "description": null,
       "generatedName": "FileMetadataKeyLengthTooBigError",
       "groupName": null,
@@ -10177,6 +10427,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "type": "primitive",
     },
     "fileMetadataKeysNumberTooBigError": {
+      "availability": null,
       "description": null,
       "generatedName": "FileMetadataKeysNumberTooBigError",
       "groupName": null,
@@ -10192,6 +10443,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "type": "primitive",
     },
     "fileMetadataValueEmptyError": {
+      "availability": null,
       "description": null,
       "generatedName": "FileMetadataValueEmptyError",
       "groupName": null,
@@ -10207,6 +10459,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "type": "primitive",
     },
     "fileMetadataValueForbiddenError": {
+      "availability": null,
       "description": null,
       "generatedName": "FileMetadataValueForbiddenError",
       "groupName": null,
@@ -10222,6 +10475,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "type": "primitive",
     },
     "fileMetadataValueLengthTooBigError": {
+      "availability": null,
       "description": null,
       "generatedName": "FileMetadataValueLengthTooBigError",
       "groupName": null,
@@ -10237,6 +10491,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "type": "primitive",
     },
     "fileNotFoundError": {
+      "availability": null,
       "description": null,
       "generatedName": "FileNotFoundError",
       "groupName": null,
@@ -10252,6 +10507,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "type": "primitive",
     },
     "fileSizeLimitExceededError": {
+      "availability": null,
       "description": null,
       "generatedName": "FileSizeLimitExceededError",
       "groupName": null,
@@ -10267,6 +10523,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "type": "primitive",
     },
     "fileTypeForbiddenError": {
+      "availability": null,
       "description": null,
       "generatedName": "FileTypeForbiddenError",
       "groupName": null,
@@ -10299,6 +10556,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "key": "uuid",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "File's unique ID.",
             "generatedName": "FileUploadInfoUuid",
             "groupName": null,
@@ -10322,6 +10580,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "key": "file_id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Same as \`uuid\`",
             "generatedName": "FileUploadInfoFileId",
             "groupName": null,
@@ -10345,6 +10604,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "key": "size",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "File's size in bytes.",
             "generatedName": "FileUploadInfoSize",
             "groupName": null,
@@ -10369,6 +10629,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "key": "total",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Same as \`size\`.",
             "generatedName": "FileUploadInfoTotal",
             "groupName": null,
@@ -10393,6 +10654,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "key": "done",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Same as \`size\`.",
             "generatedName": "FileUploadInfoDone",
             "groupName": null,
@@ -10417,6 +10679,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "key": "original_filename",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Original file of the uploaded file.",
             "generatedName": "FileUploadInfoOriginalFilename",
             "groupName": null,
@@ -10440,6 +10703,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "key": "filename",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Sanitized \`original_filename\`.",
             "generatedName": "FileUploadInfoFilename",
             "groupName": null,
@@ -10463,6 +10727,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "key": "mime_type",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "File's MIME-type.",
             "generatedName": "FileUploadInfoMimeType",
             "groupName": null,
@@ -10486,6 +10751,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "key": "image_info",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "FileUploadInfoImageInfo",
             "groupName": null,
@@ -10502,6 +10768,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "key": "video_info",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "FileUploadInfoVideoInfo",
             "groupName": null,
@@ -10518,6 +10785,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "key": "content_info",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "FileUploadInfoContentInfo",
             "groupName": null,
@@ -10534,6 +10802,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "key": "metadata",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "FileUploadInfoMetadata",
             "groupName": null,
@@ -10550,6 +10819,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "key": "is_image",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "True if the uploaded file is an image of a supported file format.",
             "generatedName": "FileUploadInfoIsImage",
             "groupName": null,
@@ -10569,6 +10839,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "key": "is_stored",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "True if the file has been marked as stored.",
             "generatedName": "FileUploadInfoIsStored",
             "groupName": null,
@@ -10588,6 +10859,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "key": "is_ready",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "True if the file is ready to be fetched from Uploadcare's CDN.",
             "generatedName": "FileUploadInfoIsReady",
             "groupName": null,
@@ -10607,18 +10879,21 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "key": "s3_bucket",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "fileUploadInfoS3Bucket",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "Name of an AWS S3 bucket where the file is stored. Only available if you associate a Foreign Storage Bucket with your project.",
               "generatedName": "FileUploadInfoS3Bucket",
               "groupName": null,
               "nameOverride": null,
               "type": "nullable",
               "value": {
+                "availability": null,
                 "description": "Name of an AWS S3 bucket where the file is stored. Only available if you associate a Foreign Storage Bucket with your project.",
                 "generatedName": "FileUploadInfoS3Bucket",
                 "groupName": null,
@@ -10657,12 +10932,14 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "key": "status",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "fileUploadInfoErrorStatusStatus",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "The system failed to fetch and/or upload the file.
 ",
               "generatedName": "FileUploadInfoErrorStatusStatus",
@@ -10684,12 +10961,14 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "key": "error",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "fileUploadInfoErrorStatusError",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "Human readable description of the issue with the fetch/upload task.
 ",
               "generatedName": "FileUploadInfoErrorStatusError",
@@ -10715,12 +10994,14 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "key": "error_code",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "fileUploadInfoErrorStatusErrorCode",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "Machine readable error code.
 
 Note: See the [Errors > FromURL upload errors](#tag/Errors) section of this
@@ -10748,6 +11029,7 @@ page for a full list of all possible error codes.
       "additionalProperties": false,
       "allOf": [
         {
+          "availability": null,
           "description": null,
           "generatedName": "FileUploadInfo",
           "groupName": null,
@@ -10770,12 +11052,14 @@ page for a full list of all possible error codes.
           "key": "type",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "fileUploadInfoFromUrlType",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "FileUploadInfoFromUrlType",
               "groupName": null,
@@ -10809,12 +11093,14 @@ page for a full list of all possible error codes.
           "key": "status",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "fileUploadInfoProgressStatusStatus",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "The system is fetching/uploading the file.
 ",
               "generatedName": "FileUploadInfoProgressStatusStatus",
@@ -10836,12 +11122,14 @@ page for a full list of all possible error codes.
           "key": "total",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "fileUploadInfoProgressStatusTotal",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "The expected size of the fetched file (in bytes).
 
 **Note:** the value can be missing if the server we are fetching the file from
@@ -10853,6 +11141,7 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
               "nameOverride": null,
               "type": "nullable",
               "value": {
+                "availability": null,
                 "description": "The expected size of the fetched file (in bytes).
 
 **Note:** the value can be missing if the server we are fetching the file from
@@ -10884,12 +11173,14 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
           "key": "done",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "fileUploadInfoProgressStatusDone",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "How many bytes of the file have been fetched so far.
 ",
               "generatedName": "FileUploadInfoProgressStatusDone",
@@ -10915,6 +11206,7 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
       "additionalProperties": false,
       "allOf": [
         {
+          "availability": null,
           "description": null,
           "generatedName": "FileUploadInfo",
           "groupName": null,
@@ -10937,12 +11229,14 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
           "key": "status",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "fileUploadInfoSuccessStatusStatus",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "The file has been fetched/uploaded successfully.",
               "generatedName": "FileUploadInfoSuccessStatusStatus",
               "groupName": null,
@@ -10976,12 +11270,14 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
           "key": "status",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "fileUploadInfoUnknownStatusStatus",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "The system does not have information about the task.
 
 Note: Uploadcare stores information about the \`/from_url/\` tasks for a limited
@@ -11020,12 +11316,14 @@ that are tool old (or that have not been created at all).
           "key": "status",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "fileUploadInfoWaitingStatusStatus",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "The system is preparing to handle the request.
 ",
               "generatedName": "FileUploadInfoWaitingStatusStatus",
@@ -11043,6 +11341,7 @@ that are tool old (or that have not been created at all).
       "type": "object",
     },
     "filesRequiredError": {
+      "availability": null,
       "description": null,
       "generatedName": "FilesRequiredError",
       "groupName": null,
@@ -11075,12 +11374,14 @@ that are tool old (or that have not been created at all).
           "key": "type",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "fromUrlUploadResponseSchemaType",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "FromUrlUploadResponseSchemaType",
               "groupName": null,
@@ -11101,12 +11402,14 @@ that are tool old (or that have not been created at all).
           "key": "token",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "fromUrlUploadResponseSchemaToken",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "Token to identify a \`/from_url/\` request.",
               "generatedName": "FromUrlUploadResponseSchemaToken",
               "groupName": null,
@@ -11127,6 +11430,7 @@ that are tool old (or that have not been created at all).
       "type": "object",
     },
     "groupFileURLParsingFailedError": {
+      "availability": null,
       "description": null,
       "generatedName": "GroupFileUrlParsingFailedError",
       "groupName": null,
@@ -11142,6 +11446,7 @@ that are tool old (or that have not been created at all).
       "type": "primitive",
     },
     "groupFilesInvalidError": {
+      "availability": null,
       "description": null,
       "generatedName": "GroupFilesInvalidError",
       "groupName": null,
@@ -11157,6 +11462,7 @@ that are tool old (or that have not been created at all).
       "type": "primitive",
     },
     "groupFilesNotFoundError": {
+      "availability": null,
       "description": null,
       "generatedName": "GroupFilesNotFoundError",
       "groupName": null,
@@ -11172,6 +11478,7 @@ that are tool old (or that have not been created at all).
       "type": "primitive",
     },
     "groupIdRequiredError": {
+      "availability": null,
       "description": null,
       "generatedName": "GroupIdRequiredError",
       "groupName": null,
@@ -11204,12 +11511,14 @@ that are tool old (or that have not been created at all).
           "key": "id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "groupInfoId",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "Group's unique ID.",
               "generatedName": "GroupInfoId",
               "groupName": null,
@@ -11234,12 +11543,14 @@ that are tool old (or that have not been created at all).
           "key": "datetime_created",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "groupInfoDatetimeCreated",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "ISO-8601 date and time when the group was created.",
               "generatedName": "GroupInfoDatetimeCreated",
               "groupName": null,
@@ -11259,18 +11570,21 @@ that are tool old (or that have not been created at all).
           "key": "datetime_stored",
           "nameOverride": null,
           "schema": {
+            "availability": "Deprecated",
             "description": null,
             "generatedName": "groupInfoDatetimeStored",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": "Deprecated",
               "description": "ISO-8601 date and time when the group was marked as stored.",
               "generatedName": "GroupInfoDatetimeStored",
               "groupName": null,
               "nameOverride": null,
               "type": "nullable",
               "value": {
+                "availability": "Deprecated",
                 "description": "ISO-8601 date and time when the group was marked as stored.",
                 "generatedName": "GroupInfoDatetimeStored",
                 "groupName": null,
@@ -11291,12 +11605,14 @@ that are tool old (or that have not been created at all).
           "key": "files_count",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "groupInfoFilesCount",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "Number of the files in the group.",
               "generatedName": "GroupInfoFilesCount",
               "groupName": null,
@@ -11322,12 +11638,14 @@ that are tool old (or that have not been created at all).
           "key": "cdn_url",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "groupInfoCdnUrl",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "Group's CDN URL.",
               "generatedName": "GroupInfoCdnUrl",
               "groupName": null,
@@ -11352,12 +11670,14 @@ that are tool old (or that have not been created at all).
           "key": "url",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "groupInfoUrl",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "Group's API resource URL. See the [REST API](/api-refs/rest-api/) documentation for details.",
               "generatedName": "GroupInfoUrl",
               "groupName": null,
@@ -11382,12 +11702,14 @@ that are tool old (or that have not been created at all).
           "key": "files",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "groupInfoFiles",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "The list of files in the group. An array may contain null values if a file has been removed.
 ",
               "generatedName": "GroupInfoFiles",
@@ -11395,6 +11717,7 @@ that are tool old (or that have not been created at all).
               "nameOverride": null,
               "type": "nullable",
               "value": {
+                "availability": null,
                 "description": "The list of files in the group. An array may contain null values if a file has been removed.
 ",
                 "generatedName": "GroupInfoFiles",
@@ -11414,6 +11737,7 @@ that are tool old (or that have not been created at all).
       "type": "object",
     },
     "groupNotFoundError": {
+      "availability": null,
       "description": null,
       "generatedName": "GroupNotFoundError",
       "groupName": null,
@@ -11429,6 +11753,7 @@ that are tool old (or that have not been created at all).
       "type": "primitive",
     },
     "hostnameNotFoundError": {
+      "availability": null,
       "description": null,
       "generatedName": "HostnameNotFoundError",
       "groupName": null,
@@ -11444,6 +11769,7 @@ that are tool old (or that have not been created at all).
       "type": "primitive",
     },
     "imageInfo": {
+      "availability": null,
       "description": "Image metadata.",
       "generatedName": "ImageInfo",
       "groupName": null,
@@ -11467,6 +11793,7 @@ that are tool old (or that have not been created at all).
             "key": "color_mode",
             "nameOverride": null,
             "schema": {
+              "availability": null,
               "description": "Image color mode.",
               "generatedName": "ImageInfoColorMode",
               "groupName": null,
@@ -11474,6 +11801,7 @@ that are tool old (or that have not been created at all).
               "type": "enum",
               "values": [
                 {
+                  "availability": null,
                   "casing": {
                     "camel": null,
                     "pascal": null,
@@ -11486,6 +11814,7 @@ that are tool old (or that have not been created at all).
                   "value": "RGB",
                 },
                 {
+                  "availability": null,
                   "casing": {
                     "camel": null,
                     "pascal": null,
@@ -11498,6 +11827,7 @@ that are tool old (or that have not been created at all).
                   "value": "RGBA",
                 },
                 {
+                  "availability": null,
                   "casing": {
                     "camel": null,
                     "pascal": null,
@@ -11510,6 +11840,7 @@ that are tool old (or that have not been created at all).
                   "value": "RGBa",
                 },
                 {
+                  "availability": null,
                   "casing": {
                     "camel": null,
                     "pascal": null,
@@ -11522,6 +11853,7 @@ that are tool old (or that have not been created at all).
                   "value": "RGBX",
                 },
                 {
+                  "availability": null,
                   "casing": {
                     "camel": null,
                     "pascal": null,
@@ -11534,6 +11866,7 @@ that are tool old (or that have not been created at all).
                   "value": "L",
                 },
                 {
+                  "availability": null,
                   "casing": {
                     "camel": null,
                     "pascal": null,
@@ -11546,6 +11879,7 @@ that are tool old (or that have not been created at all).
                   "value": "LA",
                 },
                 {
+                  "availability": null,
                   "casing": {
                     "camel": null,
                     "pascal": null,
@@ -11558,6 +11892,7 @@ that are tool old (or that have not been created at all).
                   "value": "La",
                 },
                 {
+                  "availability": null,
                   "casing": {
                     "camel": null,
                     "pascal": null,
@@ -11570,6 +11905,7 @@ that are tool old (or that have not been created at all).
                   "value": "P",
                 },
                 {
+                  "availability": null,
                   "casing": {
                     "camel": null,
                     "pascal": null,
@@ -11582,6 +11918,7 @@ that are tool old (or that have not been created at all).
                   "value": "PA",
                 },
                 {
+                  "availability": null,
                   "casing": {
                     "camel": null,
                     "pascal": null,
@@ -11594,6 +11931,7 @@ that are tool old (or that have not been created at all).
                   "value": "CMYK",
                 },
                 {
+                  "availability": null,
                   "casing": {
                     "camel": null,
                     "pascal": null,
@@ -11606,6 +11944,7 @@ that are tool old (or that have not been created at all).
                   "value": "YCbCr",
                 },
                 {
+                  "availability": null,
                   "casing": {
                     "camel": null,
                     "pascal": null,
@@ -11618,6 +11957,7 @@ that are tool old (or that have not been created at all).
                   "value": "HSV",
                 },
                 {
+                  "availability": null,
                   "casing": {
                     "camel": null,
                     "pascal": null,
@@ -11640,12 +11980,14 @@ that are tool old (or that have not been created at all).
             "key": "orientation",
             "nameOverride": null,
             "schema": {
+              "availability": null,
               "description": "Image orientation from EXIF.",
               "generatedName": "ImageInfoOrientation",
               "groupName": null,
               "nameOverride": null,
               "type": "nullable",
               "value": {
+                "availability": null,
                 "description": "Image orientation from EXIF.",
                 "generatedName": "ImageInfoOrientation",
                 "groupName": null,
@@ -11671,6 +12013,7 @@ that are tool old (or that have not been created at all).
             "key": "format",
             "nameOverride": null,
             "schema": {
+              "availability": null,
               "description": "Image format.",
               "generatedName": "ImageInfoFormat",
               "groupName": null,
@@ -11694,6 +12037,7 @@ that are tool old (or that have not been created at all).
             "key": "sequence",
             "nameOverride": null,
             "schema": {
+              "availability": null,
               "description": "Set to true if a file contains a sequence of images (GIF for example).",
               "generatedName": "ImageInfoSequence",
               "groupName": null,
@@ -11713,6 +12057,7 @@ that are tool old (or that have not been created at all).
             "key": "height",
             "nameOverride": null,
             "schema": {
+              "availability": null,
               "description": "Image height in pixels.",
               "generatedName": "ImageInfoHeight",
               "groupName": null,
@@ -11737,6 +12082,7 @@ that are tool old (or that have not been created at all).
             "key": "width",
             "nameOverride": null,
             "schema": {
+              "availability": null,
               "description": "Image width in pixels.",
               "generatedName": "ImageInfoWidth",
               "groupName": null,
@@ -11761,6 +12107,7 @@ that are tool old (or that have not been created at all).
             "key": "geo_location",
             "nameOverride": null,
             "schema": {
+              "availability": null,
               "description": "Geo-location of image from EXIF.",
               "generatedName": "ImageInfoGeoLocation",
               "groupName": null,
@@ -11784,6 +12131,7 @@ that are tool old (or that have not been created at all).
                     "key": "latitude",
                     "nameOverride": null,
                     "schema": {
+                      "availability": null,
                       "description": "Location latitude.",
                       "generatedName": "ImageInfoGeoLocationLatitude",
                       "groupName": null,
@@ -11808,6 +12156,7 @@ that are tool old (or that have not been created at all).
                     "key": "longitude",
                     "nameOverride": null,
                     "schema": {
+                      "availability": null,
                       "description": "Location longitude.",
                       "generatedName": "ImageInfoGeoLocationLongitude",
                       "groupName": null,
@@ -11837,12 +12186,14 @@ that are tool old (or that have not been created at all).
             "key": "datetime_original",
             "nameOverride": null,
             "schema": {
+              "availability": null,
               "description": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF.",
               "generatedName": "ImageInfoDatetimeOriginal",
               "groupName": null,
               "nameOverride": null,
               "type": "nullable",
               "value": {
+                "availability": null,
                 "description": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF.",
                 "generatedName": "ImageInfoDatetimeOriginal",
                 "groupName": null,
@@ -11862,18 +12213,21 @@ that are tool old (or that have not been created at all).
             "key": "dpi",
             "nameOverride": null,
             "schema": {
+              "availability": null,
               "description": "Image DPI for two dimensions.",
               "generatedName": "ImageInfoDpi",
               "groupName": null,
               "nameOverride": null,
               "type": "nullable",
               "value": {
+                "availability": null,
                 "description": "Image DPI for two dimensions.",
                 "generatedName": "ImageInfoDpi",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "array",
                 "value": {
+                  "availability": null,
                   "description": null,
                   "generatedName": "ImageInfoDpiItem",
                   "groupName": null,
@@ -11897,6 +12251,7 @@ that are tool old (or that have not been created at all).
       },
     },
     "legacyVideoInfo": {
+      "availability": null,
       "description": "Video metadata.",
       "generatedName": "LegacyVideoInfo",
       "groupName": null,
@@ -11920,12 +12275,14 @@ that are tool old (or that have not been created at all).
             "key": "duration",
             "nameOverride": null,
             "schema": {
+              "availability": null,
               "description": null,
               "generatedName": "legacyVideoInfoDuration",
               "groupName": null,
               "nameOverride": null,
               "type": "optional",
               "value": {
+                "availability": null,
                 "description": "Video file's duration in milliseconds.",
                 "generatedName": "LegacyVideoInfoDuration",
                 "groupName": null,
@@ -11951,12 +12308,14 @@ that are tool old (or that have not been created at all).
             "key": "format",
             "nameOverride": null,
             "schema": {
+              "availability": null,
               "description": null,
               "generatedName": "legacyVideoInfoFormat",
               "groupName": null,
               "nameOverride": null,
               "type": "optional",
               "value": {
+                "availability": null,
                 "description": "Video file's format.",
                 "generatedName": "LegacyVideoInfoFormat",
                 "groupName": null,
@@ -11981,12 +12340,14 @@ that are tool old (or that have not been created at all).
             "key": "bitrate",
             "nameOverride": null,
             "schema": {
+              "availability": null,
               "description": null,
               "generatedName": "legacyVideoInfoBitrate",
               "groupName": null,
               "nameOverride": null,
               "type": "optional",
               "value": {
+                "availability": null,
                 "description": "Video file's bitrate.",
                 "generatedName": "LegacyVideoInfoBitrate",
                 "groupName": null,
@@ -12012,12 +12373,14 @@ that are tool old (or that have not been created at all).
             "key": "audio",
             "nameOverride": null,
             "schema": {
+              "availability": null,
               "description": null,
               "generatedName": "legacyVideoInfoAudio",
               "groupName": null,
               "nameOverride": null,
               "type": "optional",
               "value": {
+                "availability": null,
                 "description": "Audio stream's metadata.",
                 "generatedName": "LegacyVideoInfoAudio",
                 "groupName": null,
@@ -12041,18 +12404,21 @@ that are tool old (or that have not been created at all).
                       "key": "bitrate",
                       "nameOverride": null,
                       "schema": {
+                        "availability": null,
                         "description": null,
                         "generatedName": "legacyVideoInfoAudioBitrate",
                         "groupName": null,
                         "nameOverride": null,
                         "type": "optional",
                         "value": {
+                          "availability": null,
                           "description": "Audio stream's bitrate.",
                           "generatedName": "LegacyVideoInfoAudioBitrate",
                           "groupName": null,
                           "nameOverride": null,
                           "type": "nullable",
                           "value": {
+                            "availability": null,
                             "description": "Audio stream's bitrate.",
                             "generatedName": "LegacyVideoInfoAudioBitrate",
                             "groupName": null,
@@ -12079,18 +12445,21 @@ that are tool old (or that have not been created at all).
                       "key": "codec",
                       "nameOverride": null,
                       "schema": {
+                        "availability": null,
                         "description": null,
                         "generatedName": "legacyVideoInfoAudioCodec",
                         "groupName": null,
                         "nameOverride": null,
                         "type": "optional",
                         "value": {
+                          "availability": null,
                           "description": "Audio stream's codec.",
                           "generatedName": "LegacyVideoInfoAudioCodec",
                           "groupName": null,
                           "nameOverride": null,
                           "type": "nullable",
                           "value": {
+                            "availability": null,
                             "description": "Audio stream's codec.",
                             "generatedName": "LegacyVideoInfoAudioCodec",
                             "groupName": null,
@@ -12116,18 +12485,21 @@ that are tool old (or that have not been created at all).
                       "key": "sample_rate",
                       "nameOverride": null,
                       "schema": {
+                        "availability": null,
                         "description": null,
                         "generatedName": "legacyVideoInfoAudioSampleRate",
                         "groupName": null,
                         "nameOverride": null,
                         "type": "optional",
                         "value": {
+                          "availability": null,
                           "description": "Audio stream's sample rate.",
                           "generatedName": "LegacyVideoInfoAudioSampleRate",
                           "groupName": null,
                           "nameOverride": null,
                           "type": "nullable",
                           "value": {
+                            "availability": null,
                             "description": "Audio stream's sample rate.",
                             "generatedName": "LegacyVideoInfoAudioSampleRate",
                             "groupName": null,
@@ -12154,18 +12526,21 @@ that are tool old (or that have not been created at all).
                       "key": "channels",
                       "nameOverride": null,
                       "schema": {
+                        "availability": null,
                         "description": null,
                         "generatedName": "legacyVideoInfoAudioChannels",
                         "groupName": null,
                         "nameOverride": null,
                         "type": "optional",
                         "value": {
+                          "availability": null,
                           "description": "Audio stream's number of channels.",
                           "generatedName": "LegacyVideoInfoAudioChannels",
                           "groupName": null,
                           "nameOverride": null,
                           "type": "nullable",
                           "value": {
+                            "availability": null,
                             "description": "Audio stream's number of channels.",
                             "generatedName": "LegacyVideoInfoAudioChannels",
                             "groupName": null,
@@ -12197,6 +12572,7 @@ that are tool old (or that have not been created at all).
             "key": "video",
             "nameOverride": null,
             "schema": {
+              "availability": null,
               "description": null,
               "generatedName": "legacyVideoInfoVideo",
               "groupName": null,
@@ -12220,12 +12596,14 @@ that are tool old (or that have not been created at all).
                     "key": "height",
                     "nameOverride": null,
                     "schema": {
+                      "availability": null,
                       "description": null,
                       "generatedName": "legacyVideoInfoVideoHeight",
                       "groupName": null,
                       "nameOverride": null,
                       "type": "optional",
                       "value": {
+                        "availability": null,
                         "description": "Video stream's image height.",
                         "generatedName": "LegacyVideoInfoVideoHeight",
                         "groupName": null,
@@ -12251,12 +12629,14 @@ that are tool old (or that have not been created at all).
                     "key": "width",
                     "nameOverride": null,
                     "schema": {
+                      "availability": null,
                       "description": null,
                       "generatedName": "legacyVideoInfoVideoWidth",
                       "groupName": null,
                       "nameOverride": null,
                       "type": "optional",
                       "value": {
+                        "availability": null,
                         "description": "Video stream's image width.",
                         "generatedName": "LegacyVideoInfoVideoWidth",
                         "groupName": null,
@@ -12282,12 +12662,14 @@ that are tool old (or that have not been created at all).
                     "key": "frame_rate",
                     "nameOverride": null,
                     "schema": {
+                      "availability": null,
                       "description": null,
                       "generatedName": "legacyVideoInfoVideoFrameRate",
                       "groupName": null,
                       "nameOverride": null,
                       "type": "optional",
                       "value": {
+                        "availability": null,
                         "description": "Video stream's frame rate.",
                         "generatedName": "LegacyVideoInfoVideoFrameRate",
                         "groupName": null,
@@ -12313,12 +12695,14 @@ that are tool old (or that have not been created at all).
                     "key": "bitrate",
                     "nameOverride": null,
                     "schema": {
+                      "availability": null,
                       "description": null,
                       "generatedName": "legacyVideoInfoVideoBitrate",
                       "groupName": null,
                       "nameOverride": null,
                       "type": "optional",
                       "value": {
+                        "availability": null,
                         "description": "Video stream's bitrate.",
                         "generatedName": "LegacyVideoInfoVideoBitrate",
                         "groupName": null,
@@ -12344,12 +12728,14 @@ that are tool old (or that have not been created at all).
                     "key": "codec",
                     "nameOverride": null,
                     "schema": {
+                      "availability": null,
                       "description": null,
                       "generatedName": "legacyVideoInfoVideoCodec",
                       "groupName": null,
                       "nameOverride": null,
                       "type": "optional",
                       "value": {
+                        "availability": null,
                         "description": "Video stream codec.",
                         "generatedName": "LegacyVideoInfoVideoCodec",
                         "groupName": null,
@@ -12376,16 +12762,19 @@ that are tool old (or that have not been created at all).
       },
     },
     "metadata": {
+      "availability": null,
       "description": "Arbitrary metadata associated with a file.",
       "generatedName": "Metadata",
       "groupName": null,
       "nameOverride": null,
       "type": "nullable",
       "value": {
+        "availability": null,
         "description": "Arbitrary metadata associated with a file.",
         "generatedName": "Metadata",
         "groupName": null,
         "key": {
+          "availability": null,
           "description": null,
           "generatedName": "MetadataKey",
           "groupName": null,
@@ -12409,6 +12798,7 @@ that are tool old (or that have not been created at all).
       },
     },
     "metadataValue": {
+      "availability": null,
       "description": "Arbitrary metadata associated with the file.
 See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-refs/rest-api/v0.7.0/#tag/File-metadata) for more information.
 ",
@@ -12426,6 +12816,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "type": "primitive",
     },
     "multipartFileAlreadyUploadedError": {
+      "availability": null,
       "description": null,
       "generatedName": "MultipartFileAlreadyUploadedError",
       "groupName": null,
@@ -12441,6 +12832,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "type": "primitive",
     },
     "multipartFileCompletionFailedError": {
+      "availability": null,
       "description": null,
       "generatedName": "MultipartFileCompletionFailedError",
       "groupName": null,
@@ -12456,6 +12848,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "type": "primitive",
     },
     "multipartFileIdRequiredError": {
+      "availability": null,
       "description": null,
       "generatedName": "MultipartFileIdRequiredError",
       "groupName": null,
@@ -12471,6 +12864,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "type": "primitive",
     },
     "multipartFileSizeLimitExceededError": {
+      "availability": null,
       "description": null,
       "generatedName": "MultipartFileSizeLimitExceededError",
       "groupName": null,
@@ -12486,6 +12880,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "type": "primitive",
     },
     "multipartFileSizeTooSmallError": {
+      "availability": null,
       "description": null,
       "generatedName": "MultipartFileSizeTooSmallError",
       "groupName": null,
@@ -12501,6 +12896,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "type": "primitive",
     },
     "multipartPartSizeInvalidError": {
+      "availability": null,
       "description": null,
       "generatedName": "MultipartPartSizeInvalidError",
       "groupName": null,
@@ -12516,6 +12912,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "type": "primitive",
     },
     "multipartPartSizeTooBigError": {
+      "availability": null,
       "description": null,
       "generatedName": "MultipartPartSizeTooBigError",
       "groupName": null,
@@ -12531,6 +12928,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "type": "primitive",
     },
     "multipartPartSizeTooSmallError": {
+      "availability": null,
       "description": null,
       "generatedName": "MultipartPartSizeTooSmallError",
       "groupName": null,
@@ -12546,6 +12944,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "type": "primitive",
     },
     "multipartSizeInvalidError": {
+      "availability": null,
       "description": null,
       "generatedName": "MultipartSizeInvalidError",
       "groupName": null,
@@ -12561,6 +12960,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "type": "primitive",
     },
     "multipartUploadSizeTooLargeError": {
+      "availability": null,
       "description": null,
       "generatedName": "MultipartUploadSizeTooLargeError",
       "groupName": null,
@@ -12576,6 +12976,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "type": "primitive",
     },
     "multipartUploadSizeTooSmallError": {
+      "availability": null,
       "description": null,
       "generatedName": "MultipartUploadSizeTooSmallError",
       "groupName": null,
@@ -12591,6 +12992,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "type": "primitive",
     },
     "nullCharactersForbiddenError": {
+      "availability": null,
       "description": null,
       "generatedName": "NullCharactersForbiddenError",
       "groupName": null,
@@ -12606,6 +13008,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "type": "primitive",
     },
     "postRequestParserFailedError": {
+      "availability": null,
       "description": null,
       "generatedName": "PostRequestParserFailedError",
       "groupName": null,
@@ -12621,6 +13024,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "type": "primitive",
     },
     "projectPublicKeyRemovedError": {
+      "availability": null,
       "description": null,
       "generatedName": "ProjectPublicKeyRemovedError",
       "groupName": null,
@@ -12636,6 +13040,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "type": "primitive",
     },
     "projectPublicKeyType": {
+      "availability": null,
       "description": "Public key identifying an Uploadcare project your uploads will go to.",
       "generatedName": "ProjectPublicKeyType",
       "groupName": null,
@@ -12651,6 +13056,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "type": "primitive",
     },
     "publicKeyInvalidError": {
+      "availability": null,
       "description": null,
       "generatedName": "PublicKeyInvalidError",
       "groupName": null,
@@ -12666,6 +13072,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "type": "primitive",
     },
     "publicKeyRequiredError": {
+      "availability": null,
       "description": null,
       "generatedName": "PublicKeyRequiredError",
       "groupName": null,
@@ -12681,6 +13088,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "type": "primitive",
     },
     "requestFiledsNumberLimitExceededError": {
+      "availability": null,
       "description": null,
       "generatedName": "RequestFiledsNumberLimitExceededError",
       "groupName": null,
@@ -12696,6 +13104,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "type": "primitive",
     },
     "requestParamRequiredError": {
+      "availability": null,
       "description": null,
       "generatedName": "RequestParamRequiredError",
       "groupName": null,
@@ -12728,6 +13137,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           "key": "color_mode",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Image color mode.",
             "generatedName": "SchemasImageInfoColorMode",
             "groupName": null,
@@ -12735,6 +13145,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "type": "enum",
             "values": [
               {
+                "availability": null,
                 "casing": {
                   "camel": null,
                   "pascal": null,
@@ -12747,6 +13158,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
                 "value": "RGB",
               },
               {
+                "availability": null,
                 "casing": {
                   "camel": null,
                   "pascal": null,
@@ -12759,6 +13171,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
                 "value": "RGBA",
               },
               {
+                "availability": null,
                 "casing": {
                   "camel": null,
                   "pascal": null,
@@ -12771,6 +13184,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
                 "value": "RGBa",
               },
               {
+                "availability": null,
                 "casing": {
                   "camel": null,
                   "pascal": null,
@@ -12783,6 +13197,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
                 "value": "RGBX",
               },
               {
+                "availability": null,
                 "casing": {
                   "camel": null,
                   "pascal": null,
@@ -12795,6 +13210,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
                 "value": "L",
               },
               {
+                "availability": null,
                 "casing": {
                   "camel": null,
                   "pascal": null,
@@ -12807,6 +13223,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
                 "value": "LA",
               },
               {
+                "availability": null,
                 "casing": {
                   "camel": null,
                   "pascal": null,
@@ -12819,6 +13236,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
                 "value": "La",
               },
               {
+                "availability": null,
                 "casing": {
                   "camel": null,
                   "pascal": null,
@@ -12831,6 +13249,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
                 "value": "P",
               },
               {
+                "availability": null,
                 "casing": {
                   "camel": null,
                   "pascal": null,
@@ -12843,6 +13262,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
                 "value": "PA",
               },
               {
+                "availability": null,
                 "casing": {
                   "camel": null,
                   "pascal": null,
@@ -12855,6 +13275,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
                 "value": "CMYK",
               },
               {
+                "availability": null,
                 "casing": {
                   "camel": null,
                   "pascal": null,
@@ -12867,6 +13288,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
                 "value": "YCbCr",
               },
               {
+                "availability": null,
                 "casing": {
                   "camel": null,
                   "pascal": null,
@@ -12879,6 +13301,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
                 "value": "HSV",
               },
               {
+                "availability": null,
                 "casing": {
                   "camel": null,
                   "pascal": null,
@@ -12901,12 +13324,14 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           "key": "orientation",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Image orientation from EXIF.",
             "generatedName": "SchemasImageInfoOrientation",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": "Image orientation from EXIF.",
               "generatedName": "SchemasImageInfoOrientation",
               "groupName": null,
@@ -12932,6 +13357,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           "key": "format",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Image format.",
             "generatedName": "SchemasImageInfoFormat",
             "groupName": null,
@@ -12955,6 +13381,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           "key": "sequence",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Set to true if a file contains a sequence of images (GIF for example).",
             "generatedName": "SchemasImageInfoSequence",
             "groupName": null,
@@ -12974,6 +13401,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           "key": "height",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Image height in pixels.",
             "generatedName": "SchemasImageInfoHeight",
             "groupName": null,
@@ -12998,6 +13426,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           "key": "width",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Image width in pixels.",
             "generatedName": "SchemasImageInfoWidth",
             "groupName": null,
@@ -13022,6 +13451,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           "key": "geo_location",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Geo-location of image from EXIF.",
             "generatedName": "SchemasImageInfoGeoLocation",
             "groupName": null,
@@ -13045,6 +13475,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
                   "key": "latitude",
                   "nameOverride": null,
                   "schema": {
+                    "availability": null,
                     "description": "Location latitude.",
                     "generatedName": "SchemasImageInfoGeoLocationLatitude",
                     "groupName": null,
@@ -13069,6 +13500,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
                   "key": "longitude",
                   "nameOverride": null,
                   "schema": {
+                    "availability": null,
                     "description": "Location longitude.",
                     "generatedName": "SchemasImageInfoGeoLocationLongitude",
                     "groupName": null,
@@ -13098,12 +13530,14 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           "key": "datetime_original",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF.",
             "generatedName": "SchemasImageInfoDatetimeOriginal",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF.",
               "generatedName": "SchemasImageInfoDatetimeOriginal",
               "groupName": null,
@@ -13123,18 +13557,21 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           "key": "dpi",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Image DPI for two dimensions.",
             "generatedName": "SchemasImageInfoDpi",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": "Image DPI for two dimensions.",
               "generatedName": "SchemasImageInfoDpi",
               "groupName": null,
               "nameOverride": null,
               "type": "array",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "SchemasImageInfoDpiItem",
                 "groupName": null,
@@ -13157,6 +13594,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "type": "object",
     },
     "signatureExpirationError": {
+      "availability": null,
       "description": null,
       "generatedName": "SignatureExpirationError",
       "groupName": null,
@@ -13172,6 +13610,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "type": "primitive",
     },
     "signatureExpirationInvalidError": {
+      "availability": null,
       "description": null,
       "generatedName": "SignatureExpirationInvalidError",
       "groupName": null,
@@ -13187,6 +13626,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "type": "primitive",
     },
     "signatureExpirationRequiredError": {
+      "availability": null,
       "description": null,
       "generatedName": "SignatureExpirationRequiredError",
       "groupName": null,
@@ -13202,6 +13642,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "type": "primitive",
     },
     "signatureInvalidError": {
+      "availability": null,
       "description": null,
       "generatedName": "SignatureInvalidError",
       "groupName": null,
@@ -13217,6 +13658,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "type": "primitive",
     },
     "signatureRequiredError": {
+      "availability": null,
       "description": null,
       "generatedName": "SignatureRequiredError",
       "groupName": null,
@@ -13232,6 +13674,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "type": "primitive",
     },
     "signatureType": {
+      "availability": null,
       "description": "\`signature\` must be sent along with your upload request if you would like to use signed uploads.
 The signature should be generated on your backend.
 **Note**: the process requires knowledge of your Uploadcare Project's Secret key.
@@ -13251,6 +13694,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "type": "primitive",
     },
     "sourceURLRequiredError": {
+      "availability": null,
       "description": null,
       "generatedName": "SourceUrlRequiredError",
       "groupName": null,
@@ -13266,6 +13710,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "type": "primitive",
     },
     "storeType": {
+      "availability": null,
       "description": "Determines if an uploaded file should be marked as temporary or permanent.
 
 The parameter can have the following values:
@@ -13290,6 +13735,7 @@ change the value to \`auto\`.
       "type": "enum",
       "values": [
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -13302,6 +13748,7 @@ change the value to \`auto\`.
           "value": "0",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -13314,6 +13761,7 @@ change the value to \`auto\`.
           "value": "1",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -13328,6 +13776,7 @@ change the value to \`auto\`.
       ],
     },
     "tokenRequiredError": {
+      "availability": null,
       "description": null,
       "generatedName": "TokenRequiredError",
       "groupName": null,
@@ -13343,6 +13792,7 @@ change the value to \`auto\`.
       "type": "primitive",
     },
     "uploadFailedError": {
+      "availability": null,
       "description": null,
       "generatedName": "UploadFailedError",
       "groupName": null,
@@ -13358,6 +13808,7 @@ change the value to \`auto\`.
       "type": "primitive",
     },
     "uploadcarePublicKeyInvalidError": {
+      "availability": null,
       "description": null,
       "generatedName": "UploadcarePublicKeyInvalidError",
       "groupName": null,
@@ -13373,6 +13824,7 @@ change the value to \`auto\`.
       "type": "primitive",
     },
     "uploadcarePublicKeyRequiredError": {
+      "availability": null,
       "description": null,
       "generatedName": "UploadcarePublicKeyRequiredError",
       "groupName": null,
@@ -13388,6 +13840,7 @@ change the value to \`auto\`.
       "type": "primitive",
     },
     "urlBlacklistedError": {
+      "availability": null,
       "description": null,
       "generatedName": "UrlBlacklistedError",
       "groupName": null,
@@ -13403,6 +13856,7 @@ change the value to \`auto\`.
       "type": "primitive",
     },
     "urlHostMalformedError": {
+      "availability": null,
       "description": null,
       "generatedName": "UrlHostMalformedError",
       "groupName": null,
@@ -13418,6 +13872,7 @@ change the value to \`auto\`.
       "type": "primitive",
     },
     "urlHostPrivateIPForbiddenError": {
+      "availability": null,
       "description": null,
       "generatedName": "UrlHostPrivateIpForbiddenError",
       "groupName": null,
@@ -13433,6 +13888,7 @@ change the value to \`auto\`.
       "type": "primitive",
     },
     "urlHostRequiredError": {
+      "availability": null,
       "description": null,
       "generatedName": "UrlHostRequiredError",
       "groupName": null,
@@ -13448,6 +13904,7 @@ change the value to \`auto\`.
       "type": "primitive",
     },
     "urlParsingFailedError": {
+      "availability": null,
       "description": null,
       "generatedName": "UrlParsingFailedError",
       "groupName": null,
@@ -13463,6 +13920,7 @@ change the value to \`auto\`.
       "type": "primitive",
     },
     "urlSchemeInvalidError": {
+      "availability": null,
       "description": null,
       "generatedName": "UrlSchemeInvalidError",
       "groupName": null,
@@ -13478,6 +13936,7 @@ change the value to \`auto\`.
       "type": "primitive",
     },
     "urlSchemeRequiredError": {
+      "availability": null,
       "description": null,
       "generatedName": "UrlSchemeRequiredError",
       "groupName": null,
@@ -13493,6 +13952,7 @@ change the value to \`auto\`.
       "type": "primitive",
     },
     "uuidInvalidError": {
+      "availability": null,
       "description": null,
       "generatedName": "UuidInvalidError",
       "groupName": null,
@@ -13525,12 +13985,14 @@ change the value to \`auto\`.
           "key": "duration",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Video file's duration in milliseconds.",
             "generatedName": "VideoInfoDuration",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": "Video file's duration in milliseconds.",
               "generatedName": "VideoInfoDuration",
               "groupName": null,
@@ -13556,6 +14018,7 @@ change the value to \`auto\`.
           "key": "format",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Video file's format.",
             "generatedName": "VideoInfoFormat",
             "groupName": null,
@@ -13579,12 +14042,14 @@ change the value to \`auto\`.
           "key": "bitrate",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Video file's bitrate.",
             "generatedName": "VideoInfoBitrate",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": "Video file's bitrate.",
               "generatedName": "VideoInfoBitrate",
               "groupName": null,
@@ -13610,6 +14075,7 @@ change the value to \`auto\`.
           "key": "audio",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "VideoInfoAudio",
             "groupName": null,
@@ -13633,12 +14099,14 @@ change the value to \`auto\`.
                   "key": "bitrate",
                   "nameOverride": null,
                   "schema": {
+                    "availability": null,
                     "description": "Audio stream's bitrate.",
                     "generatedName": "VideoInfoAudioItemBitrate",
                     "groupName": null,
                     "nameOverride": null,
                     "type": "nullable",
                     "value": {
+                      "availability": null,
                       "description": "Audio stream's bitrate.",
                       "generatedName": "VideoInfoAudioItemBitrate",
                       "groupName": null,
@@ -13664,12 +14132,14 @@ change the value to \`auto\`.
                   "key": "codec",
                   "nameOverride": null,
                   "schema": {
+                    "availability": null,
                     "description": "Audio stream's codec.",
                     "generatedName": "VideoInfoAudioItemCodec",
                     "groupName": null,
                     "nameOverride": null,
                     "type": "nullable",
                     "value": {
+                      "availability": null,
                       "description": "Audio stream's codec.",
                       "generatedName": "VideoInfoAudioItemCodec",
                       "groupName": null,
@@ -13694,12 +14164,14 @@ change the value to \`auto\`.
                   "key": "sample_rate",
                   "nameOverride": null,
                   "schema": {
+                    "availability": null,
                     "description": "Audio stream's sample rate.",
                     "generatedName": "VideoInfoAudioItemSampleRate",
                     "groupName": null,
                     "nameOverride": null,
                     "type": "nullable",
                     "value": {
+                      "availability": null,
                       "description": "Audio stream's sample rate.",
                       "generatedName": "VideoInfoAudioItemSampleRate",
                       "groupName": null,
@@ -13725,12 +14197,14 @@ change the value to \`auto\`.
                   "key": "channels",
                   "nameOverride": null,
                   "schema": {
+                    "availability": null,
                     "description": "Audio stream's number of channels.",
                     "generatedName": "VideoInfoAudioItemChannels",
                     "groupName": null,
                     "nameOverride": null,
                     "type": "nullable",
                     "value": {
+                      "availability": null,
                       "description": "Audio stream's number of channels.",
                       "generatedName": "VideoInfoAudioItemChannels",
                       "groupName": null,
@@ -13761,6 +14235,7 @@ change the value to \`auto\`.
           "key": "video",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "VideoInfoVideo",
             "groupName": null,
@@ -13784,6 +14259,7 @@ change the value to \`auto\`.
                   "key": "height",
                   "nameOverride": null,
                   "schema": {
+                    "availability": null,
                     "description": "Video stream's image height.",
                     "generatedName": "VideoInfoVideoItemHeight",
                     "groupName": null,
@@ -13808,6 +14284,7 @@ change the value to \`auto\`.
                   "key": "width",
                   "nameOverride": null,
                   "schema": {
+                    "availability": null,
                     "description": "Video stream's image width.",
                     "generatedName": "VideoInfoVideoItemWidth",
                     "groupName": null,
@@ -13832,6 +14309,7 @@ change the value to \`auto\`.
                   "key": "frame_rate",
                   "nameOverride": null,
                   "schema": {
+                    "availability": null,
                     "description": "Video stream's frame rate.",
                     "generatedName": "VideoInfoVideoItemFrameRate",
                     "groupName": null,
@@ -13856,12 +14334,14 @@ change the value to \`auto\`.
                   "key": "bitrate",
                   "nameOverride": null,
                   "schema": {
+                    "availability": null,
                     "description": "Video stream's bitrate.",
                     "generatedName": "VideoInfoVideoItemBitrate",
                     "groupName": null,
                     "nameOverride": null,
                     "type": "nullable",
                     "value": {
+                      "availability": null,
                       "description": "Video stream's bitrate.",
                       "generatedName": "VideoInfoVideoItemBitrate",
                       "groupName": null,
@@ -13887,12 +14367,14 @@ change the value to \`auto\`.
                   "key": "codec",
                   "nameOverride": null,
                   "schema": {
+                    "availability": null,
                     "description": "Video stream's codec.",
                     "generatedName": "VideoInfoVideoItemCodec",
                     "groupName": null,
                     "nameOverride": null,
                     "type": "nullable",
                     "value": {
+                      "availability": null,
                       "description": "Video stream's codec.",
                       "generatedName": "VideoInfoVideoItemCodec",
                       "groupName": null,

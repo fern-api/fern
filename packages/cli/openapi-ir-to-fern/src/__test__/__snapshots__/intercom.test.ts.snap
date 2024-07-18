@@ -3826,6 +3826,7 @@ You can view the currently authorised admin along with the embedded app object (
               "body": {
                 "properties": {
                   "id": {
+                    "availability": undefined,
                     "docs": "The unique identifier for the company which is given by Intercom",
                     "name": "companyId",
                     "type": "string",
@@ -32189,6 +32190,7 @@ You can view the currently authorised admin along with the embedded app object (
               "body": {
                 "properties": {
                   "id": {
+                    "availability": undefined,
                     "docs": "The unique identifier for the company which is given by Intercom",
                     "name": "companyId",
                     "type": "string",

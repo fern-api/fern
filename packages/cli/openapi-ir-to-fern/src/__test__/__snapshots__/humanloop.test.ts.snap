@@ -5440,6 +5440,7 @@ in the Evaluation Report.",
             "type": "ChatRole",
           },
           "tool_call": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "NB: Deprecated in favour of tool_calls. A tool call requested by the assistant.",
             "type": "optional<FunctionTool>",
@@ -6891,6 +6892,7 @@ Contains fields that are common to all (i.e. both chat and complete) endpoints."
             "validation": undefined,
           },
           "tool_configs": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "NB: Deprecated with tools field. Definition of tools shown to the model.",
             "type": "optional<list<ToolConfigResponse>>",
@@ -13596,6 +13598,7 @@ in the Evaluation Report.",
             "type": "ChatRole",
           },
           "tool_call": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "NB: Deprecated in favour of tool_calls. A tool call requested by the assistant.",
             "type": "optional<FunctionTool>",
@@ -15047,6 +15050,7 @@ Contains fields that are common to all (i.e. both chat and complete) endpoints."
             "validation": undefined,
           },
           "tool_configs": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "NB: Deprecated with tools field. Definition of tools shown to the model.",
             "type": "optional<list<ToolConfigResponse>>",

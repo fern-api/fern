@@ -58,6 +58,7 @@ exports[`x-fern-token-variable-name x-fern-token-variable-name parse open api 1`
         "contentType": null,
         "description": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "ChatCompletionsCreateRequest",
           "groupName": null,
@@ -72,6 +73,7 @@ exports[`x-fern-token-variable-name x-fern-token-variable-name parse open api 1`
         "description": "Success!",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "ChatCompletionsCreateResponse",
           "groupName": null,
@@ -123,12 +125,14 @@ exports[`x-fern-token-variable-name x-fern-token-variable-name parse open api 1`
           "key": "text",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "completionText",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "CompletionText",
               "groupName": null,
@@ -166,12 +170,14 @@ exports[`x-fern-token-variable-name x-fern-token-variable-name parse open api 1`
           "key": "text",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "completionChunkText",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "CompletionChunkText",
               "groupName": null,
@@ -209,12 +215,14 @@ exports[`x-fern-token-variable-name x-fern-token-variable-name parse open api 1`
           "key": "stream",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "createCompletionRequestStream",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "CreateCompletionRequestStream",
               "groupName": null,
@@ -235,6 +243,7 @@ exports[`x-fern-token-variable-name x-fern-token-variable-name parse open api 1`
           "key": "prompt",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "CreateCompletionRequestPrompt",
             "groupName": null,

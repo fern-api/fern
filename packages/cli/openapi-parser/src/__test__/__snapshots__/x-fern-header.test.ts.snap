@@ -28,6 +28,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
           "description": null,
           "name": "userId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "UserGetStreamRequestUserId",
             "groupName": null,
@@ -70,6 +71,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
               "key": "stream",
               "nameOverride": null,
               "schema": {
+                "availability": null,
                 "description": null,
                 "generatedName": "UserGetStreamRequestStream",
                 "groupName": null,
@@ -91,6 +93,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
         "description": "",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "UserGetStreamResponse",
           "groupName": null,
@@ -183,6 +186,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
           "description": null,
           "name": "userId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "UserGetRequestUserId",
             "groupName": null,
@@ -225,6 +229,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
               "key": "stream",
               "nameOverride": null,
               "schema": {
+                "availability": null,
                 "description": null,
                 "generatedName": "UserGetRequestStream",
                 "groupName": null,
@@ -246,6 +251,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
         "description": "",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "UserGetResponse",
           "groupName": null,
@@ -293,12 +299,14 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
           "key": "id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "streamUserId",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "StreamUserId",
               "groupName": null,
@@ -323,12 +331,14 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
           "key": "streamed",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "streamUserStreamed",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "StreamUserStreamed",
               "groupName": null,
@@ -362,12 +372,14 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
           "key": "id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "userId",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "UserId",
               "groupName": null,
@@ -392,12 +404,14 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
           "key": "streamed",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "userStreamed",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "UserStreamed",
               "groupName": null,

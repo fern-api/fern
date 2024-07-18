@@ -16,6 +16,7 @@ import { getFernTypeExtension } from "../openapi/v3/extensions/getFernTypeExtens
 import { getValueIfBoolean } from "../utils/getValue";
 import { convertAdditionalProperties, wrapMap } from "./convertAdditionalProperties";
 import { convertArray } from "./convertArray";
+import { convertAvailability } from "./convertAvailability";
 import { convertDiscriminatedOneOf, convertDiscriminatedOneOfWithVariants } from "./convertDiscriminatedOneOf";
 import { convertEnum } from "./convertEnum";
 import { convertLiteral } from "./convertLiteral";
@@ -90,6 +91,7 @@ export function convertReferenceObject(
             generatedName: getGeneratedTypeName(breadcrumbs),
             value: referenceSchema,
             description: undefined,
+            availability: undefined,
             groupName: undefined
         });
     } else {
@@ -128,11 +130,7 @@ export function convertSchemaObject(
     const groupName = typeof mixedGroupName === "string" ? [mixedGroupName] : mixedGroupName;
     const generatedName = getGeneratedTypeName(breadcrumbs);
     const description = schema.description;
-    // TODO: style, map more availability types
-    const availability =
-        getExtension<string>(schema, FernOpenAPIExtension.AVAILABILITY) === "deprecated" || schema.deprecated
-            ? Availability.Deprecated
-            : undefined;
+    const availability = convertAvailability(schema);
 
     const examples = getExtension<Record<string, OpenAPIV3.ExampleObject>>(schema, OpenAPIExtension.EXAMPLES);
     const fullExamples: NamedFullExample[] = [];
@@ -147,7 +145,7 @@ export function convertSchemaObject(
         );
     }
 
-    const fernSchema = getFernTypeExtension({ schema, description, nameOverride, generatedName });
+    const fernSchema = getFernTypeExtension({ schema, description, nameOverride, generatedName, availability });
     if (fernSchema != null) {
         return fernSchema;
     }
@@ -175,7 +173,8 @@ export function convertSchemaObject(
                 }),
                 groupName,
                 wrapAsNullable,
-                description
+                description,
+                availability
             });
         }
 
@@ -188,6 +187,7 @@ export function convertSchemaObject(
                 wrapAsNullable,
                 value: schema.enum[0],
                 description,
+                availability,
                 groupName
             });
         }
@@ -199,6 +199,7 @@ export function convertSchemaObject(
             enumVarNames: getExtension<string[]>(schema, [OpenAPIExtension.ENUM_VAR_NAMES]),
             enumValues: schema.enum,
             description,
+            availability,
             wrapAsNullable,
             groupName,
             context
@@ -224,7 +225,8 @@ export function convertSchemaObject(
                     propertiesToExclude
                 ),
                 groupName,
-                description: schema.description
+                description: schema.description,
+                availability
             });
         } else if (secondElement === "null") {
             return SchemaWithExample.nullable({
@@ -241,7 +243,8 @@ export function convertSchemaObject(
                     propertiesToExclude
                 ),
                 groupName,
-                description: schema.description
+                description: schema.description,
+                availability
             });
         }
     }
@@ -263,6 +266,7 @@ export function convertSchemaObject(
             generatedName,
             breadcrumbs,
             description,
+            availability,
             wrapAsNullable,
             context,
             subtypes,
@@ -280,6 +284,7 @@ export function convertSchemaObject(
                 literal: LiteralSchemaValue.boolean(literalValue),
                 wrapAsNullable,
                 description,
+                availability,
                 groupName
             });
         }
@@ -292,6 +297,7 @@ export function convertSchemaObject(
             }),
             wrapAsNullable,
             description,
+            availability,
             groupName
         });
     }
@@ -307,6 +313,7 @@ export function convertSchemaObject(
             exclusiveMaximum: getValueIfBoolean(schema.exclusiveMaximum),
             multipleOf: schema.multipleOf,
             description,
+            availability,
             wrapAsNullable,
             example: getExampleAsNumber(schema),
             groupName
@@ -327,6 +334,7 @@ export function convertSchemaObject(
             }),
             wrapAsNullable,
             description,
+            availability,
             groupName
         });
     }
@@ -342,6 +350,7 @@ export function convertSchemaObject(
             exclusiveMaximum: getValueIfBoolean(schema.exclusiveMaximum),
             multipleOf: schema.multipleOf,
             description,
+            availability,
             wrapAsNullable,
             example: getExampleAsNumber(schema),
             groupName
@@ -357,6 +366,7 @@ export function convertSchemaObject(
                 }),
                 wrapAsNullable,
                 description,
+                availability,
                 groupName
             });
         } else if (schema.format === "json-string") {
@@ -364,6 +374,7 @@ export function convertSchemaObject(
                 nameOverride,
                 generatedName,
                 description,
+                availability,
                 groupName,
                 example: undefined
             });
@@ -377,6 +388,7 @@ export function convertSchemaObject(
                 literal: LiteralSchemaValue.string(maybeConstValue),
                 wrapAsNullable,
                 description,
+                availability,
                 groupName
             });
         }
@@ -394,7 +406,8 @@ export function convertSchemaObject(
             }),
             groupName,
             wrapAsNullable,
-            description
+            description,
+            availability
         });
     }
 
@@ -406,6 +419,7 @@ export function convertSchemaObject(
             breadcrumbs,
             item: schema.items,
             description,
+            availability,
             wrapAsNullable,
             context,
             groupName,
@@ -421,6 +435,7 @@ export function convertSchemaObject(
             breadcrumbs,
             additionalProperties: schema.additionalProperties,
             description,
+            availability,
             wrapAsNullable,
             context,
             groupName,
@@ -435,6 +450,7 @@ export function convertSchemaObject(
                 generatedName,
                 breadcrumbs,
                 description,
+                availability,
                 discriminator: schema.discriminator,
                 properties: schema.properties ?? {},
                 required: schema.required,
@@ -447,6 +463,7 @@ export function convertSchemaObject(
                 nameOverride,
                 generatedName,
                 description,
+                availability,
                 wrapAsNullable,
                 context,
                 groupName,
@@ -468,6 +485,7 @@ export function convertSchemaObject(
                     nameOverride,
                     generatedName,
                     description,
+                    availability,
                     wrapAsNullable,
                     context,
                     groupName,
@@ -479,6 +497,7 @@ export function convertSchemaObject(
                     generatedName,
                     breadcrumbs,
                     description,
+                    availability,
                     discriminator: schema.discriminator,
                     properties: schema.properties ?? {},
                     required: schema.required,
@@ -516,6 +535,7 @@ export function convertSchemaObject(
                     enumVarNames: undefined,
                     enumValues: maybeAllEnumValues,
                     description,
+                    availability,
                     wrapAsNullable,
                     groupName,
                     context
@@ -531,6 +551,7 @@ export function convertSchemaObject(
                     properties: schema.properties ?? {},
                     required: schema.required,
                     description,
+                    availability,
                     wrapAsNullable,
                     discriminant: maybeDiscriminant.discriminant,
                     variants: maybeDiscriminant.schemas,
@@ -548,6 +569,7 @@ export function convertSchemaObject(
                 generatedName,
                 breadcrumbs,
                 description,
+                availability,
                 wrapAsNullable: wrapAsNullable || hasNullValue,
                 context,
                 subtypes: schema.oneOf.filter((schema) => {
@@ -596,6 +618,7 @@ export function convertSchemaObject(
                 properties: schema.properties ?? {},
                 required: schema.required,
                 description,
+                availability,
                 wrapAsNullable,
                 discriminant: maybeDiscriminant.discriminant,
                 variants: maybeDiscriminant.schemas,
@@ -613,6 +636,7 @@ export function convertSchemaObject(
             generatedName,
             breadcrumbs,
             description,
+            availability,
             wrapAsNullable: wrapAsNullable || hasNullValue,
             context,
             subtypes: schema.anyOf.filter((schema) => {
@@ -697,11 +721,13 @@ export function convertSchemaObject(
             nameOverride,
             generatedName,
             description,
+            availability,
             wrapAsNullable,
             keySchema: {
                 nameOverride: undefined,
                 generatedName: `${generatedName}Key`,
                 description: undefined,
+                availability: undefined,
                 schema: PrimitiveSchemaValueWithExample.string({
                     default: getDefaultAsString(schema),
                     pattern: schema.pattern,
@@ -716,6 +742,7 @@ export function convertSchemaObject(
                 nameOverride: undefined,
                 generatedName: `${generatedName}Value`,
                 description: undefined,
+                availability: undefined,
                 example: undefined,
                 groupName
             }),
@@ -730,6 +757,7 @@ export function convertSchemaObject(
             nameOverride,
             generatedName,
             description,
+            availability,
             groupName,
             example: inferredValue
         });
@@ -752,6 +780,7 @@ export function convertToReferencedSchema(schema: OpenAPIV3.ReferenceObject, bre
     const generatedName = getGeneratedTypeName(breadcrumbs);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const description = (schema as any).description;
+    const availability = convertAvailability(schema);
 
     const schemaId = getSchemaIdFromReference(schema);
     if (schemaId == null) {
@@ -764,6 +793,7 @@ export function convertToReferencedSchema(schema: OpenAPIV3.ReferenceObject, bre
         nameOverride,
         schema: schemaId,
         description: description ?? undefined,
+        availability,
         groupName: undefined
     });
 }
@@ -801,6 +831,7 @@ function maybeInjectDescriptionOrGroupName(
             generatedName: schema.generatedName,
             value: schema.value,
             description,
+            availability: schema.availability,
             groupName
         });
     } else if (schema.type === "nullable") {
@@ -809,6 +840,7 @@ function maybeInjectDescriptionOrGroupName(
             generatedName: schema.generatedName,
             value: schema.value,
             description,
+            availability: schema.availability,
             groupName
         });
     }
@@ -841,12 +873,14 @@ export function wrapLiteral({
     wrapAsNullable,
     groupName,
     description,
+    availability,
     nameOverride,
     generatedName
 }: {
     literal: LiteralSchemaValue;
     wrapAsNullable: boolean;
     description: string | undefined;
+    availability: Availability | undefined;
     groupName: string[] | undefined;
     nameOverride: string | undefined;
     generatedName: string;
@@ -860,10 +894,12 @@ export function wrapLiteral({
                 generatedName,
                 value: literal,
                 description,
+                availability,
                 groupName
             }),
             groupName,
-            description
+            description,
+            availability
         });
     }
     return SchemaWithExample.literal({
@@ -871,7 +907,8 @@ export function wrapLiteral({
         generatedName,
         value: literal,
         groupName,
-        description
+        description,
+        availability
     });
 }
 
@@ -880,6 +917,7 @@ export function wrapPrimitive({
     wrapAsNullable,
     groupName,
     description,
+    availability,
     generatedName,
     nameOverride
 }: {
@@ -887,6 +925,7 @@ export function wrapPrimitive({
     wrapAsNullable: boolean;
     groupName: string[] | undefined;
     description: string | undefined;
+    availability: Availability | undefined;
     nameOverride: string | undefined;
     generatedName: string;
 }): SchemaWithExample {
@@ -900,10 +939,12 @@ export function wrapPrimitive({
                 generatedName,
                 schema: primitive,
                 description,
+                availability,
                 groupName
             }),
             groupName,
-            description
+            description,
+            availability
         });
     }
     return SchemaWithExample.primitive({
@@ -911,6 +952,7 @@ export function wrapPrimitive({
         generatedName,
         schema: primitive,
         description,
+        availability,
         groupName
     });
 }

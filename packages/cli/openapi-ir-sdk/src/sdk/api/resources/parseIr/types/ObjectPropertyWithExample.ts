@@ -4,7 +4,7 @@
 
 import * as FernOpenapiIr from "../../..";
 
-export interface ObjectPropertyWithExample {
+export interface ObjectPropertyWithExample extends FernOpenapiIr.WithAvailability {
     key: string;
     schema: FernOpenapiIr.SchemaWithExample;
     audiences: string[];
@@ -14,5 +14,4 @@ export interface ObjectPropertyWithExample {
     nameOverride: string | undefined;
     /** A unique name for the property. */
     generatedName: string;
-    availability: FernOpenapiIr.Availability | undefined;
 }
