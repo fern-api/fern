@@ -930,6 +930,9 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
             streaming: () => {
                 throw new Error("Streaming is not supported");
             },
+            streamParameter: () => {
+                throw new Error("Streaming is not supported");
+            },
             fileDownload: () => {
                 throw new Error("File download is not supported");
             },

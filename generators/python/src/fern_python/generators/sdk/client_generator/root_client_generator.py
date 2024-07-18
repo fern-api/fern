@@ -391,9 +391,7 @@ class RootClientGenerator:
             parameters.append(
                 RootClientConstructorParameter(
                     constructor_parameter_name=RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME,
-                    type_hint=AST.TypeHint(self._context.get_reference_to_environments_class())
-                    if environments_config.default_environment is not None
-                    else AST.TypeHint.optional(AST.TypeHint(self._context.get_reference_to_environments_class())),
+                    type_hint=AST.TypeHint(self._context.get_reference_to_environments_class()),
                     private_member_name=None,
                     initializer=default_environment if default_environment is not None else None,
                     docs=environment_docs,
