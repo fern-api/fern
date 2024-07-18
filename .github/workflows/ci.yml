@@ -176,7 +176,7 @@ jobs:
           cli_path="$(yarn workspace @fern-api/cli bin fern:dev)"
           ./scripts/live-test.sh "$cli_path" "$FERN_ORG_TOKEN_DEV"
 
-  version-tests:
+  node-version-tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
