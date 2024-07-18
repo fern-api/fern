@@ -555,12 +555,14 @@ class EndpointFunctionGenerator:
                 writer.write_line(":")
                 with writer.indent():
                     stream_generator_func_name = "stream_generator"
-                    writer.write_node(AST.FunctionDeclaration(
-                        name=stream_generator_func_name,
-                        signature=AST.FunctionSignature(),
-                        body=AST.CodeWriter(write_stream_generator),
-                        is_async=True,
-                    ))
+                    writer.write_node(
+                        AST.FunctionDeclaration(
+                            name=stream_generator_func_name,
+                            signature=AST.FunctionSignature(),
+                            body=AST.CodeWriter(write_stream_generator),
+                            is_async=True,
+                        )
+                    )
                     writer.write_newline_if_last_line_not()
                     writer.write(f"return {stream_generator_func_name}()")
 
