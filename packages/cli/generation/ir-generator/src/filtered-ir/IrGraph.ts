@@ -139,6 +139,14 @@ export class IrGraph {
         for (const queryParameter of httpEndpoint.queryParameters) {
             populateReferencesFromTypeReference(queryParameter.valueType, referencedTypes, referencedSubpackages);
         }
+        if (rawEndpoint != null && rawEndpoint.request != null && typeof rawEndpoint.request !== "string") {
+            const parametersByAudience = getPropertiesByAudience(rawEndpoint.request["query-parameters"] ?? {});
+
+            this.queryParameters[endpointId] = {
+                endpointId,
+                parametersByAudience
+            };
+        }
         if (httpEndpoint.requestBody != null) {
             HttpRequestBody._visit(httpEndpoint.requestBody, {
                 inlinedRequestBody: (inlinedRequestBody) => {
@@ -147,15 +155,6 @@ export class IrGraph {
                     }
                     for (const property of inlinedRequestBody.properties) {
                         populateReferencesFromTypeReference(property.valueType, referencedTypes, referencedSubpackages);
-                    }
-                    if (rawEndpoint != null && rawEndpoint.request != null && typeof rawEndpoint.request !== "string") {
-                        const parametersByAudience = getPropertiesByAudience(
-                            rawEndpoint.request["query-parameters"] ?? {}
-                        );
-                        this.queryParameters[endpointId] = {
-                            endpointId,
-                            parametersByAudience
-                        };
                     }
                     if (
                         rawEndpoint != null &&
@@ -356,10 +355,10 @@ export class IrGraph {
             this.addReferencedTypes(typeIds, webhookNode.referencedTypes);
         }
 
-        const properties: Record<TypeId, Set<string>> = {};
-        const requestProperties: Record<EndpointId, Set<string>> = {};
-        const queryParameters: Record<EndpointId, Set<string>> = {};
-        const webhookPayloadProperties: Record<WebhookId, Set<string>> = {};
+        const properties: Record<TypeId, Set<string> | undefined> = {};
+        const requestProperties: Record<EndpointId, Set<string> | undefined> = {};
+        const queryParameters: Record<EndpointId, Set<string> | undefined> = {};
+        const webhookPayloadProperties: Record<WebhookId, Set<string> | undefined> = {};
 
         if (this.audiences.type === "filtered") {
             for (const [typeId, typePropertiesNode] of Object.entries(this.properties)) {
@@ -378,6 +377,7 @@ export class IrGraph {
                 if (propertiesForTypeId.size > 0) {
                     properties[typeId] = propertiesForTypeId;
                 }
+                properties[typeId] = propertiesForTypeId.size > 0 ? propertiesForTypeId : undefined;
             }
 
             for (const [endpointId, requestPropertiesNode] of Object.entries(this.requestProperties)) {
@@ -393,9 +393,7 @@ export class IrGraph {
                         });
                     }
                 }
-                if (propertiesForEndpoint.size > 0) {
-                    requestProperties[endpointId] = propertiesForEndpoint;
-                }
+                requestProperties[endpointId] = propertiesForEndpoint.size > 0 ? propertiesForEndpoint : undefined;
             }
 
             for (const [endpointId, queryParametersNode] of Object.entries(this.queryParameters)) {
@@ -411,9 +409,7 @@ export class IrGraph {
                         });
                     }
                 }
-                if (parametersForEndpoint.size > 0) {
-                    queryParameters[endpointId] = parametersForEndpoint;
-                }
+                queryParameters[endpointId] = parametersForEndpoint.size > 0 ? parametersForEndpoint : undefined;
             }
 
             for (const [webhookId, webhookPaylodPropertiesNode] of Object.entries(this.webhookProperties)) {
@@ -429,9 +425,7 @@ export class IrGraph {
                         });
                     }
                 }
-                if (propertiesForWebhook.size > 0) {
-                    requestProperties[webhookId] = propertiesForWebhook;
-                }
+                webhookPayloadProperties[webhookId] = propertiesForWebhook.size > 0 ? propertiesForWebhook : undefined;
             }
         }
 
