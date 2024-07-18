@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.2 - 2024-07-17]
 
 - Chore: Bump IR to 51.
-- Feature: Generate serialization unit tests for models, as well as CI to run them. These tests do not include instantiated object equality assertions, which should be included at a later time.
+- Feature: Generate serialization unit tests for models, as well as GH workflow to run them. These tests do not include instantiated object equality assertions, which should be included at a later time.
 
 ## [0.1.1 - 2024-07-10]
 
