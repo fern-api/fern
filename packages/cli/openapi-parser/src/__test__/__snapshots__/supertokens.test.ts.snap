@@ -31678,25 +31678,17 @@ e.g.:
                   {
                     "key": {
                       "type": "string",
-                      "value": "usageStats",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],

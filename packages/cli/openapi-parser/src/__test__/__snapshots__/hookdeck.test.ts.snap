@@ -12762,6 +12762,27 @@ exports[`open api parser hookdeck parse open api 1`] = `
                           "value": 1.1,
                         },
                       },
+                      "query": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "key",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "team_id": {
                         "type": "primitive",
                         "value": {
@@ -16540,25 +16561,17 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "query",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -21183,25 +21196,17 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "query",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -21416,25 +21421,17 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "query",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -21658,6 +21655,27 @@ exports[`open api parser hookdeck parse open api 1`] = `
                           "type": "float",
                           "value": 1.1,
                         },
+                      },
+                      "query": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "key",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          },
+                        ],
                       },
                       "team_id": {
                         "type": "primitive",
@@ -23138,25 +23156,17 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "query",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -23871,25 +23881,17 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "query",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -24104,25 +24106,17 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "query",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -36839,6 +36833,27 @@ exports[`open api parser hookdeck parse open api 1`] = `
                           "value": 1.1,
                         },
                       },
+                      "query": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "key",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "team_id": {
                         "type": "primitive",
                         "value": {
@@ -40118,25 +40133,17 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "query",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -43813,25 +43820,17 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "query",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -44046,25 +44045,17 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "query",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -50150,13 +50141,13 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "env",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "env",
+                        "value": "value",
                       },
                     },
                   },
@@ -50474,13 +50465,13 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "env",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "env",
+                        "value": "value",
                       },
                     },
                   },
@@ -50776,13 +50767,13 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "env",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "env",
+                        "value": "value",
                       },
                     },
                   },
@@ -50989,13 +50980,13 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "env",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "env",
+                        "value": "value",
                       },
                     },
                   },

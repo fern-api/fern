@@ -420,7 +420,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "transitioned",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
@@ -1986,7 +1986,7 @@ exports[`open api parser dopt parse open api 1`] = `
                           {
                             "key": {
                               "type": "string",
-                              "value": "transitioned",
+                              "value": "key",
                             },
                             "value": {
                               "type": "primitive",

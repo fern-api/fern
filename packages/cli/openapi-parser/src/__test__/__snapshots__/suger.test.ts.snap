@@ -4344,7 +4344,7 @@ exports[`open api parser suger parse open api 1`] = `
                           {
                             "key": {
                               "type": "string",
-                              "value": "records",
+                              "value": "key",
                             },
                             "value": {
                               "type": "primitive",
@@ -4713,7 +4713,7 @@ exports[`open api parser suger parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "records",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
@@ -4766,7 +4766,7 @@ exports[`open api parser suger parse open api 1`] = `
                       {
                         "key": {
                           "type": "string",
-                          "value": "originRecords",
+                          "value": "key",
                         },
                         "value": {
                           "type": "primitive",
@@ -4794,7 +4794,7 @@ exports[`open api parser suger parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "records",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
@@ -11555,13 +11555,13 @@ exports[`open api parser suger parse open api 1`] = `
                           {
                             "key": {
                               "type": "string",
-                              "value": "attributes",
+                              "value": "key",
                             },
                             "value": {
                               "type": "primitive",
                               "value": {
                                 "type": "string",
-                                "value": "attributes",
+                                "value": "value",
                               },
                             },
                           },
@@ -12881,13 +12881,13 @@ exports[`open api parser suger parse open api 1`] = `
                           {
                             "key": {
                               "type": "string",
-                              "value": "attributes",
+                              "value": "key",
                             },
                             "value": {
                               "type": "primitive",
                               "value": {
                                 "type": "string",
-                                "value": "attributes",
+                                "value": "value",
                               },
                             },
                           },
@@ -13166,13 +13166,13 @@ exports[`open api parser suger parse open api 1`] = `
                       {
                         "key": {
                           "type": "string",
-                          "value": "attributes",
+                          "value": "key",
                         },
                         "value": {
                           "type": "primitive",
                           "value": {
                             "type": "string",
-                            "value": "attributes",
+                            "value": "value",
                           },
                         },
                       },
@@ -13813,13 +13813,13 @@ exports[`open api parser suger parse open api 1`] = `
                       {
                         "key": {
                           "type": "string",
-                          "value": "attributes",
+                          "value": "key",
                         },
                         "value": {
                           "type": "primitive",
                           "value": {
                             "type": "string",
-                            "value": "attributes",
+                            "value": "value",
                           },
                         },
                       },
@@ -15331,7 +15331,7 @@ exports[`open api parser suger parse open api 1`] = `
                           {
                             "key": {
                               "type": "string",
-                              "value": "records",
+                              "value": "key",
                             },
                             "value": {
                               "type": "primitive",
@@ -16385,7 +16385,7 @@ exports[`open api parser suger parse open api 1`] = `
                           {
                             "key": {
                               "type": "string",
-                              "value": "records",
+                              "value": "key",
                             },
                             "value": {
                               "type": "primitive",
@@ -16694,7 +16694,7 @@ exports[`open api parser suger parse open api 1`] = `
                       {
                         "key": {
                           "type": "string",
-                          "value": "originRecords",
+                          "value": "key",
                         },
                         "value": {
                           "type": "primitive",
@@ -16722,7 +16722,7 @@ exports[`open api parser suger parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "records",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
@@ -17216,6 +17216,27 @@ exports[`open api parser suger parse open api 1`] = `
                 "properties": {
                   "awsMeteringResponse": {
                     "properties": {
+                      "resultMetadata": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "key",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "results": {
                         "type": "array",
                         "value": [
@@ -17278,7 +17299,7 @@ exports[`open api parser suger parse open api 1`] = `
                       {
                         "key": {
                           "type": "string",
-                          "value": "creditRecords",
+                          "value": "key",
                         },
                         "value": {
                           "type": "primitive",
@@ -17296,7 +17317,7 @@ exports[`open api parser suger parse open api 1`] = `
                       {
                         "key": {
                           "type": "string",
-                          "value": "dimensionUnitPrice",
+                          "value": "key",
                         },
                         "value": {
                           "type": "primitive",
@@ -17349,7 +17370,7 @@ exports[`open api parser suger parse open api 1`] = `
                       {
                         "key": {
                           "type": "string",
-                          "value": "includedRecords",
+                          "value": "key",
                         },
                         "value": {
                           "type": "primitive",
@@ -17367,7 +17388,7 @@ exports[`open api parser suger parse open api 1`] = `
                       {
                         "key": {
                           "type": "string",
-                          "value": "reportedRecords",
+                          "value": "key",
                         },
                         "value": {
                           "type": "primitive",

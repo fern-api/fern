@@ -46,7 +46,7 @@ exports[`open api parser squidex parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -88,7 +88,7 @@ exports[`open api parser squidex parse open api 1`] = `
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -392,7 +392,7 @@ exports[`open api parser squidex parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -582,7 +582,7 @@ exports[`open api parser squidex parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -826,7 +826,7 @@ exports[`open api parser squidex parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -1204,7 +1204,7 @@ exports[`open api parser squidex parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -1433,7 +1433,7 @@ exports[`open api parser squidex parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -1610,7 +1610,7 @@ exports[`open api parser squidex parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -1727,7 +1727,7 @@ exports[`open api parser squidex parse open api 1`] = `
                       {
                         "key": {
                           "type": "string",
-                          "value": "_links",
+                          "value": "key",
                         },
                         "value": {
                           "properties": {
@@ -1937,7 +1937,7 @@ exports[`open api parser squidex parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -2368,7 +2368,7 @@ exports[`open api parser squidex parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -2410,7 +2410,7 @@ exports[`open api parser squidex parse open api 1`] = `
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -2572,7 +2572,7 @@ exports[`open api parser squidex parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -2738,7 +2738,7 @@ exports[`open api parser squidex parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -2792,7 +2792,7 @@ exports[`open api parser squidex parse open api 1`] = `
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -3010,7 +3010,7 @@ exports[`open api parser squidex parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -3064,7 +3064,7 @@ exports[`open api parser squidex parse open api 1`] = `
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -3285,7 +3285,7 @@ exports[`open api parser squidex parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -3339,7 +3339,7 @@ exports[`open api parser squidex parse open api 1`] = `
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -3556,7 +3556,7 @@ exports[`open api parser squidex parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -3610,7 +3610,7 @@ exports[`open api parser squidex parse open api 1`] = `
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -3806,7 +3806,7 @@ You will retrieve all teams, where you are assigned as a contributor.",
                       {
                         "key": {
                           "type": "string",
-                          "value": "_links",
+                          "value": "key",
                         },
                         "value": {
                           "properties": {
@@ -4007,7 +4007,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -4199,7 +4199,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -4426,7 +4426,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -4818,7 +4818,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "details",
+                      "value": "key",
                     },
                     "value": {
                       "type": "array",
@@ -5109,7 +5109,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "details",
+                      "value": "key",
                     },
                     "value": {
                       "type": "array",
@@ -6067,7 +6067,7 @@ You will be assigned as owner of the new team automatically.",
                       {
                         "key": {
                           "type": "string",
-                          "value": "_links",
+                          "value": "key",
                         },
                         "value": {
                           "properties": {
@@ -6651,7 +6651,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -6807,13 +6807,13 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "previewUrls",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "previewUrls",
+                        "value": "value",
                       },
                     },
                   },
@@ -7141,7 +7141,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -7297,13 +7297,13 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "previewUrls",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "previewUrls",
+                        "value": "value",
                       },
                     },
                   },
@@ -7641,7 +7641,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -7797,13 +7797,13 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "previewUrls",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "previewUrls",
+                        "value": "value",
                       },
                     },
                   },
@@ -8317,7 +8317,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -8473,13 +8473,13 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "previewUrls",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "previewUrls",
+                        "value": "value",
                       },
                     },
                   },
@@ -9012,7 +9012,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -9168,13 +9168,13 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "previewUrls",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "previewUrls",
+                        "value": "value",
                       },
                     },
                   },
@@ -9528,7 +9528,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -9684,13 +9684,13 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "previewUrls",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "previewUrls",
+                        "value": "value",
                       },
                     },
                   },
@@ -10031,7 +10031,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -10187,13 +10187,13 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "previewUrls",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "previewUrls",
+                        "value": "value",
                       },
                     },
                   },
@@ -10547,7 +10547,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -10703,13 +10703,13 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "previewUrls",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "previewUrls",
+                        "value": "value",
                       },
                     },
                   },
@@ -11050,7 +11050,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -11206,13 +11206,13 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "previewUrls",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "previewUrls",
+                        "value": "value",
                       },
                     },
                   },
@@ -11566,7 +11566,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -11722,13 +11722,13 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "previewUrls",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "previewUrls",
+                        "value": "value",
                       },
                     },
                   },
@@ -12069,7 +12069,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -12225,13 +12225,13 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "previewUrls",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "previewUrls",
+                        "value": "value",
                       },
                     },
                   },
@@ -12585,7 +12585,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -12741,13 +12741,13 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "previewUrls",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "previewUrls",
+                        "value": "value",
                       },
                     },
                   },
@@ -13088,7 +13088,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -13244,13 +13244,13 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "previewUrls",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "previewUrls",
+                        "value": "value",
                       },
                     },
                   },
@@ -13604,7 +13604,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -13760,13 +13760,13 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "previewUrls",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "previewUrls",
+                        "value": "value",
                       },
                     },
                   },
@@ -14107,7 +14107,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -14263,13 +14263,13 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "previewUrls",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "previewUrls",
+                        "value": "value",
                       },
                     },
                   },
@@ -14588,7 +14588,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -14630,7 +14630,7 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -14772,13 +14772,13 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "previewUrls",
+                              "value": "key",
                             },
                             "value": {
                               "type": "primitive",
                               "value": {
                                 "type": "string",
-                                "value": "previewUrls",
+                                "value": "value",
                               },
                             },
                           },
@@ -14992,7 +14992,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -15148,13 +15148,13 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "previewUrls",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "previewUrls",
+                        "value": "value",
                       },
                     },
                   },
@@ -15429,7 +15429,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -15585,13 +15585,13 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "previewUrls",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "previewUrls",
+                        "value": "value",
                       },
                     },
                   },
@@ -15900,7 +15900,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -16056,13 +16056,13 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "previewUrls",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "previewUrls",
+                        "value": "value",
                       },
                     },
                   },
@@ -16551,7 +16551,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -16707,13 +16707,13 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "previewUrls",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "previewUrls",
+                        "value": "value",
                       },
                     },
                   },
@@ -17028,7 +17028,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -17184,13 +17184,13 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "previewUrls",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "previewUrls",
+                        "value": "value",
                       },
                     },
                   },
@@ -17499,13 +17499,13 @@ You will be assigned as owner of the new team automatically.",
               {
                 "key": {
                   "type": "string",
-                  "value": "string",
+                  "value": "key",
                 },
                 "value": {
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "string",
+                    "value": "value",
                   },
                 },
               },
@@ -17519,7 +17519,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -17675,13 +17675,13 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "previewUrls",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "previewUrls",
+                        "value": "value",
                       },
                     },
                   },
@@ -17996,7 +17996,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -18152,13 +18152,13 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "previewUrls",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "previewUrls",
+                        "value": "value",
                       },
                     },
                   },
@@ -18473,7 +18473,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -18629,13 +18629,13 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "previewUrls",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "previewUrls",
+                        "value": "value",
                       },
                     },
                   },
@@ -18947,7 +18947,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -19103,13 +19103,13 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "previewUrls",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "previewUrls",
+                        "value": "value",
                       },
                     },
                   },
@@ -19407,7 +19407,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -19563,13 +19563,13 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "previewUrls",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "previewUrls",
+                        "value": "value",
                       },
                     },
                   },
@@ -19818,7 +19818,7 @@ You will be assigned as owner of the new team automatically.",
               {
                 "key": {
                   "type": "string",
-                  "value": "string",
+                  "value": "key",
                 },
                 "value": {
                   "properties": {
@@ -20037,7 +20037,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -21597,7 +21597,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -21882,7 +21882,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -21924,7 +21924,7 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -23715,13 +23715,13 @@ You will be assigned as owner of the new team automatically.",
               {
                 "key": {
                   "type": "string",
-                  "value": "string",
+                  "value": "key",
                 },
                 "value": {
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "string",
+                    "value": "value",
                   },
                 },
               },
@@ -24628,7 +24628,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -24670,7 +24670,7 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -24861,7 +24861,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -25077,7 +25077,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -25293,7 +25293,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -25654,7 +25654,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -25696,7 +25696,7 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -25807,11 +25807,28 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "referenceData",
+                              "value": "key",
                             },
                             "value": {
                               "type": "map",
-                              "value": [],
+                              "value": [
+                                {
+                                  "key": {
+                                    "type": "string",
+                                    "value": "key",
+                                  },
+                                  "value": {
+                                    "type": "unknown",
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "value",
+                                      },
+                                    },
+                                  },
+                                },
+                              ],
                             },
                           },
                         ],
@@ -26167,11 +26184,28 @@ You will be assigned as owner of the new team automatically.",
               {
                 "key": {
                   "type": "string",
-                  "value": "string",
+                  "value": "key",
                 },
                 "value": {
                   "type": "map",
-                  "value": [],
+                  "value": [
+                    {
+                      "key": {
+                        "type": "string",
+                        "value": "key",
+                      },
+                      "value": {
+                        "type": "unknown",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "value",
+                          },
+                        },
+                      },
+                    },
+                  ],
                 },
               },
             ],
@@ -26184,7 +26218,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -26226,7 +26260,7 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -26337,11 +26371,28 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "referenceData",
+                              "value": "key",
                             },
                             "value": {
                               "type": "map",
-                              "value": [],
+                              "value": [
+                                {
+                                  "key": {
+                                    "type": "string",
+                                    "value": "key",
+                                  },
+                                  "value": {
+                                    "type": "unknown",
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "value",
+                                      },
+                                    },
+                                  },
+                                },
+                              ],
                             },
                           },
                         ],
@@ -26743,7 +26794,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -26785,7 +26836,7 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -26896,11 +26947,28 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "referenceData",
+                              "value": "key",
                             },
                             "value": {
                               "type": "map",
-                              "value": [],
+                              "value": [
+                                {
+                                  "key": {
+                                    "type": "string",
+                                    "value": "key",
+                                  },
+                                  "value": {
+                                    "type": "unknown",
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "value",
+                                      },
+                                    },
+                                  },
+                                },
+                              ],
                             },
                           },
                         ],
@@ -27207,7 +27275,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -27325,7 +27393,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "referenceData",
+                      "value": "key",
                     },
                     "value": {
                       "type": "map",
@@ -27333,25 +27401,17 @@ You will be assigned as owner of the new team automatically.",
                         {
                           "key": {
                             "type": "string",
-                            "value": "referenceData",
+                            "value": "key",
                           },
                           "value": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "key",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "value",
-                                  },
-                                },
+                            "type": "unknown",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "value",
                               },
-                            ],
+                            },
                           },
                         },
                       ],
@@ -27677,11 +27737,28 @@ You will be assigned as owner of the new team automatically.",
               {
                 "key": {
                   "type": "string",
-                  "value": "string",
+                  "value": "key",
                 },
                 "value": {
                   "type": "map",
-                  "value": [],
+                  "value": [
+                    {
+                      "key": {
+                        "type": "string",
+                        "value": "key",
+                      },
+                      "value": {
+                        "type": "unknown",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "value",
+                          },
+                        },
+                      },
+                    },
+                  ],
                 },
               },
             ],
@@ -27694,7 +27771,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -27736,7 +27813,7 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -27847,11 +27924,28 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "referenceData",
+                              "value": "key",
                             },
                             "value": {
                               "type": "map",
-                              "value": [],
+                              "value": [
+                                {
+                                  "key": {
+                                    "type": "string",
+                                    "value": "key",
+                                  },
+                                  "value": {
+                                    "type": "unknown",
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "value",
+                                      },
+                                    },
+                                  },
+                                },
+                              ],
                             },
                           },
                         ],
@@ -28275,11 +28369,28 @@ You will be assigned as owner of the new team automatically.",
               {
                 "key": {
                   "type": "string",
-                  "value": "string",
+                  "value": "key",
                 },
                 "value": {
                   "type": "map",
-                  "value": [],
+                  "value": [
+                    {
+                      "key": {
+                        "type": "string",
+                        "value": "key",
+                      },
+                      "value": {
+                        "type": "unknown",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "value",
+                          },
+                        },
+                      },
+                    },
+                  ],
                 },
               },
             ],
@@ -28292,7 +28403,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -28334,7 +28445,7 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -28445,11 +28556,28 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "referenceData",
+                              "value": "key",
                             },
                             "value": {
                               "type": "map",
-                              "value": [],
+                              "value": [
+                                {
+                                  "key": {
+                                    "type": "string",
+                                    "value": "key",
+                                  },
+                                  "value": {
+                                    "type": "unknown",
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "value",
+                                      },
+                                    },
+                                  },
+                                },
+                              ],
                             },
                           },
                         ],
@@ -29027,11 +29155,28 @@ You will be assigned as owner of the new team automatically.",
               {
                 "key": {
                   "type": "string",
-                  "value": "string",
+                  "value": "key",
                 },
                 "value": {
                   "type": "map",
-                  "value": [],
+                  "value": [
+                    {
+                      "key": {
+                        "type": "string",
+                        "value": "key",
+                      },
+                      "value": {
+                        "type": "unknown",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "value",
+                          },
+                        },
+                      },
+                    },
+                  ],
                 },
               },
             ],
@@ -29044,7 +29189,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -29086,7 +29231,7 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -29197,11 +29342,28 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "referenceData",
+                              "value": "key",
                             },
                             "value": {
                               "type": "map",
-                              "value": [],
+                              "value": [
+                                {
+                                  "key": {
+                                    "type": "string",
+                                    "value": "key",
+                                  },
+                                  "value": {
+                                    "type": "unknown",
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "value",
+                                      },
+                                    },
+                                  },
+                                },
+                              ],
                             },
                           },
                         ],
@@ -29714,7 +29876,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -29756,7 +29918,7 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -29867,11 +30029,28 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "referenceData",
+                              "value": "key",
                             },
                             "value": {
                               "type": "map",
-                              "value": [],
+                              "value": [
+                                {
+                                  "key": {
+                                    "type": "string",
+                                    "value": "key",
+                                  },
+                                  "value": {
+                                    "type": "unknown",
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "value",
+                                      },
+                                    },
+                                  },
+                                },
+                              ],
                             },
                           },
                         ],
@@ -30217,7 +30396,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -30259,7 +30438,7 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -30370,11 +30549,28 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "referenceData",
+                              "value": "key",
                             },
                             "value": {
                               "type": "map",
-                              "value": [],
+                              "value": [
+                                {
+                                  "key": {
+                                    "type": "string",
+                                    "value": "key",
+                                  },
+                                  "value": {
+                                    "type": "unknown",
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "value",
+                                      },
+                                    },
+                                  },
+                                },
+                              ],
                             },
                           },
                         ],
@@ -30879,11 +31075,28 @@ You will be assigned as owner of the new team automatically.",
                       {
                         "key": {
                           "type": "string",
-                          "value": "datas",
+                          "value": "key",
                         },
                         "value": {
                           "type": "map",
-                          "value": [],
+                          "value": [
+                            {
+                              "key": {
+                                "type": "string",
+                                "value": "key",
+                              },
+                              "value": {
+                                "type": "unknown",
+                                "value": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "value",
+                                  },
+                                },
+                              },
+                            },
+                          ],
                         },
                       },
                     ],
@@ -31473,7 +31686,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -31515,7 +31728,7 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -31626,11 +31839,28 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "referenceData",
+                              "value": "key",
                             },
                             "value": {
                               "type": "map",
-                              "value": [],
+                              "value": [
+                                {
+                                  "key": {
+                                    "type": "string",
+                                    "value": "key",
+                                  },
+                                  "value": {
+                                    "type": "unknown",
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "value",
+                                      },
+                                    },
+                                  },
+                                },
+                              ],
                             },
                           },
                         ],
@@ -31974,7 +32204,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -32016,7 +32246,7 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -32127,11 +32357,28 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "referenceData",
+                              "value": "key",
                             },
                             "value": {
                               "type": "map",
-                              "value": [],
+                              "value": [
+                                {
+                                  "key": {
+                                    "type": "string",
+                                    "value": "key",
+                                  },
+                                  "value": {
+                                    "type": "unknown",
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "value",
+                                      },
+                                    },
+                                  },
+                                },
+                              ],
                             },
                           },
                         ],
@@ -32461,7 +32708,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -32503,7 +32750,7 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -32614,11 +32861,28 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "referenceData",
+                              "value": "key",
                             },
                             "value": {
                               "type": "map",
-                              "value": [],
+                              "value": [
+                                {
+                                  "key": {
+                                    "type": "string",
+                                    "value": "key",
+                                  },
+                                  "value": {
+                                    "type": "unknown",
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "value",
+                                      },
+                                    },
+                                  },
+                                },
+                              ],
                             },
                           },
                         ],
@@ -32948,7 +33212,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -32990,7 +33254,7 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -33101,11 +33365,28 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "referenceData",
+                              "value": "key",
                             },
                             "value": {
                               "type": "map",
-                              "value": [],
+                              "value": [
+                                {
+                                  "key": {
+                                    "type": "string",
+                                    "value": "key",
+                                  },
+                                  "value": {
+                                    "type": "unknown",
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "value",
+                                      },
+                                    },
+                                  },
+                                },
+                              ],
                             },
                           },
                         ],
@@ -35300,7 +35581,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -35342,7 +35623,7 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -36876,7 +37157,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -36918,7 +37199,7 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -36986,7 +37267,7 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -37258,7 +37539,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -37495,7 +37776,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -37898,7 +38179,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -38119,7 +38400,7 @@ You will be assigned as owner of the new team automatically.",
               {
                 "key": {
                   "type": "string",
-                  "value": "string",
+                  "value": "key",
                 },
                 "value": {
                   "type": "primitive",
@@ -38321,7 +38602,7 @@ You will be assigned as owner of the new team automatically.",
               {
                 "key": {
                   "type": "string",
-                  "value": "string",
+                  "value": "key",
                 },
                 "value": {
                   "type": "primitive",
@@ -38525,7 +38806,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -38567,7 +38848,7 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -38696,7 +38977,24 @@ You will be assigned as owner of the new team automatically.",
                       },
                       "metadata": {
                         "type": "map",
-                        "value": [],
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "key",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          },
+                        ],
                       },
                       "metadataText": {
                         "type": "primitive",
@@ -39149,7 +39447,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -39289,25 +39587,17 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "metadata",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -39625,7 +39915,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -39667,7 +39957,7 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -39796,7 +40086,24 @@ You will be assigned as owner of the new team automatically.",
                       },
                       "metadata": {
                         "type": "map",
-                        "value": [],
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "key",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          },
+                        ],
                       },
                       "metadataText": {
                         "type": "primitive",
@@ -40027,7 +40334,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -40167,25 +40474,17 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "metadata",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -40448,7 +40747,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -40588,25 +40887,17 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "metadata",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -40926,7 +41217,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -41066,25 +41357,17 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "metadata",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -41806,7 +42089,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -41946,25 +42229,17 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "metadata",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -42227,7 +42502,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -42367,25 +42642,17 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "metadata",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -42619,7 +42886,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -42852,7 +43119,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -43081,7 +43348,7 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -43123,7 +43390,7 @@ You will be assigned as owner of the new team automatically.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -43356,7 +43623,7 @@ The client secret is auto generated on the server and returned. The client does 
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -43398,7 +43665,7 @@ The client secret is auto generated on the server and returned. The client does 
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -43646,7 +43913,7 @@ The client secret is auto generated on the server and returned. The client does 
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -43688,7 +43955,7 @@ The client secret is auto generated on the server and returned. The client does 
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -43955,7 +44222,7 @@ The client secret is auto generated on the server and returned. The client does 
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -43997,7 +44264,7 @@ The client secret is auto generated on the server and returned. The client does 
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -44225,7 +44492,7 @@ The client secret is auto generated on the server and returned. The client does 
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -44279,7 +44546,7 @@ The client secret is auto generated on the server and returned. The client does 
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -44497,7 +44764,7 @@ The client secret is auto generated on the server and returned. The client does 
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -44551,7 +44818,7 @@ The client secret is auto generated on the server and returned. The client does 
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -44772,7 +45039,7 @@ The client secret is auto generated on the server and returned. The client does 
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -44826,7 +45093,7 @@ The client secret is auto generated on the server and returned. The client does 
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -45043,7 +45310,7 @@ The client secret is auto generated on the server and returned. The client does 
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -45097,7 +45364,7 @@ The client secret is auto generated on the server and returned. The client does 
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -45414,7 +45681,7 @@ The client secret is auto generated on the server and returned. The client does 
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -45526,25 +45793,17 @@ The client secret is auto generated on the server and returned. The client does 
                   {
                     "key": {
                       "type": "string",
-                      "value": "roleProperties",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -45721,7 +45980,7 @@ The client secret is auto generated on the server and returned. The client does 
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -45833,25 +46092,17 @@ The client secret is auto generated on the server and returned. The client does 
                   {
                     "key": {
                       "type": "string",
-                      "value": "roleProperties",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -45998,7 +46249,7 @@ The client secret is auto generated on the server and returned. The client does 
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -46040,7 +46291,7 @@ The client secret is auto generated on the server and returned. The client does 
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -46263,7 +46514,7 @@ The client secret is auto generated on the server and returned. The client does 
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -46305,7 +46556,7 @@ The client secret is auto generated on the server and returned. The client does 
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -46544,7 +46795,7 @@ The client secret is auto generated on the server and returned. The client does 
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -46586,7 +46837,7 @@ The client secret is auto generated on the server and returned. The client does 
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -46844,7 +47095,7 @@ The client secret is auto generated on the server and returned. The client does 
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -46886,7 +47137,7 @@ The client secret is auto generated on the server and returned. The client does 
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -47105,7 +47356,7 @@ The client secret is auto generated on the server and returned. The client does 
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -47147,7 +47398,7 @@ The client secret is auto generated on the server and returned. The client does 
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -47213,7 +47464,24 @@ The client secret is auto generated on the server and returned. The client does 
                       },
                       "properties": {
                         "type": "map",
-                        "value": [],
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "key",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          },
+                        ],
                       },
                     },
                     "type": "object",
@@ -47374,7 +47642,7 @@ The client secret is auto generated on the server and returned. The client does 
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -47416,7 +47684,7 @@ The client secret is auto generated on the server and returned. The client does 
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -47482,7 +47750,24 @@ The client secret is auto generated on the server and returned. The client does 
                       },
                       "properties": {
                         "type": "map",
-                        "value": [],
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "key",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          },
+                        ],
                       },
                     },
                     "type": "object",
@@ -47816,7 +48101,7 @@ The client secret is auto generated on the server and returned. The client does 
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -47858,7 +48143,7 @@ The client secret is auto generated on the server and returned. The client does 
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -47924,7 +48209,24 @@ The client secret is auto generated on the server and returned. The client does 
                       },
                       "properties": {
                         "type": "map",
-                        "value": [],
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "key",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          },
+                        ],
                       },
                     },
                     "type": "object",
@@ -48120,7 +48422,7 @@ The client secret is auto generated on the server and returned. The client does 
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -48162,7 +48464,7 @@ The client secret is auto generated on the server and returned. The client does 
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -48228,7 +48530,24 @@ The client secret is auto generated on the server and returned. The client does 
                       },
                       "properties": {
                         "type": "map",
-                        "value": [],
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "key",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          },
+                        ],
                       },
                     },
                     "type": "object",
@@ -48367,7 +48686,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                       {
                         "key": {
                           "type": "string",
-                          "value": "_links",
+                          "value": "key",
                         },
                         "value": {
                           "properties": {
@@ -48472,25 +48791,17 @@ You will retrieve all apps, where you are assigned as a contributor.",
                       {
                         "key": {
                           "type": "string",
-                          "value": "roleProperties",
+                          "value": "key",
                         },
                         "value": {
-                          "type": "map",
-                          "value": [
-                            {
-                              "key": {
-                                "type": "string",
-                                "value": "key",
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "value",
-                                },
-                              },
+                          "type": "unknown",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "value",
                             },
-                          ],
+                          },
                         },
                       },
                     ],
@@ -48644,7 +48955,7 @@ You will be assigned as owner of the new app automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -48756,25 +49067,17 @@ You will be assigned as owner of the new app automatically.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "roleProperties",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -48905,7 +49208,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                       {
                         "key": {
                           "type": "string",
-                          "value": "_links",
+                          "value": "key",
                         },
                         "value": {
                           "properties": {
@@ -49010,25 +49313,17 @@ You will retrieve all apps, where you are assigned as a contributor.",
                       {
                         "key": {
                           "type": "string",
-                          "value": "roleProperties",
+                          "value": "key",
                         },
                         "value": {
-                          "type": "map",
-                          "value": [
-                            {
-                              "key": {
-                                "type": "string",
-                                "value": "key",
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "value",
-                                },
-                              },
+                          "type": "unknown",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "value",
                             },
-                          ],
+                          },
                         },
                       },
                     ],
@@ -49185,7 +49480,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -49297,25 +49592,17 @@ You will retrieve all apps, where you are assigned as a contributor.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "roleProperties",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -49480,7 +49767,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -49592,25 +49879,17 @@ You will retrieve all apps, where you are assigned as a contributor.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "roleProperties",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -49909,7 +50188,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -50021,25 +50300,17 @@ You will retrieve all apps, where you are assigned as a contributor.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "roleProperties",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -50200,7 +50471,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -50502,7 +50773,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -50751,7 +51022,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -50805,7 +51076,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -50868,7 +51139,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "steps",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {},
@@ -51036,7 +51307,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -51090,7 +51361,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -51153,7 +51424,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "steps",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {},
@@ -51340,7 +51611,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "steps",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {},
@@ -51360,7 +51631,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -51414,7 +51685,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -51477,7 +51748,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "steps",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {},
@@ -51680,7 +51951,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "_links",
+                      "value": "key",
                     },
                     "value": {
                       "properties": {
@@ -51734,7 +52005,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "_links",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {
@@ -51797,7 +52068,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                           {
                             "key": {
                               "type": "string",
-                              "value": "steps",
+                              "value": "key",
                             },
                             "value": {
                               "properties": {},

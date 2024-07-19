@@ -60,6 +60,15 @@ You can view the currently authorised admin along with the embedded app object (
             "method": "GET",
             "pagination": undefined,
             "path": "/me",
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "IdentifyAdminRequest",
+            },
             "response": {
               "docs": "Successful response",
               "type": "optional<root.Admin>",
@@ -125,6 +134,12 @@ You can view the currently authorised admin along with the embedded app object (
             "pagination": undefined,
             "path": "/admins/activity_logs",
             "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "ListActivityLogsRequest",
               "query-parameters": {
                 "created_at_after": {
@@ -178,6 +193,15 @@ You can view the currently authorised admin along with the embedded app object (
             "method": "GET",
             "pagination": undefined,
             "path": "/admins",
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "ListAdminsRequest",
+            },
             "response": {
               "docs": "Successful response",
               "type": "root.Admins",
@@ -231,6 +255,15 @@ You can view the currently authorised admin along with the embedded app object (
                 "docs": "The unique identifier of a given admin",
                 "type": "integer",
               },
+            },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "RetrieveAdminRequest",
             },
             "response": {
               "docs": "Admin found",
@@ -373,7 +406,12 @@ You can view the currently authorised admin along with the embedded app object (
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "SetAwayAdminRequest",
               "query-parameters": undefined,
             },
@@ -1498,6 +1536,13 @@ You can view the currently authorised admin along with the embedded app object (
             "path": "/articles",
             "request": {
               "body": "optional<root.CreateArticleRequest>",
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "CreateArticleRequest",
             },
             "response": {
               "docs": "article created",
@@ -1535,6 +1580,15 @@ You can view the currently authorised admin along with the embedded app object (
                 "docs": "The unique identifier for the article which is given by Intercom.",
                 "type": "integer",
               },
+            },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "DeleteArticleRequest",
             },
             "response": {
               "docs": "successful",
@@ -1599,6 +1653,15 @@ You can view the currently authorised admin along with the embedded app object (
             "method": "GET",
             "pagination": undefined,
             "path": "/articles",
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "ListArticlesRequest",
+            },
             "response": {
               "docs": "successful",
               "type": "root.Articles",
@@ -2070,6 +2133,15 @@ You can view the currently authorised admin along with the embedded app object (
                 "type": "integer",
               },
             },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "RetrieveArticleRequest",
+            },
             "response": {
               "docs": "Article found",
               "type": "Article",
@@ -2133,6 +2205,12 @@ You can view the currently authorised admin along with the embedded app object (
             "pagination": undefined,
             "path": "/articles/search",
             "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "SearchArticlesRequest",
               "query-parameters": {
                 "help_center_id": {
@@ -3081,6 +3159,13 @@ You can view the currently authorised admin along with the embedded app object (
             },
             "request": {
               "body": "optional<root.UpdateArticleRequest>",
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "UpdateArticleRequest",
             },
             "response": {
               "docs": "successful",
@@ -3363,6 +3448,9 @@ You can view the currently authorised admin along with the embedded app object (
                           "url": "/contacts/5ba682d23d7cf92bef87bfd4/companies",
                         },
                         "created_at": 1571672154,
+                        "custom_attributes": {
+                          "key": "value",
+                        },
                         "email": "joe@example.com",
                         "email_domain": "example.com",
                         "external_id": "f3b87a2e09d514c6c2e79b9a",
@@ -3429,6 +3517,15 @@ You can view the currently authorised admin along with the embedded app object (
                 "type": "string",
               },
             },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "ListAttachedContactsRequest",
+            },
             "response": {
               "docs": "Successful",
               "type": "root.CompanyAttachedContacts",
@@ -3475,6 +3572,15 @@ You can view the currently authorised admin along with the embedded app object (
                 "type": "string",
               },
             },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "ListAttachedSegmentsForCompaniesRequest",
+            },
             "response": {
               "docs": "Successful",
               "type": "root.CompanyAttachedSegments",
@@ -3500,7 +3606,7 @@ You can view the currently authorised admin along with the embedded app object (
                     "company_id": "1",
                     "created_at": 1719492736,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "id": "667d60808a68186f43bafd31",
                     "industry": "Software",
@@ -3551,6 +3657,15 @@ You can view the currently authorised admin along with the embedded app object (
                 "type": "string",
               },
             },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "RetrieveACompanyByIdRequest",
+            },
             "response": {
               "docs": "Successful",
               "type": "Company",
@@ -3581,7 +3696,7 @@ You can view the currently authorised admin along with the embedded app object (
                     "company_id": "1",
                     "created_at": 1719492738,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "id": "667d60828a68186f43bafd3b",
                     "industry": "Software",
@@ -3632,6 +3747,15 @@ You can view the currently authorised admin along with the embedded app object (
                 "type": "string",
               },
             },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "UpdateCompanyRequest",
+            },
             "response": {
               "docs": "Successful",
               "type": "Company",
@@ -3661,7 +3785,7 @@ You can view the currently authorised admin along with the embedded app object (
                     "company_id": "1",
                     "created_at": 1719492749,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "id": "667d608d8a68186f43bafd70",
                     "industry": "Software",
@@ -3716,7 +3840,7 @@ You can view the currently authorised admin along with the embedded app object (
                     "company_id": "1",
                     "created_at": 1719492749,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "id": "667d608d8a68186f43bafd70",
                     "industry": "Software",
@@ -3771,7 +3895,7 @@ You can view the currently authorised admin along with the embedded app object (
                     "company_id": "1",
                     "created_at": 1719492749,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "id": "667d608d8a68186f43bafd70",
                     "industry": "Software",
@@ -3833,7 +3957,12 @@ You can view the currently authorised admin along with the embedded app object (
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "AttachContactToACompanyRequest",
               "query-parameters": undefined,
             },
@@ -3920,6 +4049,13 @@ Companies are looked up via \`company_id\` in a \`POST\` request, if not found v
             "path": "/companies",
             "request": {
               "body": "optional<root.CreateOrUpdateCompanyRequest>",
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "CreateOrUpdateCompanyRequest",
             },
             "response": {
               "docs": "Successful",
@@ -3958,6 +4094,15 @@ Companies are looked up via \`company_id\` in a \`POST\` request, if not found v
                 "type": "string",
               },
             },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "DeleteCompanyRequest",
+            },
             "response": {
               "docs": "Successful",
               "type": "root.DeletedCompanyObject",
@@ -3984,7 +4129,7 @@ Companies are looked up via \`company_id\` in a \`POST\` request, if not found v
                     "company_id": "1",
                     "created_at": 1719492753,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "id": "667d60918a68186f43bafd80",
                     "industry": "Software",
@@ -4039,6 +4184,15 @@ Companies are looked up via \`company_id\` in a \`POST\` request, if not found v
                 "type": "string",
               },
             },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "DetachContactFromACompanyRequest",
+            },
             "response": {
               "docs": "Successful",
               "type": "Company",
@@ -4071,7 +4225,7 @@ When using the Companies endpoint and the pages object to iterate through the re
                         "company_id": "remote_companies_scroll_2",
                         "created_at": 1719492746,
                         "custom_attributes": {
-                          "custom_attributes": "custom_attributes",
+                          "key": "value",
                         },
                         "id": "667d608a8a68186f43bafd61",
                         "industry": "Software",
@@ -4126,6 +4280,12 @@ When using the Companies endpoint and the pages object to iterate through the re
             "pagination": undefined,
             "path": "/companies/list",
             "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "ListAllCompaniesRequest",
               "query-parameters": {
                 "order": {
@@ -4177,7 +4337,7 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
                         "company_id": "remote_companies_scroll_2",
                         "created_at": 1719492734,
                         "custom_attributes": {
-                          "custom_attributes": "custom_attributes",
+                          "key": "value",
                         },
                         "id": "667d607e8a68186f43bafd26",
                         "industry": "Software",
@@ -4232,6 +4392,12 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
             "pagination": undefined,
             "path": "/companies",
             "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "RetrieveCompanyRequest",
               "query-parameters": {
                 "company_id": {
@@ -4298,7 +4464,7 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
                         "company_id": "remote_companies_scroll_2",
                         "created_at": 1719492747,
                         "custom_attributes": {
-                          "custom_attributes": "custom_attributes",
+                          "key": "value",
                         },
                         "id": "667d608b8a68186f43bafd67",
                         "industry": "Software",
@@ -4354,6 +4520,12 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
             "pagination": undefined,
             "path": "/companies/scroll",
             "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "ScrollOverAllCompaniesRequest",
               "query-parameters": {
                 "scroll_param": {
@@ -4572,6 +4744,15 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
                 "type": "string",
               },
             },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "ArchiveContactRequest",
+            },
             "response": {
               "docs": "successful",
               "type": "root.ContactArchived",
@@ -4612,9 +4793,7 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
                     },
                     "created_at": 1719492784,
                     "custom_attributes": {
-                      "custom_attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "email": "joebloggs@intercom.io",
                     "email_domain": "example.com",
@@ -4693,6 +4872,13 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
             "path": "/contacts",
             "request": {
               "body": "root.CreateContactRequestTwo",
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "CreateContactRequest",
             },
             "response": {
               "docs": "successful",
@@ -4730,6 +4916,15 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
                 "docs": "id",
                 "type": "string",
               },
+            },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "DeleteContactRequest",
             },
             "response": {
               "docs": "successful",
@@ -4773,6 +4968,9 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
                           "url": "/contacts/5ba682d23d7cf92bef87bfd4/companies",
                         },
                         "created_at": 1571672154,
+                        "custom_attributes": {
+                          "key": "value",
+                        },
                         "email": "joe@example.com",
                         "email_domain": "example.com",
                         "external_id": "f3b87a2e09d514c6c2e79b9a",
@@ -4833,6 +5031,15 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
             "method": "GET",
             "pagination": undefined,
             "path": "/contacts",
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "ListContactsRequest",
+            },
             "response": {
               "docs": "successful",
               "type": "root.ContactList",
@@ -4874,9 +5081,7 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
                     },
                     "created_at": 1719492780,
                     "custom_attributes": {
-                      "custom_attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "email": "joe@bloggs.com",
                     "email_domain": "example.com",
@@ -4970,7 +5175,12 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "MergeContactsRequest",
               "query-parameters": undefined,
             },
@@ -5126,6 +5336,9 @@ The table below shows the operators you can use to define how you want to search
                           "url": "/contacts/5ba682d23d7cf92bef87bfd4/companies",
                         },
                         "created_at": 1571672154,
+                        "custom_attributes": {
+                          "key": "value",
+                        },
                         "email": "joe@example.com",
                         "email_domain": "example.com",
                         "external_id": "f3b87a2e09d514c6c2e79b9a",
@@ -5188,6 +5401,13 @@ The table below shows the operators you can use to define how you want to search
             "path": "/contacts/search",
             "request": {
               "body": "root.SearchRequest",
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "SearchContactsRequest",
             },
             "response": {
               "docs": "successful",
@@ -5229,9 +5449,7 @@ The table below shows the operators you can use to define how you want to search
                     },
                     "created_at": 1719492777,
                     "custom_attributes": {
-                      "custom_attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "email": "joe@bloggs.com",
                     "email_domain": "example.com",
@@ -5314,6 +5532,15 @@ The table below shows the operators you can use to define how you want to search
                 "type": "string",
               },
             },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "ShowContactRequest",
+            },
             "response": {
               "docs": "successful",
               "type": "Contact",
@@ -5347,6 +5574,15 @@ The table below shows the operators you can use to define how you want to search
                 "docs": "id",
                 "type": "string",
               },
+            },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "UnarchiveContactRequest",
             },
             "response": {
               "docs": "successful",
@@ -5392,9 +5628,7 @@ The table below shows the operators you can use to define how you want to search
                     },
                     "created_at": 1719492776,
                     "custom_attributes": {
-                      "custom_attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "email": "joebloggs@intercom.io",
                     "email_domain": "example.com",
@@ -5548,7 +5782,12 @@ The table below shows the operators you can use to define how you want to search
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "UpdateContactRequest",
               "query-parameters": undefined,
             },
@@ -5624,6 +5863,15 @@ The table below shows the operators you can use to define how you want to search
                 "type": "string",
               },
             },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "ListCompaniesForAContactRequest",
+            },
             "response": {
               "docs": "successful",
               "type": "root.ContactAttachedCompanies",
@@ -5669,6 +5917,15 @@ The table below shows the operators you can use to define how you want to search
                 "docs": "The unique identifier for the contact which is given by Intercom",
                 "type": "string",
               },
+            },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "ListSegmentsForAContactRequest",
             },
             "response": {
               "docs": "successful",
@@ -5756,6 +6013,15 @@ The data property will show a combined list of:
                 "type": "string",
               },
             },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "ListSubscriptionsForAContactRequest",
+            },
             "response": {
               "docs": "Successful",
               "type": "root.SubscriptionTypeList",
@@ -5801,6 +6067,15 @@ The data property will show a combined list of:
                 "docs": "The unique identifier for the contact which is given by Intercom",
                 "type": "string",
               },
+            },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "ListTagsForAContactRequest",
             },
             "response": {
               "docs": "successful",
@@ -6187,7 +6462,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                     },
                     "created_at": 1663597223,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -6362,7 +6637,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                     },
                     "created_at": 1663597223,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -6486,7 +6761,12 @@ If you add a contact via the email parameter and there is no user/lead found on 
                   "customer": "optional<AttachContactToConversationRequestCustomer>",
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "AttachContactToConversationRequest",
               "query-parameters": undefined,
             },
@@ -6598,7 +6878,7 @@ It is not possible to use this endpoint with Workflows.
                     },
                     "created_at": 1719492880,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -6710,6 +6990,15 @@ It is not possible to use this endpoint with Workflows.
                 "type": "string",
               },
             },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "AutoAssignConversationRequest",
+            },
             "response": {
               "docs": "Assign a conversation using assignment rules",
               "type": "Conversation",
@@ -6762,7 +7051,7 @@ It is not possible to use this endpoint with Workflows.
                     "snoozed_until": 1663597260,
                     "team_assignee_id": "0",
                     "ticket_attributes": {
-                      "ticket_attributes": "ticket_attributes",
+                      "key": "value",
                     },
                     "ticket_id": "37",
                     "ticket_parts": {
@@ -6886,7 +7175,7 @@ It is not possible to use this endpoint with Workflows.
                     "snoozed_until": 1663597260,
                     "team_assignee_id": "0",
                     "ticket_attributes": {
-                      "ticket_attributes": "ticket_attributes",
+                      "key": "value",
                     },
                     "ticket_id": "37",
                     "ticket_parts": {
@@ -6991,7 +7280,12 @@ It is not possible to use this endpoint with Workflows.
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "ConvertConversationToTicketRequest",
               "query-parameters": undefined,
             },
@@ -7076,7 +7370,12 @@ This will return the Message model that has been created.
                   "from": "CreateConversationRequestFrom",
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "CreateConversationRequest",
               "query-parameters": undefined,
             },
@@ -7173,7 +7472,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                     },
                     "created_at": 1663597223,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -7346,7 +7645,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                     },
                     "created_at": 1663597223,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -7519,7 +7818,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                     },
                     "created_at": 1663597223,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -7692,7 +7991,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                     },
                     "created_at": 1663597223,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -7817,7 +8116,12 @@ If you add a contact via the email parameter and there is no user/lead found on 
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "DetachContactFromConversationRequest",
               "query-parameters": undefined,
             },
@@ -7866,6 +8170,12 @@ You can optionally request the result page size and the cursor to start after to
             "pagination": undefined,
             "path": "/conversations",
             "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "ListConversationsRequest",
               "query-parameters": {
                 "per_page": {
@@ -7908,6 +8218,13 @@ You can optionally request the result page size and the cursor to start after to
             },
             "request": {
               "body": "ManageConversationRequestBody",
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "ManageConversationRequest",
             },
             "response": {
               "docs": "Assign a conversation",
@@ -8018,7 +8335,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492938,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492939,
@@ -8209,7 +8526,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492938,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492939,
@@ -8317,6 +8634,13 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
             "path": "/conversations/redact",
             "request": {
               "body": "root.RedactConversationRequest",
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "RedactConversationRequest",
             },
             "response": {
               "docs": "Redact a conversation part",
@@ -8426,7 +8750,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492849,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492850,
@@ -8621,7 +8945,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492849,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492850,
@@ -8816,7 +9140,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492849,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492850,
@@ -9011,7 +9335,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492849,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492850,
@@ -9206,7 +9530,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492849,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492850,
@@ -9412,7 +9736,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492852,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -9607,7 +9931,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492855,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492856,
@@ -9721,6 +10045,13 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
             },
             "request": {
               "body": "root.ReplyConversationRequest",
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "ReplyConversationRequest",
             },
             "response": {
               "docs": "User last conversation reply",
@@ -9816,7 +10147,7 @@ For AI agent conversation metadata, please note that you need to have the agent 
                     },
                     "created_at": 1719492825,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -9929,6 +10260,12 @@ For AI agent conversation metadata, please note that you need to have the agent 
               },
             },
             "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "RetrieveConversationRequest",
               "query-parameters": {
                 "display_as": {
@@ -10088,7 +10425,7 @@ The table below shows the operators you can use to define how you want to search
                         },
                         "created_at": 1719492843,
                         "custom_attributes": {
-                          "custom_attributes": "custom_attributes",
+                          "key": "value",
                         },
                         "first_contact_reply": {
                           "created_at": 1663597223,
@@ -10202,6 +10539,13 @@ The table below shows the operators you can use to define how you want to search
             "path": "/conversations/search",
             "request": {
               "body": "root.SearchRequest",
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "SearchConversationsRequest",
             },
             "response": {
               "docs": "successful",
@@ -10691,7 +11035,12 @@ If you want to reply to a coveration or take an action such as assign, unassign,
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "UpdateConversationRequest",
               "query-parameters": {
                 "display_as": {
@@ -11190,7 +11539,12 @@ If you want to reply to a coveration or take an action such as assign, unassign,
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "CreateDataAttributeRequest",
               "query-parameters": undefined,
             },
@@ -11596,6 +11950,12 @@ If you want to reply to a coveration or take an action such as assign, unassign,
             "pagination": undefined,
             "path": "/data_attributes",
             "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "LisDataAttributesRequest",
               "query-parameters": {
                 "include_archived": {
@@ -11817,7 +12177,12 @@ You can update a data attribute.
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "UpdateDataAttributeRequest",
               "query-parameters": undefined,
             },
@@ -12044,6 +12409,13 @@ Duplicated events are responded to using the normal \`202 Accepted\` code - an e
             "path": "/events",
             "request": {
               "body": "root.CreateDataEventRequestTwo",
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "CreateDataEventRequest",
             },
           },
           "dataEventSummaries": {
@@ -12080,7 +12452,12 @@ Duplicated events are responded to using the normal \`202 Accepted\` code - an e
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "CreateDataEventSummariesRequest",
               "query-parameters": undefined,
             },
@@ -12110,6 +12487,12 @@ You can optionally define the result page size as well with the \`per_page\` par
             "pagination": undefined,
             "path": "/events",
             "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "LisDataEventsRequest",
               "query-parameters": {
                 "filter": "LisDataEventsRequestFilter",
@@ -12240,6 +12623,9 @@ You can optionally define the result page size as well with the \`per_page\` par
     },
     "dataExport.yml": {
       "docs": "Everything about your Data Exports",
+      "imports": {
+        "root": "__package__.yml",
+      },
       "service": {
         "auth": false,
         "base-path": "",
@@ -12273,6 +12659,15 @@ You can optionally define the result page size as well with the \`per_page\` par
                 "docs": "job_identifier",
                 "type": "string",
               },
+            },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "CancelDataExportRequest",
             },
             "response": {
               "docs": "successful",
@@ -12331,7 +12726,12 @@ The only parameters you need to provide are the range of dates that you want exp
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "CreateDataExportsRequest",
               "query-parameters": undefined,
             },
@@ -12367,6 +12767,15 @@ Your exported message data will be streamed continuously back down to you in a g
                 "type": "string",
               },
             },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "DownloadDataExportRequest",
+            },
           },
           "getDataExport": {
             "auth": true,
@@ -12401,6 +12810,15 @@ Your exported message data will be streamed continuously back down to you in a g
                 "docs": "job_identifier",
                 "type": "string",
               },
+            },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "GetDataExportRequest",
             },
             "response": {
               "docs": "successful",
@@ -12924,7 +13342,12 @@ Your exported message data will be streamed continuously back down to you in a g
                   "translated_content": "optional<root.GroupTranslatedContent>",
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "CreateCollectionRequest",
               "query-parameters": undefined,
             },
@@ -12964,6 +13387,15 @@ Your exported message data will be streamed continuously back down to you in a g
                 "docs": "The unique identifier for the collection which is given by Intercom.",
                 "type": "integer",
               },
+            },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "DeleteCollectionRequest",
             },
             "response": {
               "docs": "successful",
@@ -13034,6 +13466,15 @@ Collections will be returned in descending order on the \`updated_at\` attribute
             "method": "GET",
             "pagination": undefined,
             "path": "/help_center/collections",
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "ListAllCollectionsRequest",
+            },
             "response": {
               "docs": "Successful",
               "type": "root.Collections",
@@ -13070,6 +13511,15 @@ Collections will be returned in descending order on the \`updated_at\` attribute
             "method": "GET",
             "pagination": undefined,
             "path": "/help_center/help_centers",
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "ListHelpCentersRequest",
+            },
             "response": {
               "docs": "Help Centers found",
               "type": "HelpCenterList",
@@ -13304,6 +13754,15 @@ Collections will be returned in descending order on the \`updated_at\` attribute
                 "type": "integer",
               },
             },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "RetrieveCollectionRequest",
+            },
             "response": {
               "docs": "Collection found",
               "type": "Collection",
@@ -13344,6 +13803,15 @@ Collections will be returned in descending order on the \`updated_at\` attribute
                 "docs": "The unique identifier for the collection which is given by Intercom.",
                 "type": "integer",
               },
+            },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "RetrieveHelpCenterRequest",
             },
             "response": {
               "docs": "Collection found",
@@ -13819,7 +14287,12 @@ Collections will be returned in descending order on the \`updated_at\` attribute
                   "translated_content": "optional<root.GroupTranslatedContent>",
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "UpdateCollectionRequest",
               "query-parameters": undefined,
             },
@@ -14227,6 +14700,13 @@ This will return the Message model that has been created.
             "path": "/messages",
             "request": {
               "body": "root.CreateMessageRequestOne",
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "CreateMessageRequest",
             },
             "response": {
               "docs": "admin message created",
@@ -14362,6 +14842,13 @@ This will return the Message model that has been created.
             "path": "/news/news_items",
             "request": {
               "body": "root.NewsItemRequest",
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "CreateNewsItemRequest",
             },
             "response": {
               "docs": "successful",
@@ -14399,6 +14886,15 @@ This will return the Message model that has been created.
                 "docs": "The unique identifier for the news item which is given by Intercom.",
                 "type": "integer",
               },
+            },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "DeleteNewsItemRequest",
             },
             "response": {
               "docs": "successful",
@@ -14445,6 +14941,15 @@ This will return the Message model that has been created.
                 "type": "string",
               },
             },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "ListLiveNewsfeedItemsRequest",
+            },
             "response": {
               "docs": "successful",
               "type": "root.PaginatedResponse",
@@ -14481,6 +14986,15 @@ This will return the Message model that has been created.
             "method": "GET",
             "pagination": undefined,
             "path": "/news/news_items",
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "ListNewsItemsRequest",
+            },
             "response": {
               "docs": "successful",
               "type": "root.PaginatedResponse",
@@ -14517,6 +15031,15 @@ This will return the Message model that has been created.
             "method": "GET",
             "pagination": undefined,
             "path": "/news/newsfeeds",
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "ListNewsfeedsRequest",
+            },
             "response": {
               "docs": "successful",
               "type": "root.PaginatedResponse",
@@ -14576,6 +15099,15 @@ This will return the Message model that has been created.
                 "type": "integer",
               },
             },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "RetrieveNewsItemRequest",
+            },
             "response": {
               "docs": "successful",
               "type": "NewsItem",
@@ -14612,6 +15144,15 @@ This will return the Message model that has been created.
                 "docs": "The unique identifier for the news feed item which is given by Intercom.",
                 "type": "string",
               },
+            },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "RetrieveNewsfeedRequest",
             },
             "response": {
               "docs": "successful",
@@ -14723,6 +15264,13 @@ This will return the Message model that has been created.
             },
             "request": {
               "body": "root.NewsItemRequest",
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "UpdateNewsItemRequest",
             },
             "response": {
               "docs": "successful",
@@ -15063,7 +15611,12 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "CreateNoteRequest",
               "query-parameters": undefined,
             },
@@ -15174,6 +15727,15 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
                 "type": "integer",
               },
             },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "ListNotesRequest",
+            },
             "response": {
               "docs": "Successful response",
               "type": "root.NoteList",
@@ -15237,6 +15799,15 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
                 "docs": "The unique identifier of a given note",
                 "type": "integer",
               },
+            },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "RetrieveNoteRequest",
             },
             "response": {
               "docs": "Note found",
@@ -15329,9 +15900,7 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
                 "response": {
                   "body": {
                     "pages": {
-                      "pages": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "segments": [
                       {
@@ -15362,6 +15931,12 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
             "pagination": undefined,
             "path": "/segments",
             "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "ListSegmentsRequest",
               "query-parameters": {
                 "include_count": {
@@ -15410,6 +15985,15 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
                 "docs": "The unique identified of a given segment.",
                 "type": "string",
               },
+            },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "RetrieveSegmentRequest",
             },
             "response": {
               "docs": "Successful response",
@@ -15623,7 +16207,12 @@ This will return a subscription type model for the subscription type that was ad
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "AttachSubscriptionTypeToContactRequest",
               "query-parameters": undefined,
             },
@@ -15685,6 +16274,15 @@ This will return a subscription type model for the subscription type that was ad
                 "type": "string",
               },
             },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "DetachSubscriptionTypeToContactRequest",
+            },
             "response": {
               "docs": "Successful",
               "type": "SubscriptionType",
@@ -15733,6 +16331,15 @@ This will return a subscription type model for the subscription type that was ad
             "method": "GET",
             "pagination": undefined,
             "path": "/subscription_types",
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "ListSubscriptionTypesRequest",
+            },
             "response": {
               "docs": "Successful",
               "type": "root.SubscriptionTypeList",
@@ -15900,6 +16507,13 @@ If custom attributes are specified, they will be added to the user or lead's cus
             "path": "/phone_call_redirects",
             "request": {
               "body": "optional<root.CreatePhoneSwitchRequest>",
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "CreatePhoneSwitchRequest",
             },
             "response": {
               "docs": "successful",
@@ -16010,7 +16624,12 @@ If custom attributes are specified, they will be added to the user or lead's cus
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "AttachTagToContactRequest",
               "query-parameters": undefined,
             },
@@ -16095,7 +16714,12 @@ If custom attributes are specified, they will be added to the user or lead's cus
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "AttachTagToConversationRequest",
               "query-parameters": undefined,
             },
@@ -16180,7 +16804,12 @@ If custom attributes are specified, they will be added to the user or lead's cus
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "AttachTagToTicketRequest",
               "query-parameters": undefined,
             },
@@ -16300,6 +16929,13 @@ Each operation will return a tag object.
             "path": "/tags",
             "request": {
               "body": "CreateTagRequestBody",
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "CreateTagRequest",
             },
             "response": {
               "docs": "Action successful",
@@ -16330,6 +16966,15 @@ Each operation will return a tag object.
                 "docs": "The unique identifier of a given tag",
                 "type": "string",
               },
+            },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "DeleteTagRequest",
             },
           },
           "detachTagFromContact": {
@@ -16373,6 +17018,15 @@ Each operation will return a tag object.
                 "docs": "The unique identifier for the tag which is given by Intercom",
                 "type": "string",
               },
+            },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "DetachTagFromContactRequest",
             },
             "response": {
               "docs": "successful",
@@ -16477,7 +17131,12 @@ Each operation will return a tag object.
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "DetachTagFromConversationRequest",
               "query-parameters": undefined,
             },
@@ -16584,7 +17243,12 @@ Each operation will return a tag object.
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "DetachTagFromTicketRequest",
               "query-parameters": undefined,
             },
@@ -16632,6 +17296,15 @@ This will return a tag object.
                 "type": "string",
               },
             },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "FindTagRequest",
+            },
             "response": {
               "docs": "Tag found",
               "type": "Tag",
@@ -16670,6 +17343,15 @@ This will return a tag object.
             "method": "GET",
             "pagination": undefined,
             "path": "/tags",
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "ListTagsRequest",
+            },
             "response": {
               "docs": "successful",
               "type": "root.Tags",
@@ -16760,6 +17442,15 @@ This will return a tag object.
             "method": "GET",
             "pagination": undefined,
             "path": "/teams",
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "ListTeamsRequest",
+            },
             "response": {
               "docs": "successful",
               "type": "root.TeamList",
@@ -16807,6 +17498,15 @@ This will return a tag object.
                 "docs": "The unique identifier of a given team.",
                 "type": "string",
               },
+            },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "RetrieveTeamRequest",
             },
             "response": {
               "docs": "successful",
@@ -16970,7 +17670,12 @@ This will return a tag object.
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "CreateTicketTypeAttributeRequest",
               "query-parameters": undefined,
             },
@@ -17005,9 +17710,7 @@ This will return a tag object.
                     "description": "New Attribute Description",
                     "id": "215",
                     "input_options": {
-                      "multiline: true": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "name": "name",
                     "order": 0,
@@ -17101,7 +17804,12 @@ This will return a tag object.
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "UpdateTicketTypeAttributeRequest",
               "query-parameters": undefined,
             },
@@ -17176,6 +17884,9 @@ This will return a tag object.
                           "default": true,
                           "description": "Bug title.",
                           "id": "1",
+                          "input_options": {
+                            "key": "value",
+                          },
                           "name": "Title",
                           "order": 1,
                           "required_to_create": false,
@@ -17201,6 +17912,13 @@ This will return a tag object.
             "path": "/ticket_types",
             "request": {
               "body": "optional<root.CreateTicketTypeRequest>",
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "CreateTicketTypeRequest",
             },
             "response": {
               "docs": "Ticket type created",
@@ -17237,6 +17955,9 @@ This will return a tag object.
                           "default": true,
                           "description": "Bug title.",
                           "id": "1",
+                          "input_options": {
+                            "key": "value",
+                          },
                           "name": "Title",
                           "order": 1,
                           "required_to_create": false,
@@ -17265,6 +17986,15 @@ This will return a tag object.
                 "docs": "The unique identifier for the ticket type which is given by Intercom.",
                 "type": "string",
               },
+            },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "GetTicketTypeRequest",
             },
             "response": {
               "docs": "Ticket type found",
@@ -17305,6 +18035,15 @@ This will return a tag object.
             "method": "GET",
             "pagination": undefined,
             "path": "/ticket_types",
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "ListTicketTypesRequest",
+            },
             "response": {
               "docs": "successful",
               "type": "root.TicketTypeList",
@@ -17349,6 +18088,9 @@ You can update a ticket type.
                           "default": true,
                           "description": "Bug title.",
                           "id": "1",
+                          "input_options": {
+                            "key": "value",
+                          },
                           "name": "Title",
                           "order": 1,
                           "required_to_create": false,
@@ -17380,6 +18122,13 @@ You can update a ticket type.
             },
             "request": {
               "body": "optional<root.UpdateTicketTypeRequest>",
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "UpdateTicketTypeRequest",
             },
             "response": {
               "docs": "Ticket type updated",
@@ -17542,7 +18291,12 @@ You can update a ticket type.
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "CreateTicketRequest",
               "query-parameters": undefined,
             },
@@ -17664,6 +18418,15 @@ You can update a ticket type.
                 "docs": "The unique identifier for the ticket which is given by Intercom.",
                 "type": "string",
               },
+            },
+            "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "GetTicketRequest",
             },
             "response": {
               "docs": "Ticket found",
@@ -17993,6 +18756,13 @@ You can update a ticket type.
             },
             "request": {
               "body": "ReplyTicketRequestBody",
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "ReplyTicketRequest",
             },
             "response": {
               "docs": "Admin quick_reply reply",
@@ -18194,6 +18964,13 @@ The table below shows the operators you can use to define how you want to search
             "path": "/tickets/search",
             "request": {
               "body": "root.SearchRequest",
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "SearchTicketsRequest",
             },
             "response": {
               "docs": "successful",
@@ -18971,7 +19748,12 @@ The table below shows the operators you can use to define how you want to search
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "UpdateTicketRequest",
               "query-parameters": undefined,
             },
@@ -19415,9 +20197,7 @@ The table below shows the operators you can use to define how you want to search
                     },
                     "created_at": 1719493072,
                     "custom_attributes": {
-                      "custom_attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "email": "foo@bar.com",
                     "email_domain": "example.com",
@@ -19505,7 +20285,12 @@ The table below shows the operators you can use to define how you want to search
                   "visitor": "unknown",
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "ConvertVisitorRequest",
               "query-parameters": undefined,
             },
@@ -19564,7 +20349,7 @@ The table below shows the operators you can use to define how you want to search
                     },
                     "created_at": 1719493070,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "do_not_track": false,
                     "email": "",
@@ -19628,6 +20413,12 @@ The table below shows the operators you can use to define how you want to search
             "pagination": undefined,
             "path": "/visitors",
             "request": {
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
               "name": "RetrieveVisitorWithUserIdRequest",
               "query-parameters": {
                 "user_id": {
@@ -19697,7 +20488,7 @@ The table below shows the operators you can use to define how you want to search
                     },
                     "created_at": 1719493068,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "do_not_track": false,
                     "email": "",
@@ -19798,7 +20589,7 @@ The table below shows the operators you can use to define how you want to search
                     },
                     "created_at": 1719493068,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "do_not_track": false,
                     "email": "",
@@ -19863,6 +20654,13 @@ The table below shows the operators you can use to define how you want to search
             "path": "/visitors",
             "request": {
               "body": "root.UpdateVisitorRequestOne",
+              "headers": {
+                "Intercom-Version": {
+                  "name": "intercomVersion",
+                  "type": "optional<root.IntercomVersion>",
+                },
+              },
+              "name": "UpdateVisitorRequest",
             },
             "response": {
               "docs": "successful",
@@ -28350,15 +29148,6 @@ You can copy the \`icon\` property for your ticket type from [Twemoji Cheatsheet
     "error-discrimination": {
       "strategy": "status-code",
     },
-    "headers": {
-      "Intercom-Version": {
-        "name": "intercomVersion",
-        "type": "optional<root.IntercomVersion>",
-      },
-    },
-    "imports": {
-      "root": "__package__.yml",
-    },
     "name": "api",
   },
 }
@@ -31727,6 +32516,9 @@ You can view the currently authorised admin along with the embedded app object (
                           "url": "/contacts/5ba682d23d7cf92bef87bfd4/companies",
                         },
                         "created_at": 1571672154,
+                        "custom_attributes": {
+                          "key": "value",
+                        },
                         "email": "joe@example.com",
                         "email_domain": "example.com",
                         "external_id": "f3b87a2e09d514c6c2e79b9a",
@@ -31864,7 +32656,7 @@ You can view the currently authorised admin along with the embedded app object (
                     "company_id": "1",
                     "created_at": 1719492736,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "id": "667d60808a68186f43bafd31",
                     "industry": "Software",
@@ -31945,7 +32737,7 @@ You can view the currently authorised admin along with the embedded app object (
                     "company_id": "1",
                     "created_at": 1719492738,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "id": "667d60828a68186f43bafd3b",
                     "industry": "Software",
@@ -32025,7 +32817,7 @@ You can view the currently authorised admin along with the embedded app object (
                     "company_id": "1",
                     "created_at": 1719492749,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "id": "667d608d8a68186f43bafd70",
                     "industry": "Software",
@@ -32080,7 +32872,7 @@ You can view the currently authorised admin along with the embedded app object (
                     "company_id": "1",
                     "created_at": 1719492749,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "id": "667d608d8a68186f43bafd70",
                     "industry": "Software",
@@ -32135,7 +32927,7 @@ You can view the currently authorised admin along with the embedded app object (
                     "company_id": "1",
                     "created_at": 1719492749,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "id": "667d608d8a68186f43bafd70",
                     "industry": "Software",
@@ -32348,7 +33140,7 @@ Companies are looked up via \`company_id\` in a \`POST\` request, if not found v
                     "company_id": "1",
                     "created_at": 1719492753,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "id": "667d60918a68186f43bafd80",
                     "industry": "Software",
@@ -32435,7 +33227,7 @@ When using the Companies endpoint and the pages object to iterate through the re
                         "company_id": "remote_companies_scroll_2",
                         "created_at": 1719492746,
                         "custom_attributes": {
-                          "custom_attributes": "custom_attributes",
+                          "key": "value",
                         },
                         "id": "667d608a8a68186f43bafd61",
                         "industry": "Software",
@@ -32541,7 +33333,7 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
                         "company_id": "remote_companies_scroll_2",
                         "created_at": 1719492734,
                         "custom_attributes": {
-                          "custom_attributes": "custom_attributes",
+                          "key": "value",
                         },
                         "id": "667d607e8a68186f43bafd26",
                         "industry": "Software",
@@ -32662,7 +33454,7 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
                         "company_id": "remote_companies_scroll_2",
                         "created_at": 1719492747,
                         "custom_attributes": {
-                          "custom_attributes": "custom_attributes",
+                          "key": "value",
                         },
                         "id": "667d608b8a68186f43bafd67",
                         "industry": "Software",
@@ -32976,9 +33768,7 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
                     },
                     "created_at": 1719492784,
                     "custom_attributes": {
-                      "custom_attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "email": "joebloggs@intercom.io",
                     "email_domain": "example.com",
@@ -33137,6 +33927,9 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
                           "url": "/contacts/5ba682d23d7cf92bef87bfd4/companies",
                         },
                         "created_at": 1571672154,
+                        "custom_attributes": {
+                          "key": "value",
+                        },
                         "email": "joe@example.com",
                         "email_domain": "example.com",
                         "external_id": "f3b87a2e09d514c6c2e79b9a",
@@ -33238,9 +34031,7 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
                     },
                     "created_at": 1719492780,
                     "custom_attributes": {
-                      "custom_attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "email": "joe@bloggs.com",
                     "email_domain": "example.com",
@@ -33490,6 +34281,9 @@ The table below shows the operators you can use to define how you want to search
                           "url": "/contacts/5ba682d23d7cf92bef87bfd4/companies",
                         },
                         "created_at": 1571672154,
+                        "custom_attributes": {
+                          "key": "value",
+                        },
                         "email": "joe@example.com",
                         "email_domain": "example.com",
                         "external_id": "f3b87a2e09d514c6c2e79b9a",
@@ -33593,9 +34387,7 @@ The table below shows the operators you can use to define how you want to search
                     },
                     "created_at": 1719492777,
                     "custom_attributes": {
-                      "custom_attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "email": "joe@bloggs.com",
                     "email_domain": "example.com",
@@ -33756,9 +34548,7 @@ The table below shows the operators you can use to define how you want to search
                     },
                     "created_at": 1719492776,
                     "custom_attributes": {
-                      "custom_attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "email": "joebloggs@intercom.io",
                     "email_domain": "example.com",
@@ -34551,7 +35341,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                     },
                     "created_at": 1663597223,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -34726,7 +35516,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                     },
                     "created_at": 1663597223,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -34962,7 +35752,7 @@ It is not possible to use this endpoint with Workflows.
                     },
                     "created_at": 1719492880,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -35126,7 +35916,7 @@ It is not possible to use this endpoint with Workflows.
                     "snoozed_until": 1663597260,
                     "team_assignee_id": "0",
                     "ticket_attributes": {
-                      "ticket_attributes": "ticket_attributes",
+                      "key": "value",
                     },
                     "ticket_id": "37",
                     "ticket_parts": {
@@ -35250,7 +36040,7 @@ It is not possible to use this endpoint with Workflows.
                     "snoozed_until": 1663597260,
                     "team_assignee_id": "0",
                     "ticket_attributes": {
-                      "ticket_attributes": "ticket_attributes",
+                      "key": "value",
                     },
                     "ticket_id": "37",
                     "ticket_parts": {
@@ -35537,7 +36327,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                     },
                     "created_at": 1663597223,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -35710,7 +36500,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                     },
                     "created_at": 1663597223,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -35883,7 +36673,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                     },
                     "created_at": 1663597223,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -36056,7 +36846,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                     },
                     "created_at": 1663597223,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -36382,7 +37172,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492938,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492939,
@@ -36573,7 +37363,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492938,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492939,
@@ -36790,7 +37580,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492849,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492850,
@@ -36985,7 +37775,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492849,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492850,
@@ -37180,7 +37970,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492849,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492850,
@@ -37375,7 +38165,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492849,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492850,
@@ -37570,7 +38360,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492849,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492850,
@@ -37776,7 +38566,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492852,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -37971,7 +38761,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492855,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492856,
@@ -38180,7 +38970,7 @@ For AI agent conversation metadata, please note that you need to have the agent 
                     },
                     "created_at": 1719492825,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -38452,7 +39242,7 @@ The table below shows the operators you can use to define how you want to search
                         },
                         "created_at": 1719492843,
                         "custom_attributes": {
-                          "custom_attributes": "custom_attributes",
+                          "key": "value",
                         },
                         "first_contact_reply": {
                           "created_at": 1663597223,
@@ -43693,9 +44483,7 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
                 "response": {
                   "body": {
                     "pages": {
-                      "pages": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "segments": [
                       {
@@ -45369,9 +46157,7 @@ This will return a tag object.
                     "description": "New Attribute Description",
                     "id": "215",
                     "input_options": {
-                      "multiline: true": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "name": "name",
                     "order": 0,
@@ -45540,6 +46326,9 @@ This will return a tag object.
                           "default": true,
                           "description": "Bug title.",
                           "id": "1",
+                          "input_options": {
+                            "key": "value",
+                          },
                           "name": "Title",
                           "order": 1,
                           "required_to_create": false,
@@ -45601,6 +46390,9 @@ This will return a tag object.
                           "default": true,
                           "description": "Bug title.",
                           "id": "1",
+                          "input_options": {
+                            "key": "value",
+                          },
                           "name": "Title",
                           "order": 1,
                           "required_to_create": false,
@@ -45713,6 +46505,9 @@ You can update a ticket type.
                           "default": true,
                           "description": "Bug title.",
                           "id": "1",
+                          "input_options": {
+                            "key": "value",
+                          },
                           "name": "Title",
                           "order": 1,
                           "required_to_create": false,
@@ -47779,9 +48574,7 @@ The table below shows the operators you can use to define how you want to search
                     },
                     "created_at": 1719493072,
                     "custom_attributes": {
-                      "custom_attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "email": "foo@bar.com",
                     "email_domain": "example.com",
@@ -47928,7 +48721,7 @@ The table below shows the operators you can use to define how you want to search
                     },
                     "created_at": 1719493070,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "do_not_track": false,
                     "email": "",
@@ -48061,7 +48854,7 @@ The table below shows the operators you can use to define how you want to search
                     },
                     "created_at": 1719493068,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "do_not_track": false,
                     "email": "",
@@ -48162,7 +48955,7 @@ The table below shows the operators you can use to define how you want to search
                     },
                     "created_at": 1719493068,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "value",
                     },
                     "do_not_track": false,
                     "email": "",

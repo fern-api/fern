@@ -4300,25 +4300,17 @@ exports[`open api parser hathora parse open api 1`] = `
                       {
                         "key": {
                           "type": "string",
-                          "value": "initialConfig",
+                          "value": "key",
                         },
                         "value": {
-                          "type": "map",
-                          "value": [
-                            {
-                              "key": {
-                                "type": "string",
-                                "value": "key",
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "value",
-                                },
-                              },
+                          "type": "unknown",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "value",
                             },
-                          ],
+                          },
                         },
                       },
                     ],
@@ -4347,25 +4339,17 @@ exports[`open api parser hathora parse open api 1`] = `
                       {
                         "key": {
                           "type": "string",
-                          "value": "state",
+                          "value": "key",
                         },
                         "value": {
-                          "type": "map",
-                          "value": [
-                            {
-                              "key": {
-                                "type": "string",
-                                "value": "key",
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "value",
-                                },
-                              },
+                          "type": "unknown",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "value",
                             },
-                          ],
+                          },
                         },
                       },
                     ],
@@ -4664,7 +4648,24 @@ exports[`open api parser hathora parse open api 1`] = `
             "properties": {
               "initialConfig": {
                 "type": "map",
-                "value": [],
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "key",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
+                        },
+                      },
+                    },
+                  },
+                ],
               },
               "region": {
                 "type": "enum",
@@ -4702,25 +4703,17 @@ exports[`open api parser hathora parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "initialConfig",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -4749,25 +4742,17 @@ exports[`open api parser hathora parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "state",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -5101,7 +5086,24 @@ exports[`open api parser hathora parse open api 1`] = `
             "properties": {
               "initialConfig": {
                 "type": "map",
-                "value": [],
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "key",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
+                        },
+                      },
+                    },
+                  },
+                ],
               },
               "region": {
                 "type": "enum",
@@ -5139,25 +5141,17 @@ exports[`open api parser hathora parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "initialConfig",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -5186,25 +5180,17 @@ exports[`open api parser hathora parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "state",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -5538,7 +5524,24 @@ exports[`open api parser hathora parse open api 1`] = `
             "properties": {
               "initialConfig": {
                 "type": "map",
-                "value": [],
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "key",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
+                        },
+                      },
+                    },
+                  },
+                ],
               },
               "region": {
                 "type": "enum",
@@ -5576,25 +5579,17 @@ exports[`open api parser hathora parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "initialConfig",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -5623,25 +5618,17 @@ exports[`open api parser hathora parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "state",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -5975,7 +5962,24 @@ exports[`open api parser hathora parse open api 1`] = `
             "properties": {
               "initialConfig": {
                 "type": "map",
-                "value": [],
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "key",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
+                        },
+                      },
+                    },
+                  },
+                ],
               },
               "region": {
                 "type": "enum",
@@ -6017,25 +6021,17 @@ exports[`open api parser hathora parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "initialConfig",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -6064,25 +6060,17 @@ exports[`open api parser hathora parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "state",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -6380,25 +6368,17 @@ exports[`open api parser hathora parse open api 1`] = `
                       {
                         "key": {
                           "type": "string",
-                          "value": "initialConfig",
+                          "value": "key",
                         },
                         "value": {
-                          "type": "map",
-                          "value": [
-                            {
-                              "key": {
-                                "type": "string",
-                                "value": "key",
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "value",
-                                },
-                              },
+                          "type": "unknown",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "value",
                             },
-                          ],
+                          },
                         },
                       },
                     ],
@@ -6427,25 +6407,17 @@ exports[`open api parser hathora parse open api 1`] = `
                       {
                         "key": {
                           "type": "string",
-                          "value": "state",
+                          "value": "key",
                         },
                         "value": {
-                          "type": "map",
-                          "value": [
-                            {
-                              "key": {
-                                "type": "string",
-                                "value": "key",
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "value",
-                                },
-                              },
+                          "type": "unknown",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "value",
                             },
-                          ],
+                          },
                         },
                       },
                     ],
@@ -6631,25 +6603,17 @@ exports[`open api parser hathora parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "initialConfig",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -6678,25 +6642,17 @@ exports[`open api parser hathora parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "state",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -6859,7 +6815,24 @@ exports[`open api parser hathora parse open api 1`] = `
             "properties": {
               "state": {
                 "type": "map",
-                "value": [],
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "key",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
+                        },
+                      },
+                    },
+                  },
+                ],
               },
             },
             "type": "object",
@@ -6893,25 +6866,17 @@ exports[`open api parser hathora parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "initialConfig",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -6940,25 +6905,17 @@ exports[`open api parser hathora parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "state",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],

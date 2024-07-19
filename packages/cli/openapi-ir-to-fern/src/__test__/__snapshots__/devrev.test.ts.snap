@@ -732,7 +732,9 @@ organization.
                         },
                         "email": "email",
                         "external_identities": [
-                          {},
+                          {
+                            "key": "value",
+                          },
                         ],
                         "full_name": "full_name",
                         "id": "id",
@@ -820,7 +822,9 @@ used.
                       },
                       "email": "email",
                       "external_identities": [
-                        {},
+                        {
+                          "key": "value",
+                        },
                       ],
                       "full_name": "full_name",
                       "id": "id",
@@ -896,9 +900,7 @@ used.
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -1166,9 +1168,7 @@ records.
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -1541,9 +1541,7 @@ permitted.
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -2008,9 +2006,7 @@ response.
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -2268,9 +2264,7 @@ won't receive any object events until successfully verified.
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -7202,7 +7196,9 @@ organization.
                         },
                         "email": "email",
                         "external_identities": [
-                          {},
+                          {
+                            "key": "value",
+                          },
                         ],
                         "full_name": "full_name",
                         "id": "id",
@@ -7290,7 +7286,9 @@ used.
                       },
                       "email": "email",
                       "external_identities": [
-                        {},
+                        {
+                          "key": "value",
+                        },
                       ],
                       "full_name": "full_name",
                       "id": "id",
@@ -7366,9 +7364,7 @@ used.
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -7636,9 +7632,7 @@ records.
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -8011,9 +8005,7 @@ permitted.
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -8478,9 +8470,7 @@ response.
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -8738,9 +8728,7 @@ won't receive any object events until successfully verified.
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },

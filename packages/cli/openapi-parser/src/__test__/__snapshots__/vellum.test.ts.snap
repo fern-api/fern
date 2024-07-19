@@ -395,25 +395,17 @@ Creates a new document index.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "indexing_config",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -599,25 +591,17 @@ Creates a new document index.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "indexing_config",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -817,25 +801,17 @@ Creates a new document index.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "indexing_config",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -1357,7 +1333,24 @@ Generate a completion using a previously defined deployment.
                     "properties": {
                       "input_values": {
                         "type": "map",
-                        "value": [],
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "key",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          },
+                        ],
                       },
                     },
                     "type": "object",
@@ -1953,7 +1946,24 @@ Compiles the prompt backing the model version using the provided input values.",
             "properties": {
               "input_values": {
                 "type": "map",
-                "value": [],
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "key",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
+                        },
+                      },
+                    },
+                  },
+                ],
               },
             },
             "type": "object",
@@ -3260,7 +3270,24 @@ or overwritten with default values.",
               },
               "input_values": {
                 "type": "map",
-                "value": [],
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "key",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
+                        },
+                      },
+                    },
+                  },
+                ],
               },
             },
             "type": "object",
@@ -3285,25 +3312,17 @@ or overwritten with default values.",
                   {
                     "key": {
                       "type": "string",
-                      "value": "input_values",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],

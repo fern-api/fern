@@ -17,7 +17,7 @@ exports[`open api parser enum-casing docs 1`] = `
               "response": {
                 "body": {
                   "custom_fields": {
-                    "custom_fields": "custom_fields",
+                    "key": "value",
                   },
                   "message": "message",
                   "status": "success",
@@ -91,7 +91,7 @@ exports[`open api parser enum-casing simple 1`] = `
               "response": {
                 "body": {
                   "custom_fields": {
-                    "custom_fields": "custom_fields",
+                    "key": "value",
                   },
                   "message": "message",
                   "status": "success",

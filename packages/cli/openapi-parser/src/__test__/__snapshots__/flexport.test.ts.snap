@@ -24101,6 +24101,27 @@ Other details about this invoice",
                             },
                             "type": "object",
                           },
+                          "metadata": {
+                            "type": "map",
+                            "value": [
+                              {
+                                "key": {
+                                  "type": "string",
+                                  "value": "key",
+                                },
+                                "value": {
+                                  "type": "unknown",
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "value",
+                                    },
+                                  },
+                                },
+                              },
+                            ],
+                          },
                           "name": {
                             "type": "primitive",
                             "value": {
@@ -25599,25 +25620,17 @@ Other details about this invoice",
                       {
                         "key": {
                           "type": "string",
-                          "value": "metadata",
+                          "value": "key",
                         },
                         "value": {
-                          "type": "map",
-                          "value": [
-                            {
-                              "key": {
-                                "type": "string",
-                                "value": "key",
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "value",
-                                },
-                              },
+                          "type": "unknown",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "value",
                             },
-                          ],
+                          },
                         },
                       },
                     ],
@@ -32096,6 +32109,27 @@ Other details about this invoice",
                               "value": "abdef123",
                             },
                           },
+                          "metadata": {
+                            "type": "map",
+                            "value": [
+                              {
+                                "key": {
+                                  "type": "string",
+                                  "value": "key",
+                                },
+                                "value": {
+                                  "type": "unknown",
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "value",
+                                    },
+                                  },
+                                },
+                              },
+                            ],
+                          },
                           "name": {
                             "type": "primitive",
                             "value": {
@@ -33115,25 +33149,17 @@ Other details about this invoice",
                       {
                         "key": {
                           "type": "string",
-                          "value": "metadata",
+                          "value": "key",
                         },
                         "value": {
-                          "type": "map",
-                          "value": [
-                            {
-                              "key": {
-                                "type": "string",
-                                "value": "key",
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "value",
-                                },
-                              },
+                          "type": "unknown",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "value",
                             },
-                          ],
+                          },
                         },
                       },
                     ],
@@ -33746,25 +33772,17 @@ Other details about this invoice",
                       {
                         "key": {
                           "type": "string",
-                          "value": "metadata",
+                          "value": "key",
                         },
                         "value": {
-                          "type": "map",
-                          "value": [
-                            {
-                              "key": {
-                                "type": "string",
-                                "value": "key",
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "value",
-                                },
-                              },
+                          "type": "unknown",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "value",
                             },
-                          ],
+                          },
                         },
                       },
                     ],
@@ -34389,25 +34407,17 @@ Other details about this invoice",
                       {
                         "key": {
                           "type": "string",
-                          "value": "metadata",
+                          "value": "key",
                         },
                         "value": {
-                          "type": "map",
-                          "value": [
-                            {
-                              "key": {
-                                "type": "string",
-                                "value": "key",
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "value",
-                                },
-                              },
+                          "type": "unknown",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "value",
                             },
-                          ],
+                          },
                         },
                       },
                     ],
@@ -37244,6 +37254,27 @@ Other details about this invoice",
                               "value": "2019-02-16T00:00:00.000Z",
                             },
                           },
+                          "metadata": {
+                            "type": "map",
+                            "value": [
+                              {
+                                "key": {
+                                  "type": "string",
+                                  "value": "key",
+                                },
+                                "value": {
+                                  "type": "unknown",
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "value",
+                                    },
+                                  },
+                                },
+                              },
+                            ],
+                          },
                           "seal_number": {
                             "type": "primitive",
                             "value": {
@@ -38315,25 +38346,17 @@ Other details about this invoice",
                       {
                         "key": {
                           "type": "string",
-                          "value": "metadata",
+                          "value": "key",
                         },
                         "value": {
-                          "type": "map",
-                          "value": [
-                            {
-                              "key": {
-                                "type": "string",
-                                "value": "key",
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "value",
-                                },
-                              },
+                          "type": "unknown",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "value",
                             },
-                          ],
+                          },
                         },
                       },
                     ],
@@ -55157,6 +55180,27 @@ Other details about this invoice",
                             },
                             "type": "object",
                           },
+                          "metadata": {
+                            "type": "map",
+                            "value": [
+                              {
+                                "key": {
+                                  "type": "string",
+                                  "value": "key",
+                                },
+                                "value": {
+                                  "type": "unknown",
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "value",
+                                    },
+                                  },
+                                },
+                              },
+                            ],
+                          },
                           "name": {
                             "type": "primitive",
                             "value": {
@@ -58215,25 +58259,17 @@ Other details about this invoice",
                       {
                         "key": {
                           "type": "string",
-                          "value": "metadata",
+                          "value": "key",
                         },
                         "value": {
-                          "type": "map",
-                          "value": [
-                            {
-                              "key": {
-                                "type": "string",
-                                "value": "key",
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "value",
-                                },
-                              },
+                          "type": "unknown",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "value",
                             },
-                          ],
+                          },
                         },
                       },
                     ],

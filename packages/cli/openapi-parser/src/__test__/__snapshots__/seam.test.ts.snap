@@ -7349,13 +7349,13 @@ exports[`seam seam parse open api 1`] = `
                       {
                         "key": {
                           "type": "string",
-                          "value": "custom_metadata",
+                          "value": "key",
                         },
                         "value": {
                           "type": "primitive",
                           "value": {
                             "type": "string",
-                            "value": "custom_metadata",
+                            "value": "value",
                           },
                         },
                       },
@@ -8786,13 +8786,13 @@ exports[`seam seam parse open api 1`] = `
                       {
                         "key": {
                           "type": "string",
-                          "value": "custom_metadata",
+                          "value": "key",
                         },
                         "value": {
                           "type": "primitive",
                           "value": {
                             "type": "string",
-                            "value": "custom_metadata",
+                            "value": "value",
                           },
                         },
                       },
@@ -9119,13 +9119,13 @@ exports[`seam seam parse open api 1`] = `
                           {
                             "key": {
                               "type": "string",
-                              "value": "custom_metadata",
+                              "value": "key",
                             },
                             "value": {
                               "type": "primitive",
                               "value": {
                                 "type": "string",
-                                "value": "custom_metadata",
+                                "value": "value",
                               },
                             },
                           },
@@ -9754,13 +9754,13 @@ exports[`seam seam parse open api 1`] = `
                       {
                         "key": {
                           "type": "string",
-                          "value": "custom_metadata",
+                          "value": "key",
                         },
                         "value": {
                           "type": "primitive",
                           "value": {
                             "type": "string",
-                            "value": "custom_metadata",
+                            "value": "value",
                           },
                         },
                       },
@@ -10118,13 +10118,13 @@ exports[`seam seam parse open api 1`] = `
                           {
                             "key": {
                               "type": "string",
-                              "value": "custom_metadata",
+                              "value": "key",
                             },
                             "value": {
                               "type": "primitive",
                               "value": {
                                 "type": "string",
-                                "value": "custom_metadata",
+                                "value": "value",
                               },
                             },
                           },
@@ -10463,13 +10463,13 @@ exports[`seam seam parse open api 1`] = `
                       {
                         "key": {
                           "type": "string",
-                          "value": "custom_metadata",
+                          "value": "key",
                         },
                         "value": {
                           "type": "primitive",
                           "value": {
                             "type": "string",
-                            "value": "custom_metadata",
+                            "value": "value",
                           },
                         },
                       },
@@ -11119,13 +11119,13 @@ exports[`seam seam parse open api 1`] = `
                       {
                         "key": {
                           "type": "string",
-                          "value": "custom_metadata",
+                          "value": "key",
                         },
                         "value": {
                           "type": "primitive",
                           "value": {
                             "type": "string",
-                            "value": "custom_metadata",
+                            "value": "value",
                           },
                         },
                       },
@@ -12615,13 +12615,13 @@ exports[`seam seam parse open api 1`] = `
                           {
                             "key": {
                               "type": "string",
-                              "value": "custom_metadata",
+                              "value": "key",
                             },
                             "value": {
                               "type": "primitive",
                               "value": {
                                 "type": "string",
-                                "value": "custom_metadata",
+                                "value": "value",
                               },
                             },
                           },
@@ -18205,13 +18205,13 @@ exports[`seam seam parse open api 1`] = `
                       {
                         "key": {
                           "type": "string",
-                          "value": "custom_metadata",
+                          "value": "key",
                         },
                         "value": {
                           "type": "primitive",
                           "value": {
                             "type": "string",
-                            "value": "custom_metadata",
+                            "value": "value",
                           },
                         },
                       },
@@ -19481,13 +19481,13 @@ exports[`seam seam parse open api 1`] = `
                       {
                         "key": {
                           "type": "string",
-                          "value": "custom_metadata",
+                          "value": "key",
                         },
                         "value": {
                           "type": "primitive",
                           "value": {
                             "type": "string",
-                            "value": "custom_metadata",
+                            "value": "value",
                           },
                         },
                       },
@@ -20994,13 +20994,13 @@ exports[`seam seam parse open api 1`] = `
                           {
                             "key": {
                               "type": "string",
-                              "value": "custom_metadata",
+                              "value": "key",
                             },
                             "value": {
                               "type": "primitive",
                               "value": {
                                 "type": "string",
-                                "value": "custom_metadata",
+                                "value": "value",
                               },
                             },
                           },
@@ -21231,13 +21231,13 @@ exports[`seam seam parse open api 1`] = `
                           {
                             "key": {
                               "type": "string",
-                              "value": "custom_metadata",
+                              "value": "key",
                             },
                             "value": {
                               "type": "primitive",
                               "value": {
                                 "type": "string",
-                                "value": "custom_metadata",
+                                "value": "value",
                               },
                             },
                           },
@@ -24712,13 +24712,13 @@ exports[`seam seam parse open api 1`] = `
                           {
                             "key": {
                               "type": "string",
-                              "value": "custom_metadata",
+                              "value": "key",
                             },
                             "value": {
                               "type": "primitive",
                               "value": {
                                 "type": "string",
-                                "value": "custom_metadata",
+                                "value": "value",
                               },
                             },
                           },
@@ -25412,13 +25412,13 @@ exports[`seam seam parse open api 1`] = `
                       {
                         "key": {
                           "type": "string",
-                          "value": "custom_metadata",
+                          "value": "key",
                         },
                         "value": {
                           "type": "primitive",
                           "value": {
                             "type": "string",
-                            "value": "custom_metadata",
+                            "value": "value",
                           },
                         },
                       },
@@ -27612,13 +27612,13 @@ exports[`seam seam parse open api 1`] = `
                           {
                             "key": {
                               "type": "string",
-                              "value": "custom_metadata",
+                              "value": "key",
                             },
                             "value": {
                               "type": "primitive",
                               "value": {
                                 "type": "string",
-                                "value": "custom_metadata",
+                                "value": "value",
                               },
                             },
                           },
@@ -32571,13 +32571,13 @@ exports[`seam seam parse open api 1`] = `
                           {
                             "key": {
                               "type": "string",
-                              "value": "custom_metadata",
+                              "value": "key",
                             },
                             "value": {
                               "type": "primitive",
                               "value": {
                                 "type": "string",
-                                "value": "custom_metadata",
+                                "value": "value",
                               },
                             },
                           },
@@ -32808,13 +32808,13 @@ exports[`seam seam parse open api 1`] = `
                           {
                             "key": {
                               "type": "string",
-                              "value": "custom_metadata",
+                              "value": "key",
                             },
                             "value": {
                               "type": "primitive",
                               "value": {
                                 "type": "string",
-                                "value": "custom_metadata",
+                                "value": "value",
                               },
                             },
                           },
@@ -54771,13 +54771,13 @@ exports[`seam seam parse open api 1`] = `
                       {
                         "key": {
                           "type": "string",
-                          "value": "custom_metadata",
+                          "value": "key",
                         },
                         "value": {
                           "type": "primitive",
                           "value": {
                             "type": "string",
-                            "value": "custom_metadata",
+                            "value": "value",
                           },
                         },
                       },

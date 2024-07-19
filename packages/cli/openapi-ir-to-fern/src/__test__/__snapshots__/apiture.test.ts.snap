@@ -5917,9 +5917,6 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
     "error-discrimination": {
       "strategy": "status-code",
     },
-    "imports": {
-      "root": "__package__.yml",
-    },
     "name": "api",
   },
 }

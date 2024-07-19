@@ -39,7 +39,8 @@ export function testConvertOpenAPI(fixtureName: string, filename: string, asyncA
             const fernDefinition = convert({
                 ir: openApiIr,
                 taskContext: mockTaskContext,
-                enableUniqueErrorsPerEndpoint: false
+                enableUniqueErrorsPerEndpoint: false,
+                detectGlobalHeaders: true
             });
             expect(fernDefinition).toMatchSnapshot();
         });
@@ -72,7 +73,8 @@ export function testConvertOpenAPI(fixtureName: string, filename: string, asyncA
             const fernDefinition = convert({
                 ir: openApiIr,
                 taskContext: mockTaskContext,
-                enableUniqueErrorsPerEndpoint: true
+                enableUniqueErrorsPerEndpoint: true,
+                detectGlobalHeaders: false
             });
             expect(fernDefinition).toMatchSnapshot();
         });
