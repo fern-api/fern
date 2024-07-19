@@ -38,8 +38,20 @@ exports[`non alphanumeric characters non-alphanumeric-characters docs 1`] = `
       "DocumentIdSeparators": {
         "enum": [
           {
-            "name": "",
+            "name": "SLASH",
             "value": "/",
+          },
+          {
+            "name": "HYPHEN",
+            "value": "-",
+          },
+          {
+            "name": "PIPE",
+            "value": "|",
+          },
+          {
+            "name": "DOT",
+            "value": ".",
           },
           {
             "name": "EMPTY",
@@ -103,8 +115,20 @@ exports[`non alphanumeric characters non-alphanumeric-characters simple 1`] = `
       "DocumentIdSeparators": {
         "enum": [
           {
-            "name": "",
+            "name": "SLASH",
             "value": "/",
+          },
+          {
+            "name": "HYPHEN",
+            "value": "-",
+          },
+          {
+            "name": "PIPE",
+            "value": "|",
+          },
+          {
+            "name": "DOT",
+            "value": ".",
           },
           {
             "name": "EMPTY",
