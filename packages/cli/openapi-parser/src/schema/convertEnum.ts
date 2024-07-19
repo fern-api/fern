@@ -127,7 +127,11 @@ const HARDCODED_ENUM_NAMES: Record<string, string> = {
     "==": "EQUAL_TO",
     "*": "ALL",
     "": "EMPTY",
-    '""': "EMPTY_STRING"
+    '""': "EMPTY_STRING",
+    "-": "HYPHEN",
+    "|": "PIPE",
+    ".": "DOT",
+    "/": "SLASH"
 };
 
 export function generateEnumNameFromValue(value: string): string {
