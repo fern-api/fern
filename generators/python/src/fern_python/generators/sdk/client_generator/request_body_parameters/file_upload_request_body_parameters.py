@@ -135,9 +135,6 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
 
         return AST.Expression(AST.CodeWriter(write))
 
-    def get_pre_fetch_statements(self, names_to_deconflict: Optional[List[str]] = None) -> Optional[AST.CodeWriter]:
-        return None
-
     def is_default_body_parameter_used(self) -> bool:
         return False
 

@@ -117,23 +117,24 @@ class ClientGenerator:
                     snippet_writer=self._snippet_writer,
                     endpoint_metadata_collector=self._endpoint_metadata_collector,
                 )
-                generated_endpoint_function = endpoint_function_generator.generate()
-                class_declaration.add_method(generated_endpoint_function.function)
-                if (
-                    not self._is_default_body_parameter_used
-                    and generated_endpoint_function.is_default_body_parameter_used
-                ):
-                    self._is_default_body_parameter_used = True
+                generated_endpoint_functions = endpoint_function_generator.generate()
+                for generated_endpoint_function in generated_endpoint_functions:
+                    class_declaration.add_method(generated_endpoint_function.function)
+                    if (
+                        not self._is_default_body_parameter_used
+                        and generated_endpoint_function.is_default_body_parameter_used
+                    ):
+                        self._is_default_body_parameter_used = True
 
-                for snippet in generated_endpoint_function.snippets or []:
-                    if is_async:
-                        self._snippet_registry.register_async_client_endpoint_snippet(
-                            endpoint=endpoint, expr=snippet.snippet, example_id=snippet.example_id
-                        )
-                    else:
-                        self._snippet_registry.register_sync_client_endpoint_snippet(
-                            endpoint=endpoint, expr=snippet.snippet, example_id=snippet.example_id
-                        )
+                    for snippet in generated_endpoint_function.snippets or []:
+                        if is_async:
+                            self._snippet_registry.register_async_client_endpoint_snippet(
+                                endpoint=endpoint, expr=snippet.snippet, example_id=snippet.example_id
+                            )
+                        else:
+                            self._snippet_registry.register_sync_client_endpoint_snippet(
+                                endpoint=endpoint, expr=snippet.snippet, example_id=snippet.example_id
+                            )
 
         return class_declaration
 
