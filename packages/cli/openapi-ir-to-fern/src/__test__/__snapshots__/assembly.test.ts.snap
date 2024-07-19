@@ -536,14 +536,14 @@ The parameter should map to a JSON encoded list of strings.
                           "sentences_idx_end": 1,
                           "sentences_idx_start": 1,
                           "severity_score_summary": {
-                            "severity_score_summary": {
+                            "key": {
                               "high": 1.1,
                               "low": 1.1,
                               "medium": 1.1,
                             },
                           },
                           "summary": {
-                            "summary": 1.1,
+                            "key": 1.1,
                           },
                           "text": "text",
                           "timestamp": {
@@ -586,7 +586,7 @@ The parameter should map to a JSON encoded list of strings.
                       ],
                       "status": "success",
                       "summary": {
-                        "summary": 1.1,
+                        "key": 1.1,
                       },
                     },
                     "id": "id",
@@ -754,14 +754,14 @@ The parameter should map to a JSON encoded list of strings.
                           "sentences_idx_end": 1,
                           "sentences_idx_start": 1,
                           "severity_score_summary": {
-                            "severity_score_summary": {
+                            "key": {
                               "high": 1.1,
                               "low": 1.1,
                               "medium": 1.1,
                             },
                           },
                           "summary": {
-                            "summary": 1.1,
+                            "key": 1.1,
                           },
                           "text": "text",
                           "timestamp": {
@@ -804,7 +804,7 @@ The parameter should map to a JSON encoded list of strings.
                       ],
                       "status": "success",
                       "summary": {
-                        "summary": 1.1,
+                        "key": 1.1,
                       },
                     },
                     "id": "id",
@@ -962,14 +962,14 @@ The parameter should map to a JSON encoded list of strings.
                           "sentences_idx_end": 1,
                           "sentences_idx_start": 1,
                           "severity_score_summary": {
-                            "severity_score_summary": {
+                            "key": {
                               "high": 1.1,
                               "low": 1.1,
                               "medium": 1.1,
                             },
                           },
                           "summary": {
-                            "summary": 1.1,
+                            "key": 1.1,
                           },
                           "text": "text",
                           "timestamp": {
@@ -1012,7 +1012,7 @@ The parameter should map to a JSON encoded list of strings.
                       ],
                       "status": "success",
                       "summary": {
-                        "summary": 1.1,
+                        "key": 1.1,
                       },
                     },
                     "id": "id",
@@ -4326,14 +4326,14 @@ The parameter should map to a JSON encoded list of strings.
                           "sentences_idx_end": 1,
                           "sentences_idx_start": 1,
                           "severity_score_summary": {
-                            "severity_score_summary": {
+                            "key": {
                               "high": 1.1,
                               "low": 1.1,
                               "medium": 1.1,
                             },
                           },
                           "summary": {
-                            "summary": 1.1,
+                            "key": 1.1,
                           },
                           "text": "text",
                           "timestamp": {
@@ -4376,7 +4376,7 @@ The parameter should map to a JSON encoded list of strings.
                       ],
                       "status": "success",
                       "summary": {
-                        "summary": 1.1,
+                        "key": 1.1,
                       },
                     },
                     "id": "id",
@@ -4544,14 +4544,14 @@ The parameter should map to a JSON encoded list of strings.
                           "sentences_idx_end": 1,
                           "sentences_idx_start": 1,
                           "severity_score_summary": {
-                            "severity_score_summary": {
+                            "key": {
                               "high": 1.1,
                               "low": 1.1,
                               "medium": 1.1,
                             },
                           },
                           "summary": {
-                            "summary": 1.1,
+                            "key": 1.1,
                           },
                           "text": "text",
                           "timestamp": {
@@ -4594,7 +4594,7 @@ The parameter should map to a JSON encoded list of strings.
                       ],
                       "status": "success",
                       "summary": {
-                        "summary": 1.1,
+                        "key": 1.1,
                       },
                     },
                     "id": "id",
@@ -4752,14 +4752,14 @@ The parameter should map to a JSON encoded list of strings.
                           "sentences_idx_end": 1,
                           "sentences_idx_start": 1,
                           "severity_score_summary": {
-                            "severity_score_summary": {
+                            "key": {
                               "high": 1.1,
                               "low": 1.1,
                               "medium": 1.1,
                             },
                           },
                           "summary": {
-                            "summary": 1.1,
+                            "key": 1.1,
                           },
                           "text": "text",
                           "timestamp": {
@@ -4802,7 +4802,7 @@ The parameter should map to a JSON encoded list of strings.
                       ],
                       "status": "success",
                       "summary": {
-                        "summary": 1.1,
+                        "key": 1.1,
                       },
                     },
                     "id": "id",

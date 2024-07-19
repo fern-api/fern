@@ -30,13 +30,13 @@ exports[`examples enum-casing parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "custom_fields",
+                      "value": "key",
                     },
                     "value": {
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "custom_fields",
+                        "value": "value",
                       },
                     },
                   },

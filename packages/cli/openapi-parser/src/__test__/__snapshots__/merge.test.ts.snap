@@ -205,25 +205,17 @@ exports[`open api parser merge parse open api 1`] = `
                       {
                         "key": {
                           "type": "string",
-                          "value": "api_endpoints_to_documentation_urls",
+                          "value": "key",
                         },
                         "value": {
-                          "type": "map",
-                          "value": [
-                            {
-                              "key": {
-                                "type": "string",
-                                "value": "key",
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "value",
-                                },
-                              },
+                          "type": "unknown",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "value",
                             },
-                          ],
+                          },
                         },
                       },
                     ],
@@ -458,25 +450,17 @@ exports[`open api parser merge parse open api 1`] = `
                       {
                         "key": {
                           "type": "string",
-                          "value": "api_endpoints_to_documentation_urls",
+                          "value": "key",
                         },
                         "value": {
-                          "type": "map",
-                          "value": [
-                            {
-                              "key": {
-                                "type": "string",
-                                "value": "key",
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "value",
-                                },
-                              },
+                          "type": "unknown",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "value",
                             },
-                          ],
+                          },
                         },
                       },
                     ],
@@ -5342,6 +5326,27 @@ exports[`open api parser merge parse open api 1`] = `
                           "value": "8d9fd929-436c-4fd4-a48b-0c61f68d6178",
                         },
                       },
+                      "custom_fields": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "key",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "date_of_birth": {
                         "type": "primitive",
                         "value": {
@@ -10025,25 +10030,17 @@ exports[`open api parser merge parse open api 1`] = `
                       {
                         "key": {
                           "type": "string",
-                          "value": "custom_fields",
+                          "value": "key",
                         },
                         "value": {
-                          "type": "map",
-                          "value": [
-                            {
-                              "key": {
-                                "type": "string",
-                                "value": "key",
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "value",
-                                },
-                              },
+                          "type": "unknown",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "value",
                             },
-                          ],
+                          },
                         },
                       },
                     ],
@@ -10571,25 +10568,17 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "custom_fields",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -14676,25 +14665,17 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "remote_field_classes",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -14705,25 +14686,17 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "request_schema",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -17637,6 +17610,27 @@ exports[`open api parser merge parse open api 1`] = `
                 "value": [
                   {
                     "properties": {
+                      "end_user": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "key",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "error_description": {
                         "type": "primitive",
                         "value": {
@@ -18126,25 +18120,17 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "end_user",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -27207,25 +27193,17 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "remote_field_classes",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -27236,25 +27214,17 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "request_schema",
+                      "value": "key",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],

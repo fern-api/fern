@@ -2904,6 +2904,9 @@ exports[`open api parser flexport docs 1`] = `
                             "link": "https://api.flexport.com/network/location/123456",
                             "ref_type": "/network/location",
                           },
+                          "metadata": {
+                            "key": "value",
+                          },
                           "name": "CompanyFoo",
                           "ref": "ref_for_company",
                         },
@@ -3083,9 +3086,7 @@ exports[`open api parser flexport docs 1`] = `
                         "ref_type": "/network/location",
                       },
                       "metadata": {
-                        "metadata": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "name": "CompanyFoo",
                       "ref": "ref_for_company",
@@ -4122,6 +4123,9 @@ exports[`open api parser flexport docs 1`] = `
                             },
                           ],
                           "last_free_day_date": "2019-02-16T00:00:00Z",
+                          "metadata": {
+                            "key": "value",
+                          },
                           "seal_number": "UE_WQ2934875",
                           "shipment": {
                             "_object": "/api/refs/object",
@@ -4243,9 +4247,7 @@ exports[`open api parser flexport docs 1`] = `
                       ],
                       "last_free_day_date": "2019-02-16T00:00:00Z",
                       "metadata": {
-                        "metadata": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "pickup_number": "ABCD1234",
                       "seal_number": "UE_WQ2934875",
@@ -5895,6 +5897,9 @@ Other details about this invoice",
                           },
                           "editable": true,
                           "id": "abdef123",
+                          "metadata": {
+                            "key": "value",
+                          },
                           "name": "Wayne Enterprises",
                         },
                       ],
@@ -5997,9 +6002,7 @@ Other details about this invoice",
                       "editable": true,
                       "id": "abdef123",
                       "metadata": {
-                        "metadata": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "name": "Zoomit",
                       "ref": "ref",
@@ -6100,9 +6103,7 @@ Other details about this invoice",
                       "editable": true,
                       "id": "abdef123",
                       "metadata": {
-                        "metadata": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "name": "Wayne Enterprises",
                       "ref": "ref",
@@ -6174,9 +6175,7 @@ Other details about this invoice",
                       "editable": true,
                       "id": "abdef123",
                       "metadata": {
-                        "metadata": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "name": "Zoomit V2",
                       "ref": "ref",
@@ -8583,6 +8582,9 @@ Other details about this invoice",
                             "link": "https://api.flexport.com/shipment_legs?f.shipment.id=123",
                             "ref_type": "/shipment_leg",
                           },
+                          "metadata": {
+                            "key": "value",
+                          },
                           "name": "ABC Shipment",
                           "ocean_shipment": {
                             "_object": "/ocean/shipment",
@@ -9096,9 +9098,7 @@ Other details about this invoice",
                         "ref_type": "/shipment_leg",
                       },
                       "metadata": {
-                        "metadata": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "name": "ABC Shipment",
                       "ocean_shipment": {
@@ -18193,6 +18193,9 @@ exports[`open api parser flexport simple 1`] = `
                             "link": "https://api.flexport.com/network/location/123456",
                             "ref_type": "/network/location",
                           },
+                          "metadata": {
+                            "key": "value",
+                          },
                           "name": "CompanyFoo",
                           "ref": "ref_for_company",
                         },
@@ -18372,9 +18375,7 @@ exports[`open api parser flexport simple 1`] = `
                         "ref_type": "/network/location",
                       },
                       "metadata": {
-                        "metadata": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "name": "CompanyFoo",
                       "ref": "ref_for_company",
@@ -19411,6 +19412,9 @@ exports[`open api parser flexport simple 1`] = `
                             },
                           ],
                           "last_free_day_date": "2019-02-16T00:00:00Z",
+                          "metadata": {
+                            "key": "value",
+                          },
                           "seal_number": "UE_WQ2934875",
                           "shipment": {
                             "_object": "/api/refs/object",
@@ -19532,9 +19536,7 @@ exports[`open api parser flexport simple 1`] = `
                       ],
                       "last_free_day_date": "2019-02-16T00:00:00Z",
                       "metadata": {
-                        "metadata": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "pickup_number": "ABCD1234",
                       "seal_number": "UE_WQ2934875",
@@ -21184,6 +21186,9 @@ Other details about this invoice",
                           },
                           "editable": true,
                           "id": "abdef123",
+                          "metadata": {
+                            "key": "value",
+                          },
                           "name": "Wayne Enterprises",
                         },
                       ],
@@ -21286,9 +21291,7 @@ Other details about this invoice",
                       "editable": true,
                       "id": "abdef123",
                       "metadata": {
-                        "metadata": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "name": "Zoomit",
                       "ref": "ref",
@@ -21389,9 +21392,7 @@ Other details about this invoice",
                       "editable": true,
                       "id": "abdef123",
                       "metadata": {
-                        "metadata": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "name": "Wayne Enterprises",
                       "ref": "ref",
@@ -21463,9 +21464,7 @@ Other details about this invoice",
                       "editable": true,
                       "id": "abdef123",
                       "metadata": {
-                        "metadata": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "name": "Zoomit V2",
                       "ref": "ref",
@@ -23872,6 +23871,9 @@ Other details about this invoice",
                             "link": "https://api.flexport.com/shipment_legs?f.shipment.id=123",
                             "ref_type": "/shipment_leg",
                           },
+                          "metadata": {
+                            "key": "value",
+                          },
                           "name": "ABC Shipment",
                           "ocean_shipment": {
                             "_object": "/ocean/shipment",
@@ -24385,9 +24387,7 @@ Other details about this invoice",
                         "ref_type": "/shipment_leg",
                       },
                       "metadata": {
-                        "metadata": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "name": "ABC Shipment",
                       "ocean_shipment": {

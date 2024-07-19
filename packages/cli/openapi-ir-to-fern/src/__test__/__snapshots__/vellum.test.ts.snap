@@ -101,9 +101,7 @@ Creates a new document index.",
                     "environment": "DEVELOPMENT",
                     "id": "id",
                     "indexing_config": {
-                      "indexing_config": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "label": "label",
                     "name": "name",
@@ -136,9 +134,7 @@ Creates a new document index.",
                     "environment": "DEVELOPMENT",
                     "id": "id",
                     "indexing_config": {
-                      "indexing_config": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "label": "label",
                     "name": "name",
@@ -173,9 +169,7 @@ Creates a new document index.",
                     "environment": "DEVELOPMENT",
                     "id": "id",
                     "indexing_config": {
-                      "indexing_config": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "label": "label",
                     "name": "name",
@@ -434,7 +428,9 @@ Compiles the prompt backing the model version using the provided input values.",
                   "id": "id",
                 },
                 "request": {
-                  "input_values": {},
+                  "input_values": {
+                    "key": "value",
+                  },
                 },
                 "response": {
                   "body": {
@@ -957,7 +953,9 @@ or overwritten with default values.",
                 },
                 "request": {
                   "evaluation_params": {},
-                  "input_values": {},
+                  "input_values": {
+                    "key": "value",
+                  },
                 },
                 "response": {
                   "body": {
@@ -965,9 +963,7 @@ or overwritten with default values.",
                       "target": "target",
                     },
                     "input_values": {
-                      "input_values": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "label": "label",
                     "test_case_id": "test_case_id",
@@ -1212,7 +1208,9 @@ Generate a completion using a previously defined deployment.
               "request": {
                 "requests": [
                   {
-                    "input_values": {},
+                    "input_values": {
+                      "key": "value",
+                    },
                   },
                 ],
               },
@@ -3309,9 +3307,7 @@ Creates a new document index.",
                     "environment": "DEVELOPMENT",
                     "id": "id",
                     "indexing_config": {
-                      "indexing_config": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "label": "label",
                     "name": "name",
@@ -3344,9 +3340,7 @@ Creates a new document index.",
                     "environment": "DEVELOPMENT",
                     "id": "id",
                     "indexing_config": {
-                      "indexing_config": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "label": "label",
                     "name": "name",
@@ -3381,9 +3375,7 @@ Creates a new document index.",
                     "environment": "DEVELOPMENT",
                     "id": "id",
                     "indexing_config": {
-                      "indexing_config": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "label": "label",
                     "name": "name",
@@ -3642,7 +3634,9 @@ Compiles the prompt backing the model version using the provided input values.",
                   "id": "id",
                 },
                 "request": {
-                  "input_values": {},
+                  "input_values": {
+                    "key": "value",
+                  },
                 },
                 "response": {
                   "body": {
@@ -4165,7 +4159,9 @@ or overwritten with default values.",
                 },
                 "request": {
                   "evaluation_params": {},
-                  "input_values": {},
+                  "input_values": {
+                    "key": "value",
+                  },
                 },
                 "response": {
                   "body": {
@@ -4173,9 +4169,7 @@ or overwritten with default values.",
                       "target": "target",
                     },
                     "input_values": {
-                      "input_values": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "label": "label",
                     "test_case_id": "test_case_id",
@@ -4352,7 +4346,9 @@ Generate a completion using a previously defined deployment.
               "request": {
                 "requests": [
                   {
-                    "input_values": {},
+                    "input_values": {
+                      "key": "value",
+                    },
                   },
                 ],
               },

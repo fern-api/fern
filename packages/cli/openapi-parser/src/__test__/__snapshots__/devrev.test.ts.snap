@@ -2896,7 +2896,24 @@ disabled.
                         "value": [
                           {
                             "type": "map",
-                            "value": [],
+                            "value": [
+                              {
+                                "key": {
+                                  "type": "string",
+                                  "value": "key",
+                                },
+                                "value": {
+                                  "type": "unknown",
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "value",
+                                    },
+                                  },
+                                },
+                              },
+                            ],
                           },
                         ],
                       },
@@ -3327,7 +3344,24 @@ used.
                     "value": [
                       {
                         "type": "map",
-                        "value": [],
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "key",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          },
+                        ],
                       },
                     ],
                   },
@@ -3677,25 +3711,17 @@ used.
               {
                 "key": {
                   "type": "string",
-                  "value": "string",
+                  "value": "key",
                 },
                 "value": {
-                  "type": "map",
-                  "value": [
-                    {
-                      "key": {
-                        "type": "string",
-                        "value": "key",
-                      },
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "value",
-                        },
-                      },
+                  "type": "unknown",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "value",
                     },
-                  ],
+                  },
                 },
               },
             ],
@@ -4787,25 +4813,17 @@ organization.
               {
                 "key": {
                   "type": "string",
-                  "value": "string",
+                  "value": "key",
                 },
                 "value": {
-                  "type": "map",
-                  "value": [
-                    {
-                      "key": {
-                        "type": "string",
-                        "value": "key",
-                      },
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "value",
-                        },
-                      },
+                  "type": "unknown",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "value",
                     },
-                  ],
+                  },
                 },
               },
             ],
@@ -6216,25 +6234,17 @@ and a logical concept denoted by the tag's name.
               {
                 "key": {
                   "type": "string",
-                  "value": "string",
+                  "value": "key",
                 },
                 "value": {
-                  "type": "map",
-                  "value": [
-                    {
-                      "key": {
-                        "type": "string",
-                        "value": "key",
-                      },
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "value",
-                        },
-                      },
+                  "type": "unknown",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "value",
                     },
-                  ],
+                  },
                 },
               },
             ],
@@ -8140,25 +8150,17 @@ used.
               {
                 "key": {
                   "type": "string",
-                  "value": "string",
+                  "value": "key",
                 },
                 "value": {
-                  "type": "map",
-                  "value": [
-                    {
-                      "key": {
-                        "type": "string",
-                        "value": "key",
-                      },
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "value",
-                        },
-                      },
+                  "type": "unknown",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "value",
                     },
-                  ],
+                  },
                 },
               },
             ],
@@ -9170,25 +9172,17 @@ used.
               {
                 "key": {
                   "type": "string",
-                  "value": "string",
+                  "value": "key",
                 },
                 "value": {
-                  "type": "map",
-                  "value": [
-                    {
-                      "key": {
-                        "type": "string",
-                        "value": "key",
-                      },
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "value",
-                        },
-                      },
+                  "type": "unknown",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "value",
                     },
-                  ],
+                  },
                 },
               },
             ],

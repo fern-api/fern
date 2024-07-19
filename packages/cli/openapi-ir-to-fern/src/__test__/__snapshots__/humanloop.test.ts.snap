@@ -61,7 +61,7 @@ deployed to the default Environment will be used.
                       {
                         "id": "id",
                         "inputs": {
-                          "inputs": "inputs",
+                          "key": "value",
                         },
                         "messages": [
                           {
@@ -69,7 +69,7 @@ deployed to the default Environment will be used.
                           },
                         ],
                         "target": {
-                          "target": "target",
+                          "key": "value",
                         },
                       },
                     ],
@@ -158,7 +158,7 @@ exists, it will be ignored.",
                       {
                         "id": "id",
                         "inputs": {
-                          "inputs": "inputs",
+                          "key": "value",
                         },
                         "messages": [
                           {
@@ -166,7 +166,7 @@ exists, it will be ignored.",
                           },
                         ],
                         "target": {
-                          "target": "target",
+                          "key": "value",
                         },
                       },
                     ],
@@ -298,7 +298,7 @@ Set the deployed Version for the specified Environment.",
                       {
                         "id": "id",
                         "inputs": {
-                          "inputs": "inputs",
+                          "key": "value",
                         },
                         "messages": [
                           {
@@ -306,7 +306,7 @@ Set the deployed Version for the specified Environment.",
                           },
                         ],
                         "target": {
-                          "target": "target",
+                          "key": "value",
                         },
                       },
                     ],
@@ -389,7 +389,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
                       {
                         "id": "id",
                         "inputs": {
-                          "inputs": "inputs",
+                          "key": "value",
                         },
                         "messages": [
                           {
@@ -397,7 +397,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
                           },
                         ],
                         "target": {
-                          "target": "target",
+                          "key": "value",
                         },
                       },
                     ],
@@ -555,7 +555,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
                       {
                         "id": "id",
                         "inputs": {
-                          "inputs": "inputs",
+                          "key": "value",
                         },
                         "messages": [
                           {
@@ -563,7 +563,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
                           },
                         ],
                         "target": {
-                          "target": "target",
+                          "key": "value",
                         },
                       },
                     ],
@@ -710,7 +710,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
                       {
                         "id": "id",
                         "inputs": {
-                          "inputs": "inputs",
+                          "key": "value",
                         },
                         "messages": [
                           {
@@ -718,7 +718,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
                           },
                         ],
                         "target": {
-                          "target": "target",
+                          "key": "value",
                         },
                       },
                     ],
@@ -1902,9 +1902,7 @@ You can manually create Logs through the API.
                     "finish_reason": "finish_reason",
                     "id": "id",
                     "inputs": {
-                      "inputs": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "messages": [
                       {
@@ -1924,9 +1922,7 @@ You can manually create Logs through the API.
                       },
                     ],
                     "metadata": {
-                      "metadata": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "output": "output",
                     "output_cost": 1.1,
@@ -1985,9 +1981,7 @@ You can manually create Logs through the API.
                       "model": "model",
                       "name": "name",
                       "other": {
-                        "other": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "presence_penalty": 1.1,
                       "provider": "openai",
@@ -2015,14 +2009,10 @@ You can manually create Logs through the API.
                     "prompt_tokens": 1,
                     "provider_latency": 1.1,
                     "provider_request": {
-                      "provider_request": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "provider_response": {
-                      "provider_response": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "raw_output": "raw_output",
                     "save": true,
@@ -2074,11 +2064,17 @@ You can manually create Logs through the API.
                         "error": "error",
                         "finish_reason": "finish_reason",
                         "id": "id",
+                        "inputs": {
+                          "key": "value",
+                        },
                         "messages": [
                           {
                             "role": "user",
                           },
                         ],
+                        "metadata": {
+                          "key": "value",
+                        },
                         "output": "output",
                         "output_cost": 1.1,
                         "output_message": {
@@ -2106,6 +2102,12 @@ You can manually create Logs through the API.
                         "prompt_cost": 1.1,
                         "prompt_tokens": 1,
                         "provider_latency": 1.1,
+                        "provider_request": {
+                          "key": "value",
+                        },
+                        "provider_response": {
+                          "key": "value",
+                        },
                         "raw_output": "raw_output",
                         "save": true,
                         "session_id": "session_id",
@@ -2234,9 +2236,7 @@ in the case where you are storing or deriving your Prompt details in code.",
                     "environment": "environment",
                     "id": "id",
                     "inputs": {
-                      "inputs": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "logs": [
                       {
@@ -2274,9 +2274,7 @@ in the case where you are storing or deriving your Prompt details in code.",
                       },
                     ],
                     "metadata": {
-                      "metadata": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "parent_id": "parent_id",
                     "prompt": {
@@ -2317,9 +2315,7 @@ in the case where you are storing or deriving your Prompt details in code.",
                       "model": "model",
                       "name": "name",
                       "other": {
-                        "other": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "presence_penalty": 1.1,
                       "provider": "openai",
@@ -2550,6 +2546,9 @@ in the case where you are storing or deriving your Prompt details in code.",
                         "description": "description",
                         "id": "id",
                         "name": "name",
+                        "parameters": {
+                          "key": "value",
+                        },
                         "version_id": "version_id",
                       },
                     ],
@@ -2557,9 +2556,7 @@ in the case where you are storing or deriving your Prompt details in code.",
                     "model": "model",
                     "name": "name",
                     "other": {
-                      "other": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "presence_penalty": 1.1,
                     "provider": "openai",
@@ -2575,6 +2572,9 @@ in the case where you are storing or deriving your Prompt details in code.",
                       {
                         "description": "description",
                         "name": "name",
+                        "parameters": {
+                          "key": "value",
+                        },
                       },
                     ],
                     "top_p": 1.1,
@@ -2658,6 +2658,9 @@ an exception will be raised.",
                         "description": "description",
                         "id": "id",
                         "name": "name",
+                        "parameters": {
+                          "key": "value",
+                        },
                         "version_id": "version_id",
                       },
                     ],
@@ -2665,9 +2668,7 @@ an exception will be raised.",
                     "model": "model",
                     "name": "name",
                     "other": {
-                      "other": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "presence_penalty": 1.1,
                     "provider": "openai",
@@ -2683,6 +2684,9 @@ an exception will be raised.",
                       {
                         "description": "description",
                         "name": "name",
+                        "parameters": {
+                          "key": "value",
+                        },
                       },
                     ],
                     "top_p": 1.1,
@@ -2892,6 +2896,9 @@ will be used for calls made to the Prompt in this Environment.",
                         "description": "description",
                         "id": "id",
                         "name": "name",
+                        "parameters": {
+                          "key": "value",
+                        },
                         "version_id": "version_id",
                       },
                     ],
@@ -2899,9 +2906,7 @@ will be used for calls made to the Prompt in this Environment.",
                     "model": "model",
                     "name": "name",
                     "other": {
-                      "other": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "presence_penalty": 1.1,
                     "provider": "openai",
@@ -2917,6 +2922,9 @@ will be used for calls made to the Prompt in this Environment.",
                       {
                         "description": "description",
                         "name": "name",
+                        "parameters": {
+                          "key": "value",
+                        },
                       },
                     ],
                     "top_p": 1.1,
@@ -3002,6 +3010,9 @@ By default the deployed version of the Prompt is returned. Use the query paramet
                         "description": "description",
                         "id": "id",
                         "name": "name",
+                        "parameters": {
+                          "key": "value",
+                        },
                         "version_id": "version_id",
                       },
                     ],
@@ -3009,9 +3020,7 @@ By default the deployed version of the Prompt is returned. Use the query paramet
                     "model": "model",
                     "name": "name",
                     "other": {
-                      "other": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "presence_penalty": 1.1,
                     "provider": "openai",
@@ -3027,6 +3036,9 @@ By default the deployed version of the Prompt is returned. Use the query paramet
                       {
                         "description": "description",
                         "name": "name",
+                        "parameters": {
+                          "key": "value",
+                        },
                       },
                     ],
                     "top_p": 1.1,
@@ -3113,6 +3125,9 @@ By default the deployed version of the Prompt is returned. Use the query paramet
                         "max_tokens": 1,
                         "model": "model",
                         "name": "name",
+                        "other": {
+                          "key": "value",
+                        },
                         "presence_penalty": 1.1,
                         "provider": "openai",
                         "response_format": {
@@ -3228,6 +3243,9 @@ By default the deployed version of the Prompt is returned. Use the query paramet
                         "max_tokens": 1,
                         "model": "model",
                         "name": "name",
+                        "other": {
+                          "key": "value",
+                        },
                         "presence_penalty": 1.1,
                         "provider": "openai",
                         "response_format": {
@@ -3550,6 +3568,9 @@ in the case where you are storing or deriving your Prompt details in code.",
                         "description": "description",
                         "id": "id",
                         "name": "name",
+                        "parameters": {
+                          "key": "value",
+                        },
                         "version_id": "version_id",
                       },
                     ],
@@ -3557,9 +3578,7 @@ in the case where you are storing or deriving your Prompt details in code.",
                     "model": "model",
                     "name": "name",
                     "other": {
-                      "other": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "presence_penalty": 1.1,
                     "provider": "openai",
@@ -3575,6 +3594,9 @@ in the case where you are storing or deriving your Prompt details in code.",
                       {
                         "description": "description",
                         "name": "name",
+                        "parameters": {
+                          "key": "value",
+                        },
                       },
                     ],
                     "top_p": 1.1,
@@ -3669,6 +3691,9 @@ within the Prompt for monitoring purposes.",
                         "description": "description",
                         "id": "id",
                         "name": "name",
+                        "parameters": {
+                          "key": "value",
+                        },
                         "version_id": "version_id",
                       },
                     ],
@@ -3676,9 +3701,7 @@ within the Prompt for monitoring purposes.",
                     "model": "model",
                     "name": "name",
                     "other": {
-                      "other": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "presence_penalty": 1.1,
                     "provider": "openai",
@@ -3694,6 +3717,9 @@ within the Prompt for monitoring purposes.",
                       {
                         "description": "description",
                         "name": "name",
+                        "parameters": {
+                          "key": "value",
+                        },
                       },
                     ],
                     "top_p": 1.1,
@@ -3847,11 +3873,17 @@ Log is in, nested within the evaluated Log.
                         "error": "error",
                         "finish_reason": "finish_reason",
                         "id": "id",
+                        "inputs": {
+                          "key": "value",
+                        },
                         "messages": [
                           {
                             "role": "user",
                           },
                         ],
+                        "metadata": {
+                          "key": "value",
+                        },
                         "output": "output",
                         "output_cost": 1.1,
                         "output_message": {
@@ -3879,6 +3911,12 @@ Log is in, nested within the evaluated Log.
                         "prompt_cost": 1.1,
                         "prompt_tokens": 1,
                         "provider_latency": 1.1,
+                        "provider_request": {
+                          "key": "value",
+                        },
+                        "provider_response": {
+                          "key": "value",
+                        },
                         "raw_output": "raw_output",
                         "save": true,
                         "session_id": "session_id",
@@ -4032,9 +4070,7 @@ Log is in, nested within the evaluated Log.
                       "description": "description",
                       "name": "name",
                       "parameters": {
-                        "parameters": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                     },
                     "id": "id",
@@ -4046,9 +4082,7 @@ Log is in, nested within the evaluated Log.
                     "last_used_at": "2024-01-15T09:30:00Z",
                     "name": "name",
                     "setup_values": {
-                      "setup_values": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "signature": "signature",
                     "source_code": "source_code",
@@ -4123,9 +4157,7 @@ an exception will be raised.",
                       "description": "description",
                       "name": "name",
                       "parameters": {
-                        "parameters": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                     },
                     "id": "id",
@@ -4137,9 +4169,7 @@ an exception will be raised.",
                     "last_used_at": "2024-01-15T09:30:00Z",
                     "name": "name",
                     "setup_values": {
-                      "setup_values": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "signature": "signature",
                     "source_code": "source_code",
@@ -4277,9 +4307,7 @@ will be used for calls made to the Tool in this Environment.",
                       "description": "description",
                       "name": "name",
                       "parameters": {
-                        "parameters": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                     },
                     "id": "id",
@@ -4291,9 +4319,7 @@ will be used for calls made to the Tool in this Environment.",
                     "last_used_at": "2024-01-15T09:30:00Z",
                     "name": "name",
                     "setup_values": {
-                      "setup_values": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "signature": "signature",
                     "source_code": "source_code",
@@ -4371,9 +4397,7 @@ By default the deployed version of the Tool is returned. Use the query parameter
                       "description": "description",
                       "name": "name",
                       "parameters": {
-                        "parameters": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                     },
                     "id": "id",
@@ -4385,9 +4409,7 @@ By default the deployed version of the Tool is returned. Use the query parameter
                     "last_used_at": "2024-01-15T09:30:00Z",
                     "name": "name",
                     "setup_values": {
-                      "setup_values": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "signature": "signature",
                     "source_code": "source_code",
@@ -4468,6 +4490,9 @@ By default the deployed version of the Tool is returned. Use the query parameter
                         ],
                         "last_used_at": "2024-01-15T09:30:00Z",
                         "name": "name",
+                        "setup_values": {
+                          "key": "value",
+                        },
                         "signature": "signature",
                         "source_code": "source_code",
                         "status": "uncommitted",
@@ -4534,14 +4559,10 @@ By default the deployed version of the Tool is returned. Use the query parameter
                       "description": "description",
                       "name": "name",
                       "parameters": {
-                        "parameters": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "setup_schema": {
-                        "setup_schema": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "signature": "signature",
                     },
@@ -4609,6 +4630,9 @@ By default the deployed version of the Tool is returned. Use the query parameter
                         ],
                         "last_used_at": "2024-01-15T09:30:00Z",
                         "name": "name",
+                        "setup_values": {
+                          "key": "value",
+                        },
                         "signature": "signature",
                         "source_code": "source_code",
                         "status": "uncommitted",
@@ -4856,9 +4880,7 @@ in the case where you are storing or deriving your Tool details in code.",
                       "description": "description",
                       "name": "name",
                       "parameters": {
-                        "parameters": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                     },
                     "id": "id",
@@ -4870,9 +4892,7 @@ in the case where you are storing or deriving your Tool details in code.",
                     "last_used_at": "2024-01-15T09:30:00Z",
                     "name": "name",
                     "setup_values": {
-                      "setup_values": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "signature": "signature",
                     "source_code": "source_code",
@@ -4959,9 +4979,7 @@ within the Tool for monitoring purposes.",
                       "description": "description",
                       "name": "name",
                       "parameters": {
-                        "parameters": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                     },
                     "id": "id",
@@ -4973,9 +4991,7 @@ within the Tool for monitoring purposes.",
                     "last_used_at": "2024-01-15T09:30:00Z",
                     "name": "name",
                     "setup_values": {
-                      "setup_values": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "signature": "signature",
                     "source_code": "source_code",
@@ -8482,7 +8498,7 @@ deployed to the default Environment will be used.
                       {
                         "id": "id",
                         "inputs": {
-                          "inputs": "inputs",
+                          "key": "value",
                         },
                         "messages": [
                           {
@@ -8490,7 +8506,7 @@ deployed to the default Environment will be used.
                           },
                         ],
                         "target": {
-                          "target": "target",
+                          "key": "value",
                         },
                       },
                     ],
@@ -8579,7 +8595,7 @@ exists, it will be ignored.",
                       {
                         "id": "id",
                         "inputs": {
-                          "inputs": "inputs",
+                          "key": "value",
                         },
                         "messages": [
                           {
@@ -8587,7 +8603,7 @@ exists, it will be ignored.",
                           },
                         ],
                         "target": {
-                          "target": "target",
+                          "key": "value",
                         },
                       },
                     ],
@@ -8719,7 +8735,7 @@ Set the deployed Version for the specified Environment.",
                       {
                         "id": "id",
                         "inputs": {
-                          "inputs": "inputs",
+                          "key": "value",
                         },
                         "messages": [
                           {
@@ -8727,7 +8743,7 @@ Set the deployed Version for the specified Environment.",
                           },
                         ],
                         "target": {
-                          "target": "target",
+                          "key": "value",
                         },
                       },
                     ],
@@ -8810,7 +8826,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
                       {
                         "id": "id",
                         "inputs": {
-                          "inputs": "inputs",
+                          "key": "value",
                         },
                         "messages": [
                           {
@@ -8818,7 +8834,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
                           },
                         ],
                         "target": {
-                          "target": "target",
+                          "key": "value",
                         },
                       },
                     ],
@@ -8976,7 +8992,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
                       {
                         "id": "id",
                         "inputs": {
-                          "inputs": "inputs",
+                          "key": "value",
                         },
                         "messages": [
                           {
@@ -8984,7 +9000,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
                           },
                         ],
                         "target": {
-                          "target": "target",
+                          "key": "value",
                         },
                       },
                     ],
@@ -9131,7 +9147,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
                       {
                         "id": "id",
                         "inputs": {
-                          "inputs": "inputs",
+                          "key": "value",
                         },
                         "messages": [
                           {
@@ -9139,7 +9155,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
                           },
                         ],
                         "target": {
-                          "target": "target",
+                          "key": "value",
                         },
                       },
                     ],
@@ -10323,9 +10339,7 @@ You can manually create Logs through the API.
                     "finish_reason": "finish_reason",
                     "id": "id",
                     "inputs": {
-                      "inputs": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "messages": [
                       {
@@ -10345,9 +10359,7 @@ You can manually create Logs through the API.
                       },
                     ],
                     "metadata": {
-                      "metadata": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "output": "output",
                     "output_cost": 1.1,
@@ -10406,9 +10418,7 @@ You can manually create Logs through the API.
                       "model": "model",
                       "name": "name",
                       "other": {
-                        "other": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "presence_penalty": 1.1,
                       "provider": "openai",
@@ -10436,14 +10446,10 @@ You can manually create Logs through the API.
                     "prompt_tokens": 1,
                     "provider_latency": 1.1,
                     "provider_request": {
-                      "provider_request": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "provider_response": {
-                      "provider_response": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "raw_output": "raw_output",
                     "save": true,
@@ -10495,11 +10501,17 @@ You can manually create Logs through the API.
                         "error": "error",
                         "finish_reason": "finish_reason",
                         "id": "id",
+                        "inputs": {
+                          "key": "value",
+                        },
                         "messages": [
                           {
                             "role": "user",
                           },
                         ],
+                        "metadata": {
+                          "key": "value",
+                        },
                         "output": "output",
                         "output_cost": 1.1,
                         "output_message": {
@@ -10527,6 +10539,12 @@ You can manually create Logs through the API.
                         "prompt_cost": 1.1,
                         "prompt_tokens": 1,
                         "provider_latency": 1.1,
+                        "provider_request": {
+                          "key": "value",
+                        },
+                        "provider_response": {
+                          "key": "value",
+                        },
                         "raw_output": "raw_output",
                         "save": true,
                         "session_id": "session_id",
@@ -10655,9 +10673,7 @@ in the case where you are storing or deriving your Prompt details in code.",
                     "environment": "environment",
                     "id": "id",
                     "inputs": {
-                      "inputs": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "logs": [
                       {
@@ -10695,9 +10711,7 @@ in the case where you are storing or deriving your Prompt details in code.",
                       },
                     ],
                     "metadata": {
-                      "metadata": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "parent_id": "parent_id",
                     "prompt": {
@@ -10738,9 +10752,7 @@ in the case where you are storing or deriving your Prompt details in code.",
                       "model": "model",
                       "name": "name",
                       "other": {
-                        "other": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "presence_penalty": 1.1,
                       "provider": "openai",
@@ -10971,6 +10983,9 @@ in the case where you are storing or deriving your Prompt details in code.",
                         "description": "description",
                         "id": "id",
                         "name": "name",
+                        "parameters": {
+                          "key": "value",
+                        },
                         "version_id": "version_id",
                       },
                     ],
@@ -10978,9 +10993,7 @@ in the case where you are storing or deriving your Prompt details in code.",
                     "model": "model",
                     "name": "name",
                     "other": {
-                      "other": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "presence_penalty": 1.1,
                     "provider": "openai",
@@ -10996,6 +11009,9 @@ in the case where you are storing or deriving your Prompt details in code.",
                       {
                         "description": "description",
                         "name": "name",
+                        "parameters": {
+                          "key": "value",
+                        },
                       },
                     ],
                     "top_p": 1.1,
@@ -11079,6 +11095,9 @@ an exception will be raised.",
                         "description": "description",
                         "id": "id",
                         "name": "name",
+                        "parameters": {
+                          "key": "value",
+                        },
                         "version_id": "version_id",
                       },
                     ],
@@ -11086,9 +11105,7 @@ an exception will be raised.",
                     "model": "model",
                     "name": "name",
                     "other": {
-                      "other": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "presence_penalty": 1.1,
                     "provider": "openai",
@@ -11104,6 +11121,9 @@ an exception will be raised.",
                       {
                         "description": "description",
                         "name": "name",
+                        "parameters": {
+                          "key": "value",
+                        },
                       },
                     ],
                     "top_p": 1.1,
@@ -11313,6 +11333,9 @@ will be used for calls made to the Prompt in this Environment.",
                         "description": "description",
                         "id": "id",
                         "name": "name",
+                        "parameters": {
+                          "key": "value",
+                        },
                         "version_id": "version_id",
                       },
                     ],
@@ -11320,9 +11343,7 @@ will be used for calls made to the Prompt in this Environment.",
                     "model": "model",
                     "name": "name",
                     "other": {
-                      "other": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "presence_penalty": 1.1,
                     "provider": "openai",
@@ -11338,6 +11359,9 @@ will be used for calls made to the Prompt in this Environment.",
                       {
                         "description": "description",
                         "name": "name",
+                        "parameters": {
+                          "key": "value",
+                        },
                       },
                     ],
                     "top_p": 1.1,
@@ -11423,6 +11447,9 @@ By default the deployed version of the Prompt is returned. Use the query paramet
                         "description": "description",
                         "id": "id",
                         "name": "name",
+                        "parameters": {
+                          "key": "value",
+                        },
                         "version_id": "version_id",
                       },
                     ],
@@ -11430,9 +11457,7 @@ By default the deployed version of the Prompt is returned. Use the query paramet
                     "model": "model",
                     "name": "name",
                     "other": {
-                      "other": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "presence_penalty": 1.1,
                     "provider": "openai",
@@ -11448,6 +11473,9 @@ By default the deployed version of the Prompt is returned. Use the query paramet
                       {
                         "description": "description",
                         "name": "name",
+                        "parameters": {
+                          "key": "value",
+                        },
                       },
                     ],
                     "top_p": 1.1,
@@ -11534,6 +11562,9 @@ By default the deployed version of the Prompt is returned. Use the query paramet
                         "max_tokens": 1,
                         "model": "model",
                         "name": "name",
+                        "other": {
+                          "key": "value",
+                        },
                         "presence_penalty": 1.1,
                         "provider": "openai",
                         "response_format": {
@@ -11649,6 +11680,9 @@ By default the deployed version of the Prompt is returned. Use the query paramet
                         "max_tokens": 1,
                         "model": "model",
                         "name": "name",
+                        "other": {
+                          "key": "value",
+                        },
                         "presence_penalty": 1.1,
                         "provider": "openai",
                         "response_format": {
@@ -11971,6 +12005,9 @@ in the case where you are storing or deriving your Prompt details in code.",
                         "description": "description",
                         "id": "id",
                         "name": "name",
+                        "parameters": {
+                          "key": "value",
+                        },
                         "version_id": "version_id",
                       },
                     ],
@@ -11978,9 +12015,7 @@ in the case where you are storing or deriving your Prompt details in code.",
                     "model": "model",
                     "name": "name",
                     "other": {
-                      "other": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "presence_penalty": 1.1,
                     "provider": "openai",
@@ -11996,6 +12031,9 @@ in the case where you are storing or deriving your Prompt details in code.",
                       {
                         "description": "description",
                         "name": "name",
+                        "parameters": {
+                          "key": "value",
+                        },
                       },
                     ],
                     "top_p": 1.1,
@@ -12090,6 +12128,9 @@ within the Prompt for monitoring purposes.",
                         "description": "description",
                         "id": "id",
                         "name": "name",
+                        "parameters": {
+                          "key": "value",
+                        },
                         "version_id": "version_id",
                       },
                     ],
@@ -12097,9 +12138,7 @@ within the Prompt for monitoring purposes.",
                     "model": "model",
                     "name": "name",
                     "other": {
-                      "other": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "presence_penalty": 1.1,
                     "provider": "openai",
@@ -12115,6 +12154,9 @@ within the Prompt for monitoring purposes.",
                       {
                         "description": "description",
                         "name": "name",
+                        "parameters": {
+                          "key": "value",
+                        },
                       },
                     ],
                     "top_p": 1.1,
@@ -12268,11 +12310,17 @@ Log is in, nested within the evaluated Log.
                         "error": "error",
                         "finish_reason": "finish_reason",
                         "id": "id",
+                        "inputs": {
+                          "key": "value",
+                        },
                         "messages": [
                           {
                             "role": "user",
                           },
                         ],
+                        "metadata": {
+                          "key": "value",
+                        },
                         "output": "output",
                         "output_cost": 1.1,
                         "output_message": {
@@ -12300,6 +12348,12 @@ Log is in, nested within the evaluated Log.
                         "prompt_cost": 1.1,
                         "prompt_tokens": 1,
                         "provider_latency": 1.1,
+                        "provider_request": {
+                          "key": "value",
+                        },
+                        "provider_response": {
+                          "key": "value",
+                        },
                         "raw_output": "raw_output",
                         "save": true,
                         "session_id": "session_id",
@@ -12453,9 +12507,7 @@ Log is in, nested within the evaluated Log.
                       "description": "description",
                       "name": "name",
                       "parameters": {
-                        "parameters": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                     },
                     "id": "id",
@@ -12467,9 +12519,7 @@ Log is in, nested within the evaluated Log.
                     "last_used_at": "2024-01-15T09:30:00Z",
                     "name": "name",
                     "setup_values": {
-                      "setup_values": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "signature": "signature",
                     "source_code": "source_code",
@@ -12544,9 +12594,7 @@ an exception will be raised.",
                       "description": "description",
                       "name": "name",
                       "parameters": {
-                        "parameters": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                     },
                     "id": "id",
@@ -12558,9 +12606,7 @@ an exception will be raised.",
                     "last_used_at": "2024-01-15T09:30:00Z",
                     "name": "name",
                     "setup_values": {
-                      "setup_values": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "signature": "signature",
                     "source_code": "source_code",
@@ -12698,9 +12744,7 @@ will be used for calls made to the Tool in this Environment.",
                       "description": "description",
                       "name": "name",
                       "parameters": {
-                        "parameters": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                     },
                     "id": "id",
@@ -12712,9 +12756,7 @@ will be used for calls made to the Tool in this Environment.",
                     "last_used_at": "2024-01-15T09:30:00Z",
                     "name": "name",
                     "setup_values": {
-                      "setup_values": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "signature": "signature",
                     "source_code": "source_code",
@@ -12792,9 +12834,7 @@ By default the deployed version of the Tool is returned. Use the query parameter
                       "description": "description",
                       "name": "name",
                       "parameters": {
-                        "parameters": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                     },
                     "id": "id",
@@ -12806,9 +12846,7 @@ By default the deployed version of the Tool is returned. Use the query parameter
                     "last_used_at": "2024-01-15T09:30:00Z",
                     "name": "name",
                     "setup_values": {
-                      "setup_values": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "signature": "signature",
                     "source_code": "source_code",
@@ -12889,6 +12927,9 @@ By default the deployed version of the Tool is returned. Use the query parameter
                         ],
                         "last_used_at": "2024-01-15T09:30:00Z",
                         "name": "name",
+                        "setup_values": {
+                          "key": "value",
+                        },
                         "signature": "signature",
                         "source_code": "source_code",
                         "status": "uncommitted",
@@ -12955,14 +12996,10 @@ By default the deployed version of the Tool is returned. Use the query parameter
                       "description": "description",
                       "name": "name",
                       "parameters": {
-                        "parameters": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "setup_schema": {
-                        "setup_schema": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "signature": "signature",
                     },
@@ -13030,6 +13067,9 @@ By default the deployed version of the Tool is returned. Use the query parameter
                         ],
                         "last_used_at": "2024-01-15T09:30:00Z",
                         "name": "name",
+                        "setup_values": {
+                          "key": "value",
+                        },
                         "signature": "signature",
                         "source_code": "source_code",
                         "status": "uncommitted",
@@ -13277,9 +13317,7 @@ in the case where you are storing or deriving your Tool details in code.",
                       "description": "description",
                       "name": "name",
                       "parameters": {
-                        "parameters": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                     },
                     "id": "id",
@@ -13291,9 +13329,7 @@ in the case where you are storing or deriving your Tool details in code.",
                     "last_used_at": "2024-01-15T09:30:00Z",
                     "name": "name",
                     "setup_values": {
-                      "setup_values": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "signature": "signature",
                     "source_code": "source_code",
@@ -13380,9 +13416,7 @@ within the Tool for monitoring purposes.",
                       "description": "description",
                       "name": "name",
                       "parameters": {
-                        "parameters": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                     },
                     "id": "id",
@@ -13394,9 +13428,7 @@ within the Tool for monitoring purposes.",
                     "last_used_at": "2024-01-15T09:30:00Z",
                     "name": "name",
                     "setup_values": {
-                      "setup_values": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "signature": "signature",
                     "source_code": "source_code",
