@@ -26,17 +26,41 @@ const GLOBAL_HEADER_PERCENTAGE_THRESHOLD = 0.75;
 
 const HEADERS_TO_IGNORE = new Set(...["Authorization"]);
 
+function _isHeaderRequired(header: RawSchemas.TypeReferenceWithDocsSchema): boolean {
+    const tString = typeof header === "string" ? header : header.type;
+    return tString.includes("optional");
+}
+
 export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
     const predefinedGlobalHeaders: Record<string, GlobalHeader> = Object.fromEntries(
         (context.ir.globalHeaders ?? []).map((header) => [header.header, header])
     );
 
     const globalHeaders: Record<string, HeaderWithCount> = {};
+    const globalHeaderRequirements: Record<string, "required" | "optional" | "both"> = {};
     for (const endpoint of context.ir.endpoints) {
         for (const header of endpoint.headers) {
             if (HEADERS_TO_IGNORE.has(header.name)) {
                 continue;
             }
+
+            // If the header is both optional and required, omit it from the global headers.
+            // We will deal with it in the endpoint headers.
+            const resolvedSchema = buildTypeReference({
+                schema: header.schema,
+                context,
+                fileContainingReference: RelativeFilePath.of("api.yml")
+            });
+            const headerIsRequired = _isHeaderRequired(resolvedSchema);
+            const stashedRequirement = globalHeaderRequirements[header.name];
+            if (stashedRequirement == null) {
+                globalHeaderRequirements[header.name] = headerIsRequired ? "required" : "optional";
+            } else if (stashedRequirement === "required") {
+                globalHeaderRequirements[header.name] = headerIsRequired ? "required" : "both";
+            } else if (stashedRequirement === "optional") {
+                globalHeaderRequirements[header.name] = headerIsRequired ? "both" : "optional";
+            }
+
             let headerWithCount = globalHeaders[header.name];
             if (headerWithCount == null) {
                 const predefinedHeader = predefinedGlobalHeaders[header.name];
@@ -86,21 +110,32 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
     }
 
     for (const [headerName, header] of Object.entries(globalHeaders)) {
+        const headerRequirement = globalHeaderRequirements[headerName];
+        // The header is required on some endpoints and optional on others
+        // forfeit it as a global header and defer it to the endpoint.
+        if (headerRequirement === "both") {
+            continue;
+        }
+
         const predefinedHeader = predefinedGlobalHeaders[headerName];
         const isRequired = header.count === context.ir.endpoints.length;
         const isOptional = header.count >= globalHeaderThreshold;
+
         if (predefinedHeader != null) {
             continue; // already added
-        } else if (isRequired) {
+        } else if (isRequired && headerRequirement === "required") {
+            // Only require as a global header if it's required on every endpoint
             context.builder.addGlobalHeader({
                 name: headerName,
                 schema: header.schema
             });
-        } else if (isOptional) {
+        } else if ((isRequired || isOptional) && headerRequirement === "optional") {
+            // If a header's true type is always optional, we should add it as optional
             context.builder.addGlobalHeader({
                 name: headerName,
                 schema: wrapTypeReferenceAsOptional(header.schema)
             });
         }
+        // If a header is always required and NOT on every endpoint, defer it to be on the endpoint
     }
 }

@@ -50,7 +50,7 @@ exports[`x-fern-parameter-name x-fern-parameter-name docs 1`] = `
     "headers": {
       "X-API-Version": {
         "name": "version",
-        "type": "string",
+        "type": "optional<string>",
       },
     },
     "name": "api",
@@ -108,7 +108,7 @@ exports[`x-fern-parameter-name x-fern-parameter-name simple 1`] = `
     "headers": {
       "X-API-Version": {
         "name": "version",
-        "type": "string",
+        "type": "optional<string>",
       },
     },
     "name": "api",
