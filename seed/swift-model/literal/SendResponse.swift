@@ -17,6 +17,6 @@ public struct SendResponse: Codable {
 
     public let message: String
     public let status: Int
-    public let success: 1: "literal"
+    public let success: literal: boolean
 
 }

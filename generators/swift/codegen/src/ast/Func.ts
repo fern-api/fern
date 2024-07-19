@@ -1,5 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Swift, { AccessLevel, Class, FunctionModifier, Param } from "..";
+import Swift, { AccessLevel, Class_, FunctionModifier, Param } from "..";
 
 /*
 
@@ -35,7 +35,7 @@ export declare namespace Func {
         /* Indicates if the function throws an error */
         throws?: boolean;
         /* The return type of the function */
-        returnClass?: Class;
+        returnClass?: Class_;
     }
 }
 
@@ -46,7 +46,7 @@ export class Func extends AstNode {
     public readonly params?: Param[];
     public readonly async: boolean;
     public readonly throws: boolean;
-    public readonly returnClass?: Class;
+    public readonly returnClass?: Class_;
 
     constructor(args: Func.Args) {
         super(Swift.indentSize);

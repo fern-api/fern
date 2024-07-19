@@ -1,7 +1,7 @@
 /* eslint-disable object-shorthand */
 /* eslint-disable @typescript-eslint/no-extraneous-class */
 /* eslint-disable no-console */
-import Swift, { AccessLevel, Class, EnumCase, Field, SwiftFile, VariableType } from "@fern-api/swift-codegen";
+import Swift, { AccessLevel, Class_, EnumCase, Field, SwiftFile, VariableType } from "@fern-api/swift-codegen";
 import { ContainerType, ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ModelGeneratorContext } from "../ModelGeneratorCli";
 import { CodeBuilder } from "./CodeBuilder";
@@ -19,16 +19,25 @@ export default class ObjectBuilder extends CodeBuilder<SwiftFile> {
     this.objectDeclaration = objectDeclaration;
   }
 
-  private buildContainer(value: ContainerType): Class {
-    return value._visit<Class>({
+  private buildContainer(value: ContainerType): Class_ {
+    return value._visit<Class_>({
       list: (value) => {
-        throw new Error("Function not implemented.");
+        const type = value._visit<Class_>({
+          container:                 (value) => Swift.factories.types.makeAny(),
+          named:                     (value) => Swift.makeClass({ name: value.name.pascalCase.safeName }),
+          primitive:             (valueType) => Swift.makePrimative({ key: valueType.v2?.type }),
+          unknown:                        () => Swift.factories.types.makeAny(),
+          _other: (value: { type: string; }) => Swift.factories.types.makeAny(),
+        });
+        return type; // TODO: Support lists
       },
       map: (value) => {
-        throw new Error("Function not implemented.");
+        return Swift.makeClass({
+          name: "map: " + value.valueType.type
+        });
       },
       optional: (value) => {
-        const type = value._visit<Class>({
+        const type = value._visit<Class_>({
           container:                 (value) => Swift.factories.types.makeAny(),
           named:                     (value) => Swift.makeClass({ name: value.name.pascalCase.safeName }),
           primitive:             (valueType) => Swift.makePrimative({ key: valueType.v2?.type }),
@@ -38,13 +47,19 @@ export default class ObjectBuilder extends CodeBuilder<SwiftFile> {
         return type.toOptional();
       },
       set: (value) => {
-        throw new Error("Function not implemented.");
+        return Swift.makeClass({
+          name: "set: " + value.type
+        });
       },
       literal: (value) => {
-        throw new Error("Function not implemented.");
+        return Swift.makeClass({
+          name: "literal: " + value.type
+        });
       },
       _other: (value: { type: string; }) => {
-        throw new Error("Function not implemented.");
+        return Swift.makeClass({
+          name: "_other: " + value.type
+        });
       }
     });
   }
@@ -62,7 +77,7 @@ export default class ObjectBuilder extends CodeBuilder<SwiftFile> {
 
     const fields = properties.map(property => {
 
-      const type = property.valueType._visit<Class | undefined>({
+      const type = property.valueType._visit<Class_ | undefined>({
         container:                 (value) => this.buildContainer(value),
         named:                     (value) => Swift.makeClass({ name: value.name.pascalCase.safeName }),
         primitive:             (valueType) => Swift.makePrimative({ key: valueType.v2?.type }),

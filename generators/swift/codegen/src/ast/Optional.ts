@@ -1,5 +1,5 @@
 import { Writer } from "@fern-api/generator-commons";
-import { Class } from "..";
+import { Class_ } from "..";
 
 /*
 
@@ -14,13 +14,11 @@ Person?
 
 export declare namespace Optional {
     interface Args {
-        class: Class
+        class: Class_
     }
 }
 
-export class Optional extends Class {
-
-    public readonly class: Class;
+export class Optional extends Class_ {
 
     constructor(args: Optional.Args) {
         super({
@@ -31,11 +29,10 @@ export class Optional extends Class {
             functions: args.class.functions,
             inheritance: args.class.inheritance,
         });
-        this.class = args.class;
     }
 
     public write(writer: Writer): void {
-        writer.writeNode(this.class);
+        writer.writeNode(this);
     }
 
 }

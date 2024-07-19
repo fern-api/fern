@@ -13,6 +13,6 @@ public struct WithCursor: Codable {
         case cursor = "cursor"
     }
 
-    public let cursor: 1: "optional"
+    public let cursor: YESM
 
 }

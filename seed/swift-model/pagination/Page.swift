@@ -17,7 +17,7 @@ public struct Page: Codable {
     }
 
     public let page: Int
-    public let next: 1: "optional"
+    public let next: YESM
     public let perPage: Int
     public let totalPage: Int
 

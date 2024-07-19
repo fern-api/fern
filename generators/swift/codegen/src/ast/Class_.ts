@@ -34,33 +34,33 @@ Breakdown:
 
 */
 
-export declare namespace Class {
+export declare namespace Class_ {
     interface Args {
         /* The access level of the type */
         accessLevel?: AccessLevel;
         /* The name of the type */
         name: string;
         /* The subclasses of this type, which can be other types or enums */
-        subclasses?: (Class | Enum)[];
+        subclasses?: (Class_ | Enum)[];
         /* The field variables in the class */
         fields?: Field[];
         /* The functions associated with this type */
         functions?: Func[];
         /* The inheritance hierarchy of this type */
-        inheritance?: Class[];
+        inheritance?: Class_[];
     }
 }
 
-export class Class extends AstNode {
+export class Class_ extends AstNode {
 
     public readonly accessLevel?: AccessLevel;
     public readonly name: string;
-    public readonly subclasses?: (Class | Enum)[];
+    public readonly subclasses?: (Class_ | Enum)[];
     public readonly fields?: Field[];
     public readonly functions?: Func[];
-    public readonly inheritance?: Class[];
+    public readonly inheritance?: Class_[];
 
-    constructor(args: Class.Args) {
+    constructor(args: Class_.Args) {
         super(Swift.indentSize);
         this.accessLevel = args.accessLevel;
         this.name = args.name;
@@ -75,6 +75,13 @@ export class Class extends AstNode {
             class: this
         });
     }
+
+    // eslint-disable-next-line @typescript-eslint/array-type
+    // public toArray(): Array_ {
+    //     return Swift.makeArray({
+    //         class: this
+    //     });
+    // }
 
     private buildTitle(): string | undefined {
 

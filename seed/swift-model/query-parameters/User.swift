@@ -15,6 +15,6 @@ public struct User: Codable {
     }
 
     public let name: String
-    public let tags: 1: "list"
+    public let tags: String
 
 }

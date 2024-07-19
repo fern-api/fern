@@ -13,6 +13,6 @@ public struct WithPage: Codable {
         case page = "page"
     }
 
-    public let page: 1: "optional"
+    public let page: YESM
 
 }

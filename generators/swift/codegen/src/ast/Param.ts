@@ -1,5 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Swift, { Class } from "..";
+import Swift, { Class_ } from "..";
 
 /*
 
@@ -21,7 +21,7 @@ export declare namespace Param {
         /* param name */
         title: string;
         /* Type of the value */
-        class: Class;
+        class: Class_;
         /* Original value. Optional because it may not exist */
         defaultValue?: string;
     }
@@ -30,7 +30,7 @@ export declare namespace Param {
 export class Param extends AstNode {
 
     public readonly title: string;
-    public readonly type: Class;
+    public readonly type: Class_;
     public readonly defaultValue?: string; // TODO
 
     constructor(args: Param.Args) {

@@ -1,7 +1,14 @@
+/**
+ * Demo:
+ * 1. Generator commons
+ * 2. Swift Ast
+ * 3. Files are generating! 🙌
+ */
+
 /* eslint-disable @typescript-eslint/no-extraneous-class */
 // Swift Imports
 import { AccessLevel } from "./ast/AccessLevel";
-import { Class } from "./ast/Class";
+import { Class_ } from "./ast/Class_";
 import { Enum } from "./ast/Enum";
 import { EnumCase } from "./ast/EnumCase";
 import { Field } from "./ast/Field";
@@ -17,7 +24,7 @@ import { TypeAlias } from "./ast/TypeAlias";
 
 // Swift Exports
 export { AccessLevel } from "./ast/AccessLevel";
-export { Class } from "./ast/Class";
+export { Class_ } from "./ast/Class_";
 export { Enum } from "./ast/Enum";
 export { EnumCase } from "./ast/EnumCase";
 export { Field } from "./ast/Field";
@@ -85,8 +92,8 @@ export default class Swift {
     return new Struct(args);
   }
 
-  public static makeClass(args: Class.Args): Class {
-    return new Class(args);
+  public static makeClass(args: Class_.Args): Class_ {
+    return new Class_(args);
   }
 
   public static makeOptional(args: Optional.Args): Optional {
@@ -96,6 +103,11 @@ export default class Swift {
   public static makeFile(args: File.Args): File {
     return new File(args);
   }
+
+  // // eslint-disable-next-line @typescript-eslint/array-type
+  // public static makeArray(args: Array_.Args): Array_ {
+  //   return new Array_(args);
+  // }
 
   /**
    * 🏭 Factories
@@ -173,7 +185,7 @@ export default class Swift {
       /**
        * @returns class Codable { ... }
        */
-      makeCodable(): Class {
+      makeCodable(): Class_ {
         return Swift.makeClass({
           name: "Codable"
         });

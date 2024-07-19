@@ -15,8 +15,8 @@ public struct ListUsersPaginationResponse: Codable {
         case data = "data"
     }
 
-    public let page: 1: "optional"
+    public let page: YESM
     public let totalCount: Int
-    public let data: 1: "list"
+    public let data: YESM
 
 }

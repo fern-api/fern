@@ -13,6 +13,6 @@ public struct UserListContainer: Codable {
         case users = "users"
     }
 
-    public let users: 1: "list"
+    public let users: YESM
 
 }

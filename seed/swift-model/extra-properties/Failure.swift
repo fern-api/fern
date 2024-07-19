@@ -13,6 +13,6 @@ public struct Failure: Codable {
         case status = "status"
     }
 
-    public let status: 1: "literal"
+    public let status: literal: string
 
 }

@@ -15,6 +15,6 @@ public struct UserPage: Codable {
     }
 
     public let data: UserListContainer
-    public let next: 1: "optional"
+    public let next: YESM
 
 }

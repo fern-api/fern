@@ -1,5 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Swift, { AccessLevel, Class } from "..";
+import Swift, { AccessLevel, Class_ } from "..";
 import { VariableType } from "./VariableType";
 
 export declare namespace Field {
@@ -7,7 +7,7 @@ export declare namespace Field {
         accessLevel?: AccessLevel;
         variableType?: VariableType;
         name: string;
-        class: Class,
+        class: Class_,
         defaultValue?: string,
     }
 }
@@ -16,7 +16,7 @@ export class Field extends AstNode {
     public readonly accessLevel?: AccessLevel;
     public readonly variableType?: VariableType;
     public readonly name: string;
-    public readonly class: Class;
+    public readonly class: Class_;
     public readonly defaultValue?: string; // TODO
 
     constructor({ 

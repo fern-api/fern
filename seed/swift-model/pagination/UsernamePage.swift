@@ -14,7 +14,7 @@ public struct UsernamePage: Codable {
         case data = "data"
     }
 
-    public let after: 1: "optional"
-    public let data: 1: "list"
+    public let after: YESM
+    public let data: YESM
 
 }

@@ -16,7 +16,7 @@ public struct User: Codable {
     }
 
     public let userName: String
-    public let metadataTags: 1: "list"
-    public let extraProperties: 1: "map"
+    public let metadataTags: String
+    public let extraProperties: map: primitive
 
 }
