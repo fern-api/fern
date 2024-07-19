@@ -142,7 +142,3 @@ class Paginator:
         property_path.append(response_property.property.name.name)
         path_name = list(map(lambda name: name.snake_case.safe_name, property_path))
         return ".".join(path_name)
-
-
-def request_property_to_name(request_property: ir_types.RequestPropertyValue) -> str:
-    return request_property.get_as_union().name.name.snake_case.safe_name
