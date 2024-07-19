@@ -52,6 +52,7 @@ exports[`non alphanumeric characters non-alphanumeric-characters parse open api 
         "contentType": null,
         "description": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "PatchSettingsRequest",
           "groupName": null,
@@ -66,6 +67,7 @@ exports[`non alphanumeric characters non-alphanumeric-characters parse open api 
         "description": "OK",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "PatchSettingsResponse",
           "groupName": null,
@@ -91,6 +93,7 @@ exports[`non alphanumeric characters non-alphanumeric-characters parse open api 
   ],
   "schemas": {
     "DocumentIDSeparators": {
+      "availability": null,
       "description": null,
       "generatedName": "DocumentIdSeparators",
       "groupName": null,
@@ -98,6 +101,7 @@ exports[`non alphanumeric characters non-alphanumeric-characters parse open api 
       "type": "enum",
       "values": [
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -110,6 +114,7 @@ exports[`non alphanumeric characters non-alphanumeric-characters parse open api 
           "value": "/",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -122,6 +127,7 @@ exports[`non alphanumeric characters non-alphanumeric-characters parse open api 
           "value": "-",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -134,6 +140,7 @@ exports[`non alphanumeric characters non-alphanumeric-characters parse open api 
           "value": "|",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -146,6 +153,7 @@ exports[`non alphanumeric characters non-alphanumeric-characters parse open api 
           "value": ".",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -163,6 +171,7 @@ exports[`non alphanumeric characters non-alphanumeric-characters parse open api 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Settings",
       "groupName": null,
@@ -170,17 +179,20 @@ exports[`non alphanumeric characters non-alphanumeric-characters parse open api 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "settingsSeparator",
           "key": "separator",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "settingsSeparator",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "SettingsSeparator",
               "groupName": null,

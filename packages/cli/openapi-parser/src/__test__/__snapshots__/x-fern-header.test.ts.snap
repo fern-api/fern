@@ -24,9 +24,11 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       "path": "/user/{userId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "userId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "UserGetStreamRequestUserId",
             "groupName": null,
@@ -53,6 +55,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "UserGetStreamRequest",
           "groupName": null,
@@ -62,11 +65,13 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
               "audiences": [
                 "public",
               ],
+              "availability": null,
               "conflict": {},
               "generatedName": "userGetStreamRequestStream",
               "key": "stream",
               "nameOverride": null,
               "schema": {
+                "availability": null,
                 "description": null,
                 "generatedName": "UserGetStreamRequestStream",
                 "groupName": null,
@@ -88,6 +93,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
         "description": "",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "UserGetStreamResponse",
           "groupName": null,
@@ -176,9 +182,11 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       "path": "/user/{userId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "userId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "UserGetRequestUserId",
             "groupName": null,
@@ -205,6 +213,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "UserGetRequest",
           "groupName": null,
@@ -214,11 +223,13 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
               "audiences": [
                 "public",
               ],
+              "availability": null,
               "conflict": {},
               "generatedName": "userGetRequestStream",
               "key": "stream",
               "nameOverride": null,
               "schema": {
+                "availability": null,
                 "description": null,
                 "generatedName": "UserGetRequestStream",
                 "groupName": null,
@@ -240,6 +251,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
         "description": "",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "UserGetResponse",
           "groupName": null,
@@ -273,6 +285,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "StreamUser",
       "groupName": null,
@@ -280,17 +293,20 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "streamUserId",
           "key": "id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "streamUserId",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "StreamUserId",
               "groupName": null,
@@ -309,17 +325,20 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "streamUserStreamed",
           "key": "streamed",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "streamUserStreamed",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "StreamUserStreamed",
               "groupName": null,
@@ -339,6 +358,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "User",
       "groupName": null,
@@ -346,17 +366,20 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "userId",
           "key": "id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "userId",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "UserId",
               "groupName": null,
@@ -375,17 +398,20 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "userStreamed",
           "key": "streamed",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "userStreamed",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "UserStreamed",
               "groupName": null,

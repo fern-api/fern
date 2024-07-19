@@ -6,6 +6,10 @@ types:
     properties:
       description: optional<string>
 
+  WithAvailability:
+    properties:
+      availability: optional<finalIr.Availability>
+
   WithName:
     properties:
       nameOverride:

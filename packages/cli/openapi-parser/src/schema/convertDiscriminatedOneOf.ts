@@ -1,4 +1,5 @@
 import {
+    Availability,
     CommonPropertyWithExample,
     OneOfSchemaWithExample,
     SchemaWithExample,
@@ -15,6 +16,7 @@ export function convertDiscriminatedOneOf({
     breadcrumbs,
     properties,
     description,
+    availability,
     required,
     wrapAsNullable,
     discriminator,
@@ -26,6 +28,7 @@ export function convertDiscriminatedOneOf({
     breadcrumbs: string[];
     properties: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>;
     description: string | undefined;
+    availability: Availability | undefined;
     required: string[] | undefined;
     wrapAsNullable: boolean;
     discriminator: OpenAPIV3.DiscriminatorObject;
@@ -71,6 +74,7 @@ export function convertDiscriminatedOneOf({
         wrapAsNullable,
         properties: convertedProperties,
         description,
+        availability,
         discriminant,
         subtypes: unionSubTypes,
         groupName
@@ -83,6 +87,7 @@ export function convertDiscriminatedOneOfWithVariants({
     breadcrumbs,
     properties,
     description,
+    availability,
     required,
     wrapAsNullable,
     discriminant,
@@ -95,6 +100,7 @@ export function convertDiscriminatedOneOfWithVariants({
     breadcrumbs: string[];
     properties: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>;
     description: string | undefined;
+    availability: Availability | undefined;
     required: string[] | undefined;
     wrapAsNullable: boolean;
     discriminant: string;
@@ -138,6 +144,7 @@ export function convertDiscriminatedOneOfWithVariants({
         wrapAsNullable,
         properties: convertedProperties,
         description,
+        availability,
         discriminant,
         subtypes: unionSubTypes,
         groupName
@@ -150,6 +157,7 @@ export function wrapDiscriminantedOneOf({
     wrapAsNullable,
     properties,
     description,
+    availability,
     discriminant,
     subtypes,
     groupName
@@ -159,6 +167,7 @@ export function wrapDiscriminantedOneOf({
     wrapAsNullable: boolean;
     properties: CommonPropertyWithExample[];
     description: string | undefined;
+    availability: Availability | undefined;
     discriminant: string;
     subtypes: Record<string, SchemaWithExample>;
     groupName: SdkGroupName | undefined;
@@ -170,6 +179,7 @@ export function wrapDiscriminantedOneOf({
             value: SchemaWithExample.oneOf(
                 OneOfSchemaWithExample.discriminated({
                     description,
+                    availability,
                     discriminantProperty: discriminant,
                     nameOverride,
                     generatedName,
@@ -179,12 +189,14 @@ export function wrapDiscriminantedOneOf({
                 })
             ),
             groupName,
-            description
+            description,
+            availability
         });
     }
     return SchemaWithExample.oneOf(
         OneOfSchemaWithExample.discriminated({
             description,
+            availability,
             discriminantProperty: discriminant,
             nameOverride,
             generatedName,

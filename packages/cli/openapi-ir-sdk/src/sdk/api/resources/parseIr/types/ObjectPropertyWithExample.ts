@@ -4,7 +4,7 @@
 
 import * as FernOpenapiIr from "../../..";
 
-export interface ObjectPropertyWithExample {
+export interface ObjectPropertyWithExample extends FernOpenapiIr.WithAvailability {
     key: string;
     schema: FernOpenapiIr.SchemaWithExample;
     audiences: string[];

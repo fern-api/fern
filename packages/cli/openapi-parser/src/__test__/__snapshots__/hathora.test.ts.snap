@@ -224,12 +224,14 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "GetAppsResponse",
           "groupName": null,
           "nameOverride": null,
           "type": "array",
           "value": {
+            "availability": null,
             "description": null,
             "generatedName": "GetAppsResponseItem",
             "groupName": null,
@@ -259,6 +261,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "UnprocessableEntityError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
@@ -280,6 +283,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "InternalServerErrorBody",
             "groupName": null,
@@ -419,6 +423,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "CreateAppRequest",
           "groupName": null,
@@ -426,6 +431,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "createAppRequestAuthConfiguration",
               "key": "authConfiguration",
@@ -434,6 +440,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
+                "availability": null,
                 "description": null,
                 "generatedName": "CreateAppRequestAuthConfiguration",
                 "groupName": null,
@@ -441,11 +448,13 @@ exports[`open api parser hathora parse open api 1`] = `
                 "properties": [
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "createAppRequestAuthConfigurationGoogle",
                     "key": "google",
                     "nameOverride": null,
                     "schema": {
+                      "availability": null,
                       "description": null,
                       "generatedName": "createAppRequestAuthConfigurationGoogle",
                       "groupName": null,
@@ -455,6 +464,7 @@ exports[`open api parser hathora parse open api 1`] = `
                         "additionalProperties": false,
                         "allOf": [],
                         "allOfPropertyConflicts": [],
+                        "availability": null,
                         "description": null,
                         "generatedName": "CreateAppRequestAuthConfigurationGoogle",
                         "groupName": null,
@@ -462,11 +472,13 @@ exports[`open api parser hathora parse open api 1`] = `
                         "properties": [
                           {
                             "audiences": [],
+                            "availability": null,
                             "conflict": {},
                             "generatedName": "createAppRequestAuthConfigurationGoogleClientId",
                             "key": "clientId",
                             "nameOverride": null,
                             "schema": {
+                              "availability": null,
                               "description": null,
                               "generatedName": "CreateAppRequestAuthConfigurationGoogleClientId",
                               "groupName": null,
@@ -489,17 +501,20 @@ exports[`open api parser hathora parse open api 1`] = `
                   },
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "createAppRequestAuthConfigurationNickname",
                     "key": "nickname",
                     "nameOverride": null,
                     "schema": {
+                      "availability": null,
                       "description": null,
                       "generatedName": "createAppRequestAuthConfigurationNickname",
                       "groupName": null,
                       "nameOverride": null,
                       "type": "optional",
                       "value": {
+                        "availability": null,
                         "description": null,
                         "generatedName": "CreateAppRequestAuthConfigurationNickname",
                         "groupName": null,
@@ -511,17 +526,20 @@ exports[`open api parser hathora parse open api 1`] = `
                   },
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "createAppRequestAuthConfigurationAnonymous",
                     "key": "anonymous",
                     "nameOverride": null,
                     "schema": {
+                      "availability": null,
                       "description": null,
                       "generatedName": "createAppRequestAuthConfigurationAnonymous",
                       "groupName": null,
                       "nameOverride": null,
                       "type": "optional",
                       "value": {
+                        "availability": null,
                         "description": null,
                         "generatedName": "CreateAppRequestAuthConfigurationAnonymous",
                         "groupName": null,
@@ -537,11 +555,13 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "createAppRequestAppName",
               "key": "appName",
               "nameOverride": null,
               "schema": {
+                "availability": null,
                 "description": null,
                 "generatedName": "CreateAppRequestAppName",
                 "groupName": null,
@@ -567,6 +587,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "CreateAppResponse",
           "groupName": null,
@@ -595,6 +616,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -616,6 +638,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "UnprocessableEntityError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
@@ -637,6 +660,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "InternalServerErrorBody",
             "groupName": null,
@@ -779,9 +803,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/apps/v1/update/{appId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "UpdateAppRequestAppId",
             "groupName": null,
@@ -801,6 +827,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "UpdateAppRequest",
           "groupName": null,
@@ -808,6 +835,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "updateAppRequestAuthConfiguration",
               "key": "authConfiguration",
@@ -816,6 +844,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
+                "availability": null,
                 "description": null,
                 "generatedName": "UpdateAppRequestAuthConfiguration",
                 "groupName": null,
@@ -823,11 +852,13 @@ exports[`open api parser hathora parse open api 1`] = `
                 "properties": [
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "updateAppRequestAuthConfigurationGoogle",
                     "key": "google",
                     "nameOverride": null,
                     "schema": {
+                      "availability": null,
                       "description": null,
                       "generatedName": "updateAppRequestAuthConfigurationGoogle",
                       "groupName": null,
@@ -837,6 +868,7 @@ exports[`open api parser hathora parse open api 1`] = `
                         "additionalProperties": false,
                         "allOf": [],
                         "allOfPropertyConflicts": [],
+                        "availability": null,
                         "description": null,
                         "generatedName": "UpdateAppRequestAuthConfigurationGoogle",
                         "groupName": null,
@@ -844,11 +876,13 @@ exports[`open api parser hathora parse open api 1`] = `
                         "properties": [
                           {
                             "audiences": [],
+                            "availability": null,
                             "conflict": {},
                             "generatedName": "updateAppRequestAuthConfigurationGoogleClientId",
                             "key": "clientId",
                             "nameOverride": null,
                             "schema": {
+                              "availability": null,
                               "description": null,
                               "generatedName": "UpdateAppRequestAuthConfigurationGoogleClientId",
                               "groupName": null,
@@ -871,17 +905,20 @@ exports[`open api parser hathora parse open api 1`] = `
                   },
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "updateAppRequestAuthConfigurationNickname",
                     "key": "nickname",
                     "nameOverride": null,
                     "schema": {
+                      "availability": null,
                       "description": null,
                       "generatedName": "updateAppRequestAuthConfigurationNickname",
                       "groupName": null,
                       "nameOverride": null,
                       "type": "optional",
                       "value": {
+                        "availability": null,
                         "description": null,
                         "generatedName": "UpdateAppRequestAuthConfigurationNickname",
                         "groupName": null,
@@ -893,17 +930,20 @@ exports[`open api parser hathora parse open api 1`] = `
                   },
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "updateAppRequestAuthConfigurationAnonymous",
                     "key": "anonymous",
                     "nameOverride": null,
                     "schema": {
+                      "availability": null,
                       "description": null,
                       "generatedName": "updateAppRequestAuthConfigurationAnonymous",
                       "groupName": null,
                       "nameOverride": null,
                       "type": "optional",
                       "value": {
+                        "availability": null,
                         "description": null,
                         "generatedName": "UpdateAppRequestAuthConfigurationAnonymous",
                         "groupName": null,
@@ -919,11 +959,13 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "updateAppRequestAppName",
               "key": "appName",
               "nameOverride": null,
               "schema": {
+                "availability": null,
                 "description": null,
                 "generatedName": "UpdateAppRequestAppName",
                 "groupName": null,
@@ -949,6 +991,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "UpdateAppResponse",
           "groupName": null,
@@ -977,6 +1020,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -1104,9 +1148,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/apps/v1/info/{appId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetAppInfoRequestAppId",
             "groupName": null,
@@ -1124,6 +1170,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "GetAppInfoResponse",
           "groupName": null,
@@ -1152,6 +1199,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -1173,6 +1221,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "InternalServerErrorBody",
             "groupName": null,
@@ -1223,9 +1272,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/apps/v1/delete/{appId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "DeleteAppRequestAppId",
             "groupName": null,
@@ -1259,6 +1310,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -1320,9 +1372,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/auth/v1/{appId}/login/anonymous",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "LoginAnonymousRequestAppId",
             "groupName": null,
@@ -1343,6 +1397,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "LoginAnonymousResponse",
           "groupName": null,
@@ -1350,11 +1405,13 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "loginAnonymousResponseToken",
               "key": "token",
               "nameOverride": null,
               "schema": {
+                "availability": null,
                 "description": null,
                 "generatedName": "LoginAnonymousResponseToken",
                 "groupName": null,
@@ -1394,6 +1451,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -1466,9 +1524,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/auth/v1/{appId}/login/nickname",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "LoginNicknameRequestAppId",
             "groupName": null,
@@ -1488,6 +1548,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "LoginNicknameRequest",
           "groupName": null,
@@ -1495,11 +1556,13 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "loginNicknameRequestNickname",
               "key": "nickname",
               "nameOverride": null,
               "schema": {
+                "availability": null,
                 "description": null,
                 "generatedName": "LoginNicknameRequestNickname",
                 "groupName": null,
@@ -1528,6 +1591,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "LoginNicknameResponse",
           "groupName": null,
@@ -1535,11 +1599,13 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "loginNicknameResponseToken",
               "key": "token",
               "nameOverride": null,
               "schema": {
+                "availability": null,
                 "description": null,
                 "generatedName": "LoginNicknameResponseToken",
                 "groupName": null,
@@ -1579,6 +1645,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "UnauthorizedError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
@@ -1600,6 +1667,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -1672,9 +1740,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/auth/v1/{appId}/login/google",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "LoginGoogleRequestAppId",
             "groupName": null,
@@ -1694,6 +1764,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "LoginGoogleRequest",
           "groupName": null,
@@ -1701,11 +1772,13 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "loginGoogleRequestIdToken",
               "key": "idToken",
               "nameOverride": null,
               "schema": {
+                "availability": null,
                 "description": null,
                 "generatedName": "LoginGoogleRequestIdToken",
                 "groupName": null,
@@ -1734,6 +1807,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "LoginGoogleResponse",
           "groupName": null,
@@ -1741,11 +1815,13 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "loginGoogleResponseToken",
               "key": "token",
               "nameOverride": null,
               "schema": {
+                "availability": null,
                 "description": null,
                 "generatedName": "LoginGoogleResponseToken",
                 "groupName": null,
@@ -1785,6 +1861,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -1925,9 +2002,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/builds/v1/{appId}/list",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetBuildsRequestAppId",
             "groupName": null,
@@ -1945,12 +2024,14 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "GetBuildsResponse",
           "groupName": null,
           "nameOverride": null,
           "type": "array",
           "value": {
+            "availability": null,
             "description": null,
             "generatedName": "GetBuildsResponseItem",
             "groupName": null,
@@ -1980,6 +2061,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -2125,9 +2207,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/builds/v1/{appId}/info/{buildId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetBuildInfoRequestAppId",
             "groupName": null,
@@ -2138,9 +2222,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "buildId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetBuildInfoRequestBuildId",
             "groupName": null,
@@ -2158,6 +2244,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "GetBuildInfoResponse",
           "groupName": null,
@@ -2186,6 +2273,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -2207,6 +2295,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "UnprocessableEntityError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
@@ -2228,6 +2317,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "InternalServerErrorBody",
             "groupName": null,
@@ -2363,9 +2453,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/builds/v1/{appId}/create",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "CreateBuildRequestAppId",
             "groupName": null,
@@ -2383,6 +2475,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "CreateBuildResponse",
           "groupName": null,
@@ -2411,6 +2504,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -2432,6 +2526,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "InternalServerErrorBody",
             "groupName": null,
@@ -2459,9 +2554,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/builds/v1/{appId}/run/{buildId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "RunBuildRequestAppId",
             "groupName": null,
@@ -2472,9 +2569,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "buildId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "RunBuildRequestBuildId",
             "groupName": null,
@@ -2526,6 +2625,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -2547,6 +2647,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "UnprocessableEntityError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
@@ -2568,6 +2669,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "InternalServerErrorBody",
             "groupName": null,
@@ -2628,9 +2730,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/builds/v1/{appId}/delete/{buildId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "DeleteBuildRequestAppId",
             "groupName": null,
@@ -2641,9 +2745,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "buildId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "DeleteBuildRequestBuildId",
             "groupName": null,
@@ -2677,6 +2783,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -2831,9 +2938,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/deployments/v1/{appId}/list",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetDeploymentsRequestAppId",
             "groupName": null,
@@ -2851,12 +2960,14 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "GetDeploymentsResponse",
           "groupName": null,
           "nameOverride": null,
           "type": "array",
           "value": {
+            "availability": null,
             "description": null,
             "generatedName": "GetDeploymentsResponseItem",
             "groupName": null,
@@ -2886,6 +2997,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -3045,9 +3157,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/deployments/v1/{appId}/info/{deploymentId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetDeploymentInfoRequestAppId",
             "groupName": null,
@@ -3058,9 +3172,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "deploymentId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetDeploymentInfoRequestDeploymentId",
             "groupName": null,
@@ -3078,6 +3194,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "GetDeploymentInfoResponse",
           "groupName": null,
@@ -3106,6 +3223,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -3127,6 +3245,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "UnprocessableEntityError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
@@ -3148,6 +3267,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "InternalServerErrorBody",
             "groupName": null,
@@ -3357,9 +3477,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/deployments/v1/{appId}/create/{buildId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "CreateDeploymentRequestAppId",
             "groupName": null,
@@ -3370,9 +3492,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "buildId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "CreateDeploymentRequestBuildId",
             "groupName": null,
@@ -3389,6 +3513,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "contentType": null,
         "description": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "CreateDeploymentRequest",
           "groupName": null,
@@ -3403,6 +3528,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "CreateDeploymentResponse",
           "groupName": null,
@@ -3481,6 +3607,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "GetPingServiceEndpointsResponse",
           "groupName": null,
@@ -3509,6 +3636,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "UnauthorizedError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
@@ -3530,6 +3658,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -3551,6 +3680,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "UnprocessableEntityError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
@@ -3572,6 +3702,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "TooManyRequestsError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
@@ -3593,6 +3724,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "InternalServerErrorBody",
             "groupName": null,
@@ -3653,11 +3785,13 @@ exports[`open api parser hathora parse open api 1`] = `
       "generatedRequestName": "CreatePrivateLobbyDeprecatedRequest",
       "headers": [
         {
+          "availability": null,
           "description": null,
           "env": null,
           "name": "Authorization",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "CreatePrivateLobbyDeprecatedRequestAuthorization",
             "groupName": null,
@@ -3682,9 +3816,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/lobby/v1/{appId}/create/private",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "CreatePrivateLobbyDeprecatedRequestAppId",
             "groupName": null,
@@ -3697,16 +3833,19 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "region",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "CreatePrivateLobbyDeprecatedRequestRegion",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "CreatePrivateLobbyDeprecatedRequestRegion",
               "groupName": null,
@@ -3717,16 +3856,19 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": null,
           "name": "local",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "CreatePrivateLobbyDeprecatedRequestLocal",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "CreatePrivateLobbyDeprecatedRequestLocal",
               "groupName": null,
@@ -3746,6 +3888,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "CreatePrivateLobbyDeprecatedResponse",
           "groupName": null,
@@ -3774,6 +3917,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "UnauthorizedError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
@@ -3795,6 +3939,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -3816,6 +3961,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "UnprocessableEntityError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
@@ -3837,6 +3983,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "TooManyRequestsError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
@@ -3858,6 +4005,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "InternalServerErrorBody",
             "groupName": null,
@@ -3918,11 +4066,13 @@ exports[`open api parser hathora parse open api 1`] = `
       "generatedRequestName": "CreatePublicLobbyDeprecatedRequest",
       "headers": [
         {
+          "availability": null,
           "description": null,
           "env": null,
           "name": "Authorization",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "CreatePublicLobbyDeprecatedRequestAuthorization",
             "groupName": null,
@@ -3947,9 +4097,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/lobby/v1/{appId}/create/public",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "CreatePublicLobbyDeprecatedRequestAppId",
             "groupName": null,
@@ -3962,16 +4114,19 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "region",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "CreatePublicLobbyDeprecatedRequestRegion",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "CreatePublicLobbyDeprecatedRequestRegion",
               "groupName": null,
@@ -3982,16 +4137,19 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": null,
           "name": "local",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "CreatePublicLobbyDeprecatedRequestLocal",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "CreatePublicLobbyDeprecatedRequestLocal",
               "groupName": null,
@@ -4011,6 +4169,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "CreatePublicLobbyDeprecatedResponse",
           "groupName": null,
@@ -4039,6 +4198,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "UnauthorizedError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
@@ -4060,6 +4220,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -4208,11 +4369,13 @@ exports[`open api parser hathora parse open api 1`] = `
       "generatedRequestName": "ListActivePublicLobbiesDeprecatedRequest",
       "headers": [
         {
+          "availability": null,
           "description": null,
           "env": null,
           "name": "Authorization",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ListActivePublicLobbiesDeprecatedRequestAuthorization",
             "groupName": null,
@@ -4237,9 +4400,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/lobby/v1/{appId}/list",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ListActivePublicLobbiesDeprecatedRequestAppId",
             "groupName": null,
@@ -4252,16 +4417,19 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "local",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ListActivePublicLobbiesDeprecatedRequestLocal",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ListActivePublicLobbiesDeprecatedRequestLocal",
               "groupName": null,
@@ -4275,16 +4443,19 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": null,
           "name": "region",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ListActivePublicLobbiesDeprecatedRequestRegion",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ListActivePublicLobbiesDeprecatedRequestRegion",
               "groupName": null,
@@ -4301,12 +4472,14 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "ListActivePublicLobbiesDeprecatedResponse",
           "groupName": null,
           "nameOverride": null,
           "type": "array",
           "value": {
+            "availability": null,
             "description": null,
             "generatedName": "ListActivePublicLobbiesDeprecatedResponseItem",
             "groupName": null,
@@ -4336,6 +4509,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "UnauthorizedError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
@@ -4357,6 +4531,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -4378,6 +4553,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "UnprocessableEntityError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
@@ -4399,6 +4575,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "TooManyRequestsError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
@@ -4420,6 +4597,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "InternalServerErrorBody",
             "groupName": null,
@@ -4592,11 +4770,13 @@ exports[`open api parser hathora parse open api 1`] = `
       "generatedRequestName": "CreatePrivateLobbyRequest",
       "headers": [
         {
+          "availability": null,
           "description": null,
           "env": null,
           "name": "Authorization",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "CreatePrivateLobbyRequestAuthorization",
             "groupName": null,
@@ -4621,9 +4801,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/lobby/v2/{appId}/create/private",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "CreatePrivateLobbyRequestAppId",
             "groupName": null,
@@ -4636,16 +4818,19 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "roomId",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "CreatePrivateLobbyRequestRoomId",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "CreatePrivateLobbyRequestRoomId",
               "groupName": null,
@@ -4664,6 +4849,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "CreatePrivateLobbyRequest",
           "groupName": null,
@@ -4671,15 +4857,18 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "createPrivateLobbyRequestInitialConfig",
               "key": "initialConfig",
               "nameOverride": null,
               "schema": {
+                "availability": null,
                 "description": null,
                 "generatedName": "CreatePrivateLobbyRequestInitialConfig",
                 "groupName": null,
                 "key": {
+                  "availability": null,
                   "description": null,
                   "generatedName": "CreatePrivateLobbyRequestInitialConfigKey",
                   "groupName": null,
@@ -4704,11 +4893,13 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "createPrivateLobbyRequestRegion",
               "key": "region",
               "nameOverride": null,
               "schema": {
+                "availability": null,
                 "description": null,
                 "generatedName": "CreatePrivateLobbyRequestRegion",
                 "groupName": null,
@@ -4727,6 +4918,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "CreatePrivateLobbyResponse",
           "groupName": null,
@@ -4755,6 +4947,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "UnauthorizedError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
@@ -4776,6 +4969,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -4797,6 +4991,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "UnprocessableEntityError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
@@ -4818,6 +5013,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "TooManyRequestsError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
@@ -4839,6 +5035,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "InternalServerErrorBody",
             "groupName": null,
@@ -5011,11 +5208,13 @@ exports[`open api parser hathora parse open api 1`] = `
       "generatedRequestName": "CreatePublicLobbyRequest",
       "headers": [
         {
+          "availability": null,
           "description": null,
           "env": null,
           "name": "Authorization",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "CreatePublicLobbyRequestAuthorization",
             "groupName": null,
@@ -5040,9 +5239,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/lobby/v2/{appId}/create/public",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "CreatePublicLobbyRequestAppId",
             "groupName": null,
@@ -5055,16 +5256,19 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "roomId",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "CreatePublicLobbyRequestRoomId",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "CreatePublicLobbyRequestRoomId",
               "groupName": null,
@@ -5083,6 +5287,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "CreatePublicLobbyRequest",
           "groupName": null,
@@ -5090,15 +5295,18 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "createPublicLobbyRequestInitialConfig",
               "key": "initialConfig",
               "nameOverride": null,
               "schema": {
+                "availability": null,
                 "description": null,
                 "generatedName": "CreatePublicLobbyRequestInitialConfig",
                 "groupName": null,
                 "key": {
+                  "availability": null,
                   "description": null,
                   "generatedName": "CreatePublicLobbyRequestInitialConfigKey",
                   "groupName": null,
@@ -5123,11 +5331,13 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "createPublicLobbyRequestRegion",
               "key": "region",
               "nameOverride": null,
               "schema": {
+                "availability": null,
                 "description": null,
                 "generatedName": "CreatePublicLobbyRequestRegion",
                 "groupName": null,
@@ -5146,6 +5356,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "CreatePublicLobbyResponse",
           "groupName": null,
@@ -5174,6 +5385,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "UnauthorizedError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
@@ -5195,6 +5407,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -5216,6 +5429,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "UnprocessableEntityError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
@@ -5237,6 +5451,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "TooManyRequestsError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
@@ -5258,6 +5473,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "InternalServerErrorBody",
             "groupName": null,
@@ -5430,11 +5646,13 @@ exports[`open api parser hathora parse open api 1`] = `
       "generatedRequestName": "CreateLocalLobbyRequest",
       "headers": [
         {
+          "availability": null,
           "description": null,
           "env": null,
           "name": "Authorization",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "CreateLocalLobbyRequestAuthorization",
             "groupName": null,
@@ -5459,9 +5677,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/lobby/v2/{appId}/create/local",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "CreateLocalLobbyRequestAppId",
             "groupName": null,
@@ -5474,16 +5694,19 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "roomId",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "CreateLocalLobbyRequestRoomId",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "CreateLocalLobbyRequestRoomId",
               "groupName": null,
@@ -5502,6 +5725,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "CreateLocalLobbyRequest",
           "groupName": null,
@@ -5509,15 +5733,18 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "createLocalLobbyRequestInitialConfig",
               "key": "initialConfig",
               "nameOverride": null,
               "schema": {
+                "availability": null,
                 "description": null,
                 "generatedName": "CreateLocalLobbyRequestInitialConfig",
                 "groupName": null,
                 "key": {
+                  "availability": null,
                   "description": null,
                   "generatedName": "CreateLocalLobbyRequestInitialConfigKey",
                   "groupName": null,
@@ -5542,11 +5769,13 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "createLocalLobbyRequestRegion",
               "key": "region",
               "nameOverride": null,
               "schema": {
+                "availability": null,
                 "description": null,
                 "generatedName": "CreateLocalLobbyRequestRegion",
                 "groupName": null,
@@ -5565,6 +5794,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "CreateLocalLobbyResponse",
           "groupName": null,
@@ -5593,6 +5823,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "UnauthorizedError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
@@ -5614,6 +5845,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -5635,6 +5867,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "UnprocessableEntityError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
@@ -5656,6 +5889,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "TooManyRequestsError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
@@ -5677,6 +5911,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "InternalServerErrorBody",
             "groupName": null,
@@ -5853,11 +6088,13 @@ exports[`open api parser hathora parse open api 1`] = `
       "generatedRequestName": "CreateLobbyRequest",
       "headers": [
         {
+          "availability": null,
           "description": null,
           "env": null,
           "name": "Authorization",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "CreateLobbyRequestAuthorization",
             "groupName": null,
@@ -5882,9 +6119,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/lobby/v2/{appId}/create",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "CreateLobbyRequestAppId",
             "groupName": null,
@@ -5897,16 +6136,19 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "roomId",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "CreateLobbyRequestRoomId",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "CreateLobbyRequestRoomId",
               "groupName": null,
@@ -5925,6 +6167,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "CreateLobbyRequest",
           "groupName": null,
@@ -5932,11 +6175,13 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "createLobbyRequestVisibility",
               "key": "visibility",
               "nameOverride": null,
               "schema": {
+                "availability": null,
                 "description": null,
                 "generatedName": "CreateLobbyRequestVisibility",
                 "groupName": null,
@@ -5944,6 +6189,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "enum",
                 "values": [
                   {
+                    "availability": null,
                     "casing": {
                       "camel": null,
                       "pascal": null,
@@ -5956,6 +6202,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "value": "public",
                   },
                   {
+                    "availability": null,
                     "casing": {
                       "camel": null,
                       "pascal": null,
@@ -5968,6 +6215,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "value": "private",
                   },
                   {
+                    "availability": null,
                     "casing": {
                       "camel": null,
                       "pascal": null,
@@ -5984,15 +6232,18 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "createLobbyRequestInitialConfig",
               "key": "initialConfig",
               "nameOverride": null,
               "schema": {
+                "availability": null,
                 "description": null,
                 "generatedName": "CreateLobbyRequestInitialConfig",
                 "groupName": null,
                 "key": {
+                  "availability": null,
                   "description": null,
                   "generatedName": "CreateLobbyRequestInitialConfigKey",
                   "groupName": null,
@@ -6017,11 +6268,13 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "createLobbyRequestRegion",
               "key": "region",
               "nameOverride": null,
               "schema": {
+                "availability": null,
                 "description": null,
                 "generatedName": "CreateLobbyRequestRegion",
                 "groupName": null,
@@ -6040,6 +6293,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "CreateLobbyResponse",
           "groupName": null,
@@ -6190,9 +6444,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/lobby/v2/{appId}/list/public",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ListActivePublicLobbiesRequestAppId",
             "groupName": null,
@@ -6205,16 +6461,19 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "region",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ListActivePublicLobbiesRequestRegion",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ListActivePublicLobbiesRequestRegion",
               "groupName": null,
@@ -6231,12 +6490,14 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "ListActivePublicLobbiesResponse",
           "groupName": null,
           "nameOverride": null,
           "type": "array",
           "value": {
+            "availability": null,
             "description": null,
             "generatedName": "ListActivePublicLobbiesResponseItem",
             "groupName": null,
@@ -6266,6 +6527,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -6415,9 +6677,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/lobby/v2/{appId}/info/{roomId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetLobbyInfoRequestAppId",
             "groupName": null,
@@ -6428,9 +6692,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "roomId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetLobbyInfoRequestRoomId",
             "groupName": null,
@@ -6448,6 +6714,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "GetLobbyInfoResponse",
           "groupName": null,
@@ -6476,6 +6743,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -6497,6 +6765,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "UnprocessableEntityError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
@@ -6671,9 +6940,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/lobby/v2/{appId}/setState/{roomId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "SetLobbyStateRequestAppId",
             "groupName": null,
@@ -6684,9 +6955,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "roomId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "SetLobbyStateRequestRoomId",
             "groupName": null,
@@ -6706,6 +6979,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "SetLobbyStateRequest",
           "groupName": null,
@@ -6713,15 +6987,18 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "setLobbyStateRequestState",
               "key": "state",
               "nameOverride": null,
               "schema": {
+                "availability": null,
                 "description": null,
                 "generatedName": "SetLobbyStateRequestState",
                 "groupName": null,
                 "key": {
+                  "availability": null,
                   "description": null,
                   "generatedName": "SetLobbyStateRequestStateKey",
                   "groupName": null,
@@ -6754,6 +7031,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "SetLobbyStateResponse",
           "groupName": null,
@@ -6782,6 +7060,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -6809,9 +7088,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/logs/v1/{appId}/all",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetLogsForAppRequestAppId",
             "groupName": null,
@@ -6824,16 +7105,19 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "follow",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetLogsForAppRequestFollow",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "GetLogsForAppRequestFollow",
               "groupName": null,
@@ -6847,16 +7131,19 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": null,
           "name": "tailLines",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetLogsForAppRequestTailLines",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "GetLogsForAppRequestTailLines",
               "groupName": null,
@@ -6875,16 +7162,19 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": null,
           "name": "region",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetLogsForAppRequestRegion",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "GetLogsForAppRequestRegion",
               "groupName": null,
@@ -6920,6 +7210,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -6947,9 +7238,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/logs/v1/{appId}/process/{processId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetLogsForProcessRequestAppId",
             "groupName": null,
@@ -6960,9 +7253,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "processId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetLogsForProcessRequestProcessId",
             "groupName": null,
@@ -6975,16 +7270,19 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "follow",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetLogsForProcessRequestFollow",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "GetLogsForProcessRequestFollow",
               "groupName": null,
@@ -6998,16 +7296,19 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": null,
           "name": "tailLines",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetLogsForProcessRequestTailLines",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "GetLogsForProcessRequestTailLines",
               "groupName": null,
@@ -7051,6 +7352,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -7078,9 +7380,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/logs/v1/{appId}/deployment/{deploymentId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetLogsForDeploymentRequestAppId",
             "groupName": null,
@@ -7091,9 +7395,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "deploymentId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetLogsForDeploymentRequestDeploymentId",
             "groupName": null,
@@ -7106,16 +7412,19 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "follow",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetLogsForDeploymentRequestFollow",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "GetLogsForDeploymentRequestFollow",
               "groupName": null,
@@ -7129,16 +7438,19 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": null,
           "name": "tailLines",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetLogsForDeploymentRequestTailLines",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "GetLogsForDeploymentRequestTailLines",
               "groupName": null,
@@ -7182,6 +7494,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -7203,6 +7516,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "UnprocessableEntityError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
@@ -7363,9 +7677,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/metrics/v1/{appId}/process/{processId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetMetricsRequestAppId",
             "groupName": null,
@@ -7376,9 +7692,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "processId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetMetricsRequestProcessId",
             "groupName": null,
@@ -7391,22 +7709,26 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "metrics",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetMetricsRequestMetrics",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "GetMetricsRequestMetrics",
               "groupName": null,
               "nameOverride": null,
               "type": "array",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "GetMetricsRequestMetricsItem",
                 "groupName": null,
@@ -7418,16 +7740,19 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": null,
           "name": "end",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetMetricsRequestEnd",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "GetMetricsRequestEnd",
               "groupName": null,
@@ -7446,16 +7771,19 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": null,
           "name": "start",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetMetricsRequestStart",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "GetMetricsRequestStart",
               "groupName": null,
@@ -7474,16 +7802,19 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": null,
           "name": "step",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetMetricsRequestStep",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "GetMetricsRequestStep",
               "groupName": null,
@@ -7508,6 +7839,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "GetMetricsResponse",
           "groupName": null,
@@ -7536,6 +7868,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -7739,9 +8072,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/processes/v1/{appId}/list/running",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetRunningProcessesRequestAppId",
             "groupName": null,
@@ -7754,16 +8089,19 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "region",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetRunningProcessesRequestRegion",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "GetRunningProcessesRequestRegion",
               "groupName": null,
@@ -7780,12 +8118,14 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "GetRunningProcessesResponse",
           "groupName": null,
           "nameOverride": null,
           "type": "array",
           "value": {
+            "availability": null,
             "description": null,
             "generatedName": "GetRunningProcessesResponseItem",
             "groupName": null,
@@ -7815,6 +8155,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -7983,9 +8324,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/processes/v1/{appId}/list/stopped",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetStoppedProcessesRequestAppId",
             "groupName": null,
@@ -7998,16 +8341,19 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "region",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetStoppedProcessesRequestRegion",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "GetStoppedProcessesRequestRegion",
               "groupName": null,
@@ -8024,12 +8370,14 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "GetStoppedProcessesResponse",
           "groupName": null,
           "nameOverride": null,
           "type": "array",
           "value": {
+            "availability": null,
             "description": null,
             "generatedName": "GetStoppedProcessesResponseItem",
             "groupName": null,
@@ -8059,6 +8407,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -8232,9 +8581,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/processes/v1/{appId}/info/{processId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetProcessInfoRequestAppId",
             "groupName": null,
@@ -8245,9 +8596,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "processId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetProcessInfoRequestProcessId",
             "groupName": null,
@@ -8265,6 +8618,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "GetProcessInfoResponse",
           "groupName": null,
@@ -8293,6 +8647,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -8314,6 +8669,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "InternalServerErrorBody",
             "groupName": null,
@@ -8378,9 +8734,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/rooms/v1/{appId}/create",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "CreateRoomRequestAppId",
             "groupName": null,
@@ -8400,6 +8758,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "CreateRoomRequest",
           "groupName": null,
@@ -8407,11 +8766,13 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "audiences": [],
+              "availability": null,
               "conflict": {},
               "generatedName": "createRoomRequestRegion",
               "key": "region",
               "nameOverride": null,
               "schema": {
+                "availability": null,
                 "description": null,
                 "generatedName": "CreateRoomRequestRegion",
                 "groupName": null,
@@ -8430,6 +8791,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "CreateRoomResponse",
           "groupName": null,
@@ -8458,6 +8820,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -8611,9 +8974,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/rooms/v1/{appId}/info/{roomId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetRoomInfoRequestAppId",
             "groupName": null,
@@ -8624,9 +8989,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "roomId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetRoomInfoRequestRoomId",
             "groupName": null,
@@ -8644,6 +9011,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "GetRoomInfoResponse",
           "groupName": null,
@@ -8672,6 +9040,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -8792,9 +9161,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/rooms/v1/{appId}/list/{processId}/active",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetActiveRoomsForProcessRequestAppId",
             "groupName": null,
@@ -8805,9 +9176,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "processId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetActiveRoomsForProcessRequestProcessId",
             "groupName": null,
@@ -8825,12 +9198,14 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "GetActiveRoomsForProcessResponse",
           "groupName": null,
           "nameOverride": null,
           "type": "array",
           "value": {
+            "availability": null,
             "description": null,
             "generatedName": "GetActiveRoomsForProcessResponseItem",
             "groupName": null,
@@ -8860,6 +9235,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -8980,9 +9356,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/rooms/v1/{appId}/list/{processId}/inactive",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetInactiveRoomsForProcessRequestAppId",
             "groupName": null,
@@ -8993,9 +9371,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "processId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetInactiveRoomsForProcessRequestProcessId",
             "groupName": null,
@@ -9013,12 +9393,14 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "GetInactiveRoomsForProcessResponse",
           "groupName": null,
           "nameOverride": null,
           "type": "array",
           "value": {
+            "availability": null,
             "description": null,
             "generatedName": "GetInactiveRoomsForProcessResponseItem",
             "groupName": null,
@@ -9048,6 +9430,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -9069,6 +9452,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "InternalServerErrorBody",
             "groupName": null,
@@ -9129,9 +9513,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/rooms/v1/{appId}/destroy/{roomId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "DestroyRoomRequestAppId",
             "groupName": null,
@@ -9142,9 +9528,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "roomId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "DestroyRoomRequestRoomId",
             "groupName": null,
@@ -9178,6 +9566,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -9199,6 +9588,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "InternalServerErrorBody",
             "groupName": null,
@@ -9259,9 +9649,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/rooms/v1/{appId}/suspend/{roomId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "SuspendRoomRequestAppId",
             "groupName": null,
@@ -9272,9 +9664,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "roomId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "SuspendRoomRequestRoomId",
             "groupName": null,
@@ -9308,6 +9702,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
             "groupName": null,
@@ -9329,6 +9724,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "UnprocessableEntityError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
@@ -9350,6 +9746,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "InternalServerErrorBody",
             "groupName": null,
@@ -9377,9 +9774,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "path": "/rooms/v1/{appId}/connectioninfo/{roomId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "appId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetConnectionInfoRequestAppId",
             "groupName": null,
@@ -9390,9 +9789,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "variableReference": null,
         },
         {
+          "availability": null,
           "description": null,
           "name": "roomId",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetConnectionInfoRequestRoomId",
             "groupName": null,
@@ -9410,6 +9811,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "GetConnectionInfoResponse",
           "groupName": null,
@@ -9469,6 +9871,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ActiveConnectionInfo",
       "groupName": null,
@@ -9476,11 +9879,13 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "activeConnectionInfoTransportType",
           "key": "transportType",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ActiveConnectionInfoTransportType",
             "groupName": null,
@@ -9491,11 +9896,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "activeConnectionInfoPort",
           "key": "port",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ActiveConnectionInfoPort",
             "groupName": null,
@@ -9514,11 +9921,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "activeConnectionInfoHost",
           "key": "host",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ActiveConnectionInfoHost",
             "groupName": null,
@@ -9536,11 +9945,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "activeConnectionInfoRoomId",
           "key": "roomId",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ActiveConnectionInfoRoomId",
             "groupName": null,
@@ -9553,6 +9964,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "object",
     },
     "AppId": {
+      "availability": null,
       "description": null,
       "generatedName": "AppId",
       "groupName": null,
@@ -9571,6 +9983,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Application",
       "groupName": null,
@@ -9578,17 +9991,20 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "applicationDeletedBy",
           "key": "deletedBy",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ApplicationDeletedBy",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ApplicationDeletedBy",
               "groupName": null,
@@ -9607,17 +10023,20 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "applicationDeletedAt",
           "key": "deletedAt",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ApplicationDeletedAt",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ApplicationDeletedAt",
               "groupName": null,
@@ -9631,11 +10050,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "applicationCreatedAt",
           "key": "createdAt",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ApplicationCreatedAt",
             "groupName": null,
@@ -9648,11 +10069,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "applicationCreatedBy",
           "key": "createdBy",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ApplicationCreatedBy",
             "groupName": null,
@@ -9670,11 +10093,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "applicationOrgId",
           "key": "orgId",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ApplicationOrgId",
             "groupName": null,
@@ -9685,6 +10110,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "applicationAuthConfiguration",
           "key": "authConfiguration",
@@ -9693,6 +10119,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
+            "availability": null,
             "description": null,
             "generatedName": "ApplicationAuthConfiguration",
             "groupName": null,
@@ -9700,11 +10127,13 @@ exports[`open api parser hathora parse open api 1`] = `
             "properties": [
               {
                 "audiences": [],
+                "availability": null,
                 "conflict": {},
                 "generatedName": "applicationAuthConfigurationGoogle",
                 "key": "google",
                 "nameOverride": null,
                 "schema": {
+                  "availability": null,
                   "description": null,
                   "generatedName": "applicationAuthConfigurationGoogle",
                   "groupName": null,
@@ -9714,6 +10143,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
+                    "availability": null,
                     "description": null,
                     "generatedName": "ApplicationAuthConfigurationGoogle",
                     "groupName": null,
@@ -9721,11 +10151,13 @@ exports[`open api parser hathora parse open api 1`] = `
                     "properties": [
                       {
                         "audiences": [],
+                        "availability": null,
                         "conflict": {},
                         "generatedName": "applicationAuthConfigurationGoogleClientId",
                         "key": "clientId",
                         "nameOverride": null,
                         "schema": {
+                          "availability": null,
                           "description": null,
                           "generatedName": "ApplicationAuthConfigurationGoogleClientId",
                           "groupName": null,
@@ -9748,17 +10180,20 @@ exports[`open api parser hathora parse open api 1`] = `
               },
               {
                 "audiences": [],
+                "availability": null,
                 "conflict": {},
                 "generatedName": "applicationAuthConfigurationNickname",
                 "key": "nickname",
                 "nameOverride": null,
                 "schema": {
+                  "availability": null,
                   "description": null,
                   "generatedName": "applicationAuthConfigurationNickname",
                   "groupName": null,
                   "nameOverride": null,
                   "type": "optional",
                   "value": {
+                    "availability": null,
                     "description": null,
                     "generatedName": "ApplicationAuthConfigurationNickname",
                     "groupName": null,
@@ -9770,17 +10205,20 @@ exports[`open api parser hathora parse open api 1`] = `
               },
               {
                 "audiences": [],
+                "availability": null,
                 "conflict": {},
                 "generatedName": "applicationAuthConfigurationAnonymous",
                 "key": "anonymous",
                 "nameOverride": null,
                 "schema": {
+                  "availability": null,
                   "description": null,
                   "generatedName": "applicationAuthConfigurationAnonymous",
                   "groupName": null,
                   "nameOverride": null,
                   "type": "optional",
                   "value": {
+                    "availability": null,
                     "description": null,
                     "generatedName": "ApplicationAuthConfigurationAnonymous",
                     "groupName": null,
@@ -9796,11 +10234,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "applicationAppSecret",
           "key": "appSecret",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ApplicationAppSecret",
             "groupName": null,
@@ -9818,11 +10258,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "applicationAppId",
           "key": "appId",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ApplicationAppId",
             "groupName": null,
@@ -9840,11 +10282,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "applicationAppName",
           "key": "appName",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ApplicationAppName",
             "groupName": null,
@@ -9867,6 +10311,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [
         {
+          "availability": null,
           "description": null,
           "generatedName": "Application",
           "groupName": null,
@@ -9875,6 +10320,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ApplicationWithDeployment",
       "groupName": null,
@@ -9882,11 +10328,13 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "applicationWithDeploymentDeployment",
           "key": "deployment",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ApplicationWithDeploymentDeployment",
             "groupName": null,
@@ -9902,6 +10350,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Build",
       "groupName": null,
@@ -9909,11 +10358,13 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "buildRegionalContainerTags",
           "key": "regionalContainerTags",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "BuildRegionalContainerTags",
             "groupName": null,
@@ -9923,6 +10374,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
+              "availability": null,
               "description": null,
               "generatedName": "BuildRegionalContainerTagsItem",
               "groupName": null,
@@ -9930,11 +10382,13 @@ exports[`open api parser hathora parse open api 1`] = `
               "properties": [
                 {
                   "audiences": [],
+                  "availability": null,
                   "conflict": {},
                   "generatedName": "buildRegionalContainerTagsItemContainerTag",
                   "key": "containerTag",
                   "nameOverride": null,
                   "schema": {
+                    "availability": null,
                     "description": null,
                     "generatedName": "BuildRegionalContainerTagsItemContainerTag",
                     "groupName": null,
@@ -9952,11 +10406,13 @@ exports[`open api parser hathora parse open api 1`] = `
                 },
                 {
                   "audiences": [],
+                  "availability": null,
                   "conflict": {},
                   "generatedName": "buildRegionalContainerTagsItemRegion",
                   "key": "region",
                   "nameOverride": null,
                   "schema": {
+                    "availability": null,
                     "description": null,
                     "generatedName": "BuildRegionalContainerTagsItemRegion",
                     "groupName": null,
@@ -9972,11 +10428,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "buildImageSize",
           "key": "imageSize",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "BuildImageSize",
             "groupName": null,
@@ -9995,11 +10453,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "buildStatus",
           "key": "status",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "BuildStatus",
             "groupName": null,
@@ -10007,6 +10467,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "type": "enum",
             "values": [
               {
+                "availability": null,
                 "casing": {
                   "camel": null,
                   "pascal": null,
@@ -10019,6 +10480,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "value": "created",
               },
               {
+                "availability": null,
                 "casing": {
                   "camel": null,
                   "pascal": null,
@@ -10031,6 +10493,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "value": "running",
               },
               {
+                "availability": null,
                 "casing": {
                   "camel": null,
                   "pascal": null,
@@ -10043,6 +10506,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "value": "succeeded",
               },
               {
+                "availability": null,
                 "casing": {
                   "camel": null,
                   "pascal": null,
@@ -10059,17 +10523,20 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "buildDeletedAt",
           "key": "deletedAt",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "BuildDeletedAt",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "BuildDeletedAt",
               "groupName": null,
@@ -10083,17 +10550,20 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "buildFinishedAt",
           "key": "finishedAt",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "BuildFinishedAt",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "BuildFinishedAt",
               "groupName": null,
@@ -10107,17 +10577,20 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "buildStartedAt",
           "key": "startedAt",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "BuildStartedAt",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "BuildStartedAt",
               "groupName": null,
@@ -10131,11 +10604,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "buildCreatedAt",
           "key": "createdAt",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "BuildCreatedAt",
             "groupName": null,
@@ -10148,11 +10623,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "buildCreatedBy",
           "key": "createdBy",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "BuildCreatedBy",
             "groupName": null,
@@ -10170,11 +10647,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "buildBuildId",
           "key": "buildId",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "BuildBuildId",
             "groupName": null,
@@ -10185,11 +10664,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "buildAppId",
           "key": "appId",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "BuildAppId",
             "groupName": null,
@@ -10202,6 +10683,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "object",
     },
     "BuildId": {
+      "availability": null,
       "description": null,
       "generatedName": "BuildId",
       "groupName": null,
@@ -10220,6 +10702,7 @@ exports[`open api parser hathora parse open api 1`] = `
     "ConnectionInfo": {
       "type": "oneOf",
       "value": {
+        "availability": null,
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "status",
@@ -10228,6 +10711,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "nameOverride": null,
         "schemas": {
           "active": {
+            "availability": null,
             "description": null,
             "generatedName": "ComponentsSchemasActiveConnectionInfo",
             "groupName": null,
@@ -10236,6 +10720,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "type": "reference",
           },
           "starting": {
+            "availability": null,
             "description": null,
             "generatedName": "ComponentsSchemasStartingConnectionInfo",
             "groupName": null,
@@ -10251,6 +10736,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [
         {
+          "availability": null,
           "description": null,
           "generatedName": "DeploymentConfig",
           "groupName": null,
@@ -10259,6 +10745,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Deployment",
       "groupName": null,
@@ -10266,11 +10753,13 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentCreatedAt",
           "key": "createdAt",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "DeploymentCreatedAt",
             "groupName": null,
@@ -10283,11 +10772,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentCreatedBy",
           "key": "createdBy",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "DeploymentCreatedBy",
             "groupName": null,
@@ -10305,11 +10796,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentRequestedMemoryMb",
           "key": "requestedMemoryMB",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "DeploymentRequestedMemoryMb",
             "groupName": null,
@@ -10328,11 +10821,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentRequestedCpu",
           "key": "requestedCPU",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "DeploymentRequestedCpu",
             "groupName": null,
@@ -10351,11 +10846,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentDeploymentId",
           "key": "deploymentId",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "DeploymentDeploymentId",
             "groupName": null,
@@ -10366,11 +10863,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentBuildId",
           "key": "buildId",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "DeploymentBuildId",
             "groupName": null,
@@ -10381,11 +10880,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentAppId",
           "key": "appId",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "DeploymentAppId",
             "groupName": null,
@@ -10401,6 +10902,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "DeploymentConfig",
       "groupName": null,
@@ -10408,11 +10910,13 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentConfigEnv",
           "key": "env",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "DeploymentConfigEnv",
             "groupName": null,
@@ -10422,6 +10926,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
+              "availability": null,
               "description": null,
               "generatedName": "DeploymentConfigEnvItem",
               "groupName": null,
@@ -10429,11 +10934,13 @@ exports[`open api parser hathora parse open api 1`] = `
               "properties": [
                 {
                   "audiences": [],
+                  "availability": null,
                   "conflict": {},
                   "generatedName": "deploymentConfigEnvItemValue",
                   "key": "value",
                   "nameOverride": null,
                   "schema": {
+                    "availability": null,
                     "description": null,
                     "generatedName": "DeploymentConfigEnvItemValue",
                     "groupName": null,
@@ -10451,11 +10958,13 @@ exports[`open api parser hathora parse open api 1`] = `
                 },
                 {
                   "audiences": [],
+                  "availability": null,
                   "conflict": {},
                   "generatedName": "deploymentConfigEnvItemName",
                   "key": "name",
                   "nameOverride": null,
                   "schema": {
+                    "availability": null,
                     "description": null,
                     "generatedName": "DeploymentConfigEnvItemName",
                     "groupName": null,
@@ -10478,11 +10987,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentConfigRoomsPerProcess",
           "key": "roomsPerProcess",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "DeploymentConfigRoomsPerProcess",
             "groupName": null,
@@ -10501,11 +11012,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentConfigPlanName",
           "key": "planName",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "DeploymentConfigPlanName",
             "groupName": null,
@@ -10516,11 +11029,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentConfigTransportType",
           "key": "transportType",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "DeploymentConfigTransportType",
             "groupName": null,
@@ -10531,11 +11046,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "deploymentConfigContainerPort",
           "key": "containerPort",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "DeploymentConfigContainerPort",
             "groupName": null,
@@ -10556,6 +11073,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "object",
     },
     "DeploymentId": {
+      "availability": null,
       "description": null,
       "generatedName": "DeploymentId",
       "groupName": null,
@@ -10572,6 +11090,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "primitive",
     },
     "DiscoveryResponse": {
+      "availability": null,
       "description": null,
       "generatedName": "DiscoveryResponse",
       "groupName": null,
@@ -10581,6 +11100,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "additionalProperties": false,
         "allOf": [],
         "allOfPropertyConflicts": [],
+        "availability": null,
         "description": null,
         "generatedName": "DiscoveryResponseItem",
         "groupName": null,
@@ -10588,11 +11108,13 @@ exports[`open api parser hathora parse open api 1`] = `
         "properties": [
           {
             "audiences": [],
+            "availability": null,
             "conflict": {},
             "generatedName": "discoveryResponseItemPort",
             "key": "port",
             "nameOverride": null,
             "schema": {
+              "availability": null,
               "description": null,
               "generatedName": "DiscoveryResponseItemPort",
               "groupName": null,
@@ -10611,11 +11133,13 @@ exports[`open api parser hathora parse open api 1`] = `
           },
           {
             "audiences": [],
+            "availability": null,
             "conflict": {},
             "generatedName": "discoveryResponseItemHost",
             "key": "host",
             "nameOverride": null,
             "schema": {
+              "availability": null,
               "description": null,
               "generatedName": "DiscoveryResponseItemHost",
               "groupName": null,
@@ -10633,11 +11157,13 @@ exports[`open api parser hathora parse open api 1`] = `
           },
           {
             "audiences": [],
+            "availability": null,
             "conflict": {},
             "generatedName": "discoveryResponseItemRegion",
             "key": "region",
             "nameOverride": null,
             "schema": {
+              "availability": null,
               "description": null,
               "generatedName": "DiscoveryResponseItemRegion",
               "groupName": null,
@@ -10654,6 +11180,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Lobby",
       "groupName": null,
@@ -10661,21 +11188,25 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lobbyState",
           "key": "state",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "lobbyState",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "LobbyState",
               "groupName": null,
               "key": {
+                "availability": null,
                 "description": null,
                 "generatedName": "LobbyStateKey",
                 "groupName": null,
@@ -10701,15 +11232,18 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lobbyInitialConfig",
           "key": "initialConfig",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "LobbyInitialConfig",
             "groupName": null,
             "key": {
+              "availability": null,
               "description": null,
               "generatedName": "LobbyInitialConfigKey",
               "groupName": null,
@@ -10734,11 +11268,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lobbyCreatedAt",
           "key": "createdAt",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "LobbyCreatedAt",
             "groupName": null,
@@ -10751,11 +11287,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lobbyCreatedBy",
           "key": "createdBy",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "LobbyCreatedBy",
             "groupName": null,
@@ -10773,11 +11311,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lobbyLocal",
           "key": "local",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "LobbyLocal",
             "groupName": null,
@@ -10791,11 +11331,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lobbyVisibility",
           "key": "visibility",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "LobbyVisibility",
             "groupName": null,
@@ -10803,6 +11345,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "type": "enum",
             "values": [
               {
+                "availability": null,
                 "casing": {
                   "camel": null,
                   "pascal": null,
@@ -10815,6 +11358,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "value": "private",
               },
               {
+                "availability": null,
                 "casing": {
                   "camel": null,
                   "pascal": null,
@@ -10827,6 +11371,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "value": "public",
               },
               {
+                "availability": null,
                 "casing": {
                   "camel": null,
                   "pascal": null,
@@ -10843,11 +11388,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lobbyRegion",
           "key": "region",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "LobbyRegion",
             "groupName": null,
@@ -10858,11 +11405,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lobbyRoomId",
           "key": "roomId",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "LobbyRoomId",
             "groupName": null,
@@ -10873,11 +11422,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "lobbyAppId",
           "key": "appId",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "LobbyAppId",
             "groupName": null,
@@ -10890,6 +11441,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "object",
     },
     "MetricName": {
+      "availability": null,
       "description": null,
       "generatedName": "MetricName",
       "groupName": null,
@@ -10897,6 +11449,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -10909,6 +11462,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "value": "cpu",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -10921,6 +11475,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "value": "memory",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -10933,6 +11488,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "value": "rate_egress",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -10950,6 +11506,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "MetricValue",
       "groupName": null,
@@ -10957,11 +11514,13 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "metricValueValue",
           "key": "value",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "MetricValueValue",
             "groupName": null,
@@ -10980,11 +11539,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "metricValueTimestamp",
           "key": "timestamp",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "MetricValueTimestamp",
             "groupName": null,
@@ -11005,6 +11566,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "object",
     },
     "MetricsResponse": {
+      "availability": null,
       "description": null,
       "generatedName": "MetricsResponse",
       "groupName": null,
@@ -11013,6 +11575,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "reference",
     },
     "Omit_Room.allocations_": {
+      "availability": null,
       "description": "Construct a type with the properties of T except for those in type K.",
       "generatedName": "OmitRoomAllocations",
       "groupName": null,
@@ -11021,6 +11584,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "reference",
     },
     "OrgId": {
+      "availability": null,
       "description": null,
       "generatedName": "OrgId",
       "groupName": null,
@@ -11039,6 +11603,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "From T, pick a set of properties whose keys are in the union K",
       "generatedName": "PickRoomExcludeKeyofRoomAllocations",
       "groupName": null,
@@ -11046,11 +11611,13 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "pickRoomExcludeKeyofRoomAllocationsAppId",
           "key": "appId",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "PickRoomExcludeKeyofRoomAllocationsAppId",
             "groupName": null,
@@ -11061,11 +11628,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "pickRoomExcludeKeyofRoomAllocationsRoomId",
           "key": "roomId",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "PickRoomExcludeKeyofRoomAllocationsRoomId",
             "groupName": null,
@@ -11076,11 +11645,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "pickRoomExcludeKeyofRoomAllocationsStatus",
           "key": "status",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "PickRoomExcludeKeyofRoomAllocationsStatus",
             "groupName": null,
@@ -11091,17 +11662,20 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "pickRoomExcludeKeyofRoomAllocationsCurrentAllocation",
           "key": "currentAllocation",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "PickRoomExcludeKeyofRoomAllocationsCurrentAllocation",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "PickRoomExcludeKeyofRoomAllocationsCurrentAllocation",
               "groupName": null,
@@ -11115,6 +11689,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "object",
     },
     "PlanName": {
+      "availability": null,
       "description": null,
       "generatedName": "PlanName",
       "groupName": null,
@@ -11122,6 +11697,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -11134,6 +11710,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "value": "tiny",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -11146,6 +11723,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "value": "small",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -11158,6 +11736,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "value": "medium",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -11175,6 +11754,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Process",
       "groupName": null,
@@ -11182,11 +11762,13 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processEgressedBytes",
           "key": "egressedBytes",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ProcessEgressedBytes",
             "groupName": null,
@@ -11205,17 +11787,20 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processIdleSince",
           "key": "idleSince",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ProcessIdleSince",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ProcessIdleSince",
               "groupName": null,
@@ -11229,11 +11814,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processActiveConnections",
           "key": "activeConnections",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ProcessActiveConnections",
             "groupName": null,
@@ -11252,11 +11839,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processRoomSlotsAvailable",
           "key": "roomSlotsAvailable",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ProcessRoomSlotsAvailable",
             "groupName": null,
@@ -11275,11 +11864,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processDraining",
           "key": "draining",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ProcessDraining",
             "groupName": null,
@@ -11293,17 +11884,20 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processTerminatedAt",
           "key": "terminatedAt",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ProcessTerminatedAt",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ProcessTerminatedAt",
               "groupName": null,
@@ -11317,17 +11911,20 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processStoppingAt",
           "key": "stoppingAt",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ProcessStoppingAt",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ProcessStoppingAt",
               "groupName": null,
@@ -11341,17 +11938,20 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processStartedAt",
           "key": "startedAt",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ProcessStartedAt",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ProcessStartedAt",
               "groupName": null,
@@ -11365,11 +11965,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processStartingAt",
           "key": "startingAt",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ProcessStartingAt",
             "groupName": null,
@@ -11382,11 +11984,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processRoomsPerProcess",
           "key": "roomsPerProcess",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ProcessRoomsPerProcess",
             "groupName": null,
@@ -11405,11 +12009,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processPort",
           "key": "port",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ProcessPort",
             "groupName": null,
@@ -11428,11 +12034,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processHost",
           "key": "host",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ProcessHost",
             "groupName": null,
@@ -11450,11 +12058,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processRegion",
           "key": "region",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ProcessRegion",
             "groupName": null,
@@ -11465,11 +12075,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processProcessId",
           "key": "processId",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ProcessProcessId",
             "groupName": null,
@@ -11480,11 +12092,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processDeploymentId",
           "key": "deploymentId",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ProcessDeploymentId",
             "groupName": null,
@@ -11495,11 +12109,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processAppId",
           "key": "appId",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ProcessAppId",
             "groupName": null,
@@ -11512,6 +12128,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "object",
     },
     "ProcessId": {
+      "availability": null,
       "description": null,
       "generatedName": "ProcessId",
       "groupName": null,
@@ -11530,6 +12147,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [
         {
+          "availability": null,
           "description": null,
           "generatedName": "Process",
           "groupName": null,
@@ -11538,6 +12156,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ProcessWithRooms",
       "groupName": null,
@@ -11545,17 +12164,20 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processWithRoomsRooms",
           "key": "rooms",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ProcessWithRoomsRooms",
             "groupName": null,
             "nameOverride": null,
             "type": "array",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ProcessWithRoomsRoomsItem",
               "groupName": null,
@@ -11567,11 +12189,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "processWithRoomsTotalRooms",
           "key": "totalRooms",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ProcessWithRoomsTotalRooms",
             "groupName": null,
@@ -11595,6 +12219,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Construct a type with a set of properties K of type T",
       "generatedName": "RecordPartialMetricNameMetricValueArray",
       "groupName": null,
@@ -11602,23 +12227,27 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "recordPartialMetricNameMetricValueArrayCpu",
           "key": "cpu",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "recordPartialMetricNameMetricValueArrayCpu",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "RecordPartialMetricNameMetricValueArrayCpu",
               "groupName": null,
               "nameOverride": null,
               "type": "array",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "RecordPartialMetricNameMetricValueArrayCpuItem",
                 "groupName": null,
@@ -11631,23 +12260,27 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "recordPartialMetricNameMetricValueArrayMemory",
           "key": "memory",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "recordPartialMetricNameMetricValueArrayMemory",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "RecordPartialMetricNameMetricValueArrayMemory",
               "groupName": null,
               "nameOverride": null,
               "type": "array",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "RecordPartialMetricNameMetricValueArrayMemoryItem",
                 "groupName": null,
@@ -11660,23 +12293,27 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "recordPartialMetricNameMetricValueArrayRateEgress",
           "key": "rate_egress",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "recordPartialMetricNameMetricValueArrayRateEgress",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "RecordPartialMetricNameMetricValueArrayRateEgress",
               "groupName": null,
               "nameOverride": null,
               "type": "array",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "RecordPartialMetricNameMetricValueArrayRateEgressItem",
                 "groupName": null,
@@ -11689,23 +12326,27 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "recordPartialMetricNameMetricValueArrayTotalEgress",
           "key": "total_egress",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "recordPartialMetricNameMetricValueArrayTotalEgress",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "RecordPartialMetricNameMetricValueArrayTotalEgress",
               "groupName": null,
               "nameOverride": null,
               "type": "array",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "RecordPartialMetricNameMetricValueArrayTotalEgressItem",
                 "groupName": null,
@@ -11723,6 +12364,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Construct a type with a set of properties K of type T",
       "generatedName": "RecordStringNever",
       "groupName": null,
@@ -11731,6 +12373,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "object",
     },
     "Region": {
+      "availability": null,
       "description": null,
       "generatedName": "Region",
       "groupName": null,
@@ -11738,6 +12381,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -11750,6 +12394,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "value": "Seattle",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -11762,6 +12407,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "value": "Washington_DC",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -11774,6 +12420,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "value": "Chicago",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -11786,6 +12433,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "value": "London",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -11798,6 +12446,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "value": "Frankfurt",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -11810,6 +12459,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "value": "Mumbai",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -11822,6 +12472,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "value": "Singapore",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -11834,6 +12485,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "value": "Tokyo",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -11846,6 +12498,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "value": "Sydney",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -11863,6 +12516,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Room",
       "groupName": null,
@@ -11870,17 +12524,20 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "roomCurrentAllocation",
           "key": "currentAllocation",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "RoomCurrentAllocation",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "RoomCurrentAllocation",
               "groupName": null,
@@ -11892,11 +12549,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "roomStatus",
           "key": "status",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "RoomStatus",
             "groupName": null,
@@ -11907,17 +12566,20 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "roomAllocations",
           "key": "allocations",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "RoomAllocations",
             "groupName": null,
             "nameOverride": null,
             "type": "array",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "RoomAllocationsItem",
               "groupName": null,
@@ -11929,11 +12591,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "roomRoomId",
           "key": "roomId",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "RoomRoomId",
             "groupName": null,
@@ -11944,11 +12608,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "roomAppId",
           "key": "appId",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "RoomAppId",
             "groupName": null,
@@ -11964,6 +12630,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "RoomAllocation",
       "groupName": null,
@@ -11971,17 +12638,20 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "roomAllocationUnscheduledAt",
           "key": "unscheduledAt",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "RoomAllocationUnscheduledAt",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "RoomAllocationUnscheduledAt",
               "groupName": null,
@@ -11995,11 +12665,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "roomAllocationScheduledAt",
           "key": "scheduledAt",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "RoomAllocationScheduledAt",
             "groupName": null,
@@ -12012,11 +12684,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "roomAllocationProcessId",
           "key": "processId",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "RoomAllocationProcessId",
             "groupName": null,
@@ -12027,11 +12701,13 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "roomAllocationRoomAllocationId",
           "key": "roomAllocationId",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "RoomAllocationRoomAllocationId",
             "groupName": null,
@@ -12044,6 +12720,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "object",
     },
     "RoomAllocationId": {
+      "availability": null,
       "description": null,
       "generatedName": "RoomAllocationId",
       "groupName": null,
@@ -12059,6 +12736,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "primitive",
     },
     "RoomId": {
+      "availability": null,
       "description": null,
       "generatedName": "RoomId",
       "groupName": null,
@@ -12074,6 +12752,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "primitive",
     },
     "RoomStatus": {
+      "availability": null,
       "description": null,
       "generatedName": "RoomStatus",
       "groupName": null,
@@ -12081,6 +12760,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -12093,6 +12773,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "value": "scheduling",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -12105,6 +12786,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "value": "active",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -12117,6 +12799,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "value": "suspended",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -12131,6 +12814,7 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
     },
     "RoomWithoutAllocations": {
+      "availability": null,
       "description": null,
       "generatedName": "RoomWithoutAllocations",
       "groupName": null,
@@ -12142,6 +12826,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "StartingConnectionInfo",
       "groupName": null,
@@ -12149,11 +12834,13 @@ exports[`open api parser hathora parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "startingConnectionInfoRoomId",
           "key": "roomId",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "StartingConnectionInfoRoomId",
             "groupName": null,
@@ -12166,6 +12853,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "object",
     },
     "TransportType": {
+      "availability": null,
       "description": null,
       "generatedName": "TransportType",
       "groupName": null,
@@ -12173,6 +12861,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "enum",
       "values": [
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -12185,6 +12874,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "value": "tcp",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -12197,6 +12887,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "value": "udp",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,

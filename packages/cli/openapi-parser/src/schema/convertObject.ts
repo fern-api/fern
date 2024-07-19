@@ -1,5 +1,6 @@
 import {
     AllOfPropertyConflict,
+    Availability,
     NamedFullExample,
     ObjectPropertyConflictInfo,
     ObjectPropertyWithExample,
@@ -12,12 +13,13 @@ import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../getExtension";
 import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions";
 import { isAdditionalPropertiesAny } from "./convertAdditionalProperties";
+import { convertAvailability } from "./convertAvailability";
 import { convertSchema, convertToReferencedSchema, getSchemaIdFromReference } from "./convertSchemas";
 import { SchemaParserContext } from "./SchemaParserContext";
+import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
 import { getGeneratedPropertyName } from "./utils/getSchemaName";
 import { isReferenceObject } from "./utils/isReferenceObject";
 import { isSchemaWithExampleEqual } from "./utils/isSchemaEqual";
-import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
 
 interface ReferencedAllOfInfo {
     schemaId: SchemaId;
@@ -38,7 +40,8 @@ export function convertObject({
     propertiesToExclude,
     groupName,
     fullExamples,
-    additionalProperties
+    additionalProperties,
+    availability
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -53,6 +56,7 @@ export function convertObject({
     groupName: SdkGroupName | undefined;
     fullExamples: undefined | NamedFullExample[];
     additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
+    availability: Availability | undefined;
 }): SchemaWithExample {
     const allRequired = [...(required ?? [])];
     const propertiesToConvert = { ...properties };
@@ -85,6 +89,7 @@ export function convertObject({
                                             generatedName: "",
                                             value: property.schema,
                                             description: undefined,
+                                            availability: property.availability,
                                             groupName: undefined
                                         })
                                     };
@@ -148,6 +153,8 @@ export function convertObject({
         ([propertyName, propertySchema]) => {
             const isRequired = allRequired.includes(propertyName);
             const audiences = getExtension<string[]>(propertySchema, FernOpenAPIExtension.AUDIENCES) ?? [];
+            const availability = convertAvailability(propertySchema);
+
             const propertyNameOverride = getExtension<string | undefined>(
                 propertySchema,
                 FernOpenAPIExtension.FERN_PROPERTY_NAME
@@ -160,6 +167,7 @@ export function convertObject({
                       nameOverride,
                       generatedName,
                       description: undefined,
+                      availability,
                       value: convertSchema(propertySchema, false, context, propertyBreadcrumbs),
                       groupName
                   });
@@ -180,7 +188,8 @@ export function convertObject({
                 nameOverride: propertyNameOverride,
                 audiences,
                 conflict: conflicts,
-                generatedName: getGeneratedPropertyName([...breadcrumbs, propertyName])
+                generatedName: getGeneratedPropertyName([...breadcrumbs, propertyName]),
+                availability
             };
         }
     );
@@ -215,7 +224,8 @@ export function convertObject({
         allOfPropertyConflicts,
         groupName,
         fullExamples,
-        additionalProperties
+        additionalProperties,
+        availability
     });
 }
 
@@ -229,7 +239,8 @@ export function wrapObject({
     allOfPropertyConflicts,
     groupName,
     fullExamples,
-    additionalProperties
+    additionalProperties,
+    availability
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -241,6 +252,7 @@ export function wrapObject({
     groupName: SdkGroupName | undefined;
     fullExamples: undefined | NamedFullExample[];
     additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
+    availability: Availability | undefined;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
@@ -255,9 +267,11 @@ export function wrapObject({
                 allOfPropertyConflicts,
                 groupName,
                 fullExamples,
-                additionalProperties: isAdditionalPropertiesAny(additionalProperties)
+                additionalProperties: isAdditionalPropertiesAny(additionalProperties),
+                availability: undefined
             }),
             description,
+            availability,
             groupName
         });
     }
@@ -270,7 +284,8 @@ export function wrapObject({
         allOfPropertyConflicts,
         groupName,
         fullExamples,
-        additionalProperties: isAdditionalPropertiesAny(additionalProperties)
+        additionalProperties: isAdditionalPropertiesAny(additionalProperties),
+        availability
     });
 }
 

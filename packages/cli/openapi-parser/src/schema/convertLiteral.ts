@@ -1,4 +1,4 @@
-import { LiteralSchemaValue, SchemaWithExample, SdkGroupName } from "@fern-api/openapi-ir-sdk";
+import { Availability, LiteralSchemaValue, SchemaWithExample, SdkGroupName } from "@fern-api/openapi-ir-sdk";
 
 function createLiteralSchemaValue(value: unknown): LiteralSchemaValue {
     if (typeof value === "string") {
@@ -17,6 +17,7 @@ export function convertLiteral({
     wrapAsNullable,
     value,
     description,
+    availability,
     groupName
 }: {
     nameOverride: string | undefined;
@@ -24,6 +25,7 @@ export function convertLiteral({
     value: unknown;
     wrapAsNullable: boolean;
     description: string | undefined;
+    availability: Availability | undefined;
     groupName: SdkGroupName | undefined;
 }): SchemaWithExample {
     if (wrapAsNullable) {
@@ -35,9 +37,11 @@ export function convertLiteral({
                 generatedName,
                 value: createLiteralSchemaValue(value),
                 description,
+                availability,
                 groupName
             }),
             description,
+            availability,
             groupName
         });
     }
@@ -46,6 +50,7 @@ export function convertLiteral({
         generatedName,
         value: createLiteralSchemaValue(value),
         description,
+        availability,
         groupName
     });
 }

@@ -90,6 +90,7 @@ function getScopes(oauthSecurityScheme: OpenAPIV3.OAuth2SecurityScheme): EnumSch
                 })
             ),
             description: undefined,
+            availability: undefined,
             enumVarNames: undefined,
             wrapAsNullable: false,
             groupName: undefined,

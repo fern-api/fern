@@ -126,20 +126,21 @@ types:
       - GET
       - POST
 
-  EndpointAvailability:
+  Availability:
     enum:
       - GenerallyAvailable
       - Beta
       - Deprecated
 
   Endpoint:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithDescription
+      - commons.WithAvailability
     properties:
       authed: boolean
       internal: optional<boolean>
       idempotent: optional<boolean>
       method: HttpMethod
-      availability: optional<EndpointAvailability>
       audiences: list<string>
       path:
         type: string
@@ -305,14 +306,18 @@ types:
       - TRACE
 
   PathParameter:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithDescription
+      - commons.WithAvailability
     properties:
       name: string
       schema: Schema
       variableReference: optional<string>
 
   QueryParameter:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithDescription
+      - commons.WithAvailability
     properties:
       name: string
       schema: Schema
@@ -322,7 +327,9 @@ types:
           Populated by `x-fern-parameter-name` on a parameter object.
 
   Header:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithDescription
+      - commons.WithAvailability
     properties:
       name: string
       schema: Schema
@@ -415,6 +422,7 @@ types:
       - commons.WithDescription
       - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithAvailability
     properties:
       schema: PrimitiveSchemaValue
 
@@ -469,6 +477,7 @@ types:
       - commons.WithDescription
       - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithAvailability
     properties:
       value: LiteralSchemaValue
 
@@ -482,6 +491,7 @@ types:
       - commons.WithDescription
       - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithAvailability
     properties:
       allOf: list<ReferencedSchema>
       properties: list<ObjectProperty>
@@ -502,6 +512,8 @@ types:
         docs: If the allOf schemas have different types. Unclear how to resolve this. Possibly make the property unknown?
 
   ObjectProperty:
+    extends:
+      - commons.WithAvailability
     properties:
       key: string
       schema: Schema
@@ -527,6 +539,7 @@ types:
       - commons.WithDescription
       - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithAvailability
     properties:
       value: Schema
 
@@ -535,6 +548,7 @@ types:
       - commons.WithDescription
       - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithAvailability
     properties:
       key: PrimitiveSchema
       value: Schema
@@ -544,6 +558,7 @@ types:
       - commons.WithDescription
       - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithAvailability
     properties:
       value: Schema
 
@@ -552,6 +567,7 @@ types:
       - commons.WithDescription
       - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithAvailability
     properties:
       value: Schema
 
@@ -560,12 +576,14 @@ types:
       - commons.WithDescription
       - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithAvailability
     properties:
       values: list<EnumValue>
 
   EnumValue:
     extends:
       - commons.WithDescription
+      - commons.WithAvailability
     properties:
       nameOverride:
         type: optional<string>
@@ -590,6 +608,7 @@ types:
       - commons.WithDescription
       - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithAvailability
     properties:
       schema: commons.SchemaId
 
@@ -603,6 +622,7 @@ types:
       - commons.WithDescription
       - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithAvailability
     properties:
       discriminantProperty: string
       commonProperties: list<CommonProperty>
@@ -618,5 +638,6 @@ types:
       - commons.WithDescription
       - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithAvailability
     properties:
       schemas: list<Schema>

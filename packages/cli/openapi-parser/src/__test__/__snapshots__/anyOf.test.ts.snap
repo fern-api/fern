@@ -55,6 +55,7 @@ exports[`open api parser anyOf parse open api 1`] = `
         "contentType": null,
         "description": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "GetRequest",
           "groupName": null,
@@ -69,6 +70,7 @@ exports[`open api parser anyOf parse open api 1`] = `
         "description": "A simple API response.",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "GetResponse",
           "groupName": null,
@@ -96,6 +98,7 @@ exports[`open api parser anyOf parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "A generic request type used throughout the API.
 ",
       "generatedName": "Request",
@@ -104,17 +107,20 @@ exports[`open api parser anyOf parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "requestId",
           "key": "id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "requestId",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "An optional string value.
 ",
               "generatedName": "RequestId",
@@ -122,6 +128,7 @@ exports[`open api parser anyOf parse open api 1`] = `
               "nameOverride": null,
               "type": "nullable",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "RequestId",
                 "groupName": null,
@@ -146,6 +153,7 @@ exports[`open api parser anyOf parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "A generic response type used throughout the API.
 ",
       "generatedName": "Response",
@@ -154,17 +162,20 @@ exports[`open api parser anyOf parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "responseValue",
           "key": "value",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "responseValue",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "An optional numerical value.
 ",
               "generatedName": "ResponseValue",
@@ -172,6 +183,7 @@ exports[`open api parser anyOf parse open api 1`] = `
               "nameOverride": null,
               "type": "nullable",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "ResponseValue",
                 "groupName": null,

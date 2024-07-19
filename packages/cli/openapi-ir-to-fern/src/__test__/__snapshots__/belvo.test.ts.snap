@@ -30684,6 +30684,7 @@ For \`access_to_resource_denied\` errors, the description is:
             "validation": undefined,
           },
           "bank_product_id": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "*This field has been deprecated.*
 
@@ -30734,6 +30735,7 @@ For \`access_to_resource_denied\` errors, the description is:
           },
           "institution": "optional<InstitutionAccount>",
           "internal_identification": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "*This field has been deprecated.*
 
@@ -30856,6 +30858,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
             "validation": undefined,
           },
           "end_date": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "*This field has been deprecated.*
 ",
@@ -30869,6 +30872,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
             "validation": undefined,
           },
           "last_payment_date": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "*This field has been deprecated.*
 
@@ -30885,6 +30889,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
             "validation": undefined,
           },
           "monthly_payment": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "*This field has been deprecated.*
 
@@ -31005,6 +31010,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
             },
           },
           "credit_limit": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "This field has been deprecated.
 
@@ -31014,6 +31020,7 @@ Please see \`principal\` instead.
             "validation": undefined,
           },
           "cutting_date": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "This field has been deprecated.
 
@@ -31023,6 +31030,7 @@ The closing date of the loan period.
             "validation": undefined,
           },
           "cutting_day": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "This field has been deprecated.
 
@@ -31038,6 +31046,7 @@ The closing day of the month for the loan.
             "validation": undefined,
           },
           "interest_rate": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "This field has been deprecated.
 
@@ -31053,6 +31062,7 @@ Please see the \`interest_rates\` object instead.
             "validation": undefined,
           },
           "last_payment_date": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "This field has been deprecated.
 
@@ -31062,6 +31072,7 @@ The date when the last loan payment was made.
             "validation": undefined,
           },
           "last_period_balance": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "This field has been deprecated.
 
@@ -31071,6 +31082,7 @@ Please see \`outstanding_balance\` instead.
             "validation": undefined,
           },
           "limit_day": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "This field has been deprecated.
 
@@ -31092,6 +31104,7 @@ Please see \`payment_day\` instead.
             "validation": undefined,
           },
           "no_interest_payment": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "This field has been deprecated.
 
@@ -31356,6 +31369,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "collected_at": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "This field has been deprecated.
 
@@ -31365,6 +31379,7 @@ The ISO-8601 timestamp when the data point was collected.
             "validation": undefined,
           },
           "current_balance": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "*This field has been deprecated. Please use the \`balance\` field instead.*
 ",
@@ -31383,6 +31398,7 @@ The ISO-8601 timestamp when the data point was collected.
             },
           },
           "statement": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "*This field has been deprecated.*
 
@@ -35689,6 +35705,7 @@ For example: If the invoice is paid in installments, this field indicates the da
           },
           "payment_method": "optional<EnumInvoiceDianPaymentMethod>",
           "payment_method_description": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "The description of the payment method used for this invoice.
 ",
@@ -36053,6 +36070,7 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
           },
           "payment_method": "optional<EnumInvoiceSatPaymentMethod>",
           "payment_method_description": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "*This field has been deprecated.*
 
@@ -36071,6 +36089,7 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
             "validation": undefined,
           },
           "payment_type_description": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "*This field has been deprecated.*
 ",
@@ -36091,6 +36110,7 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
             "validation": undefined,
           },
           "receiver_blacklist_status": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "This field has been deprecated. Please use \`receiver_tax_fraud_status\` instead.
 ",
@@ -36120,6 +36140,7 @@ Possible statuses are:
             "validation": undefined,
           },
           "sender_blacklist_status": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "This field has been deprecated. Please use \`sender_tax_fraud_status\` instead.
 ",
@@ -37284,6 +37305,7 @@ For \`not_found\` errors, the description is:
             },
           },
           "first_name": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "*This field has been deprecated.*
 
@@ -37310,6 +37332,7 @@ For \`not_found\` errors, the description is:
             "validation": undefined,
           },
           "last_name": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "*This field has been deprecated.*
 
@@ -37336,6 +37359,7 @@ For \`not_found\` errors, the description is:
             "validation": undefined,
           },
           "second_last_name": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "*This field has been deprecated.*
 
@@ -37656,6 +37680,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             "type": "string",
           },
           "charges": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "An array of charge objects related to this paymnet intent. If no charges are associated, we return an empty array.
 
@@ -37939,6 +37964,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "string",
           },
           "charges": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "An array of charge objects related to this paymnet intent. If no charges are associated, we return an empty array.
 
@@ -71767,6 +71793,7 @@ For \`access_to_resource_denied\` errors, the description is:
             "validation": undefined,
           },
           "bank_product_id": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "*This field has been deprecated.*
 
@@ -71817,6 +71844,7 @@ For \`access_to_resource_denied\` errors, the description is:
           },
           "institution": "optional<InstitutionAccount>",
           "internal_identification": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "*This field has been deprecated.*
 
@@ -71939,6 +71967,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
             "validation": undefined,
           },
           "end_date": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "*This field has been deprecated.*
 ",
@@ -71952,6 +71981,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
             "validation": undefined,
           },
           "last_payment_date": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "*This field has been deprecated.*
 
@@ -71968,6 +71998,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
             "validation": undefined,
           },
           "monthly_payment": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "*This field has been deprecated.*
 
@@ -72088,6 +72119,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
             },
           },
           "credit_limit": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "This field has been deprecated.
 
@@ -72097,6 +72129,7 @@ Please see \`principal\` instead.
             "validation": undefined,
           },
           "cutting_date": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "This field has been deprecated.
 
@@ -72106,6 +72139,7 @@ The closing date of the loan period.
             "validation": undefined,
           },
           "cutting_day": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "This field has been deprecated.
 
@@ -72121,6 +72155,7 @@ The closing day of the month for the loan.
             "validation": undefined,
           },
           "interest_rate": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "This field has been deprecated.
 
@@ -72136,6 +72171,7 @@ Please see the \`interest_rates\` object instead.
             "validation": undefined,
           },
           "last_payment_date": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "This field has been deprecated.
 
@@ -72145,6 +72181,7 @@ The date when the last loan payment was made.
             "validation": undefined,
           },
           "last_period_balance": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "This field has been deprecated.
 
@@ -72154,6 +72191,7 @@ Please see \`outstanding_balance\` instead.
             "validation": undefined,
           },
           "limit_day": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "This field has been deprecated.
 
@@ -72175,6 +72213,7 @@ Please see \`payment_day\` instead.
             "validation": undefined,
           },
           "no_interest_payment": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "This field has been deprecated.
 
@@ -72439,6 +72478,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "collected_at": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "This field has been deprecated.
 
@@ -72448,6 +72488,7 @@ The ISO-8601 timestamp when the data point was collected.
             "validation": undefined,
           },
           "current_balance": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "*This field has been deprecated. Please use the \`balance\` field instead.*
 ",
@@ -72466,6 +72507,7 @@ The ISO-8601 timestamp when the data point was collected.
             },
           },
           "statement": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "*This field has been deprecated.*
 
@@ -76772,6 +76814,7 @@ For example: If the invoice is paid in installments, this field indicates the da
           },
           "payment_method": "optional<EnumInvoiceDianPaymentMethod>",
           "payment_method_description": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "The description of the payment method used for this invoice.
 ",
@@ -77136,6 +77179,7 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
           },
           "payment_method": "optional<EnumInvoiceSatPaymentMethod>",
           "payment_method_description": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "*This field has been deprecated.*
 
@@ -77154,6 +77198,7 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
             "validation": undefined,
           },
           "payment_type_description": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "*This field has been deprecated.*
 ",
@@ -77174,6 +77219,7 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
             "validation": undefined,
           },
           "receiver_blacklist_status": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "This field has been deprecated. Please use \`receiver_tax_fraud_status\` instead.
 ",
@@ -77203,6 +77249,7 @@ Possible statuses are:
             "validation": undefined,
           },
           "sender_blacklist_status": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "This field has been deprecated. Please use \`sender_tax_fraud_status\` instead.
 ",
@@ -78367,6 +78414,7 @@ For \`not_found\` errors, the description is:
             },
           },
           "first_name": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "*This field has been deprecated.*
 
@@ -78393,6 +78441,7 @@ For \`not_found\` errors, the description is:
             "validation": undefined,
           },
           "last_name": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "*This field has been deprecated.*
 
@@ -78419,6 +78468,7 @@ For \`not_found\` errors, the description is:
             "validation": undefined,
           },
           "second_last_name": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "*This field has been deprecated.*
 
@@ -78739,6 +78789,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             "type": "string",
           },
           "charges": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "An array of charge objects related to this paymnet intent. If no charges are associated, we return an empty array.
 
@@ -79022,6 +79073,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "string",
           },
           "charges": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "An array of charge objects related to this paymnet intent. If no charges are associated, we return an empty array.
 

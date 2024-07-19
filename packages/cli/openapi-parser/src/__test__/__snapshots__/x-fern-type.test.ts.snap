@@ -14,10 +14,12 @@ exports[`x-fern-type x-fern-type parse open api 1`] = `
   "nonRequestReferencedSchemas": [],
   "schemas": {
     "BaseUser": {
+      "availability": null,
       "description": null,
       "generatedName": "BaseUser",
       "groupName": null,
       "key": {
+        "availability": null,
         "description": null,
         "generatedName": "BaseUser",
         "groupName": null,
@@ -34,6 +36,7 @@ exports[`x-fern-type x-fern-type parse open api 1`] = `
       "nameOverride": null,
       "type": "map",
       "value": {
+        "availability": null,
         "description": null,
         "generatedName": "BaseUser",
         "groupName": null,

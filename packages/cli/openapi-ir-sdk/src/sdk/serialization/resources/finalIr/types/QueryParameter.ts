@@ -15,10 +15,11 @@ export const QueryParameter: core.serialization.ObjectSchema<
         schema: core.serialization.lazy(async () => (await import("../../..")).Schema),
         parameterNameOverride: core.serialization.string().optional(),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAvailability));
 
 export declare namespace QueryParameter {
-    interface Raw extends serializers.WithDescription.Raw {
+    interface Raw extends serializers.WithDescription.Raw, serializers.WithAvailability.Raw {
         name: string;
         schema: serializers.Schema.Raw;
         parameterNameOverride?: string | null;

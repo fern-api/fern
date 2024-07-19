@@ -1,4 +1,9 @@
-import { PrimitiveSchemaValueWithExample, SchemaWithExample, SdkGroupName } from "@fern-api/openapi-ir-sdk";
+import {
+    Availability,
+    PrimitiveSchemaValueWithExample,
+    SchemaWithExample,
+    SdkGroupName
+} from "@fern-api/openapi-ir-sdk";
 import { wrapPrimitive } from "./convertSchemas";
 
 export function convertNumber({
@@ -12,6 +17,7 @@ export function convertNumber({
     exclusiveMaximum,
     multipleOf,
     description,
+    availability,
     wrapAsNullable,
     example,
     groupName
@@ -26,6 +32,7 @@ export function convertNumber({
     exclusiveMaximum: boolean | undefined;
     multipleOf: number | undefined;
     description: string | undefined;
+    availability: Availability | undefined;
     wrapAsNullable: boolean;
     example: number | undefined;
     groupName: SdkGroupName | undefined;
@@ -45,6 +52,7 @@ export function convertNumber({
             }),
             wrapAsNullable,
             description,
+            availability,
             groupName
         });
     } else if (format === "float") {
@@ -56,6 +64,7 @@ export function convertNumber({
             }),
             wrapAsNullable,
             description,
+            availability,
             groupName
         });
     } else if (format === "int32") {
@@ -73,6 +82,7 @@ export function convertNumber({
             }),
             wrapAsNullable,
             description,
+            availability,
             groupName
         });
     } else if (format === "int64") {
@@ -85,6 +95,7 @@ export function convertNumber({
             }),
             wrapAsNullable,
             description,
+            availability,
             groupName
         });
     } else if (format === "time-delta") {
@@ -96,6 +107,7 @@ export function convertNumber({
             }),
             wrapAsNullable,
             description,
+            availability,
             groupName
         });
     }
@@ -107,6 +119,7 @@ export function convertNumber({
         }),
         wrapAsNullable,
         description,
+        availability,
         groupName
     });
 }

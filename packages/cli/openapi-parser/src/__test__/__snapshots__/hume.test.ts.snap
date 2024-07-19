@@ -40,16 +40,19 @@ exports[`open api parser hume parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": "The maximum number of jobs to include in the response.",
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ListJobsRequestLimit",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ListJobsRequestLimit",
               "groupName": null,
@@ -68,22 +71,26 @@ exports[`open api parser hume parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": "Include only jobs with these statuses.",
           "name": "status",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ListJobsRequestStatus",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ListJobsRequestStatus",
               "groupName": null,
               "nameOverride": null,
               "type": "array",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "ListJobsRequestStatusItem",
                 "groupName": null,
@@ -95,16 +102,19 @@ exports[`open api parser hume parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": "Include only jobs that were created before or after \`timestamp_ms\`.",
           "name": "when",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ListJobsRequestWhen",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ListJobsRequestWhen",
               "groupName": null,
@@ -115,16 +125,19 @@ exports[`open api parser hume parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": "Defaults to the current date and time. See \`when\`.",
           "name": "timestamp_ms",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ListJobsRequestTimestampMs",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ListJobsRequestTimestampMs",
               "groupName": null,
@@ -143,16 +156,19 @@ exports[`open api parser hume parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": "The job timestamp to sort by.",
           "name": "sort_by",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ListJobsRequestSortBy",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ListJobsRequestSortBy",
               "groupName": null,
@@ -163,16 +179,19 @@ exports[`open api parser hume parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": "The sort direction.",
           "name": "direction",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ListJobsRequestDirection",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ListJobsRequestDirection",
               "groupName": null,
@@ -189,12 +208,14 @@ exports[`open api parser hume parse open api 1`] = `
         "description": "",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "ListJobsResponse",
           "groupName": null,
           "nameOverride": null,
           "type": "array",
           "value": {
+            "availability": null,
             "description": null,
             "generatedName": "ListJobsResponseItem",
             "groupName": null,
@@ -260,6 +281,7 @@ exports[`open api parser hume parse open api 1`] = `
         "contentType": null,
         "description": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "StartJobRequest",
           "groupName": null,
@@ -274,6 +296,7 @@ exports[`open api parser hume parse open api 1`] = `
         "description": "",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "StartJobResponse",
           "groupName": null,
@@ -333,9 +356,11 @@ exports[`open api parser hume parse open api 1`] = `
       "path": "/v0/batch/jobs/{id}/predictions",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "id",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetJobPredictionsRequestId",
             "groupName": null,
@@ -360,12 +385,14 @@ exports[`open api parser hume parse open api 1`] = `
         "description": "",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "GetJobPredictionsResponse",
           "groupName": null,
           "nameOverride": null,
           "type": "array",
           "value": {
+            "availability": null,
             "description": null,
             "generatedName": "GetJobPredictionsResponseItem",
             "groupName": null,
@@ -400,9 +427,11 @@ exports[`open api parser hume parse open api 1`] = `
       "path": "/v0/batch/jobs/{id}/artifacts",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "id",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetJobArtifactsRequestId",
             "groupName": null,
@@ -451,9 +480,11 @@ exports[`open api parser hume parse open api 1`] = `
       "path": "/v0/batch/jobs/{id}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "id",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GetJobRequestId",
             "groupName": null,
@@ -478,6 +509,7 @@ exports[`open api parser hume parse open api 1`] = `
         "description": "",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "GetJobResponse",
           "groupName": null,
@@ -564,6 +596,7 @@ exports[`open api parser hume parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "BaseRequest",
       "groupName": null,
@@ -571,17 +604,20 @@ exports[`open api parser hume parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "baseRequestModels",
           "key": "models",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "baseRequestModels",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "BaseRequestModels",
               "groupName": null,
@@ -593,17 +629,20 @@ exports[`open api parser hume parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "baseRequestTranscription",
           "key": "transcription",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "baseRequestTranscription",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "BaseRequestTranscription",
               "groupName": null,
@@ -615,17 +654,20 @@ exports[`open api parser hume parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "baseRequestUrls",
           "key": "urls",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "baseRequestUrls",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "URLs to the media files to be processed. Each must be a valid public URL to a media file (see recommended input filetypes) or an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`) of media files.
 
 If you wish to supply more than 100 URLs, consider providing them as an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`).",
@@ -634,6 +676,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "nameOverride": null,
               "type": "array",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "BaseRequestUrlsItem",
                 "groupName": null,
@@ -653,17 +696,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "baseRequestCallbackUrl",
           "key": "callback_url",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "baseRequestCallbackUrl",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "If provided, a \`POST\` request will be made to the URL with the generated predictions on completion or the error message on failure.",
               "generatedName": "BaseRequestCallbackUrl",
               "groupName": null,
@@ -682,17 +728,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "baseRequestNotify",
           "key": "notify",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "baseRequestNotify",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "Whether to send an email notification to the user upon job failure.",
               "generatedName": "BaseRequestNotify",
               "groupName": null,
@@ -709,6 +758,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "Bcp47Tag": {
+      "availability": null,
       "description": null,
       "generatedName": "Bcp47Tag",
       "groupName": null,
@@ -716,6 +766,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "enum",
       "values": [
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -728,6 +779,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "zh",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -740,6 +792,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "da",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -752,6 +805,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "nl",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -764,6 +818,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "en",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -776,6 +831,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "en-AU",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -788,6 +844,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "en-IN",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -800,6 +857,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "en-NZ",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -812,6 +870,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "en-GB",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -824,6 +883,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "fr",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -836,6 +896,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "fr-CA",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -848,6 +909,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "de",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -860,6 +922,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "hi",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -872,6 +935,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "hi-Latn",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -884,6 +948,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "id",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -896,6 +961,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "it",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -908,6 +974,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "ja",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -920,6 +987,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "ko",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -932,6 +1000,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "no",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -944,6 +1013,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "pl",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -956,6 +1026,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "pt",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -968,6 +1039,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "pt-BR",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -980,6 +1052,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "pt-PT",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -992,6 +1065,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "ru",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -1004,6 +1078,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "es",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -1016,6 +1091,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "es-419",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -1028,6 +1104,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "sv",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -1040,6 +1117,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "ta",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -1052,6 +1130,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "tr",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -1069,6 +1148,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "A bounding box around a face.",
       "generatedName": "BoundingBox",
       "groupName": null,
@@ -1076,11 +1156,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "boundingBoxX",
           "key": "x",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "x-coordinate of bounding box top left corner.",
             "generatedName": "BoundingBoxX",
             "groupName": null,
@@ -1099,11 +1181,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "boundingBoxY",
           "key": "y",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "y-coordinate of bounding box top left corner.",
             "generatedName": "BoundingBoxY",
             "groupName": null,
@@ -1122,11 +1206,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "boundingBoxW",
           "key": "w",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Bounding box width.",
             "generatedName": "BoundingBoxW",
             "groupName": null,
@@ -1145,11 +1231,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "boundingBoxH",
           "key": "h",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Bounding box height.",
             "generatedName": "BoundingBoxH",
             "groupName": null,
@@ -1173,6 +1261,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "BurstPrediction",
       "groupName": null,
@@ -1180,11 +1269,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "burstPredictionTime",
           "key": "time",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "BurstPredictionTime",
             "groupName": null,
@@ -1195,17 +1286,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "burstPredictionEmotions",
           "key": "emotions",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "A high-dimensional embedding in emotion space.",
             "generatedName": "BurstPredictionEmotions",
             "groupName": null,
             "nameOverride": null,
             "type": "array",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "BurstPredictionEmotionsItem",
               "groupName": null,
@@ -1217,17 +1311,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "burstPredictionDescriptions",
           "key": "descriptions",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Modality-specific descriptive features and their scores.",
             "generatedName": "BurstPredictionDescriptions",
             "groupName": null,
             "nameOverride": null,
             "type": "array",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "BurstPredictionDescriptionsItem",
               "groupName": null,
@@ -1244,6 +1341,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Completed",
       "groupName": null,
@@ -1251,11 +1349,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "completedCreatedTimestampMs",
           "key": "created_timestamp_ms",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "When this job was created (Unix timestamp in milliseconds).",
             "generatedName": "CompletedCreatedTimestampMs",
             "groupName": null,
@@ -1274,11 +1374,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "completedStartedTimestampMs",
           "key": "started_timestamp_ms",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "When this job started (Unix timestamp in milliseconds).",
             "generatedName": "CompletedStartedTimestampMs",
             "groupName": null,
@@ -1297,11 +1399,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "completedEndedTimestampMs",
           "key": "ended_timestamp_ms",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "When this job ended (Unix timestamp in milliseconds).",
             "generatedName": "CompletedEndedTimestampMs",
             "groupName": null,
@@ -1320,11 +1424,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "completedNumPredictions",
           "key": "num_predictions",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "The number of predictions that were generated by this job.",
             "generatedName": "CompletedNumPredictions",
             "groupName": null,
@@ -1343,11 +1449,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "completedNumErrors",
           "key": "num_errors",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "The number of errors that occurred while running this job.",
             "generatedName": "CompletedNumErrors",
             "groupName": null,
@@ -1371,6 +1479,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "DescriptionsScore",
       "groupName": null,
@@ -1378,11 +1487,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "descriptionsScoreName",
           "key": "name",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Name of the descriptive feature being expressed.",
             "generatedName": "DescriptionsScoreName",
             "groupName": null,
@@ -1400,11 +1511,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "descriptionsScoreScore",
           "key": "score",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Embedding value for the descriptive feature being expressed.",
             "generatedName": "DescriptionsScoreScore",
             "groupName": null,
@@ -1424,6 +1537,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "Direction": {
+      "availability": null,
       "description": null,
       "generatedName": "Direction",
       "groupName": null,
@@ -1431,6 +1545,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "enum",
       "values": [
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -1443,6 +1558,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "asc",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -1460,6 +1576,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "EmotionScore",
       "groupName": null,
@@ -1467,11 +1584,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "emotionScoreName",
           "key": "name",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Name of the emotion being expressed.",
             "generatedName": "EmotionScoreName",
             "groupName": null,
@@ -1489,11 +1608,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "emotionScoreScore",
           "key": "score",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Embedding value for the emotion being expressed.",
             "generatedName": "EmotionScoreScore",
             "groupName": null,
@@ -1513,10 +1634,12 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "Empty": {
+      "availability": null,
       "description": "To include predictions for this model type, set this field to \`{}\`. It is currently not configurable further.",
       "generatedName": "Empty",
       "groupName": null,
       "key": {
+        "availability": null,
         "description": null,
         "generatedName": "EmptyKey",
         "groupName": null,
@@ -1542,6 +1665,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Error",
       "groupName": null,
@@ -1549,11 +1673,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "errorMessage",
           "key": "message",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "An error message.",
             "generatedName": "ErrorMessage",
             "groupName": null,
@@ -1571,11 +1697,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "errorFile",
           "key": "file",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "A file path relative to the top level source URL or file.",
             "generatedName": "ErrorFile",
             "groupName": null,
@@ -1598,6 +1726,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Face",
       "groupName": null,
@@ -1605,17 +1734,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "faceFpsPred",
           "key": "fps_pred",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "faceFpsPred",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "Number of frames per second to process. Other frames will be omitted from the response. Set to \`0\` to process every frame.",
               "generatedName": "FaceFpsPred",
               "groupName": null,
@@ -1635,17 +1767,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "faceProbThreshold",
           "key": "prob_threshold",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "faceProbThreshold",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "Face detection probability threshold. Faces detected with a probability less than this threshold will be omitted from the response.",
               "generatedName": "FaceProbThreshold",
               "groupName": null,
@@ -1665,17 +1800,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "faceIdentifyFaces",
           "key": "identify_faces",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "faceIdentifyFaces",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "Whether to return identifiers for faces across frames. If \`true\`, unique identifiers will be assigned to face bounding boxes to differentiate different faces. If \`false\`, all faces will be tagged with an \`unknown\` ID.",
               "generatedName": "FaceIdentifyFaces",
               "groupName": null,
@@ -1690,17 +1828,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "faceMinFaceSize",
           "key": "min_face_size",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "faceMinFaceSize",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "Minimum bounding box side length in pixels to treat as a face. Faces detected with a bounding box side length in pixels less than this threshold will be omitted from the response.",
               "generatedName": "FaceMinFaceSize",
               "groupName": null,
@@ -1720,17 +1861,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "faceFacs",
           "key": "facs",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "faceFacs",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "FaceFacs",
               "groupName": null,
@@ -1742,17 +1886,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "faceDescriptions",
           "key": "descriptions",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "faceDescriptions",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "FaceDescriptions",
               "groupName": null,
@@ -1764,17 +1911,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "faceSaveFaces",
           "key": "save_faces",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "faceSaveFaces",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "Whether to extract and save the detected faces in the artifacts zip created by each job.",
               "generatedName": "FaceSaveFaces",
               "groupName": null,
@@ -1794,6 +1944,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "FacePrediction",
       "groupName": null,
@@ -1801,11 +1952,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "facePredictionFrame",
           "key": "frame",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Frame number",
             "generatedName": "FacePredictionFrame",
             "groupName": null,
@@ -1824,11 +1977,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "facePredictionTime",
           "key": "time",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Time in seconds when face detection occurred.",
             "generatedName": "FacePredictionTime",
             "groupName": null,
@@ -1847,11 +2002,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "facePredictionProb",
           "key": "prob",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "The predicted probability that a detected face was actually a face.",
             "generatedName": "FacePredictionProb",
             "groupName": null,
@@ -1870,11 +2027,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "facePredictionBox",
           "key": "box",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "FacePredictionBox",
             "groupName": null,
@@ -1885,17 +2044,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "facePredictionEmotions",
           "key": "emotions",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "A high-dimensional embedding in emotion space.",
             "generatedName": "FacePredictionEmotions",
             "groupName": null,
             "nameOverride": null,
             "type": "array",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "FacePredictionEmotionsItem",
               "groupName": null,
@@ -1907,23 +2069,27 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "facePredictionFacs",
           "key": "facs",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "facePredictionFacs",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "FACS 2.0 features and their scores.",
               "generatedName": "FacePredictionFacs",
               "groupName": null,
               "nameOverride": null,
               "type": "array",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "FacePredictionFacsItem",
                 "groupName": null,
@@ -1936,23 +2102,27 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "facePredictionDescriptions",
           "key": "descriptions",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "facePredictionDescriptions",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "Modality-specific descriptive features and their scores.",
               "generatedName": "FacePredictionDescriptions",
               "groupName": null,
               "nameOverride": null,
               "type": "array",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "FacePredictionDescriptionsItem",
                 "groupName": null,
@@ -1970,6 +2140,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "FacemeshPrediction",
       "groupName": null,
@@ -1977,17 +2148,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "facemeshPredictionEmotions",
           "key": "emotions",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "A high-dimensional embedding in emotion space.",
             "generatedName": "FacemeshPredictionEmotions",
             "groupName": null,
             "nameOverride": null,
             "type": "array",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "FacemeshPredictionEmotionsItem",
               "groupName": null,
@@ -2004,6 +2178,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "FacsScore",
       "groupName": null,
@@ -2011,11 +2186,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "facsScoreName",
           "key": "name",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Name of the FACS 2.0 feature being expressed.",
             "generatedName": "FacsScoreName",
             "groupName": null,
@@ -2033,11 +2210,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "facsScoreScore",
           "key": "score",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Embedding value for the FACS 2.0 feature being expressed.",
             "generatedName": "FacsScoreScore",
             "groupName": null,
@@ -2060,6 +2239,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Failed",
       "groupName": null,
@@ -2067,11 +2247,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "failedCreatedTimestampMs",
           "key": "created_timestamp_ms",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "When this job was created (Unix timestamp in milliseconds).",
             "generatedName": "FailedCreatedTimestampMs",
             "groupName": null,
@@ -2090,11 +2272,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "failedStartedTimestampMs",
           "key": "started_timestamp_ms",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "When this job started (Unix timestamp in milliseconds).",
             "generatedName": "FailedStartedTimestampMs",
             "groupName": null,
@@ -2113,11 +2297,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "failedEndedTimestampMs",
           "key": "ended_timestamp_ms",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "When this job ended (Unix timestamp in milliseconds).",
             "generatedName": "FailedEndedTimestampMs",
             "groupName": null,
@@ -2136,11 +2322,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "failedMessage",
           "key": "message",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "An error message.",
             "generatedName": "FailedMessage",
             "groupName": null,
@@ -2163,6 +2351,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "File",
       "groupName": null,
@@ -2170,17 +2359,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fileFilename",
           "key": "filename",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "fileFilename",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "The name of the file.",
               "generatedName": "FileFilename",
               "groupName": null,
@@ -2199,17 +2391,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fileContentType",
           "key": "content_type",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "fileContentType",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "The content type of the file.",
               "generatedName": "FileContentType",
               "groupName": null,
@@ -2228,11 +2423,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "fileMd5Sum",
           "key": "md5sum",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "The MD5 checksum of the file.",
             "generatedName": "FileMd5Sum",
             "groupName": null,
@@ -2252,6 +2449,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "Granularity": {
+      "availability": null,
       "description": "The granularity at which to generate predictions. \`utterance\` corresponds to a natural pause or break in conversation, while \`conversational_turn\` corresponds to a change in speaker.",
       "generatedName": "Granularity",
       "groupName": null,
@@ -2259,6 +2457,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "enum",
       "values": [
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -2271,6 +2470,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "word",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -2283,6 +2483,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "sentence",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -2295,6 +2496,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "utterance",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -2312,6 +2514,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "GroupedPredictionsBurstPrediction",
       "groupName": null,
@@ -2319,11 +2522,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "groupedPredictionsBurstPredictionId",
           "key": "id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
             "generatedName": "GroupedPredictionsBurstPredictionId",
             "groupName": null,
@@ -2341,17 +2546,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "groupedPredictionsBurstPredictionPredictions",
           "key": "predictions",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GroupedPredictionsBurstPredictionPredictions",
             "groupName": null,
             "nameOverride": null,
             "type": "array",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "GroupedPredictionsBurstPredictionPredictionsItem",
               "groupName": null,
@@ -2368,6 +2576,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "GroupedPredictionsFacePrediction",
       "groupName": null,
@@ -2375,11 +2584,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "groupedPredictionsFacePredictionId",
           "key": "id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
             "generatedName": "GroupedPredictionsFacePredictionId",
             "groupName": null,
@@ -2397,17 +2608,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "groupedPredictionsFacePredictionPredictions",
           "key": "predictions",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GroupedPredictionsFacePredictionPredictions",
             "groupName": null,
             "nameOverride": null,
             "type": "array",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "GroupedPredictionsFacePredictionPredictionsItem",
               "groupName": null,
@@ -2424,6 +2638,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "GroupedPredictionsFacemeshPrediction",
       "groupName": null,
@@ -2431,11 +2646,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "groupedPredictionsFacemeshPredictionId",
           "key": "id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
             "generatedName": "GroupedPredictionsFacemeshPredictionId",
             "groupName": null,
@@ -2453,17 +2670,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "groupedPredictionsFacemeshPredictionPredictions",
           "key": "predictions",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GroupedPredictionsFacemeshPredictionPredictions",
             "groupName": null,
             "nameOverride": null,
             "type": "array",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "GroupedPredictionsFacemeshPredictionPredictionsItem",
               "groupName": null,
@@ -2480,6 +2700,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "GroupedPredictionsLanguagePrediction",
       "groupName": null,
@@ -2487,11 +2708,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "groupedPredictionsLanguagePredictionId",
           "key": "id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
             "generatedName": "GroupedPredictionsLanguagePredictionId",
             "groupName": null,
@@ -2509,17 +2732,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "groupedPredictionsLanguagePredictionPredictions",
           "key": "predictions",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GroupedPredictionsLanguagePredictionPredictions",
             "groupName": null,
             "nameOverride": null,
             "type": "array",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "GroupedPredictionsLanguagePredictionPredictionsItem",
               "groupName": null,
@@ -2536,6 +2762,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "GroupedPredictionsNerPrediction",
       "groupName": null,
@@ -2543,11 +2770,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "groupedPredictionsNerPredictionId",
           "key": "id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
             "generatedName": "GroupedPredictionsNerPredictionId",
             "groupName": null,
@@ -2565,17 +2794,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "groupedPredictionsNerPredictionPredictions",
           "key": "predictions",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GroupedPredictionsNerPredictionPredictions",
             "groupName": null,
             "nameOverride": null,
             "type": "array",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "GroupedPredictionsNerPredictionPredictionsItem",
               "groupName": null,
@@ -2592,6 +2824,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "GroupedPredictionsProsodyPrediction",
       "groupName": null,
@@ -2599,11 +2832,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "groupedPredictionsProsodyPredictionId",
           "key": "id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
             "generatedName": "GroupedPredictionsProsodyPredictionId",
             "groupName": null,
@@ -2621,17 +2856,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "groupedPredictionsProsodyPredictionPredictions",
           "key": "predictions",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GroupedPredictionsProsodyPredictionPredictions",
             "groupName": null,
             "nameOverride": null,
             "type": "array",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "GroupedPredictionsProsodyPredictionPredictionsItem",
               "groupName": null,
@@ -2648,6 +2886,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "InProgress",
       "groupName": null,
@@ -2655,11 +2894,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "inProgressCreatedTimestampMs",
           "key": "created_timestamp_ms",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "When this job was created (Unix timestamp in milliseconds).",
             "generatedName": "InProgressCreatedTimestampMs",
             "groupName": null,
@@ -2678,11 +2919,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "inProgressStartedTimestampMs",
           "key": "started_timestamp_ms",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "When this job started (Unix timestamp in milliseconds).",
             "generatedName": "InProgressStartedTimestampMs",
             "groupName": null,
@@ -2706,6 +2949,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "JobId",
       "groupName": null,
@@ -2713,11 +2957,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "jobIdJobId",
           "key": "job_id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "The ID of the started job.",
             "generatedName": "JobIdJobId",
             "groupName": null,
@@ -2740,6 +2986,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "JobRequest",
       "groupName": null,
@@ -2747,11 +2994,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "jobRequestUserId",
           "key": "user_id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Your user ID.",
             "generatedName": "JobRequestUserId",
             "groupName": null,
@@ -2769,11 +3018,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "jobRequestJobId",
           "key": "job_id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "The ID associated with this job.",
             "generatedName": "JobRequestJobId",
             "groupName": null,
@@ -2791,11 +3042,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "jobRequestRequest",
           "key": "request",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "JobRequestRequest",
             "groupName": null,
@@ -2806,11 +3059,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "jobRequestState",
           "key": "state",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "JobRequestState",
             "groupName": null,
@@ -2826,6 +3081,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Language",
       "groupName": null,
@@ -2833,17 +3089,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "languageGranularity",
           "key": "granularity",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "languageGranularity",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "LanguageGranularity",
               "groupName": null,
@@ -2855,17 +3114,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "languageIdentifySpeakers",
           "key": "identify_speakers",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "languageIdentifySpeakers",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
               "generatedName": "LanguageIdentifySpeakers",
               "groupName": null,
@@ -2880,17 +3142,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "languageSentiment",
           "key": "sentiment",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "languageSentiment",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "LanguageSentiment",
               "groupName": null,
@@ -2902,17 +3167,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "languageToxicity",
           "key": "toxicity",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "languageToxicity",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "LanguageToxicity",
               "groupName": null,
@@ -2929,6 +3197,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "LanguagePrediction",
       "groupName": null,
@@ -2936,11 +3205,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "languagePredictionText",
           "key": "text",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "A segment of text (like a word or a sentence).",
             "generatedName": "LanguagePredictionText",
             "groupName": null,
@@ -2958,11 +3229,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "languagePredictionPosition",
           "key": "position",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "LanguagePredictionPosition",
             "groupName": null,
@@ -2973,17 +3246,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "languagePredictionTime",
           "key": "time",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "languagePredictionTime",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "LanguagePredictionTime",
               "groupName": null,
@@ -2995,17 +3271,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "languagePredictionConfidence",
           "key": "confidence",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "languagePredictionConfidence",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
               "generatedName": "LanguagePredictionConfidence",
               "groupName": null,
@@ -3025,17 +3304,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "languagePredictionSpeakerConfidence",
           "key": "speaker_confidence",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "languagePredictionSpeakerConfidence",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
               "generatedName": "LanguagePredictionSpeakerConfidence",
               "groupName": null,
@@ -3055,17 +3337,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "languagePredictionEmotions",
           "key": "emotions",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "A high-dimensional embedding in emotion space.",
             "generatedName": "LanguagePredictionEmotions",
             "groupName": null,
             "nameOverride": null,
             "type": "array",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "LanguagePredictionEmotionsItem",
               "groupName": null,
@@ -3077,17 +3362,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "languagePredictionSentiment",
           "key": "sentiment",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "languagePredictionSentiment",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "Sentiment predictions returned as a distribution. This model predicts the probability that a given text could be interpreted as having each sentiment level from \`1\` (negative) to \`9\` (positive).
 
 Compared to returning one estimate of sentiment, this enables a more nuanced analysis of a text's meaning. For example, a text with very neutral sentiment would have an average rating of \`5\`. But also a text that could be interpreted as having very positive sentiment or very negative sentiment would also have an average rating of \`5\`. The average sentiment is less informative than the distribution over sentiment, so this API returns a value for each sentiment level.",
@@ -3096,6 +3384,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "nameOverride": null,
               "type": "array",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "LanguagePredictionSentimentItem",
                 "groupName": null,
@@ -3108,23 +3397,27 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "languagePredictionToxicity",
           "key": "toxicity",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "languagePredictionToxicity",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "Toxicity predictions returned as probabilities that the text can be classified into the following categories: \`toxic\`, \`severe_toxic\`, \`obscene\`, \`threat\`, \`insult\`, and \`identity_hate\`.",
               "generatedName": "LanguagePredictionToxicity",
               "groupName": null,
               "nameOverride": null,
               "type": "array",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "LanguagePredictionToxicityItem",
                 "groupName": null,
@@ -3142,6 +3435,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Models",
       "groupName": null,
@@ -3149,17 +3443,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelsFace",
           "key": "face",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "modelsFace",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ModelsFace",
               "groupName": null,
@@ -3171,17 +3468,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelsBurst",
           "key": "burst",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "modelsBurst",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ModelsBurst",
               "groupName": null,
@@ -3193,17 +3493,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelsProsody",
           "key": "prosody",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "modelsProsody",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ModelsProsody",
               "groupName": null,
@@ -3215,17 +3518,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelsLanguage",
           "key": "language",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "modelsLanguage",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ModelsLanguage",
               "groupName": null,
@@ -3237,17 +3543,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelsNer",
           "key": "ner",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "modelsNer",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ModelsNer",
               "groupName": null,
@@ -3259,17 +3568,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelsFacemesh",
           "key": "facemesh",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "modelsFacemesh",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ModelsFacemesh",
               "groupName": null,
@@ -3286,6 +3598,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ModelsPredictions",
       "groupName": null,
@@ -3293,17 +3606,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelsPredictionsFace",
           "key": "face",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "modelsPredictionsFace",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ModelsPredictionsFace",
               "groupName": null,
@@ -3315,17 +3631,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelsPredictionsBurst",
           "key": "burst",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "modelsPredictionsBurst",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ModelsPredictionsBurst",
               "groupName": null,
@@ -3337,17 +3656,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelsPredictionsProsody",
           "key": "prosody",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "modelsPredictionsProsody",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ModelsPredictionsProsody",
               "groupName": null,
@@ -3359,17 +3681,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelsPredictionsLanguage",
           "key": "language",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "modelsPredictionsLanguage",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ModelsPredictionsLanguage",
               "groupName": null,
@@ -3381,17 +3706,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelsPredictionsNer",
           "key": "ner",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "modelsPredictionsNer",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ModelsPredictionsNer",
               "groupName": null,
@@ -3403,17 +3731,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "modelsPredictionsFacemesh",
           "key": "facemesh",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "modelsPredictionsFacemesh",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ModelsPredictionsFacemesh",
               "groupName": null,
@@ -3430,6 +3761,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Ner",
       "groupName": null,
@@ -3437,17 +3769,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "nerIdentifySpeakers",
           "key": "identify_speakers",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "nerIdentifySpeakers",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
               "generatedName": "NerIdentifySpeakers",
               "groupName": null,
@@ -3467,6 +3802,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "NerPrediction",
       "groupName": null,
@@ -3474,11 +3810,13 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "nerPredictionEntity",
           "key": "entity",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "The recognized topic or entity.",
             "generatedName": "NerPredictionEntity",
             "groupName": null,
@@ -3496,11 +3834,13 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "nerPredictionPosition",
           "key": "position",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "NerPredictionPosition",
             "groupName": null,
@@ -3511,11 +3851,13 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "nerPredictionEntityConfidence",
           "key": "entity_confidence",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Our NER model's relative confidence in the recognized topic or entity.",
             "generatedName": "NerPredictionEntityConfidence",
             "groupName": null,
@@ -3534,11 +3876,13 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "nerPredictionSupport",
           "key": "support",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "A measure of how often the entity is linked to by other entities.",
             "generatedName": "NerPredictionSupport",
             "groupName": null,
@@ -3557,11 +3901,13 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "nerPredictionUri",
           "key": "uri",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "A URL which provides more information about the recognized topic or entity.",
             "generatedName": "NerPredictionUri",
             "groupName": null,
@@ -3579,11 +3925,13 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "nerPredictionLinkWord",
           "key": "link_word",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "The specific word to which the emotion predictions are linked.",
             "generatedName": "NerPredictionLinkWord",
             "groupName": null,
@@ -3601,17 +3949,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "nerPredictionTime",
           "key": "time",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "nerPredictionTime",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "NerPredictionTime",
               "groupName": null,
@@ -3623,17 +3974,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "nerPredictionConfidence",
           "key": "confidence",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "nerPredictionConfidence",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
               "generatedName": "NerPredictionConfidence",
               "groupName": null,
@@ -3653,17 +4007,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "nerPredictionSpeakerConfidence",
           "key": "speaker_confidence",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "nerPredictionSpeakerConfidence",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
               "generatedName": "NerPredictionSpeakerConfidence",
               "groupName": null,
@@ -3683,17 +4040,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "nerPredictionEmotions",
           "key": "emotions",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "A high-dimensional embedding in emotion space.",
             "generatedName": "NerPredictionEmotions",
             "groupName": null,
             "nameOverride": null,
             "type": "array",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "NerPredictionEmotionsItem",
               "groupName": null,
@@ -3707,10 +4067,12 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "type": "object",
     },
     "Null": {
+      "availability": null,
       "description": "No associated metadata for this model. Value will be \`null\`.",
       "generatedName": "Null",
       "groupName": null,
       "key": {
+        "availability": null,
         "description": null,
         "generatedName": "NullKey",
         "groupName": null,
@@ -3736,6 +4098,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Position of a segment of text within a larger document, measured in characters. Uses zero-based indexing. The beginning index is inclusive and the end index is exclusive.",
       "generatedName": "PositionInterval",
       "groupName": null,
@@ -3743,11 +4106,13 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "positionIntervalBegin",
           "key": "begin",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "The index of the first character in the text segment, inclusive.",
             "generatedName": "PositionIntervalBegin",
             "groupName": null,
@@ -3766,11 +4131,13 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "positionIntervalEnd",
           "key": "end",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "The index of the last character in the text segment, exclusive.",
             "generatedName": "PositionIntervalEnd",
             "groupName": null,
@@ -3794,6 +4161,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Prediction",
       "groupName": null,
@@ -3801,11 +4169,13 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "predictionFile",
           "key": "file",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "A file path relative to the top level source URL or file.",
             "generatedName": "PredictionFile",
             "groupName": null,
@@ -3823,11 +4193,13 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "predictionModels",
           "key": "models",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "PredictionModels",
             "groupName": null,
@@ -3843,6 +4215,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PredictionsOptionalNullBurstPrediction",
       "groupName": null,
@@ -3850,17 +4223,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "predictionsOptionalNullBurstPredictionMetadata",
           "key": "metadata",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "predictionsOptionalNullBurstPredictionMetadata",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "PredictionsOptionalNullBurstPredictionMetadata",
               "groupName": null,
@@ -3872,17 +4248,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "predictionsOptionalNullBurstPredictionGroupedPredictions",
           "key": "grouped_predictions",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "PredictionsOptionalNullBurstPredictionGroupedPredictions",
             "groupName": null,
             "nameOverride": null,
             "type": "array",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "PredictionsOptionalNullBurstPredictionGroupedPredictionsItem",
               "groupName": null,
@@ -3899,6 +4278,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PredictionsOptionalNullFacePrediction",
       "groupName": null,
@@ -3906,17 +4286,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "predictionsOptionalNullFacePredictionMetadata",
           "key": "metadata",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "predictionsOptionalNullFacePredictionMetadata",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "PredictionsOptionalNullFacePredictionMetadata",
               "groupName": null,
@@ -3928,17 +4311,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "predictionsOptionalNullFacePredictionGroupedPredictions",
           "key": "grouped_predictions",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "PredictionsOptionalNullFacePredictionGroupedPredictions",
             "groupName": null,
             "nameOverride": null,
             "type": "array",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "PredictionsOptionalNullFacePredictionGroupedPredictionsItem",
               "groupName": null,
@@ -3955,6 +4341,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PredictionsOptionalNullFacemeshPrediction",
       "groupName": null,
@@ -3962,17 +4349,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "predictionsOptionalNullFacemeshPredictionMetadata",
           "key": "metadata",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "predictionsOptionalNullFacemeshPredictionMetadata",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "PredictionsOptionalNullFacemeshPredictionMetadata",
               "groupName": null,
@@ -3984,17 +4374,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "predictionsOptionalNullFacemeshPredictionGroupedPredictions",
           "key": "grouped_predictions",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "PredictionsOptionalNullFacemeshPredictionGroupedPredictions",
             "groupName": null,
             "nameOverride": null,
             "type": "array",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "PredictionsOptionalNullFacemeshPredictionGroupedPredictionsItem",
               "groupName": null,
@@ -4011,6 +4404,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PredictionsOptionalTranscriptionMetadataLanguagePrediction",
       "groupName": null,
@@ -4018,17 +4412,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "predictionsOptionalTranscriptionMetadataLanguagePredictionMetadata",
           "key": "metadata",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "predictionsOptionalTranscriptionMetadataLanguagePredictionMetadata",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "PredictionsOptionalTranscriptionMetadataLanguagePredictionMetadata",
               "groupName": null,
@@ -4040,17 +4437,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "predictionsOptionalTranscriptionMetadataLanguagePredictionGroupedPredictions",
           "key": "grouped_predictions",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "PredictionsOptionalTranscriptionMetadataLanguagePredictionGroupedPredictions",
             "groupName": null,
             "nameOverride": null,
             "type": "array",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "PredictionsOptionalTranscriptionMetadataLanguagePredictionGroupedPredictionsItem",
               "groupName": null,
@@ -4067,6 +4467,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PredictionsOptionalTranscriptionMetadataNerPrediction",
       "groupName": null,
@@ -4074,17 +4475,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "predictionsOptionalTranscriptionMetadataNerPredictionMetadata",
           "key": "metadata",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "predictionsOptionalTranscriptionMetadataNerPredictionMetadata",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "PredictionsOptionalTranscriptionMetadataNerPredictionMetadata",
               "groupName": null,
@@ -4096,17 +4500,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "predictionsOptionalTranscriptionMetadataNerPredictionGroupedPredictions",
           "key": "grouped_predictions",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "PredictionsOptionalTranscriptionMetadataNerPredictionGroupedPredictions",
             "groupName": null,
             "nameOverride": null,
             "type": "array",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "PredictionsOptionalTranscriptionMetadataNerPredictionGroupedPredictionsItem",
               "groupName": null,
@@ -4123,6 +4530,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "PredictionsOptionalTranscriptionMetadataProsodyPrediction",
       "groupName": null,
@@ -4130,17 +4538,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "predictionsOptionalTranscriptionMetadataProsodyPredictionMetadata",
           "key": "metadata",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "predictionsOptionalTranscriptionMetadataProsodyPredictionMetadata",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "PredictionsOptionalTranscriptionMetadataProsodyPredictionMetadata",
               "groupName": null,
@@ -4152,17 +4563,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "predictionsOptionalTranscriptionMetadataProsodyPredictionGroupedPredictions",
           "key": "grouped_predictions",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "PredictionsOptionalTranscriptionMetadataProsodyPredictionGroupedPredictions",
             "groupName": null,
             "nameOverride": null,
             "type": "array",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "PredictionsOptionalTranscriptionMetadataProsodyPredictionGroupedPredictionsItem",
               "groupName": null,
@@ -4179,6 +4593,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "NOTE: the \`granularity\` field is ignored if transcription is not enabled or if the \`window\` field has been set.",
       "generatedName": "Prosody",
       "groupName": null,
@@ -4186,17 +4601,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "prosodyGranularity",
           "key": "granularity",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "prosodyGranularity",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ProsodyGranularity",
               "groupName": null,
@@ -4208,17 +4626,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "prosodyIdentifySpeakers",
           "key": "identify_speakers",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "prosodyIdentifySpeakers",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
               "generatedName": "ProsodyIdentifySpeakers",
               "groupName": null,
@@ -4233,17 +4654,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "prosodyWindow",
           "key": "window",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "prosodyWindow",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ProsodyWindow",
               "groupName": null,
@@ -4260,6 +4684,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ProsodyPrediction",
       "groupName": null,
@@ -4267,17 +4692,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "prosodyPredictionText",
           "key": "text",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "prosodyPredictionText",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "A segment of text (like a word or a sentence).",
               "generatedName": "ProsodyPredictionText",
               "groupName": null,
@@ -4296,11 +4724,13 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "prosodyPredictionTime",
           "key": "time",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ProsodyPredictionTime",
             "groupName": null,
@@ -4311,17 +4741,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "prosodyPredictionConfidence",
           "key": "confidence",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "prosodyPredictionConfidence",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
               "generatedName": "ProsodyPredictionConfidence",
               "groupName": null,
@@ -4341,17 +4774,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "prosodyPredictionSpeakerConfidence",
           "key": "speaker_confidence",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "prosodyPredictionSpeakerConfidence",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
               "generatedName": "ProsodyPredictionSpeakerConfidence",
               "groupName": null,
@@ -4371,17 +4807,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "prosodyPredictionEmotions",
           "key": "emotions",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "A high-dimensional embedding in emotion space.",
             "generatedName": "ProsodyPredictionEmotions",
             "groupName": null,
             "nameOverride": null,
             "type": "array",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ProsodyPredictionEmotionsItem",
               "groupName": null,
@@ -4398,6 +4837,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Queued",
       "groupName": null,
@@ -4405,11 +4845,13 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "queuedCreatedTimestampMs",
           "key": "created_timestamp_ms",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "When this job was created (Unix timestamp in milliseconds).",
             "generatedName": "QueuedCreatedTimestampMs",
             "groupName": null,
@@ -4433,6 +4875,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Request",
       "groupName": null,
@@ -4440,17 +4883,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "requestModels",
           "key": "models",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "requestModels",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "RequestModels",
               "groupName": null,
@@ -4462,17 +4908,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "requestTranscription",
           "key": "transcription",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "requestTranscription",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "RequestTranscription",
               "groupName": null,
@@ -4484,17 +4933,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "requestUrls",
           "key": "urls",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "requestUrls",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "URLs to the media files to be processed. Each must be a valid public URL to a media file (see recommended input filetypes) or an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`) of media files.
 
 If you wish to supply more than 100 URLs, consider providing them as an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`).",
@@ -4503,6 +4955,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "nameOverride": null,
               "type": "array",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "RequestUrlsItem",
                 "groupName": null,
@@ -4522,17 +4975,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "requestCallbackUrl",
           "key": "callback_url",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "requestCallbackUrl",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "If provided, a \`POST\` request will be made to the URL with the generated predictions on completion or the error message on failure.",
               "generatedName": "RequestCallbackUrl",
               "groupName": null,
@@ -4551,17 +5007,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "requestNotify",
           "key": "notify",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "requestNotify",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "Whether to send an email notification to the user upon job completion/failure.",
               "generatedName": "RequestNotify",
               "groupName": null,
@@ -4576,17 +5035,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "requestFiles",
           "key": "files",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "RequestFiles",
             "groupName": null,
             "nameOverride": null,
             "type": "array",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "RequestFilesItem",
               "groupName": null,
@@ -4603,6 +5065,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Results",
       "groupName": null,
@@ -4610,17 +5073,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "resultsPredictions",
           "key": "predictions",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ResultsPredictions",
             "groupName": null,
             "nameOverride": null,
             "type": "array",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ResultsPredictionsItem",
               "groupName": null,
@@ -4632,17 +5098,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "resultsErrors",
           "key": "errors",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ResultsErrors",
             "groupName": null,
             "nameOverride": null,
             "type": "array",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ResultsErrorsItem",
               "groupName": null,
@@ -4659,6 +5128,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SentimentScore",
       "groupName": null,
@@ -4666,11 +5136,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "sentimentScoreName",
           "key": "name",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Level of sentiment, ranging from \`1\` (negative) to \`9\` (positive)",
             "generatedName": "SentimentScoreName",
             "groupName": null,
@@ -4688,11 +5160,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "sentimentScoreScore",
           "key": "score",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Prediction for this level of sentiment",
             "generatedName": "SentimentScoreScore",
             "groupName": null,
@@ -4712,6 +5186,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "SortBy": {
+      "availability": null,
       "description": null,
       "generatedName": "SortBy",
       "groupName": null,
@@ -4719,6 +5194,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "enum",
       "values": [
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -4731,6 +5207,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "created",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -4743,6 +5220,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "started",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -4759,6 +5237,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
     "Source": {
       "type": "oneOf",
       "value": {
+        "availability": null,
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "type",
@@ -4767,6 +5246,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "nameOverride": null,
         "schemas": {
           "file": {
+            "availability": null,
             "description": null,
             "generatedName": "ComponentsSchemasSourceFile",
             "groupName": null,
@@ -4775,6 +5255,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "type": "reference",
           },
           "url": {
+            "availability": null,
             "description": null,
             "generatedName": "ComponentsSchemasSourceUrl",
             "groupName": null,
@@ -4790,6 +5271,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SourceResult",
       "groupName": null,
@@ -4797,11 +5279,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "sourceResultSource",
           "key": "source",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "SourceResultSource",
             "groupName": null,
@@ -4812,17 +5296,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "sourceResultResults",
           "key": "results",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "sourceResultResults",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "SourceResultResults",
               "groupName": null,
@@ -4834,17 +5321,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "sourceResultError",
           "key": "error",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "sourceResultError",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "An error message.",
               "generatedName": "SourceResultError",
               "groupName": null,
@@ -4868,6 +5358,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [
         {
+          "availability": null,
           "description": null,
           "generatedName": "File",
           "groupName": null,
@@ -4876,6 +5367,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SourceFile",
       "groupName": null,
@@ -4887,6 +5379,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [
         {
+          "availability": null,
           "description": null,
           "generatedName": "Url",
           "groupName": null,
@@ -4895,6 +5388,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SourceUrl",
       "groupName": null,
@@ -4905,6 +5399,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
     "State": {
       "type": "oneOf",
       "value": {
+        "availability": null,
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "status",
@@ -4913,6 +5408,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "nameOverride": null,
         "schemas": {
           "COMPLETED": {
+            "availability": null,
             "description": null,
             "generatedName": "ComponentsSchemasStateCompleted",
             "groupName": null,
@@ -4921,6 +5417,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "type": "reference",
           },
           "FAILED": {
+            "availability": null,
             "description": null,
             "generatedName": "ComponentsSchemasStateFailed",
             "groupName": null,
@@ -4929,6 +5426,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "type": "reference",
           },
           "IN_PROGRESS": {
+            "availability": null,
             "description": null,
             "generatedName": "ComponentsSchemasStateInProgress",
             "groupName": null,
@@ -4937,6 +5435,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "type": "reference",
           },
           "QUEUED": {
+            "availability": null,
             "description": null,
             "generatedName": "ComponentsSchemasStateQueued",
             "groupName": null,
@@ -4952,6 +5451,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [
         {
+          "availability": null,
           "description": null,
           "generatedName": "Completed",
           "groupName": null,
@@ -4960,6 +5460,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "StateCompleted",
       "groupName": null,
@@ -4971,6 +5472,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [
         {
+          "availability": null,
           "description": null,
           "generatedName": "Failed",
           "groupName": null,
@@ -4979,6 +5481,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "StateFailed",
       "groupName": null,
@@ -4990,6 +5493,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [
         {
+          "availability": null,
           "description": null,
           "generatedName": "InProgress",
           "groupName": null,
@@ -4998,6 +5502,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "StateInProgress",
       "groupName": null,
@@ -5009,6 +5514,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [
         {
+          "availability": null,
           "description": null,
           "generatedName": "Queued",
           "groupName": null,
@@ -5017,6 +5523,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
       ],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "StateQueued",
       "groupName": null,
@@ -5025,6 +5532,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "Status": {
+      "availability": null,
       "description": null,
       "generatedName": "Status",
       "groupName": null,
@@ -5032,6 +5540,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "enum",
       "values": [
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -5044,6 +5553,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "QUEUED",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -5056,6 +5566,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "IN_PROGRESS",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -5068,6 +5579,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "COMPLETED",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -5085,6 +5597,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "A time range with a beginning and end, measured in seconds.",
       "generatedName": "TimeInterval",
       "groupName": null,
@@ -5092,11 +5605,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "timeIntervalBegin",
           "key": "begin",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Beginning of time range in seconds.",
             "generatedName": "TimeIntervalBegin",
             "groupName": null,
@@ -5115,11 +5630,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "timeIntervalEnd",
           "key": "end",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "End of time range in seconds.",
             "generatedName": "TimeIntervalEnd",
             "groupName": null,
@@ -5143,6 +5660,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "ToxicityScore",
       "groupName": null,
@@ -5150,11 +5668,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "toxicityScoreName",
           "key": "name",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Category of toxicity.",
             "generatedName": "ToxicityScoreName",
             "groupName": null,
@@ -5172,11 +5692,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "toxicityScoreScore",
           "key": "score",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Prediction for this category of toxicity",
             "generatedName": "ToxicityScoreScore",
             "groupName": null,
@@ -5199,6 +5721,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Transcription",
       "groupName": null,
@@ -5206,17 +5729,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptionLanguage",
           "key": "language",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "transcriptionLanguage",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "TranscriptionLanguage",
               "groupName": null,
@@ -5233,6 +5759,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Transcription metadata for your media file.",
       "generatedName": "TranscriptionMetadata",
       "groupName": null,
@@ -5240,11 +5767,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptionMetadataConfidence",
           "key": "confidence",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Value between \`0.0\` and \`1.0\` indicating our transcription model’s relative confidence in the transcription of your media file.",
             "generatedName": "TranscriptionMetadataConfidence",
             "groupName": null,
@@ -5263,17 +5792,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "transcriptionMetadataDetectedLanguage",
           "key": "detected_language",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "transcriptionMetadataDetectedLanguage",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "TranscriptionMetadataDetectedLanguage",
               "groupName": null,
@@ -5290,6 +5822,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Url",
       "groupName": null,
@@ -5297,11 +5830,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "urlUrl",
           "key": "url",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "The URL of the source media file.",
             "generatedName": "UrlUrl",
             "groupName": null,
@@ -5321,6 +5856,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "When": {
+      "availability": null,
       "description": null,
       "generatedName": "When",
       "groupName": null,
@@ -5328,6 +5864,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "enum",
       "values": [
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -5340,6 +5877,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "value": "created_before",
         },
         {
+          "availability": null,
           "casing": {
             "camel": null,
             "pascal": null,
@@ -5357,6 +5895,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Window",
       "groupName": null,
@@ -5364,17 +5903,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "windowLength",
           "key": "length",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "windowLength",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "The length of the sliding window.",
               "generatedName": "WindowLength",
               "groupName": null,
@@ -5394,17 +5936,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "windowStep",
           "key": "step",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "windowStep",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "The step size of the sliding window.",
               "generatedName": "WindowStep",
               "groupName": null,

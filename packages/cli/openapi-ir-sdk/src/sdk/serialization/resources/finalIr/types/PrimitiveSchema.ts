@@ -15,10 +15,15 @@ export const PrimitiveSchema: core.serialization.ObjectSchema<
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithName))
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSdkGroupName));
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSdkGroupName))
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAvailability));
 
 export declare namespace PrimitiveSchema {
-    interface Raw extends serializers.WithDescription.Raw, serializers.WithName.Raw, serializers.WithSdkGroupName.Raw {
+    interface Raw
+        extends serializers.WithDescription.Raw,
+            serializers.WithName.Raw,
+            serializers.WithSdkGroupName.Raw,
+            serializers.WithAvailability.Raw {
         schema: serializers.PrimitiveSchemaValue.Raw;
     }
 }

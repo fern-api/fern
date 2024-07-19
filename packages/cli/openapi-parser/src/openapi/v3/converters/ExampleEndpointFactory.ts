@@ -544,7 +544,8 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
                     audiences: [],
                     conflict: {},
                     generatedName: property.key,
-                    nameOverride: undefined
+                    nameOverride: undefined,
+                    availability: undefined
                 };
             })
             .filter(isNonNullish),
@@ -555,6 +556,7 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
         nameOverride: undefined,
         generatedName: "",
         groupName: undefined,
-        additionalProperties: false
+        additionalProperties: false,
+        availability: undefined
     });
 }

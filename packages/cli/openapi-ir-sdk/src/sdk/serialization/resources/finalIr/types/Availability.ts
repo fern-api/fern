@@ -6,11 +6,9 @@ import * as serializers from "../../..";
 import * as FernOpenapiIr from "../../../../api";
 import * as core from "../../../../core";
 
-export const EndpointAvailability: core.serialization.Schema<
-    serializers.EndpointAvailability.Raw,
-    FernOpenapiIr.EndpointAvailability
-> = core.serialization.enum_(["GenerallyAvailable", "Beta", "Deprecated"]);
+export const Availability: core.serialization.Schema<serializers.Availability.Raw, FernOpenapiIr.Availability> =
+    core.serialization.enum_(["GenerallyAvailable", "Beta", "Deprecated"]);
 
-export declare namespace EndpointAvailability {
+export declare namespace Availability {
     type Raw = "GenerallyAvailable" | "Beta" | "Deprecated";
 }

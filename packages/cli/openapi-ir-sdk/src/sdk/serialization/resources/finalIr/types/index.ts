@@ -11,7 +11,7 @@ export * from "./WebsocketHandshake";
 export * from "./WebsocketSessionExample";
 export * from "./WebsocketMessageExample";
 export * from "./WebhookHttpMethod";
-export * from "./EndpointAvailability";
+export * from "./Availability";
 export * from "./Endpoint";
 export * from "./Pagination";
 export * from "./CursorPagination";

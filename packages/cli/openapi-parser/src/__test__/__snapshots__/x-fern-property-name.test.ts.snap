@@ -17,6 +17,7 @@ exports[`x-fern-property-name x-fern-property-name parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "BaseUser",
       "groupName": null,
@@ -24,17 +25,20 @@ exports[`x-fern-property-name x-fern-property-name parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "baseUserId",
           "key": "id",
           "nameOverride": "renamed_id",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "baseUserId",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "BaseUserId",
               "groupName": null,

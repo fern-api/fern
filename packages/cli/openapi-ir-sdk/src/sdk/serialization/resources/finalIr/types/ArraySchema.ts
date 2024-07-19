@@ -13,10 +13,15 @@ export const ArraySchema: core.serialization.ObjectSchema<serializers.ArraySchem
         })
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithName))
-        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSdkGroupName));
+        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSdkGroupName))
+        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAvailability));
 
 export declare namespace ArraySchema {
-    interface Raw extends serializers.WithDescription.Raw, serializers.WithName.Raw, serializers.WithSdkGroupName.Raw {
+    interface Raw
+        extends serializers.WithDescription.Raw,
+            serializers.WithName.Raw,
+            serializers.WithSdkGroupName.Raw,
+            serializers.WithAvailability.Raw {
         value: serializers.Schema.Raw;
     }
 }

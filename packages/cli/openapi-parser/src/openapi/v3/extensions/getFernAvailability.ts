@@ -1,4 +1,4 @@
-import { EndpointAvailability } from "@fern-api/openapi-ir-sdk";
+import { Availability } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../getExtension";
 import { FernOpenAPIExtension } from "./fernExtensions";
@@ -8,17 +8,17 @@ export interface BasicSecuritySchemeNames {
     passwordVariable?: string;
 }
 
-export function getFernAvailability(operationObject: OpenAPIV3.OperationObject): undefined | EndpointAvailability {
+export function getFernAvailability(operationObject: OpenAPIV3.OperationObject): undefined | Availability {
     const availability = getExtension<string>(operationObject, FernOpenAPIExtension.AVAILABILITY);
     if (availability === "ga" || availability === "generally-available") {
-        return EndpointAvailability.GenerallyAvailable;
+        return Availability.GenerallyAvailable;
     } else if (availability === "beta" || availability === "pre-release") {
-        return EndpointAvailability.Beta;
+        return Availability.Beta;
     } else if (availability === "deprecated") {
-        return EndpointAvailability.Deprecated;
+        return Availability.Deprecated;
     }
     if (operationObject.deprecated) {
-        return EndpointAvailability.Deprecated;
+        return Availability.Deprecated;
     }
     return undefined;
 }

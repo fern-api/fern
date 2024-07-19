@@ -17,6 +17,7 @@ exports[`open api parser webhooks parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Pet",
       "groupName": null,
@@ -24,11 +25,13 @@ exports[`open api parser webhooks parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "petId",
           "key": "id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "PetId",
             "groupName": null,
@@ -47,11 +50,13 @@ exports[`open api parser webhooks parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "petName",
           "key": "name",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "PetName",
             "groupName": null,
@@ -69,17 +74,20 @@ exports[`open api parser webhooks parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "petTag",
           "key": "tag",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "petTag",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "PetTag",
               "groupName": null,
@@ -166,6 +174,7 @@ exports[`open api parser webhooks parse open api 1`] = `
       "method": "POST",
       "operationId": "CreatePet",
       "payload": {
+        "availability": null,
         "description": null,
         "generatedName": "CreatePetPayload",
         "groupName": null,

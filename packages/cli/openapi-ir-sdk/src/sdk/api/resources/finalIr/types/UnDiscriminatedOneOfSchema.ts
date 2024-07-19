@@ -7,6 +7,7 @@ import * as FernOpenapiIr from "../../..";
 export interface UnDiscriminatedOneOfSchema
     extends FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithName,
-        FernOpenapiIr.WithSdkGroupName {
+        FernOpenapiIr.WithSdkGroupName,
+        FernOpenapiIr.WithAvailability {
     schemas: FernOpenapiIr.Schema[];
 }

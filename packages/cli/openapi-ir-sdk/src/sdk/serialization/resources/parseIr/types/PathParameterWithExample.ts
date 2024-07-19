@@ -15,10 +15,11 @@ export const PathParameterWithExample: core.serialization.ObjectSchema<
         schema: core.serialization.lazy(async () => (await import("../../..")).SchemaWithExample),
         variableReference: core.serialization.string().optional(),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAvailability));
 
 export declare namespace PathParameterWithExample {
-    interface Raw extends serializers.WithDescription.Raw {
+    interface Raw extends serializers.WithDescription.Raw, serializers.WithAvailability.Raw {
         name: string;
         schema: serializers.SchemaWithExample.Raw;
         variableReference?: string | null;

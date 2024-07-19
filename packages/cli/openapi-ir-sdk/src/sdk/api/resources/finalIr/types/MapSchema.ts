@@ -7,7 +7,8 @@ import * as FernOpenapiIr from "../../..";
 export interface MapSchema
     extends FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithName,
-        FernOpenapiIr.WithSdkGroupName {
+        FernOpenapiIr.WithSdkGroupName,
+        FernOpenapiIr.WithAvailability {
     key: FernOpenapiIr.PrimitiveSchema;
     value: FernOpenapiIr.Schema;
 }
