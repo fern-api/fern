@@ -29,6 +29,12 @@ export declare namespace OSSWorkspace {
          * Typically enabled for duck typed languages like Python / TypeScript.
          */
         enableDiscriminatedUnionV2?: boolean;
+        /*
+         * Whether or not to extract frequently used headers out of the endpoints into a
+         * global header. This is primarily used for generating SDKs, but disabled for docs
+         * as it allows the documentation to more closely mirror the OpenAPI spec.
+         */
+        detectGlobalHeaders?: boolean;
     }
 }
 
@@ -66,7 +72,8 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
         const definition = convert({
             taskContext: context,
             ir: openApiIr,
-            enableUniqueErrorsPerEndpoint: settings?.enableUniqueErrorsPerEndpoint ?? false
+            enableUniqueErrorsPerEndpoint: settings?.enableUniqueErrorsPerEndpoint ?? false,
+            detectGlobalHeaders: settings?.detectGlobalHeaders ?? true
         });
 
         return {
@@ -119,7 +126,9 @@ export function getOSSWorkspaceSettingsFromGeneratorInvocation(
     if (generatorInvocation.settings == null) {
         return undefined;
     }
-    const result: OSSWorkspace.Settings = {};
+    const result: OSSWorkspace.Settings = {
+        detectGlobalHeaders: true
+    };
     if (generatorInvocation.settings.unions === "v1") {
         result.enableDiscriminatedUnionV2 = true;
     }
