@@ -646,9 +646,7 @@ exports[`open api parser hookdeck docs 1`] = `
                     "processed_batch": 1,
                     "progress": 1.1,
                     "query": {
-                      "query": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
@@ -693,9 +691,7 @@ exports[`open api parser hookdeck docs 1`] = `
                     "processed_batch": 1,
                     "progress": 1.1,
                     "query": {
-                      "query": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
@@ -780,6 +776,9 @@ exports[`open api parser hookdeck docs 1`] = `
                         "number": 1.1,
                         "processed_batch": 1,
                         "progress": 1.1,
+                        "query": {
+                          "key": "value",
+                        },
                         "team_id": "team_id",
                         "updated_at": "2024-01-15T09:30:00Z",
                       },
@@ -849,9 +848,7 @@ exports[`open api parser hookdeck docs 1`] = `
                     "processed_batch": 1,
                     "progress": 1.1,
                     "query": {
-                      "query": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
@@ -1443,9 +1440,7 @@ exports[`open api parser hookdeck docs 1`] = `
                     "processed_batch": 1,
                     "progress": 1.1,
                     "query": {
-                      "query": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
@@ -1490,9 +1485,7 @@ exports[`open api parser hookdeck docs 1`] = `
                     "processed_batch": 1,
                     "progress": 1.1,
                     "query": {
-                      "query": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
@@ -1577,6 +1570,9 @@ exports[`open api parser hookdeck docs 1`] = `
                         "number": 1.1,
                         "processed_batch": 1,
                         "progress": 1.1,
+                        "query": {
+                          "key": "value",
+                        },
                         "team_id": "team_id",
                         "updated_at": "2024-01-15T09:30:00Z",
                       },
@@ -1646,9 +1642,7 @@ exports[`open api parser hookdeck docs 1`] = `
                     "processed_batch": 1,
                     "progress": 1.1,
                     "query": {
-                      "query": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
@@ -1780,9 +1774,7 @@ exports[`open api parser hookdeck docs 1`] = `
                     "processed_batch": 1,
                     "progress": 1.1,
                     "query": {
-                      "query": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
@@ -1827,9 +1819,7 @@ exports[`open api parser hookdeck docs 1`] = `
                     "processed_batch": 1,
                     "progress": 1.1,
                     "query": {
-                      "query": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
@@ -1914,6 +1904,9 @@ exports[`open api parser hookdeck docs 1`] = `
                         "number": 1.1,
                         "processed_batch": 1,
                         "progress": 1.1,
+                        "query": {
+                          "key": "value",
+                        },
                         "team_id": "team_id",
                         "updated_at": "2024-01-15T09:30:00Z",
                       },
@@ -1983,9 +1976,7 @@ exports[`open api parser hookdeck docs 1`] = `
                     "processed_batch": 1,
                     "progress": 1.1,
                     "query": {
-                      "query": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
@@ -6987,7 +6978,7 @@ exports[`open api parser hookdeck docs 1`] = `
                     "created_at": "2024-01-15T09:30:00Z",
                     "encrypted_env": "encrypted_env",
                     "env": {
-                      "env": "env",
+                      "key": "env",
                     },
                     "id": "id",
                     "iv": "iv",
@@ -7053,7 +7044,7 @@ exports[`open api parser hookdeck docs 1`] = `
                     "created_at": "2024-01-15T09:30:00Z",
                     "encrypted_env": "encrypted_env",
                     "env": {
-                      "env": "env",
+                      "key": "env",
                     },
                     "id": "id",
                     "iv": "iv",
@@ -7383,7 +7374,7 @@ exports[`open api parser hookdeck docs 1`] = `
                     "created_at": "2024-01-15T09:30:00Z",
                     "encrypted_env": "encrypted_env",
                     "env": {
-                      "env": "env",
+                      "key": "env",
                     },
                     "id": "id",
                     "iv": "iv",
@@ -7457,7 +7448,7 @@ exports[`open api parser hookdeck docs 1`] = `
                     "created_at": "2024-01-15T09:30:00Z",
                     "encrypted_env": "encrypted_env",
                     "env": {
-                      "env": "env",
+                      "key": "env",
                     },
                     "id": "id",
                     "iv": "iv",
@@ -11083,9 +11074,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "processed_batch": 1,
                     "progress": 1.1,
                     "query": {
-                      "query": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
@@ -11130,9 +11119,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "processed_batch": 1,
                     "progress": 1.1,
                     "query": {
-                      "query": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
@@ -11217,6 +11204,9 @@ exports[`open api parser hookdeck simple 1`] = `
                         "number": 1.1,
                         "processed_batch": 1,
                         "progress": 1.1,
+                        "query": {
+                          "key": "value",
+                        },
                         "team_id": "team_id",
                         "updated_at": "2024-01-15T09:30:00Z",
                       },
@@ -11286,9 +11276,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "processed_batch": 1,
                     "progress": 1.1,
                     "query": {
-                      "query": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
@@ -11880,9 +11868,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "processed_batch": 1,
                     "progress": 1.1,
                     "query": {
-                      "query": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
@@ -11927,9 +11913,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "processed_batch": 1,
                     "progress": 1.1,
                     "query": {
-                      "query": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
@@ -12014,6 +11998,9 @@ exports[`open api parser hookdeck simple 1`] = `
                         "number": 1.1,
                         "processed_batch": 1,
                         "progress": 1.1,
+                        "query": {
+                          "key": "value",
+                        },
                         "team_id": "team_id",
                         "updated_at": "2024-01-15T09:30:00Z",
                       },
@@ -12083,9 +12070,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "processed_batch": 1,
                     "progress": 1.1,
                     "query": {
-                      "query": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
@@ -12217,9 +12202,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "processed_batch": 1,
                     "progress": 1.1,
                     "query": {
-                      "query": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
@@ -12264,9 +12247,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "processed_batch": 1,
                     "progress": 1.1,
                     "query": {
-                      "query": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
@@ -12351,6 +12332,9 @@ exports[`open api parser hookdeck simple 1`] = `
                         "number": 1.1,
                         "processed_batch": 1,
                         "progress": 1.1,
+                        "query": {
+                          "key": "value",
+                        },
                         "team_id": "team_id",
                         "updated_at": "2024-01-15T09:30:00Z",
                       },
@@ -12420,9 +12404,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "processed_batch": 1,
                     "progress": 1.1,
                     "query": {
-                      "query": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
@@ -17424,7 +17406,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "created_at": "2024-01-15T09:30:00Z",
                     "encrypted_env": "encrypted_env",
                     "env": {
-                      "env": "env",
+                      "key": "env",
                     },
                     "id": "id",
                     "iv": "iv",
@@ -17490,7 +17472,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "created_at": "2024-01-15T09:30:00Z",
                     "encrypted_env": "encrypted_env",
                     "env": {
-                      "env": "env",
+                      "key": "env",
                     },
                     "id": "id",
                     "iv": "iv",
@@ -17820,7 +17802,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "created_at": "2024-01-15T09:30:00Z",
                     "encrypted_env": "encrypted_env",
                     "env": {
-                      "env": "env",
+                      "key": "env",
                     },
                     "id": "id",
                     "iv": "iv",
@@ -17894,7 +17876,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "created_at": "2024-01-15T09:30:00Z",
                     "encrypted_env": "encrypted_env",
                     "env": {
-                      "env": "env",
+                      "key": "env",
                     },
                     "id": "id",
                     "iv": "iv",

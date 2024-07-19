@@ -24,9 +24,7 @@ exports[`open api parser aries docs 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -106,9 +104,7 @@ exports[`open api parser aries docs 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -159,9 +155,7 @@ exports[`open api parser aries docs 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -201,9 +195,7 @@ exports[`open api parser aries docs 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -259,9 +251,7 @@ exports[`open api parser aries docs 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -690,9 +680,7 @@ exports[`open api parser aries docs 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -1122,9 +1110,7 @@ exports[`open api parser aries docs 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -1272,9 +1258,7 @@ exports[`open api parser aries docs 1`] = `
                       "schemaId": "20",
                       "tag": "tag",
                       "type": {
-                        "CL": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "value": {
                         "primary": {
@@ -1448,9 +1432,7 @@ exports[`open api parser aries docs 1`] = `
                       "schemaId": "20",
                       "tag": "tag",
                       "type": {
-                        "CL": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "value": {
                         "primary": {
@@ -1517,9 +1499,7 @@ exports[`open api parser aries docs 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -1549,9 +1529,7 @@ exports[`open api parser aries docs 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -2187,6 +2165,9 @@ exports[`open api parser aries docs 1`] = `
                     "byte_count": 1234,
                     "data": {
                       "base64": "ey4uLn0=",
+                      "json": {
+                        "key": "value",
+                      },
                       "links": [
                         "https://link.to/data",
                         "https://link.to/data",
@@ -2466,7 +2447,9 @@ exports[`open api parser aries docs 1`] = `
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                           "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                           "disclosures": [
-                            {},
+                            {
+                              "key": "value",
+                            },
                           ],
                         },
                         "discovery_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -2486,7 +2469,9 @@ exports[`open api parser aries docs 1`] = `
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                           "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                           "disclosures": [
-                            {},
+                            {
+                              "key": "value",
+                            },
                           ],
                         },
                         "discovery_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -2536,7 +2521,9 @@ exports[`open api parser aries docs 1`] = `
                         "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                         "disclosures": [
-                          {},
+                          {
+                            "key": "value",
+                          },
                         ],
                       },
                       "discovery_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -3187,9 +3174,7 @@ exports[`open api parser aries docs 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -3325,6 +3310,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -3381,7 +3369,7 @@ exports[`open api parser aries docs 1`] = `
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {
-                        "values": {
+                        "key": {
                           "encoded": "-1",
                           "raw": "raw",
                         },
@@ -3583,6 +3571,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -3639,7 +3630,7 @@ exports[`open api parser aries docs 1`] = `
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {
-                        "values": {
+                        "key": {
                           "encoded": "-1",
                           "raw": "raw",
                         },
@@ -3720,9 +3711,7 @@ exports[`open api parser aries docs 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -3809,6 +3798,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -3865,7 +3857,7 @@ exports[`open api parser aries docs 1`] = `
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {
-                        "values": {
+                        "key": {
                           "encoded": "-1",
                           "raw": "raw",
                         },
@@ -3963,6 +3955,9 @@ exports[`open api parser aries docs 1`] = `
                               "byte_count": 1234,
                               "data": {
                                 "base64": "ey4uLn0=",
+                                "json": {
+                                  "key": "value",
+                                },
                                 "links": [
                                   "https://link.to/data",
                                   "https://link.to/data",
@@ -4016,7 +4011,7 @@ exports[`open api parser aries docs 1`] = `
                           "signature": {},
                           "signature_correctness_proof": {},
                           "values": {
-                            "values": {
+                            "key": {
                               "encoded": "-1",
                               "raw": "raw",
                             },
@@ -4088,6 +4083,9 @@ exports[`open api parser aries docs 1`] = `
                               "byte_count": 1234,
                               "data": {
                                 "base64": "ey4uLn0=",
+                                "json": {
+                                  "key": "value",
+                                },
                                 "links": [
                                   "https://link.to/data",
                                   "https://link.to/data",
@@ -4141,7 +4139,7 @@ exports[`open api parser aries docs 1`] = `
                           "signature": {},
                           "signature_correctness_proof": {},
                           "values": {
-                            "values": {
+                            "key": {
                               "encoded": "-1",
                               "raw": "raw",
                             },
@@ -4261,6 +4259,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -4317,7 +4318,7 @@ exports[`open api parser aries docs 1`] = `
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {
-                        "values": {
+                        "key": {
                           "encoded": "-1",
                           "raw": "raw",
                         },
@@ -4378,9 +4379,7 @@ exports[`open api parser aries docs 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -4478,6 +4477,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -4534,7 +4536,7 @@ exports[`open api parser aries docs 1`] = `
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {
-                        "values": {
+                        "key": {
                           "encoded": "-1",
                           "raw": "raw",
                         },
@@ -4644,6 +4646,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -4700,7 +4705,7 @@ exports[`open api parser aries docs 1`] = `
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {
-                        "values": {
+                        "key": {
                           "encoded": "-1",
                           "raw": "raw",
                         },
@@ -4824,6 +4829,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -4880,7 +4888,7 @@ exports[`open api parser aries docs 1`] = `
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {
-                        "values": {
+                        "key": {
                           "encoded": "-1",
                           "raw": "raw",
                         },
@@ -5093,6 +5101,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -5149,7 +5160,7 @@ exports[`open api parser aries docs 1`] = `
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {
-                        "values": {
+                        "key": {
                           "encoded": "-1",
                           "raw": "raw",
                         },
@@ -5321,6 +5332,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -5377,7 +5391,7 @@ exports[`open api parser aries docs 1`] = `
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {
-                        "values": {
+                        "key": {
                           "encoded": "-1",
                           "raw": "raw",
                         },
@@ -5573,6 +5587,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -5629,7 +5646,7 @@ exports[`open api parser aries docs 1`] = `
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {
-                        "values": {
+                        "key": {
                           "encoded": "-1",
                           "raw": "raw",
                         },
@@ -5752,6 +5769,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -5803,6 +5823,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -5857,6 +5880,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -5892,6 +5918,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -6000,6 +6029,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -6051,6 +6083,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -6105,6 +6140,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -6140,6 +6178,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -6219,9 +6260,7 @@ exports[`open api parser aries docs 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -6268,6 +6307,9 @@ exports[`open api parser aries docs 1`] = `
                             "byte_count": 1234,
                             "data": {
                               "base64": "ey4uLn0=",
+                              "json": {
+                                "key": "value",
+                              },
                               "links": [
                                 "https://link.to/data",
                                 "https://link.to/data",
@@ -6319,6 +6361,9 @@ exports[`open api parser aries docs 1`] = `
                             "byte_count": 1234,
                             "data": {
                               "base64": "ey4uLn0=",
+                              "json": {
+                                "key": "value",
+                              },
                               "links": [
                                 "https://link.to/data",
                                 "https://link.to/data",
@@ -6373,6 +6418,9 @@ exports[`open api parser aries docs 1`] = `
                             "byte_count": 1234,
                             "data": {
                               "base64": "ey4uLn0=",
+                              "json": {
+                                "key": "value",
+                              },
                               "links": [
                                 "https://link.to/data",
                                 "https://link.to/data",
@@ -6408,6 +6456,9 @@ exports[`open api parser aries docs 1`] = `
                             "byte_count": 1234,
                             "data": {
                               "base64": "ey4uLn0=",
+                              "json": {
+                                "key": "value",
+                              },
                               "links": [
                                 "https://link.to/data",
                                 "https://link.to/data",
@@ -6492,6 +6543,9 @@ exports[`open api parser aries docs 1`] = `
                                 "byte_count": 1234,
                                 "data": {
                                   "base64": "ey4uLn0=",
+                                  "json": {
+                                    "key": "value",
+                                  },
                                   "links": [
                                     "https://link.to/data",
                                     "https://link.to/data",
@@ -6542,6 +6596,9 @@ exports[`open api parser aries docs 1`] = `
                                 "byte_count": 1234,
                                 "data": {
                                   "base64": "ey4uLn0=",
+                                  "json": {
+                                    "key": "value",
+                                  },
                                   "links": [
                                     "https://link.to/data",
                                     "https://link.to/data",
@@ -6595,6 +6652,9 @@ exports[`open api parser aries docs 1`] = `
                                 "byte_count": 1234,
                                 "data": {
                                   "base64": "ey4uLn0=",
+                                  "json": {
+                                    "key": "value",
+                                  },
                                   "links": [
                                     "https://link.to/data",
                                     "https://link.to/data",
@@ -6629,6 +6689,9 @@ exports[`open api parser aries docs 1`] = `
                                 "byte_count": 1234,
                                 "data": {
                                   "base64": "ey4uLn0=",
+                                  "json": {
+                                    "key": "value",
+                                  },
                                   "links": [
                                     "https://link.to/data",
                                     "https://link.to/data",
@@ -6687,6 +6750,9 @@ exports[`open api parser aries docs 1`] = `
                                 "byte_count": 1234,
                                 "data": {
                                   "base64": "ey4uLn0=",
+                                  "json": {
+                                    "key": "value",
+                                  },
                                   "links": [
                                     "https://link.to/data",
                                     "https://link.to/data",
@@ -6737,6 +6803,9 @@ exports[`open api parser aries docs 1`] = `
                                 "byte_count": 1234,
                                 "data": {
                                   "base64": "ey4uLn0=",
+                                  "json": {
+                                    "key": "value",
+                                  },
                                   "links": [
                                     "https://link.to/data",
                                     "https://link.to/data",
@@ -6790,6 +6859,9 @@ exports[`open api parser aries docs 1`] = `
                                 "byte_count": 1234,
                                 "data": {
                                   "base64": "ey4uLn0=",
+                                  "json": {
+                                    "key": "value",
+                                  },
                                   "links": [
                                     "https://link.to/data",
                                     "https://link.to/data",
@@ -6824,6 +6896,9 @@ exports[`open api parser aries docs 1`] = `
                                 "byte_count": 1234,
                                 "data": {
                                   "base64": "ey4uLn0=",
+                                  "json": {
+                                    "key": "value",
+                                  },
                                   "links": [
                                     "https://link.to/data",
                                     "https://link.to/data",
@@ -6930,6 +7005,9 @@ exports[`open api parser aries docs 1`] = `
                             "byte_count": 1234,
                             "data": {
                               "base64": "ey4uLn0=",
+                              "json": {
+                                "key": "value",
+                              },
                               "links": [
                                 "https://link.to/data",
                                 "https://link.to/data",
@@ -6981,6 +7059,9 @@ exports[`open api parser aries docs 1`] = `
                             "byte_count": 1234,
                             "data": {
                               "base64": "ey4uLn0=",
+                              "json": {
+                                "key": "value",
+                              },
                               "links": [
                                 "https://link.to/data",
                                 "https://link.to/data",
@@ -7035,6 +7116,9 @@ exports[`open api parser aries docs 1`] = `
                             "byte_count": 1234,
                             "data": {
                               "base64": "ey4uLn0=",
+                              "json": {
+                                "key": "value",
+                              },
                               "links": [
                                 "https://link.to/data",
                                 "https://link.to/data",
@@ -7070,6 +7154,9 @@ exports[`open api parser aries docs 1`] = `
                             "byte_count": 1234,
                             "data": {
                               "base64": "ey4uLn0=",
+                              "json": {
+                                "key": "value",
+                              },
                               "links": [
                                 "https://link.to/data",
                                 "https://link.to/data",
@@ -7157,9 +7244,7 @@ exports[`open api parser aries docs 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -7232,6 +7317,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -7283,6 +7371,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -7337,6 +7428,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -7372,6 +7466,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -7452,6 +7549,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -7503,6 +7603,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -7557,6 +7660,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -7592,6 +7698,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -7693,6 +7802,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -7744,6 +7856,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -7798,6 +7913,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -7833,6 +7951,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -7916,6 +8037,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -7967,6 +8091,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -8021,6 +8148,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -8056,6 +8186,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -8181,6 +8314,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -8232,6 +8368,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -8286,6 +8425,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -8321,6 +8463,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -8371,12 +8516,20 @@ exports[`open api parser aries docs 1`] = `
                     "ld_proof": {
                       "credential": {
                         "@context": [
-                          {},
-                          {},
+                          {
+                            "key": "value",
+                          },
+                          {
+                            "key": "value",
+                          },
                         ],
-                        "credentialSubject": {},
+                        "credentialSubject": {
+                          "key": "value",
+                        },
                         "issuanceDate": "2010-01-01 19:23:24+00:00",
-                        "issuer": {},
+                        "issuer": {
+                          "key": "value",
+                        },
                         "type": [
                           "VerifiableCredential",
                           "AlumniCredential",
@@ -8408,6 +8561,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -8459,6 +8615,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -8513,6 +8672,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -8548,6 +8710,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -8656,6 +8821,9 @@ exports[`open api parser aries docs 1`] = `
                             "byte_count": 1234,
                             "data": {
                               "base64": "ey4uLn0=",
+                              "json": {
+                                "key": "value",
+                              },
                               "links": [
                                 "https://link.to/data",
                                 "https://link.to/data",
@@ -8707,6 +8875,9 @@ exports[`open api parser aries docs 1`] = `
                             "byte_count": 1234,
                             "data": {
                               "base64": "ey4uLn0=",
+                              "json": {
+                                "key": "value",
+                              },
                               "links": [
                                 "https://link.to/data",
                                 "https://link.to/data",
@@ -8761,6 +8932,9 @@ exports[`open api parser aries docs 1`] = `
                             "byte_count": 1234,
                             "data": {
                               "base64": "ey4uLn0=",
+                              "json": {
+                                "key": "value",
+                              },
                               "links": [
                                 "https://link.to/data",
                                 "https://link.to/data",
@@ -8796,6 +8970,9 @@ exports[`open api parser aries docs 1`] = `
                             "byte_count": 1234,
                             "data": {
                               "base64": "ey4uLn0=",
+                              "json": {
+                                "key": "value",
+                              },
                               "links": [
                                 "https://link.to/data",
                                 "https://link.to/data",
@@ -9045,9 +9222,7 @@ exports[`open api parser aries docs 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -9366,9 +9541,7 @@ exports[`open api parser aries docs 1`] = `
               {
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -10297,9 +10470,7 @@ exports[`open api parser aries docs 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -10634,6 +10805,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -10650,6 +10824,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -10675,7 +10852,9 @@ exports[`open api parser aries docs 1`] = `
                           "serviceEndpoint": "http://192.168.56.101:8020",
                           "type": "string",
                         },
-                        {},
+                        {
+                          "key": "value",
+                        },
                       ],
                     },
                     "invitation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -10793,6 +10972,9 @@ exports[`open api parser aries docs 1`] = `
                       "byte_count": 1234,
                       "data": {
                         "base64": "ey4uLn0=",
+                        "json": {
+                          "key": "value",
+                        },
                         "links": [
                           "https://link.to/data",
                           "https://link.to/data",
@@ -10809,6 +10991,9 @@ exports[`open api parser aries docs 1`] = `
                       "byte_count": 1234,
                       "data": {
                         "base64": "ey4uLn0=",
+                        "json": {
+                          "key": "value",
+                        },
                         "links": [
                           "https://link.to/data",
                           "https://link.to/data",
@@ -10834,7 +11019,9 @@ exports[`open api parser aries docs 1`] = `
                       "serviceEndpoint": "http://192.168.56.101:8020",
                       "type": "string",
                     },
-                    {},
+                    {
+                      "key": "value",
+                    },
                   ],
                 },
                 "response": {
@@ -10862,6 +11049,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -10878,6 +11068,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -10903,7 +11096,9 @@ exports[`open api parser aries docs 1`] = `
                           "serviceEndpoint": "http://192.168.56.101:8020",
                           "type": "string",
                         },
-                        {},
+                        {
+                          "key": "value",
+                        },
                       ],
                     },
                     "oob_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -11046,7 +11241,7 @@ exports[`open api parser aries docs 1`] = `
                       },
                       "requested_proof": {
                         "predicates": {
-                          "predicates": {},
+                          "key": {},
                         },
                       },
                     },
@@ -11140,6 +11335,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -11209,9 +11407,7 @@ exports[`open api parser aries docs 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -11330,6 +11526,9 @@ exports[`open api parser aries docs 1`] = `
                               "byte_count": 1234,
                               "data": {
                                 "base64": "ey4uLn0=",
+                                "json": {
+                                  "key": "value",
+                                },
                                 "links": [
                                   "https://link.to/data",
                                   "https://link.to/data",
@@ -11445,6 +11644,9 @@ exports[`open api parser aries docs 1`] = `
                               "byte_count": 1234,
                               "data": {
                                 "base64": "ey4uLn0=",
+                                "json": {
+                                  "key": "value",
+                                },
                                 "links": [
                                   "https://link.to/data",
                                   "https://link.to/data",
@@ -11604,7 +11806,7 @@ exports[`open api parser aries docs 1`] = `
                       },
                       "requested_proof": {
                         "predicates": {
-                          "predicates": {},
+                          "key": {},
                         },
                       },
                     },
@@ -11698,6 +11900,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -11753,9 +11958,7 @@ exports[`open api parser aries docs 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -11855,7 +12058,7 @@ exports[`open api parser aries docs 1`] = `
                       },
                       "requested_proof": {
                         "predicates": {
-                          "predicates": {},
+                          "key": {},
                         },
                       },
                     },
@@ -11949,6 +12152,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -12084,7 +12290,7 @@ exports[`open api parser aries docs 1`] = `
                       },
                       "requested_proof": {
                         "predicates": {
-                          "predicates": {},
+                          "key": {},
                         },
                       },
                     },
@@ -12178,6 +12384,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -12300,7 +12509,7 @@ exports[`open api parser aries docs 1`] = `
                       },
                       "requested_proof": {
                         "predicates": {
-                          "predicates": {},
+                          "key": {},
                         },
                       },
                     },
@@ -12394,6 +12603,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -12473,7 +12685,7 @@ exports[`open api parser aries docs 1`] = `
                       },
                       "requested_proof": {
                         "predicates": {
-                          "predicates": {},
+                          "key": {},
                         },
                       },
                     },
@@ -12567,6 +12779,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -12660,7 +12875,7 @@ exports[`open api parser aries docs 1`] = `
                       },
                       "requested_proof": {
                         "predicates": {
-                          "predicates": {},
+                          "key": {},
                         },
                       },
                     },
@@ -12754,6 +12969,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -12903,6 +13121,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -12933,6 +13154,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -12962,6 +13186,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -13032,9 +13259,7 @@ exports[`open api parser aries docs 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -13084,6 +13309,9 @@ exports[`open api parser aries docs 1`] = `
                               "byte_count": 1234,
                               "data": {
                                 "base64": "ey4uLn0=",
+                                "json": {
+                                  "key": "value",
+                                },
                                 "links": [
                                   "https://link.to/data",
                                   "https://link.to/data",
@@ -13113,6 +13341,9 @@ exports[`open api parser aries docs 1`] = `
                               "byte_count": 1234,
                               "data": {
                                 "base64": "ey4uLn0=",
+                                "json": {
+                                  "key": "value",
+                                },
                                 "links": [
                                   "https://link.to/data",
                                   "https://link.to/data",
@@ -13141,6 +13372,9 @@ exports[`open api parser aries docs 1`] = `
                               "byte_count": 1234,
                               "data": {
                                 "base64": "ey4uLn0=",
+                                "json": {
+                                  "key": "value",
+                                },
                                 "links": [
                                   "https://link.to/data",
                                   "https://link.to/data",
@@ -13187,6 +13421,9 @@ exports[`open api parser aries docs 1`] = `
                               "byte_count": 1234,
                               "data": {
                                 "base64": "ey4uLn0=",
+                                "json": {
+                                  "key": "value",
+                                },
                                 "links": [
                                   "https://link.to/data",
                                   "https://link.to/data",
@@ -13216,6 +13453,9 @@ exports[`open api parser aries docs 1`] = `
                               "byte_count": 1234,
                               "data": {
                                 "base64": "ey4uLn0=",
+                                "json": {
+                                  "key": "value",
+                                },
                                 "links": [
                                   "https://link.to/data",
                                   "https://link.to/data",
@@ -13244,6 +13484,9 @@ exports[`open api parser aries docs 1`] = `
                               "byte_count": 1234,
                               "data": {
                                 "base64": "ey4uLn0=",
+                                "json": {
+                                  "key": "value",
+                                },
                                 "links": [
                                   "https://link.to/data",
                                   "https://link.to/data",
@@ -13405,6 +13648,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -13435,6 +13681,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -13464,6 +13713,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -13520,9 +13772,7 @@ exports[`open api parser aries docs 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -13626,6 +13876,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -13656,6 +13909,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -13685,6 +13941,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -13829,6 +14088,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -13859,6 +14121,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -13888,6 +14153,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -14016,6 +14284,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -14046,6 +14317,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -14075,6 +14349,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -14171,6 +14448,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -14201,6 +14481,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -14230,6 +14513,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -14326,6 +14612,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -14356,6 +14645,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -14385,6 +14677,9 @@ exports[`open api parser aries docs 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -15341,9 +15636,7 @@ exports[`open api parser aries docs 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -15652,9 +15945,7 @@ exports[`open api parser aries docs 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -16075,9 +16366,7 @@ exports[`open api parser aries docs 1`] = `
               {
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -16098,9 +16387,7 @@ exports[`open api parser aries docs 1`] = `
               {
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -16373,9 +16660,7 @@ exports[`open api parser aries docs 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -16410,9 +16695,7 @@ exports[`open api parser aries docs 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -23089,9 +23372,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -23171,9 +23452,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -23224,9 +23503,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -23266,9 +23543,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -23324,9 +23599,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -23755,9 +24028,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -24187,9 +24458,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -24337,9 +24606,7 @@ exports[`open api parser aries simple 1`] = `
                       "schemaId": "20",
                       "tag": "tag",
                       "type": {
-                        "CL": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "value": {
                         "primary": {
@@ -24513,9 +24780,7 @@ exports[`open api parser aries simple 1`] = `
                       "schemaId": "20",
                       "tag": "tag",
                       "type": {
-                        "CL": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "value": {
                         "primary": {
@@ -24582,9 +24847,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -24614,9 +24877,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -25252,6 +25513,9 @@ exports[`open api parser aries simple 1`] = `
                     "byte_count": 1234,
                     "data": {
                       "base64": "ey4uLn0=",
+                      "json": {
+                        "key": "value",
+                      },
                       "links": [
                         "https://link.to/data",
                         "https://link.to/data",
@@ -25531,7 +25795,9 @@ exports[`open api parser aries simple 1`] = `
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                           "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                           "disclosures": [
-                            {},
+                            {
+                              "key": "value",
+                            },
                           ],
                         },
                         "discovery_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -25551,7 +25817,9 @@ exports[`open api parser aries simple 1`] = `
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                           "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                           "disclosures": [
-                            {},
+                            {
+                              "key": "value",
+                            },
                           ],
                         },
                         "discovery_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -25601,7 +25869,9 @@ exports[`open api parser aries simple 1`] = `
                         "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                         "disclosures": [
-                          {},
+                          {
+                            "key": "value",
+                          },
                         ],
                       },
                       "discovery_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -26252,9 +26522,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -26390,6 +26658,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -26446,7 +26717,7 @@ exports[`open api parser aries simple 1`] = `
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {
-                        "values": {
+                        "key": {
                           "encoded": "-1",
                           "raw": "raw",
                         },
@@ -26648,6 +26919,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -26704,7 +26978,7 @@ exports[`open api parser aries simple 1`] = `
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {
-                        "values": {
+                        "key": {
                           "encoded": "-1",
                           "raw": "raw",
                         },
@@ -26785,9 +27059,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -26874,6 +27146,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -26930,7 +27205,7 @@ exports[`open api parser aries simple 1`] = `
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {
-                        "values": {
+                        "key": {
                           "encoded": "-1",
                           "raw": "raw",
                         },
@@ -27028,6 +27303,9 @@ exports[`open api parser aries simple 1`] = `
                               "byte_count": 1234,
                               "data": {
                                 "base64": "ey4uLn0=",
+                                "json": {
+                                  "key": "value",
+                                },
                                 "links": [
                                   "https://link.to/data",
                                   "https://link.to/data",
@@ -27081,7 +27359,7 @@ exports[`open api parser aries simple 1`] = `
                           "signature": {},
                           "signature_correctness_proof": {},
                           "values": {
-                            "values": {
+                            "key": {
                               "encoded": "-1",
                               "raw": "raw",
                             },
@@ -27153,6 +27431,9 @@ exports[`open api parser aries simple 1`] = `
                               "byte_count": 1234,
                               "data": {
                                 "base64": "ey4uLn0=",
+                                "json": {
+                                  "key": "value",
+                                },
                                 "links": [
                                   "https://link.to/data",
                                   "https://link.to/data",
@@ -27206,7 +27487,7 @@ exports[`open api parser aries simple 1`] = `
                           "signature": {},
                           "signature_correctness_proof": {},
                           "values": {
-                            "values": {
+                            "key": {
                               "encoded": "-1",
                               "raw": "raw",
                             },
@@ -27326,6 +27607,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -27382,7 +27666,7 @@ exports[`open api parser aries simple 1`] = `
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {
-                        "values": {
+                        "key": {
                           "encoded": "-1",
                           "raw": "raw",
                         },
@@ -27443,9 +27727,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -27543,6 +27825,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -27599,7 +27884,7 @@ exports[`open api parser aries simple 1`] = `
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {
-                        "values": {
+                        "key": {
                           "encoded": "-1",
                           "raw": "raw",
                         },
@@ -27709,6 +27994,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -27765,7 +28053,7 @@ exports[`open api parser aries simple 1`] = `
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {
-                        "values": {
+                        "key": {
                           "encoded": "-1",
                           "raw": "raw",
                         },
@@ -27889,6 +28177,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -27945,7 +28236,7 @@ exports[`open api parser aries simple 1`] = `
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {
-                        "values": {
+                        "key": {
                           "encoded": "-1",
                           "raw": "raw",
                         },
@@ -28158,6 +28449,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -28214,7 +28508,7 @@ exports[`open api parser aries simple 1`] = `
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {
-                        "values": {
+                        "key": {
                           "encoded": "-1",
                           "raw": "raw",
                         },
@@ -28386,6 +28680,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -28442,7 +28739,7 @@ exports[`open api parser aries simple 1`] = `
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {
-                        "values": {
+                        "key": {
                           "encoded": "-1",
                           "raw": "raw",
                         },
@@ -28638,6 +28935,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -28694,7 +28994,7 @@ exports[`open api parser aries simple 1`] = `
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {
-                        "values": {
+                        "key": {
                           "encoded": "-1",
                           "raw": "raw",
                         },
@@ -28817,6 +29117,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -28868,6 +29171,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -28922,6 +29228,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -28957,6 +29266,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -29065,6 +29377,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -29116,6 +29431,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -29170,6 +29488,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -29205,6 +29526,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -29284,9 +29608,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -29333,6 +29655,9 @@ exports[`open api parser aries simple 1`] = `
                             "byte_count": 1234,
                             "data": {
                               "base64": "ey4uLn0=",
+                              "json": {
+                                "key": "value",
+                              },
                               "links": [
                                 "https://link.to/data",
                                 "https://link.to/data",
@@ -29384,6 +29709,9 @@ exports[`open api parser aries simple 1`] = `
                             "byte_count": 1234,
                             "data": {
                               "base64": "ey4uLn0=",
+                              "json": {
+                                "key": "value",
+                              },
                               "links": [
                                 "https://link.to/data",
                                 "https://link.to/data",
@@ -29438,6 +29766,9 @@ exports[`open api parser aries simple 1`] = `
                             "byte_count": 1234,
                             "data": {
                               "base64": "ey4uLn0=",
+                              "json": {
+                                "key": "value",
+                              },
                               "links": [
                                 "https://link.to/data",
                                 "https://link.to/data",
@@ -29473,6 +29804,9 @@ exports[`open api parser aries simple 1`] = `
                             "byte_count": 1234,
                             "data": {
                               "base64": "ey4uLn0=",
+                              "json": {
+                                "key": "value",
+                              },
                               "links": [
                                 "https://link.to/data",
                                 "https://link.to/data",
@@ -29557,6 +29891,9 @@ exports[`open api parser aries simple 1`] = `
                                 "byte_count": 1234,
                                 "data": {
                                   "base64": "ey4uLn0=",
+                                  "json": {
+                                    "key": "value",
+                                  },
                                   "links": [
                                     "https://link.to/data",
                                     "https://link.to/data",
@@ -29607,6 +29944,9 @@ exports[`open api parser aries simple 1`] = `
                                 "byte_count": 1234,
                                 "data": {
                                   "base64": "ey4uLn0=",
+                                  "json": {
+                                    "key": "value",
+                                  },
                                   "links": [
                                     "https://link.to/data",
                                     "https://link.to/data",
@@ -29660,6 +30000,9 @@ exports[`open api parser aries simple 1`] = `
                                 "byte_count": 1234,
                                 "data": {
                                   "base64": "ey4uLn0=",
+                                  "json": {
+                                    "key": "value",
+                                  },
                                   "links": [
                                     "https://link.to/data",
                                     "https://link.to/data",
@@ -29694,6 +30037,9 @@ exports[`open api parser aries simple 1`] = `
                                 "byte_count": 1234,
                                 "data": {
                                   "base64": "ey4uLn0=",
+                                  "json": {
+                                    "key": "value",
+                                  },
                                   "links": [
                                     "https://link.to/data",
                                     "https://link.to/data",
@@ -29752,6 +30098,9 @@ exports[`open api parser aries simple 1`] = `
                                 "byte_count": 1234,
                                 "data": {
                                   "base64": "ey4uLn0=",
+                                  "json": {
+                                    "key": "value",
+                                  },
                                   "links": [
                                     "https://link.to/data",
                                     "https://link.to/data",
@@ -29802,6 +30151,9 @@ exports[`open api parser aries simple 1`] = `
                                 "byte_count": 1234,
                                 "data": {
                                   "base64": "ey4uLn0=",
+                                  "json": {
+                                    "key": "value",
+                                  },
                                   "links": [
                                     "https://link.to/data",
                                     "https://link.to/data",
@@ -29855,6 +30207,9 @@ exports[`open api parser aries simple 1`] = `
                                 "byte_count": 1234,
                                 "data": {
                                   "base64": "ey4uLn0=",
+                                  "json": {
+                                    "key": "value",
+                                  },
                                   "links": [
                                     "https://link.to/data",
                                     "https://link.to/data",
@@ -29889,6 +30244,9 @@ exports[`open api parser aries simple 1`] = `
                                 "byte_count": 1234,
                                 "data": {
                                   "base64": "ey4uLn0=",
+                                  "json": {
+                                    "key": "value",
+                                  },
                                   "links": [
                                     "https://link.to/data",
                                     "https://link.to/data",
@@ -29995,6 +30353,9 @@ exports[`open api parser aries simple 1`] = `
                             "byte_count": 1234,
                             "data": {
                               "base64": "ey4uLn0=",
+                              "json": {
+                                "key": "value",
+                              },
                               "links": [
                                 "https://link.to/data",
                                 "https://link.to/data",
@@ -30046,6 +30407,9 @@ exports[`open api parser aries simple 1`] = `
                             "byte_count": 1234,
                             "data": {
                               "base64": "ey4uLn0=",
+                              "json": {
+                                "key": "value",
+                              },
                               "links": [
                                 "https://link.to/data",
                                 "https://link.to/data",
@@ -30100,6 +30464,9 @@ exports[`open api parser aries simple 1`] = `
                             "byte_count": 1234,
                             "data": {
                               "base64": "ey4uLn0=",
+                              "json": {
+                                "key": "value",
+                              },
                               "links": [
                                 "https://link.to/data",
                                 "https://link.to/data",
@@ -30135,6 +30502,9 @@ exports[`open api parser aries simple 1`] = `
                             "byte_count": 1234,
                             "data": {
                               "base64": "ey4uLn0=",
+                              "json": {
+                                "key": "value",
+                              },
                               "links": [
                                 "https://link.to/data",
                                 "https://link.to/data",
@@ -30222,9 +30592,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -30297,6 +30665,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -30348,6 +30719,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -30402,6 +30776,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -30437,6 +30814,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -30517,6 +30897,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -30568,6 +30951,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -30622,6 +31008,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -30657,6 +31046,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -30758,6 +31150,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -30809,6 +31204,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -30863,6 +31261,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -30898,6 +31299,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -30981,6 +31385,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -31032,6 +31439,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -31086,6 +31496,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -31121,6 +31534,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -31246,6 +31662,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -31297,6 +31716,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -31351,6 +31773,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -31386,6 +31811,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -31436,12 +31864,20 @@ exports[`open api parser aries simple 1`] = `
                     "ld_proof": {
                       "credential": {
                         "@context": [
-                          {},
-                          {},
+                          {
+                            "key": "value",
+                          },
+                          {
+                            "key": "value",
+                          },
                         ],
-                        "credentialSubject": {},
+                        "credentialSubject": {
+                          "key": "value",
+                        },
                         "issuanceDate": "2010-01-01 19:23:24+00:00",
-                        "issuer": {},
+                        "issuer": {
+                          "key": "value",
+                        },
                         "type": [
                           "VerifiableCredential",
                           "AlumniCredential",
@@ -31473,6 +31909,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -31524,6 +31963,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -31578,6 +32020,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -31613,6 +32058,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -31721,6 +32169,9 @@ exports[`open api parser aries simple 1`] = `
                             "byte_count": 1234,
                             "data": {
                               "base64": "ey4uLn0=",
+                              "json": {
+                                "key": "value",
+                              },
                               "links": [
                                 "https://link.to/data",
                                 "https://link.to/data",
@@ -31772,6 +32223,9 @@ exports[`open api parser aries simple 1`] = `
                             "byte_count": 1234,
                             "data": {
                               "base64": "ey4uLn0=",
+                              "json": {
+                                "key": "value",
+                              },
                               "links": [
                                 "https://link.to/data",
                                 "https://link.to/data",
@@ -31826,6 +32280,9 @@ exports[`open api parser aries simple 1`] = `
                             "byte_count": 1234,
                             "data": {
                               "base64": "ey4uLn0=",
+                              "json": {
+                                "key": "value",
+                              },
                               "links": [
                                 "https://link.to/data",
                                 "https://link.to/data",
@@ -31861,6 +32318,9 @@ exports[`open api parser aries simple 1`] = `
                             "byte_count": 1234,
                             "data": {
                               "base64": "ey4uLn0=",
+                              "json": {
+                                "key": "value",
+                              },
                               "links": [
                                 "https://link.to/data",
                                 "https://link.to/data",
@@ -32110,9 +32570,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -32431,9 +32889,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -33362,9 +33818,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -33699,6 +34153,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -33715,6 +34172,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -33740,7 +34200,9 @@ exports[`open api parser aries simple 1`] = `
                           "serviceEndpoint": "http://192.168.56.101:8020",
                           "type": "string",
                         },
-                        {},
+                        {
+                          "key": "value",
+                        },
                       ],
                     },
                     "invitation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -33858,6 +34320,9 @@ exports[`open api parser aries simple 1`] = `
                       "byte_count": 1234,
                       "data": {
                         "base64": "ey4uLn0=",
+                        "json": {
+                          "key": "value",
+                        },
                         "links": [
                           "https://link.to/data",
                           "https://link.to/data",
@@ -33874,6 +34339,9 @@ exports[`open api parser aries simple 1`] = `
                       "byte_count": 1234,
                       "data": {
                         "base64": "ey4uLn0=",
+                        "json": {
+                          "key": "value",
+                        },
                         "links": [
                           "https://link.to/data",
                           "https://link.to/data",
@@ -33899,7 +34367,9 @@ exports[`open api parser aries simple 1`] = `
                       "serviceEndpoint": "http://192.168.56.101:8020",
                       "type": "string",
                     },
-                    {},
+                    {
+                      "key": "value",
+                    },
                   ],
                 },
                 "response": {
@@ -33927,6 +34397,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -33943,6 +34416,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -33968,7 +34444,9 @@ exports[`open api parser aries simple 1`] = `
                           "serviceEndpoint": "http://192.168.56.101:8020",
                           "type": "string",
                         },
-                        {},
+                        {
+                          "key": "value",
+                        },
                       ],
                     },
                     "oob_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -34111,7 +34589,7 @@ exports[`open api parser aries simple 1`] = `
                       },
                       "requested_proof": {
                         "predicates": {
-                          "predicates": {},
+                          "key": {},
                         },
                       },
                     },
@@ -34205,6 +34683,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -34274,9 +34755,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -34395,6 +34874,9 @@ exports[`open api parser aries simple 1`] = `
                               "byte_count": 1234,
                               "data": {
                                 "base64": "ey4uLn0=",
+                                "json": {
+                                  "key": "value",
+                                },
                                 "links": [
                                   "https://link.to/data",
                                   "https://link.to/data",
@@ -34510,6 +34992,9 @@ exports[`open api parser aries simple 1`] = `
                               "byte_count": 1234,
                               "data": {
                                 "base64": "ey4uLn0=",
+                                "json": {
+                                  "key": "value",
+                                },
                                 "links": [
                                   "https://link.to/data",
                                   "https://link.to/data",
@@ -34669,7 +35154,7 @@ exports[`open api parser aries simple 1`] = `
                       },
                       "requested_proof": {
                         "predicates": {
-                          "predicates": {},
+                          "key": {},
                         },
                       },
                     },
@@ -34763,6 +35248,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -34818,9 +35306,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -34920,7 +35406,7 @@ exports[`open api parser aries simple 1`] = `
                       },
                       "requested_proof": {
                         "predicates": {
-                          "predicates": {},
+                          "key": {},
                         },
                       },
                     },
@@ -35014,6 +35500,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -35149,7 +35638,7 @@ exports[`open api parser aries simple 1`] = `
                       },
                       "requested_proof": {
                         "predicates": {
-                          "predicates": {},
+                          "key": {},
                         },
                       },
                     },
@@ -35243,6 +35732,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -35365,7 +35857,7 @@ exports[`open api parser aries simple 1`] = `
                       },
                       "requested_proof": {
                         "predicates": {
-                          "predicates": {},
+                          "key": {},
                         },
                       },
                     },
@@ -35459,6 +35951,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -35538,7 +36033,7 @@ exports[`open api parser aries simple 1`] = `
                       },
                       "requested_proof": {
                         "predicates": {
-                          "predicates": {},
+                          "key": {},
                         },
                       },
                     },
@@ -35632,6 +36127,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -35725,7 +36223,7 @@ exports[`open api parser aries simple 1`] = `
                       },
                       "requested_proof": {
                         "predicates": {
-                          "predicates": {},
+                          "key": {},
                         },
                       },
                     },
@@ -35819,6 +36317,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -35968,6 +36469,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -35998,6 +36502,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -36027,6 +36534,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -36097,9 +36607,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -36149,6 +36657,9 @@ exports[`open api parser aries simple 1`] = `
                               "byte_count": 1234,
                               "data": {
                                 "base64": "ey4uLn0=",
+                                "json": {
+                                  "key": "value",
+                                },
                                 "links": [
                                   "https://link.to/data",
                                   "https://link.to/data",
@@ -36178,6 +36689,9 @@ exports[`open api parser aries simple 1`] = `
                               "byte_count": 1234,
                               "data": {
                                 "base64": "ey4uLn0=",
+                                "json": {
+                                  "key": "value",
+                                },
                                 "links": [
                                   "https://link.to/data",
                                   "https://link.to/data",
@@ -36206,6 +36720,9 @@ exports[`open api parser aries simple 1`] = `
                               "byte_count": 1234,
                               "data": {
                                 "base64": "ey4uLn0=",
+                                "json": {
+                                  "key": "value",
+                                },
                                 "links": [
                                   "https://link.to/data",
                                   "https://link.to/data",
@@ -36252,6 +36769,9 @@ exports[`open api parser aries simple 1`] = `
                               "byte_count": 1234,
                               "data": {
                                 "base64": "ey4uLn0=",
+                                "json": {
+                                  "key": "value",
+                                },
                                 "links": [
                                   "https://link.to/data",
                                   "https://link.to/data",
@@ -36281,6 +36801,9 @@ exports[`open api parser aries simple 1`] = `
                               "byte_count": 1234,
                               "data": {
                                 "base64": "ey4uLn0=",
+                                "json": {
+                                  "key": "value",
+                                },
                                 "links": [
                                   "https://link.to/data",
                                   "https://link.to/data",
@@ -36309,6 +36832,9 @@ exports[`open api parser aries simple 1`] = `
                               "byte_count": 1234,
                               "data": {
                                 "base64": "ey4uLn0=",
+                                "json": {
+                                  "key": "value",
+                                },
                                 "links": [
                                   "https://link.to/data",
                                   "https://link.to/data",
@@ -36470,6 +36996,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -36500,6 +37029,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -36529,6 +37061,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -36585,9 +37120,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -36691,6 +37224,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -36721,6 +37257,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -36750,6 +37289,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -36894,6 +37436,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -36924,6 +37469,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -36953,6 +37501,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -37081,6 +37632,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -37111,6 +37665,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -37140,6 +37697,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -37236,6 +37796,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -37266,6 +37829,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -37295,6 +37861,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -37391,6 +37960,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -37421,6 +37993,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -37450,6 +38025,9 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
+                            "json": {
+                              "key": "value",
+                            },
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -38406,9 +38984,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -38717,9 +39293,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -39140,9 +39714,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -39163,9 +39735,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -39438,9 +40008,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -39475,9 +40043,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },

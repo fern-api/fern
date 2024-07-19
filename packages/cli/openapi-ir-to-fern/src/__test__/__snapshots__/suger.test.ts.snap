@@ -1822,12 +1822,12 @@ exports[`open api parser suger docs 1`] = `
                     "lastUpdateTime": "2024-01-15T09:30:00Z",
                     "metaInfo": {
                       "originRecords": {
-                        "originRecords": 1.1,
+                        "key": 1.1,
                       },
                     },
                     "organizationID": "organizationID",
                     "records": {
-                      "records": 1.1,
+                      "key": 1.1,
                     },
                     "serialID": 1,
                     "status": "status",
@@ -1875,6 +1875,9 @@ exports[`open api parser suger docs 1`] = `
                     "id": "id",
                     "info": {
                       "awsMeteringResponse": {
+                        "resultMetadata": {
+                          "key": "value",
+                        },
                         "results": [
                           {},
                         ],
@@ -1891,10 +1894,10 @@ exports[`open api parser suger docs 1`] = `
                       "commitAmount": 1.1,
                       "creditAmount": 1.1,
                       "creditRecords": {
-                        "creditRecords": 1.1,
+                        "key": 1.1,
                       },
                       "dimensionUnitPrice": {
-                        "dimensionUnitPrice": 1.1,
+                        "key": 1.1,
                       },
                       "endTime": "2024-01-15T09:30:00Z",
                       "gcpMeteringResponse": {
@@ -1905,10 +1908,10 @@ exports[`open api parser suger docs 1`] = `
                         "serviceRolloutId": "serviceRolloutId",
                       },
                       "includedRecords": {
-                        "includedRecords": 1.1,
+                        "key": 1.1,
                       },
                       "reportedRecords": {
-                        "reportedRecords": 1.1,
+                        "key": 1.1,
                       },
                       "startTime": "2024-01-15T09:30:00Z",
                       "usageRecordGroupIds": [
@@ -1968,7 +1971,7 @@ exports[`open api parser suger docs 1`] = `
                         "lastUpdateTime": "2024-01-15T09:30:00Z",
                         "organizationID": "organizationID",
                         "records": {
-                          "records": 1.1,
+                          "key": 1.1,
                         },
                         "serialID": 1,
                         "status": "status",
@@ -2042,7 +2045,7 @@ exports[`open api parser suger docs 1`] = `
                         "lastUpdateTime": "2024-01-15T09:30:00Z",
                         "organizationID": "organizationID",
                         "records": {
-                          "records": 1.1,
+                          "key": 1.1,
                         },
                         "serialID": 1,
                         "status": "status",
@@ -2113,7 +2116,7 @@ exports[`open api parser suger docs 1`] = `
                         "lastUpdateTime": "2024-01-15T09:30:00Z",
                         "organizationID": "organizationID",
                         "records": {
-                          "records": 1.1,
+                          "key": 1.1,
                         },
                         "serialID": 1,
                         "status": "status",
@@ -2391,7 +2394,7 @@ exports[`open api parser suger docs 1`] = `
                   "entitlementID": "entitlementID",
                   "organizationID": "organizationID",
                   "records": {
-                    "records": 1.1,
+                    "key": 1.1,
                   },
                 },
                 "response": {
@@ -2402,12 +2405,12 @@ exports[`open api parser suger docs 1`] = `
                     "lastUpdateTime": "2024-01-15T09:30:00Z",
                     "metaInfo": {
                       "originRecords": {
-                        "originRecords": 1.1,
+                        "key": 1.1,
                       },
                     },
                     "organizationID": "organizationID",
                     "records": {
-                      "records": 1.1,
+                      "key": 1.1,
                     },
                     "serialID": 1,
                     "status": "status",
@@ -3463,7 +3466,7 @@ exports[`open api parser suger docs 1`] = `
                     "id": "id",
                     "info": {
                       "attributes": {
-                        "attributes": "attributes",
+                        "key": "attributes",
                       },
                       "awsSaasProduct": {
                         "Dimensions": [
@@ -3624,7 +3627,7 @@ exports[`open api parser suger docs 1`] = `
                       "id": "id",
                       "info": {
                         "attributes": {
-                          "attributes": "attributes",
+                          "key": "attributes",
                         },
                         "awsSnsSubscriptions": [
                           {},
@@ -3690,7 +3693,7 @@ exports[`open api parser suger docs 1`] = `
                       "id": "id",
                       "info": {
                         "attributes": {
-                          "attributes": "attributes",
+                          "key": "attributes",
                         },
                         "awsSnsSubscriptions": [
                           {},
@@ -3764,7 +3767,7 @@ exports[`open api parser suger docs 1`] = `
                     "id": "id",
                     "info": {
                       "attributes": {
-                        "attributes": "attributes",
+                        "key": "attributes",
                       },
                       "awsSaasProduct": {
                         "Dimensions": [
@@ -10163,12 +10166,12 @@ exports[`open api parser suger simple 1`] = `
                     "lastUpdateTime": "2024-01-15T09:30:00Z",
                     "metaInfo": {
                       "originRecords": {
-                        "originRecords": 1.1,
+                        "key": 1.1,
                       },
                     },
                     "organizationID": "organizationID",
                     "records": {
-                      "records": 1.1,
+                      "key": 1.1,
                     },
                     "serialID": 1,
                     "status": "status",
@@ -10216,6 +10219,9 @@ exports[`open api parser suger simple 1`] = `
                     "id": "id",
                     "info": {
                       "awsMeteringResponse": {
+                        "resultMetadata": {
+                          "key": "value",
+                        },
                         "results": [
                           {},
                         ],
@@ -10232,10 +10238,10 @@ exports[`open api parser suger simple 1`] = `
                       "commitAmount": 1.1,
                       "creditAmount": 1.1,
                       "creditRecords": {
-                        "creditRecords": 1.1,
+                        "key": 1.1,
                       },
                       "dimensionUnitPrice": {
-                        "dimensionUnitPrice": 1.1,
+                        "key": 1.1,
                       },
                       "endTime": "2024-01-15T09:30:00Z",
                       "gcpMeteringResponse": {
@@ -10246,10 +10252,10 @@ exports[`open api parser suger simple 1`] = `
                         "serviceRolloutId": "serviceRolloutId",
                       },
                       "includedRecords": {
-                        "includedRecords": 1.1,
+                        "key": 1.1,
                       },
                       "reportedRecords": {
-                        "reportedRecords": 1.1,
+                        "key": 1.1,
                       },
                       "startTime": "2024-01-15T09:30:00Z",
                       "usageRecordGroupIds": [
@@ -10309,7 +10315,7 @@ exports[`open api parser suger simple 1`] = `
                         "lastUpdateTime": "2024-01-15T09:30:00Z",
                         "organizationID": "organizationID",
                         "records": {
-                          "records": 1.1,
+                          "key": 1.1,
                         },
                         "serialID": 1,
                         "status": "status",
@@ -10383,7 +10389,7 @@ exports[`open api parser suger simple 1`] = `
                         "lastUpdateTime": "2024-01-15T09:30:00Z",
                         "organizationID": "organizationID",
                         "records": {
-                          "records": 1.1,
+                          "key": 1.1,
                         },
                         "serialID": 1,
                         "status": "status",
@@ -10454,7 +10460,7 @@ exports[`open api parser suger simple 1`] = `
                         "lastUpdateTime": "2024-01-15T09:30:00Z",
                         "organizationID": "organizationID",
                         "records": {
-                          "records": 1.1,
+                          "key": 1.1,
                         },
                         "serialID": 1,
                         "status": "status",
@@ -10732,7 +10738,7 @@ exports[`open api parser suger simple 1`] = `
                   "entitlementID": "entitlementID",
                   "organizationID": "organizationID",
                   "records": {
-                    "records": 1.1,
+                    "key": 1.1,
                   },
                 },
                 "response": {
@@ -10743,12 +10749,12 @@ exports[`open api parser suger simple 1`] = `
                     "lastUpdateTime": "2024-01-15T09:30:00Z",
                     "metaInfo": {
                       "originRecords": {
-                        "originRecords": 1.1,
+                        "key": 1.1,
                       },
                     },
                     "organizationID": "organizationID",
                     "records": {
-                      "records": 1.1,
+                      "key": 1.1,
                     },
                     "serialID": 1,
                     "status": "status",
@@ -11804,7 +11810,7 @@ exports[`open api parser suger simple 1`] = `
                     "id": "id",
                     "info": {
                       "attributes": {
-                        "attributes": "attributes",
+                        "key": "attributes",
                       },
                       "awsSaasProduct": {
                         "Dimensions": [
@@ -11965,7 +11971,7 @@ exports[`open api parser suger simple 1`] = `
                       "id": "id",
                       "info": {
                         "attributes": {
-                          "attributes": "attributes",
+                          "key": "attributes",
                         },
                         "awsSnsSubscriptions": [
                           {},
@@ -12031,7 +12037,7 @@ exports[`open api parser suger simple 1`] = `
                       "id": "id",
                       "info": {
                         "attributes": {
-                          "attributes": "attributes",
+                          "key": "attributes",
                         },
                         "awsSnsSubscriptions": [
                           {},
@@ -12105,7 +12111,7 @@ exports[`open api parser suger simple 1`] = `
                     "id": "id",
                     "info": {
                       "attributes": {
-                        "attributes": "attributes",
+                        "key": "attributes",
                       },
                       "awsSaasProduct": {
                         "Dimensions": [

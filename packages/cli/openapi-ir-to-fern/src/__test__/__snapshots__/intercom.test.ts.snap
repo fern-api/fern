@@ -3363,6 +3363,9 @@ You can view the currently authorised admin along with the embedded app object (
                           "url": "/contacts/5ba682d23d7cf92bef87bfd4/companies",
                         },
                         "created_at": 1571672154,
+                        "custom_attributes": {
+                          "key": "value",
+                        },
                         "email": "joe@example.com",
                         "email_domain": "example.com",
                         "external_id": "f3b87a2e09d514c6c2e79b9a",
@@ -3500,7 +3503,7 @@ You can view the currently authorised admin along with the embedded app object (
                     "company_id": "1",
                     "created_at": 1719492736,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "id": "667d60808a68186f43bafd31",
                     "industry": "Software",
@@ -3581,7 +3584,7 @@ You can view the currently authorised admin along with the embedded app object (
                     "company_id": "1",
                     "created_at": 1719492738,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "id": "667d60828a68186f43bafd3b",
                     "industry": "Software",
@@ -3661,7 +3664,7 @@ You can view the currently authorised admin along with the embedded app object (
                     "company_id": "1",
                     "created_at": 1719492749,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "id": "667d608d8a68186f43bafd70",
                     "industry": "Software",
@@ -3716,7 +3719,7 @@ You can view the currently authorised admin along with the embedded app object (
                     "company_id": "1",
                     "created_at": 1719492749,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "id": "667d608d8a68186f43bafd70",
                     "industry": "Software",
@@ -3771,7 +3774,7 @@ You can view the currently authorised admin along with the embedded app object (
                     "company_id": "1",
                     "created_at": 1719492749,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "id": "667d608d8a68186f43bafd70",
                     "industry": "Software",
@@ -3983,7 +3986,7 @@ Companies are looked up via \`company_id\` in a \`POST\` request, if not found v
                     "company_id": "1",
                     "created_at": 1719492753,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "id": "667d60918a68186f43bafd80",
                     "industry": "Software",
@@ -4070,7 +4073,7 @@ When using the Companies endpoint and the pages object to iterate through the re
                         "company_id": "remote_companies_scroll_2",
                         "created_at": 1719492746,
                         "custom_attributes": {
-                          "custom_attributes": "custom_attributes",
+                          "key": "custom_attributes",
                         },
                         "id": "667d608a8a68186f43bafd61",
                         "industry": "Software",
@@ -4176,7 +4179,7 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
                         "company_id": "remote_companies_scroll_2",
                         "created_at": 1719492734,
                         "custom_attributes": {
-                          "custom_attributes": "custom_attributes",
+                          "key": "custom_attributes",
                         },
                         "id": "667d607e8a68186f43bafd26",
                         "industry": "Software",
@@ -4297,7 +4300,7 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
                         "company_id": "remote_companies_scroll_2",
                         "created_at": 1719492747,
                         "custom_attributes": {
-                          "custom_attributes": "custom_attributes",
+                          "key": "custom_attributes",
                         },
                         "id": "667d608b8a68186f43bafd67",
                         "industry": "Software",
@@ -4611,9 +4614,7 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
                     },
                     "created_at": 1719492784,
                     "custom_attributes": {
-                      "custom_attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "email": "joebloggs@intercom.io",
                     "email_domain": "example.com",
@@ -4772,6 +4773,9 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
                           "url": "/contacts/5ba682d23d7cf92bef87bfd4/companies",
                         },
                         "created_at": 1571672154,
+                        "custom_attributes": {
+                          "key": "value",
+                        },
                         "email": "joe@example.com",
                         "email_domain": "example.com",
                         "external_id": "f3b87a2e09d514c6c2e79b9a",
@@ -4873,9 +4877,7 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
                     },
                     "created_at": 1719492780,
                     "custom_attributes": {
-                      "custom_attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "email": "joe@bloggs.com",
                     "email_domain": "example.com",
@@ -5125,6 +5127,9 @@ The table below shows the operators you can use to define how you want to search
                           "url": "/contacts/5ba682d23d7cf92bef87bfd4/companies",
                         },
                         "created_at": 1571672154,
+                        "custom_attributes": {
+                          "key": "value",
+                        },
                         "email": "joe@example.com",
                         "email_domain": "example.com",
                         "external_id": "f3b87a2e09d514c6c2e79b9a",
@@ -5228,9 +5233,7 @@ The table below shows the operators you can use to define how you want to search
                     },
                     "created_at": 1719492777,
                     "custom_attributes": {
-                      "custom_attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "email": "joe@bloggs.com",
                     "email_domain": "example.com",
@@ -5391,9 +5394,7 @@ The table below shows the operators you can use to define how you want to search
                     },
                     "created_at": 1719492776,
                     "custom_attributes": {
-                      "custom_attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "email": "joebloggs@intercom.io",
                     "email_domain": "example.com",
@@ -6186,7 +6187,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                     },
                     "created_at": 1663597223,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -6361,7 +6362,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                     },
                     "created_at": 1663597223,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -6597,7 +6598,7 @@ It is not possible to use this endpoint with Workflows.
                     },
                     "created_at": 1719492880,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -6761,7 +6762,7 @@ It is not possible to use this endpoint with Workflows.
                     "snoozed_until": 1663597260,
                     "team_assignee_id": "0",
                     "ticket_attributes": {
-                      "ticket_attributes": "ticket_attributes",
+                      "key": "ticket_attributes",
                     },
                     "ticket_id": "37",
                     "ticket_parts": {
@@ -6885,7 +6886,7 @@ It is not possible to use this endpoint with Workflows.
                     "snoozed_until": 1663597260,
                     "team_assignee_id": "0",
                     "ticket_attributes": {
-                      "ticket_attributes": "ticket_attributes",
+                      "key": "ticket_attributes",
                     },
                     "ticket_id": "37",
                     "ticket_parts": {
@@ -7172,7 +7173,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                     },
                     "created_at": 1663597223,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -7345,7 +7346,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                     },
                     "created_at": 1663597223,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -7518,7 +7519,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                     },
                     "created_at": 1663597223,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -7691,7 +7692,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                     },
                     "created_at": 1663597223,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -8017,7 +8018,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492938,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492939,
@@ -8208,7 +8209,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492938,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492939,
@@ -8425,7 +8426,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492849,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492850,
@@ -8620,7 +8621,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492849,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492850,
@@ -8815,7 +8816,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492849,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492850,
@@ -9010,7 +9011,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492849,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492850,
@@ -9205,7 +9206,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492849,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492850,
@@ -9411,7 +9412,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492852,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -9606,7 +9607,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492855,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492856,
@@ -9815,7 +9816,7 @@ For AI agent conversation metadata, please note that you need to have the agent 
                     },
                     "created_at": 1719492825,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -10087,7 +10088,7 @@ The table below shows the operators you can use to define how you want to search
                         },
                         "created_at": 1719492843,
                         "custom_attributes": {
-                          "custom_attributes": "custom_attributes",
+                          "key": "custom_attributes",
                         },
                         "first_contact_reply": {
                           "created_at": 1663597223,
@@ -15328,9 +15329,7 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
                 "response": {
                   "body": {
                     "pages": {
-                      "pages": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "segments": [
                       {
@@ -17004,9 +17003,7 @@ This will return a tag object.
                     "description": "New Attribute Description",
                     "id": "215",
                     "input_options": {
-                      "multiline: true": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "name": "name",
                     "order": 0,
@@ -17175,6 +17172,9 @@ This will return a tag object.
                           "default": true,
                           "description": "Bug title.",
                           "id": "1",
+                          "input_options": {
+                            "key": "value",
+                          },
                           "name": "Title",
                           "order": 1,
                           "required_to_create": false,
@@ -17236,6 +17236,9 @@ This will return a tag object.
                           "default": true,
                           "description": "Bug title.",
                           "id": "1",
+                          "input_options": {
+                            "key": "value",
+                          },
                           "name": "Title",
                           "order": 1,
                           "required_to_create": false,
@@ -17348,6 +17351,9 @@ You can update a ticket type.
                           "default": true,
                           "description": "Bug title.",
                           "id": "1",
+                          "input_options": {
+                            "key": "value",
+                          },
                           "name": "Title",
                           "order": 1,
                           "required_to_create": false,
@@ -19414,9 +19420,7 @@ The table below shows the operators you can use to define how you want to search
                     },
                     "created_at": 1719493072,
                     "custom_attributes": {
-                      "custom_attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "email": "foo@bar.com",
                     "email_domain": "example.com",
@@ -19563,7 +19567,7 @@ The table below shows the operators you can use to define how you want to search
                     },
                     "created_at": 1719493070,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "do_not_track": false,
                     "email": "",
@@ -19696,7 +19700,7 @@ The table below shows the operators you can use to define how you want to search
                     },
                     "created_at": 1719493068,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "do_not_track": false,
                     "email": "",
@@ -19797,7 +19801,7 @@ The table below shows the operators you can use to define how you want to search
                     },
                     "created_at": 1719493068,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "do_not_track": false,
                     "email": "",
@@ -31726,6 +31730,9 @@ You can view the currently authorised admin along with the embedded app object (
                           "url": "/contacts/5ba682d23d7cf92bef87bfd4/companies",
                         },
                         "created_at": 1571672154,
+                        "custom_attributes": {
+                          "key": "value",
+                        },
                         "email": "joe@example.com",
                         "email_domain": "example.com",
                         "external_id": "f3b87a2e09d514c6c2e79b9a",
@@ -31863,7 +31870,7 @@ You can view the currently authorised admin along with the embedded app object (
                     "company_id": "1",
                     "created_at": 1719492736,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "id": "667d60808a68186f43bafd31",
                     "industry": "Software",
@@ -31944,7 +31951,7 @@ You can view the currently authorised admin along with the embedded app object (
                     "company_id": "1",
                     "created_at": 1719492738,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "id": "667d60828a68186f43bafd3b",
                     "industry": "Software",
@@ -32024,7 +32031,7 @@ You can view the currently authorised admin along with the embedded app object (
                     "company_id": "1",
                     "created_at": 1719492749,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "id": "667d608d8a68186f43bafd70",
                     "industry": "Software",
@@ -32079,7 +32086,7 @@ You can view the currently authorised admin along with the embedded app object (
                     "company_id": "1",
                     "created_at": 1719492749,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "id": "667d608d8a68186f43bafd70",
                     "industry": "Software",
@@ -32134,7 +32141,7 @@ You can view the currently authorised admin along with the embedded app object (
                     "company_id": "1",
                     "created_at": 1719492749,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "id": "667d608d8a68186f43bafd70",
                     "industry": "Software",
@@ -32346,7 +32353,7 @@ Companies are looked up via \`company_id\` in a \`POST\` request, if not found v
                     "company_id": "1",
                     "created_at": 1719492753,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "id": "667d60918a68186f43bafd80",
                     "industry": "Software",
@@ -32433,7 +32440,7 @@ When using the Companies endpoint and the pages object to iterate through the re
                         "company_id": "remote_companies_scroll_2",
                         "created_at": 1719492746,
                         "custom_attributes": {
-                          "custom_attributes": "custom_attributes",
+                          "key": "custom_attributes",
                         },
                         "id": "667d608a8a68186f43bafd61",
                         "industry": "Software",
@@ -32539,7 +32546,7 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
                         "company_id": "remote_companies_scroll_2",
                         "created_at": 1719492734,
                         "custom_attributes": {
-                          "custom_attributes": "custom_attributes",
+                          "key": "custom_attributes",
                         },
                         "id": "667d607e8a68186f43bafd26",
                         "industry": "Software",
@@ -32660,7 +32667,7 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
                         "company_id": "remote_companies_scroll_2",
                         "created_at": 1719492747,
                         "custom_attributes": {
-                          "custom_attributes": "custom_attributes",
+                          "key": "custom_attributes",
                         },
                         "id": "667d608b8a68186f43bafd67",
                         "industry": "Software",
@@ -32974,9 +32981,7 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
                     },
                     "created_at": 1719492784,
                     "custom_attributes": {
-                      "custom_attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "email": "joebloggs@intercom.io",
                     "email_domain": "example.com",
@@ -33135,6 +33140,9 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
                           "url": "/contacts/5ba682d23d7cf92bef87bfd4/companies",
                         },
                         "created_at": 1571672154,
+                        "custom_attributes": {
+                          "key": "value",
+                        },
                         "email": "joe@example.com",
                         "email_domain": "example.com",
                         "external_id": "f3b87a2e09d514c6c2e79b9a",
@@ -33236,9 +33244,7 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
                     },
                     "created_at": 1719492780,
                     "custom_attributes": {
-                      "custom_attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "email": "joe@bloggs.com",
                     "email_domain": "example.com",
@@ -33488,6 +33494,9 @@ The table below shows the operators you can use to define how you want to search
                           "url": "/contacts/5ba682d23d7cf92bef87bfd4/companies",
                         },
                         "created_at": 1571672154,
+                        "custom_attributes": {
+                          "key": "value",
+                        },
                         "email": "joe@example.com",
                         "email_domain": "example.com",
                         "external_id": "f3b87a2e09d514c6c2e79b9a",
@@ -33591,9 +33600,7 @@ The table below shows the operators you can use to define how you want to search
                     },
                     "created_at": 1719492777,
                     "custom_attributes": {
-                      "custom_attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "email": "joe@bloggs.com",
                     "email_domain": "example.com",
@@ -33754,9 +33761,7 @@ The table below shows the operators you can use to define how you want to search
                     },
                     "created_at": 1719492776,
                     "custom_attributes": {
-                      "custom_attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "email": "joebloggs@intercom.io",
                     "email_domain": "example.com",
@@ -34549,7 +34554,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                     },
                     "created_at": 1663597223,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -34724,7 +34729,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                     },
                     "created_at": 1663597223,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -34960,7 +34965,7 @@ It is not possible to use this endpoint with Workflows.
                     },
                     "created_at": 1719492880,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -35124,7 +35129,7 @@ It is not possible to use this endpoint with Workflows.
                     "snoozed_until": 1663597260,
                     "team_assignee_id": "0",
                     "ticket_attributes": {
-                      "ticket_attributes": "ticket_attributes",
+                      "key": "ticket_attributes",
                     },
                     "ticket_id": "37",
                     "ticket_parts": {
@@ -35248,7 +35253,7 @@ It is not possible to use this endpoint with Workflows.
                     "snoozed_until": 1663597260,
                     "team_assignee_id": "0",
                     "ticket_attributes": {
-                      "ticket_attributes": "ticket_attributes",
+                      "key": "ticket_attributes",
                     },
                     "ticket_id": "37",
                     "ticket_parts": {
@@ -35535,7 +35540,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                     },
                     "created_at": 1663597223,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -35708,7 +35713,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                     },
                     "created_at": 1663597223,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -35881,7 +35886,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                     },
                     "created_at": 1663597223,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -36054,7 +36059,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                     },
                     "created_at": 1663597223,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -36380,7 +36385,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492938,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492939,
@@ -36571,7 +36576,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492938,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492939,
@@ -36788,7 +36793,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492849,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492850,
@@ -36983,7 +36988,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492849,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492850,
@@ -37178,7 +37183,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492849,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492850,
@@ -37373,7 +37378,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492849,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492850,
@@ -37568,7 +37573,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492849,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492850,
@@ -37774,7 +37779,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492852,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -37969,7 +37974,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
                     },
                     "created_at": 1719492855,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1719492856,
@@ -38178,7 +38183,7 @@ For AI agent conversation metadata, please note that you need to have the agent 
                     },
                     "created_at": 1719492825,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "first_contact_reply": {
                       "created_at": 1663597223,
@@ -38450,7 +38455,7 @@ The table below shows the operators you can use to define how you want to search
                         },
                         "created_at": 1719492843,
                         "custom_attributes": {
-                          "custom_attributes": "custom_attributes",
+                          "key": "custom_attributes",
                         },
                         "first_contact_reply": {
                           "created_at": 1663597223,
@@ -43691,9 +43696,7 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
                 "response": {
                   "body": {
                     "pages": {
-                      "pages": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "segments": [
                       {
@@ -45367,9 +45370,7 @@ This will return a tag object.
                     "description": "New Attribute Description",
                     "id": "215",
                     "input_options": {
-                      "multiline: true": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "name": "name",
                     "order": 0,
@@ -45538,6 +45539,9 @@ This will return a tag object.
                           "default": true,
                           "description": "Bug title.",
                           "id": "1",
+                          "input_options": {
+                            "key": "value",
+                          },
                           "name": "Title",
                           "order": 1,
                           "required_to_create": false,
@@ -45599,6 +45603,9 @@ This will return a tag object.
                           "default": true,
                           "description": "Bug title.",
                           "id": "1",
+                          "input_options": {
+                            "key": "value",
+                          },
                           "name": "Title",
                           "order": 1,
                           "required_to_create": false,
@@ -45711,6 +45718,9 @@ You can update a ticket type.
                           "default": true,
                           "description": "Bug title.",
                           "id": "1",
+                          "input_options": {
+                            "key": "value",
+                          },
                           "name": "Title",
                           "order": 1,
                           "required_to_create": false,
@@ -47777,9 +47787,7 @@ The table below shows the operators you can use to define how you want to search
                     },
                     "created_at": 1719493072,
                     "custom_attributes": {
-                      "custom_attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "email": "foo@bar.com",
                     "email_domain": "example.com",
@@ -47926,7 +47934,7 @@ The table below shows the operators you can use to define how you want to search
                     },
                     "created_at": 1719493070,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "do_not_track": false,
                     "email": "",
@@ -48059,7 +48067,7 @@ The table below shows the operators you can use to define how you want to search
                     },
                     "created_at": 1719493068,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "do_not_track": false,
                     "email": "",
@@ -48160,7 +48168,7 @@ The table below shows the operators you can use to define how you want to search
                     },
                     "created_at": 1719493068,
                     "custom_attributes": {
-                      "custom_attributes": "custom_attributes",
+                      "key": "custom_attributes",
                     },
                     "do_not_track": false,
                     "email": "",

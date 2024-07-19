@@ -1266,7 +1266,7 @@ The parameter should map to a JSON encoded list of strings.
                               {
                                 "key": {
                                   "type": "string",
-                                  "value": "severity_score_summary",
+                                  "value": "key",
                                 },
                                 "value": {
                                   "properties": {
@@ -1303,7 +1303,7 @@ The parameter should map to a JSON encoded list of strings.
                               {
                                 "key": {
                                   "type": "string",
-                                  "value": "summary",
+                                  "value": "key",
                                 },
                                 "value": {
                                   "type": "primitive",
@@ -1502,7 +1502,7 @@ The parameter should map to a JSON encoded list of strings.
                       {
                         "key": {
                           "type": "string",
-                          "value": "summary",
+                          "value": "key",
                         },
                         "value": {
                           "type": "primitive",
@@ -2303,7 +2303,7 @@ The parameter should map to a JSON encoded list of strings.
                               {
                                 "key": {
                                   "type": "string",
-                                  "value": "severity_score_summary",
+                                  "value": "key",
                                 },
                                 "value": {
                                   "properties": {
@@ -2340,7 +2340,7 @@ The parameter should map to a JSON encoded list of strings.
                               {
                                 "key": {
                                   "type": "string",
-                                  "value": "summary",
+                                  "value": "key",
                                 },
                                 "value": {
                                   "type": "primitive",
@@ -2539,7 +2539,7 @@ The parameter should map to a JSON encoded list of strings.
                       {
                         "key": {
                           "type": "string",
-                          "value": "summary",
+                          "value": "key",
                         },
                         "value": {
                           "type": "primitive",
@@ -3348,7 +3348,7 @@ The parameter should map to a JSON encoded list of strings.
                               {
                                 "key": {
                                   "type": "string",
-                                  "value": "severity_score_summary",
+                                  "value": "key",
                                 },
                                 "value": {
                                   "properties": {
@@ -3385,7 +3385,7 @@ The parameter should map to a JSON encoded list of strings.
                               {
                                 "key": {
                                   "type": "string",
-                                  "value": "summary",
+                                  "value": "key",
                                 },
                                 "value": {
                                   "type": "primitive",
@@ -3584,7 +3584,7 @@ The parameter should map to a JSON encoded list of strings.
                       {
                         "key": {
                           "type": "string",
-                          "value": "summary",
+                          "value": "key",
                         },
                         "value": {
                           "type": "primitive",

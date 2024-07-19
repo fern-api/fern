@@ -659,7 +659,7 @@ If we check the checkbox where \`us_based_employees\` and \`private_repos->clone
                     "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                     "resource": {
                       "action_groups": {
-                        "action_groups": [
+                        "key": [
                           "action_groups",
                         ],
                       },
@@ -871,7 +871,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                     "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                     "resource": {
                       "action_groups": {
-                        "action_groups": [
+                        "key": [
                           "action_groups",
                         ],
                       },
@@ -984,7 +984,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                       "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                       "resource": {
                         "action_groups": {
-                          "action_groups": [
+                          "key": [
                             "action_groups",
                           ],
                         },
@@ -1111,7 +1111,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                       "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                       "resource": {
                         "action_groups": {
-                          "action_groups": [
+                          "key": [
                             "action_groups",
                           ],
                         },
@@ -1390,7 +1390,7 @@ Fields that will be provided will be completely overwritten.",
                     "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                     "resource": {
                       "action_groups": {
-                        "action_groups": [
+                        "key": [
                           "action_groups",
                         ],
                       },
@@ -1566,7 +1566,9 @@ allowed.",
                     "id": "id",
                     "jwks": {
                       "keys": [
-                        {},
+                        {
+                          "key": "value",
+                        },
                       ],
                     },
                     "key": "key",
@@ -1574,9 +1576,7 @@ allowed.",
                     "organization_id": "organization_id",
                     "project_id": "project_id",
                     "settings": {
-                      "settings": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -1650,7 +1650,9 @@ allowed.",
                     "id": "id",
                     "jwks": {
                       "keys": [
-                        {},
+                        {
+                          "key": "value",
+                        },
                       ],
                     },
                     "key": "key",
@@ -1658,9 +1660,7 @@ allowed.",
                     "organization_id": "organization_id",
                     "project_id": "project_id",
                     "settings": {
-                      "settings": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -1734,7 +1734,9 @@ allowed.",
                     "id": "id",
                     "jwks": {
                       "keys": [
-                        {},
+                        {
+                          "key": "value",
+                        },
                       ],
                     },
                     "key": "key",
@@ -1742,9 +1744,7 @@ allowed.",
                     "organization_id": "organization_id",
                     "project_id": "project_id",
                     "settings": {
-                      "settings": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -1790,7 +1790,9 @@ allowed.",
                       "id": "id",
                       "jwks": {
                         "keys": [
-                          {},
+                          {
+                            "key": "value",
+                          },
                         ],
                       },
                       "key": "key",
@@ -1798,9 +1800,7 @@ allowed.",
                       "organization_id": "organization_id",
                       "project_id": "project_id",
                       "settings": {
-                        "settings": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -1856,7 +1856,9 @@ allowed.",
                     "id": "id",
                     "jwks": {
                       "keys": [
-                        {},
+                        {
+                          "key": "value",
+                        },
                       ],
                     },
                     "key": "key",
@@ -1874,9 +1876,7 @@ allowed.",
                     ],
                     "project_id": "project_id",
                     "settings": {
-                      "settings": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "stats": {
                       "has_decision_logs": true,
@@ -1897,7 +1897,9 @@ allowed.",
                           "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                           "identities": [
                             {
-                              "auth0_info": {},
+                              "auth0_info": {
+                                "key": "value",
+                              },
                               "email": "Jane@permituser.com",
                               "email_verified": true,
                               "provider": "google-oauth2",
@@ -1980,7 +1982,9 @@ allowed.",
                     "id": "id",
                     "jwks": {
                       "keys": [
-                        {},
+                        {
+                          "key": "value",
+                        },
                       ],
                     },
                     "key": "key",
@@ -1988,9 +1992,7 @@ allowed.",
                     "organization_id": "organization_id",
                     "project_id": "project_id",
                     "settings": {
-                      "settings": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -2106,9 +2108,7 @@ authenticated actor (i.e: human team member or api key).",
                     "key": "key",
                     "name": "name",
                     "settings": {
-                      "settings": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -2200,9 +2200,7 @@ if such org exists and can be accessed by the authenticated actor.",
                     "key": "key",
                     "name": "name",
                     "settings": {
-                      "settings": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -2238,9 +2236,7 @@ if such org exists and can be accessed by the authenticated actor.",
                     "key": "key",
                     "name": "name",
                     "settings": {
-                      "settings": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -2280,9 +2276,7 @@ authenticated actor (i.e: human team member or api key).",
                       "key": "key",
                       "name": "name",
                       "settings": {
-                        "settings": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -2332,9 +2326,7 @@ authenticated actor (i.e: human team member or api key).",
                     "key": "key",
                     "name": "name",
                     "settings": {
-                      "settings": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -2422,9 +2414,7 @@ Every project is a separate silo, and has its own unique set of environments and
                     "name": "name",
                     "organization_id": "organization_id",
                     "settings": {
-                      "settings": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "updated_at": "2024-01-15T09:30:00Z",
                     "urn_namespace": "urn_namespace",
@@ -2543,9 +2533,7 @@ Every project is a separate silo, and has its own unique set of environments and
                     "name": "name",
                     "organization_id": "organization_id",
                     "settings": {
-                      "settings": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "updated_at": "2024-01-15T09:30:00Z",
                     "urn_namespace": "urn_namespace",
@@ -2587,9 +2575,7 @@ Every project is a separate silo, and has its own unique set of environments and
                       "name": "name",
                       "organization_id": "organization_id",
                       "settings": {
-                        "settings": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "updated_at": "2024-01-15T09:30:00Z",
                       "urn_namespace": "urn_namespace",
@@ -2642,9 +2628,7 @@ Every project is a separate silo, and has its own unique set of environments and
                     "name": "name",
                     "organization_id": "organization_id",
                     "settings": {
-                      "settings": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "updated_at": "2024-01-15T09:30:00Z",
                     "urn_namespace": "urn_namespace",
@@ -2750,9 +2734,7 @@ to a role as one action.
                       "update",
                     ],
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "Writer Action Group",
@@ -2888,9 +2870,7 @@ This includes any permissions granted to perform the action.",
                       "update",
                     ],
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "Writer Action Group",
@@ -2954,9 +2934,7 @@ This includes any permissions granted to perform the action.",
                         "update",
                       ],
                       "attributes": {
-                        "attributes": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "created_at": "2019-08-24T14:15:22Z",
                       "description": "Writer Action Group",
@@ -3032,9 +3010,7 @@ Fields that will be provided will be completely overwritten.",
                       "update",
                     ],
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "Writer Action Group",
@@ -3142,9 +3118,7 @@ Each (resource, action) pair defines a unique permission level.
                 "response": {
                   "body": {
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "read a document",
@@ -3276,9 +3250,7 @@ This includes any permissions granted to perform the action.",
                 "response": {
                   "body": {
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "read a document",
@@ -3339,9 +3311,7 @@ This includes any permissions granted to perform the action.",
                   "body": [
                     {
                       "attributes": {
-                        "attributes": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "created_at": "2019-08-24T14:15:22Z",
                       "description": "read a document",
@@ -3416,9 +3386,7 @@ Fields that will be provided will be completely overwritten.",
                 "response": {
                   "body": {
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "read a document",
@@ -4222,9 +4190,7 @@ If some of the permissions specified are already assigned, will skip them.",
                 "response": {
                   "body": {
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the maintainer role can read from the repo and push changes",
@@ -4303,9 +4269,7 @@ If some of the permissions specified are already assigned, will skip them.",
                 "response": {
                   "body": {
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the maintainer role can read from the repo and push changes",
@@ -4454,9 +4418,7 @@ This includes any permissions granted to said role.",
                 "response": {
                   "body": {
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the maintainer role can read from the repo and push changes",
@@ -4523,6 +4485,9 @@ This includes any permissions granted to said role.",
                   "body": {
                     "roles": [
                       {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "created_at": "2019-08-24T14:15:22Z",
                         "description": "the maintainer role can read from the repo and push changes",
                         "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -4590,6 +4555,9 @@ This includes any permissions granted to said role.",
                   "body": {
                     "roles": [
                       {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "created_at": "2019-08-24T14:15:22Z",
                         "description": "the maintainer role can read from the repo and push changes",
                         "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -4656,9 +4624,7 @@ This includes any permissions granted to said role.",
                   "body": [
                     {
                       "attributes": {
-                        "attributes": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "created_at": "2019-08-24T14:15:22Z",
                       "description": "the maintainer role can read from the repo and push changes",
@@ -4741,9 +4707,7 @@ If some of the permissions specified are already unassigned, will skip them.",
                 "response": {
                   "body": {
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the maintainer role can read from the repo and push changes",
@@ -4819,9 +4783,7 @@ Fields that will be provided will be completely overwritten.",
                 "response": {
                   "body": {
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the maintainer role can read from the repo and push changes",
@@ -4968,24 +4930,33 @@ A resource may also contain:
                 "response": {
                   "body": {
                     "action_groups": {
-                      "action_groups": [
+                      "key": [
                         "action_groups",
                       ],
                     },
                     "actions": {
                       "clone": {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "description": "description",
                         "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
                         "key": "key",
                         "name": "name",
                       },
                       "push": {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "description": "description",
                         "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
                         "key": "key",
                         "name": "name",
                       },
                       "read": {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "description": "description",
                         "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
                         "key": "key",
@@ -5137,24 +5108,33 @@ A resource may also contain:
                 "response": {
                   "body": {
                     "action_groups": {
-                      "action_groups": [
+                      "key": [
                         "action_groups",
                       ],
                     },
                     "actions": {
                       "clone": {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "description": "description",
                         "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
                         "key": "key",
                         "name": "name",
                       },
                       "push": {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "description": "description",
                         "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
                         "key": "key",
                         "name": "name",
                       },
                       "read": {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "description": "description",
                         "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
                         "key": "key",
@@ -5229,7 +5209,7 @@ A resource may also contain:
                     "data": [
                       {
                         "action_groups": {
-                          "action_groups": [
+                          "key": [
                             "action_groups",
                           ],
                         },
@@ -5339,31 +5319,40 @@ TODO: we need to decide if we are auto-revoking, or if we are rejecting the PUT 
                 },
                 "request": {
                   "actions": {
-                    "actions": {},
+                    "key": {},
                   },
                   "name": "name",
                 },
                 "response": {
                   "body": {
                     "action_groups": {
-                      "action_groups": [
+                      "key": [
                         "action_groups",
                       ],
                     },
                     "actions": {
                       "clone": {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "description": "description",
                         "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
                         "key": "key",
                         "name": "name",
                       },
                       "push": {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "description": "description",
                         "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
                         "key": "key",
                         "name": "name",
                       },
                       "read": {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "description": "description",
                         "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
                         "key": "key",
@@ -5477,24 +5466,33 @@ Fields that will be provided will be completely overwritten.",
                 "response": {
                   "body": {
                     "action_groups": {
-                      "action_groups": [
+                      "key": [
                         "action_groups",
                       ],
                     },
                     "actions": {
                       "clone": {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "description": "description",
                         "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
                         "key": "key",
                         "name": "name",
                       },
                       "push": {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "description": "description",
                         "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
                         "key": "key",
                         "name": "name",
                       },
                       "read": {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "description": "description",
                         "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
                         "key": "key",
@@ -5940,9 +5938,7 @@ If some of the permissions specified are already assigned, will skip them.",
                 "response": {
                   "body": {
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the editor role can read and write to documents",
@@ -6015,9 +6011,7 @@ If some of the permissions specified are already assigned, will skip them.",
                 "response": {
                   "body": {
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the editor role can read and write to documents",
@@ -6155,9 +6149,7 @@ This includes any permissions granted to said role.",
                 "response": {
                   "body": {
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the editor role can read and write to documents",
@@ -6218,6 +6210,9 @@ This includes any permissions granted to said role.",
                   "body": {
                     "roles": [
                       {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "created_at": "2019-08-24T14:15:22Z",
                         "description": "the editor role can read and write to documents",
                         "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -6279,6 +6274,9 @@ This includes any permissions granted to said role.",
                   "body": {
                     "roles": [
                       {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "created_at": "2019-08-24T14:15:22Z",
                         "description": "the editor role can read and write to documents",
                         "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -6339,6 +6337,9 @@ This includes any permissions granted to said role.",
                   "body": {
                     "data": [
                       {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "created_at": "2019-08-24T14:15:22Z",
                         "description": "the editor role can read and write to documents",
                         "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -6425,9 +6426,7 @@ If some of the permissions specified are already unassigned, will skip them.",
                 "response": {
                   "body": {
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the editor role can read and write to documents",
@@ -6497,9 +6496,7 @@ Fields that will be provided will be completely overwritten.",
                 "response": {
                   "body": {
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the editor role can read and write to documents",
@@ -11827,7 +11824,7 @@ If we check the checkbox where \`us_based_employees\` and \`private_repos->clone
                     "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                     "resource": {
                       "action_groups": {
-                        "action_groups": [
+                        "key": [
                           "action_groups",
                         ],
                       },
@@ -12039,7 +12036,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                     "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                     "resource": {
                       "action_groups": {
-                        "action_groups": [
+                        "key": [
                           "action_groups",
                         ],
                       },
@@ -12152,7 +12149,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                       "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                       "resource": {
                         "action_groups": {
-                          "action_groups": [
+                          "key": [
                             "action_groups",
                           ],
                         },
@@ -12279,7 +12276,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                       "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                       "resource": {
                         "action_groups": {
-                          "action_groups": [
+                          "key": [
                             "action_groups",
                           ],
                         },
@@ -12558,7 +12555,7 @@ Fields that will be provided will be completely overwritten.",
                     "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                     "resource": {
                       "action_groups": {
-                        "action_groups": [
+                        "key": [
                           "action_groups",
                         ],
                       },
@@ -12734,7 +12731,9 @@ allowed.",
                     "id": "id",
                     "jwks": {
                       "keys": [
-                        {},
+                        {
+                          "key": "value",
+                        },
                       ],
                     },
                     "key": "key",
@@ -12742,9 +12741,7 @@ allowed.",
                     "organization_id": "organization_id",
                     "project_id": "project_id",
                     "settings": {
-                      "settings": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -12818,7 +12815,9 @@ allowed.",
                     "id": "id",
                     "jwks": {
                       "keys": [
-                        {},
+                        {
+                          "key": "value",
+                        },
                       ],
                     },
                     "key": "key",
@@ -12826,9 +12825,7 @@ allowed.",
                     "organization_id": "organization_id",
                     "project_id": "project_id",
                     "settings": {
-                      "settings": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -12902,7 +12899,9 @@ allowed.",
                     "id": "id",
                     "jwks": {
                       "keys": [
-                        {},
+                        {
+                          "key": "value",
+                        },
                       ],
                     },
                     "key": "key",
@@ -12910,9 +12909,7 @@ allowed.",
                     "organization_id": "organization_id",
                     "project_id": "project_id",
                     "settings": {
-                      "settings": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -12958,7 +12955,9 @@ allowed.",
                       "id": "id",
                       "jwks": {
                         "keys": [
-                          {},
+                          {
+                            "key": "value",
+                          },
                         ],
                       },
                       "key": "key",
@@ -12966,9 +12965,7 @@ allowed.",
                       "organization_id": "organization_id",
                       "project_id": "project_id",
                       "settings": {
-                        "settings": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -13024,7 +13021,9 @@ allowed.",
                     "id": "id",
                     "jwks": {
                       "keys": [
-                        {},
+                        {
+                          "key": "value",
+                        },
                       ],
                     },
                     "key": "key",
@@ -13042,9 +13041,7 @@ allowed.",
                     ],
                     "project_id": "project_id",
                     "settings": {
-                      "settings": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "stats": {
                       "has_decision_logs": true,
@@ -13065,7 +13062,9 @@ allowed.",
                           "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                           "identities": [
                             {
-                              "auth0_info": {},
+                              "auth0_info": {
+                                "key": "value",
+                              },
                               "email": "Jane@permituser.com",
                               "email_verified": true,
                               "provider": "google-oauth2",
@@ -13148,7 +13147,9 @@ allowed.",
                     "id": "id",
                     "jwks": {
                       "keys": [
-                        {},
+                        {
+                          "key": "value",
+                        },
                       ],
                     },
                     "key": "key",
@@ -13156,9 +13157,7 @@ allowed.",
                     "organization_id": "organization_id",
                     "project_id": "project_id",
                     "settings": {
-                      "settings": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -13274,9 +13273,7 @@ authenticated actor (i.e: human team member or api key).",
                     "key": "key",
                     "name": "name",
                     "settings": {
-                      "settings": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -13368,9 +13365,7 @@ if such org exists and can be accessed by the authenticated actor.",
                     "key": "key",
                     "name": "name",
                     "settings": {
-                      "settings": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -13406,9 +13401,7 @@ if such org exists and can be accessed by the authenticated actor.",
                     "key": "key",
                     "name": "name",
                     "settings": {
-                      "settings": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -13448,9 +13441,7 @@ authenticated actor (i.e: human team member or api key).",
                       "key": "key",
                       "name": "name",
                       "settings": {
-                        "settings": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -13500,9 +13491,7 @@ authenticated actor (i.e: human team member or api key).",
                     "key": "key",
                     "name": "name",
                     "settings": {
-                      "settings": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -13590,9 +13579,7 @@ Every project is a separate silo, and has its own unique set of environments and
                     "name": "name",
                     "organization_id": "organization_id",
                     "settings": {
-                      "settings": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "updated_at": "2024-01-15T09:30:00Z",
                     "urn_namespace": "urn_namespace",
@@ -13711,9 +13698,7 @@ Every project is a separate silo, and has its own unique set of environments and
                     "name": "name",
                     "organization_id": "organization_id",
                     "settings": {
-                      "settings": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "updated_at": "2024-01-15T09:30:00Z",
                     "urn_namespace": "urn_namespace",
@@ -13755,9 +13740,7 @@ Every project is a separate silo, and has its own unique set of environments and
                       "name": "name",
                       "organization_id": "organization_id",
                       "settings": {
-                        "settings": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "updated_at": "2024-01-15T09:30:00Z",
                       "urn_namespace": "urn_namespace",
@@ -13810,9 +13793,7 @@ Every project is a separate silo, and has its own unique set of environments and
                     "name": "name",
                     "organization_id": "organization_id",
                     "settings": {
-                      "settings": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "updated_at": "2024-01-15T09:30:00Z",
                     "urn_namespace": "urn_namespace",
@@ -13918,9 +13899,7 @@ to a role as one action.
                       "update",
                     ],
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "Writer Action Group",
@@ -14056,9 +14035,7 @@ This includes any permissions granted to perform the action.",
                       "update",
                     ],
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "Writer Action Group",
@@ -14122,9 +14099,7 @@ This includes any permissions granted to perform the action.",
                         "update",
                       ],
                       "attributes": {
-                        "attributes": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "created_at": "2019-08-24T14:15:22Z",
                       "description": "Writer Action Group",
@@ -14200,9 +14175,7 @@ Fields that will be provided will be completely overwritten.",
                       "update",
                     ],
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "Writer Action Group",
@@ -14310,9 +14283,7 @@ Each (resource, action) pair defines a unique permission level.
                 "response": {
                   "body": {
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "read a document",
@@ -14444,9 +14415,7 @@ This includes any permissions granted to perform the action.",
                 "response": {
                   "body": {
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "read a document",
@@ -14507,9 +14476,7 @@ This includes any permissions granted to perform the action.",
                   "body": [
                     {
                       "attributes": {
-                        "attributes": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "created_at": "2019-08-24T14:15:22Z",
                       "description": "read a document",
@@ -14584,9 +14551,7 @@ Fields that will be provided will be completely overwritten.",
                 "response": {
                   "body": {
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "read a document",
@@ -15390,9 +15355,7 @@ If some of the permissions specified are already assigned, will skip them.",
                 "response": {
                   "body": {
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the maintainer role can read from the repo and push changes",
@@ -15471,9 +15434,7 @@ If some of the permissions specified are already assigned, will skip them.",
                 "response": {
                   "body": {
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the maintainer role can read from the repo and push changes",
@@ -15622,9 +15583,7 @@ This includes any permissions granted to said role.",
                 "response": {
                   "body": {
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the maintainer role can read from the repo and push changes",
@@ -15691,6 +15650,9 @@ This includes any permissions granted to said role.",
                   "body": {
                     "roles": [
                       {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "created_at": "2019-08-24T14:15:22Z",
                         "description": "the maintainer role can read from the repo and push changes",
                         "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -15758,6 +15720,9 @@ This includes any permissions granted to said role.",
                   "body": {
                     "roles": [
                       {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "created_at": "2019-08-24T14:15:22Z",
                         "description": "the maintainer role can read from the repo and push changes",
                         "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -15824,9 +15789,7 @@ This includes any permissions granted to said role.",
                   "body": [
                     {
                       "attributes": {
-                        "attributes": {
-                          "key": "value",
-                        },
+                        "key": "value",
                       },
                       "created_at": "2019-08-24T14:15:22Z",
                       "description": "the maintainer role can read from the repo and push changes",
@@ -15909,9 +15872,7 @@ If some of the permissions specified are already unassigned, will skip them.",
                 "response": {
                   "body": {
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the maintainer role can read from the repo and push changes",
@@ -15987,9 +15948,7 @@ Fields that will be provided will be completely overwritten.",
                 "response": {
                   "body": {
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the maintainer role can read from the repo and push changes",
@@ -16136,24 +16095,33 @@ A resource may also contain:
                 "response": {
                   "body": {
                     "action_groups": {
-                      "action_groups": [
+                      "key": [
                         "action_groups",
                       ],
                     },
                     "actions": {
                       "clone": {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "description": "description",
                         "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
                         "key": "key",
                         "name": "name",
                       },
                       "push": {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "description": "description",
                         "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
                         "key": "key",
                         "name": "name",
                       },
                       "read": {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "description": "description",
                         "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
                         "key": "key",
@@ -16305,24 +16273,33 @@ A resource may also contain:
                 "response": {
                   "body": {
                     "action_groups": {
-                      "action_groups": [
+                      "key": [
                         "action_groups",
                       ],
                     },
                     "actions": {
                       "clone": {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "description": "description",
                         "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
                         "key": "key",
                         "name": "name",
                       },
                       "push": {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "description": "description",
                         "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
                         "key": "key",
                         "name": "name",
                       },
                       "read": {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "description": "description",
                         "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
                         "key": "key",
@@ -16397,7 +16374,7 @@ A resource may also contain:
                     "data": [
                       {
                         "action_groups": {
-                          "action_groups": [
+                          "key": [
                             "action_groups",
                           ],
                         },
@@ -16507,31 +16484,40 @@ TODO: we need to decide if we are auto-revoking, or if we are rejecting the PUT 
                 },
                 "request": {
                   "actions": {
-                    "actions": {},
+                    "key": {},
                   },
                   "name": "name",
                 },
                 "response": {
                   "body": {
                     "action_groups": {
-                      "action_groups": [
+                      "key": [
                         "action_groups",
                       ],
                     },
                     "actions": {
                       "clone": {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "description": "description",
                         "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
                         "key": "key",
                         "name": "name",
                       },
                       "push": {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "description": "description",
                         "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
                         "key": "key",
                         "name": "name",
                       },
                       "read": {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "description": "description",
                         "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
                         "key": "key",
@@ -16645,24 +16631,33 @@ Fields that will be provided will be completely overwritten.",
                 "response": {
                   "body": {
                     "action_groups": {
-                      "action_groups": [
+                      "key": [
                         "action_groups",
                       ],
                     },
                     "actions": {
                       "clone": {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "description": "description",
                         "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
                         "key": "key",
                         "name": "name",
                       },
                       "push": {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "description": "description",
                         "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
                         "key": "key",
                         "name": "name",
                       },
                       "read": {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "description": "description",
                         "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
                         "key": "key",
@@ -17108,9 +17103,7 @@ If some of the permissions specified are already assigned, will skip them.",
                 "response": {
                   "body": {
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the editor role can read and write to documents",
@@ -17183,9 +17176,7 @@ If some of the permissions specified are already assigned, will skip them.",
                 "response": {
                   "body": {
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the editor role can read and write to documents",
@@ -17323,9 +17314,7 @@ This includes any permissions granted to said role.",
                 "response": {
                   "body": {
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the editor role can read and write to documents",
@@ -17386,6 +17375,9 @@ This includes any permissions granted to said role.",
                   "body": {
                     "roles": [
                       {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "created_at": "2019-08-24T14:15:22Z",
                         "description": "the editor role can read and write to documents",
                         "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -17447,6 +17439,9 @@ This includes any permissions granted to said role.",
                   "body": {
                     "roles": [
                       {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "created_at": "2019-08-24T14:15:22Z",
                         "description": "the editor role can read and write to documents",
                         "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -17507,6 +17502,9 @@ This includes any permissions granted to said role.",
                   "body": {
                     "data": [
                       {
+                        "attributes": {
+                          "key": "value",
+                        },
                         "created_at": "2019-08-24T14:15:22Z",
                         "description": "the editor role can read and write to documents",
                         "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -17593,9 +17591,7 @@ If some of the permissions specified are already unassigned, will skip them.",
                 "response": {
                   "body": {
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the editor role can read and write to documents",
@@ -17665,9 +17661,7 @@ Fields that will be provided will be completely overwritten.",
                 "response": {
                   "body": {
                     "attributes": {
-                      "attributes": {
-                        "key": "value",
-                      },
+                      "key": "value",
                     },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the editor role can read and write to documents",
