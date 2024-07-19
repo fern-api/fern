@@ -329,6 +329,7 @@ export function buildEnumTypeDeclaration(schema: EnumSchema): ConvertedTypeDecla
             ) {
                 return name;
             }
+
             const enumValueDeclaration: RawSchemas.EnumValueSchema = {
                 value: enumValue.value
             };
