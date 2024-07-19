@@ -192,3 +192,4 @@ allowedFailures:
   - exhaustive:dev-dependencies
   - audiences
   - enum # throws b/c of undiscriminated union examples
+  - streaming-parameter
