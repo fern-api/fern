@@ -36,7 +36,7 @@ exports[`examples enum-casing parse open api 1`] = `
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "custom_fields",
+                        "value": "value",
                       },
                     },
                   },

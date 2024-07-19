@@ -123,7 +123,7 @@ exports[`generate IR from OpenAPI 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "437d963ed274f2664e8243e4c41baeec900dc79b",
+                "id": "0edd746d92598770fa1ea83360bdb11526fc6701",
                 "name": null,
                 "queryParameters": [],
                 "request": null,
@@ -134,7 +134,7 @@ exports[`generate IR from OpenAPI 1`] = `
                     "value": {
                       "jsonExample": {
                         "custom_fields": {
-                          "key": "custom_fields",
+                          "key": "value",
                         },
                         "message": "message",
                         "status": "success",
@@ -423,13 +423,13 @@ exports[`generate IR from OpenAPI 1`] = `
                               },
                               "value": {
                                 "jsonExample": {
-                                  "key": "custom_fields",
+                                  "key": "value",
                                 },
                                 "shape": {
                                   "container": {
                                     "optional": {
                                       "jsonExample": {
-                                        "key": "custom_fields",
+                                        "key": "value",
                                       },
                                       "shape": {
                                         "container": {
@@ -459,11 +459,11 @@ exports[`generate IR from OpenAPI 1`] = `
                                                 },
                                               },
                                               "value": {
-                                                "jsonExample": "custom_fields",
+                                                "jsonExample": "value",
                                                 "shape": {
                                                   "primitive": {
                                                     "string": {
-                                                      "original": "custom_fields",
+                                                      "original": "value",
                                                     },
                                                     "type": "string",
                                                   },
@@ -661,7 +661,7 @@ exports[`generate IR from OpenAPI 1`] = `
                     "value": {
                       "jsonExample": {
                         "custom_fields": {
-                          "key": "custom_fields",
+                          "key": "value",
                         },
                         "message": "message",
                         "status": "success",
@@ -950,13 +950,13 @@ exports[`generate IR from OpenAPI 1`] = `
                               },
                               "value": {
                                 "jsonExample": {
-                                  "key": "custom_fields",
+                                  "key": "value",
                                 },
                                 "shape": {
                                   "container": {
                                     "optional": {
                                       "jsonExample": {
-                                        "key": "custom_fields",
+                                        "key": "value",
                                       },
                                       "shape": {
                                         "container": {
@@ -986,11 +986,11 @@ exports[`generate IR from OpenAPI 1`] = `
                                                 },
                                               },
                                               "value": {
-                                                "jsonExample": "custom_fields",
+                                                "jsonExample": "value",
                                                 "shape": {
                                                   "primitive": {
                                                     "string": {
-                                                      "original": "custom_fields",
+                                                      "original": "value",
                                                     },
                                                     "type": "string",
                                                   },

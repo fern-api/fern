@@ -3466,7 +3466,7 @@ exports[`open api parser suger docs 1`] = `
                     "id": "id",
                     "info": {
                       "attributes": {
-                        "key": "attributes",
+                        "key": "value",
                       },
                       "awsSaasProduct": {
                         "Dimensions": [
@@ -3627,7 +3627,7 @@ exports[`open api parser suger docs 1`] = `
                       "id": "id",
                       "info": {
                         "attributes": {
-                          "key": "attributes",
+                          "key": "value",
                         },
                         "awsSnsSubscriptions": [
                           {},
@@ -3693,7 +3693,7 @@ exports[`open api parser suger docs 1`] = `
                       "id": "id",
                       "info": {
                         "attributes": {
-                          "key": "attributes",
+                          "key": "value",
                         },
                         "awsSnsSubscriptions": [
                           {},
@@ -3767,7 +3767,7 @@ exports[`open api parser suger docs 1`] = `
                     "id": "id",
                     "info": {
                       "attributes": {
-                        "key": "attributes",
+                        "key": "value",
                       },
                       "awsSaasProduct": {
                         "Dimensions": [
@@ -11810,7 +11810,7 @@ exports[`open api parser suger simple 1`] = `
                     "id": "id",
                     "info": {
                       "attributes": {
-                        "key": "attributes",
+                        "key": "value",
                       },
                       "awsSaasProduct": {
                         "Dimensions": [
@@ -11971,7 +11971,7 @@ exports[`open api parser suger simple 1`] = `
                       "id": "id",
                       "info": {
                         "attributes": {
-                          "key": "attributes",
+                          "key": "value",
                         },
                         "awsSnsSubscriptions": [
                           {},
@@ -12037,7 +12037,7 @@ exports[`open api parser suger simple 1`] = `
                       "id": "id",
                       "info": {
                         "attributes": {
-                          "key": "attributes",
+                          "key": "value",
                         },
                         "awsSnsSubscriptions": [
                           {},
@@ -12111,7 +12111,7 @@ exports[`open api parser suger simple 1`] = `
                     "id": "id",
                     "info": {
                       "attributes": {
-                        "key": "attributes",
+                        "key": "value",
                       },
                       "awsSaasProduct": {
                         "Dimensions": [

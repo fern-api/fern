@@ -376,7 +376,6 @@ export class ExampleTypeFactory {
                     schema: schema.value,
                     visitedSchemaIds,
                     depth: depth + 1,
-                    options,
                     options: {
                         ...options,
                         // override the name to be "value" for map value otherwise you can start to get key name

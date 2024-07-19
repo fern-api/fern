@@ -46463,7 +46463,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "env",
+                        "value": "value",
                       },
                     },
                   },
@@ -46772,7 +46772,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "env",
+                        "value": "value",
                       },
                     },
                   },
@@ -47060,7 +47060,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "env",
+                        "value": "value",
                       },
                     },
                   },
@@ -47267,7 +47267,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "primitive",
                       "value": {
                         "type": "string",
-                        "value": "env",
+                        "value": "value",
                       },
                     },
                   },

@@ -660,7 +660,7 @@ If we check the checkbox where \`us_based_employees\` and \`private_repos->clone
                     "resource": {
                       "action_groups": {
                         "key": [
-                          "action_groups",
+                          "value",
                         ],
                       },
                       "actions": {
@@ -872,7 +872,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                     "resource": {
                       "action_groups": {
                         "key": [
-                          "action_groups",
+                          "value",
                         ],
                       },
                       "actions": {
@@ -985,7 +985,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                       "resource": {
                         "action_groups": {
                           "key": [
-                            "action_groups",
+                            "value",
                           ],
                         },
                         "actions": {
@@ -1112,7 +1112,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                       "resource": {
                         "action_groups": {
                           "key": [
-                            "action_groups",
+                            "value",
                           ],
                         },
                         "actions": {
@@ -1391,7 +1391,7 @@ Fields that will be provided will be completely overwritten.",
                     "resource": {
                       "action_groups": {
                         "key": [
-                          "action_groups",
+                          "value",
                         ],
                       },
                       "actions": {
@@ -4931,7 +4931,7 @@ A resource may also contain:
                   "body": {
                     "action_groups": {
                       "key": [
-                        "action_groups",
+                        "value",
                       ],
                     },
                     "actions": {
@@ -5109,7 +5109,7 @@ A resource may also contain:
                   "body": {
                     "action_groups": {
                       "key": [
-                        "action_groups",
+                        "value",
                       ],
                     },
                     "actions": {
@@ -5210,7 +5210,7 @@ A resource may also contain:
                       {
                         "action_groups": {
                           "key": [
-                            "action_groups",
+                            "value",
                           ],
                         },
                         "actions": {
@@ -5327,7 +5327,7 @@ TODO: we need to decide if we are auto-revoking, or if we are rejecting the PUT 
                   "body": {
                     "action_groups": {
                       "key": [
-                        "action_groups",
+                        "value",
                       ],
                     },
                     "actions": {
@@ -5467,7 +5467,7 @@ Fields that will be provided will be completely overwritten.",
                   "body": {
                     "action_groups": {
                       "key": [
-                        "action_groups",
+                        "value",
                       ],
                     },
                     "actions": {
@@ -11825,7 +11825,7 @@ If we check the checkbox where \`us_based_employees\` and \`private_repos->clone
                     "resource": {
                       "action_groups": {
                         "key": [
-                          "action_groups",
+                          "value",
                         ],
                       },
                       "actions": {
@@ -12037,7 +12037,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                     "resource": {
                       "action_groups": {
                         "key": [
-                          "action_groups",
+                          "value",
                         ],
                       },
                       "actions": {
@@ -12150,7 +12150,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                       "resource": {
                         "action_groups": {
                           "key": [
-                            "action_groups",
+                            "value",
                           ],
                         },
                         "actions": {
@@ -12277,7 +12277,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                       "resource": {
                         "action_groups": {
                           "key": [
-                            "action_groups",
+                            "value",
                           ],
                         },
                         "actions": {
@@ -12556,7 +12556,7 @@ Fields that will be provided will be completely overwritten.",
                     "resource": {
                       "action_groups": {
                         "key": [
-                          "action_groups",
+                          "value",
                         ],
                       },
                       "actions": {
@@ -16096,7 +16096,7 @@ A resource may also contain:
                   "body": {
                     "action_groups": {
                       "key": [
-                        "action_groups",
+                        "value",
                       ],
                     },
                     "actions": {
@@ -16274,7 +16274,7 @@ A resource may also contain:
                   "body": {
                     "action_groups": {
                       "key": [
-                        "action_groups",
+                        "value",
                       ],
                     },
                     "actions": {
@@ -16375,7 +16375,7 @@ A resource may also contain:
                       {
                         "action_groups": {
                           "key": [
-                            "action_groups",
+                            "value",
                           ],
                         },
                         "actions": {
@@ -16492,7 +16492,7 @@ TODO: we need to decide if we are auto-revoking, or if we are rejecting the PUT 
                   "body": {
                     "action_groups": {
                       "key": [
-                        "action_groups",
+                        "value",
                       ],
                     },
                     "actions": {
@@ -16632,7 +16632,7 @@ Fields that will be provided will be completely overwritten.",
                   "body": {
                     "action_groups": {
                       "key": [
-                        "action_groups",
+                        "value",
                       ],
                     },
                     "actions": {

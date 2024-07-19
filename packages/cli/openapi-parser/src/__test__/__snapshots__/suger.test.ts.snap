@@ -11327,7 +11327,7 @@ exports[`open api parser suger parse open api 1`] = `
                               "type": "primitive",
                               "value": {
                                 "type": "string",
-                                "value": "attributes",
+                                "value": "value",
                               },
                             },
                           },
@@ -12582,7 +12582,7 @@ exports[`open api parser suger parse open api 1`] = `
                               "type": "primitive",
                               "value": {
                                 "type": "string",
-                                "value": "attributes",
+                                "value": "value",
                               },
                             },
                           },
@@ -12863,7 +12863,7 @@ exports[`open api parser suger parse open api 1`] = `
                           "type": "primitive",
                           "value": {
                             "type": "string",
-                            "value": "attributes",
+                            "value": "value",
                           },
                         },
                       },
@@ -13500,7 +13500,7 @@ exports[`open api parser suger parse open api 1`] = `
                           "type": "primitive",
                           "value": {
                             "type": "string",
-                            "value": "attributes",
+                            "value": "value",
                           },
                         },
                       },
