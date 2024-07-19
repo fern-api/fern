@@ -14,18 +14,20 @@ export interface FilteredIr {
     hasWebhook(webhook: Webhook): boolean;
     hasWebhookPayloadProperty(webhookId: string, property: string): boolean;
     hasRequestProperty(endpoint: string, property: string): boolean;
+    hasQueryParameter(endpoint: string, parameter: string): boolean;
     hasSubpackageId(subpackageId: string): boolean;
 }
 
 export class FilteredIrImpl implements FilteredIr {
     private types: Set<TypeId> = new Set();
-    private properties: Record<TypeId, Set<string>>;
+    private properties: Record<TypeId, Set<string> | undefined>;
     private errors: Set<ErrorId> = new Set();
     private services: Set<ServiceId> = new Set();
     private endpoints: Set<EndpointId> = new Set();
-    private requestProperties: Record<EndpointId, Set<string>>;
+    private requestProperties: Record<EndpointId, Set<string> | undefined>;
+    private queryParameters: Record<EndpointId, Set<string> | undefined>;
     private webhooks: Set<WebhookId> = new Set();
-    private webhookPayloadProperties: Record<WebhookId, Set<string>>;
+    private webhookPayloadProperties: Record<WebhookId, Set<string> | undefined>;
     private subpackages: Set<SubpackageId> = new Set();
 
     public constructor({
@@ -35,18 +37,20 @@ export class FilteredIrImpl implements FilteredIr {
         endpoints,
         webhooks,
         subpackages,
+        queryParameters,
         requestProperties,
         webhookPayloadProperties,
         properties
     }: {
         types: Set<TypeId>;
-        properties: Record<TypeId, Set<string>>;
+        properties: Record<TypeId, Set<string> | undefined>;
         errors: Set<ErrorId>;
         services: Set<ServiceId>;
-        requestProperties: Record<EndpointId, Set<string>>;
+        queryParameters: Record<EndpointId, Set<string> | undefined>;
+        requestProperties: Record<EndpointId, Set<string> | undefined>;
         endpoints: Set<EndpointId>;
         webhooks: Set<WebhookId>;
-        webhookPayloadProperties: Record<WebhookId, Set<string>>;
+        webhookPayloadProperties: Record<WebhookId, Set<string> | undefined>;
         subpackages: Set<SubpackageId>;
     }) {
         this.types = types;
@@ -58,6 +62,7 @@ export class FilteredIrImpl implements FilteredIr {
         this.webhookPayloadProperties = webhookPayloadProperties;
         this.subpackages = subpackages;
         this.requestProperties = requestProperties;
+        this.queryParameters = queryParameters;
     }
 
     public hasTypeId(typeId: string): boolean {
@@ -83,8 +88,8 @@ export class FilteredIrImpl implements FilteredIr {
 
     public hasProperty(typeId: string, property: string): boolean {
         const properties = this.properties[typeId];
-        // no properties were filtered for type
         if (properties == null) {
+            // No audiences were configured.
             return true;
         }
         return properties.has(property);
@@ -106,11 +111,20 @@ export class FilteredIrImpl implements FilteredIr {
 
     public hasRequestProperty(endpoint: string, property: string): boolean {
         const properties = this.requestProperties[endpoint];
-        // no properties were filtered for inlined request
         if (properties == null) {
+            // No audiences were configured.
             return true;
         }
         return properties.has(property);
+    }
+
+    public hasQueryParameter(endpoint: string, parameter: string): boolean {
+        const parameters = this.queryParameters[endpoint];
+        if (parameters == null) {
+            // No audiences were configured.
+            return true;
+        }
+        return parameters.has(parameter);
     }
 
     public hasSubpackage(subpackageId: string): boolean {
@@ -126,8 +140,8 @@ export class FilteredIrImpl implements FilteredIr {
 
     public hasWebhookPayloadProperty(webhookId: string, property: string): boolean {
         const properties = this.webhookPayloadProperties[webhookId];
-        // no properties were filtered for inlined request
         if (properties == null) {
+            // No audiences were configured.
             return true;
         }
         return properties.has(property);
