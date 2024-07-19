@@ -28,6 +28,18 @@ export interface InlinedRequestPropertiesNode {
     propertiesByAudience: Record<AudienceId, Set<string>>;
 }
 
+export interface InlinedRequestQueryParametersNode {
+    endpointId: EndpointId;
+    /* If audience not present, keep all properties */
+    parametersByAudience: Record<AudienceId, Set<string>>;
+}
+
+export interface InlinedRequestHeadersNode {
+    endpointId: EndpointId;
+    /* If audience not present, keep all properties */
+    parametersByAudience: Record<AudienceId, Set<string>>;
+}
+
 export interface InlinedWebhookPayloadProperiesNode {
     webhookId: WebhookId;
     /* If audience not present, keep all properties */
