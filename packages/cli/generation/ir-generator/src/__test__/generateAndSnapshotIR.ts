@@ -28,7 +28,7 @@ export async function generateAndSnapshotIRFromPath({
     if (!workspace.didSucceed) {
         throw new Error(`Failed to load workspace: ${JSON.stringify(workspace.failures)}`);
     }
-    generateAndSnapshotIR({ workspace: workspace.workspace, workspaceName, audiences, absolutePathToIr });
+    await generateAndSnapshotIR({ workspace: workspace.workspace, workspaceName, audiences, absolutePathToIr });
 }
 
 export async function generateAndSnapshotIR({
