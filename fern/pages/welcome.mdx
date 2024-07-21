@@ -5,38 +5,40 @@ slug: home
 layout: overview
 ---
 
+APIs underpin the internet but are still painful to work with. They are often untyped, unstandardized, and out-of-sync across multiple sources of truth.
+
+Fern is a developer tool designed to generate SDKs, documentation, and servers from an API definition. Build with Fern to offer easy-to-use and well-documented APIs.
+
 ## Products
 
 <Cards cols={3}>
   <Card
-    title="API First Development"
-    icon="fa-solid fa-pen"
-    href="/learn/api-definition/introduction/what-is-an-api-definition"
+    title="SDKs"
+    icon="fa-regular fa-code"
+    href="/learn/sdks/introduction/overview"
   >
-    Start with an API Definition
+    Idiomatic client libraries
   </Card>
   <Card
     title="Docs"
-    icon="fa-solid fa-browser"
+    icon="fa-regular fa-browser"
     href="/learn/docs/getting-started/quickstart"
   >
     A beautiful documentation website
   </Card>
   <Card
-    title="SDKs"
-    icon="fa-brands fa-codepen"
-    href="/learn/sdks/introduction/overview"
+    title="Servers"
+    icon="fa-regular fa-server"
+    href="/learn/servers/introduction/overview"
   >
-    Idiomatic client libraries
+    Generate server-side code
   </Card>
 </Cards>
 
 ## Motivation
 
 <div className="motivation">
-  Stripe, Twilio, and AWS have the resources to invest in internal tooling for developer 
-  experience. They provide client libraries in multiple languages and developer documentation
-  that stays up-to-date. 
+  Stripe, Twilio, and AWS have the resources to invest in internal tooling for developer experience. They provide client libraries in multiple languages and developer documentation that stays up-to-date. 
 
   We are building Fern to productize this process and make it accessible to all
   software companies.
@@ -52,6 +54,12 @@ layout: overview
 </Button>
 </ButtonGroup>
 
+## Go API First
 
+Fern allows developers to design their API before building their app. This approach is known as `API First Development` and allows teams to iterate on their API design before writing any code. Use Fern to generate server code, SDKs, and documentation from your API definition.
 
+<Tip>If you're starting from scratch, we recommend you start with the Fern Definition. Think of it as _OpenAPI simple_.</Tip>
 
+Fern supports the following inputs
+- [OpenAPI (formerly Swagger)](./api-definition/openapi/openapi-overview.mdx)
+- [Fern Definition](./api-definition/fern-definition/ferndef-overview.mdx)
