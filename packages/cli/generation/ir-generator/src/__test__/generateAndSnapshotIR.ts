@@ -2,11 +2,11 @@ import { Audiences } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { loadAPIWorkspace } from "@fern-api/workspace-loader";
+import { APIWorkspace, loadAPIWorkspace } from "@fern-api/workspace-loader";
 import { writeFile } from "fs/promises";
 import { generateIntermediateRepresentation } from "../generateIntermediateRepresentation";
 
-export async function generateAndSnapshotIR({
+export async function generateAndSnapshotIRFromPath({
     absolutePathToWorkspace,
     workspaceName,
     audiences,
@@ -28,8 +28,22 @@ export async function generateAndSnapshotIR({
     if (!workspace.didSucceed) {
         throw new Error(`Failed to load workspace: ${JSON.stringify(workspace.failures)}`);
     }
+    generateAndSnapshotIR({ workspace: workspace.workspace, workspaceName, audiences, absolutePathToIr });
+}
 
-    const fernWorkspace = await workspace.workspace.toFernWorkspace({
+export async function generateAndSnapshotIR({
+    workspace,
+    workspaceName,
+    audiences,
+    absolutePathToIr
+}: {
+    workspace: APIWorkspace;
+    workspaceName: string;
+    absolutePathToIr: AbsoluteFilePath;
+    audiences: Audiences;
+}): Promise<void> {
+    const context = createMockTaskContext();
+    const fernWorkspace = await workspace.toFernWorkspace({
         context
     });
 
