@@ -3,6 +3,7 @@ import { FernOpenapiIr, ResponseWithExample } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../../getExtension";
 import { convertSchema } from "../../../../schema/convertSchemas";
+import { ExampleTypeFactory } from "../../../../schema/examples/ExampleTypeFactory";
 import { convertSchemaWithExampleToSchema } from "../../../../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
@@ -140,17 +141,19 @@ function convertResolvedResponse({
                     return ResponseWithExample.streamingJson({
                         description: resolvedResponse.description,
                         responseProperty: undefined,
-                        schema: convertSchemaWithExampleToSchema(
-                            convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs)
-                        )
+                        schema: convertSchemaWithExampleToSchema({
+                            schema: convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs),
+                            exampleTypeFactory: new ExampleTypeFactory({})
+                        })
                     });
                 case "sse":
                     return ResponseWithExample.streamingSse({
                         description: resolvedResponse.description,
                         responseProperty: undefined,
-                        schema: convertSchemaWithExampleToSchema(
-                            convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs)
-                        )
+                        schema: convertSchemaWithExampleToSchema({
+                            schema: convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs),
+                            exampleTypeFactory: new ExampleTypeFactory({})
+                        })
                     });
             }
         }

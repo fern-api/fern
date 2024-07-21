@@ -8,6 +8,11 @@ export interface OpenApiIrConverterContextOpts {
     ir: OpenApiIntermediateRepresentation;
 
     /**
+     * If true, the converter will generate examples for each schema.
+     */
+    generateSchemaExamples: boolean;
+
+    /**
      * If true, each error will be made unique per endpoint. This is the preferred behavior for Docs.
      * If false, error codes will be shared across endpoints. The side effect is that if more than one error schema is detected for each error code, then the error schema will default to unknown. This is the preferred behavior for SDKs.
      */
@@ -26,19 +31,23 @@ export class OpenApiIrConverterContext {
     public ir: OpenApiIntermediateRepresentation;
     public builder: FernDefinitionBuilder;
     public detectGlobalHeaders: boolean;
+    public generateSchemaExamples: boolean;
+
     private defaultServerName: string | undefined = undefined;
 
     constructor({
         taskContext,
         ir,
         enableUniqueErrorsPerEndpoint,
-        detectGlobalHeaders
+        detectGlobalHeaders,
+        generateSchemaExamples,
     }: OpenApiIrConverterContextOpts) {
         this.logger = taskContext.logger;
         this.taskContext = taskContext;
         this.ir = ir;
         this.builder = new FernDefinitionBuilderImpl(ir, false, enableUniqueErrorsPerEndpoint);
         this.detectGlobalHeaders = detectGlobalHeaders;
+        this.generateSchemaExamples = generateSchemaExamples;
     }
 
     public getSchema(id: SchemaId): Schema | undefined {

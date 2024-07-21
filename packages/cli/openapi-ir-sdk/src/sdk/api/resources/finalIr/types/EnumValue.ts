@@ -12,4 +12,5 @@ export interface EnumValue extends FernOpenapiIr.WithDescription, FernOpenapiIr.
     /** Value of the enum */
     value: string;
     casing: FernOpenapiIr.CasingOverrides | undefined;
+    examples: FernOpenapiIr.FullExample[] | undefined;
 }

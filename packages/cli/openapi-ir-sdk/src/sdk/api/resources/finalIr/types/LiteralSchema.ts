@@ -10,4 +10,5 @@ export interface LiteralSchema
         FernOpenapiIr.WithSdkGroupName,
         FernOpenapiIr.WithAvailability {
     value: FernOpenapiIr.LiteralSchemaValue;
+    examples: FernOpenapiIr.FullExample[] | undefined;
 }

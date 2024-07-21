@@ -10,9 +10,10 @@ import { OpenAPIV3 } from "openapi-types";
 import { convertEnum } from "./convertEnum";
 import { convertReferenceObject, convertSchema } from "./convertSchemas";
 import { SchemaParserContext } from "./SchemaParserContext";
+import { convertSchemaWithExampleToSchema } from "./utils/convertSchemaWithExampleToSchema";
 import { getGeneratedTypeName } from "./utils/getSchemaName";
 import { isReferenceObject } from "./utils/isReferenceObject";
-import { isSchemaEqual } from "./utils/isSchemaEqual";
+import { isSchemaEqual, isSchemaWithExampleEqual } from "./utils/isSchemaEqual";
 import { convertNumberToSnakeCase } from "./utils/replaceStartingNumber";
 
 export function convertUndiscriminatedOneOf({
@@ -47,7 +48,8 @@ export function convertUndiscriminatedOneOf({
                     value: LiteralSchemaValue.string(enumValue),
                     groupName: undefined,
                     description: undefined,
-                    availability: enumValue.availability
+                    availability: enumValue.availability,
+                    examples: []
                 });
             });
         }
@@ -60,7 +62,7 @@ export function convertUndiscriminatedOneOf({
         let isDuplicate = false;
         for (let j = i + 1; j < convertedSubtypes.length; ++j) {
             const b = convertedSubtypes[j];
-            if (a != null && b != null && isSchemaEqual(a, b)) {
+            if (a != null && b != null && isSchemaWithExampleEqual(a, b)) {
                 isDuplicate = true;
                 break;
             }
@@ -150,7 +152,8 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
                     value: LiteralSchemaValue.string(discriminantValue),
                     groupName: undefined,
                     description: undefined,
-                    availability: undefined
+                    availability: undefined,
+                    examples: []
                 }),
                 ...subtypeReference.properties.filter((objectProperty) => {
                     return objectProperty.key !== discriminator.propertyName;
@@ -167,7 +170,14 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
         let isDuplicate = false;
         for (let j = i + 1; j < convertedSubtypes.length; ++j) {
             const b = convertedSubtypes[j];
-            if (a != null && b != null && isSchemaEqual(a, b)) {
+            if (
+                a != null &&
+                b != null &&
+                isSchemaEqual(
+                    convertSchemaWithExampleToSchema({ schema: a }),
+                    convertSchemaWithExampleToSchema({ schema: b })
+                )
+            ) {
                 isDuplicate = true;
                 break;
             }

@@ -10,4 +10,5 @@ export interface ArraySchema
         FernOpenapiIr.WithSdkGroupName,
         FernOpenapiIr.WithAvailability {
     value: FernOpenapiIr.Schema;
+    examples: FernOpenapiIr.FullExample[] | undefined;
 }

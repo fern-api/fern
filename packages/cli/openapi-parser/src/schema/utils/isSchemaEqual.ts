@@ -11,7 +11,10 @@ import { convertSchemaWithExampleToSchema } from "./convertSchemaWithExampleToSc
 
 // only diffs the schema, not the example
 export function isSchemaWithExampleEqual(a: SchemaWithExample, b: SchemaWithExample): boolean {
-    return isSchemaEqual(convertSchemaWithExampleToSchema(a), convertSchemaWithExampleToSchema(b));
+    return isSchemaEqual(
+        convertSchemaWithExampleToSchema({ schema: a }),
+        convertSchemaWithExampleToSchema({ schema: b })
+    );
 }
 
 export function isSchemaEqual(a: Schema, b: Schema): boolean {

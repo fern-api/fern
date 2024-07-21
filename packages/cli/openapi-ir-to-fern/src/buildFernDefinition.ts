@@ -52,6 +52,7 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
 
         const declarationFile = getDeclarationFileForSchema(schema);
         const typeDeclaration = buildTypeDeclaration({ schema, context, declarationFile });
+        const typeDeclarationSchema = typeDeclaration.schema;
 
         // HACKHACK: Skip self-referencing schemas. I'm not sure if this is the right way to do this.
         if (isRawAliasDefinition(typeDeclaration.schema)) {
@@ -63,7 +64,7 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
 
         context.builder.addType(declarationFile, {
             name: typeDeclaration.name ?? id,
-            schema: typeDeclaration.schema
+            schema: typeDeclaration.schema,
         });
     }
 

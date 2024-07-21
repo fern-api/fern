@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import {
+    FullExample,
     ObjectProperty,
     ObjectPropertyWithExample,
     OneOfSchema,
@@ -9,29 +10,51 @@ import {
     Schema,
     SchemaWithExample
 } from "@fern-api/openapi-ir-sdk";
+import { ExampleTypeFactory } from "../examples/ExampleTypeFactory";
 
-export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Schema {
+export function convertSchemaWithExampleToSchema({
+    schema,
+    exampleTypeFactory
+}: {
+    schema: SchemaWithExample;
+    exampleTypeFactory?: ExampleTypeFactory;
+}): Schema {
+    const examples: FullExample[] = [];
+    exampleTypeFactory = exampleTypeFactory ?? new ExampleTypeFactory({});
+    const example = exampleTypeFactory.buildExample({
+        schema,
+        exampleId: undefined,
+        example: undefined,
+        options: { ignoreOptionals: true, isParameter: false }
+    });
+    if (example != null) {
+        examples.push(example);
+    }
     switch (schema.type) {
         case "object":
             return Schema.object({
                 allOf: schema.allOf,
-                properties: schema.properties.map((objectProperty) => convertToObjectProperty(objectProperty)),
+                properties: schema.properties.map((objectProperty) =>
+                    convertToObjectProperty({ objectProperty, exampleTypeFactory })
+                ),
                 allOfPropertyConflicts: schema.allOfPropertyConflicts,
                 description: schema.description,
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
                 groupName: schema.groupName,
                 additionalProperties: schema.additionalProperties,
-                availability: schema.availability
+                availability: schema.availability,
+                examples
             });
         case "array":
             return Schema.array({
                 description: schema.description,
                 availability: schema.availability,
-                value: convertSchemaWithExampleToSchema(schema.value),
+                value: convertSchemaWithExampleToSchema({ schema: schema.value, exampleTypeFactory }),
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
-                groupName: schema.groupName
+                groupName: schema.groupName,
+                examples
             });
         case "enum":
             return Schema.enum({
@@ -40,7 +63,8 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
                 values: schema.values,
-                groupName: schema.groupName
+                groupName: schema.groupName,
+                examples
             });
         case "literal":
             return Schema.literal({
@@ -49,7 +73,8 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 value: schema.value,
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
-                groupName: schema.groupName
+                groupName: schema.groupName,
+                examples
             });
         case "nullable":
             return Schema.nullable({
@@ -57,8 +82,9 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 nameOverride: schema.nameOverride,
                 description: schema.description,
                 availability: schema.availability,
-                value: convertSchemaWithExampleToSchema(schema.value),
-                groupName: schema.groupName
+                value: convertSchemaWithExampleToSchema({ schema: schema.value, exampleTypeFactory }),
+                groupName: schema.groupName,
+                examples
             });
         case "optional":
             return Schema.optional({
@@ -66,8 +92,9 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 nameOverride: schema.nameOverride,
                 description: schema.description,
                 availability: schema.availability,
-                value: convertSchemaWithExampleToSchema(schema.value),
-                groupName: schema.groupName
+                value: convertSchemaWithExampleToSchema({ schema: schema.value, exampleTypeFactory }),
+                groupName: schema.groupName,
+                examples
             });
         case "primitive":
             return Schema.primitive({
@@ -76,7 +103,8 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 schema: convertToPrimitiveSchemaValue(schema.schema),
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
-                groupName: schema.groupName
+                groupName: schema.groupName,
+                examples
             });
         case "map":
             return Schema.map({
@@ -88,12 +116,14 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                     schema: convertToPrimitiveSchemaValue(schema.key.schema),
                     generatedName: schema.key.generatedName,
                     nameOverride: schema.key.nameOverride,
-                    groupName: schema.groupName
+                    groupName: schema.groupName,
+                    examples: []
                 }),
-                value: convertSchemaWithExampleToSchema(schema.value),
+                value: convertSchemaWithExampleToSchema({ schema: schema.value, exampleTypeFactory }),
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
-                groupName: schema.groupName
+                groupName: schema.groupName,
+                examples
             });
         case "reference":
             return Schema.reference({
@@ -105,7 +135,7 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 groupName: schema.groupName
             });
         case "oneOf":
-            return Schema.oneOf(convertToOneOf(schema.value));
+            return Schema.oneOf(convertToOneOf({ oneOfSchema: schema.value, exampleTypeFactory }));
         case "unknown":
             return Schema.unknown({ nameOverride: schema.nameOverride, generatedName: schema.generatedName });
         default:
@@ -113,7 +143,13 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
     }
 }
 
-export function convertSchemaWithExampleToOptionalSchema(schema: SchemaWithExample): Schema {
+export function convertSchemaWithExampleToOptionalSchema({
+    schema,
+    exampleTypeFactory
+}: {
+    schema: SchemaWithExample;
+    exampleTypeFactory: ExampleTypeFactory;
+}): Schema {
     switch (schema.type) {
         case "object":
         case "array":
@@ -129,8 +165,9 @@ export function convertSchemaWithExampleToOptionalSchema(schema: SchemaWithExamp
                 nameOverride: schema.nameOverride,
                 description: schema.description,
                 availability: schema.availability,
-                value: convertSchemaWithExampleToSchema(schema),
-                groupName: schema.groupName
+                value: convertSchemaWithExampleToSchema({ schema: schema, exampleTypeFactory }),
+                groupName: schema.groupName,
+                examples: []
             });
         case "optional":
             return Schema.optional({
@@ -138,18 +175,20 @@ export function convertSchemaWithExampleToOptionalSchema(schema: SchemaWithExamp
                 nameOverride: schema.nameOverride,
                 description: schema.description,
                 availability: schema.availability,
-                value: convertSchemaWithExampleToSchema(schema.value),
-                groupName: schema.groupName
+                value: convertSchemaWithExampleToSchema({ schema: schema.value, exampleTypeFactory }),
+                groupName: schema.groupName,
+                examples: []
             });
         case "oneOf": {
-            const oneOfSchema = convertToOneOf(schema.value);
+            const oneOfSchema = convertToOneOf({ oneOfSchema: schema.value, exampleTypeFactory });
             return Schema.optional({
                 generatedName: oneOfSchema.generatedName,
                 nameOverride: oneOfSchema.nameOverride,
                 description: oneOfSchema.description,
                 availability: oneOfSchema.availability,
-                value: Schema.oneOf(convertToOneOf(schema.value)),
-                groupName: oneOfSchema.groupName
+                value: Schema.oneOf(oneOfSchema),
+                groupName: oneOfSchema.groupName,
+                examples: []
             });
         }
         default:
@@ -157,14 +196,30 @@ export function convertSchemaWithExampleToOptionalSchema(schema: SchemaWithExamp
     }
 }
 
-function convertToOneOf(oneOfSchema: OneOfSchemaWithExample): OneOfSchema {
+function convertToOneOf({
+    oneOfSchema,
+    exampleTypeFactory
+}: {
+    oneOfSchema: OneOfSchemaWithExample;
+    exampleTypeFactory: ExampleTypeFactory;
+}): OneOfSchema {
+    const examples: FullExample[] = [];
+    const example = exampleTypeFactory.buildExample({
+        schema: SchemaWithExample.oneOf(oneOfSchema),
+        exampleId: undefined,
+        example: undefined,
+        options: { ignoreOptionals: true, isParameter: false }
+    });
+    if (example != null) {
+        examples.push(example);
+    }
     switch (oneOfSchema.type) {
         case "discriminated":
             return OneOfSchema.discriminated({
                 commonProperties: oneOfSchema.commonProperties.map((commonProperty) => {
                     return {
                         key: commonProperty.key,
-                        schema: convertSchemaWithExampleToSchema(commonProperty.schema)
+                        schema: convertSchemaWithExampleToSchema({ schema: commonProperty.schema, exampleTypeFactory })
                     };
                 }),
                 description: oneOfSchema.description,
@@ -174,10 +229,14 @@ function convertToOneOf(oneOfSchema: OneOfSchemaWithExample): OneOfSchema {
                 nameOverride: oneOfSchema.nameOverride,
                 schemas: Object.fromEntries(
                     Object.entries(oneOfSchema.schemas).map(([discriminantValue, schemaWithExample]) => {
-                        return [discriminantValue, convertSchemaWithExampleToSchema(schemaWithExample)];
+                        return [
+                            discriminantValue,
+                            convertSchemaWithExampleToSchema({ schema: schemaWithExample, exampleTypeFactory })
+                        ];
                     })
                 ),
-                groupName: oneOfSchema.groupName
+                groupName: oneOfSchema.groupName,
+                examples
             });
         case "undisciminated":
             return OneOfSchema.undisciminated({
@@ -185,8 +244,11 @@ function convertToOneOf(oneOfSchema: OneOfSchemaWithExample): OneOfSchema {
                 availability: oneOfSchema.availability,
                 generatedName: oneOfSchema.generatedName,
                 nameOverride: oneOfSchema.nameOverride,
-                schemas: oneOfSchema.schemas.map((oneOfSchema) => convertSchemaWithExampleToSchema(oneOfSchema)),
-                groupName: oneOfSchema.groupName
+                schemas: oneOfSchema.schemas.map((oneOfSchema) =>
+                    convertSchemaWithExampleToSchema({ schema: oneOfSchema, exampleTypeFactory })
+                ),
+                groupName: oneOfSchema.groupName,
+                examples
             });
         default:
             assertNever(oneOfSchema);
@@ -218,12 +280,18 @@ function convertToPrimitiveSchemaValue(primitiveSchema: PrimitiveSchemaValueWith
     }
 }
 
-function convertToObjectProperty(objectProperty: ObjectPropertyWithExample): ObjectProperty {
+function convertToObjectProperty({
+    objectProperty,
+    exampleTypeFactory
+}: {
+    objectProperty: ObjectPropertyWithExample;
+    exampleTypeFactory?: ExampleTypeFactory;
+}): ObjectProperty {
     return {
         conflict: objectProperty.conflict,
         generatedName: objectProperty.generatedName,
         key: objectProperty.key,
-        schema: convertSchemaWithExampleToSchema(objectProperty.schema),
+        schema: convertSchemaWithExampleToSchema({ schema: objectProperty.schema, exampleTypeFactory }),
         audiences: objectProperty.audiences,
         nameOverride: objectProperty.nameOverride,
         availability: objectProperty.availability

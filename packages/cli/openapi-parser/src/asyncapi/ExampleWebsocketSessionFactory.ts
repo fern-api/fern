@@ -10,6 +10,7 @@ import {
 import { isExamplePrimitive } from "../openapi/v3/converters/ExampleEndpointFactory";
 import { convertSchema } from "../schema/convertSchemas";
 import { ExampleTypeFactory } from "../schema/examples/ExampleTypeFactory";
+import { convertSchemaWithExampleToSchema } from "../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../schema/utils/isReferenceObject";
 import { isSchemaRequired } from "../schema/utils/isSchemaRequired";
 import { AsyncAPIV2ParserContext } from "./AsyncAPIParserContext";
@@ -241,11 +242,15 @@ export class ExampleWebsocketSessionFactory {
         return example;
     }
 
-    private isSchemaRequired(schema: SchemaWithExample) {
-        return isSchemaRequired(this.getResolvedSchema(schema));
+    private isSchemaRequired(schemaWithExample: SchemaWithExample) {
+        const schema = convertSchemaWithExampleToSchema({
+            schema: this.getResolvedSchema(schemaWithExample),
+            exampleTypeFactory: new ExampleTypeFactory({})
+        });
+        return isSchemaRequired(schema);
     }
 
-    private getResolvedSchema(schema: SchemaWithExample) {
+    private getResolvedSchema(schema: SchemaWithExample): SchemaWithExample {
         while (schema.type === "reference") {
             const resolvedSchema = this.schemas[schema.schema];
             if (resolvedSchema == null) {

@@ -18,6 +18,7 @@ import {
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { ExampleTypeFactory } from "../../../schema/examples/ExampleTypeFactory";
 import { convertSchemaToSchemaWithExample } from "../../../schema/utils/convertSchemaToSchemaWithExample";
+import { convertSchemaWithExampleToSchema } from "../../../schema/utils/convertSchemaWithExampleToSchema";
 import { isSchemaRequired } from "../../../schema/utils/isSchemaRequired";
 import { hasIncompleteExample } from "../hasIncompleteExample";
 
@@ -297,11 +298,12 @@ export class ExampleEndpointFactory {
             .filter(isNonNullish);
     }
 
-    private isSchemaRequired(schema: SchemaWithExample) {
-        return isSchemaRequired(this.getResolvedSchema(schema));
+    private isSchemaRequired(schemaWithExample: SchemaWithExample) {
+        const schema = convertSchemaWithExampleToSchema({ schema: this.getResolvedSchema(schemaWithExample) });
+        return isSchemaRequired(schema);
     }
 
-    private getResolvedSchema(schema: SchemaWithExample) {
+    private getResolvedSchema(schema: SchemaWithExample): SchemaWithExample {
         return schema;
     }
 }

@@ -4,6 +4,7 @@ import {
     EndpointExample,
     EndpointWithExample,
     ErrorExample,
+    FernOpenapiIr,
     HttpError,
     LiteralSchemaValue,
     ObjectPropertyWithExample,
@@ -22,6 +23,7 @@ import { getExtension } from "../../getExtension";
 import { ParseOpenAPIOptions } from "../../options";
 import { convertSchema } from "../../schema/convertSchemas";
 import { convertToFullExample } from "../../schema/examples/convertToFullExample";
+import { ExampleTypeFactory } from "../../schema/examples/ExampleTypeFactory";
 import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
 import { getGeneratedTypeName } from "../../schema/utils/getSchemaName";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject";
@@ -167,9 +169,11 @@ export function generateIr({
     const schemasWithoutDiscriminants = maybeRemoveDiscriminantsFromSchemas(schemasWithExample, context);
     // Add them back when declared as union metadata, as that means we're treating discriminated unions as undiscriminated unions.
     const schemasWithDiscriminants = maybeAddBackDiscriminantsFromSchemas(schemasWithoutDiscriminants, context);
+
+    const exampleTypeFactory = new ExampleTypeFactory(schemasWithoutDiscriminants);
     const schemas: Record<string, Schema> = {};
     for (const [key, schemaWithExample] of Object.entries(schemasWithDiscriminants)) {
-        const schema = convertSchemaWithExampleToSchema(schemaWithExample);
+        const schema = convertSchemaWithExampleToSchema({ schema: schemaWithExample, exampleTypeFactory });
         if (context.isSchemaExcluded(key)) {
             continue;
         }
@@ -201,25 +205,34 @@ export function generateIr({
 
         return {
             ...endpointWithExample,
-            request:
-                request?.type === "json"
-                    ? {
-                          ...request,
-                          schema: convertSchemaWithExampleToSchema(request.schema)
-                      }
-                    : request,
-            response:
-                response?.type === "json"
-                    ? {
-                          ...response,
-                          schema: convertSchemaWithExampleToSchema(response.schema)
-                      }
-                    : response,
+            request: request?._visit<FernOpenapiIr.Request | undefined>({
+                json: (value) =>
+                    FernOpenapiIr.Request.json({
+                        ...value,
+                        schema: convertSchemaWithExampleToSchema({ schema: value.schema, exampleTypeFactory })
+                    }),
+                multipart: (value) => FernOpenapiIr.Request.multipart(value),
+                octetStream: (value) => FernOpenapiIr.Request.octetStream(value),
+                _other: (req) => undefined
+            }),
+            response: response?._visit<FernOpenapiIr.Response | undefined>({
+                json: (value) =>
+                    FernOpenapiIr.Response.json({
+                        ...value,
+                        schema: convertSchemaWithExampleToSchema({ schema: value.schema, exampleTypeFactory })
+                    }),
+                file: (value) => FernOpenapiIr.Response.file(value),
+                streamingJson: (value) => FernOpenapiIr.Response.streamingJson(value),
+                streamingSse: (value) => FernOpenapiIr.Response.streamingSse(value),
+                streamingText: (value) => FernOpenapiIr.Response.streamingText(value),
+                text: (value) => FernOpenapiIr.Response.text(value),
+                _other: (value) => undefined
+            }),
             queryParameters: endpointWithExample.queryParameters.map((queryParameter) => {
                 return {
                     description: queryParameter.description,
                     name: queryParameter.name,
-                    schema: convertSchemaWithExampleToSchema(queryParameter.schema),
+                    schema: convertSchemaWithExampleToSchema({ schema: queryParameter.schema, exampleTypeFactory }),
                     parameterNameOverride: queryParameter.parameterNameOverride,
                     availability: queryParameter.availability
                 };
@@ -228,7 +241,7 @@ export function generateIr({
                 return {
                     description: pathParameter.description,
                     name: pathParameter.name,
-                    schema: convertSchemaWithExampleToSchema(pathParameter.schema),
+                    schema: convertSchemaWithExampleToSchema({ schema: pathParameter.schema, exampleTypeFactory }),
                     variableReference: pathParameter.variableReference,
                     availability: pathParameter.availability
                 };
@@ -237,7 +250,7 @@ export function generateIr({
                 return {
                     description: header.description,
                     name: header.name,
-                    schema: convertSchemaWithExampleToSchema(header.schema),
+                    schema: convertSchemaWithExampleToSchema({ schema: header.schema, exampleTypeFactory }),
                     parameterNameOverride: header.parameterNameOverride,
                     env: header.env,
                     availability: header.availability
@@ -248,7 +261,7 @@ export function generateIr({
                 return {
                     generatedName: error.generatedName,
                     nameOverride: error.nameOverride,
-                    schema: convertSchemaWithExampleToSchema(error.schema),
+                    schema: convertSchemaWithExampleToSchema({ schema: error.schema, exampleTypeFactory }),
                     description: error.description,
                     examples: error.fullExamples
                         ?.map((example): ErrorExample | undefined => {
@@ -310,13 +323,29 @@ export function generateIr({
 }
 
 function maybeRemoveDiscriminantsFromSchemas(
-    schemas: Record<string, SchemaWithExample>,
+    schemasWithExample: Record<string, SchemaWithExample>,
     context: AbstractOpenAPIV3ParserContext
 ): Record<string, SchemaWithExample> {
+    const exampleTypeFactory = new ExampleTypeFactory(schemasWithExample);
+    const schemas: Record<string, Schema> = Object.fromEntries(
+        Object.entries(schemasWithExample).map(([key, value]) => {
+            return [
+                key,
+                convertSchemaWithExampleToSchema({
+                    schema: value,
+                    exampleTypeFactory
+                })
+            ];
+        })
+    );
     const result: Record<string, SchemaWithExample> = {};
-    for (const [schemaId, schema] of Object.entries(schemas)) {
-        if (schema.type !== "object") {
-            result[schemaId] = schema;
+    for (const [schemaId, schemaWithExample] of Object.entries(schemasWithExample)) {
+        let schema = convertSchemaWithExampleToSchema({
+            schema: schemaWithExample,
+            exampleTypeFactory
+        });
+        if (schemaWithExample.type !== "object" || schema.type !== "object") {
+            result[schemaId] = schemaWithExample;
             continue;
         }
         const referenceToSchema: OpenAPIV3.ReferenceObject = {
@@ -324,25 +353,28 @@ function maybeRemoveDiscriminantsFromSchemas(
         };
         const discriminatedUnionReference = context.getReferencesFromDiscriminatedUnion(referenceToSchema);
         if (discriminatedUnionReference == null) {
-            result[schemaId] = schema;
+            result[schemaId] = schemaWithExample;
             continue;
         }
 
         const schemaWithoutDiscriminants: SchemaWithExample.Object_ = {
-            ...schema,
+            ...schemaWithExample,
             type: "object",
-            properties: schema.properties.filter((objectProperty) => {
+            properties: schemaWithExample.properties.filter((objectProperty) => {
                 return !discriminatedUnionReference.discriminants.has(objectProperty.key);
             }),
-            allOfPropertyConflicts: schema.allOfPropertyConflicts.filter((allOfPropertyConflict) => {
+            allOfPropertyConflicts: schemaWithExample.allOfPropertyConflicts.filter((allOfPropertyConflict) => {
                 return !discriminatedUnionReference.discriminants.has(allOfPropertyConflict.propertyKey);
             })
         };
         result[schemaId] = schemaWithoutDiscriminants;
 
-        const parentSchemaIds = getAllParentSchemaIds({ schema, schemas });
+        const parentSchemaIds = getAllParentSchemaIds({
+            schema,
+            schemas
+        });
         for (const parentSchemaId of [...new Set(parentSchemaIds)]) {
-            const parentSchema = result[parentSchemaId] ?? schemas[parentSchemaId];
+            const parentSchema = result[parentSchemaId] ?? schemasWithExample[parentSchemaId];
             if (parentSchema == null || parentSchema.type !== "object") {
                 continue;
             }
@@ -393,7 +425,8 @@ function maybeAddBackDiscriminantsFromSchemas(
                             value: LiteralSchemaValue.string(discriminantValue),
                             groupName: undefined,
                             description: undefined,
-                            availability: schema.availability
+                            availability: schema.availability,
+                            examples: []
                         })
                     });
                 }

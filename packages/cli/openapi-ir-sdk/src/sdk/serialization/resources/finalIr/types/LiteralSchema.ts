@@ -12,6 +12,9 @@ export const LiteralSchema: core.serialization.ObjectSchema<
 > = core.serialization
     .objectWithoutOptionalProperties({
         value: core.serialization.lazy(async () => (await import("../../..")).LiteralSchemaValue),
+        examples: core.serialization
+            .list(core.serialization.lazy(async () => (await import("../../..")).FullExample))
+            .optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithName))
@@ -25,5 +28,6 @@ export declare namespace LiteralSchema {
             serializers.WithSdkGroupName.Raw,
             serializers.WithAvailability.Raw {
         value: serializers.LiteralSchemaValue.Raw;
+        examples?: serializers.FullExample.Raw[] | null;
     }
 }

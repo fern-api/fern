@@ -20,6 +20,10 @@ export declare namespace OSSWorkspace {
 
     export interface Settings {
         /*
+         * Whether or not to generate examples for schemas.
+         */
+        generateSchemaExamples?: boolean;
+        /*
          * Whether or not to parse unique errors for OpenAPI operation. This is
          * an option that is typically enabled for docs generation.
          */
@@ -73,7 +77,8 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
             taskContext: context,
             ir: openApiIr,
             enableUniqueErrorsPerEndpoint: settings?.enableUniqueErrorsPerEndpoint ?? false,
-            detectGlobalHeaders: settings?.detectGlobalHeaders ?? true
+            detectGlobalHeaders: settings?.detectGlobalHeaders ?? true,
+            generateSchemaExamples: settings?.generateSchemaExamples ?? false
         });
 
         return {

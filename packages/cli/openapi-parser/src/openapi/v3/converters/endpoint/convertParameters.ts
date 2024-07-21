@@ -109,7 +109,8 @@ export function convertParameters({
                     value: LiteralSchemaValue.string(defaultValue),
                     description: undefined,
                     availability,
-                    groupName: undefined
+                    groupName: undefined,
+                    examples: []
                 });
             }
         }

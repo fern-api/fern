@@ -11,4 +11,5 @@ export interface MapSchema
         FernOpenapiIr.WithAvailability {
     key: FernOpenapiIr.PrimitiveSchema;
     value: FernOpenapiIr.Schema;
+    examples: FernOpenapiIr.FullExample[] | undefined;
 }

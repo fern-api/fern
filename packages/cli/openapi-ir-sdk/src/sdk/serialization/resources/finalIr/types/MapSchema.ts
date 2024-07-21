@@ -11,6 +11,9 @@ export const MapSchema: core.serialization.ObjectSchema<serializers.MapSchema.Ra
         .objectWithoutOptionalProperties({
             key: core.serialization.lazyObject(async () => (await import("../../..")).PrimitiveSchema),
             value: core.serialization.lazy(async () => (await import("../../..")).Schema),
+            examples: core.serialization
+                .list(core.serialization.lazy(async () => (await import("../../..")).FullExample))
+                .optional(),
         })
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithName))
@@ -25,5 +28,6 @@ export declare namespace MapSchema {
             serializers.WithAvailability.Raw {
         key: serializers.PrimitiveSchema.Raw;
         value: serializers.Schema.Raw;
+        examples?: serializers.FullExample.Raw[] | null;
     }
 }

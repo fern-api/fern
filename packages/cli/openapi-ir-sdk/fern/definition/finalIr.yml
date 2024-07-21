@@ -425,6 +425,7 @@ types:
       - commons.WithAvailability
     properties:
       schema: PrimitiveSchemaValue
+      examples: optional<list<example.FullExample>>
 
   PrimitiveSchemaValue:
     union:
@@ -480,6 +481,7 @@ types:
       - commons.WithAvailability
     properties:
       value: LiteralSchemaValue
+      examples: optional<list<example.FullExample>>
 
   LiteralSchemaValue:
     union:
@@ -497,6 +499,7 @@ types:
       properties: list<ObjectProperty>
       allOfPropertyConflicts: list<AllOfPropertyConflict>
       additionalProperties: boolean
+      examples: optional<list<example.FullExample>>
 
   # OpenAPI IR to Fern:
   # For every allOfPropertyConflict, we will inline the SchemaIds that conflict.
@@ -542,6 +545,7 @@ types:
       - commons.WithAvailability
     properties:
       value: Schema
+      examples: optional<list<example.FullExample>>
 
   MapSchema:
     extends:
@@ -552,6 +556,7 @@ types:
     properties:
       key: PrimitiveSchema
       value: Schema
+      examples: optional<list<example.FullExample>>
 
   OptionalSchema:
     extends:
@@ -561,6 +566,7 @@ types:
       - commons.WithAvailability
     properties:
       value: Schema
+      examples: optional<list<example.FullExample>>
 
   NullableSchema:
     extends:
@@ -570,6 +576,7 @@ types:
       - commons.WithAvailability
     properties:
       value: Schema
+      examples: optional<list<example.FullExample>>
 
   EnumSchema:
     extends:
@@ -579,6 +586,7 @@ types:
       - commons.WithAvailability
     properties:
       values: list<EnumValue>
+      examples: optional<list<example.FullExample>>
 
   EnumValue:
     extends:
@@ -595,6 +603,7 @@ types:
         type: string
         docs: Value of the enum
       casing: optional<CasingOverrides>
+      examples: optional<list<example.FullExample>>
 
   CasingOverrides:
     properties:
@@ -627,6 +636,7 @@ types:
       discriminantProperty: string
       commonProperties: list<CommonProperty>
       schemas: map<string, Schema>
+      examples: optional<list<example.FullExample>>
 
   CommonProperty:
     properties:
@@ -641,3 +651,4 @@ types:
       - commons.WithAvailability
     properties:
       schemas: list<Schema>
+      examples: optional<list<example.FullExample>>

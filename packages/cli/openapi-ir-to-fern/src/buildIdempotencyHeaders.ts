@@ -17,7 +17,8 @@ const STRING_SCHEMA = Schema.primitive({
         format: undefined,
         minLength: undefined,
         maxLength: undefined
-    })
+    }),
+    examples: undefined,
 });
 
 export function buildIdempotencyHeaders(context: OpenApiIrConverterContext): void {

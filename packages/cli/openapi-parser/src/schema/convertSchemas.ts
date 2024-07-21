@@ -895,7 +895,8 @@ export function wrapLiteral({
                 value: literal,
                 description,
                 availability,
-                groupName
+                groupName,
+                examples: []
             }),
             groupName,
             description,
@@ -908,7 +909,8 @@ export function wrapLiteral({
         value: literal,
         groupName,
         description,
-        availability
+        availability,
+        examples: []
     });
 }
 

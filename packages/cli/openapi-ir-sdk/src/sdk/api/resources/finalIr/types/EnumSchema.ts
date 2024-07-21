@@ -10,4 +10,5 @@ export interface EnumSchema
         FernOpenapiIr.WithSdkGroupName,
         FernOpenapiIr.WithAvailability {
     values: FernOpenapiIr.EnumValue[];
+    examples: FernOpenapiIr.FullExample[] | undefined;
 }

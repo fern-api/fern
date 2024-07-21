@@ -57,7 +57,8 @@ export function convertEnum({
                 pascal: fernEnumValue?.casing?.pascal ?? undefined,
                 screamingSnake: fernEnumValue?.casing?.screamingSnake ?? undefined,
                 camel: fernEnumValue?.casing?.camel ?? undefined
-            }
+            },
+            examples: []
         };
     });
     return wrapEnum({

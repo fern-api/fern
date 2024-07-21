@@ -38,7 +38,8 @@ export function convertLiteral({
                 value: createLiteralSchemaValue(value),
                 description,
                 availability,
-                groupName
+                groupName,
+                examples: []
             }),
             description,
             availability,
@@ -51,6 +52,7 @@ export function convertLiteral({
         value: createLiteralSchemaValue(value),
         description,
         availability,
-        groupName
+        groupName,
+        examples: []
     });
 }
