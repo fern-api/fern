@@ -43,5 +43,5 @@ public record ObjectWithOptionalField
     public Dictionary<int, string>? Map { get; init; }
 
     [JsonPropertyName("bigint")]
-    public string? Bigint { get; init; }
+    public int? Bigint { get; init; }
 }

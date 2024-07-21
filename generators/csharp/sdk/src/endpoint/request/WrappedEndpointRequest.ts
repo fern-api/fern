@@ -219,7 +219,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 return false;
             }
             case "primitive": {
-                return typeReference.primitive === "STRING";
+                return typeReference.primitive.v1 === "STRING";
             }
             case "unknown": {
                 return false;
@@ -248,7 +248,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 return false;
             }
             case "primitive": {
-                return typeReference.primitive === "DATE_TIME";
+                return typeReference.primitive.v1 === "DATE_TIME";
             }
             case "unknown": {
                 return false;

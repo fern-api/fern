@@ -1,5 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ContainerType, DeclaredTypeName, Literal, PrimitiveType, TypeReference } from "@fern-fern/ir-sdk/api";
+import {
+    ContainerType,
+    DeclaredTypeName,
+    Literal,
+    PrimitiveType,
+    PrimitiveTypeV1,
+    TypeReference
+} from "@fern-fern/ir-sdk/api";
 import { csharp } from "../";
 import { ClassReference, Type } from "../ast";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
@@ -75,7 +82,7 @@ export class CsharpTypeMapper {
     }
 
     private convertPrimitive({ primitive }: { primitive: PrimitiveType }): Type {
-        return PrimitiveType._visit<csharp.Type>(primitive, {
+        return PrimitiveTypeV1._visit<csharp.Type>(primitive.v1, {
             integer: () => csharp.Type.integer(),
             double: () => csharp.Type.double(),
             string: () => csharp.Type.string(),
@@ -86,7 +93,8 @@ export class CsharpTypeMapper {
             uuid: () => csharp.Type.uuid(),
             // https://learn.microsoft.com/en-us/dotnet/api/system.convert.tobase64string?view=net-8.0
             base64: () => csharp.Type.string(),
-            _other: () => csharp.Type.object()
+            _other: () => csharp.Type.object(),
+            bigInteger: () => csharp.Type.integer()
         });
     }
 

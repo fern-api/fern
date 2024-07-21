@@ -24,6 +24,28 @@ jobs:
       - name: Build Release
         run: dotnet build src -c Release /p:ContinuousIntegrationBuild=true
 
+  unit-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - uses: actions/checkout@master
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 8.x
+
+      - name: Install tools
+        run: |
+          dotnet tool restore
+
+      - name: Run Tests
+        run: |
+          dotnet test src
+
 
   publish:
     needs: [compile]

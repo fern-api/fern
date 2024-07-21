@@ -17,7 +17,7 @@ public class CompletionsClient
 
     public async Task StreamAsync(StreamCompletionRequest request)
     {
-        await _client.MakeRequestAsync(
+        var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,

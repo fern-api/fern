@@ -1,7 +1,14 @@
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
-import { getUndiscriminatedUnionSerializerAnnotation } from "@fern-api/fern-csharp-model";
+import { ExampleGenerator, getUndiscriminatedUnionSerializerAnnotation } from "@fern-api/fern-csharp-model";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { HttpEndpoint, SdkRequestWrapper, ServiceId } from "@fern-fern/ir-sdk/api";
+import {
+    ExampleEndpointCall,
+    ExampleTypeReference,
+    HttpEndpoint,
+    Name,
+    SdkRequestWrapper,
+    ServiceId
+} from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -19,6 +26,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
     private wrapper: SdkRequestWrapper;
     private serviceId: ServiceId;
     private endpoint: HttpEndpoint;
+    private snippetHelper: ExampleGenerator;
 
     public constructor({ wrapper, context, serviceId, endpoint }: WrappedRequestGenerator.Args) {
         super(context);
@@ -26,6 +34,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         this.serviceId = serviceId;
         this.classReference = this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName);
         this.endpoint = endpoint;
+        this.snippetHelper = new ExampleGenerator(context);
     }
 
     protected doGenerate(): CSharpFile {
@@ -120,6 +129,46 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             clazz: class_,
             directory: this.getDirectory()
         });
+    }
+
+    public doGenerateSnippet(example: ExampleEndpointCall): csharp.CodeBlock {
+        const orderedFields: { name: Name; value: ExampleTypeReference }[] = [];
+        for (const exampleQueryParameter of example.queryParameters) {
+            orderedFields.push({ name: exampleQueryParameter.name.name, value: exampleQueryParameter.value });
+        }
+
+        for (const header of example.endpointHeaders) {
+            orderedFields.push({ name: header.name.name, value: header.value });
+        }
+
+        example.request?._visit({
+            reference: (reference) => {
+                orderedFields.push({ name: this.wrapper.bodyKey, value: reference });
+            },
+            inlinedRequestBody: (inlinedRequestBody) => {
+                for (const property of inlinedRequestBody.properties) {
+                    orderedFields.push({ name: property.name.name, value: property.value });
+                }
+            },
+            _other: () => undefined
+        });
+        const args = orderedFields
+            .map(({ name, value }) => {
+                const assignment = this.snippetHelper.getSnippetForTypeReference(value);
+                if (assignment === undefined) {
+                    return null;
+                }
+                return {
+                    name: name.pascalCase.safeName,
+                    assignment
+                };
+            })
+            .filter((value): value is { name: string; assignment: csharp.CodeBlock } => value != null);
+        const instantiateClass = csharp.instantiateClass({
+            classReference: this.classReference,
+            arguments_: args
+        });
+        return csharp.codeblock((writer) => writer.writeNode(instantiateClass));
     }
 
     protected getFilepath(): RelativeFilePath {
