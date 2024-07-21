@@ -3927,7 +3927,6 @@ __metadata:
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^29.5.12
-    "@types/jest-specific-snapshot": ^0.5.9
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     "@types/object-hash": ^3.0.6
@@ -3936,7 +3935,6 @@ __metadata:
     depcheck: ^1.4.6
     eslint: ^8.56.0
     jest: ^29.7.0
-    jest-specific-snapshot: ^8.0.0
     lodash-es: ^4.17.21
     object-hash: ^3.0.0
     organize-imports-cli: ^0.10.0

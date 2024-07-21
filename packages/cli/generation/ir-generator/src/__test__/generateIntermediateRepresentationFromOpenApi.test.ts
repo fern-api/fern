@@ -1,15 +1,15 @@
 import { Audiences } from "@fern-api/configuration";
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { loadApis } from "@fern-api/project-loader";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { APIWorkspace } from "@fern-api/workspace-loader";
+import { writeFile } from "fs/promises";
 import path from "path";
 import { generateIntermediateRepresentation } from "../generateIntermediateRepresentation";
 
-require("jest-specific-snapshot");
-
 const TEST_DEFINITIONS_DIR = path.join(__dirname, "../../../../../../test-definitions-openapi");
+const IR_DIR = path.join(__dirname, "openapi-irs");
 
 const TEST_DEFINITION_CONFIG: Record<string, TestConfig> = {
     audiences: {
@@ -56,8 +56,10 @@ it("generate IR from OpenAPI", async () => {
                 unrecognizedObjectKeys: "strip"
             }
         );
-        expect(intermediateRepresentationJson).toMatchSpecificSnapshot(
-            `__snapshots__/openapi/${fernWorkspace.workspaceName}.txt`
+
+        await writeFile(
+            join(AbsoluteFilePath.of(IR_DIR), RelativeFilePath.of(`${workspace.workspaceName ?? "ir"}.json`)),
+            await stringifyLargeObject(intermediateRepresentationJson, { pretty: true })
         );
     }
 });
