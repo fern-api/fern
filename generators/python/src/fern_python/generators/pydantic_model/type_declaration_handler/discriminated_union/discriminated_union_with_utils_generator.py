@@ -156,6 +156,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
             # No reason to have model config overrides on the base model, but
             # also Pydantic V2's RootModel doesn't allow for a lot of the configuration.
             include_model_config=False,
+            force_update_forward_refs=True,
         ) as external_pydantic_model:
             external_pydantic_model.add_class_var_unsafe(
                 name="factory",

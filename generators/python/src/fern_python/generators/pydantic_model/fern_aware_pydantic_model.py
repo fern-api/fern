@@ -42,6 +42,7 @@ class FernAwarePydanticModel:
         docstring: Optional[str] = None,
         snippet: Optional[str] = None,
         include_model_config: Optional[bool] = True,
+        force_update_forward_refs: bool = False,
     ):
         self._class_name = class_name
         self._type_name = type_name
@@ -49,6 +50,7 @@ class FernAwarePydanticModel:
         self._custom_config = custom_config
         self._source_file = source_file
         self._extends = extends
+        self._force_update_forward_refs = force_update_forward_refs
 
         models_to_extend = [item for item in base_models] if base_models is not None else []
         extends_crs = (
@@ -210,7 +212,7 @@ class FernAwarePydanticModel:
         if self._custom_config.include_validators:
             self._pydantic_model.add_partial_class()
             self._get_validators_generator().add_validators()
-        if self._model_contains_forward_refs:
+        if self._model_contains_forward_refs or self._force_update_forward_refs:
             self._pydantic_model.update_forward_refs()
         self._pydantic_model.finish()
 
