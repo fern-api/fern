@@ -39,7 +39,6 @@ it("test definitions", async () => {
         defaultToAllApiWorkspaces: true
     });
 
-    
     await Promise.all(
         apiWorkspaces.map(async (workspace) => {
             await generateAndSnapshotIR({
