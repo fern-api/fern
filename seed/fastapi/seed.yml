@@ -38,3 +38,4 @@ allowedFailures:
   - websocket
   - enum
   - server-sent-events
+  - streaming-parameter

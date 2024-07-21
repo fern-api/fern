@@ -61,6 +61,7 @@ export class ReqWithHeaders {
                 "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,
             },
             contentType: "application/json",
+            requestType: "json",
             body: serializers.reqWithHeaders.getWithCustomHeader.Request.jsonOrThrow(_body, {
                 unrecognizedObjectKeys: "strip",
             }),

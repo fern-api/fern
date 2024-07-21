@@ -40,8 +40,10 @@ class ConditionalTree(AstNode):
             with writer.indent():
                 for node in condition.code:
                     writer.write_node(node)
+                    writer.write_newline_if_last_line_not()
         if self.else_code is not None:
             writer.write("else:")
             with writer.indent():
                 for node in self.else_code:
                     writer.write_node(node)
+                    writer.write_newline_if_last_line_not()

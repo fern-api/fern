@@ -11,5 +11,5 @@ import * as fs from "fs";
  *     }
  */
 export interface JustFileRequet {
-    file: File | fs.ReadStream;
+    file: File | fs.ReadStream | Blob;
 }
