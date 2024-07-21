@@ -1,3 +1,5 @@
+/* eslint-disable jest/expect-expect */
+
 import { Audiences } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import { serialization as IrSerialization } from "@fern-api/ir-sdk";

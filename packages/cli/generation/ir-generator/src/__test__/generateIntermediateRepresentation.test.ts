@@ -1,3 +1,5 @@
+/* eslint-disable jest/expect-expect */
+
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import path from "path";
 import { generateAndSnapshotIR } from "./generateAndSnapshotIR";
