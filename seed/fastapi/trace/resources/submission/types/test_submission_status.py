@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
 from .error_info import ErrorInfo
 from .running_submission_state import RunningSubmissionState
 from .submission_status_for_test_case import SubmissionStatusForTestCase
@@ -17,16 +17,32 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def stopped(self) -> TestSubmissionStatus:
-        return TestSubmissionStatus(_TestSubmissionStatus.Stopped(type="stopped"))
+        if IS_PYDANTIC_V2:
+            return TestSubmissionStatus(root=_TestSubmissionStatus.Stopped(type="stopped"))
+        else:
+            return TestSubmissionStatus(__root__=_TestSubmissionStatus.Stopped(type="stopped"))
 
     def errored(self, value: ErrorInfo) -> TestSubmissionStatus:
-        return TestSubmissionStatus(_TestSubmissionStatus.Errored(type="errored", value=value))
+        if IS_PYDANTIC_V2:
+            return TestSubmissionStatus(root=_TestSubmissionStatus.Errored(type="errored", value=value))
+        else:
+            return TestSubmissionStatus(__root__=_TestSubmissionStatus.Errored(type="errored", value=value))
 
     def running(self, value: RunningSubmissionState) -> TestSubmissionStatus:
-        return TestSubmissionStatus(_TestSubmissionStatus.Running(type="running", value=value))
+        if IS_PYDANTIC_V2:
+            return TestSubmissionStatus(root=_TestSubmissionStatus.Running(type="running", value=value))
+        else:
+            return TestSubmissionStatus(__root__=_TestSubmissionStatus.Running(type="running", value=value))
 
     def test_case_id_to_state(self, value: typing.Dict[str, SubmissionStatusForTestCase]) -> TestSubmissionStatus:
-        return TestSubmissionStatus(_TestSubmissionStatus.TestCaseIdToState(type="testCaseIdToState", value=value))
+        if IS_PYDANTIC_V2:
+            return TestSubmissionStatus(
+                root=_TestSubmissionStatus.TestCaseIdToState(type="testCaseIdToState", value=value)
+            )
+        else:
+            return TestSubmissionStatus(
+                __root__=_TestSubmissionStatus.TestCaseIdToState(type="testCaseIdToState", value=value)
+            )
 
 
 class TestSubmissionStatus(UniversalRootModel):
@@ -81,14 +97,15 @@ class TestSubmissionStatus(UniversalRootModel):
         running: typing.Callable[[RunningSubmissionState], T_Result],
         test_case_id_to_state: typing.Callable[[typing.Dict[str, SubmissionStatusForTestCase]], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "stopped":
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "stopped":
             return stopped()
-        if self.get_as_union().type == "errored":
-            return errored(self.get_as_union().value)
-        if self.get_as_union().type == "running":
-            return running(self.get_as_union().value)
-        if self.get_as_union().type == "testCaseIdToState":
-            return test_case_id_to_state(self.get_as_union().value)
+        if unioned_value.type == "errored":
+            return errored(unioned_value.value)
+        if unioned_value.type == "running":
+            return running(unioned_value.value)
+        if unioned_value.type == "testCaseIdToState":
+            return test_case_id_to_state(unioned_value.value)
 
 
 class _TestSubmissionStatus:
@@ -106,3 +123,6 @@ class _TestSubmissionStatus:
     class TestCaseIdToState(UniversalBaseModel):
         type: typing.Literal["testCaseIdToState"] = "testCaseIdToState"
         value: typing.Dict[str, SubmissionStatusForTestCase]
+
+
+update_forward_refs(TestSubmissionStatus)

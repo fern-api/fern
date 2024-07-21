@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
 from .foo import Foo as types_types_foo_Foo
 
 T_Result = typing.TypeVar("T_Result")
@@ -15,13 +15,26 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def integer(self, value: int) -> UnionWithBaseProperties:
-        return UnionWithBaseProperties(_UnionWithBaseProperties.Integer(type="integer", value=value))
+        if IS_PYDANTIC_V2:
+            return UnionWithBaseProperties(root=_UnionWithBaseProperties.Integer(type="integer", value=value))
+        else:
+            return UnionWithBaseProperties(__root__=_UnionWithBaseProperties.Integer(type="integer", value=value))
 
     def string(self, value: str) -> UnionWithBaseProperties:
-        return UnionWithBaseProperties(_UnionWithBaseProperties.String(type="string", value=value))
+        if IS_PYDANTIC_V2:
+            return UnionWithBaseProperties(root=_UnionWithBaseProperties.String(type="string", value=value))
+        else:
+            return UnionWithBaseProperties(__root__=_UnionWithBaseProperties.String(type="string", value=value))
 
     def foo(self, value: types_types_foo_Foo) -> UnionWithBaseProperties:
-        return UnionWithBaseProperties(_UnionWithBaseProperties.Foo(**value.dict(exclude_unset=True), type="foo"))
+        if IS_PYDANTIC_V2:
+            return UnionWithBaseProperties(
+                root=_UnionWithBaseProperties.Foo(**value.dict(exclude_unset=True), type="foo")
+            )
+        else:
+            return UnionWithBaseProperties(
+                __root__=_UnionWithBaseProperties.Foo(**value.dict(exclude_unset=True), type="foo")
+            )
 
 
 class UnionWithBaseProperties(UniversalRootModel):
@@ -63,12 +76,13 @@ class UnionWithBaseProperties(UniversalRootModel):
         string: typing.Callable[[str], T_Result],
         foo: typing.Callable[[types_types_foo_Foo], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "integer":
-            return integer(self.get_as_union().value)
-        if self.get_as_union().type == "string":
-            return string(self.get_as_union().value)
-        else:
-            return foo(types_types_foo_Foo(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "integer":
+            return integer(unioned_value.value)
+        if unioned_value.type == "string":
+            return string(unioned_value.value)
+        if unioned_value.type == "foo":
+            return foo(types_types_foo_Foo(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
 
 
 class _UnionWithBaseProperties:
@@ -107,3 +121,6 @@ class _UnionWithBaseProperties:
                 frozen = True
                 smart_union = True
                 allow_population_by_field_name = True
+
+
+update_forward_refs(UnionWithBaseProperties)

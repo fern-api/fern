@@ -21,45 +21,94 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def integer_value(self, value: int) -> VariableValue:
-        return VariableValue(_VariableValue.IntegerValue(type="integerValue", value=value))
+        if IS_PYDANTIC_V2:
+            return VariableValue(root=_VariableValue.IntegerValue(type="integerValue", value=value))
+        else:
+            return VariableValue(__root__=_VariableValue.IntegerValue(type="integerValue", value=value))
 
     def boolean_value(self, value: bool) -> VariableValue:
-        return VariableValue(_VariableValue.BooleanValue(type="booleanValue", value=value))
+        if IS_PYDANTIC_V2:
+            return VariableValue(root=_VariableValue.BooleanValue(type="booleanValue", value=value))
+        else:
+            return VariableValue(__root__=_VariableValue.BooleanValue(type="booleanValue", value=value))
 
     def double_value(self, value: float) -> VariableValue:
-        return VariableValue(_VariableValue.DoubleValue(type="doubleValue", value=value))
+        if IS_PYDANTIC_V2:
+            return VariableValue(root=_VariableValue.DoubleValue(type="doubleValue", value=value))
+        else:
+            return VariableValue(__root__=_VariableValue.DoubleValue(type="doubleValue", value=value))
 
     def string_value(self, value: str) -> VariableValue:
-        return VariableValue(_VariableValue.StringValue(type="stringValue", value=value))
+        if IS_PYDANTIC_V2:
+            return VariableValue(root=_VariableValue.StringValue(type="stringValue", value=value))
+        else:
+            return VariableValue(__root__=_VariableValue.StringValue(type="stringValue", value=value))
 
     def char_value(self, value: str) -> VariableValue:
-        return VariableValue(_VariableValue.CharValue(type="charValue", value=value))
+        if IS_PYDANTIC_V2:
+            return VariableValue(root=_VariableValue.CharValue(type="charValue", value=value))
+        else:
+            return VariableValue(__root__=_VariableValue.CharValue(type="charValue", value=value))
 
     def map_value(self, value: resources_commons_types_map_value_MapValue) -> VariableValue:
-        return VariableValue(_VariableValue.MapValue(**value.dict(exclude_unset=True), type="mapValue"))
+        if IS_PYDANTIC_V2:
+            return VariableValue(root=_VariableValue.MapValue(**value.dict(exclude_unset=True), type="mapValue"))
+        else:
+            return VariableValue(__root__=_VariableValue.MapValue(**value.dict(exclude_unset=True), type="mapValue"))
 
     def list_value(self, value: typing.List[VariableValue]) -> VariableValue:
-        return VariableValue(_VariableValue.ListValue(type="listValue", value=value))
+        if IS_PYDANTIC_V2:
+            return VariableValue(root=_VariableValue.ListValue(type="listValue", value=value))
+        else:
+            return VariableValue(__root__=_VariableValue.ListValue(type="listValue", value=value))
 
     def binary_tree_value(self, value: resources_commons_types_binary_tree_value_BinaryTreeValue) -> VariableValue:
-        return VariableValue(_VariableValue.BinaryTreeValue(**value.dict(exclude_unset=True), type="binaryTreeValue"))
+        if IS_PYDANTIC_V2:
+            return VariableValue(
+                root=_VariableValue.BinaryTreeValue(**value.dict(exclude_unset=True), type="binaryTreeValue")
+            )
+        else:
+            return VariableValue(
+                __root__=_VariableValue.BinaryTreeValue(**value.dict(exclude_unset=True), type="binaryTreeValue")
+            )
 
     def singly_linked_list_value(
         self, value: resources_commons_types_singly_linked_list_value_SinglyLinkedListValue
     ) -> VariableValue:
-        return VariableValue(
-            _VariableValue.SinglyLinkedListValue(**value.dict(exclude_unset=True), type="singlyLinkedListValue")
-        )
+        if IS_PYDANTIC_V2:
+            return VariableValue(
+                root=_VariableValue.SinglyLinkedListValue(
+                    **value.dict(exclude_unset=True), type="singlyLinkedListValue"
+                )
+            )
+        else:
+            return VariableValue(
+                __root__=_VariableValue.SinglyLinkedListValue(
+                    **value.dict(exclude_unset=True), type="singlyLinkedListValue"
+                )
+            )
 
     def doubly_linked_list_value(
         self, value: resources_commons_types_doubly_linked_list_value_DoublyLinkedListValue
     ) -> VariableValue:
-        return VariableValue(
-            _VariableValue.DoublyLinkedListValue(**value.dict(exclude_unset=True), type="doublyLinkedListValue")
-        )
+        if IS_PYDANTIC_V2:
+            return VariableValue(
+                root=_VariableValue.DoublyLinkedListValue(
+                    **value.dict(exclude_unset=True), type="doublyLinkedListValue"
+                )
+            )
+        else:
+            return VariableValue(
+                __root__=_VariableValue.DoublyLinkedListValue(
+                    **value.dict(exclude_unset=True), type="doublyLinkedListValue"
+                )
+            )
 
     def null_value(self) -> VariableValue:
-        return VariableValue(_VariableValue.NullValue(type="nullValue"))
+        if IS_PYDANTIC_V2:
+            return VariableValue(root=_VariableValue.NullValue(type="nullValue"))
+        else:
+            return VariableValue(__root__=_VariableValue.NullValue(type="nullValue"))
 
 
 class VariableValue(UniversalRootModel):
@@ -153,43 +202,42 @@ class VariableValue(UniversalRootModel):
         ],
         null_value: typing.Callable[[], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "integerValue":
-            return integer_value(self.get_as_union().value)
-        if self.get_as_union().type == "booleanValue":
-            return boolean_value(self.get_as_union().value)
-        if self.get_as_union().type == "doubleValue":
-            return double_value(self.get_as_union().value)
-        if self.get_as_union().type == "stringValue":
-            return string_value(self.get_as_union().value)
-        if self.get_as_union().type == "charValue":
-            return char_value(self.get_as_union().value)
-        if self.get_as_union().type == "mapValue":
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "integerValue":
+            return integer_value(unioned_value.value)
+        if unioned_value.type == "booleanValue":
+            return boolean_value(unioned_value.value)
+        if unioned_value.type == "doubleValue":
+            return double_value(unioned_value.value)
+        if unioned_value.type == "stringValue":
+            return string_value(unioned_value.value)
+        if unioned_value.type == "charValue":
+            return char_value(unioned_value.value)
+        if unioned_value.type == "mapValue":
             return map_value(
-                resources_commons_types_map_value_MapValue(
-                    **self.get_as_union().dict(exclude_unset=True, exclude={"type"})
-                )
+                resources_commons_types_map_value_MapValue(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
             )
-        if self.get_as_union().type == "listValue":
-            return list_value(self.get_as_union().value)
-        if self.get_as_union().type == "binaryTreeValue":
+        if unioned_value.type == "listValue":
+            return list_value(unioned_value.value)
+        if unioned_value.type == "binaryTreeValue":
             return binary_tree_value(
                 resources_commons_types_binary_tree_value_BinaryTreeValue(
-                    **self.get_as_union().dict(exclude_unset=True, exclude={"type"})
+                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
                 )
             )
-        if self.get_as_union().type == "singlyLinkedListValue":
+        if unioned_value.type == "singlyLinkedListValue":
             return singly_linked_list_value(
                 resources_commons_types_singly_linked_list_value_SinglyLinkedListValue(
-                    **self.get_as_union().dict(exclude_unset=True, exclude={"type"})
+                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
                 )
             )
-        if self.get_as_union().type == "doublyLinkedListValue":
+        if unioned_value.type == "doublyLinkedListValue":
             return doubly_linked_list_value(
                 resources_commons_types_doubly_linked_list_value_DoublyLinkedListValue(
-                    **self.get_as_union().dict(exclude_unset=True, exclude={"type"})
+                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
                 )
             )
-        if self.get_as_union().type == "nullValue":
+        if unioned_value.type == "nullValue":
             return null_value()
 
 

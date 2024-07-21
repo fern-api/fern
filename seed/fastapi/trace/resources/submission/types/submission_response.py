@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
 from ...commons.types.problem_id import ProblemId
 from .code_execution_update import (
     CodeExecutionUpdate as resources_submission_types_code_execution_update_CodeExecutionUpdate,
@@ -20,26 +20,58 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def server_initialized(self) -> SubmissionResponse:
-        return SubmissionResponse(_SubmissionResponse.ServerInitialized(type="serverInitialized"))
+        if IS_PYDANTIC_V2:
+            return SubmissionResponse(root=_SubmissionResponse.ServerInitialized(type="serverInitialized"))
+        else:
+            return SubmissionResponse(__root__=_SubmissionResponse.ServerInitialized(type="serverInitialized"))
 
     def problem_initialized(self, value: ProblemId) -> SubmissionResponse:
-        return SubmissionResponse(_SubmissionResponse.ProblemInitialized(type="problemInitialized", value=value))
+        if IS_PYDANTIC_V2:
+            return SubmissionResponse(
+                root=_SubmissionResponse.ProblemInitialized(type="problemInitialized", value=value)
+            )
+        else:
+            return SubmissionResponse(
+                __root__=_SubmissionResponse.ProblemInitialized(type="problemInitialized", value=value)
+            )
 
     def workspace_initialized(self) -> SubmissionResponse:
-        return SubmissionResponse(_SubmissionResponse.WorkspaceInitialized(type="workspaceInitialized"))
+        if IS_PYDANTIC_V2:
+            return SubmissionResponse(root=_SubmissionResponse.WorkspaceInitialized(type="workspaceInitialized"))
+        else:
+            return SubmissionResponse(__root__=_SubmissionResponse.WorkspaceInitialized(type="workspaceInitialized"))
 
     def server_errored(self, value: ExceptionInfo) -> SubmissionResponse:
-        return SubmissionResponse(
-            _SubmissionResponse.ServerErrored(**value.dict(exclude_unset=True), type="serverErrored")
-        )
+        if IS_PYDANTIC_V2:
+            return SubmissionResponse(
+                root=_SubmissionResponse.ServerErrored(**value.dict(exclude_unset=True), type="serverErrored")
+            )
+        else:
+            return SubmissionResponse(
+                __root__=_SubmissionResponse.ServerErrored(**value.dict(exclude_unset=True), type="serverErrored")
+            )
 
     def code_execution_update(
         self, value: resources_submission_types_code_execution_update_CodeExecutionUpdate
     ) -> SubmissionResponse:
-        return SubmissionResponse(_SubmissionResponse.CodeExecutionUpdate(type="codeExecutionUpdate", value=value))
+        if IS_PYDANTIC_V2:
+            return SubmissionResponse(
+                root=_SubmissionResponse.CodeExecutionUpdate(type="codeExecutionUpdate", value=value)
+            )
+        else:
+            return SubmissionResponse(
+                __root__=_SubmissionResponse.CodeExecutionUpdate(type="codeExecutionUpdate", value=value)
+            )
 
     def terminated(self, value: TerminatedResponse) -> SubmissionResponse:
-        return SubmissionResponse(_SubmissionResponse.Terminated(**value.dict(exclude_unset=True), type="terminated"))
+        if IS_PYDANTIC_V2:
+            return SubmissionResponse(
+                root=_SubmissionResponse.Terminated(**value.dict(exclude_unset=True), type="terminated")
+            )
+        else:
+            return SubmissionResponse(
+                __root__=_SubmissionResponse.Terminated(**value.dict(exclude_unset=True), type="terminated")
+            )
 
 
 class SubmissionResponse(UniversalRootModel):
@@ -106,18 +138,19 @@ class SubmissionResponse(UniversalRootModel):
         ],
         terminated: typing.Callable[[TerminatedResponse], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "serverInitialized":
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "serverInitialized":
             return server_initialized()
-        if self.get_as_union().type == "problemInitialized":
-            return problem_initialized(self.get_as_union().value)
-        if self.get_as_union().type == "workspaceInitialized":
+        if unioned_value.type == "problemInitialized":
+            return problem_initialized(unioned_value.value)
+        if unioned_value.type == "workspaceInitialized":
             return workspace_initialized()
-        if self.get_as_union().type == "serverErrored":
-            return server_errored(ExceptionInfo(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
-        if self.get_as_union().type == "codeExecutionUpdate":
-            return code_execution_update(self.get_as_union().value)
-        if self.get_as_union().type == "terminated":
-            return terminated(TerminatedResponse(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
+        if unioned_value.type == "serverErrored":
+            return server_errored(ExceptionInfo(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+        if unioned_value.type == "codeExecutionUpdate":
+            return code_execution_update(unioned_value.value)
+        if unioned_value.type == "terminated":
+            return terminated(TerminatedResponse(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
 
 
 class _SubmissionResponse:
@@ -146,3 +179,6 @@ class _SubmissionResponse:
 
         class Config:
             allow_population_by_field_name = True
+
+
+update_forward_refs(SubmissionResponse)

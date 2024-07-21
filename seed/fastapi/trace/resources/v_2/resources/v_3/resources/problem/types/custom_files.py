@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ........core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
+from ........core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
 from .......commons.types.language import Language
 from .basic_custom_files import BasicCustomFiles
 from .files import Files
@@ -17,10 +17,16 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def basic(self, value: BasicCustomFiles) -> CustomFiles:
-        return CustomFiles(_CustomFiles.Basic(**value.dict(exclude_unset=True), type="basic"))
+        if IS_PYDANTIC_V2:
+            return CustomFiles(root=_CustomFiles.Basic(**value.dict(exclude_unset=True), type="basic"))
+        else:
+            return CustomFiles(__root__=_CustomFiles.Basic(**value.dict(exclude_unset=True), type="basic"))
 
     def custom(self, value: typing.Dict[Language, Files]) -> CustomFiles:
-        return CustomFiles(_CustomFiles.Custom(type="custom", value=value))
+        if IS_PYDANTIC_V2:
+            return CustomFiles(root=_CustomFiles.Custom(type="custom", value=value))
+        else:
+            return CustomFiles(__root__=_CustomFiles.Custom(type="custom", value=value))
 
 
 class CustomFiles(UniversalRootModel):
@@ -47,10 +53,11 @@ class CustomFiles(UniversalRootModel):
         basic: typing.Callable[[BasicCustomFiles], T_Result],
         custom: typing.Callable[[typing.Dict[Language, Files]], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "basic":
-            return basic(BasicCustomFiles(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
-        if self.get_as_union().type == "custom":
-            return custom(self.get_as_union().value)
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "basic":
+            return basic(BasicCustomFiles(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+        if unioned_value.type == "custom":
+            return custom(unioned_value.value)
 
 
 class _CustomFiles:
@@ -63,3 +70,6 @@ class _CustomFiles:
     class Custom(UniversalBaseModel):
         type: typing.Literal["custom"] = "custom"
         value: typing.Dict[Language, Files]
+
+
+update_forward_refs(CustomFiles)

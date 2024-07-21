@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ........core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
+from ........core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
 from .non_void_function_signature import NonVoidFunctionSignature
 from .void_function_signature import VoidFunctionSignature
 from .void_function_signature_that_takes_actual_result import VoidFunctionSignatureThatTakesActualResult
@@ -17,17 +17,32 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def void(self, value: VoidFunctionSignature) -> FunctionSignature:
-        return FunctionSignature(_FunctionSignature.Void(**value.dict(exclude_unset=True), type="void"))
+        if IS_PYDANTIC_V2:
+            return FunctionSignature(root=_FunctionSignature.Void(**value.dict(exclude_unset=True), type="void"))
+        else:
+            return FunctionSignature(__root__=_FunctionSignature.Void(**value.dict(exclude_unset=True), type="void"))
 
     def non_void(self, value: NonVoidFunctionSignature) -> FunctionSignature:
-        return FunctionSignature(_FunctionSignature.NonVoid(**value.dict(exclude_unset=True), type="nonVoid"))
+        if IS_PYDANTIC_V2:
+            return FunctionSignature(root=_FunctionSignature.NonVoid(**value.dict(exclude_unset=True), type="nonVoid"))
+        else:
+            return FunctionSignature(
+                __root__=_FunctionSignature.NonVoid(**value.dict(exclude_unset=True), type="nonVoid")
+            )
 
     def void_that_takes_actual_result(self, value: VoidFunctionSignatureThatTakesActualResult) -> FunctionSignature:
-        return FunctionSignature(
-            _FunctionSignature.VoidThatTakesActualResult(
-                **value.dict(exclude_unset=True), type="voidThatTakesActualResult"
+        if IS_PYDANTIC_V2:
+            return FunctionSignature(
+                root=_FunctionSignature.VoidThatTakesActualResult(
+                    **value.dict(exclude_unset=True), type="voidThatTakesActualResult"
+                )
             )
-        )
+        else:
+            return FunctionSignature(
+                __root__=_FunctionSignature.VoidThatTakesActualResult(
+                    **value.dict(exclude_unset=True), type="voidThatTakesActualResult"
+                )
+            )
 
 
 class FunctionSignature(UniversalRootModel):
@@ -69,15 +84,14 @@ class FunctionSignature(UniversalRootModel):
         non_void: typing.Callable[[NonVoidFunctionSignature], T_Result],
         void_that_takes_actual_result: typing.Callable[[VoidFunctionSignatureThatTakesActualResult], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "void":
-            return void(VoidFunctionSignature(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
-        if self.get_as_union().type == "nonVoid":
-            return non_void(NonVoidFunctionSignature(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
-        if self.get_as_union().type == "voidThatTakesActualResult":
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "void":
+            return void(VoidFunctionSignature(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+        if unioned_value.type == "nonVoid":
+            return non_void(NonVoidFunctionSignature(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+        if unioned_value.type == "voidThatTakesActualResult":
             return void_that_takes_actual_result(
-                VoidFunctionSignatureThatTakesActualResult(
-                    **self.get_as_union().dict(exclude_unset=True, exclude={"type"})
-                )
+                VoidFunctionSignatureThatTakesActualResult(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
             )
 
 
@@ -99,3 +113,6 @@ class _FunctionSignature:
 
         class Config:
             allow_population_by_field_name = True
+
+
+update_forward_refs(FunctionSignature)

@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
+from ......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
 from .deep_equality_correctness_check import DeepEqualityCorrectnessCheck
 from .void_function_definition_that_takes_actual_result import VoidFunctionDefinitionThatTakesActualResult
 
@@ -16,12 +16,24 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def deep_equality(self, value: DeepEqualityCorrectnessCheck) -> AssertCorrectnessCheck:
-        return AssertCorrectnessCheck(
-            _AssertCorrectnessCheck.DeepEquality(**value.dict(exclude_unset=True), type="deepEquality")
-        )
+        if IS_PYDANTIC_V2:
+            return AssertCorrectnessCheck(
+                root=_AssertCorrectnessCheck.DeepEquality(**value.dict(exclude_unset=True), type="deepEquality")
+            )
+        else:
+            return AssertCorrectnessCheck(
+                __root__=_AssertCorrectnessCheck.DeepEquality(**value.dict(exclude_unset=True), type="deepEquality")
+            )
 
     def custom(self, value: VoidFunctionDefinitionThatTakesActualResult) -> AssertCorrectnessCheck:
-        return AssertCorrectnessCheck(_AssertCorrectnessCheck.Custom(**value.dict(exclude_unset=True), type="custom"))
+        if IS_PYDANTIC_V2:
+            return AssertCorrectnessCheck(
+                root=_AssertCorrectnessCheck.Custom(**value.dict(exclude_unset=True), type="custom")
+            )
+        else:
+            return AssertCorrectnessCheck(
+                __root__=_AssertCorrectnessCheck.Custom(**value.dict(exclude_unset=True), type="custom")
+            )
 
 
 class AssertCorrectnessCheck(UniversalRootModel):
@@ -50,15 +62,14 @@ class AssertCorrectnessCheck(UniversalRootModel):
         deep_equality: typing.Callable[[DeepEqualityCorrectnessCheck], T_Result],
         custom: typing.Callable[[VoidFunctionDefinitionThatTakesActualResult], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "deepEquality":
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "deepEquality":
             return deep_equality(
-                DeepEqualityCorrectnessCheck(**self.get_as_union().dict(exclude_unset=True, exclude={"type"}))
+                DeepEqualityCorrectnessCheck(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
             )
-        if self.get_as_union().type == "custom":
+        if unioned_value.type == "custom":
             return custom(
-                VoidFunctionDefinitionThatTakesActualResult(
-                    **self.get_as_union().dict(exclude_unset=True, exclude={"type"})
-                )
+                VoidFunctionDefinitionThatTakesActualResult(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
             )
 
 
@@ -74,3 +85,6 @@ class _AssertCorrectnessCheck:
 
         class Config:
             allow_population_by_field_name = True
+
+
+update_forward_refs(AssertCorrectnessCheck)

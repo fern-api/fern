@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
 from .bar import Bar as resources_types_types_bar_Bar
 from .foo import Foo as resources_types_types_foo_Foo
 
@@ -16,10 +16,16 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def foo(self, value: resources_types_types_foo_Foo) -> UnionWithoutKey:
-        return UnionWithoutKey(_UnionWithoutKey.Foo(**value.dict(exclude_unset=True), type="foo"))
+        if IS_PYDANTIC_V2:
+            return UnionWithoutKey(root=_UnionWithoutKey.Foo(**value.dict(exclude_unset=True), type="foo"))
+        else:
+            return UnionWithoutKey(__root__=_UnionWithoutKey.Foo(**value.dict(exclude_unset=True), type="foo"))
 
     def bar(self, value: resources_types_types_bar_Bar) -> UnionWithoutKey:
-        return UnionWithoutKey(_UnionWithoutKey.Bar(**value.dict(exclude_unset=True), type="bar"))
+        if IS_PYDANTIC_V2:
+            return UnionWithoutKey(root=_UnionWithoutKey.Bar(**value.dict(exclude_unset=True), type="bar"))
+        else:
+            return UnionWithoutKey(__root__=_UnionWithoutKey.Bar(**value.dict(exclude_unset=True), type="bar"))
 
 
 class UnionWithoutKey(UniversalRootModel):
@@ -46,10 +52,11 @@ class UnionWithoutKey(UniversalRootModel):
         foo: typing.Callable[[resources_types_types_foo_Foo], T_Result],
         bar: typing.Callable[[resources_types_types_bar_Bar], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "foo":
-            return foo(resources_types_types_foo_Foo(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
-        if self.get_as_union().type == "bar":
-            return bar(resources_types_types_bar_Bar(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "foo":
+            return foo(resources_types_types_foo_Foo(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+        if unioned_value.type == "bar":
+            return bar(resources_types_types_bar_Bar(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
 
 
 class _UnionWithoutKey:
@@ -64,3 +71,6 @@ class _UnionWithoutKey:
 
         class Config:
             allow_population_by_field_name = True
+
+
+update_forward_refs(UnionWithoutKey)

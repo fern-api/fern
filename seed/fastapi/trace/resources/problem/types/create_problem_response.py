@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
 from ...commons.types.problem_id import ProblemId
 from .create_problem_error import CreateProblemError
 
@@ -16,10 +16,16 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def success(self, value: ProblemId) -> CreateProblemResponse:
-        return CreateProblemResponse(_CreateProblemResponse.Success(type="success", value=value))
+        if IS_PYDANTIC_V2:
+            return CreateProblemResponse(root=_CreateProblemResponse.Success(type="success", value=value))
+        else:
+            return CreateProblemResponse(__root__=_CreateProblemResponse.Success(type="success", value=value))
 
     def error(self, value: CreateProblemError) -> CreateProblemResponse:
-        return CreateProblemResponse(_CreateProblemResponse.Error(type="error", value=value))
+        if IS_PYDANTIC_V2:
+            return CreateProblemResponse(root=_CreateProblemResponse.Error(type="error", value=value))
+        else:
+            return CreateProblemResponse(__root__=_CreateProblemResponse.Error(type="error", value=value))
 
 
 class CreateProblemResponse(UniversalRootModel):
@@ -46,10 +52,11 @@ class CreateProblemResponse(UniversalRootModel):
     def visit(
         self, success: typing.Callable[[ProblemId], T_Result], error: typing.Callable[[CreateProblemError], T_Result]
     ) -> T_Result:
-        if self.get_as_union().type == "success":
-            return success(self.get_as_union().value)
-        if self.get_as_union().type == "error":
-            return error(self.get_as_union().value)
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "success":
+            return success(unioned_value.value)
+        if unioned_value.type == "error":
+            return error(unioned_value.value)
 
 
 class _CreateProblemResponse:
@@ -60,3 +67,6 @@ class _CreateProblemResponse:
     class Error(UniversalBaseModel):
         type: typing.Literal["error"] = "error"
         value: CreateProblemError
+
+
+update_forward_refs(CreateProblemResponse)

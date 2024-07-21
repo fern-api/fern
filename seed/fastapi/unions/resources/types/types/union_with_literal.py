@@ -4,14 +4,17 @@ from __future__ import annotations
 
 import typing
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
 
 class _Factory:
     def fern(self, value: typing.Literal["fern"]) -> UnionWithLiteral:
-        return UnionWithLiteral(_UnionWithLiteral.Fern(type="fern", value=value))
+        if IS_PYDANTIC_V2:
+            return UnionWithLiteral(root=_UnionWithLiteral.Fern(type="fern", value=value))
+        else:
+            return UnionWithLiteral(__root__=_UnionWithLiteral.Fern(type="fern", value=value))
 
 
 class UnionWithLiteral(UniversalRootModel):
@@ -30,11 +33,15 @@ class UnionWithLiteral(UniversalRootModel):
             return self.__root__
 
     def visit(self, fern: typing.Callable[[typing.Literal["fern"]], T_Result]) -> T_Result:
-        if self.get_as_union().type == "fern":
-            return fern(self.get_as_union().value)
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "fern":
+            return fern(unioned_value.value)
 
 
 class _UnionWithLiteral:
     class Fern(UniversalBaseModel):
         type: typing.Literal["fern"] = "fern"
         value: typing.Literal["fern"]
+
+
+update_forward_refs(UnionWithLiteral)

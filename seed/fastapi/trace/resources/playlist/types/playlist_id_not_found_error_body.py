@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import typing
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
 from .playlist_id import PlaylistId as resources_playlist_types_playlist_id_PlaylistId
 
 T_Result = typing.TypeVar("T_Result")
@@ -12,7 +12,14 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def playlist_id(self, value: resources_playlist_types_playlist_id_PlaylistId) -> PlaylistIdNotFoundErrorBody:
-        return PlaylistIdNotFoundErrorBody(_PlaylistIdNotFoundErrorBody.PlaylistId(type="playlistId", value=value))
+        if IS_PYDANTIC_V2:
+            return PlaylistIdNotFoundErrorBody(
+                root=_PlaylistIdNotFoundErrorBody.PlaylistId(type="playlistId", value=value)
+            )
+        else:
+            return PlaylistIdNotFoundErrorBody(
+                __root__=_PlaylistIdNotFoundErrorBody.PlaylistId(type="playlistId", value=value)
+            )
 
 
 class PlaylistIdNotFoundErrorBody(UniversalRootModel):
@@ -33,11 +40,15 @@ class PlaylistIdNotFoundErrorBody(UniversalRootModel):
     def visit(
         self, playlist_id: typing.Callable[[resources_playlist_types_playlist_id_PlaylistId], T_Result]
     ) -> T_Result:
-        if self.get_as_union().type == "playlistId":
-            return playlist_id(self.get_as_union().value)
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "playlistId":
+            return playlist_id(unioned_value.value)
 
 
 class _PlaylistIdNotFoundErrorBody:
     class PlaylistId(UniversalBaseModel):
         type: typing.Literal["playlistId"] = "playlistId"
         value: resources_playlist_types_playlist_id_PlaylistId
+
+
+update_forward_refs(PlaylistIdNotFoundErrorBody)

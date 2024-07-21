@@ -55,6 +55,7 @@ export class Auth {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: {
                 ...serializers.auth.GetTokenRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
                 audience: "https://api.example.com",

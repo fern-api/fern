@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
 from .foo import Foo as types_types_foo_Foo
 
 T_Result = typing.TypeVar("T_Result")
@@ -15,10 +15,16 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def foo(self, value: types_types_foo_Foo) -> UnionWithUnknown:
-        return UnionWithUnknown(_UnionWithUnknown.Foo(**value.dict(exclude_unset=True), type="foo"))
+        if IS_PYDANTIC_V2:
+            return UnionWithUnknown(root=_UnionWithUnknown.Foo(**value.dict(exclude_unset=True), type="foo"))
+        else:
+            return UnionWithUnknown(__root__=_UnionWithUnknown.Foo(**value.dict(exclude_unset=True), type="foo"))
 
     def unknown(self) -> UnionWithUnknown:
-        return UnionWithUnknown(_UnionWithUnknown.Unknown(type="unknown"))
+        if IS_PYDANTIC_V2:
+            return UnionWithUnknown(root=_UnionWithUnknown.Unknown(type="unknown"))
+        else:
+            return UnionWithUnknown(__root__=_UnionWithUnknown.Unknown(type="unknown"))
 
 
 class UnionWithUnknown(UniversalRootModel):
@@ -43,9 +49,10 @@ class UnionWithUnknown(UniversalRootModel):
     def visit(
         self, foo: typing.Callable[[types_types_foo_Foo], T_Result], unknown: typing.Callable[[], T_Result]
     ) -> T_Result:
-        if self.get_as_union().type == "foo":
-            return foo(types_types_foo_Foo(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
-        else:
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "foo":
+            return foo(types_types_foo_Foo(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+        if unioned_value.type == "unknown":
             return unknown()
 
 
@@ -72,3 +79,6 @@ class _UnionWithUnknown:
             class Config:
                 frozen = True
                 smart_union = True
+
+
+update_forward_refs(UnionWithUnknown)

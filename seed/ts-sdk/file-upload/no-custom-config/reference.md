@@ -37,7 +37,7 @@ await client.service.post(
 <dl>
 <dd>
 
-**file:** `File | fs.ReadStream`
+**file:** `File | fs.ReadStream | Blob`
 
 </dd>
 </dl>
@@ -45,7 +45,7 @@ await client.service.post(
 <dl>
 <dd>
 
-**fileList:** `File[] | fs.ReadStream[]`
+**fileList:** `File[] | fs.ReadStream[] | Blob[]`
 
 </dd>
 </dl>
@@ -53,7 +53,7 @@ await client.service.post(
 <dl>
 <dd>
 
-**maybeFile:** `File | fs.ReadStream | undefined`
+**maybeFile:** `File | fs.ReadStream | Blob | undefined`
 
 </dd>
 </dl>
@@ -61,7 +61,7 @@ await client.service.post(
 <dl>
 <dd>
 
-**maybeFileList:** `File[] | fs.ReadStream[] | undefined`
+**maybeFileList:** `File[] | fs.ReadStream[] | Blob[] | undefined`
 
 </dd>
 </dl>
@@ -117,7 +117,7 @@ await client.service.justFile(fs.createReadStream("/path/to/your/file"));
 <dl>
 <dd>
 
-**file:** `File | fs.ReadStream`
+**file:** `File | fs.ReadStream | Blob`
 
 </dd>
 </dl>
@@ -171,7 +171,7 @@ await client.service.justFileWithQueryParams(fs.createReadStream("/path/to/your/
 <dl>
 <dd>
 
-**file:** `File | fs.ReadStream`
+**file:** `File | fs.ReadStream | Blob`
 
 </dd>
 </dl>

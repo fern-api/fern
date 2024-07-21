@@ -7,17 +7,23 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
 
 class _Factory:
     def html(self, value: str) -> Metadata:
-        return Metadata(_Metadata.Html(type="html", value=value))
+        if IS_PYDANTIC_V2:
+            return Metadata(root=_Metadata.Html(type="html", value=value))
+        else:
+            return Metadata(__root__=_Metadata.Html(type="html", value=value))
 
     def markdown(self, value: str) -> Metadata:
-        return Metadata(_Metadata.Markdown(type="markdown", value=value))
+        if IS_PYDANTIC_V2:
+            return Metadata(root=_Metadata.Markdown(type="markdown", value=value))
+        else:
+            return Metadata(__root__=_Metadata.Markdown(type="markdown", value=value))
 
 
 class Metadata(UniversalRootModel):
@@ -48,10 +54,11 @@ class Metadata(UniversalRootModel):
             return self.__root__
 
     def visit(self, html: typing.Callable[[str], T_Result], markdown: typing.Callable[[str], T_Result]) -> T_Result:
-        if self.get_as_union().type == "html":
-            return html(self.get_as_union().value)
-        if self.get_as_union().type == "markdown":
-            return markdown(self.get_as_union().value)
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "html":
+            return html(unioned_value.value)
+        if unioned_value.type == "markdown":
+            return markdown(unioned_value.value)
 
 
 class _Metadata:
@@ -62,3 +69,6 @@ class _Metadata:
     class Markdown(UniversalBaseModel):
         type: typing.Literal["markdown"] = "markdown"
         value: str
+
+
+update_forward_refs(Metadata)

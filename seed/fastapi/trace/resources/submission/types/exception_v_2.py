@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
 from .exception_info import ExceptionInfo
 
 T_Result = typing.TypeVar("T_Result")
@@ -15,10 +15,16 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def generic(self, value: ExceptionInfo) -> ExceptionV2:
-        return ExceptionV2(_ExceptionV2.Generic(**value.dict(exclude_unset=True), type="generic"))
+        if IS_PYDANTIC_V2:
+            return ExceptionV2(root=_ExceptionV2.Generic(**value.dict(exclude_unset=True), type="generic"))
+        else:
+            return ExceptionV2(__root__=_ExceptionV2.Generic(**value.dict(exclude_unset=True), type="generic"))
 
     def timeout(self) -> ExceptionV2:
-        return ExceptionV2(_ExceptionV2.Timeout(type="timeout"))
+        if IS_PYDANTIC_V2:
+            return ExceptionV2(root=_ExceptionV2.Timeout(type="timeout"))
+        else:
+            return ExceptionV2(__root__=_ExceptionV2.Timeout(type="timeout"))
 
 
 class ExceptionV2(UniversalRootModel):
@@ -43,9 +49,10 @@ class ExceptionV2(UniversalRootModel):
     def visit(
         self, generic: typing.Callable[[ExceptionInfo], T_Result], timeout: typing.Callable[[], T_Result]
     ) -> T_Result:
-        if self.get_as_union().type == "generic":
-            return generic(ExceptionInfo(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
-        if self.get_as_union().type == "timeout":
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "generic":
+            return generic(ExceptionInfo(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+        if unioned_value.type == "timeout":
             return timeout()
 
 
@@ -58,3 +65,6 @@ class _ExceptionV2:
 
     class Timeout(UniversalBaseModel):
         type: typing.Literal["timeout"] = "timeout"
+
+
+update_forward_refs(ExceptionV2)

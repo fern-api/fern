@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
 from .circle import Circle as resources_union_types_circle_Circle
 from .square import Square as resources_union_types_square_Square
 
@@ -16,10 +16,16 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def circle(self, value: resources_union_types_circle_Circle) -> Shape:
-        return Shape(_Shape.Circle(**value.dict(exclude_unset=True), type="circle"))
+        if IS_PYDANTIC_V2:
+            return Shape(root=_Shape.Circle(**value.dict(exclude_unset=True), type="circle"))
+        else:
+            return Shape(__root__=_Shape.Circle(**value.dict(exclude_unset=True), type="circle"))
 
     def square(self, value: resources_union_types_square_Square) -> Shape:
-        return Shape(_Shape.Square(**value.dict(exclude_unset=True), type="square"))
+        if IS_PYDANTIC_V2:
+            return Shape(root=_Shape.Square(**value.dict(exclude_unset=True), type="square"))
+        else:
+            return Shape(__root__=_Shape.Square(**value.dict(exclude_unset=True), type="square"))
 
 
 class Shape(UniversalRootModel):
@@ -46,13 +52,14 @@ class Shape(UniversalRootModel):
         circle: typing.Callable[[resources_union_types_circle_Circle], T_Result],
         square: typing.Callable[[resources_union_types_square_Square], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "circle":
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "circle":
             return circle(
-                resources_union_types_circle_Circle(**self.get_as_union().dict(exclude_unset=True, exclude={"type"}))
+                resources_union_types_circle_Circle(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
             )
-        if self.get_as_union().type == "square":
+        if unioned_value.type == "square":
             return square(
-                resources_union_types_square_Square(**self.get_as_union().dict(exclude_unset=True, exclude={"type"}))
+                resources_union_types_square_Square(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
             )
 
 
@@ -68,3 +75,6 @@ class _Shape:
 
         class Config:
             allow_population_by_field_name = True
+
+
+update_forward_refs(Shape)

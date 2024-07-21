@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ........core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
+from ........core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
 from .parameter_id import ParameterId
 
 T_Result = typing.TypeVar("T_Result")
@@ -15,14 +15,24 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def html(self, value: str) -> TestCaseImplementationDescriptionBoard:
-        return TestCaseImplementationDescriptionBoard(
-            _TestCaseImplementationDescriptionBoard.Html(type="html", value=value)
-        )
+        if IS_PYDANTIC_V2:
+            return TestCaseImplementationDescriptionBoard(
+                root=_TestCaseImplementationDescriptionBoard.Html(type="html", value=value)
+            )
+        else:
+            return TestCaseImplementationDescriptionBoard(
+                __root__=_TestCaseImplementationDescriptionBoard.Html(type="html", value=value)
+            )
 
     def param_id(self, value: ParameterId) -> TestCaseImplementationDescriptionBoard:
-        return TestCaseImplementationDescriptionBoard(
-            _TestCaseImplementationDescriptionBoard.ParamId(type="paramId", value=value)
-        )
+        if IS_PYDANTIC_V2:
+            return TestCaseImplementationDescriptionBoard(
+                root=_TestCaseImplementationDescriptionBoard.ParamId(type="paramId", value=value)
+            )
+        else:
+            return TestCaseImplementationDescriptionBoard(
+                __root__=_TestCaseImplementationDescriptionBoard.ParamId(type="paramId", value=value)
+            )
 
 
 class TestCaseImplementationDescriptionBoard(UniversalRootModel):
@@ -57,10 +67,11 @@ class TestCaseImplementationDescriptionBoard(UniversalRootModel):
     def visit(
         self, html: typing.Callable[[str], T_Result], param_id: typing.Callable[[ParameterId], T_Result]
     ) -> T_Result:
-        if self.get_as_union().type == "html":
-            return html(self.get_as_union().value)
-        if self.get_as_union().type == "paramId":
-            return param_id(self.get_as_union().value)
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "html":
+            return html(unioned_value.value)
+        if unioned_value.type == "paramId":
+            return param_id(unioned_value.value)
 
 
 class _TestCaseImplementationDescriptionBoard:
@@ -71,3 +82,6 @@ class _TestCaseImplementationDescriptionBoard:
     class ParamId(UniversalBaseModel):
         type: typing.Literal["paramId"] = "paramId"
         value: ParameterId
+
+
+update_forward_refs(TestCaseImplementationDescriptionBoard)

@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
 from ...commons.types.variable_value import VariableValue
 
 T_Result = typing.TypeVar("T_Result")
@@ -15,13 +15,22 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def html(self, value: str) -> ProblemDescriptionBoard:
-        return ProblemDescriptionBoard(_ProblemDescriptionBoard.Html(type="html", value=value))
+        if IS_PYDANTIC_V2:
+            return ProblemDescriptionBoard(root=_ProblemDescriptionBoard.Html(type="html", value=value))
+        else:
+            return ProblemDescriptionBoard(__root__=_ProblemDescriptionBoard.Html(type="html", value=value))
 
     def variable(self, value: VariableValue) -> ProblemDescriptionBoard:
-        return ProblemDescriptionBoard(_ProblemDescriptionBoard.Variable(type="variable", value=value))
+        if IS_PYDANTIC_V2:
+            return ProblemDescriptionBoard(root=_ProblemDescriptionBoard.Variable(type="variable", value=value))
+        else:
+            return ProblemDescriptionBoard(__root__=_ProblemDescriptionBoard.Variable(type="variable", value=value))
 
     def test_case_id(self, value: str) -> ProblemDescriptionBoard:
-        return ProblemDescriptionBoard(_ProblemDescriptionBoard.TestCaseId(type="testCaseId", value=value))
+        if IS_PYDANTIC_V2:
+            return ProblemDescriptionBoard(root=_ProblemDescriptionBoard.TestCaseId(type="testCaseId", value=value))
+        else:
+            return ProblemDescriptionBoard(__root__=_ProblemDescriptionBoard.TestCaseId(type="testCaseId", value=value))
 
 
 class ProblemDescriptionBoard(UniversalRootModel):
@@ -63,12 +72,13 @@ class ProblemDescriptionBoard(UniversalRootModel):
         variable: typing.Callable[[VariableValue], T_Result],
         test_case_id: typing.Callable[[str], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "html":
-            return html(self.get_as_union().value)
-        if self.get_as_union().type == "variable":
-            return variable(self.get_as_union().value)
-        if self.get_as_union().type == "testCaseId":
-            return test_case_id(self.get_as_union().value)
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "html":
+            return html(unioned_value.value)
+        if unioned_value.type == "variable":
+            return variable(unioned_value.value)
+        if unioned_value.type == "testCaseId":
+            return test_case_id(unioned_value.value)
 
 
 class _ProblemDescriptionBoard:
@@ -83,3 +93,6 @@ class _ProblemDescriptionBoard:
     class TestCaseId(UniversalBaseModel):
         type: typing.Literal["testCaseId"] = "testCaseId"
         value: str
+
+
+update_forward_refs(ProblemDescriptionBoard)

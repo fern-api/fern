@@ -8,20 +8,29 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
 
 class _Factory:
     def value(self, value: int) -> UnionWithTime:
-        return UnionWithTime(_UnionWithTime.Value(type="value", value=value))
+        if IS_PYDANTIC_V2:
+            return UnionWithTime(root=_UnionWithTime.Value(type="value", value=value))
+        else:
+            return UnionWithTime(__root__=_UnionWithTime.Value(type="value", value=value))
 
     def date(self, value: dt.date) -> UnionWithTime:
-        return UnionWithTime(_UnionWithTime.Date(type="date", value=value))
+        if IS_PYDANTIC_V2:
+            return UnionWithTime(root=_UnionWithTime.Date(type="date", value=value))
+        else:
+            return UnionWithTime(__root__=_UnionWithTime.Date(type="date", value=value))
 
     def datetime(self, value: dt.datetime) -> UnionWithTime:
-        return UnionWithTime(_UnionWithTime.Datetime(type="datetime", value=value))
+        if IS_PYDANTIC_V2:
+            return UnionWithTime(root=_UnionWithTime.Datetime(type="datetime", value=value))
+        else:
+            return UnionWithTime(__root__=_UnionWithTime.Datetime(type="datetime", value=value))
 
 
 class UnionWithTime(UniversalRootModel):
@@ -51,12 +60,13 @@ class UnionWithTime(UniversalRootModel):
         date: typing.Callable[[dt.date], T_Result],
         datetime: typing.Callable[[dt.datetime], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "value":
-            return value(self.get_as_union().value)
-        if self.get_as_union().type == "date":
-            return date(self.get_as_union().value)
-        if self.get_as_union().type == "datetime":
-            return datetime(self.get_as_union().value)
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "value":
+            return value(unioned_value.value)
+        if unioned_value.type == "date":
+            return date(unioned_value.value)
+        if unioned_value.type == "datetime":
+            return datetime(unioned_value.value)
 
 
 class _UnionWithTime:
@@ -71,3 +81,6 @@ class _UnionWithTime:
     class Datetime(UniversalBaseModel):
         type: typing.Literal["datetime"] = "datetime"
         value: dt.datetime
+
+
+update_forward_refs(UnionWithTime)

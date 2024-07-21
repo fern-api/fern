@@ -3,6 +3,7 @@
 import logging
 
 import starlette
+import starlette.exceptions
 
 import fastapi
 

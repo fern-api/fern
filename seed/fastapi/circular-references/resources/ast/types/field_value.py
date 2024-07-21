@@ -16,13 +16,22 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def primitive_value(self, value: resources_ast_types_primitive_value_PrimitiveValue) -> FieldValue:
-        return FieldValue(_FieldValue.PrimitiveValue(type="primitive_value", value=value))
+        if IS_PYDANTIC_V2:
+            return FieldValue(root=_FieldValue.PrimitiveValue(type="primitive_value", value=value))
+        else:
+            return FieldValue(__root__=_FieldValue.PrimitiveValue(type="primitive_value", value=value))
 
     def object_value(self, value: resources_ast_types_object_value_ObjectValue) -> FieldValue:
-        return FieldValue(_FieldValue.ObjectValue(**value.dict(exclude_unset=True), type="object_value"))
+        if IS_PYDANTIC_V2:
+            return FieldValue(root=_FieldValue.ObjectValue(**value.dict(exclude_unset=True), type="object_value"))
+        else:
+            return FieldValue(__root__=_FieldValue.ObjectValue(**value.dict(exclude_unset=True), type="object_value"))
 
     def container_value(self, value: resources_ast_types_container_value_ContainerValue) -> FieldValue:
-        return FieldValue(_FieldValue.ContainerValue(type="container_value", value=value))
+        if IS_PYDANTIC_V2:
+            return FieldValue(root=_FieldValue.ContainerValue(type="container_value", value=value))
+        else:
+            return FieldValue(__root__=_FieldValue.ContainerValue(type="container_value", value=value))
 
 
 class FieldValue(UniversalRootModel):
@@ -56,16 +65,15 @@ class FieldValue(UniversalRootModel):
         object_value: typing.Callable[[resources_ast_types_object_value_ObjectValue], T_Result],
         container_value: typing.Callable[[resources_ast_types_container_value_ContainerValue], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "primitive_value":
-            return primitive_value(self.get_as_union().value)
-        if self.get_as_union().type == "object_value":
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "primitive_value":
+            return primitive_value(unioned_value.value)
+        if unioned_value.type == "object_value":
             return object_value(
-                resources_ast_types_object_value_ObjectValue(
-                    **self.get_as_union().dict(exclude_unset=True, exclude={"type"})
-                )
+                resources_ast_types_object_value_ObjectValue(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
             )
-        if self.get_as_union().type == "container_value":
-            return container_value(self.get_as_union().value)
+        if unioned_value.type == "container_value":
+            return container_value(unioned_value.value)
 
 
 from .container_value import ContainerValue as resources_ast_types_container_value_ContainerValue  # noqa: E402

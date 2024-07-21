@@ -8,17 +8,23 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
 
 class _Factory:
     def date(self, value: typing.Optional[dt.date]) -> UnionWithOptionalTime:
-        return UnionWithOptionalTime(_UnionWithOptionalTime.Date(type="date", value=value))
+        if IS_PYDANTIC_V2:
+            return UnionWithOptionalTime(root=_UnionWithOptionalTime.Date(type="date", value=value))
+        else:
+            return UnionWithOptionalTime(__root__=_UnionWithOptionalTime.Date(type="date", value=value))
 
     def dateimte(self, value: typing.Optional[dt.datetime]) -> UnionWithOptionalTime:
-        return UnionWithOptionalTime(_UnionWithOptionalTime.Dateimte(type="dateimte", value=value))
+        if IS_PYDANTIC_V2:
+            return UnionWithOptionalTime(root=_UnionWithOptionalTime.Dateimte(type="dateimte", value=value))
+        else:
+            return UnionWithOptionalTime(__root__=_UnionWithOptionalTime.Dateimte(type="dateimte", value=value))
 
 
 class UnionWithOptionalTime(UniversalRootModel):
@@ -47,10 +53,11 @@ class UnionWithOptionalTime(UniversalRootModel):
         date: typing.Callable[[typing.Optional[dt.date]], T_Result],
         dateimte: typing.Callable[[typing.Optional[dt.datetime]], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "date":
-            return date(self.get_as_union().value)
-        if self.get_as_union().type == "dateimte":
-            return dateimte(self.get_as_union().value)
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "date":
+            return date(unioned_value.value)
+        if unioned_value.type == "dateimte":
+            return dateimte(unioned_value.value)
 
 
 class _UnionWithOptionalTime:
@@ -61,3 +68,6 @@ class _UnionWithOptionalTime:
     class Dateimte(UniversalBaseModel):
         type: typing.Literal["dateimte"] = "dateimte"
         value: typing.Optional[dt.datetime] = None
+
+
+update_forward_refs(UnionWithOptionalTime)

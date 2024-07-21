@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
 from .cat import Cat as types_union_types_cat_Cat
 from .dog import Dog as types_union_types_dog_Dog
 
@@ -16,10 +16,16 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def dog(self, value: types_union_types_dog_Dog) -> Animal:
-        return Animal(_Animal.Dog(**value.dict(exclude_unset=True), animal="dog"))
+        if IS_PYDANTIC_V2:
+            return Animal(root=_Animal.Dog(**value.dict(exclude_unset=True), animal="dog"))
+        else:
+            return Animal(__root__=_Animal.Dog(**value.dict(exclude_unset=True), animal="dog"))
 
     def cat(self, value: types_union_types_cat_Cat) -> Animal:
-        return Animal(_Animal.Cat(**value.dict(exclude_unset=True), animal="cat"))
+        if IS_PYDANTIC_V2:
+            return Animal(root=_Animal.Cat(**value.dict(exclude_unset=True), animal="cat"))
+        else:
+            return Animal(__root__=_Animal.Cat(**value.dict(exclude_unset=True), animal="cat"))
 
 
 class Animal(UniversalRootModel):
@@ -46,10 +52,11 @@ class Animal(UniversalRootModel):
         dog: typing.Callable[[types_union_types_dog_Dog], T_Result],
         cat: typing.Callable[[types_union_types_cat_Cat], T_Result],
     ) -> T_Result:
-        if self.get_as_union().animal == "dog":
-            return dog(types_union_types_dog_Dog(**self.get_as_union().dict(exclude_unset=True, exclude={"animal"})))
-        else:
-            return cat(types_union_types_cat_Cat(**self.get_as_union().dict(exclude_unset=True, exclude={"animal"})))
+        unioned_value = self.get_as_union()
+        if unioned_value.animal == "dog":
+            return dog(types_union_types_dog_Dog(**unioned_value.dict(exclude_unset=True, exclude={"animal"})))
+        if unioned_value.animal == "cat":
+            return cat(types_union_types_cat_Cat(**unioned_value.dict(exclude_unset=True, exclude={"animal"})))
 
 
 class _Animal:
@@ -76,3 +83,6 @@ class _Animal:
                 frozen = True
                 smart_union = True
                 allow_population_by_field_name = True
+
+
+update_forward_refs(Animal)

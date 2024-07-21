@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
 from .compile_error import CompileError as resources_submission_types_compile_error_CompileError
 from .internal_error import InternalError as resources_submission_types_internal_error_InternalError
 from .runtime_error import RuntimeError as resources_submission_types_runtime_error_RuntimeError
@@ -17,13 +17,22 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def compile_error(self, value: resources_submission_types_compile_error_CompileError) -> ErrorInfo:
-        return ErrorInfo(_ErrorInfo.CompileError(**value.dict(exclude_unset=True), type="compileError"))
+        if IS_PYDANTIC_V2:
+            return ErrorInfo(root=_ErrorInfo.CompileError(**value.dict(exclude_unset=True), type="compileError"))
+        else:
+            return ErrorInfo(__root__=_ErrorInfo.CompileError(**value.dict(exclude_unset=True), type="compileError"))
 
     def runtime_error(self, value: resources_submission_types_runtime_error_RuntimeError) -> ErrorInfo:
-        return ErrorInfo(_ErrorInfo.RuntimeError(**value.dict(exclude_unset=True), type="runtimeError"))
+        if IS_PYDANTIC_V2:
+            return ErrorInfo(root=_ErrorInfo.RuntimeError(**value.dict(exclude_unset=True), type="runtimeError"))
+        else:
+            return ErrorInfo(__root__=_ErrorInfo.RuntimeError(**value.dict(exclude_unset=True), type="runtimeError"))
 
     def internal_error(self, value: resources_submission_types_internal_error_InternalError) -> ErrorInfo:
-        return ErrorInfo(_ErrorInfo.InternalError(**value.dict(exclude_unset=True), type="internalError"))
+        if IS_PYDANTIC_V2:
+            return ErrorInfo(root=_ErrorInfo.InternalError(**value.dict(exclude_unset=True), type="internalError"))
+        else:
+            return ErrorInfo(__root__=_ErrorInfo.InternalError(**value.dict(exclude_unset=True), type="internalError"))
 
 
 class ErrorInfo(UniversalRootModel):
@@ -57,22 +66,23 @@ class ErrorInfo(UniversalRootModel):
         runtime_error: typing.Callable[[resources_submission_types_runtime_error_RuntimeError], T_Result],
         internal_error: typing.Callable[[resources_submission_types_internal_error_InternalError], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "compileError":
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "compileError":
             return compile_error(
                 resources_submission_types_compile_error_CompileError(
-                    **self.get_as_union().dict(exclude_unset=True, exclude={"type"})
+                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
                 )
             )
-        if self.get_as_union().type == "runtimeError":
+        if unioned_value.type == "runtimeError":
             return runtime_error(
                 resources_submission_types_runtime_error_RuntimeError(
-                    **self.get_as_union().dict(exclude_unset=True, exclude={"type"})
+                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
                 )
             )
-        if self.get_as_union().type == "internalError":
+        if unioned_value.type == "internalError":
             return internal_error(
                 resources_submission_types_internal_error_InternalError(
-                    **self.get_as_union().dict(exclude_unset=True, exclude={"type"})
+                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
                 )
             )
 
@@ -95,3 +105,6 @@ class _ErrorInfo:
 
         class Config:
             allow_population_by_field_name = True
+
+
+update_forward_refs(ErrorInfo)

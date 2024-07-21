@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
 from .custom_test_cases_unsupported import (
     CustomTestCasesUnsupported as resources_submission_types_custom_test_cases_unsupported_CustomTestCasesUnsupported,
 )
@@ -23,23 +23,48 @@ class _Factory:
     def submission_id_not_found(
         self, value: resources_submission_types_submission_id_not_found_SubmissionIdNotFound
     ) -> InvalidRequestCause:
-        return InvalidRequestCause(
-            _InvalidRequestCause.SubmissionIdNotFound(**value.dict(exclude_unset=True), type="submissionIdNotFound")
-        )
+        if IS_PYDANTIC_V2:
+            return InvalidRequestCause(
+                root=_InvalidRequestCause.SubmissionIdNotFound(
+                    **value.dict(exclude_unset=True), type="submissionIdNotFound"
+                )
+            )
+        else:
+            return InvalidRequestCause(
+                __root__=_InvalidRequestCause.SubmissionIdNotFound(
+                    **value.dict(exclude_unset=True), type="submissionIdNotFound"
+                )
+            )
 
     def custom_test_cases_unsupported(
         self, value: resources_submission_types_custom_test_cases_unsupported_CustomTestCasesUnsupported
     ) -> InvalidRequestCause:
-        return InvalidRequestCause(
-            _InvalidRequestCause.CustomTestCasesUnsupported(
-                **value.dict(exclude_unset=True), type="customTestCasesUnsupported"
+        if IS_PYDANTIC_V2:
+            return InvalidRequestCause(
+                root=_InvalidRequestCause.CustomTestCasesUnsupported(
+                    **value.dict(exclude_unset=True), type="customTestCasesUnsupported"
+                )
             )
-        )
+        else:
+            return InvalidRequestCause(
+                __root__=_InvalidRequestCause.CustomTestCasesUnsupported(
+                    **value.dict(exclude_unset=True), type="customTestCasesUnsupported"
+                )
+            )
 
     def unexpected_language(self, value: UnexpectedLanguageError) -> InvalidRequestCause:
-        return InvalidRequestCause(
-            _InvalidRequestCause.UnexpectedLanguage(**value.dict(exclude_unset=True), type="unexpectedLanguage")
-        )
+        if IS_PYDANTIC_V2:
+            return InvalidRequestCause(
+                root=_InvalidRequestCause.UnexpectedLanguage(
+                    **value.dict(exclude_unset=True), type="unexpectedLanguage"
+                )
+            )
+        else:
+            return InvalidRequestCause(
+                __root__=_InvalidRequestCause.UnexpectedLanguage(
+                    **value.dict(exclude_unset=True), type="unexpectedLanguage"
+                )
+            )
 
 
 class InvalidRequestCause(UniversalRootModel):
@@ -93,21 +118,22 @@ class InvalidRequestCause(UniversalRootModel):
         ],
         unexpected_language: typing.Callable[[UnexpectedLanguageError], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "submissionIdNotFound":
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "submissionIdNotFound":
             return submission_id_not_found(
                 resources_submission_types_submission_id_not_found_SubmissionIdNotFound(
-                    **self.get_as_union().dict(exclude_unset=True, exclude={"type"})
+                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
                 )
             )
-        if self.get_as_union().type == "customTestCasesUnsupported":
+        if unioned_value.type == "customTestCasesUnsupported":
             return custom_test_cases_unsupported(
                 resources_submission_types_custom_test_cases_unsupported_CustomTestCasesUnsupported(
-                    **self.get_as_union().dict(exclude_unset=True, exclude={"type"})
+                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
                 )
             )
-        if self.get_as_union().type == "unexpectedLanguage":
+        if unioned_value.type == "unexpectedLanguage":
             return unexpected_language(
-                UnexpectedLanguageError(**self.get_as_union().dict(exclude_unset=True, exclude={"type"}))
+                UnexpectedLanguageError(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
             )
 
 
@@ -131,3 +157,6 @@ class _InvalidRequestCause:
 
         class Config:
             allow_population_by_field_name = True
+
+
+update_forward_refs(InvalidRequestCause)

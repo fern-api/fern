@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
 from .exception_info import ExceptionInfo
 
 T_Result = typing.TypeVar("T_Result")
@@ -15,10 +15,16 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def generic(self, value: ExceptionInfo) -> Exception:
-        return Exception(_Exception.Generic(**value.dict(exclude_unset=True), type="generic"))
+        if IS_PYDANTIC_V2:
+            return Exception(root=_Exception.Generic(**value.dict(exclude_unset=True), type="generic"))
+        else:
+            return Exception(__root__=_Exception.Generic(**value.dict(exclude_unset=True), type="generic"))
 
     def timeout(self) -> Exception:
-        return Exception(_Exception.Timeout(type="timeout"))
+        if IS_PYDANTIC_V2:
+            return Exception(root=_Exception.Timeout(type="timeout"))
+        else:
+            return Exception(__root__=_Exception.Timeout(type="timeout"))
 
 
 class Exception(UniversalRootModel):
@@ -55,9 +61,10 @@ class Exception(UniversalRootModel):
     def visit(
         self, generic: typing.Callable[[ExceptionInfo], T_Result], timeout: typing.Callable[[], T_Result]
     ) -> T_Result:
-        if self.get_as_union().type == "generic":
-            return generic(ExceptionInfo(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
-        if self.get_as_union().type == "timeout":
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "generic":
+            return generic(ExceptionInfo(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+        if unioned_value.type == "timeout":
             return timeout()
 
 
@@ -70,3 +77,6 @@ class _Exception:
 
     class Timeout(UniversalBaseModel):
         type: typing.Literal["timeout"] = "timeout"
+
+
+update_forward_refs(Exception)

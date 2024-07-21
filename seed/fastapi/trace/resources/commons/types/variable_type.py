@@ -14,34 +14,64 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def integer_type(self) -> VariableType:
-        return VariableType(_VariableType.IntegerType(type="integerType"))
+        if IS_PYDANTIC_V2:
+            return VariableType(root=_VariableType.IntegerType(type="integerType"))
+        else:
+            return VariableType(__root__=_VariableType.IntegerType(type="integerType"))
 
     def double_type(self) -> VariableType:
-        return VariableType(_VariableType.DoubleType(type="doubleType"))
+        if IS_PYDANTIC_V2:
+            return VariableType(root=_VariableType.DoubleType(type="doubleType"))
+        else:
+            return VariableType(__root__=_VariableType.DoubleType(type="doubleType"))
 
     def boolean_type(self) -> VariableType:
-        return VariableType(_VariableType.BooleanType(type="booleanType"))
+        if IS_PYDANTIC_V2:
+            return VariableType(root=_VariableType.BooleanType(type="booleanType"))
+        else:
+            return VariableType(__root__=_VariableType.BooleanType(type="booleanType"))
 
     def string_type(self) -> VariableType:
-        return VariableType(_VariableType.StringType(type="stringType"))
+        if IS_PYDANTIC_V2:
+            return VariableType(root=_VariableType.StringType(type="stringType"))
+        else:
+            return VariableType(__root__=_VariableType.StringType(type="stringType"))
 
     def char_type(self) -> VariableType:
-        return VariableType(_VariableType.CharType(type="charType"))
+        if IS_PYDANTIC_V2:
+            return VariableType(root=_VariableType.CharType(type="charType"))
+        else:
+            return VariableType(__root__=_VariableType.CharType(type="charType"))
 
     def list_type(self, value: resources_commons_types_list_type_ListType) -> VariableType:
-        return VariableType(_VariableType.ListType(**value.dict(exclude_unset=True), type="listType"))
+        if IS_PYDANTIC_V2:
+            return VariableType(root=_VariableType.ListType(**value.dict(exclude_unset=True), type="listType"))
+        else:
+            return VariableType(__root__=_VariableType.ListType(**value.dict(exclude_unset=True), type="listType"))
 
     def map_type(self, value: resources_commons_types_map_type_MapType) -> VariableType:
-        return VariableType(_VariableType.MapType(**value.dict(exclude_unset=True), type="mapType"))
+        if IS_PYDANTIC_V2:
+            return VariableType(root=_VariableType.MapType(**value.dict(exclude_unset=True), type="mapType"))
+        else:
+            return VariableType(__root__=_VariableType.MapType(**value.dict(exclude_unset=True), type="mapType"))
 
     def binary_tree_type(self) -> VariableType:
-        return VariableType(_VariableType.BinaryTreeType(type="binaryTreeType"))
+        if IS_PYDANTIC_V2:
+            return VariableType(root=_VariableType.BinaryTreeType(type="binaryTreeType"))
+        else:
+            return VariableType(__root__=_VariableType.BinaryTreeType(type="binaryTreeType"))
 
     def singly_linked_list_type(self) -> VariableType:
-        return VariableType(_VariableType.SinglyLinkedListType(type="singlyLinkedListType"))
+        if IS_PYDANTIC_V2:
+            return VariableType(root=_VariableType.SinglyLinkedListType(type="singlyLinkedListType"))
+        else:
+            return VariableType(__root__=_VariableType.SinglyLinkedListType(type="singlyLinkedListType"))
 
     def doubly_linked_list_type(self) -> VariableType:
-        return VariableType(_VariableType.DoublyLinkedListType(type="doublyLinkedListType"))
+        if IS_PYDANTIC_V2:
+            return VariableType(root=_VariableType.DoublyLinkedListType(type="doublyLinkedListType"))
+        else:
+            return VariableType(__root__=_VariableType.DoublyLinkedListType(type="doublyLinkedListType"))
 
 
 class VariableType(UniversalRootModel):
@@ -126,33 +156,30 @@ class VariableType(UniversalRootModel):
         singly_linked_list_type: typing.Callable[[], T_Result],
         doubly_linked_list_type: typing.Callable[[], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "integerType":
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "integerType":
             return integer_type()
-        if self.get_as_union().type == "doubleType":
+        if unioned_value.type == "doubleType":
             return double_type()
-        if self.get_as_union().type == "booleanType":
+        if unioned_value.type == "booleanType":
             return boolean_type()
-        if self.get_as_union().type == "stringType":
+        if unioned_value.type == "stringType":
             return string_type()
-        if self.get_as_union().type == "charType":
+        if unioned_value.type == "charType":
             return char_type()
-        if self.get_as_union().type == "listType":
+        if unioned_value.type == "listType":
             return list_type(
-                resources_commons_types_list_type_ListType(
-                    **self.get_as_union().dict(exclude_unset=True, exclude={"type"})
-                )
+                resources_commons_types_list_type_ListType(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
             )
-        if self.get_as_union().type == "mapType":
+        if unioned_value.type == "mapType":
             return map_type(
-                resources_commons_types_map_type_MapType(
-                    **self.get_as_union().dict(exclude_unset=True, exclude={"type"})
-                )
+                resources_commons_types_map_type_MapType(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
             )
-        if self.get_as_union().type == "binaryTreeType":
+        if unioned_value.type == "binaryTreeType":
             return binary_tree_type()
-        if self.get_as_union().type == "singlyLinkedListType":
+        if unioned_value.type == "singlyLinkedListType":
             return singly_linked_list_type()
-        if self.get_as_union().type == "doublyLinkedListType":
+        if unioned_value.type == "doublyLinkedListType":
             return doubly_linked_list_type()
 
 

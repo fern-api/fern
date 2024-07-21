@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
 from .test_submission_state import TestSubmissionState
 from .workspace_submission_state import WorkspaceSubmissionState
 
@@ -16,10 +16,22 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def test(self, value: TestSubmissionState) -> SubmissionTypeState:
-        return SubmissionTypeState(_SubmissionTypeState.Test(**value.dict(exclude_unset=True), type="test"))
+        if IS_PYDANTIC_V2:
+            return SubmissionTypeState(root=_SubmissionTypeState.Test(**value.dict(exclude_unset=True), type="test"))
+        else:
+            return SubmissionTypeState(
+                __root__=_SubmissionTypeState.Test(**value.dict(exclude_unset=True), type="test")
+            )
 
     def workspace(self, value: WorkspaceSubmissionState) -> SubmissionTypeState:
-        return SubmissionTypeState(_SubmissionTypeState.Workspace(**value.dict(exclude_unset=True), type="workspace"))
+        if IS_PYDANTIC_V2:
+            return SubmissionTypeState(
+                root=_SubmissionTypeState.Workspace(**value.dict(exclude_unset=True), type="workspace")
+            )
+        else:
+            return SubmissionTypeState(
+                __root__=_SubmissionTypeState.Workspace(**value.dict(exclude_unset=True), type="workspace")
+            )
 
 
 class SubmissionTypeState(UniversalRootModel):
@@ -48,10 +60,11 @@ class SubmissionTypeState(UniversalRootModel):
         test: typing.Callable[[TestSubmissionState], T_Result],
         workspace: typing.Callable[[WorkspaceSubmissionState], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "test":
-            return test(TestSubmissionState(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
-        if self.get_as_union().type == "workspace":
-            return workspace(WorkspaceSubmissionState(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "test":
+            return test(TestSubmissionState(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+        if unioned_value.type == "workspace":
+            return workspace(WorkspaceSubmissionState(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
 
 
 class _SubmissionTypeState:
@@ -66,3 +79,6 @@ class _SubmissionTypeState:
 
         class Config:
             allow_population_by_field_name = True
+
+
+update_forward_refs(SubmissionTypeState)

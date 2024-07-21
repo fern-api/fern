@@ -37,18 +37,17 @@ if IS_PYDANTIC_V2:
         is_union as is_union,
     )
     from pydantic.v1.fields import ModelField as ModelField  # type: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
+else:
+    from pydantic.datetime_parse import parse_date as parse_date  # type: ignore # Pydantic v1
+    from pydantic.datetime_parse import parse_datetime as parse_datetime  # type: ignore # Pydantic v1
+    from pydantic.fields import ModelField as ModelField  # type: ignore # Pydantic v1
+    from pydantic.json import ENCODERS_BY_TYPE as encoders_by_type  # type: ignore # Pydantic v1
+    from pydantic.typing import get_args as get_args  # type: ignore # Pydantic v1
+    from pydantic.typing import get_origin as get_origin  # type: ignore # Pydantic v1
+    from pydantic.typing import is_literal_type as is_literal_type  # type: ignore # Pydantic v1
+    from pydantic.typing import is_union as is_union  # type: ignore # Pydantic v1
 
     # isort: on
-
-else:
-    from pydantic.datetime_parse import parse_date as parse_date
-    from pydantic.datetime_parse import parse_datetime as parse_datetime
-    from pydantic.fields import ModelField as ModelField
-    from pydantic.json import ENCODERS_BY_TYPE as encoders_by_type
-    from pydantic.typing import get_args as get_args
-    from pydantic.typing import get_origin as get_origin
-    from pydantic.typing import is_literal_type as is_literal_type
-    from pydantic.typing import is_union as is_union
 
 
 T = typing.TypeVar("T")
@@ -88,17 +87,11 @@ def to_jsonable_with_fallback(
 
 
 class UniversalBaseModel(pydantic.BaseModel):
-    if IS_PYDANTIC_V2:
-        # Note: `smart_union` is on by default in Pydantic v2
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(  # type: ignore # Pydantic v2
-            populate_by_name=True, json_encoders={dt.datetime: serialize_datetime}
-        )
-    else:
-
-        class Config:
-            smart_union = True
-            allow_population_by_field_name = True
-            json_encoders = {dt.datetime: serialize_datetime}
+    class Config:
+        populate_by_name = True
+        smart_union = True
+        allow_population_by_field_name = True
+        json_encoders = {dt.datetime: serialize_datetime}
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -165,7 +158,7 @@ def universal_root_validator(pre: bool = False) -> typing.Callable[[AnyCallable]
             if IS_PYDANTIC_V2:
                 wrapped_func = pydantic.model_validator("before" if pre else "after")(func)  # type: ignore # Pydantic v2
             else:
-                wrapped_func = pydantic.root_validator(pre=pre)(func)
+                wrapped_func = pydantic.root_validator(pre=pre)(func)  # type: ignore # Pydantic v1
 
             return wrapped_func(*args, **kwargs)
 

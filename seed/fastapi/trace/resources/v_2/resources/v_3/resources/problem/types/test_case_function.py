@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ........core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
+from ........core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
 from .test_case_with_actual_result_implementation import TestCaseWithActualResultImplementation
 from .void_function_definition import VoidFunctionDefinition
 
@@ -16,12 +16,20 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def with_actual_result(self, value: TestCaseWithActualResultImplementation) -> TestCaseFunction:
-        return TestCaseFunction(
-            _TestCaseFunction.WithActualResult(**value.dict(exclude_unset=True), type="withActualResult")
-        )
+        if IS_PYDANTIC_V2:
+            return TestCaseFunction(
+                root=_TestCaseFunction.WithActualResult(**value.dict(exclude_unset=True), type="withActualResult")
+            )
+        else:
+            return TestCaseFunction(
+                __root__=_TestCaseFunction.WithActualResult(**value.dict(exclude_unset=True), type="withActualResult")
+            )
 
     def custom(self, value: VoidFunctionDefinition) -> TestCaseFunction:
-        return TestCaseFunction(_TestCaseFunction.Custom(**value.dict(exclude_unset=True), type="custom"))
+        if IS_PYDANTIC_V2:
+            return TestCaseFunction(root=_TestCaseFunction.Custom(**value.dict(exclude_unset=True), type="custom"))
+        else:
+            return TestCaseFunction(__root__=_TestCaseFunction.Custom(**value.dict(exclude_unset=True), type="custom"))
 
 
 class TestCaseFunction(UniversalRootModel):
@@ -50,12 +58,13 @@ class TestCaseFunction(UniversalRootModel):
         with_actual_result: typing.Callable[[TestCaseWithActualResultImplementation], T_Result],
         custom: typing.Callable[[VoidFunctionDefinition], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "withActualResult":
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "withActualResult":
             return with_actual_result(
-                TestCaseWithActualResultImplementation(**self.get_as_union().dict(exclude_unset=True, exclude={"type"}))
+                TestCaseWithActualResultImplementation(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
             )
-        if self.get_as_union().type == "custom":
-            return custom(VoidFunctionDefinition(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
+        if unioned_value.type == "custom":
+            return custom(VoidFunctionDefinition(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
 
 
 class _TestCaseFunction:
@@ -70,3 +79,6 @@ class _TestCaseFunction:
 
         class Config:
             allow_population_by_field_name = True
+
+
+update_forward_refs(TestCaseFunction)

@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
+from ......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
 from .test_case_implementation import TestCaseImplementation
 from .test_case_template_id import TestCaseTemplateId
 
@@ -16,14 +16,28 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def template_id(self, value: TestCaseTemplateId) -> TestCaseImplementationReference:
-        return TestCaseImplementationReference(
-            _TestCaseImplementationReference.TemplateId(type="templateId", value=value)
-        )
+        if IS_PYDANTIC_V2:
+            return TestCaseImplementationReference(
+                root=_TestCaseImplementationReference.TemplateId(type="templateId", value=value)
+            )
+        else:
+            return TestCaseImplementationReference(
+                __root__=_TestCaseImplementationReference.TemplateId(type="templateId", value=value)
+            )
 
     def implementation(self, value: TestCaseImplementation) -> TestCaseImplementationReference:
-        return TestCaseImplementationReference(
-            _TestCaseImplementationReference.Implementation(**value.dict(exclude_unset=True), type="implementation")
-        )
+        if IS_PYDANTIC_V2:
+            return TestCaseImplementationReference(
+                root=_TestCaseImplementationReference.Implementation(
+                    **value.dict(exclude_unset=True), type="implementation"
+                )
+            )
+        else:
+            return TestCaseImplementationReference(
+                __root__=_TestCaseImplementationReference.Implementation(
+                    **value.dict(exclude_unset=True), type="implementation"
+                )
+            )
 
 
 class TestCaseImplementationReference(UniversalRootModel):
@@ -56,12 +70,11 @@ class TestCaseImplementationReference(UniversalRootModel):
         template_id: typing.Callable[[TestCaseTemplateId], T_Result],
         implementation: typing.Callable[[TestCaseImplementation], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "templateId":
-            return template_id(self.get_as_union().value)
-        if self.get_as_union().type == "implementation":
-            return implementation(
-                TestCaseImplementation(**self.get_as_union().dict(exclude_unset=True, exclude={"type"}))
-            )
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "templateId":
+            return template_id(unioned_value.value)
+        if unioned_value.type == "implementation":
+            return implementation(TestCaseImplementation(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
 
 
 class _TestCaseImplementationReference:
@@ -74,3 +87,6 @@ class _TestCaseImplementationReference:
 
         class Config:
             allow_population_by_field_name = True
+
+
+update_forward_refs(TestCaseImplementationReference)

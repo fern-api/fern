@@ -7,17 +7,23 @@ import typing
 import pydantic
 import typing_extensions
 
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
 
 class _Factory:
     def integer(self, value: int) -> UnionWithPrimitive:
-        return UnionWithPrimitive(_UnionWithPrimitive.Integer(type="integer", value=value))
+        if IS_PYDANTIC_V2:
+            return UnionWithPrimitive(root=_UnionWithPrimitive.Integer(type="integer", value=value))
+        else:
+            return UnionWithPrimitive(__root__=_UnionWithPrimitive.Integer(type="integer", value=value))
 
     def string(self, value: str) -> UnionWithPrimitive:
-        return UnionWithPrimitive(_UnionWithPrimitive.String(type="string", value=value))
+        if IS_PYDANTIC_V2:
+            return UnionWithPrimitive(root=_UnionWithPrimitive.String(type="string", value=value))
+        else:
+            return UnionWithPrimitive(__root__=_UnionWithPrimitive.String(type="string", value=value))
 
 
 class UnionWithPrimitive(UniversalRootModel):
@@ -40,10 +46,11 @@ class UnionWithPrimitive(UniversalRootModel):
             return self.__root__
 
     def visit(self, integer: typing.Callable[[int], T_Result], string: typing.Callable[[str], T_Result]) -> T_Result:
-        if self.get_as_union().type == "integer":
-            return integer(self.get_as_union().value)
-        else:
-            return string(self.get_as_union().value)
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "integer":
+            return integer(unioned_value.value)
+        if unioned_value.type == "string":
+            return string(unioned_value.value)
 
 
 class _UnionWithPrimitive:
@@ -70,3 +77,6 @@ class _UnionWithPrimitive:
             class Config:
                 frozen = True
                 smart_union = True
+
+
+update_forward_refs(UnionWithPrimitive)

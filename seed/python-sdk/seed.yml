@@ -143,7 +143,7 @@ scripts:
       - poetry lock
       - poetry install
       - poetry run mypy ./src ./tests
-      # - fern test --command "poetry run pytest -rP ."
+      - fern test --command "poetry run pytest -rP ."
   # Test Pydantic V1
   - docker: fernapi/python-seed
     commands:
@@ -154,7 +154,7 @@ scripts:
       - poetry lock
       - poetry install
       - poetry run mypy ./src ./tests
-      # - fern test --command "poetry run pytest -rP ."
+      - fern test --command "poetry run pytest -rP ."
 allowedFailures: 
   # This is the only one that should always fail
   - exhaustive:additional_init_exports

@@ -1,3 +1,4 @@
+from re import A
 from typing import List, Optional, Set
 
 import fern.ir.resources as ir_types
@@ -155,6 +156,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
             # No reason to have model config overrides on the base model, but
             # also Pydantic V2's RootModel doesn't allow for a lot of the configuration.
             include_model_config=False,
+            force_update_forward_refs=True,
         ) as external_pydantic_model:
             external_pydantic_model.add_class_var_unsafe(
                 name="factory",
@@ -300,7 +302,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                             ),
                                             args=[
                                                 AST.Expression(
-                                                    f'self.get_as_union().dict(exclude_unset=True, exclude={{"{self._union.discriminant.wire_value}"}})',
+                                                    f'unioned_value.dict(exclude_unset=True, exclude={{"{self._union.discriminant.wire_value}"}})',
                                                     spread=AST.ExpressionSpread.TWO_ASTERISKS,
                                                 )
                                             ],
@@ -312,7 +314,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                 ),
                                 single_property=lambda property: VisitorArgument(
                                     expression=AST.Expression(
-                                        f"self.get_as_union().{get_field_name_for_single_property(property)}"
+                                        f"unioned_value.{get_field_name_for_single_property(property)}"
                                     ),
                                     type=external_pydantic_model.get_type_hint_for_type_reference(property.type),
                                 ),
@@ -321,7 +323,10 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                         )
                         for single_union_type in self._union.types
                     ],
-                    reference_to_current_value=f"self.get_as_union().{self._get_discriminant_attr_name()}",
+                    pre_tree_expressions=[
+                        AST.Expression("unioned_value = self.get_as_union()"),
+                    ],
+                    reference_to_current_value=f"unioned_value.{self._get_discriminant_attr_name()}",
                 )
             )
 
@@ -364,13 +369,26 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                 ),
             )
 
-            sub_union_instantiation = AST.ClassInstantiation(
-                class_=external_union,
-                args=[AST.Expression(internal_single_union_type_instantiation)],
-            )
+            def write_condition(root_str: str) -> AST.CodeWriter:
+                def write_condition_for_root(writer: AST.NodeWriter) -> None:
+                    sub_union_instantiation = AST.ClassInstantiation(
+                        class_=external_union,
+                        kwargs=[(root_str, AST.Expression(internal_single_union_type_instantiation))],
+                    )
 
-            writer.write("return ")
-            writer.write_node(sub_union_instantiation)
+                    writer.write("return ")
+                    writer.write_node(sub_union_instantiation)
+                return AST.CodeWriter(write_condition_for_root)
+
+            writer.write_node(AST.ConditionalTree(
+                conditions=[
+                    AST.IfConditionLeaf(
+                        condition=AST.Expression(self._context.core_utilities.get_is_pydantic_v2()),
+                        code=[AST.Expression(write_condition("root"))]
+                    )
+                ],
+                else_code=[AST.Expression(write_condition("__root__"))]
+            ))
 
         return write
 

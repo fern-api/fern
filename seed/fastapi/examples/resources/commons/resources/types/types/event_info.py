@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
+from ......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
 from .metadata import Metadata as resources_commons_resources_types_types_metadata_Metadata
 from .tag import Tag as resources_commons_resources_types_types_tag_Tag
 
@@ -16,10 +16,16 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def metadata(self, value: resources_commons_resources_types_types_metadata_Metadata) -> EventInfo:
-        return EventInfo(_EventInfo.Metadata(**value.dict(exclude_unset=True), type="metadata"))
+        if IS_PYDANTIC_V2:
+            return EventInfo(root=_EventInfo.Metadata(**value.dict(exclude_unset=True), type="metadata"))
+        else:
+            return EventInfo(__root__=_EventInfo.Metadata(**value.dict(exclude_unset=True), type="metadata"))
 
     def tag(self, value: resources_commons_resources_types_types_tag_Tag) -> EventInfo:
-        return EventInfo(_EventInfo.Tag(type="tag", value=value))
+        if IS_PYDANTIC_V2:
+            return EventInfo(root=_EventInfo.Tag(type="tag", value=value))
+        else:
+            return EventInfo(__root__=_EventInfo.Tag(type="tag", value=value))
 
 
 class EventInfo(UniversalRootModel):
@@ -58,14 +64,15 @@ class EventInfo(UniversalRootModel):
         metadata: typing.Callable[[resources_commons_resources_types_types_metadata_Metadata], T_Result],
         tag: typing.Callable[[resources_commons_resources_types_types_tag_Tag], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "metadata":
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "metadata":
             return metadata(
                 resources_commons_resources_types_types_metadata_Metadata(
-                    **self.get_as_union().dict(exclude_unset=True, exclude={"type"})
+                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
                 )
             )
-        if self.get_as_union().type == "tag":
-            return tag(self.get_as_union().value)
+        if unioned_value.type == "tag":
+            return tag(unioned_value.value)
 
 
 class _EventInfo:
@@ -78,3 +85,6 @@ class _EventInfo:
     class Tag(UniversalBaseModel):
         type: typing.Literal["tag"] = "tag"
         value: resources_commons_resources_types_types_tag_Tag
+
+
+update_forward_refs(EventInfo)

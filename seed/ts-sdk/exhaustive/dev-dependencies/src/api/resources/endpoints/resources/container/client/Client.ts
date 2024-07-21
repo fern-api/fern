@@ -49,6 +49,7 @@ export class Container {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: serializers.endpoints.container.getAndReturnListOfPrimitives.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
@@ -107,6 +108,7 @@ export class Container {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: serializers.endpoints.container.getAndReturnListOfObjects.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
@@ -155,6 +157,7 @@ export class Container {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: serializers.endpoints.container.getAndReturnSetOfPrimitives.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
@@ -213,6 +216,7 @@ export class Container {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: serializers.endpoints.container.getAndReturnSetOfObjects.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
@@ -263,6 +267,7 @@ export class Container {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: serializers.endpoints.container.getAndReturnMapPrimToPrim.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
@@ -320,6 +325,7 @@ export class Container {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: serializers.endpoints.container.getAndReturnMapOfPrimToObject.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
@@ -378,6 +384,7 @@ export class Container {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body:
                 request != null
                     ? serializers.endpoints.container.getAndReturnOptional.Request.jsonOrThrow(request, {

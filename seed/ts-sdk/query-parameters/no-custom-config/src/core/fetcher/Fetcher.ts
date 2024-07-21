@@ -20,7 +20,9 @@ export declare namespace Fetcher {
         maxRetries?: number;
         withCredentials?: boolean;
         abortSignal?: AbortSignal;
+        requestType?: "json" | "file" | "bytes";
         responseType?: "json" | "blob" | "streaming" | "text";
+        duplex?: "half";
     }
 
     export type Error = FailedStatusCodeError | NonJsonError | TimeoutError | UnknownError;
@@ -62,7 +64,10 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
     }
 
     const url = createRequestUrl(args.url, args.queryParameters);
-    let requestBody: BodyInit | undefined = await getRequestBody(args.body, args.contentType ?? "");
+    let requestBody: BodyInit | undefined = await getRequestBody({
+        body: args.body,
+        type: args.requestType === "json" ? "json" : "other",
+    });
     const fetchFn = await getFetchFn();
 
     try {
@@ -76,13 +81,18 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                     requestBody,
                     args.timeoutMs,
                     args.abortSignal,
-                    args.withCredentials
+                    args.withCredentials,
+                    args.duplex
                 ),
             args.maxRetries
         );
         let responseBody = await getResponseBody(response, args.responseType);
 
         if (response.status >= 200 && response.status < 400) {
+            if (args.duplex && args.responseType === "streaming") {
+                responseBody = (await import("stream")).Readable.from(responseBody as any);
+            }
+
             return {
                 ok: true,
                 body: responseBody as R,

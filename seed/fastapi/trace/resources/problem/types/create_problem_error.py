@@ -6,7 +6,7 @@ import typing
 
 import pydantic
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
 from .generic_create_problem_error import GenericCreateProblemError
 
 T_Result = typing.TypeVar("T_Result")
@@ -14,7 +14,14 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def generic(self, value: GenericCreateProblemError) -> CreateProblemError:
-        return CreateProblemError(_CreateProblemError.Generic(**value.dict(exclude_unset=True), error_type="generic"))
+        if IS_PYDANTIC_V2:
+            return CreateProblemError(
+                root=_CreateProblemError.Generic(**value.dict(exclude_unset=True), error_type="generic")
+            )
+        else:
+            return CreateProblemError(
+                __root__=_CreateProblemError.Generic(**value.dict(exclude_unset=True), error_type="generic")
+            )
 
 
 class CreateProblemError(UniversalRootModel):
@@ -33,8 +40,9 @@ class CreateProblemError(UniversalRootModel):
             return self.__root__
 
     def visit(self, generic: typing.Callable[[GenericCreateProblemError], T_Result]) -> T_Result:
-        if self.get_as_union().error_type == "generic":
-            return generic(GenericCreateProblemError(**self.get_as_union().dict(exclude_unset=True, exclude={"_type"})))
+        unioned_value = self.get_as_union()
+        if unioned_value.error_type == "generic":
+            return generic(GenericCreateProblemError(**unioned_value.dict(exclude_unset=True, exclude={"_type"})))
 
 
 class _CreateProblemError:
@@ -43,3 +51,6 @@ class _CreateProblemError:
 
         class Config:
             allow_population_by_field_name = True
+
+
+update_forward_refs(CreateProblemError)

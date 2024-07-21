@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
 from .test_case_hidden_grade import TestCaseHiddenGrade
 from .test_case_non_hidden_grade import TestCaseNonHiddenGrade
 
@@ -16,10 +16,16 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def hidden(self, value: TestCaseHiddenGrade) -> TestCaseGrade:
-        return TestCaseGrade(_TestCaseGrade.Hidden(**value.dict(exclude_unset=True), type="hidden"))
+        if IS_PYDANTIC_V2:
+            return TestCaseGrade(root=_TestCaseGrade.Hidden(**value.dict(exclude_unset=True), type="hidden"))
+        else:
+            return TestCaseGrade(__root__=_TestCaseGrade.Hidden(**value.dict(exclude_unset=True), type="hidden"))
 
     def non_hidden(self, value: TestCaseNonHiddenGrade) -> TestCaseGrade:
-        return TestCaseGrade(_TestCaseGrade.NonHidden(**value.dict(exclude_unset=True), type="nonHidden"))
+        if IS_PYDANTIC_V2:
+            return TestCaseGrade(root=_TestCaseGrade.NonHidden(**value.dict(exclude_unset=True), type="nonHidden"))
+        else:
+            return TestCaseGrade(__root__=_TestCaseGrade.NonHidden(**value.dict(exclude_unset=True), type="nonHidden"))
 
 
 class TestCaseGrade(UniversalRootModel):
@@ -46,10 +52,11 @@ class TestCaseGrade(UniversalRootModel):
         hidden: typing.Callable[[TestCaseHiddenGrade], T_Result],
         non_hidden: typing.Callable[[TestCaseNonHiddenGrade], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "hidden":
-            return hidden(TestCaseHiddenGrade(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
-        if self.get_as_union().type == "nonHidden":
-            return non_hidden(TestCaseNonHiddenGrade(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "hidden":
+            return hidden(TestCaseHiddenGrade(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+        if unioned_value.type == "nonHidden":
+            return non_hidden(TestCaseNonHiddenGrade(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
 
 
 class _TestCaseGrade:
@@ -64,3 +71,6 @@ class _TestCaseGrade:
 
         class Config:
             allow_population_by_field_name = True
+
+
+update_forward_refs(TestCaseGrade)

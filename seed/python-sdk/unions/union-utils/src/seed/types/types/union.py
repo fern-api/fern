@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
 from .bar import Bar as types_types_bar_Bar
 from .foo import Foo as types_types_foo_Foo
 
@@ -16,10 +16,16 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def foo(self, value: types_types_foo_Foo) -> Union:
-        return Union(_Union.Foo(type="foo", foo=value))
+        if IS_PYDANTIC_V2:
+            return Union(root=_Union.Foo(type="foo", foo=value))
+        else:
+            return Union(__root__=_Union.Foo(type="foo", foo=value))
 
     def bar(self, value: types_types_bar_Bar) -> Union:
-        return Union(_Union.Bar(type="bar", bar=value))
+        if IS_PYDANTIC_V2:
+            return Union(root=_Union.Bar(type="bar", bar=value))
+        else:
+            return Union(__root__=_Union.Bar(type="bar", bar=value))
 
 
 class Union(UniversalRootModel):
@@ -48,10 +54,11 @@ class Union(UniversalRootModel):
         foo: typing.Callable[[types_types_foo_Foo], T_Result],
         bar: typing.Callable[[types_types_bar_Bar], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "foo":
-            return foo(self.get_as_union().foo)
-        else:
-            return bar(self.get_as_union().bar)
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "foo":
+            return foo(unioned_value.foo)
+        if unioned_value.type == "bar":
+            return bar(unioned_value.bar)
 
 
 class _Union:
@@ -78,3 +85,6 @@ class _Union:
             class Config:
                 frozen = True
                 smart_union = True
+
+
+update_forward_refs(Union)

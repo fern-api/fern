@@ -10,7 +10,7 @@ import uuid
 import fastapi
 import pydantic
 
-from ..unchecked_base_model import UncheckedBaseModel
+from ..pydantic_utilities import UniversalBaseModel
 
 
 class FernHTTPException(abc.ABC, fastapi.HTTPException):
@@ -22,7 +22,7 @@ class FernHTTPException(abc.ABC, fastapi.HTTPException):
         self.status_code = status_code
         self.content = content
 
-    class Body(UncheckedBaseModel):
+    class Body(UniversalBaseModel):
         error_name: typing.Optional[str] = pydantic.Field(alias="errorName", default=None)
         error_instance_id: uuid.UUID = pydantic.Field(alias="errorInstanceId", default_factory=uuid.uuid4)
         content: typing.Optional[typing.Any] = None

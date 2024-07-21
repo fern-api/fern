@@ -7,17 +7,23 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
 
 class _Factory:
     def and_(self, value: bool) -> Test:
-        return Test(_Test.And(type="and", value=value))
+        if IS_PYDANTIC_V2:
+            return Test(root=_Test.And(type="and", value=value))
+        else:
+            return Test(__root__=_Test.And(type="and", value=value))
 
     def or_(self, value: bool) -> Test:
-        return Test(_Test.Or(type="or", value=value))
+        if IS_PYDANTIC_V2:
+            return Test(root=_Test.Or(type="or", value=value))
+        else:
+            return Test(__root__=_Test.Or(type="or", value=value))
 
 
 class Test(UniversalRootModel):
@@ -44,10 +50,11 @@ class Test(UniversalRootModel):
             return self.__root__
 
     def visit(self, and_: typing.Callable[[bool], T_Result], or_: typing.Callable[[bool], T_Result]) -> T_Result:
-        if self.get_as_union().type == "and":
-            return and_(self.get_as_union().value)
-        if self.get_as_union().type == "or":
-            return or_(self.get_as_union().value)
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "and":
+            return and_(unioned_value.value)
+        if unioned_value.type == "or":
+            return or_(unioned_value.value)
 
 
 class _Test:
@@ -58,3 +65,6 @@ class _Test:
     class Or(UniversalBaseModel):
         type: typing.Literal["or"] = "or"
         value: bool
+
+
+update_forward_refs(Test)

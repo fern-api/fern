@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
 from ...commons.types.variable_value import VariableValue
 from .exception_info import ExceptionInfo
 from .exception_v_2 import ExceptionV2 as resources_submission_types_exception_v_2_ExceptionV2
@@ -17,13 +17,22 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def value(self, value: VariableValue) -> ActualResult:
-        return ActualResult(_ActualResult.Value(type="value", value=value))
+        if IS_PYDANTIC_V2:
+            return ActualResult(root=_ActualResult.Value(type="value", value=value))
+        else:
+            return ActualResult(__root__=_ActualResult.Value(type="value", value=value))
 
     def exception(self, value: ExceptionInfo) -> ActualResult:
-        return ActualResult(_ActualResult.Exception(**value.dict(exclude_unset=True), type="exception"))
+        if IS_PYDANTIC_V2:
+            return ActualResult(root=_ActualResult.Exception(**value.dict(exclude_unset=True), type="exception"))
+        else:
+            return ActualResult(__root__=_ActualResult.Exception(**value.dict(exclude_unset=True), type="exception"))
 
     def exception_v_2(self, value: resources_submission_types_exception_v_2_ExceptionV2) -> ActualResult:
-        return ActualResult(_ActualResult.ExceptionV2(type="exceptionV2", value=value))
+        if IS_PYDANTIC_V2:
+            return ActualResult(root=_ActualResult.ExceptionV2(type="exceptionV2", value=value))
+        else:
+            return ActualResult(__root__=_ActualResult.ExceptionV2(type="exceptionV2", value=value))
 
 
 class ActualResult(UniversalRootModel):
@@ -53,12 +62,13 @@ class ActualResult(UniversalRootModel):
         exception: typing.Callable[[ExceptionInfo], T_Result],
         exception_v_2: typing.Callable[[resources_submission_types_exception_v_2_ExceptionV2], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "value":
-            return value(self.get_as_union().value)
-        if self.get_as_union().type == "exception":
-            return exception(ExceptionInfo(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
-        if self.get_as_union().type == "exceptionV2":
-            return exception_v_2(self.get_as_union().value)
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "value":
+            return value(unioned_value.value)
+        if unioned_value.type == "exception":
+            return exception(ExceptionInfo(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+        if unioned_value.type == "exceptionV2":
+            return exception_v_2(unioned_value.value)
 
 
 class _ActualResult:
@@ -75,3 +85,6 @@ class _ActualResult:
     class ExceptionV2(UniversalBaseModel):
         type: typing.Literal["exceptionV2"] = "exceptionV2"
         value: resources_submission_types_exception_v_2_ExceptionV2
+
+
+update_forward_refs(ActualResult)

@@ -6,7 +6,7 @@ import typing
 
 import pydantic
 
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
 from .foo import Foo as types_types_foo_Foo
 
 T_Result = typing.TypeVar("T_Result")
@@ -14,7 +14,14 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def foo(self, value: types_types_foo_Foo) -> UnionWithSingleElement:
-        return UnionWithSingleElement(_UnionWithSingleElement.Foo(**value.dict(exclude_unset=True), type="foo"))
+        if IS_PYDANTIC_V2:
+            return UnionWithSingleElement(
+                root=_UnionWithSingleElement.Foo(**value.dict(exclude_unset=True), type="foo")
+            )
+        else:
+            return UnionWithSingleElement(
+                __root__=_UnionWithSingleElement.Foo(**value.dict(exclude_unset=True), type="foo")
+            )
 
 
 class UnionWithSingleElement(UniversalRootModel):
@@ -33,7 +40,9 @@ class UnionWithSingleElement(UniversalRootModel):
             return self.__root__
 
     def visit(self, foo: typing.Callable[[types_types_foo_Foo], T_Result]) -> T_Result:
-        return foo(types_types_foo_Foo(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "foo":
+            return foo(types_types_foo_Foo(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
 
 
 class _UnionWithSingleElement:
@@ -48,3 +57,6 @@ class _UnionWithSingleElement:
                 frozen = True
                 smart_union = True
                 allow_population_by_field_name = True
+
+
+update_forward_refs(UnionWithSingleElement)

@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
 from .building_executor_response import BuildingExecutorResponse
 from .errored_response import ErroredResponse
 from .finished_response import FinishedResponse
@@ -25,43 +25,116 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def building_executor(self, value: BuildingExecutorResponse) -> CodeExecutionUpdate:
-        return CodeExecutionUpdate(
-            _CodeExecutionUpdate.BuildingExecutor(**value.dict(exclude_unset=True), type="buildingExecutor")
-        )
+        if IS_PYDANTIC_V2:
+            return CodeExecutionUpdate(
+                root=_CodeExecutionUpdate.BuildingExecutor(**value.dict(exclude_unset=True), type="buildingExecutor")
+            )
+        else:
+            return CodeExecutionUpdate(
+                __root__=_CodeExecutionUpdate.BuildingExecutor(
+                    **value.dict(exclude_unset=True), type="buildingExecutor"
+                )
+            )
 
     def running(self, value: RunningResponse) -> CodeExecutionUpdate:
-        return CodeExecutionUpdate(_CodeExecutionUpdate.Running(**value.dict(exclude_unset=True), type="running"))
+        if IS_PYDANTIC_V2:
+            return CodeExecutionUpdate(
+                root=_CodeExecutionUpdate.Running(**value.dict(exclude_unset=True), type="running")
+            )
+        else:
+            return CodeExecutionUpdate(
+                __root__=_CodeExecutionUpdate.Running(**value.dict(exclude_unset=True), type="running")
+            )
 
     def errored(self, value: ErroredResponse) -> CodeExecutionUpdate:
-        return CodeExecutionUpdate(_CodeExecutionUpdate.Errored(**value.dict(exclude_unset=True), type="errored"))
+        if IS_PYDANTIC_V2:
+            return CodeExecutionUpdate(
+                root=_CodeExecutionUpdate.Errored(**value.dict(exclude_unset=True), type="errored")
+            )
+        else:
+            return CodeExecutionUpdate(
+                __root__=_CodeExecutionUpdate.Errored(**value.dict(exclude_unset=True), type="errored")
+            )
 
     def stopped(self, value: StoppedResponse) -> CodeExecutionUpdate:
-        return CodeExecutionUpdate(_CodeExecutionUpdate.Stopped(**value.dict(exclude_unset=True), type="stopped"))
+        if IS_PYDANTIC_V2:
+            return CodeExecutionUpdate(
+                root=_CodeExecutionUpdate.Stopped(**value.dict(exclude_unset=True), type="stopped")
+            )
+        else:
+            return CodeExecutionUpdate(
+                __root__=_CodeExecutionUpdate.Stopped(**value.dict(exclude_unset=True), type="stopped")
+            )
 
     def graded(self, value: GradedResponse) -> CodeExecutionUpdate:
-        return CodeExecutionUpdate(_CodeExecutionUpdate.Graded(**value.dict(exclude_unset=True), type="graded"))
+        if IS_PYDANTIC_V2:
+            return CodeExecutionUpdate(
+                root=_CodeExecutionUpdate.Graded(**value.dict(exclude_unset=True), type="graded")
+            )
+        else:
+            return CodeExecutionUpdate(
+                __root__=_CodeExecutionUpdate.Graded(**value.dict(exclude_unset=True), type="graded")
+            )
 
     def graded_v_2(self, value: GradedResponseV2) -> CodeExecutionUpdate:
-        return CodeExecutionUpdate(_CodeExecutionUpdate.GradedV2(**value.dict(exclude_unset=True), type="gradedV2"))
+        if IS_PYDANTIC_V2:
+            return CodeExecutionUpdate(
+                root=_CodeExecutionUpdate.GradedV2(**value.dict(exclude_unset=True), type="gradedV2")
+            )
+        else:
+            return CodeExecutionUpdate(
+                __root__=_CodeExecutionUpdate.GradedV2(**value.dict(exclude_unset=True), type="gradedV2")
+            )
 
     def workspace_ran(self, value: WorkspaceRanResponse) -> CodeExecutionUpdate:
-        return CodeExecutionUpdate(
-            _CodeExecutionUpdate.WorkspaceRan(**value.dict(exclude_unset=True), type="workspaceRan")
-        )
+        if IS_PYDANTIC_V2:
+            return CodeExecutionUpdate(
+                root=_CodeExecutionUpdate.WorkspaceRan(**value.dict(exclude_unset=True), type="workspaceRan")
+            )
+        else:
+            return CodeExecutionUpdate(
+                __root__=_CodeExecutionUpdate.WorkspaceRan(**value.dict(exclude_unset=True), type="workspaceRan")
+            )
 
     def recording(self, value: RecordingResponseNotification) -> CodeExecutionUpdate:
-        return CodeExecutionUpdate(_CodeExecutionUpdate.Recording(**value.dict(exclude_unset=True), type="recording"))
+        if IS_PYDANTIC_V2:
+            return CodeExecutionUpdate(
+                root=_CodeExecutionUpdate.Recording(**value.dict(exclude_unset=True), type="recording")
+            )
+        else:
+            return CodeExecutionUpdate(
+                __root__=_CodeExecutionUpdate.Recording(**value.dict(exclude_unset=True), type="recording")
+            )
 
     def recorded(self, value: RecordedResponseNotification) -> CodeExecutionUpdate:
-        return CodeExecutionUpdate(_CodeExecutionUpdate.Recorded(**value.dict(exclude_unset=True), type="recorded"))
+        if IS_PYDANTIC_V2:
+            return CodeExecutionUpdate(
+                root=_CodeExecutionUpdate.Recorded(**value.dict(exclude_unset=True), type="recorded")
+            )
+        else:
+            return CodeExecutionUpdate(
+                __root__=_CodeExecutionUpdate.Recorded(**value.dict(exclude_unset=True), type="recorded")
+            )
 
     def invalid_request(self, value: InvalidRequestResponse) -> CodeExecutionUpdate:
-        return CodeExecutionUpdate(
-            _CodeExecutionUpdate.InvalidRequest(**value.dict(exclude_unset=True), type="invalidRequest")
-        )
+        if IS_PYDANTIC_V2:
+            return CodeExecutionUpdate(
+                root=_CodeExecutionUpdate.InvalidRequest(**value.dict(exclude_unset=True), type="invalidRequest")
+            )
+        else:
+            return CodeExecutionUpdate(
+                __root__=_CodeExecutionUpdate.InvalidRequest(**value.dict(exclude_unset=True), type="invalidRequest")
+            )
 
     def finished(self, value: FinishedResponse) -> CodeExecutionUpdate:
-        return CodeExecutionUpdate(_CodeExecutionUpdate.Finished(**value.dict(exclude_unset=True), type="finished"))
+        if IS_PYDANTIC_V2:
+            return CodeExecutionUpdate(
+                root=_CodeExecutionUpdate.Finished(**value.dict(exclude_unset=True), type="finished")
+            )
+        else:
+            return CodeExecutionUpdate(
+                __root__=_CodeExecutionUpdate.Finished(**value.dict(exclude_unset=True), type="finished")
+            )
 
 
 class CodeExecutionUpdate(UniversalRootModel):
@@ -151,36 +224,31 @@ class CodeExecutionUpdate(UniversalRootModel):
         invalid_request: typing.Callable[[InvalidRequestResponse], T_Result],
         finished: typing.Callable[[FinishedResponse], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "buildingExecutor":
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "buildingExecutor":
             return building_executor(
-                BuildingExecutorResponse(**self.get_as_union().dict(exclude_unset=True, exclude={"type"}))
+                BuildingExecutorResponse(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
             )
-        if self.get_as_union().type == "running":
-            return running(RunningResponse(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
-        if self.get_as_union().type == "errored":
-            return errored(ErroredResponse(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
-        if self.get_as_union().type == "stopped":
-            return stopped(StoppedResponse(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
-        if self.get_as_union().type == "graded":
-            return graded(GradedResponse(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
-        if self.get_as_union().type == "gradedV2":
-            return graded_v_2(GradedResponseV2(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
-        if self.get_as_union().type == "workspaceRan":
-            return workspace_ran(WorkspaceRanResponse(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
-        if self.get_as_union().type == "recording":
-            return recording(
-                RecordingResponseNotification(**self.get_as_union().dict(exclude_unset=True, exclude={"type"}))
-            )
-        if self.get_as_union().type == "recorded":
-            return recorded(
-                RecordedResponseNotification(**self.get_as_union().dict(exclude_unset=True, exclude={"type"}))
-            )
-        if self.get_as_union().type == "invalidRequest":
-            return invalid_request(
-                InvalidRequestResponse(**self.get_as_union().dict(exclude_unset=True, exclude={"type"}))
-            )
-        if self.get_as_union().type == "finished":
-            return finished(FinishedResponse(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
+        if unioned_value.type == "running":
+            return running(RunningResponse(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+        if unioned_value.type == "errored":
+            return errored(ErroredResponse(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+        if unioned_value.type == "stopped":
+            return stopped(StoppedResponse(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+        if unioned_value.type == "graded":
+            return graded(GradedResponse(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+        if unioned_value.type == "gradedV2":
+            return graded_v_2(GradedResponseV2(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+        if unioned_value.type == "workspaceRan":
+            return workspace_ran(WorkspaceRanResponse(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+        if unioned_value.type == "recording":
+            return recording(RecordingResponseNotification(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+        if unioned_value.type == "recorded":
+            return recorded(RecordedResponseNotification(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+        if unioned_value.type == "invalidRequest":
+            return invalid_request(InvalidRequestResponse(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+        if unioned_value.type == "finished":
+            return finished(FinishedResponse(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
 
 
 class _CodeExecutionUpdate:
@@ -249,3 +317,6 @@ class _CodeExecutionUpdate:
 
         class Config:
             allow_population_by_field_name = True
+
+
+update_forward_refs(CodeExecutionUpdate)

@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
 from .error_info import ErrorInfo
 from .running_submission_state import RunningSubmissionState
 from .workspace_run_details import WorkspaceRunDetails
@@ -17,21 +17,42 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def stopped(self) -> WorkspaceSubmissionStatus:
-        return WorkspaceSubmissionStatus(_WorkspaceSubmissionStatus.Stopped(type="stopped"))
+        if IS_PYDANTIC_V2:
+            return WorkspaceSubmissionStatus(root=_WorkspaceSubmissionStatus.Stopped(type="stopped"))
+        else:
+            return WorkspaceSubmissionStatus(__root__=_WorkspaceSubmissionStatus.Stopped(type="stopped"))
 
     def errored(self, value: ErrorInfo) -> WorkspaceSubmissionStatus:
-        return WorkspaceSubmissionStatus(_WorkspaceSubmissionStatus.Errored(type="errored", value=value))
+        if IS_PYDANTIC_V2:
+            return WorkspaceSubmissionStatus(root=_WorkspaceSubmissionStatus.Errored(type="errored", value=value))
+        else:
+            return WorkspaceSubmissionStatus(__root__=_WorkspaceSubmissionStatus.Errored(type="errored", value=value))
 
     def running(self, value: RunningSubmissionState) -> WorkspaceSubmissionStatus:
-        return WorkspaceSubmissionStatus(_WorkspaceSubmissionStatus.Running(type="running", value=value))
+        if IS_PYDANTIC_V2:
+            return WorkspaceSubmissionStatus(root=_WorkspaceSubmissionStatus.Running(type="running", value=value))
+        else:
+            return WorkspaceSubmissionStatus(__root__=_WorkspaceSubmissionStatus.Running(type="running", value=value))
 
     def ran(self, value: WorkspaceRunDetails) -> WorkspaceSubmissionStatus:
-        return WorkspaceSubmissionStatus(_WorkspaceSubmissionStatus.Ran(**value.dict(exclude_unset=True), type="ran"))
+        if IS_PYDANTIC_V2:
+            return WorkspaceSubmissionStatus(
+                root=_WorkspaceSubmissionStatus.Ran(**value.dict(exclude_unset=True), type="ran")
+            )
+        else:
+            return WorkspaceSubmissionStatus(
+                __root__=_WorkspaceSubmissionStatus.Ran(**value.dict(exclude_unset=True), type="ran")
+            )
 
     def traced(self, value: WorkspaceRunDetails) -> WorkspaceSubmissionStatus:
-        return WorkspaceSubmissionStatus(
-            _WorkspaceSubmissionStatus.Traced(**value.dict(exclude_unset=True), type="traced")
-        )
+        if IS_PYDANTIC_V2:
+            return WorkspaceSubmissionStatus(
+                root=_WorkspaceSubmissionStatus.Traced(**value.dict(exclude_unset=True), type="traced")
+            )
+        else:
+            return WorkspaceSubmissionStatus(
+                __root__=_WorkspaceSubmissionStatus.Traced(**value.dict(exclude_unset=True), type="traced")
+            )
 
 
 class WorkspaceSubmissionStatus(UniversalRootModel):
@@ -91,16 +112,17 @@ class WorkspaceSubmissionStatus(UniversalRootModel):
         ran: typing.Callable[[WorkspaceRunDetails], T_Result],
         traced: typing.Callable[[WorkspaceRunDetails], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "stopped":
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "stopped":
             return stopped()
-        if self.get_as_union().type == "errored":
-            return errored(self.get_as_union().value)
-        if self.get_as_union().type == "running":
-            return running(self.get_as_union().value)
-        if self.get_as_union().type == "ran":
-            return ran(WorkspaceRunDetails(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
-        if self.get_as_union().type == "traced":
-            return traced(WorkspaceRunDetails(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
+        if unioned_value.type == "errored":
+            return errored(unioned_value.value)
+        if unioned_value.type == "running":
+            return running(unioned_value.value)
+        if unioned_value.type == "ran":
+            return ran(WorkspaceRunDetails(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+        if unioned_value.type == "traced":
+            return traced(WorkspaceRunDetails(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
 
 
 class _WorkspaceSubmissionStatus:
@@ -126,3 +148,6 @@ class _WorkspaceSubmissionStatus:
 
         class Config:
             allow_population_by_field_name = True
+
+
+update_forward_refs(WorkspaceSubmissionStatus)

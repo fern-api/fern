@@ -7,17 +7,23 @@ import typing
 import pydantic
 import typing_extensions
 
-from ......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
+from ......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
 
 class _Factory:
     def string(self, value: str) -> Data:
-        return Data(_Data.String(type="string", value=value))
+        if IS_PYDANTIC_V2:
+            return Data(root=_Data.String(type="string", value=value))
+        else:
+            return Data(__root__=_Data.String(type="string", value=value))
 
     def base_64(self, value: str) -> Data:
-        return Data(_Data.Base64(type="base64", value=value))
+        if IS_PYDANTIC_V2:
+            return Data(root=_Data.Base64(type="base64", value=value))
+        else:
+            return Data(__root__=_Data.Base64(type="base64", value=value))
 
 
 class Data(UniversalRootModel):
@@ -48,10 +54,11 @@ class Data(UniversalRootModel):
             return self.__root__
 
     def visit(self, string: typing.Callable[[str], T_Result], base_64: typing.Callable[[str], T_Result]) -> T_Result:
-        if self.get_as_union().type == "string":
-            return string(self.get_as_union().value)
-        if self.get_as_union().type == "base64":
-            return base_64(self.get_as_union().value)
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "string":
+            return string(unioned_value.value)
+        if unioned_value.type == "base64":
+            return base_64(unioned_value.value)
 
 
 class _Data:
@@ -62,3 +69,6 @@ class _Data:
     class Base64(UniversalBaseModel):
         type: typing.Literal["base64"] = "base64"
         value: str
+
+
+update_forward_refs(Data)

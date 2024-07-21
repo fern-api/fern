@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
 from .organization import Organization as resources_service_types_organization_Organization
 from .user import User as resources_service_types_user_User
 
@@ -16,10 +16,18 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def user(self, value: resources_service_types_user_User) -> Resource:
-        return Resource(_Resource.User(**value.dict(exclude_unset=True), resource_type="user"))
+        if IS_PYDANTIC_V2:
+            return Resource(root=_Resource.User(**value.dict(exclude_unset=True), resource_type="user"))
+        else:
+            return Resource(__root__=_Resource.User(**value.dict(exclude_unset=True), resource_type="user"))
 
     def organization(self, value: resources_service_types_organization_Organization) -> Resource:
-        return Resource(_Resource.Organization(**value.dict(exclude_unset=True), resource_type="Organization"))
+        if IS_PYDANTIC_V2:
+            return Resource(root=_Resource.Organization(**value.dict(exclude_unset=True), resource_type="Organization"))
+        else:
+            return Resource(
+                __root__=_Resource.Organization(**value.dict(exclude_unset=True), resource_type="Organization")
+            )
 
 
 class Resource(UniversalRootModel):
@@ -58,16 +66,15 @@ class Resource(UniversalRootModel):
         user: typing.Callable[[resources_service_types_user_User], T_Result],
         organization: typing.Callable[[resources_service_types_organization_Organization], T_Result],
     ) -> T_Result:
-        if self.get_as_union().resource_type == "user":
+        unioned_value = self.get_as_union()
+        if unioned_value.resource_type == "user":
             return user(
-                resources_service_types_user_User(
-                    **self.get_as_union().dict(exclude_unset=True, exclude={"resource_type"})
-                )
+                resources_service_types_user_User(**unioned_value.dict(exclude_unset=True, exclude={"resource_type"}))
             )
-        if self.get_as_union().resource_type == "Organization":
+        if unioned_value.resource_type == "Organization":
             return organization(
                 resources_service_types_organization_Organization(
-                    **self.get_as_union().dict(exclude_unset=True, exclude={"resource_type"})
+                    **unioned_value.dict(exclude_unset=True, exclude={"resource_type"})
                 )
             )
 
@@ -84,3 +91,6 @@ class _Resource:
 
         class Config:
             allow_population_by_field_name = True
+
+
+update_forward_refs(Resource)

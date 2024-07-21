@@ -14,10 +14,16 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def list_(self, value: typing.List[FieldValue]) -> ContainerValue:
-        return ContainerValue(_ContainerValue.List(type="list", value=value))
+        if IS_PYDANTIC_V2:
+            return ContainerValue(root=_ContainerValue.List(type="list", value=value))
+        else:
+            return ContainerValue(__root__=_ContainerValue.List(type="list", value=value))
 
     def optional(self, value: typing.Optional[FieldValue]) -> ContainerValue:
-        return ContainerValue(_ContainerValue.Optional(type="optional", value=value))
+        if IS_PYDANTIC_V2:
+            return ContainerValue(root=_ContainerValue.Optional(type="optional", value=value))
+        else:
+            return ContainerValue(__root__=_ContainerValue.Optional(type="optional", value=value))
 
 
 class ContainerValue(UniversalRootModel):
@@ -44,10 +50,11 @@ class ContainerValue(UniversalRootModel):
         list_: typing.Callable[[typing.List[FieldValue]], T_Result],
         optional: typing.Callable[[typing.Optional[FieldValue]], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "list":
-            return list_(self.get_as_union().value)
-        if self.get_as_union().type == "optional":
-            return optional(self.get_as_union().value)
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "list":
+            return list_(unioned_value.value)
+        if unioned_value.type == "optional":
+            return optional(unioned_value.value)
 
 
 from .field_value import FieldValue  # noqa: E402
