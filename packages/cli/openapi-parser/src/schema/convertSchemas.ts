@@ -42,7 +42,8 @@ export function convertSchema(
     context: SchemaParserContext,
     breadcrumbs: string[],
     referencedAsRequest = false,
-    propertiesToExclude: Set<string> = new Set()
+    propertiesToExclude: Set<string> = new Set(),
+    exampleUnderride?: string | number | boolean | unknown[]
 ): SchemaWithExample {
     if (isReferenceObject(schema)) {
         const schemaId = getSchemaIdFromReference(schema);
@@ -62,7 +63,8 @@ export function convertSchema(
             context,
             getBreadcrumbsFromReference(schema.$ref),
             propertiesToExclude,
-            referencedAsRequest
+            referencedAsRequest,
+            exampleUnderride
         );
     } else {
         return convertSchemaObject(
@@ -71,7 +73,8 @@ export function convertSchema(
             context,
             breadcrumbs,
             propertiesToExclude,
-            referencedAsRequest
+            referencedAsRequest,
+            exampleUnderride
         );
     }
 }
@@ -119,7 +122,8 @@ export function convertSchemaObject(
     context: SchemaParserContext,
     breadcrumbs: string[],
     propertiesToExclude: Set<string> = new Set(),
-    referencedAsRequest = false
+    referencedAsRequest = false,
+    exampleUnderride?: string | number | boolean | unknown[]
 ): SchemaWithExample {
     const nameOverride =
         getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME) ??
@@ -133,6 +137,7 @@ export function convertSchemaObject(
     const availability = convertAvailability(schema);
 
     const examples = getExtension<Record<string, OpenAPIV3.ExampleObject>>(schema, OpenAPIExtension.EXAMPLES);
+
     const fullExamples: NamedFullExample[] = [];
     if (schema.example != null) {
         fullExamples.push({ name: undefined, value: schema.example, description: undefined });
@@ -152,7 +157,15 @@ export function convertSchemaObject(
 
     // if a schema is null then we should wrap it as nullable
     if (!wrapAsNullable && schema.nullable === true) {
-        return convertSchemaObject(schema, true, context, breadcrumbs);
+        return convertSchemaObject(
+            schema,
+            true,
+            context,
+            breadcrumbs,
+            propertiesToExclude,
+            referencedAsRequest,
+            exampleUnderride
+        );
     }
 
     // enums
@@ -169,7 +182,7 @@ export function convertSchemaObject(
                     maxLength: schema.maxLength,
                     pattern: schema.pattern,
                     format: schema.format,
-                    example: getExamplesString(schema)
+                    example: getExamplesString(schema, exampleUnderride as string)
                 }),
                 groupName,
                 wrapAsNullable,
@@ -222,7 +235,9 @@ export function convertSchemaObject(
                     wrapAsNullable,
                     context,
                     breadcrumbs,
-                    propertiesToExclude
+                    propertiesToExclude,
+                    referencedAsRequest,
+                    exampleUnderride
                 ),
                 groupName,
                 description: schema.description,
@@ -240,7 +255,9 @@ export function convertSchemaObject(
                     wrapAsNullable,
                     context,
                     breadcrumbs,
-                    propertiesToExclude
+                    propertiesToExclude,
+                    referencedAsRequest,
+                    exampleUnderride
                 ),
                 groupName,
                 description: schema.description,
@@ -293,7 +310,7 @@ export function convertSchemaObject(
             generatedName,
             primitive: PrimitiveSchemaValueWithExample.boolean({
                 default: schema.default,
-                example: getExampleAsBoolean(schema)
+                example: getExampleAsBoolean(schema, exampleUnderride as boolean)
             }),
             wrapAsNullable,
             description,
@@ -315,7 +332,7 @@ export function convertSchemaObject(
             description,
             availability,
             wrapAsNullable,
-            example: getExampleAsNumber(schema),
+            example: getExampleAsNumber(schema, exampleUnderride as number),
             groupName
         });
     }
@@ -330,7 +347,7 @@ export function convertSchemaObject(
                 exclusiveMinimum: getValueIfBoolean(schema.exclusiveMinimum),
                 exclusiveMaximum: getValueIfBoolean(schema.exclusiveMaximum),
                 multipleOf: schema.multipleOf,
-                example: getExampleAsNumber(schema)
+                example: getExampleAsNumber(schema, exampleUnderride as number)
             }),
             wrapAsNullable,
             description,
@@ -352,7 +369,7 @@ export function convertSchemaObject(
             description,
             availability,
             wrapAsNullable,
-            example: getExampleAsNumber(schema),
+            example: getExampleAsNumber(schema, exampleUnderride as number),
             groupName
         });
     }
@@ -362,7 +379,7 @@ export function convertSchemaObject(
                 nameOverride,
                 generatedName,
                 primitive: PrimitiveSchemaValueWithExample.datetime({
-                    example: getExamplesString(schema)
+                    example: getExamplesString(schema, exampleUnderride as string)
                 }),
                 wrapAsNullable,
                 description,
@@ -402,7 +419,8 @@ export function convertSchemaObject(
                 format: schema.format,
                 minLength: schema.minLength,
                 maxLength: schema.maxLength,
-                example: getExamplesString(schema)
+                // THIS IS THE LINE THAT IS FAILING
+                example: getExamplesString(schema, exampleUnderride as string)
             }),
             groupName,
             wrapAsNullable,
@@ -423,7 +441,7 @@ export function convertSchemaObject(
             wrapAsNullable,
             context,
             groupName,
-            example: getExampleAsArray(schema)
+            example: getExampleAsArray(schema, exampleUnderride as unknown[])
         });
     }
 
@@ -734,7 +752,7 @@ export function convertSchemaObject(
                     format: schema.format,
                     minLength: schema.minLength,
                     maxLength: schema.maxLength,
-                    example: getExamplesString(schema)
+                    example: getExamplesString(schema, exampleUnderride as string)
                 }),
                 groupName
             },

@@ -54,7 +54,15 @@ export function convertParameters({
 
         let schema =
             resolvedParameter.schema != null
-                ? convertSchema(resolvedParameter.schema, !isRequired, context, parameterBreadcrumbs)
+                ? convertSchema(
+                      resolvedParameter.schema,
+                      !isRequired,
+                      context,
+                      parameterBreadcrumbs,
+                      false,
+                      new Set(),
+                      getExamplesString(resolvedParameter as OpenAPIV3.SchemaObject)
+                  )
                 : isRequired
                 ? SchemaWithExample.primitive({
                       nameOverride: undefined,
@@ -65,7 +73,7 @@ export function convertParameters({
                           format: undefined,
                           minLength: undefined,
                           maxLength: undefined,
-                          example: getExamplesString(resolvedParameter.example)
+                          example: getExamplesString(resolvedParameter as OpenAPIV3.SchemaObject)
                       }),
                       description: undefined,
                       availability,
@@ -83,7 +91,7 @@ export function convertParameters({
                               format: undefined,
                               minLength: undefined,
                               maxLength: undefined,
-                              example: getExamplesString(resolvedParameter.example)
+                              example: getExamplesString(resolvedParameter as OpenAPIV3.SchemaObject)
                           }),
                           description: undefined,
                           availability: undefined,
@@ -144,6 +152,7 @@ export function convertParameters({
             );
         }
     }
+
     return convertedParameters;
 }
 

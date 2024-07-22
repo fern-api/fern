@@ -85,7 +85,8 @@ You can view the currently authorised admin along with the embedded app object (
               {
                 "name": "Successful response",
                 "query-parameters": {
-                  "created_at_after": "created_at_after",
+                  "created_at_after": "1677253093",
+                  "created_at_before": "1677861493",
                 },
                 "response": {
                   "body": {
@@ -2157,6 +2158,10 @@ You can view the currently authorised admin along with the embedded app object (
             "examples": [
               {
                 "name": "Search successful",
+                "query-parameters": {
+                  "phrase": "Getting started",
+                  "state": "published",
+                },
                 "response": {
                   "body": {
                     "data": {
@@ -3424,7 +3429,7 @@ You can view the currently authorised admin along with the embedded app object (
               {
                 "name": "Successful",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
                 },
                 "response": {
                   "body": {
@@ -3543,7 +3548,7 @@ You can view the currently authorised admin along with the embedded app object (
               {
                 "name": "Successful",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
                 },
                 "response": {
                   "body": {
@@ -3598,7 +3603,7 @@ You can view the currently authorised admin along with the embedded app object (
               {
                 "name": "Successful",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
                 },
                 "response": {
                   "body": {
@@ -3688,7 +3693,7 @@ You can view the currently authorised admin along with the embedded app object (
               {
                 "name": "Successful",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
                 },
                 "response": {
                   "body": {
@@ -4074,7 +4079,7 @@ Companies are looked up via \`company_id\` in a \`POST\` request, if not found v
               {
                 "name": "Successful",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
                 },
                 "response": {
                   "body": {
@@ -4120,8 +4125,8 @@ Companies are looked up via \`company_id\` in a \`POST\` request, if not found v
               {
                 "name": "Successful",
                 "path-parameters": {
-                  "contact_id": "contact_id",
-                  "id": "id",
+                  "contact_id": "58a430d35458202d41b1e65b",
+                  "id": "58a430d35458202d41b1e65b",
                 },
                 "response": {
                   "body": {
@@ -4217,6 +4222,9 @@ When using the Companies endpoint and the pages object to iterate through the re
             "examples": [
               {
                 "name": "Successful",
+                "query-parameters": {
+                  "order": "desc",
+                },
                 "response": {
                   "body": {
                     "data": [
@@ -4329,6 +4337,12 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
             "examples": [
               {
                 "name": "Successful",
+                "query-parameters": {
+                  "company_id": "12345",
+                  "name": "my company",
+                  "segment_id": "98765",
+                  "tag_id": "678910",
+                },
                 "response": {
                   "body": {
                     "data": [
@@ -4723,7 +4737,7 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
               {
                 "name": "successful",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "63a07ddf05a32042dffac965",
                 },
                 "response": {
                   "body": {
@@ -5425,7 +5439,7 @@ The table below shows the operators you can use to define how you want to search
               {
                 "name": "successful",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "63a07ddf05a32042dffac965",
                 },
                 "response": {
                   "body": {
@@ -5554,7 +5568,7 @@ The table below shows the operators you can use to define how you want to search
               {
                 "name": "successful",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "63a07ddf05a32042dffac965",
                 },
                 "response": {
                   "body": {
@@ -5600,7 +5614,7 @@ The table below shows the operators you can use to define how you want to search
               {
                 "name": "successful",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "63a07ddf05a32042dffac965",
                 },
                 "request": {
                   "email": "joebloggs@intercom.io",
@@ -5808,7 +5822,7 @@ The table below shows the operators you can use to define how you want to search
               {
                 "name": "successful",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "63a07ddf05a32042dffac965",
                 },
                 "response": {
                   "body": {
@@ -5889,7 +5903,7 @@ The table below shows the operators you can use to define how you want to search
               {
                 "name": "successful",
                 "path-parameters": {
-                  "contact_id": "contact_id",
+                  "contact_id": "63a07ddf05a32042dffac965",
                 },
                 "response": {
                   "body": {
@@ -5951,7 +5965,7 @@ The data property will show a combined list of:
               {
                 "name": "Successful",
                 "path-parameters": {
-                  "contact_id": "contact_id",
+                  "contact_id": "63a07ddf05a32042dffac965",
                 },
                 "response": {
                   "body": {
@@ -6039,7 +6053,7 @@ The data property will show a combined list of:
               {
                 "name": "successful",
                 "path-parameters": {
-                  "contact_id": "contact_id",
+                  "contact_id": "63a07ddf05a32042dffac965",
                 },
                 "response": {
                   "body": {
@@ -6392,7 +6406,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
               {
                 "name": "Attach a contact to a conversation",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123",
                 },
                 "request": {
                   "admin_id": "12345",
@@ -6567,7 +6581,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
               {
                 "name": "Not found",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123",
                 },
                 "request": {
                   "admin_id": "12345",
@@ -6792,7 +6806,7 @@ It is not possible to use this endpoint with Workflows.
               {
                 "name": "Assign a conversation using assignment rules",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123",
                 },
                 "response": {
                   "body": {
@@ -7404,8 +7418,8 @@ If you add a contact via the email parameter and there is no user/lead found on 
               {
                 "name": "Detach a contact from a group conversation",
                 "path-parameters": {
-                  "contact_id": "contact_id",
-                  "conversation_id": "conversation_id",
+                  "contact_id": "123",
+                  "conversation_id": "123",
                 },
                 "request": {
                   "admin_id": "5017690",
@@ -7577,8 +7591,8 @@ If you add a contact via the email parameter and there is no user/lead found on 
               {
                 "name": "Conversation not found",
                 "path-parameters": {
-                  "contact_id": "contact_id",
-                  "conversation_id": "conversation_id",
+                  "contact_id": "123",
+                  "conversation_id": "123",
                 },
                 "request": {
                   "admin_id": "5017690",
@@ -7750,8 +7764,8 @@ If you add a contact via the email parameter and there is no user/lead found on 
               {
                 "name": "Contact not found",
                 "path-parameters": {
-                  "contact_id": "contact_id",
-                  "conversation_id": "conversation_id",
+                  "contact_id": "123",
+                  "conversation_id": "123",
                 },
                 "request": {
                   "admin_id": "5017690",
@@ -7923,8 +7937,8 @@ If you add a contact via the email parameter and there is no user/lead found on 
               {
                 "name": "Last customer",
                 "path-parameters": {
-                  "contact_id": "contact_id",
-                  "conversation_id": "conversation_id",
+                  "contact_id": "123",
+                  "conversation_id": "123",
                 },
                 "request": {
                   "admin_id": "5017690",
@@ -8660,7 +8674,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
               {
                 "name": "User reply",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123 or "last"",
                 },
                 "request": {
                   "body": "Thanks again :)",
@@ -8855,7 +8869,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
               {
                 "name": "Admin note reply",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123 or "last"",
                 },
                 "request": {
                   "admin_id": "3156780",
@@ -9050,7 +9064,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
               {
                 "name": "User last conversation reply",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123 or "last"",
                 },
                 "request": {
                   "body": "Thanks again :)",
@@ -9245,7 +9259,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
               {
                 "name": "Not found",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123 or "last"",
                 },
                 "request": {
                   "body": "Thanks again :)",
@@ -9440,7 +9454,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
               {
                 "name": "User reply",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123 or "last"",
                 },
                 "request": {
                   "body": "Thanks again :)",
@@ -9635,7 +9649,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
               {
                 "name": "Admin note reply",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123 or "last"",
                 },
                 "request": {
                   "body": "Thanks again :)",
@@ -9841,7 +9855,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
               {
                 "name": "User last conversation reply",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123 or "last"",
                 },
                 "request": {
                   "body": "Thanks again :)",
@@ -10082,6 +10096,9 @@ For AI agent conversation metadata, please note that you need to have the agent 
                 "name": "conversation found",
                 "path-parameters": {
                   "id": 1,
+                },
+                "query-parameters": {
+                  "display_as": "plaintext",
                 },
                 "response": {
                   "body": {
@@ -10574,6 +10591,9 @@ If you want to reply to a coveration or take an action such as assign, unassign,
                 "path-parameters": {
                   "id": 1,
                 },
+                "query-parameters": {
+                  "display_as": "plaintext",
+                },
                 "request": {
                   "custom_attributes": {
                     "issue_type": "Billing",
@@ -10795,6 +10815,9 @@ If you want to reply to a coveration or take an action such as assign, unassign,
                 "name": "Not found",
                 "path-parameters": {
                   "id": 1,
+                },
+                "query-parameters": {
+                  "display_as": "plaintext",
                 },
                 "request": {
                   "custom_attributes": {
@@ -14912,7 +14935,7 @@ This will return the Message model that has been created.
               {
                 "name": "successful",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123",
                 },
                 "response": {
                   "body": {
@@ -15124,7 +15147,7 @@ This will return the Message model that has been created.
               {
                 "name": "successful",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123",
                 },
                 "response": {
                   "body": {
@@ -15962,7 +15985,7 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
               {
                 "name": "Successful response",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123",
                 },
                 "response": {
                   "body": {
@@ -16088,7 +16111,7 @@ This will return a subscription type model for the subscription type that was ad
               {
                 "name": "Successful",
                 "path-parameters": {
-                  "contact_id": "contact_id",
+                  "contact_id": "63a07ddf05a32042dffac965",
                 },
                 "request": {
                   "consent_type": "opt_in",
@@ -16121,7 +16144,7 @@ This will return a subscription type model for the subscription type that was ad
               {
                 "name": "Contact not found",
                 "path-parameters": {
-                  "contact_id": "contact_id",
+                  "contact_id": "63a07ddf05a32042dffac965",
                 },
                 "request": {
                   "consent_type": "opt_in",
@@ -16154,7 +16177,7 @@ This will return a subscription type model for the subscription type that was ad
               {
                 "name": "Resource not found",
                 "path-parameters": {
-                  "contact_id": "contact_id",
+                  "contact_id": "63a07ddf05a32042dffac965",
                 },
                 "request": {
                   "consent_type": "opt_in",
@@ -16233,8 +16256,8 @@ This will return a subscription type model for the subscription type that was ad
               {
                 "name": "Successful",
                 "path-parameters": {
-                  "contact_id": "contact_id",
-                  "id": "id",
+                  "contact_id": "63a07ddf05a32042dffac965",
+                  "id": "37846",
                 },
                 "response": {
                   "body": {
@@ -16545,7 +16568,7 @@ If custom attributes are specified, they will be added to the user or lead's cus
               {
                 "name": "successful",
                 "path-parameters": {
-                  "contact_id": "contact_id",
+                  "contact_id": "63a07ddf05a32042dffac965",
                 },
                 "request": {
                   "id": "7522907",
@@ -16566,7 +16589,7 @@ If custom attributes are specified, they will be added to the user or lead's cus
               {
                 "name": "Contact not found",
                 "path-parameters": {
-                  "contact_id": "contact_id",
+                  "contact_id": "63a07ddf05a32042dffac965",
                 },
                 "request": {
                   "id": "7522907",
@@ -16587,7 +16610,7 @@ If custom attributes are specified, they will be added to the user or lead's cus
               {
                 "name": "Tag not found",
                 "path-parameters": {
-                  "contact_id": "contact_id",
+                  "contact_id": "63a07ddf05a32042dffac965",
                 },
                 "request": {
                   "id": "123",
@@ -16650,7 +16673,7 @@ If custom attributes are specified, they will be added to the user or lead's cus
               {
                 "name": "successful",
                 "path-parameters": {
-                  "conversation_id": "conversation_id",
+                  "conversation_id": "64619700005694",
                 },
                 "request": {
                   "admin_id": "780",
@@ -16672,7 +16695,7 @@ If custom attributes are specified, they will be added to the user or lead's cus
               {
                 "name": "Conversation not found",
                 "path-parameters": {
-                  "conversation_id": "conversation_id",
+                  "conversation_id": "64619700005694",
                 },
                 "request": {
                   "admin_id": "780",
@@ -16740,7 +16763,7 @@ If custom attributes are specified, they will be added to the user or lead's cus
               {
                 "name": "successful",
                 "path-parameters": {
-                  "ticket_id": "ticket_id",
+                  "ticket_id": "64619700005694",
                 },
                 "request": {
                   "admin_id": "780",
@@ -16762,7 +16785,7 @@ If custom attributes are specified, they will be added to the user or lead's cus
               {
                 "name": "Ticket not found",
                 "path-parameters": {
-                  "ticket_id": "ticket_id",
+                  "ticket_id": "64619700005694",
                 },
                 "request": {
                   "admin_id": "780",
@@ -16954,7 +16977,7 @@ Each operation will return a tag object.
             "examples": [
               {
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123",
                 },
               },
             ],
@@ -16989,8 +17012,8 @@ Each operation will return a tag object.
               {
                 "name": "successful",
                 "path-parameters": {
-                  "contact_id": "contact_id",
-                  "id": "id",
+                  "contact_id": "63a07ddf05a32042dffac965",
+                  "id": "7522907",
                 },
                 "response": {
                   "body": {
@@ -17045,8 +17068,8 @@ Each operation will return a tag object.
               {
                 "name": "successful",
                 "path-parameters": {
-                  "conversation_id": "conversation_id",
-                  "id": "id",
+                  "conversation_id": "64619700005694",
+                  "id": "7522907",
                 },
                 "request": {
                   "admin_id": "123",
@@ -17067,8 +17090,8 @@ Each operation will return a tag object.
               {
                 "name": "Conversation not found",
                 "path-parameters": {
-                  "conversation_id": "conversation_id",
-                  "id": "id",
+                  "conversation_id": "64619700005694",
+                  "id": "7522907",
                 },
                 "request": {
                   "admin_id": "123",
@@ -17089,8 +17112,8 @@ Each operation will return a tag object.
               {
                 "name": "Tag not found",
                 "path-parameters": {
-                  "conversation_id": "conversation_id",
-                  "id": "id",
+                  "conversation_id": "64619700005694",
+                  "id": "7522907",
                 },
                 "request": {
                   "admin_id": "123",
@@ -17157,8 +17180,8 @@ Each operation will return a tag object.
               {
                 "name": "successful",
                 "path-parameters": {
-                  "id": "id",
-                  "ticket_id": "ticket_id",
+                  "id": "7522907",
+                  "ticket_id": "64619700005694",
                 },
                 "request": {
                   "admin_id": "123",
@@ -17179,8 +17202,8 @@ Each operation will return a tag object.
               {
                 "name": "Ticket not found",
                 "path-parameters": {
-                  "id": "id",
-                  "ticket_id": "ticket_id",
+                  "id": "7522907",
+                  "ticket_id": "64619700005694",
                 },
                 "request": {
                   "admin_id": "123",
@@ -17201,8 +17224,8 @@ Each operation will return a tag object.
               {
                 "name": "Tag not found",
                 "path-parameters": {
-                  "id": "id",
-                  "ticket_id": "ticket_id",
+                  "id": "7522907",
+                  "ticket_id": "64619700005694",
                 },
                 "request": {
                   "admin_id": "123",
@@ -17271,7 +17294,7 @@ This will return a tag object.
               {
                 "name": "Tag found",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123",
                 },
                 "response": {
                   "body": {
@@ -17468,7 +17491,7 @@ This will return a tag object.
               {
                 "name": "successful",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123",
                 },
                 "response": {
                   "body": {
@@ -29229,7 +29252,8 @@ You can view the currently authorised admin along with the embedded app object (
               {
                 "name": "Successful response",
                 "query-parameters": {
-                  "created_at_after": "created_at_after",
+                  "created_at_after": "1677253093",
+                  "created_at_before": "1677861493",
                 },
                 "response": {
                   "body": {
@@ -31238,6 +31262,10 @@ You can view the currently authorised admin along with the embedded app object (
             "examples": [
               {
                 "name": "Search successful",
+                "query-parameters": {
+                  "phrase": "Getting started",
+                  "state": "published",
+                },
                 "response": {
                   "body": {
                     "data": {
@@ -32492,7 +32520,7 @@ You can view the currently authorised admin along with the embedded app object (
               {
                 "name": "Successful",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
                 },
                 "response": {
                   "body": {
@@ -32602,7 +32630,7 @@ You can view the currently authorised admin along with the embedded app object (
               {
                 "name": "Successful",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
                 },
                 "response": {
                   "body": {
@@ -32648,7 +32676,7 @@ You can view the currently authorised admin along with the embedded app object (
               {
                 "name": "Successful",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
                 },
                 "response": {
                   "body": {
@@ -32729,7 +32757,7 @@ You can view the currently authorised admin along with the embedded app object (
               {
                 "name": "Successful",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
                 },
                 "response": {
                   "body": {
@@ -33094,7 +33122,7 @@ Companies are looked up via \`company_id\` in a \`POST\` request, if not found v
               {
                 "name": "Successful",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
                 },
                 "response": {
                   "body": {
@@ -33131,8 +33159,8 @@ Companies are looked up via \`company_id\` in a \`POST\` request, if not found v
               {
                 "name": "Successful",
                 "path-parameters": {
-                  "contact_id": "contact_id",
-                  "id": "id",
+                  "contact_id": "58a430d35458202d41b1e65b",
+                  "id": "58a430d35458202d41b1e65b",
                 },
                 "response": {
                   "body": {
@@ -33219,6 +33247,9 @@ When using the Companies endpoint and the pages object to iterate through the re
             "examples": [
               {
                 "name": "Successful",
+                "query-parameters": {
+                  "order": "desc",
+                },
                 "response": {
                   "body": {
                     "data": [
@@ -33325,6 +33356,12 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
             "examples": [
               {
                 "name": "Successful",
+                "query-parameters": {
+                  "company_id": "12345",
+                  "name": "my company",
+                  "segment_id": "98765",
+                  "tag_id": "678910",
+                },
                 "response": {
                   "body": {
                     "data": [
@@ -33707,7 +33744,7 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
               {
                 "name": "successful",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "63a07ddf05a32042dffac965",
                 },
                 "response": {
                   "body": {
@@ -34363,7 +34400,7 @@ The table below shows the operators you can use to define how you want to search
               {
                 "name": "successful",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "63a07ddf05a32042dffac965",
                 },
                 "response": {
                   "body": {
@@ -34483,7 +34520,7 @@ The table below shows the operators you can use to define how you want to search
               {
                 "name": "successful",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "63a07ddf05a32042dffac965",
                 },
                 "response": {
                   "body": {
@@ -34520,7 +34557,7 @@ The table below shows the operators you can use to define how you want to search
               {
                 "name": "successful",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "63a07ddf05a32042dffac965",
                 },
                 "request": {
                   "email": "joebloggs@intercom.io",
@@ -34723,7 +34760,7 @@ The table below shows the operators you can use to define how you want to search
               {
                 "name": "successful",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "63a07ddf05a32042dffac965",
                 },
                 "response": {
                   "body": {
@@ -34795,7 +34832,7 @@ The table below shows the operators you can use to define how you want to search
               {
                 "name": "successful",
                 "path-parameters": {
-                  "contact_id": "contact_id",
+                  "contact_id": "63a07ddf05a32042dffac965",
                 },
                 "response": {
                   "body": {
@@ -34848,7 +34885,7 @@ The data property will show a combined list of:
               {
                 "name": "Successful",
                 "path-parameters": {
-                  "contact_id": "contact_id",
+                  "contact_id": "63a07ddf05a32042dffac965",
                 },
                 "response": {
                   "body": {
@@ -34927,7 +34964,7 @@ The data property will show a combined list of:
               {
                 "name": "successful",
                 "path-parameters": {
-                  "contact_id": "contact_id",
+                  "contact_id": "63a07ddf05a32042dffac965",
                 },
                 "response": {
                   "body": {
@@ -35271,7 +35308,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
               {
                 "name": "Attach a contact to a conversation",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123",
                 },
                 "request": {
                   "admin_id": "12345",
@@ -35446,7 +35483,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
               {
                 "name": "Not found",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123",
                 },
                 "request": {
                   "admin_id": "12345",
@@ -35666,7 +35703,7 @@ It is not possible to use this endpoint with Workflows.
               {
                 "name": "Assign a conversation using assignment rules",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123",
                 },
                 "response": {
                   "body": {
@@ -36259,8 +36296,8 @@ If you add a contact via the email parameter and there is no user/lead found on 
               {
                 "name": "Detach a contact from a group conversation",
                 "path-parameters": {
-                  "contact_id": "contact_id",
-                  "conversation_id": "conversation_id",
+                  "contact_id": "123",
+                  "conversation_id": "123",
                 },
                 "request": {
                   "admin_id": "5017690",
@@ -36432,8 +36469,8 @@ If you add a contact via the email parameter and there is no user/lead found on 
               {
                 "name": "Conversation not found",
                 "path-parameters": {
-                  "contact_id": "contact_id",
-                  "conversation_id": "conversation_id",
+                  "contact_id": "123",
+                  "conversation_id": "123",
                 },
                 "request": {
                   "admin_id": "5017690",
@@ -36605,8 +36642,8 @@ If you add a contact via the email parameter and there is no user/lead found on 
               {
                 "name": "Contact not found",
                 "path-parameters": {
-                  "contact_id": "contact_id",
-                  "conversation_id": "conversation_id",
+                  "contact_id": "123",
+                  "conversation_id": "123",
                 },
                 "request": {
                   "admin_id": "5017690",
@@ -36778,8 +36815,8 @@ If you add a contact via the email parameter and there is no user/lead found on 
               {
                 "name": "Last customer",
                 "path-parameters": {
-                  "contact_id": "contact_id",
-                  "conversation_id": "conversation_id",
+                  "contact_id": "123",
+                  "conversation_id": "123",
                 },
                 "request": {
                   "admin_id": "5017690",
@@ -37490,7 +37527,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
               {
                 "name": "User reply",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123 or "last"",
                 },
                 "request": {
                   "body": "Thanks again :)",
@@ -37685,7 +37722,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
               {
                 "name": "Admin note reply",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123 or "last"",
                 },
                 "request": {
                   "admin_id": "3156780",
@@ -37880,7 +37917,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
               {
                 "name": "User last conversation reply",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123 or "last"",
                 },
                 "request": {
                   "body": "Thanks again :)",
@@ -38075,7 +38112,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
               {
                 "name": "Not found",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123 or "last"",
                 },
                 "request": {
                   "body": "Thanks again :)",
@@ -38270,7 +38307,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
               {
                 "name": "User reply",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123 or "last"",
                 },
                 "request": {
                   "body": "Thanks again :)",
@@ -38465,7 +38502,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
               {
                 "name": "Admin note reply",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123 or "last"",
                 },
                 "request": {
                   "body": "Thanks again :)",
@@ -38671,7 +38708,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
               {
                 "name": "User last conversation reply",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123 or "last"",
                 },
                 "request": {
                   "body": "Thanks again :)",
@@ -38905,6 +38942,9 @@ For AI agent conversation metadata, please note that you need to have the agent 
                 "name": "conversation found",
                 "path-parameters": {
                   "id": 1,
+                },
+                "query-parameters": {
+                  "display_as": "plaintext",
                 },
                 "response": {
                   "body": {
@@ -39384,6 +39424,9 @@ If you want to reply to a coveration or take an action such as assign, unassign,
                 "path-parameters": {
                   "id": 1,
                 },
+                "query-parameters": {
+                  "display_as": "plaintext",
+                },
                 "request": {
                   "custom_attributes": {
                     "issue_type": "Billing",
@@ -39605,6 +39648,9 @@ If you want to reply to a coveration or take an action such as assign, unassign,
                 "name": "Not found",
                 "path-parameters": {
                   "id": 1,
+                },
+                "query-parameters": {
+                  "display_as": "plaintext",
                 },
                 "request": {
                   "custom_attributes": {
@@ -43570,7 +43616,7 @@ This will return the Message model that has been created.
               {
                 "name": "successful",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123",
                 },
                 "response": {
                   "body": {
@@ -43746,7 +43792,7 @@ This will return the Message model that has been created.
               {
                 "name": "successful",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123",
                 },
                 "response": {
                   "body": {
@@ -44539,7 +44585,7 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
               {
                 "name": "Successful response",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123",
                 },
                 "response": {
                   "body": {
@@ -44656,7 +44702,7 @@ This will return a subscription type model for the subscription type that was ad
               {
                 "name": "Successful",
                 "path-parameters": {
-                  "contact_id": "contact_id",
+                  "contact_id": "63a07ddf05a32042dffac965",
                 },
                 "request": {
                   "consent_type": "opt_in",
@@ -44689,7 +44735,7 @@ This will return a subscription type model for the subscription type that was ad
               {
                 "name": "Contact not found",
                 "path-parameters": {
-                  "contact_id": "contact_id",
+                  "contact_id": "63a07ddf05a32042dffac965",
                 },
                 "request": {
                   "consent_type": "opt_in",
@@ -44722,7 +44768,7 @@ This will return a subscription type model for the subscription type that was ad
               {
                 "name": "Resource not found",
                 "path-parameters": {
-                  "contact_id": "contact_id",
+                  "contact_id": "63a07ddf05a32042dffac965",
                 },
                 "request": {
                   "consent_type": "opt_in",
@@ -44796,8 +44842,8 @@ This will return a subscription type model for the subscription type that was ad
               {
                 "name": "Successful",
                 "path-parameters": {
-                  "contact_id": "contact_id",
-                  "id": "id",
+                  "contact_id": "63a07ddf05a32042dffac965",
+                  "id": "37846",
                 },
                 "response": {
                   "body": {
@@ -45083,7 +45129,7 @@ If custom attributes are specified, they will be added to the user or lead's cus
               {
                 "name": "successful",
                 "path-parameters": {
-                  "contact_id": "contact_id",
+                  "contact_id": "63a07ddf05a32042dffac965",
                 },
                 "request": {
                   "id": "7522907",
@@ -45104,7 +45150,7 @@ If custom attributes are specified, they will be added to the user or lead's cus
               {
                 "name": "Contact not found",
                 "path-parameters": {
-                  "contact_id": "contact_id",
+                  "contact_id": "63a07ddf05a32042dffac965",
                 },
                 "request": {
                   "id": "7522907",
@@ -45125,7 +45171,7 @@ If custom attributes are specified, they will be added to the user or lead's cus
               {
                 "name": "Tag not found",
                 "path-parameters": {
-                  "contact_id": "contact_id",
+                  "contact_id": "63a07ddf05a32042dffac965",
                 },
                 "request": {
                   "id": "123",
@@ -45183,7 +45229,7 @@ If custom attributes are specified, they will be added to the user or lead's cus
               {
                 "name": "successful",
                 "path-parameters": {
-                  "conversation_id": "conversation_id",
+                  "conversation_id": "64619700005694",
                 },
                 "request": {
                   "admin_id": "780",
@@ -45205,7 +45251,7 @@ If custom attributes are specified, they will be added to the user or lead's cus
               {
                 "name": "Conversation not found",
                 "path-parameters": {
-                  "conversation_id": "conversation_id",
+                  "conversation_id": "64619700005694",
                 },
                 "request": {
                   "admin_id": "780",
@@ -45268,7 +45314,7 @@ If custom attributes are specified, they will be added to the user or lead's cus
               {
                 "name": "successful",
                 "path-parameters": {
-                  "ticket_id": "ticket_id",
+                  "ticket_id": "64619700005694",
                 },
                 "request": {
                   "admin_id": "780",
@@ -45290,7 +45336,7 @@ If custom attributes are specified, they will be added to the user or lead's cus
               {
                 "name": "Ticket not found",
                 "path-parameters": {
-                  "ticket_id": "ticket_id",
+                  "ticket_id": "64619700005694",
                 },
                 "request": {
                   "admin_id": "780",
@@ -45470,7 +45516,7 @@ Each operation will return a tag object.
             "examples": [
               {
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123",
                 },
               },
             ],
@@ -45496,8 +45542,8 @@ Each operation will return a tag object.
               {
                 "name": "successful",
                 "path-parameters": {
-                  "contact_id": "contact_id",
-                  "id": "id",
+                  "contact_id": "63a07ddf05a32042dffac965",
+                  "id": "7522907",
                 },
                 "response": {
                   "body": {
@@ -45543,8 +45589,8 @@ Each operation will return a tag object.
               {
                 "name": "successful",
                 "path-parameters": {
-                  "conversation_id": "conversation_id",
-                  "id": "id",
+                  "conversation_id": "64619700005694",
+                  "id": "7522907",
                 },
                 "request": {
                   "admin_id": "123",
@@ -45565,8 +45611,8 @@ Each operation will return a tag object.
               {
                 "name": "Conversation not found",
                 "path-parameters": {
-                  "conversation_id": "conversation_id",
-                  "id": "id",
+                  "conversation_id": "64619700005694",
+                  "id": "7522907",
                 },
                 "request": {
                   "admin_id": "123",
@@ -45587,8 +45633,8 @@ Each operation will return a tag object.
               {
                 "name": "Tag not found",
                 "path-parameters": {
-                  "conversation_id": "conversation_id",
-                  "id": "id",
+                  "conversation_id": "64619700005694",
+                  "id": "7522907",
                 },
                 "request": {
                   "admin_id": "123",
@@ -45650,8 +45696,8 @@ Each operation will return a tag object.
               {
                 "name": "successful",
                 "path-parameters": {
-                  "id": "id",
-                  "ticket_id": "ticket_id",
+                  "id": "7522907",
+                  "ticket_id": "64619700005694",
                 },
                 "request": {
                   "admin_id": "123",
@@ -45672,8 +45718,8 @@ Each operation will return a tag object.
               {
                 "name": "Ticket not found",
                 "path-parameters": {
-                  "id": "id",
-                  "ticket_id": "ticket_id",
+                  "id": "7522907",
+                  "ticket_id": "64619700005694",
                 },
                 "request": {
                   "admin_id": "123",
@@ -45694,8 +45740,8 @@ Each operation will return a tag object.
               {
                 "name": "Tag not found",
                 "path-parameters": {
-                  "id": "id",
-                  "ticket_id": "ticket_id",
+                  "id": "7522907",
+                  "ticket_id": "64619700005694",
                 },
                 "request": {
                   "admin_id": "123",
@@ -45759,7 +45805,7 @@ This will return a tag object.
               {
                 "name": "Tag found",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123",
                 },
                 "response": {
                   "body": {
@@ -45929,7 +45975,7 @@ This will return a tag object.
               {
                 "name": "successful",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "123",
                 },
                 "response": {
                   "body": {
