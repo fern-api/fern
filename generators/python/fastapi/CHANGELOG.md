@@ -8,9 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0-rc0] - 2024-07-16
 
 - Break: The generated server stubs now support Pydantic V2 outright, it no longer uses `pydantic.v1` models. This change introduces additional breaks:
+
   - Wrapped aliases have been removed
   - Custom root validators for models with a **root** type have been removed (e.g. only unions with utils still leverages root models)
   - Public fields previously prefixed with `_` are now prefixed with `f_` (Pydantic V2 does not allow for `_` prefixes on public fields and Python does not allow for a numeric prefix)
+
+- NOTE: This version allows for upgrading your FastAPI version to latest (> 0.111.0), as well as Pydantic V2. If you are leveraging `output: location: local-file-system` you will have to bump these versions yourself!
 
 ## [0.11.1] - 2024-07-10
 

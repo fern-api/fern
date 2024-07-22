@@ -103,9 +103,14 @@ class SnippetWriter:
                 ),
             )
             if value is not None:
+                # TODO: we really need to centralize a lot of this logic,
+                # especially around renaming and models in general
                 maybe_rewritten_name = (
                     request_parameter_names.get(property.name.name) or property.name.name.snake_case.safe_name
                 )
+                if maybe_rewritten_name.startswith("_"):
+                    maybe_rewritten_name = "f_" + maybe_rewritten_name.lstrip("_")
+
                 args.append(
                     self.get_snippet_for_named_parameter(
                         parameter_name=maybe_rewritten_name,
