@@ -51,15 +51,15 @@ class EnumGenerator(AbstractTypeGenerator):
                     AST.ClassReference(
                         import_=AST.ReferenceImport(module=AST.Module.built_in(("enum",))),
                         qualified_name_excluding_import=("StrEnum",),
-                    ),
-                ],
+                    )
+                ]
             else:
                 extends = [
                     AST.ClassReference(
                         import_=AST.ReferenceImport(module=AST.Module.built_in(("enum",))),
                         qualified_name_excluding_import=("StrEnum",),
-                    ),
-                ],
+                    )
+                ]
             enum_class = AST.ClassDeclaration(
                 name=self._get_class_name(),
                 extends=extends,
