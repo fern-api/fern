@@ -61,7 +61,7 @@ export function convertParameters({
                       parameterBreadcrumbs,
                       false,
                       new Set(),
-                      getExamplesString(resolvedParameter as OpenAPIV3.SchemaObject)
+                      getExamplesString(resolvedParameter, context.logger)
                   )
                 : isRequired
                 ? SchemaWithExample.primitive({
@@ -73,7 +73,7 @@ export function convertParameters({
                           format: undefined,
                           minLength: undefined,
                           maxLength: undefined,
-                          example: getExamplesString(resolvedParameter as OpenAPIV3.SchemaObject)
+                          example: getExamplesString(resolvedParameter, context.logger)
                       }),
                       description: undefined,
                       availability,
@@ -91,7 +91,7 @@ export function convertParameters({
                               format: undefined,
                               minLength: undefined,
                               maxLength: undefined,
-                              example: getExamplesString(resolvedParameter as OpenAPIV3.SchemaObject)
+                              example: getExamplesString(resolvedParameter, context.logger)
                           }),
                           description: undefined,
                           availability: undefined,

@@ -182,7 +182,7 @@ export function convertSchemaObject(
                     maxLength: schema.maxLength,
                     pattern: schema.pattern,
                     format: schema.format,
-                    example: getExamplesString(schema, exampleUnderride as string)
+                    example: getExamplesString(schema, context.logger, exampleUnderride as string)
                 }),
                 groupName,
                 wrapAsNullable,
@@ -310,7 +310,7 @@ export function convertSchemaObject(
             generatedName,
             primitive: PrimitiveSchemaValueWithExample.boolean({
                 default: schema.default,
-                example: getExampleAsBoolean(schema, exampleUnderride as boolean)
+                example: getExampleAsBoolean(schema, context.logger, exampleUnderride as boolean)
             }),
             wrapAsNullable,
             description,
@@ -332,7 +332,7 @@ export function convertSchemaObject(
             description,
             availability,
             wrapAsNullable,
-            example: getExampleAsNumber(schema, exampleUnderride as number),
+            example: getExampleAsNumber(schema, context.logger, exampleUnderride as number),
             groupName
         });
     }
@@ -347,7 +347,7 @@ export function convertSchemaObject(
                 exclusiveMinimum: getValueIfBoolean(schema.exclusiveMinimum),
                 exclusiveMaximum: getValueIfBoolean(schema.exclusiveMaximum),
                 multipleOf: schema.multipleOf,
-                example: getExampleAsNumber(schema, exampleUnderride as number)
+                example: getExampleAsNumber(schema, context.logger, exampleUnderride as number)
             }),
             wrapAsNullable,
             description,
@@ -369,7 +369,7 @@ export function convertSchemaObject(
             description,
             availability,
             wrapAsNullable,
-            example: getExampleAsNumber(schema, exampleUnderride as number),
+            example: getExampleAsNumber(schema, context.logger, exampleUnderride as number),
             groupName
         });
     }
@@ -379,7 +379,7 @@ export function convertSchemaObject(
                 nameOverride,
                 generatedName,
                 primitive: PrimitiveSchemaValueWithExample.datetime({
-                    example: getExamplesString(schema, exampleUnderride as string)
+                    example: getExamplesString(schema, context.logger, exampleUnderride as string)
                 }),
                 wrapAsNullable,
                 description,
@@ -419,8 +419,7 @@ export function convertSchemaObject(
                 format: schema.format,
                 minLength: schema.minLength,
                 maxLength: schema.maxLength,
-                // THIS IS THE LINE THAT IS FAILING
-                example: getExamplesString(schema, exampleUnderride as string)
+                example: getExamplesString(schema, context.logger, exampleUnderride as string)
             }),
             groupName,
             wrapAsNullable,
@@ -441,7 +440,7 @@ export function convertSchemaObject(
             wrapAsNullable,
             context,
             groupName,
-            example: getExampleAsArray(schema, exampleUnderride as unknown[])
+            example: getExampleAsArray(schema, context.logger, exampleUnderride as unknown[])
         });
     }
 
@@ -752,7 +751,7 @@ export function convertSchemaObject(
                     format: schema.format,
                     minLength: schema.minLength,
                     maxLength: schema.maxLength,
-                    example: getExamplesString(schema, exampleUnderride as string)
+                    example: getExamplesString(schema, context.logger, exampleUnderride as string)
                 }),
                 groupName
             },
