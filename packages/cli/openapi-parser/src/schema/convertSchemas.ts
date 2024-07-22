@@ -43,7 +43,7 @@ export function convertSchema(
     breadcrumbs: string[],
     referencedAsRequest = false,
     propertiesToExclude: Set<string> = new Set(),
-    exampleUnderride?: string | number | boolean | unknown[]
+    fallback?: string | number | boolean | unknown[]
 ): SchemaWithExample {
     if (isReferenceObject(schema)) {
         const schemaId = getSchemaIdFromReference(schema);
@@ -64,7 +64,7 @@ export function convertSchema(
             getBreadcrumbsFromReference(schema.$ref),
             propertiesToExclude,
             referencedAsRequest,
-            exampleUnderride
+            fallback
         );
     } else {
         return convertSchemaObject(
@@ -74,7 +74,7 @@ export function convertSchema(
             breadcrumbs,
             propertiesToExclude,
             referencedAsRequest,
-            exampleUnderride
+            fallback
         );
     }
 }
@@ -123,7 +123,7 @@ export function convertSchemaObject(
     breadcrumbs: string[],
     propertiesToExclude: Set<string> = new Set(),
     referencedAsRequest = false,
-    exampleUnderride?: string | number | boolean | unknown[]
+    fallback?: string | number | boolean | unknown[]
 ): SchemaWithExample {
     const nameOverride =
         getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME) ??
@@ -164,7 +164,7 @@ export function convertSchemaObject(
             breadcrumbs,
             propertiesToExclude,
             referencedAsRequest,
-            exampleUnderride
+            fallback
         );
     }
 
@@ -182,7 +182,7 @@ export function convertSchemaObject(
                     maxLength: schema.maxLength,
                     pattern: schema.pattern,
                     format: schema.format,
-                    example: getExamplesString(schema, context.logger, exampleUnderride as string)
+                    example: getExamplesString({ schema, logger: context.logger, fallback })
                 }),
                 groupName,
                 wrapAsNullable,
@@ -237,7 +237,7 @@ export function convertSchemaObject(
                     breadcrumbs,
                     propertiesToExclude,
                     referencedAsRequest,
-                    exampleUnderride
+                    fallback
                 ),
                 groupName,
                 description: schema.description,
@@ -257,7 +257,7 @@ export function convertSchemaObject(
                     breadcrumbs,
                     propertiesToExclude,
                     referencedAsRequest,
-                    exampleUnderride
+                    fallback
                 ),
                 groupName,
                 description: schema.description,
@@ -310,7 +310,7 @@ export function convertSchemaObject(
             generatedName,
             primitive: PrimitiveSchemaValueWithExample.boolean({
                 default: schema.default,
-                example: getExampleAsBoolean(schema, context.logger, exampleUnderride as boolean)
+                example: getExampleAsBoolean({ schema, logger: context.logger, fallback })
             }),
             wrapAsNullable,
             description,
@@ -332,7 +332,7 @@ export function convertSchemaObject(
             description,
             availability,
             wrapAsNullable,
-            example: getExampleAsNumber(schema, context.logger, exampleUnderride as number),
+            example: getExampleAsNumber({ schema, logger: context.logger, fallback }),
             groupName
         });
     }
@@ -347,7 +347,7 @@ export function convertSchemaObject(
                 exclusiveMinimum: getValueIfBoolean(schema.exclusiveMinimum),
                 exclusiveMaximum: getValueIfBoolean(schema.exclusiveMaximum),
                 multipleOf: schema.multipleOf,
-                example: getExampleAsNumber(schema, context.logger, exampleUnderride as number)
+                example: getExampleAsNumber({ schema, logger: context.logger, fallback })
             }),
             wrapAsNullable,
             description,
@@ -369,7 +369,7 @@ export function convertSchemaObject(
             description,
             availability,
             wrapAsNullable,
-            example: getExampleAsNumber(schema, context.logger, exampleUnderride as number),
+            example: getExampleAsNumber({ schema, logger: context.logger, fallback }),
             groupName
         });
     }
@@ -379,7 +379,7 @@ export function convertSchemaObject(
                 nameOverride,
                 generatedName,
                 primitive: PrimitiveSchemaValueWithExample.datetime({
-                    example: getExamplesString(schema, context.logger, exampleUnderride as string)
+                    example: getExamplesString({ schema, logger: context.logger, fallback })
                 }),
                 wrapAsNullable,
                 description,
@@ -419,7 +419,7 @@ export function convertSchemaObject(
                 format: schema.format,
                 minLength: schema.minLength,
                 maxLength: schema.maxLength,
-                example: getExamplesString(schema, context.logger, exampleUnderride as string)
+                example: getExamplesString({ schema, logger: context.logger, fallback })
             }),
             groupName,
             wrapAsNullable,
@@ -440,7 +440,7 @@ export function convertSchemaObject(
             wrapAsNullable,
             context,
             groupName,
-            example: getExampleAsArray(schema, context.logger, exampleUnderride as unknown[])
+            example: getExampleAsArray({ schema, logger: context.logger, fallback })
         });
     }
 
@@ -751,7 +751,7 @@ export function convertSchemaObject(
                     format: schema.format,
                     minLength: schema.minLength,
                     maxLength: schema.maxLength,
-                    example: getExamplesString(schema, context.logger, exampleUnderride as string)
+                    example: getExamplesString({ schema, logger: context.logger, fallback })
                 }),
                 groupName
             },

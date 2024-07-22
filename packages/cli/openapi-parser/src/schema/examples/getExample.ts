@@ -1,62 +1,78 @@
 import { Logger } from "@fern-api/logger";
 import { OpenAPIV3 } from "openapi-types";
 
-export function getExampleAsNumber(
-    schema: OpenAPIV3.SchemaObject | OpenAPIV3.ParameterObject,
-    contextLogger: Logger,
-    exampleUnderride?: number
-): number | undefined {
+export function getExampleAsNumber({
+    schema,
+    logger,
+    fallback
+}: {
+    schema: OpenAPIV3.SchemaObject | OpenAPIV3.ParameterObject;
+    logger: Logger;
+    fallback?: unknown;
+}): number | undefined {
     if (schema.example != null && typeof schema.example === "number") {
         return schema.example;
     }
-    if (exampleUnderride && typeof exampleUnderride !== "number") {
-        contextLogger.warn(`Expected exampleUnderride to be a number, but got ${typeof exampleUnderride}`);
-        return undefined;
+    if (fallback && typeof fallback === "number") {
+        return fallback;
     }
-    return exampleUnderride;
+    logger.warn(`Expected fallback to be a number, but got ${typeof fallback}`);
+    return undefined;
 }
 
-export function getExampleAsBoolean(
-    schema: OpenAPIV3.SchemaObject | OpenAPIV3.ParameterObject,
-    contextLogger: Logger,
-    exampleUnderride?: boolean
-): boolean | undefined {
+export function getExampleAsBoolean({
+    schema,
+    logger,
+    fallback
+}: {
+    schema: OpenAPIV3.SchemaObject | OpenAPIV3.ParameterObject;
+    logger: Logger;
+    fallback?: unknown;
+}): boolean | undefined {
     if (schema.example != null && typeof schema.example === "boolean") {
         return schema.example;
     }
-    if (exampleUnderride && typeof exampleUnderride !== "boolean") {
-        contextLogger.warn(`Expected exampleUnderride to be a boolean, but got ${typeof exampleUnderride}`);
-        return undefined;
+    if (fallback && typeof fallback === "boolean") {
+        return fallback;
     }
-    return exampleUnderride;
+    logger.warn(`Expected fallback to be a boolean, but got ${typeof fallback}`);
+    return undefined;
 }
 
-export function getExamplesString(
-    schema: OpenAPIV3.SchemaObject | OpenAPIV3.ParameterObject,
-    contextLogger: Logger,
-    exampleUnderride?: string
-): string | undefined {
+export function getExamplesString({
+    schema,
+    logger,
+    fallback
+}: {
+    schema: OpenAPIV3.SchemaObject | OpenAPIV3.ParameterObject;
+    logger: Logger;
+    fallback?: unknown;
+}): string | undefined {
     if (schema.example != null && typeof schema.example === "string") {
         return schema.example;
     }
-    if (exampleUnderride && typeof exampleUnderride !== "string") {
-        contextLogger.warn(`Expected exampleUnderride to be a string, but got ${typeof exampleUnderride}`);
-        return undefined;
+    if (fallback && typeof fallback === "string") {
+        return fallback;
     }
-    return exampleUnderride;
+    logger.warn(`Expected fallback to be a string, but got ${typeof fallback}`);
+    return undefined;
 }
 
-export function getExampleAsArray(
-    schema: OpenAPIV3.SchemaObject | OpenAPIV3.ParameterObject,
-    contextLogger: Logger,
-    exampleUnderride?: unknown[]
-): unknown[] | undefined {
+export function getExampleAsArray({
+    schema,
+    logger,
+    fallback
+}: {
+    schema: OpenAPIV3.SchemaObject | OpenAPIV3.ParameterObject;
+    logger: Logger;
+    fallback?: unknown;
+}): unknown[] | undefined {
     if (schema.example != null && Array.isArray(schema.example)) {
         return schema.example;
     }
-    if (exampleUnderride && !Array.isArray(exampleUnderride)) {
-        contextLogger.warn(`Expected exampleUnderride to be a array, but got ${typeof exampleUnderride}`);
-        return undefined;
+    if (fallback && Array.isArray(fallback)) {
+        return fallback;
     }
-    return exampleUnderride;
+    logger.warn(`Expected fallback to be a array, but got ${typeof fallback}`);
+    return undefined;
 }

@@ -61,7 +61,10 @@ export function convertParameters({
                       parameterBreadcrumbs,
                       false,
                       new Set(),
-                      getExamplesString(resolvedParameter, context.logger)
+                      getExamplesString({
+                          schema: resolvedParameter,
+                          logger: context.logger
+                      })
                   )
                 : isRequired
                 ? SchemaWithExample.primitive({
@@ -73,7 +76,10 @@ export function convertParameters({
                           format: undefined,
                           minLength: undefined,
                           maxLength: undefined,
-                          example: getExamplesString(resolvedParameter, context.logger)
+                          example: getExamplesString({
+                              schema: resolvedParameter,
+                              logger: context.logger
+                          })
                       }),
                       description: undefined,
                       availability,
@@ -91,7 +97,10 @@ export function convertParameters({
                               format: undefined,
                               minLength: undefined,
                               maxLength: undefined,
-                              example: getExamplesString(resolvedParameter, context.logger)
+                              example: getExamplesString({
+                                  schema: resolvedParameter,
+                                  logger: context.logger
+                              })
                           }),
                           description: undefined,
                           availability: undefined,
