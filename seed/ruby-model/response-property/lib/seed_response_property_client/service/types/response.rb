@@ -47,8 +47,8 @@ module SeedResponsePropertyClient
           data = parsed_json["data"].to_json
           data = SeedResponsePropertyClient::Service::Movie.from_json(json_object: data)
         end
-        metadata = struct["metadata"]
-        docs = struct["docs"]
+        metadata = parsed_json["metadata"]
+        docs = parsed_json["docs"]
         new(
           data: data,
           metadata: metadata,

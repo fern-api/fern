@@ -31,7 +31,8 @@ module SeedUnionsClient
       # @return [SeedUnionsClient::Types::Bar]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        name = struct["name"]
+        parsed_json = JSON.parse(json_object)
+        name = parsed_json["name"]
         new(name: name, additional_properties: struct)
       end
 

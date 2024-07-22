@@ -37,7 +37,7 @@ module SeedMixedCaseClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        name = struct["Name"]
+        name = parsed_json["Name"]
         if parsed_json["NestedUser"].nil?
           nested_user = nil
         else

@@ -130,29 +130,29 @@ module SeedObjectClient
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      one = struct["one"]
-      two = struct["two"]
-      three = struct["three"]
-      four = struct["four"]
-      five = struct["five"]
+      one = parsed_json["one"]
+      two = parsed_json["two"]
+      three = parsed_json["three"]
+      four = parsed_json["four"]
+      five = parsed_json["five"]
       six = (DateTime.parse(parsed_json["six"]) unless parsed_json["six"].nil?)
       seven = (Date.parse(parsed_json["seven"]) unless parsed_json["seven"].nil?)
-      eight = struct["eight"]
-      nine = struct["nine"]
-      ten = struct["ten"]
+      eight = parsed_json["eight"]
+      nine = parsed_json["nine"]
+      ten = parsed_json["ten"]
       if parsed_json["eleven"].nil?
         eleven = nil
       else
         eleven = parsed_json["eleven"].to_json
         eleven = Set.new(eleven)
       end
-      twelve = struct["twelve"]
-      thirteen = struct["thirteen"]
-      fourteen = struct["fourteen"]
-      fifteen = struct["fifteen"]
-      sixteen = struct["sixteen"]
-      seventeen = struct["seventeen"]
-      eighteen = struct["eighteen"]
+      twelve = parsed_json["twelve"]
+      thirteen = parsed_json["thirteen"]
+      fourteen = parsed_json["fourteen"]
+      fifteen = parsed_json["fifteen"]
+      sixteen = parsed_json["sixteen"]
+      seventeen = parsed_json["seventeen"]
+      eighteen = parsed_json["eighteen"]
       if parsed_json["nineteen"].nil?
         nineteen = nil
       else

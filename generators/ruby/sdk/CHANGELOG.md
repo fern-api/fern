@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.8.1] - 2024-07-22
+
+- Fix: Nested `hash` types are recursively resolved in `from_json` such that they come back as true hashes, as opposed to structs
+
+- Fix: Pass through additional params from request options even if the original request did not have those types of params (ex: query parameters)
+
 ## [0.8.0] - 2024-07-03
 
 - Fix: Date snippets now wrap their examples in quotation marks to correctly use `.parse`

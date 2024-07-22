@@ -71,7 +71,7 @@ module SeedTraceClient
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
-          problem_name = struct["problemName"]
+          problem_name = parsed_json["problemName"]
           if parsed_json["problemDescription"].nil?
             problem_description = nil
           else
@@ -98,7 +98,7 @@ module SeedTraceClient
             supported_languages = parsed_json["supportedLanguages"].to_json
             supported_languages = Set.new(supported_languages)
           end
-          is_public = struct["isPublic"]
+          is_public = parsed_json["isPublic"]
           new(
             problem_name: problem_name,
             problem_description: problem_description,

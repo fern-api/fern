@@ -37,7 +37,7 @@ module SeedExamplesClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        response = struct["response"]
+        response = parsed_json["response"]
         identifiers = parsed_json["identifiers"]&.map do |item|
           item = item.to_json
           SeedExamplesClient::Identifier.from_json(json_object: item)

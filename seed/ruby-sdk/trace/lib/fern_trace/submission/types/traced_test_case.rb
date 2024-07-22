@@ -43,7 +43,7 @@ module SeedTraceClient
           result = parsed_json["result"].to_json
           result = SeedTraceClient::Submission::TestCaseResultWithStdout.from_json(json_object: result)
         end
-        trace_responses_size = struct["traceResponsesSize"]
+        trace_responses_size = parsed_json["traceResponsesSize"]
         new(
           result: result,
           trace_responses_size: trace_responses_size,

@@ -84,15 +84,15 @@ module SeedTraceClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        problem_id = struct["problemId"]
+        problem_id = parsed_json["problemId"]
         if parsed_json["problemDescription"].nil?
           problem_description = nil
         else
           problem_description = parsed_json["problemDescription"].to_json
           problem_description = SeedTraceClient::Problem::ProblemDescription.from_json(json_object: problem_description)
         end
-        problem_name = struct["problemName"]
-        problem_version = struct["problemVersion"]
+        problem_name = parsed_json["problemName"]
+        problem_version = parsed_json["problemVersion"]
         files = parsed_json["files"]&.transform_values do |value|
           value = value.to_json
           SeedTraceClient::Problem::ProblemFiles.from_json(json_object: value)
@@ -111,8 +111,8 @@ module SeedTraceClient
           item = item.to_json
           SeedTraceClient::Commons::TestCaseWithExpectedResult.from_json(json_object: item)
         end
-        method_name = struct["methodName"]
-        supports_custom_test_cases = struct["supportsCustomTestCases"]
+        method_name = parsed_json["methodName"]
+        supports_custom_test_cases = parsed_json["supportsCustomTestCases"]
         new(
           problem_id: problem_id,
           problem_description: problem_description,
