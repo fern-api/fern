@@ -123,6 +123,10 @@ navigation:
           - page: Registry publishing
             path: ./pages/sdks/features/publish-to-registries.mdx
             icon: pro
+          - page: Publish to Private Registries
+            hidden: true
+            path: ./pages/sdks/features/publish-to-private-registries.mdx
+            icon: pro
           - page: Auto-Pagination
             path: ./pages/sdks/features/auto-pagination.mdx
             icon: pro
