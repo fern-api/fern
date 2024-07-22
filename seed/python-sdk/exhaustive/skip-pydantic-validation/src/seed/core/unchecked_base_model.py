@@ -110,7 +110,7 @@ class UncheckedBaseModel(UniversalBaseModel):
             object.__setattr__(m, "__pydantic_fields_set__", _fields_set)
         else:
             object.__setattr__(m, "__fields_set__", _fields_set)
-            m._init_private_attributes()  # type: ignore # mypy: ignore # Pydantic v1
+            m._init_private_attributes()  # type: ignore # Pydantic v1
         return m
 
 
@@ -255,7 +255,7 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
 def _get_is_populate_by_name(model: typing.Type["Model"]) -> bool:
     if IS_PYDANTIC_V2:
         return model.model_config.get("populate_by_name", False)  # type: ignore # Pydantic v2
-    return model.__config__.allow_population_by_field_name  # type: ignore # mypy: ignore # Pydantic v1
+    return model.__config__.allow_population_by_field_name  # type: ignore # Pydantic v1
 
 
 PydanticField = typing.Union[ModelField, pydantic.fields.FieldInfo]

@@ -15,16 +15,16 @@ IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 if IS_PYDANTIC_V2:
     # isort will try to reformat the comments on these imports, which breaks mypy
     # isort: off
-    from pydantic.v1.datetime_parse import (  # type: ignore # mypy: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
+    from pydantic.v1.datetime_parse import (  # type: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
         parse_date as parse_date,
     )
     from pydantic.v1.datetime_parse import (  # pyright: ignore[reportMissingImports] # Pydantic v2
         parse_datetime as parse_datetime,
     )
-    from pydantic.v1.json import (  # type: ignore # mypy: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
+    from pydantic.v1.json import (  # type: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
         ENCODERS_BY_TYPE as encoders_by_type,
     )
-    from pydantic.v1.typing import (  # type: ignore # mypy: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
+    from pydantic.v1.typing import (  # type: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
         get_args as get_args,
     )
     from pydantic.v1.typing import (  # pyright: ignore[reportMissingImports] # Pydantic v2
@@ -36,16 +36,16 @@ if IS_PYDANTIC_V2:
     from pydantic.v1.typing import (  # pyright: ignore[reportMissingImports] # Pydantic v2
         is_union as is_union,
     )
-    from pydantic.v1.fields import ModelField as ModelField  # type: ignore # mypy: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
+    from pydantic.v1.fields import ModelField as ModelField  # type: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
 else:
-    from pydantic.datetime_parse import parse_date as parse_date  # mypy: ignore # Pydantic v1
-    from pydantic.datetime_parse import parse_datetime as parse_datetime  # mypy: ignore # Pydantic v1
-    from pydantic.fields import ModelField as ModelField  # mypy: ignore # Pydantic v1
-    from pydantic.json import ENCODERS_BY_TYPE as encoders_by_type  # mypy: ignore # Pydantic v1
-    from pydantic.typing import get_args as get_args  # mypy: ignore # Pydantic v1
-    from pydantic.typing import get_origin as get_origin  # mypy: ignore # Pydantic v1
-    from pydantic.typing import is_literal_type as is_literal_type  # mypy: ignore # Pydantic v1
-    from pydantic.typing import is_union as is_union  # mypy: ignore # Pydantic v1
+    from pydantic.datetime_parse import parse_date as parse_date  # type: ignore # Pydantic v1
+    from pydantic.datetime_parse import parse_datetime as parse_datetime  # type: ignore # Pydantic v1
+    from pydantic.fields import ModelField as ModelField  # type: ignore # Pydantic v1
+    from pydantic.json import ENCODERS_BY_TYPE as encoders_by_type  # type: ignore # Pydantic v1
+    from pydantic.typing import get_args as get_args  # type: ignore # Pydantic v1
+    from pydantic.typing import get_origin as get_origin  # type: ignore # Pydantic v1
+    from pydantic.typing import is_literal_type as is_literal_type  # type: ignore # Pydantic v1
+    from pydantic.typing import is_union as is_union  # type: ignore # Pydantic v1
 
     # isort: on
 
@@ -156,9 +156,9 @@ def universal_root_validator(pre: bool = False) -> typing.Callable[[AnyCallable]
         @wraps(func)
         def validate(*args: typing.Any, **kwargs: typing.Any) -> AnyCallable:
             if IS_PYDANTIC_V2:
-                wrapped_func = pydantic.model_validator("before" if pre else "after")(func)  # type: ignore # mypy: ignore # Pydantic v2
+                wrapped_func = pydantic.model_validator("before" if pre else "after")(func)  # type: ignore # Pydantic v2
             else:
-                wrapped_func = pydantic.root_validator(pre=pre)(func)  # mypy: ignore # Pydantic v1
+                wrapped_func = pydantic.root_validator(pre=pre)(func)  # type: ignore # Pydantic v1
 
             return wrapped_func(*args, **kwargs)
 
