@@ -15,8 +15,10 @@ export function getExampleAsNumber({
     }
     if (fallback && typeof fallback === "number") {
         return fallback;
+    } else if (fallback) {
+        logger.warn(`Expected fallback to be a number, but got ${typeof fallback}`);
     }
-    logger.warn(`Expected fallback to be a number, but got ${typeof fallback}`);
+
     return undefined;
 }
 
@@ -34,8 +36,9 @@ export function getExampleAsBoolean({
     }
     if (fallback && typeof fallback === "boolean") {
         return fallback;
+    } else if (fallback) {
+        logger.warn(`Expected fallback to be a boolean, but got ${typeof fallback}`);
     }
-    logger.warn(`Expected fallback to be a boolean, but got ${typeof fallback}`);
     return undefined;
 }
 
@@ -53,8 +56,9 @@ export function getExamplesString({
     }
     if (fallback && typeof fallback === "string") {
         return fallback;
+    } else if (fallback) {
+        logger.warn(`Expected fallback to be a string, but got ${typeof fallback}`);
     }
-    logger.warn(`Expected fallback to be a string, but got ${typeof fallback}`);
     return undefined;
 }
 
@@ -72,7 +76,8 @@ export function getExampleAsArray({
     }
     if (fallback && Array.isArray(fallback)) {
         return fallback;
+    } else if (fallback) {
+        logger.warn(`Expected fallback to be a array, but got ${typeof fallback}`);
     }
-    logger.warn(`Expected fallback to be a array, but got ${typeof fallback}`);
     return undefined;
 }
