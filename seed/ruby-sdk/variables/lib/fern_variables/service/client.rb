@@ -28,10 +28,12 @@ module SeedVariablesClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
-        unless request_options.nil? && request_options&.additional_query_parameters.nil?
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
           req.params = { **(request_options&.additional_query_parameters || {}) }.compact
         end
-        req.body = { **(request_options&.additional_body_parameters || {}) }.compact unless request_options.nil?
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
         req.url "#{@request_client.get_url(request_options: request_options)}/#{endpoint_param}"
       end
     end
@@ -62,10 +64,12 @@ module SeedVariablesClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
-          unless request_options.nil? && request_options&.additional_query_parameters.nil?
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
             req.params = { **(request_options&.additional_query_parameters || {}) }.compact
           end
-          req.body = { **(request_options&.additional_body_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/#{endpoint_param}"
         end
       end

@@ -44,7 +44,9 @@ module SeedLiteralClient
           "stream": false,
           "query": query
         }.compact
-        req.body = { **(request_options&.additional_body_parameters || {}) }.compact unless request_options.nil?
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
         req.url "#{@request_client.get_url(request_options: request_options)}/query"
       end
       SeedLiteralClient::SendResponse.from_json(json_object: response.body)
@@ -91,7 +93,9 @@ module SeedLiteralClient
             "stream": false,
             "query": query
           }.compact
-          req.body = { **(request_options&.additional_body_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/query"
         end
         SeedLiteralClient::SendResponse.from_json(json_object: response.body)
