@@ -222,9 +222,12 @@ export class SerializableObject extends Class_ {
 
                     return toJsonIfPresent;
                 } else {
+                    functionUsesParsedJson = true;
                     return new Expression({
                         leftSide: prop.name,
-                        rightSide: parsedJsonVariable.fromJson() ?? structVariable,
+                        // If there's no fromJson on the value, then let's return parsed JSON, as that would remain a hash,
+                        // as opposed to returning the struct, which is what you almost always want.
+                        rightSide: parsedJsonVariable.fromJson() ?? parsedJsonVariable,
                         isAssignment: true
                     });
                 }

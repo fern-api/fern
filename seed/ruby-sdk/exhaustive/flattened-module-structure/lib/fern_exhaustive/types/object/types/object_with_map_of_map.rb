@@ -33,7 +33,8 @@ module SeedExhaustiveClient
           # @return [SeedExhaustiveClient::Types::Object_::Types::ObjectWithMapOfMap]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            map = struct["map"]
+            parsed_json = JSON.parse(json_object)
+            map = parsed_json["map"]
             new(map: map, additional_properties: struct)
           end
 

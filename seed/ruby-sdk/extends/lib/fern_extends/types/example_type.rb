@@ -34,8 +34,9 @@ module SeedExtendsClient
     # @return [SeedExtendsClient::ExampleType]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      name = struct["name"]
-      docs = struct["docs"]
+      parsed_json = JSON.parse(json_object)
+      name = parsed_json["name"]
+      docs = parsed_json["docs"]
       new(
         name: name,
         docs: docs,

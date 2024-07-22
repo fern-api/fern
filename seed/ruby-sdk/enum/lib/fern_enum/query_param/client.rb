@@ -40,6 +40,9 @@ module SeedEnumClient
           "operandOrColor": operand_or_color,
           "maybeOperandOrColor": maybe_operand_or_color
         }.compact
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
         req.url "#{@request_client.get_url(request_options: request_options)}/query"
       end
     end
@@ -73,6 +76,9 @@ module SeedEnumClient
           "operandOrColor": operand_or_color,
           "maybeOperandOrColor": maybe_operand_or_color
         }.compact
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
         req.url "#{@request_client.get_url(request_options: request_options)}/query-list"
       end
     end
@@ -113,6 +119,9 @@ module SeedEnumClient
             "operandOrColor": operand_or_color,
             "maybeOperandOrColor": maybe_operand_or_color
           }.compact
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/query"
         end
       end
@@ -148,6 +157,9 @@ module SeedEnumClient
             "operandOrColor": operand_or_color,
             "maybeOperandOrColor": maybe_operand_or_color
           }.compact
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/query-list"
         end
       end

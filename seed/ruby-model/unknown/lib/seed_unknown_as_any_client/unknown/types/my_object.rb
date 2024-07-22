@@ -31,7 +31,8 @@ module SeedUnknownAsAnyClient
       # @return [SeedUnknownAsAnyClient::Unknown::MyObject]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        unknown = struct["unknown"]
+        parsed_json = JSON.parse(json_object)
+        unknown = parsed_json["unknown"]
         new(unknown: unknown, additional_properties: struct)
       end
 

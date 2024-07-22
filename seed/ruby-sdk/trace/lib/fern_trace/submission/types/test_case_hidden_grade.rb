@@ -31,7 +31,8 @@ module SeedTraceClient
       # @return [SeedTraceClient::Submission::TestCaseHiddenGrade]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        passed = struct["passed"]
+        parsed_json = JSON.parse(json_object)
+        passed = parsed_json["passed"]
         new(passed: passed, additional_properties: struct)
       end
 

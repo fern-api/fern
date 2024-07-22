@@ -37,7 +37,7 @@ module SeedTraceClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        test_case_id = struct["testCaseId"]
+        test_case_id = parsed_json["testCaseId"]
         if parsed_json["grade"].nil?
           grade = nil
         else

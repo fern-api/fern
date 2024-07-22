@@ -16,7 +16,7 @@ module SeedExamplesClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         begin
           SeedExamplesClient::Types::Actor.validate_raw(obj: struct)
-          return SeedExamplesClient::Types::Actor.from_json(json_object: json_object) unless json_object.nil?
+          return SeedExamplesClient::Types::Actor.from_json(json_object: struct) unless struct.nil?
 
           return nil
         rescue StandardError
@@ -24,7 +24,7 @@ module SeedExamplesClient
         end
         begin
           SeedExamplesClient::Types::Actress.validate_raw(obj: struct)
-          return SeedExamplesClient::Types::Actress.from_json(json_object: json_object) unless json_object.nil?
+          return SeedExamplesClient::Types::Actress.from_json(json_object: struct) unless struct.nil?
 
           return nil
         rescue StandardError
@@ -32,7 +32,7 @@ module SeedExamplesClient
         end
         begin
           SeedExamplesClient::Types::StuntDouble.validate_raw(obj: struct)
-          return SeedExamplesClient::Types::StuntDouble.from_json(json_object: json_object) unless json_object.nil?
+          return SeedExamplesClient::Types::StuntDouble.from_json(json_object: struct) unless struct.nil?
 
           return nil
         rescue StandardError

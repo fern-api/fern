@@ -38,9 +38,10 @@ module SeedLiteralClient
     # @return [SeedLiteralClient::SendResponse]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      message = struct["message"]
-      status = struct["status"]
-      success = struct["success"]
+      parsed_json = JSON.parse(json_object)
+      message = parsed_json["message"]
+      status = parsed_json["status"]
+      success = parsed_json["success"]
       new(
         message: message,
         status: status,

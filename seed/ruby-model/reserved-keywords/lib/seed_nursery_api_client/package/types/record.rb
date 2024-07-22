@@ -35,8 +35,9 @@ module SeedNurseryApiClient
       # @return [SeedNurseryApiClient::Package::Record]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        foo = struct["foo"]
-        _3_d = struct["3d"]
+        parsed_json = JSON.parse(json_object)
+        foo = parsed_json["foo"]
+        _3_d = parsed_json["3d"]
         new(
           foo: foo,
           _3_d: _3_d,

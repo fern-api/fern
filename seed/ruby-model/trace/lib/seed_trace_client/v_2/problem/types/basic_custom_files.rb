@@ -53,7 +53,7 @@ module SeedTraceClient
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
-          method_name = struct["methodName"]
+          method_name = parsed_json["methodName"]
           if parsed_json["signature"].nil?
             signature = nil
           else

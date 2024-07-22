@@ -29,6 +29,9 @@ module SeedStreamingClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = {
           **(request_options&.additional_body_parameters || {}),
           "stream": false,
@@ -65,6 +68,9 @@ module SeedStreamingClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = {
             **(request_options&.additional_body_parameters || {}),
             "stream": false,

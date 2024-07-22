@@ -38,8 +38,9 @@ module SeedObjectsWithImportsClient
         # @return [SeedObjectsWithImportsClient::Commons::Metadata::Metadata]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          id = struct["id"]
-          data = struct["data"]
+          parsed_json = JSON.parse(json_object)
+          id = parsed_json["id"]
+          data = parsed_json["data"]
           new(
             id: id,
             data: data,

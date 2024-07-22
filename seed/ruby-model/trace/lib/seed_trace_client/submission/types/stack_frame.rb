@@ -41,8 +41,8 @@ module SeedTraceClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        method_name = struct["methodName"]
-        line_number = struct["lineNumber"]
+        method_name = parsed_json["methodName"]
+        line_number = parsed_json["lineNumber"]
         scopes = parsed_json["scopes"]&.map do |item|
           item = item.to_json
           SeedTraceClient::Submission::Scope.from_json(json_object: item)

@@ -39,6 +39,12 @@ module SeedTraceClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
         req.url "#{@request_client.get_url(request_options: request_options)}/sessions/create-session/#{language}"
       end
       SeedTraceClient::Submission::ExecutionSessionResponse.from_json(json_object: response.body)
@@ -67,6 +73,12 @@ module SeedTraceClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
         req.url "#{@request_client.get_url(request_options: request_options)}/sessions/#{session_id}"
       end
       SeedTraceClient::Submission::ExecutionSessionResponse.from_json(json_object: response.body)
@@ -94,6 +106,12 @@ module SeedTraceClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
         req.url "#{@request_client.get_url(request_options: request_options)}/sessions/stop/#{session_id}"
       end
     end
@@ -117,6 +135,12 @@ module SeedTraceClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
         req.url "#{@request_client.get_url(request_options: request_options)}/sessions/execution-sessions-state"
       end
       SeedTraceClient::Submission::GetExecutionSessionStateResponse.from_json(json_object: response.body)
@@ -156,6 +180,12 @@ module SeedTraceClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/sessions/create-session/#{language}"
         end
         SeedTraceClient::Submission::ExecutionSessionResponse.from_json(json_object: response.body)
@@ -186,6 +216,12 @@ module SeedTraceClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/sessions/#{session_id}"
         end
         SeedTraceClient::Submission::ExecutionSessionResponse.from_json(json_object: response.body)
@@ -215,6 +251,12 @@ module SeedTraceClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/sessions/stop/#{session_id}"
         end
       end
@@ -240,6 +282,12 @@ module SeedTraceClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/sessions/execution-sessions-state"
         end
         SeedTraceClient::Submission::GetExecutionSessionStateResponse.from_json(json_object: response.body)

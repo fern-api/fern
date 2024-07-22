@@ -69,7 +69,7 @@ module SeedTraceClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        problem_name = struct["problemName"]
+        problem_name = parsed_json["problemName"]
         if parsed_json["problemDescription"].nil?
           problem_description = nil
         else
@@ -94,7 +94,7 @@ module SeedTraceClient
           item = item.to_json
           SeedTraceClient::Commons::TestCaseWithExpectedResult.from_json(json_object: item)
         end
-        method_name = struct["methodName"]
+        method_name = parsed_json["methodName"]
         new(
           problem_name: problem_name,
           problem_description: problem_description,

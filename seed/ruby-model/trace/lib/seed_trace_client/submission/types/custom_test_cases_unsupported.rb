@@ -35,8 +35,9 @@ module SeedTraceClient
       # @return [SeedTraceClient::Submission::CustomTestCasesUnsupported]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        problem_id = struct["problemId"]
-        submission_id = struct["submissionId"]
+        parsed_json = JSON.parse(json_object)
+        problem_id = parsed_json["problemId"]
+        submission_id = parsed_json["submissionId"]
         new(
           problem_id: problem_id,
           submission_id: submission_id,

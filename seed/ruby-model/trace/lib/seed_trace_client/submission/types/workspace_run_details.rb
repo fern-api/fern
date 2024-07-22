@@ -56,7 +56,7 @@ module SeedTraceClient
           exception = parsed_json["exception"].to_json
           exception = SeedTraceClient::Submission::ExceptionInfo.from_json(json_object: exception)
         end
-        stdout = struct["stdout"]
+        stdout = parsed_json["stdout"]
         new(
           exception_v_2: exception_v_2,
           exception: exception,
