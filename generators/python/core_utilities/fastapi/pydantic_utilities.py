@@ -36,14 +36,14 @@ if IS_PYDANTIC_V2:
     )
     from pydantic.v1.fields import ModelField as ModelField  # type: ignore # mypy: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
 else:
-    from pydantic.datetime_parse import parse_date as parse_date  # type: ignore # mypy: ignore # Pydantic v1
-    from pydantic.datetime_parse import parse_datetime as parse_datetime  # type: ignore # mypy: ignore # Pydantic v1
-    from pydantic.fields import ModelField as ModelField  # type: ignore # mypy: ignore # Pydantic v1
-    from pydantic.json import ENCODERS_BY_TYPE as encoders_by_type  # type: ignore # mypy: ignore # Pydantic v1
-    from pydantic.typing import get_args as get_args  # type: ignore # mypy: ignore # Pydantic v1
-    from pydantic.typing import get_origin as get_origin  # type: ignore # mypy: ignore # Pydantic v1
-    from pydantic.typing import is_literal_type as is_literal_type  # type: ignore # mypy: ignore # Pydantic v1
-    from pydantic.typing import is_union as is_union  # type: ignore # mypy: ignore # Pydantic v1
+    from pydantic.datetime_parse import parse_date as parse_date  # mypy: ignore # type: ignore # Pydantic v1
+    from pydantic.datetime_parse import parse_datetime as parse_datetime  # mypy: ignore # type: ignore # Pydantic v1
+    from pydantic.fields import ModelField as ModelField  # mypy: ignore # type: ignore # Pydantic v1
+    from pydantic.json import ENCODERS_BY_TYPE as encoders_by_type  # mypy: ignore # type: ignore # Pydantic v1
+    from pydantic.typing import get_args as get_args  # mypy: ignore # type: ignore # Pydantic v1
+    from pydantic.typing import get_origin as get_origin  # mypy: ignore # type: ignore # Pydantic v1
+    from pydantic.typing import is_literal_type as is_literal_type  # mypy: ignore # type: ignore # Pydantic v1
+    from pydantic.typing import is_union as is_union  # mypy: ignore # type: ignore # Pydantic v1
 
     # isort: on
 
@@ -156,7 +156,7 @@ def universal_root_validator(pre: bool = False) -> typing.Callable[[AnyCallable]
             if IS_PYDANTIC_V2:
                 wrapped_func = pydantic.model_validator("before" if pre else "after")(func)  # type: ignore # mypy: ignore # Pydantic v2
             else:
-                wrapped_func = pydantic.root_validator(pre=pre)(func)  # type: ignore # mypy: ignore # Pydantic v1
+                wrapped_func = pydantic.root_validator(pre=pre)(func)  # mypy: ignore # type: ignore # Pydantic v1
 
             return wrapped_func(*args, **kwargs)
 
