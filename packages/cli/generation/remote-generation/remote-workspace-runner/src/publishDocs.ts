@@ -273,7 +273,7 @@ function startDocsRegisterFailed(
             return context.failAndThrow(
                 "Please make sure that none of your custom domains are not overlapping (i.e. one is a substring of another)"
             );
-        case "ForbiddenError":
+        case "FernTokenForbiddenError":
             return context.failAndThrow("Please make sure that your FERN_TOKEN is valid and set correctly.");
         default:
             return context.failAndThrow("Failed to publish docs.", error);
