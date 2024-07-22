@@ -37,6 +37,7 @@ module SeedAudiencesClient
       # @return [SeedAudiencesClient::Foo::FilteredType]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         public_property = parsed_json["public_property"]
         private_property = parsed_json["private_property"]
         new(

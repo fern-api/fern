@@ -39,6 +39,7 @@ module SeedTraceClient
           # @return [SeedTraceClient::V2::V3::Problem::FunctionImplementation]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
+            parsed_json = JSON.parse(json_object)
             impl = parsed_json["impl"]
             imports = parsed_json["imports"]
             new(

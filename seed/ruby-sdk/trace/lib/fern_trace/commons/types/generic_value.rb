@@ -37,6 +37,7 @@ module SeedTraceClient
       # @return [SeedTraceClient::Commons::GenericValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         stringified_type = parsed_json["stringifiedType"]
         stringified_value = parsed_json["stringifiedValue"]
         new(

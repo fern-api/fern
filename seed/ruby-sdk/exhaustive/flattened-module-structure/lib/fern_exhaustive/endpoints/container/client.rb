@@ -33,7 +33,9 @@ module SeedExhaustiveClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? && request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/container/list-of-primitives"
         end
@@ -56,7 +58,9 @@ module SeedExhaustiveClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? && request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/container/list-of-objects"
         end
@@ -82,7 +86,9 @@ module SeedExhaustiveClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? && request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/container/set-of-primitives"
         end
@@ -104,7 +110,9 @@ module SeedExhaustiveClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? && request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/container/set-of-objects"
         end
@@ -126,7 +134,9 @@ module SeedExhaustiveClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? && request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/container/map-prim-to-prim"
         end
@@ -148,7 +158,9 @@ module SeedExhaustiveClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? && request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/container/map-prim-to-object"
         end
@@ -175,7 +187,9 @@ module SeedExhaustiveClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? && request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/container/opt-objects"
         end
@@ -209,7 +223,9 @@ module SeedExhaustiveClient
           **@request_client.get_headers,
           **(request_options&.additional_headers || {})
             }.compact
-            req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+            unless request_options.nil? && request_options&.additional_query_parameters.nil?
+              req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+            end
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/container/list-of-primitives"
           end
@@ -235,7 +251,9 @@ module SeedExhaustiveClient
           **@request_client.get_headers,
           **(request_options&.additional_headers || {})
             }.compact
-            req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+            unless request_options.nil? && request_options&.additional_query_parameters.nil?
+              req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+            end
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/container/list-of-objects"
           end
@@ -263,7 +281,9 @@ module SeedExhaustiveClient
           **@request_client.get_headers,
           **(request_options&.additional_headers || {})
             }.compact
-            req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+            unless request_options.nil? && request_options&.additional_query_parameters.nil?
+              req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+            end
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/container/set-of-primitives"
           end
@@ -287,7 +307,9 @@ module SeedExhaustiveClient
           **@request_client.get_headers,
           **(request_options&.additional_headers || {})
             }.compact
-            req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+            unless request_options.nil? && request_options&.additional_query_parameters.nil?
+              req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+            end
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/container/set-of-objects"
           end
@@ -311,7 +333,9 @@ module SeedExhaustiveClient
           **@request_client.get_headers,
           **(request_options&.additional_headers || {})
             }.compact
-            req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+            unless request_options.nil? && request_options&.additional_query_parameters.nil?
+              req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+            end
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/container/map-prim-to-prim"
           end
@@ -336,7 +360,9 @@ module SeedExhaustiveClient
           **@request_client.get_headers,
           **(request_options&.additional_headers || {})
             }.compact
-            req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+            unless request_options.nil? && request_options&.additional_query_parameters.nil?
+              req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+            end
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/container/map-prim-to-object"
           end
@@ -365,7 +391,9 @@ module SeedExhaustiveClient
           **@request_client.get_headers,
           **(request_options&.additional_headers || {})
             }.compact
-            req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+            unless request_options.nil? && request_options&.additional_query_parameters.nil?
+              req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+            end
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/container/opt-objects"
           end

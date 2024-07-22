@@ -35,6 +35,7 @@ module SeedTraceClient
       # @return [SeedTraceClient::Submission::ExpressionLocation]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         start = parsed_json["start"]
         offset = parsed_json["offset"]
         new(

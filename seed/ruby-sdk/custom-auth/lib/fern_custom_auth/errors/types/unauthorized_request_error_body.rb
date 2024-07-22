@@ -31,6 +31,7 @@ module SeedCustomAuthClient
       # @return [SeedCustomAuthClient::Errors::UnauthorizedRequestErrorBody]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         message = parsed_json["message"]
         new(message: message, additional_properties: struct)
       end

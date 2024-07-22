@@ -37,7 +37,9 @@ module SeedTraceClient
           **(request_options&.additional_headers || {}),
           "admin-key-header": admin_key_header
         }.compact
-        req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+        unless request_options.nil? && request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request_options&.additional_body_parameters || {}) }.compact unless request_options.nil?
         req.url "#{@request_client.get_url(request_options: request_options)}/migration-info/all"
       end
@@ -81,7 +83,9 @@ module SeedTraceClient
             **(request_options&.additional_headers || {}),
             "admin-key-header": admin_key_header
           }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? && request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request_options&.additional_body_parameters || {}) }.compact unless request_options.nil?
           req.url "#{@request_client.get_url(request_options: request_options)}/migration-info/all"
         end

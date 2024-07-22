@@ -39,7 +39,9 @@ module SeedTraceClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? && request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request_options&.additional_body_parameters || {}) }.compact unless request_options.nil?
           req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/lightweight-problem-info"
         end
@@ -71,7 +73,9 @@ module SeedTraceClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? && request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request_options&.additional_body_parameters || {}) }.compact unless request_options.nil?
           req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/problem-info"
         end
@@ -104,7 +108,9 @@ module SeedTraceClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? && request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request_options&.additional_body_parameters || {}) }.compact unless request_options.nil?
           req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/problem-info/#{problem_id}"
         end
@@ -134,7 +140,9 @@ module SeedTraceClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? && request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request_options&.additional_body_parameters || {}) }.compact unless request_options.nil?
           req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/problem-info/#{problem_id}/version/#{problem_version}"
         end
@@ -177,7 +185,9 @@ module SeedTraceClient
           **@request_client.get_headers,
           **(request_options&.additional_headers || {})
             }.compact
-            req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+            unless request_options.nil? && request_options&.additional_query_parameters.nil?
+              req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+            end
             req.body = { **(request_options&.additional_body_parameters || {}) }.compact unless request_options.nil?
             req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/lightweight-problem-info"
           end
@@ -214,7 +224,9 @@ module SeedTraceClient
           **@request_client.get_headers,
           **(request_options&.additional_headers || {})
             }.compact
-            req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+            unless request_options.nil? && request_options&.additional_query_parameters.nil?
+              req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+            end
             req.body = { **(request_options&.additional_body_parameters || {}) }.compact unless request_options.nil?
             req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/problem-info"
           end
@@ -252,7 +264,9 @@ module SeedTraceClient
           **@request_client.get_headers,
           **(request_options&.additional_headers || {})
             }.compact
-            req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+            unless request_options.nil? && request_options&.additional_query_parameters.nil?
+              req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+            end
             req.body = { **(request_options&.additional_body_parameters || {}) }.compact unless request_options.nil?
             req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/problem-info/#{problem_id}"
           end
@@ -287,7 +301,9 @@ module SeedTraceClient
           **@request_client.get_headers,
           **(request_options&.additional_headers || {})
             }.compact
-            req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+            unless request_options.nil? && request_options&.additional_query_parameters.nil?
+              req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+            end
             req.body = { **(request_options&.additional_body_parameters || {}) }.compact unless request_options.nil?
             req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/problem-info/#{problem_id}/version/#{problem_version}"
           end

@@ -31,6 +31,7 @@ module SeedFileUploadClient
       # @return [SeedFileUploadClient::Service::MyObject]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         foo = parsed_json["foo"]
         new(foo: foo, additional_properties: struct)
       end

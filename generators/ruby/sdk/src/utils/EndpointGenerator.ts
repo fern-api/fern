@@ -386,6 +386,7 @@ export class EndpointGenerator {
               })
             : new ConditionalStatement({
                   if_: {
+                      negated: true,
                       leftSide: new FunctionInvocation({
                           onObject: this.requestOptionsVariable,
                           baseFunction: new Function_({
@@ -394,7 +395,15 @@ export class EndpointGenerator {
                           }),
                           optionalSafeCall: false
                       }),
-                      operation: "!",
+                      operation: "&&",
+                      rightSide: new FunctionInvocation({
+                          onObject: additionalQueryProperty,
+                          baseFunction: new Function_({
+                              name: "nil?",
+                              functionBody: []
+                          }),
+                          optionalSafeCall: false
+                      }),
                       expressions: [
                           new Expression({
                               leftSide: `${this.blockArg}.params`,

@@ -81,6 +81,7 @@ module SeedExamplesClient
       # @return [SeedExamplesClient::Types::ExtendedMovie]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         cast = parsed_json["cast"]
         id = parsed_json["id"]
         prequel = parsed_json["prequel"]

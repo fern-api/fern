@@ -45,6 +45,7 @@ module SeedTraceClient
       # @return [SeedTraceClient::Submission::RecordedResponseNotification]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         submission_id = parsed_json["submissionId"]
         trace_responses_size = parsed_json["traceResponsesSize"]
         test_case_id = parsed_json["testCaseId"]

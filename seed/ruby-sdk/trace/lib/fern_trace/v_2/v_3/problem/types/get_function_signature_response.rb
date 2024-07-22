@@ -33,6 +33,7 @@ module SeedTraceClient
           # @return [SeedTraceClient::V2::V3::Problem::GetFunctionSignatureResponse]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
+            parsed_json = JSON.parse(json_object)
             function_by_language = parsed_json["functionByLanguage"]
             new(function_by_language: function_by_language, additional_properties: struct)
           end

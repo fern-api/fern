@@ -31,6 +31,7 @@ module SeedUnionsClient
       # @return [SeedUnionsClient::Union::Square]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         length = parsed_json["length"]
         new(length: length, additional_properties: struct)
       end

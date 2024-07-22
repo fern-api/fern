@@ -32,7 +32,9 @@ module SeedExhaustiveClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? && request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/primitive/string"
         end
@@ -54,7 +56,9 @@ module SeedExhaustiveClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? && request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/primitive/integer"
         end
@@ -76,7 +80,9 @@ module SeedExhaustiveClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? && request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/primitive/long"
         end
@@ -98,7 +104,9 @@ module SeedExhaustiveClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? && request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/primitive/double"
         end
@@ -120,7 +128,9 @@ module SeedExhaustiveClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? && request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/primitive/boolean"
         end
@@ -142,7 +152,9 @@ module SeedExhaustiveClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? && request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/primitive/datetime"
         end
@@ -167,7 +179,9 @@ module SeedExhaustiveClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? && request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/primitive/date"
         end
@@ -192,7 +206,9 @@ module SeedExhaustiveClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? && request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/primitive/uuid"
         end
@@ -214,7 +230,9 @@ module SeedExhaustiveClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? && request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/primitive/base64"
         end
@@ -248,7 +266,9 @@ module SeedExhaustiveClient
           **@request_client.get_headers,
           **(request_options&.additional_headers || {})
             }.compact
-            req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+            unless request_options.nil? && request_options&.additional_query_parameters.nil?
+              req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+            end
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/primitive/string"
           end
@@ -273,7 +293,9 @@ module SeedExhaustiveClient
           **@request_client.get_headers,
           **(request_options&.additional_headers || {})
             }.compact
-            req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+            unless request_options.nil? && request_options&.additional_query_parameters.nil?
+              req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+            end
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/primitive/integer"
           end
@@ -298,7 +320,9 @@ module SeedExhaustiveClient
           **@request_client.get_headers,
           **(request_options&.additional_headers || {})
             }.compact
-            req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+            unless request_options.nil? && request_options&.additional_query_parameters.nil?
+              req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+            end
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/primitive/long"
           end
@@ -323,7 +347,9 @@ module SeedExhaustiveClient
           **@request_client.get_headers,
           **(request_options&.additional_headers || {})
             }.compact
-            req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+            unless request_options.nil? && request_options&.additional_query_parameters.nil?
+              req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+            end
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/primitive/double"
           end
@@ -348,7 +374,9 @@ module SeedExhaustiveClient
           **@request_client.get_headers,
           **(request_options&.additional_headers || {})
             }.compact
-            req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+            unless request_options.nil? && request_options&.additional_query_parameters.nil?
+              req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+            end
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/primitive/boolean"
           end
@@ -373,7 +401,9 @@ module SeedExhaustiveClient
           **@request_client.get_headers,
           **(request_options&.additional_headers || {})
             }.compact
-            req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+            unless request_options.nil? && request_options&.additional_query_parameters.nil?
+              req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+            end
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/primitive/datetime"
           end
@@ -398,7 +428,9 @@ module SeedExhaustiveClient
           **@request_client.get_headers,
           **(request_options&.additional_headers || {})
             }.compact
-            req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+            unless request_options.nil? && request_options&.additional_query_parameters.nil?
+              req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+            end
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/primitive/date"
           end
@@ -423,7 +455,9 @@ module SeedExhaustiveClient
           **@request_client.get_headers,
           **(request_options&.additional_headers || {})
             }.compact
-            req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+            unless request_options.nil? && request_options&.additional_query_parameters.nil?
+              req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+            end
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/primitive/uuid"
           end
@@ -448,7 +482,9 @@ module SeedExhaustiveClient
           **@request_client.get_headers,
           **(request_options&.additional_headers || {})
             }.compact
-            req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+            unless request_options.nil? && request_options&.additional_query_parameters.nil?
+              req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+            end
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/primitive/base64"
           end

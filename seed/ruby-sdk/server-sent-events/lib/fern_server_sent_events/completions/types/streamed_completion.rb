@@ -37,6 +37,7 @@ module SeedServerSentEventsClient
       # @return [SeedServerSentEventsClient::Completions::StreamedCompletion]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         delta = parsed_json["delta"]
         tokens = parsed_json["tokens"]
         new(

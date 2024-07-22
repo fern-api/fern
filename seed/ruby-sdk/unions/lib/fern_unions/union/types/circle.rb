@@ -31,6 +31,7 @@ module SeedUnionsClient
       # @return [SeedUnionsClient::Union::Circle]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         radius = parsed_json["radius"]
         new(radius: radius, additional_properties: struct)
       end

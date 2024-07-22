@@ -31,6 +31,7 @@ module SeedMixedCaseClient
       # @return [SeedMixedCaseClient::Service::Organization]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         name = parsed_json["name"]
         new(name: name, additional_properties: struct)
       end

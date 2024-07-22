@@ -37,6 +37,7 @@ module SeedExhaustiveClient
           # @return [SeedExhaustiveClient::Types::Union::Types::Dog]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
+            parsed_json = JSON.parse(json_object)
             name = parsed_json["name"]
             likes_to_woof = parsed_json["likesToWoof"]
             new(

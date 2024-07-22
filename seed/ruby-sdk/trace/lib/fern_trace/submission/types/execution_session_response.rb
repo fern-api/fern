@@ -52,6 +52,7 @@ module SeedTraceClient
       # @return [SeedTraceClient::Submission::ExecutionSessionResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         session_id = parsed_json["sessionId"]
         execution_session_url = parsed_json["executionSessionUrl"]
         language = parsed_json["language"]

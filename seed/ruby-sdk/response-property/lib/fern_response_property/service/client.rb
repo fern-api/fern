@@ -33,7 +33,9 @@ module SeedResponsePropertyClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
-        req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+        unless request_options.nil? && request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
@@ -56,7 +58,9 @@ module SeedResponsePropertyClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
-        req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+        unless request_options.nil? && request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
@@ -79,7 +83,9 @@ module SeedResponsePropertyClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
-        req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+        unless request_options.nil? && request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
@@ -102,7 +108,9 @@ module SeedResponsePropertyClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
-        req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+        unless request_options.nil? && request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
@@ -125,7 +133,9 @@ module SeedResponsePropertyClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
-        req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+        unless request_options.nil? && request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
@@ -148,7 +158,9 @@ module SeedResponsePropertyClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
-        req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+        unless request_options.nil? && request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
@@ -171,7 +183,9 @@ module SeedResponsePropertyClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
-        req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+        unless request_options.nil? && request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
@@ -206,7 +220,9 @@ module SeedResponsePropertyClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? && request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end
@@ -231,7 +247,9 @@ module SeedResponsePropertyClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? && request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end
@@ -256,7 +274,9 @@ module SeedResponsePropertyClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? && request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end
@@ -281,7 +301,9 @@ module SeedResponsePropertyClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? && request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end
@@ -306,7 +328,9 @@ module SeedResponsePropertyClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? && request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end
@@ -331,7 +355,9 @@ module SeedResponsePropertyClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? && request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end
@@ -356,7 +382,9 @@ module SeedResponsePropertyClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
-          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          unless request_options.nil? && request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end

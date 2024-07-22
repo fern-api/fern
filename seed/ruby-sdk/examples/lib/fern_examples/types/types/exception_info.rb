@@ -43,6 +43,7 @@ module SeedExamplesClient
       # @return [SeedExamplesClient::Types::ExceptionInfo]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         exception_type = parsed_json["exceptionType"]
         exception_message = parsed_json["exceptionMessage"]
         exception_stacktrace = parsed_json["exceptionStacktrace"]
