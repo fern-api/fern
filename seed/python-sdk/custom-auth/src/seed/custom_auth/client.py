@@ -5,7 +5,7 @@ from json.decoder import JSONDecodeError
 
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.pydantic_utilities import pydantic_v1
+from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..errors.errors.bad_request import BadRequest
 from ..errors.errors.unauthorized_request import UnauthorizedRequest
@@ -47,10 +47,10 @@ class CustomAuthClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(bool, _response.json())  # type: ignore
+                return typing.cast(bool, parse_obj_as(type_=bool, object_=_response.json()))  # type: ignore
             if _response.status_code == 401:
                 raise UnauthorizedRequest(
-                    pydantic_v1.parse_obj_as(UnauthorizedRequestErrorBody, _response.json())  # type: ignore
+                    typing.cast(UnauthorizedRequestErrorBody, parse_obj_as(type_=UnauthorizedRequestErrorBody, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -91,10 +91,10 @@ class CustomAuthClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(bool, _response.json())  # type: ignore
+                return typing.cast(bool, parse_obj_as(type_=bool, object_=_response.json()))  # type: ignore
             if _response.status_code == 401:
                 raise UnauthorizedRequest(
-                    pydantic_v1.parse_obj_as(UnauthorizedRequestErrorBody, _response.json())  # type: ignore
+                    typing.cast(UnauthorizedRequestErrorBody, parse_obj_as(type_=UnauthorizedRequestErrorBody, object_=_response.json()))  # type: ignore
                 )
             if _response.status_code == 400:
                 raise BadRequest()
@@ -144,10 +144,10 @@ class AsyncCustomAuthClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(bool, _response.json())  # type: ignore
+                return typing.cast(bool, parse_obj_as(type_=bool, object_=_response.json()))  # type: ignore
             if _response.status_code == 401:
                 raise UnauthorizedRequest(
-                    pydantic_v1.parse_obj_as(UnauthorizedRequestErrorBody, _response.json())  # type: ignore
+                    typing.cast(UnauthorizedRequestErrorBody, parse_obj_as(type_=UnauthorizedRequestErrorBody, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -196,10 +196,10 @@ class AsyncCustomAuthClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(bool, _response.json())  # type: ignore
+                return typing.cast(bool, parse_obj_as(type_=bool, object_=_response.json()))  # type: ignore
             if _response.status_code == 401:
                 raise UnauthorizedRequest(
-                    pydantic_v1.parse_obj_as(UnauthorizedRequestErrorBody, _response.json())  # type: ignore
+                    typing.cast(UnauthorizedRequestErrorBody, parse_obj_as(type_=UnauthorizedRequestErrorBody, object_=_response.json()))  # type: ignore
                 )
             if _response.status_code == 400:
                 raise BadRequest()

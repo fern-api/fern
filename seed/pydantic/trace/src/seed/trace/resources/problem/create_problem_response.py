@@ -4,17 +4,17 @@ from __future__ import annotations
 
 import typing
 
-from ...core.pydantic_utilities import pydantic_v1
+from ...core.pydantic_utilities import UniversalBaseModel
 from ..commons.problem_id import ProblemId
 from .create_problem_error import CreateProblemError
 
 
-class CreateProblemResponse_Success(pydantic_v1.BaseModel):
+class CreateProblemResponse_Success(UniversalBaseModel):
     value: ProblemId
     type: typing.Literal["success"] = "success"
 
 
-class CreateProblemResponse_Error(pydantic_v1.BaseModel):
+class CreateProblemResponse_Error(UniversalBaseModel):
     value: CreateProblemError
     type: typing.Literal["error"] = "error"
 

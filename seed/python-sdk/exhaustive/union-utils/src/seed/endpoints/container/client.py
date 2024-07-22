@@ -5,7 +5,7 @@ from json.decoder import JSONDecodeError
 
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ...core.pydantic_utilities import pydantic_v1
+from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
 from ...types.object.types.object_with_required_field import ObjectWithRequiredField
 
@@ -49,7 +49,7 @@ class ContainerClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(typing.List[str], _response.json())  # type: ignore
+                return typing.cast(typing.List[str], parse_obj_as(type_=typing.List[str], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -95,7 +95,7 @@ class ContainerClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(typing.List[ObjectWithRequiredField], _response.json())  # type: ignore
+                return typing.cast(typing.List[ObjectWithRequiredField], parse_obj_as(type_=typing.List[ObjectWithRequiredField], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -133,7 +133,7 @@ class ContainerClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(typing.Set[str], _response.json())  # type: ignore
+                return typing.cast(typing.Set[str], parse_obj_as(type_=typing.Set[str], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -167,11 +167,11 @@ class ContainerClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.container.get_and_return_set_of_objects(
-            request={
+            request=[
                 ObjectWithRequiredField(
                     string="string",
                 )
-            },
+            ],
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -179,7 +179,7 @@ class ContainerClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(typing.List[ObjectWithRequiredField], _response.json())  # type: ignore
+                return typing.cast(typing.List[ObjectWithRequiredField], parse_obj_as(type_=typing.List[ObjectWithRequiredField], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -217,7 +217,7 @@ class ContainerClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(typing.Dict[str, str], _response.json())  # type: ignore
+                return typing.cast(typing.Dict[str, str], parse_obj_as(type_=typing.Dict[str, str], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -263,7 +263,7 @@ class ContainerClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(typing.Dict[str, ObjectWithRequiredField], _response.json())  # type: ignore
+                return typing.cast(typing.Dict[str, ObjectWithRequiredField], parse_obj_as(type_=typing.Dict[str, ObjectWithRequiredField], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -307,7 +307,7 @@ class ContainerClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(typing.Optional[ObjectWithRequiredField], _response.json())  # type: ignore
+                return typing.cast(typing.Optional[ObjectWithRequiredField], parse_obj_as(type_=typing.Optional[ObjectWithRequiredField], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -358,7 +358,7 @@ class AsyncContainerClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(typing.List[str], _response.json())  # type: ignore
+                return typing.cast(typing.List[str], parse_obj_as(type_=typing.List[str], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -412,7 +412,7 @@ class AsyncContainerClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(typing.List[ObjectWithRequiredField], _response.json())  # type: ignore
+                return typing.cast(typing.List[ObjectWithRequiredField], parse_obj_as(type_=typing.List[ObjectWithRequiredField], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -458,7 +458,7 @@ class AsyncContainerClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(typing.Set[str], _response.json())  # type: ignore
+                return typing.cast(typing.Set[str], parse_obj_as(type_=typing.Set[str], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -497,11 +497,11 @@ class AsyncContainerClient:
 
         async def main() -> None:
             await client.endpoints.container.get_and_return_set_of_objects(
-                request={
+                request=[
                     ObjectWithRequiredField(
                         string="string",
                     )
-                },
+                ],
             )
 
 
@@ -512,7 +512,7 @@ class AsyncContainerClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(typing.List[ObjectWithRequiredField], _response.json())  # type: ignore
+                return typing.cast(typing.List[ObjectWithRequiredField], parse_obj_as(type_=typing.List[ObjectWithRequiredField], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -558,7 +558,7 @@ class AsyncContainerClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(typing.Dict[str, str], _response.json())  # type: ignore
+                return typing.cast(typing.Dict[str, str], parse_obj_as(type_=typing.Dict[str, str], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -612,7 +612,7 @@ class AsyncContainerClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(typing.Dict[str, ObjectWithRequiredField], _response.json())  # type: ignore
+                return typing.cast(typing.Dict[str, ObjectWithRequiredField], parse_obj_as(type_=typing.Dict[str, ObjectWithRequiredField], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -664,7 +664,7 @@ class AsyncContainerClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(typing.Optional[ObjectWithRequiredField], _response.json())  # type: ignore
+                return typing.cast(typing.Optional[ObjectWithRequiredField], parse_obj_as(type_=typing.Optional[ObjectWithRequiredField], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

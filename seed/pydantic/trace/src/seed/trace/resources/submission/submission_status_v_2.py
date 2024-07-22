@@ -2,62 +2,42 @@
 
 from __future__ import annotations
 
-import datetime as dt
 import typing
 
-from ...core.datetime_utils import serialize_datetime
-from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+import pydantic
+
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..commons.problem_id import ProblemId
 from ..v_2.resources.problem.problem_info_v_2 import ProblemInfoV2
 from .test_submission_update import TestSubmissionUpdate
 from .workspace_submission_update import WorkspaceSubmissionUpdate
 
 
-class SubmissionStatusV2_Test(pydantic_v1.BaseModel):
+class SubmissionStatusV2_Test(UniversalBaseModel):
     updates: typing.List[TestSubmissionUpdate]
-    problem_id: ProblemId = pydantic_v1.Field(alias="problemId")
-    problem_version: int = pydantic_v1.Field(alias="problemVersion")
-    problem_info: ProblemInfoV2 = pydantic_v1.Field(alias="problemInfo")
+    problem_id: ProblemId = pydantic.Field(alias="problemId")
+    problem_version: int = pydantic.Field(alias="problemVersion")
+    problem_info: ProblemInfoV2 = pydantic.Field(alias="problemInfo")
     type: typing.Literal["test"] = "test"
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        allow_population_by_field_name = True
-        populate_by_name = True
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            extra = pydantic.Extra.allow
 
 
-class SubmissionStatusV2_Workspace(pydantic_v1.BaseModel):
+class SubmissionStatusV2_Workspace(UniversalBaseModel):
     updates: typing.List[WorkspaceSubmissionUpdate]
     type: typing.Literal["workspace"] = "workspace"
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 SubmissionStatusV2 = typing.Union[SubmissionStatusV2_Test, SubmissionStatusV2_Workspace]

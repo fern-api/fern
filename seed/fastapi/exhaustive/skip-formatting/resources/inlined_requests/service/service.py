@@ -20,19 +20,23 @@ class AbstractInlinedRequestsService(AbstractFernService):
     with FastAPI when you register your implementation using Fern's register()
     function.
     """
+    
     @abc.abstractmethod
     def post_with_object_bodyand_response(self, *, body: PostWithObjectBody) -> ObjectWithOptionalField:
         """
         POST with custom object in request body, response is an object
         """
         ...
+    
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
     """
+    
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
         cls.__init_post_with_object_bodyand_response(router=router)
+    
     @classmethod
     def __init_post_with_object_bodyand_response(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.post_with_object_bodyand_response)

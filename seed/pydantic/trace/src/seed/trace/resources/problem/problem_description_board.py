@@ -4,20 +4,20 @@ from __future__ import annotations
 
 import typing
 
-from ...core.pydantic_utilities import pydantic_v1
+from ...core.pydantic_utilities import UniversalBaseModel
 
 
-class ProblemDescriptionBoard_Html(pydantic_v1.BaseModel):
+class ProblemDescriptionBoard_Html(UniversalBaseModel):
     value: str
     type: typing.Literal["html"] = "html"
 
 
-class ProblemDescriptionBoard_Variable(pydantic_v1.BaseModel):
+class ProblemDescriptionBoard_Variable(UniversalBaseModel):
     value: VariableValue
     type: typing.Literal["variable"] = "variable"
 
 
-class ProblemDescriptionBoard_TestCaseId(pydantic_v1.BaseModel):
+class ProblemDescriptionBoard_TestCaseId(UniversalBaseModel):
     value: str
     type: typing.Literal["testCaseId"] = "testCaseId"
 
