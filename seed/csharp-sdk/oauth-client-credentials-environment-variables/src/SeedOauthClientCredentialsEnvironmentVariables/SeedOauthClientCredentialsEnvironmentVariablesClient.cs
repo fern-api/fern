@@ -9,10 +9,7 @@ public partial class SeedOauthClientCredentialsEnvironmentVariablesClient
 {
     private RawClient _client;
 
-    public SeedOauthClientCredentialsEnvironmentVariablesClient(
-        string token,
-        ClientOptions? clientOptions = null
-    )
+    public SeedOauthClientCredentialsEnvironmentVariablesClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
