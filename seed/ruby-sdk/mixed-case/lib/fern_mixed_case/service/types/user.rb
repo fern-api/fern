@@ -39,9 +39,9 @@ module SeedMixedCaseClient
       # @return [SeedMixedCaseClient::Service::User]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        user_name = struct["userName"]
-        metadata_tags = struct["metadata_tags"]
-        extra_properties = struct["EXTRA_PROPERTIES"]
+        user_name = parsed_json["userName"]
+        metadata_tags = parsed_json["metadata_tags"]
+        extra_properties = parsed_json["EXTRA_PROPERTIES"]
         new(
           user_name: user_name,
           metadata_tags: metadata_tags,

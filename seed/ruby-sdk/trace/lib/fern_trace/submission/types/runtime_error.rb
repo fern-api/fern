@@ -31,7 +31,7 @@ module SeedTraceClient
       # @return [SeedTraceClient::Submission::RuntimeError]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        message = struct["message"]
+        message = parsed_json["message"]
         new(message: message, additional_properties: struct)
       end
 

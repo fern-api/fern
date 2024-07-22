@@ -36,7 +36,7 @@ module SeedExhaustiveClient
           # @return [SeedExhaustiveClient::Types::Object_::Types::DoubleOptional]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            optional_alias = struct["optionalAlias"]
+            optional_alias = parsed_json["optionalAlias"]
             new(optional_alias: optional_alias, additional_properties: struct)
           end
 

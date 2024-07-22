@@ -33,6 +33,8 @@ module SeedExamplesClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
+        req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+        req.body = { **(request_options&.additional_body_parameters || {}) }.compact unless request_options.nil?
         req.url "#{@request_client.get_url(request_options: request_options)}/movie/#{movie_id}"
       end
       SeedExamplesClient::Types::Movie.from_json(json_object: response.body)
@@ -62,6 +64,7 @@ module SeedExamplesClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
+        req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
@@ -91,6 +94,7 @@ module SeedExamplesClient
           "X-API-Version": x_api_version
         }.compact
         req.params = { **(request_options&.additional_query_parameters || {}), "shallow": shallow, "tag": tag }.compact
+        req.body = { **(request_options&.additional_body_parameters || {}) }.compact unless request_options.nil?
         req.url "#{@request_client.get_url(request_options: request_options)}/metadata"
       end
       SeedExamplesClient::Types::Metadata.from_json(json_object: response.body)
@@ -110,6 +114,8 @@ module SeedExamplesClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
+        req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+        req.body = { **(request_options&.additional_body_parameters || {}) }.compact unless request_options.nil?
         req.url "#{@request_client.get_url(request_options: request_options)}/response"
       end
       SeedExamplesClient::Types::Response.from_json(json_object: response.body)
@@ -142,6 +148,8 @@ module SeedExamplesClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact unless request_options.nil?
           req.url "#{@request_client.get_url(request_options: request_options)}/movie/#{movie_id}"
         end
         SeedExamplesClient::Types::Movie.from_json(json_object: response.body)
@@ -173,6 +181,7 @@ module SeedExamplesClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end
@@ -209,6 +218,7 @@ module SeedExamplesClient
             "shallow": shallow,
             "tag": tag
           }.compact
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact unless request_options.nil?
           req.url "#{@request_client.get_url(request_options: request_options)}/metadata"
         end
         SeedExamplesClient::Types::Metadata.from_json(json_object: response.body)
@@ -230,6 +240,8 @@ module SeedExamplesClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact unless request_options.nil?
           req.url "#{@request_client.get_url(request_options: request_options)}/response"
         end
         SeedExamplesClient::Types::Response.from_json(json_object: response.body)

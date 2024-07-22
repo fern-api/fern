@@ -52,9 +52,9 @@ module SeedMultiLineDocsClient
       # @return [SeedMultiLineDocsClient::User::User]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        id = struct["id"]
-        name = struct["name"]
-        age = struct["age"]
+        id = parsed_json["id"]
+        name = parsed_json["name"]
+        age = parsed_json["age"]
         new(
           id: id,
           name: name,

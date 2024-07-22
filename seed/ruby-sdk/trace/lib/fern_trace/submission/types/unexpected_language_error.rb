@@ -36,8 +36,8 @@ module SeedTraceClient
       # @return [SeedTraceClient::Submission::UnexpectedLanguageError]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        expected_language = struct["expectedLanguage"]
-        actual_language = struct["actualLanguage"]
+        expected_language = parsed_json["expectedLanguage"]
+        actual_language = parsed_json["actualLanguage"]
         new(
           expected_language: expected_language,
           actual_language: actual_language,

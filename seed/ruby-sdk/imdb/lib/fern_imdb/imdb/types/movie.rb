@@ -39,9 +39,9 @@ module SeedApiClient
       # @return [SeedApiClient::Imdb::Movie]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        id = struct["id"]
-        title = struct["title"]
-        rating = struct["rating"]
+        id = parsed_json["id"]
+        title = parsed_json["title"]
+        rating = parsed_json["rating"]
         new(
           id: id,
           title: title,

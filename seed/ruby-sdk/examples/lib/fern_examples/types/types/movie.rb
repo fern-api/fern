@@ -76,15 +76,15 @@ module SeedExamplesClient
       # @return [SeedExamplesClient::Types::Movie]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        id = struct["id"]
-        prequel = struct["prequel"]
-        title = struct["title"]
-        from = struct["from"]
-        rating = struct["rating"]
-        type = struct["type"]
-        tag = struct["tag"]
-        book = struct["book"]
-        metadata = struct["metadata"]
+        id = parsed_json["id"]
+        prequel = parsed_json["prequel"]
+        title = parsed_json["title"]
+        from = parsed_json["from"]
+        rating = parsed_json["rating"]
+        type = parsed_json["type"]
+        tag = parsed_json["tag"]
+        book = parsed_json["book"]
+        metadata = parsed_json["metadata"]
         new(
           id: id,
           prequel: prequel,

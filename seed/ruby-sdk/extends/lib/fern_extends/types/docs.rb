@@ -30,7 +30,7 @@ module SeedExtendsClient
     # @return [SeedExtendsClient::Docs]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      docs = struct["docs"]
+      docs = parsed_json["docs"]
       new(docs: docs, additional_properties: struct)
     end
 

@@ -33,7 +33,7 @@ module SeedPaginationClient
       # @return [SeedPaginationClient::Users::WithCursor]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        cursor = struct["cursor"]
+        cursor = parsed_json["cursor"]
         new(cursor: cursor, additional_properties: struct)
       end
 

@@ -32,6 +32,8 @@ module SeedFileDownloadClient
       **(request_options&.additional_headers || {})
         }.compact
         req.options.on_data = on_data
+        req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+        req.body = { **(request_options&.additional_body_parameters || {}) }.compact unless request_options.nil?
         req.url "#{@request_client.get_url(request_options: request_options)}/"
       end
     end
@@ -66,6 +68,8 @@ module SeedFileDownloadClient
         **(request_options&.additional_headers || {})
           }.compact
           req.options.on_data = on_data
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact unless request_options.nil?
           req.url "#{@request_client.get_url(request_options: request_options)}/"
         end
       end

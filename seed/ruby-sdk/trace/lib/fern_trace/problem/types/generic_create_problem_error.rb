@@ -39,9 +39,9 @@ module SeedTraceClient
       # @return [SeedTraceClient::Problem::GenericCreateProblemError]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        message = struct["message"]
-        type = struct["type"]
-        stacktrace = struct["stacktrace"]
+        message = parsed_json["message"]
+        type = parsed_json["type"]
+        stacktrace = parsed_json["stacktrace"]
         new(
           message: message,
           type: type,

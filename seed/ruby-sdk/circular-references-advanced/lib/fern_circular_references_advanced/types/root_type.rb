@@ -30,7 +30,7 @@ module SeedApiClient
     # @return [SeedApiClient::RootType]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      s = struct["s"]
+      s = parsed_json["s"]
       new(s: s, additional_properties: struct)
     end
 

@@ -39,9 +39,9 @@ module SeedLiteralClient
       # @return [SeedLiteralClient::Reference::SendRequest]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        prompt = struct["prompt"]
-        query = struct["query"]
-        stream = struct["stream"]
+        prompt = parsed_json["prompt"]
+        query = parsed_json["query"]
+        stream = parsed_json["stream"]
         new(
           prompt: prompt,
           query: query,

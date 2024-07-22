@@ -31,7 +31,7 @@ module SeedTraceClient
       # @return [SeedTraceClient::Submission::WorkspaceTracedUpdate]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        trace_responses_size = struct["traceResponsesSize"]
+        trace_responses_size = parsed_json["traceResponsesSize"]
         new(trace_responses_size: trace_responses_size, additional_properties: struct)
       end
 

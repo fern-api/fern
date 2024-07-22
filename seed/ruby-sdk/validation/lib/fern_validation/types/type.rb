@@ -39,9 +39,9 @@ module SeedValidationClient
     # @return [SeedValidationClient::Type]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      decimal = struct["decimal"]
-      even = struct["even"]
-      name = struct["name"]
+      decimal = parsed_json["decimal"]
+      even = parsed_json["even"]
+      name = parsed_json["name"]
       new(
         decimal: decimal,
         even: even,

@@ -35,8 +35,8 @@ module SeedAliasClient
     # @return [SeedAliasClient::Type]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      id = struct["id"]
-      name = struct["name"]
+      id = parsed_json["id"]
+      name = parsed_json["name"]
       new(
         id: id,
         name: name,

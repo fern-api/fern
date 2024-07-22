@@ -42,9 +42,9 @@ module SeedExamplesClient
         # @return [SeedExamplesClient::Commons::Types::Metadata]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          id = struct["id"]
-          data = struct["data"]
-          json_string = struct["jsonString"]
+          id = parsed_json["id"]
+          data = parsed_json["data"]
+          json_string = parsed_json["jsonString"]
           new(
             id: id,
             data: data,

@@ -30,7 +30,7 @@ module SeedExtraPropertiesClient
     # @return [SeedExtraPropertiesClient::Failure]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      status = struct["status"]
+      status = parsed_json["status"]
       new(status: status, additional_properties: struct)
     end
 

@@ -35,8 +35,8 @@ module SeedPaginationClient
       # @return [SeedPaginationClient::Users::NextPage]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        page = struct["page"]
-        starting_after = struct["starting_after"]
+        page = parsed_json["page"]
+        starting_after = parsed_json["starting_after"]
         new(
           page: page,
           starting_after: starting_after,

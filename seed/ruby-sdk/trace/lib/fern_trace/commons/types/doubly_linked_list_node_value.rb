@@ -45,10 +45,10 @@ module SeedTraceClient
       # @return [SeedTraceClient::Commons::DoublyLinkedListNodeValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        node_id = struct["nodeId"]
-        val = struct["val"]
-        next_ = struct["next"]
-        prev = struct["prev"]
+        node_id = parsed_json["nodeId"]
+        val = parsed_json["val"]
+        next_ = parsed_json["next"]
+        prev = parsed_json["prev"]
         new(
           node_id: node_id,
           val: val,

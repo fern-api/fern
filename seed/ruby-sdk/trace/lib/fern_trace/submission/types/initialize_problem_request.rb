@@ -37,8 +37,8 @@ module SeedTraceClient
       # @return [SeedTraceClient::Submission::InitializeProblemRequest]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        problem_id = struct["problemId"]
-        problem_version = struct["problemVersion"]
+        problem_id = parsed_json["problemId"]
+        problem_version = parsed_json["problemVersion"]
         new(
           problem_id: problem_id,
           problem_version: problem_version,

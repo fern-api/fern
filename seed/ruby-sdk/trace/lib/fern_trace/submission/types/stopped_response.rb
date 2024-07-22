@@ -31,7 +31,7 @@ module SeedTraceClient
       # @return [SeedTraceClient::Submission::StoppedResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        submission_id = struct["submissionId"]
+        submission_id = parsed_json["submissionId"]
         new(submission_id: submission_id, additional_properties: struct)
       end
 

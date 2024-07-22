@@ -357,7 +357,7 @@ export class EndpointGenerator {
         ];
     }
 
-    public getFaradayParameters(): Expression | undefined {
+    public getFaradayParameters(): AstNode | undefined {
         const additionalQueryProperty = this.requestOptions.getAdditionalQueryProperties(this.requestOptionsVariable);
 
         const literalQueryParams = new Map(
@@ -384,7 +384,30 @@ export class EndpointGenerator {
                   }),
                   isAssignment: true
               })
-            : undefined;
+            : new ConditionalStatement({
+                  if_: {
+                      leftSide: new FunctionInvocation({
+                          onObject: this.requestOptionsVariable,
+                          baseFunction: new Function_({
+                              name: "nil?",
+                              functionBody: []
+                          }),
+                          optionalSafeCall: false
+                      }),
+                      operation: "!",
+                      expressions: [
+                          new Expression({
+                              leftSide: `${this.blockArg}.params`,
+                              rightSide: new HashInstance({
+                                  additionalHashes: [{ value: additionalQueryProperty, defaultValue: "{}" }],
+                                  shouldCompact: true,
+                                  stringifyValues: false
+                              }),
+                              isAssignment: true
+                          })
+                      ]
+                  }
+              });
     }
 
     private getFaradayBodyForReference(additionalBodyProperty: string): AstNode[] {
@@ -526,8 +549,34 @@ export class EndpointGenerator {
                     throw new Error("Unknown request body type.");
                 }
             });
+        } else {
+            return [
+                new ConditionalStatement({
+                    if_: {
+                        leftSide: new FunctionInvocation({
+                            onObject: this.requestOptionsVariable,
+                            baseFunction: new Function_({
+                                name: "nil?",
+                                functionBody: []
+                            }),
+                            optionalSafeCall: false
+                        }),
+                        operation: "!",
+                        expressions: [
+                            new Expression({
+                                leftSide: `${this.blockArg}.body`,
+                                rightSide: new HashInstance({
+                                    additionalHashes: [{ value: additionalBodyProperty, defaultValue: "{}" }],
+                                    shouldCompact: true,
+                                    stringifyValues: false
+                                }),
+                                isAssignment: true
+                            })
+                        ]
+                    }
+                })
+            ];
         }
-        return;
     }
 
     public getFaradayBlock(

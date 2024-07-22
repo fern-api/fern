@@ -36,8 +36,8 @@ module SeedExhaustiveClient
         # @return [SeedExhaustiveClient::Types::Union::Cat]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          name = struct["name"]
-          likes_to_meow = struct["likesToMeow"]
+          name = parsed_json["name"]
+          likes_to_meow = parsed_json["likesToMeow"]
           new(
             name: name,
             likes_to_meow: likes_to_meow,

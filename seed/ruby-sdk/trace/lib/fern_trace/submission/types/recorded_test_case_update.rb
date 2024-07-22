@@ -35,8 +35,8 @@ module SeedTraceClient
       # @return [SeedTraceClient::Submission::RecordedTestCaseUpdate]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        test_case_id = struct["testCaseId"]
-        trace_responses_size = struct["traceResponsesSize"]
+        test_case_id = parsed_json["testCaseId"]
+        trace_responses_size = parsed_json["traceResponsesSize"]
         new(
           test_case_id: test_case_id,
           trace_responses_size: trace_responses_size,

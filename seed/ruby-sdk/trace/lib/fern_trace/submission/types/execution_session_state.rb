@@ -63,12 +63,12 @@ module SeedTraceClient
       # @return [SeedTraceClient::Submission::ExecutionSessionState]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        last_time_contacted = struct["lastTimeContacted"]
-        session_id = struct["sessionId"]
-        is_warm_instance = struct["isWarmInstance"]
-        aws_task_id = struct["awsTaskId"]
-        language = struct["language"]
-        status = struct["status"]
+        last_time_contacted = parsed_json["lastTimeContacted"]
+        session_id = parsed_json["sessionId"]
+        is_warm_instance = parsed_json["isWarmInstance"]
+        aws_task_id = parsed_json["awsTaskId"]
+        language = parsed_json["language"]
+        status = parsed_json["status"]
         new(
           last_time_contacted: last_time_contacted,
           session_id: session_id,

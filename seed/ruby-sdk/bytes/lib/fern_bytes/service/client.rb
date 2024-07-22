@@ -28,6 +28,7 @@ module SeedBytesClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
+        req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
         req.headers["Content-Type"] = "application/octet-stream"
         req.body = request
         req.url "#{@request_client.get_url(request_options: request_options)}/upload-content"
@@ -60,6 +61,7 @@ module SeedBytesClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
           req.headers["Content-Type"] = "application/octet-stream"
           req.body = request
           req.url "#{@request_client.get_url(request_options: request_options)}/upload-content"

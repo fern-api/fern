@@ -51,6 +51,7 @@ module SeedExamplesClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
+        req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/"
       end
@@ -100,6 +101,7 @@ module SeedExamplesClient
       **@async_request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
+        req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@async_request_client.get_url(request_options: request_options)}/"
       end

@@ -36,8 +36,8 @@ module SeedExamplesClient
       # @return [SeedExamplesClient::Types::Migration]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        name = struct["name"]
-        status = struct["status"]
+        name = parsed_json["name"]
+        status = parsed_json["status"]
         new(
           name: name,
           status: status,

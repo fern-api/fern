@@ -33,7 +33,7 @@ module SeedTraceClient
       # @return [SeedTraceClient::Submission::GetTraceResponsesPageRequest]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        offset = struct["offset"]
+        offset = parsed_json["offset"]
         new(offset: offset, additional_properties: struct)
       end
 

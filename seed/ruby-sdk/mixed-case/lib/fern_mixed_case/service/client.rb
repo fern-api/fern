@@ -31,6 +31,8 @@ module SeedMixedCaseClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
+        req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+        req.body = { **(request_options&.additional_body_parameters || {}) }.compact unless request_options.nil?
         req.url "#{@request_client.get_url(request_options: request_options)}/resource/#{resource_id}"
       end
       SeedMixedCaseClient::Service::Resource.from_json(json_object: response.body)
@@ -56,6 +58,7 @@ module SeedMixedCaseClient
           "page_limit": page_limit,
           "beforeDate": before_date
         }.compact
+        req.body = { **(request_options&.additional_body_parameters || {}) }.compact unless request_options.nil?
         req.url "#{@request_client.get_url(request_options: request_options)}/resource"
       end
       parsed_json = JSON.parse(response.body)
@@ -91,6 +94,8 @@ module SeedMixedCaseClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact unless request_options.nil?
           req.url "#{@request_client.get_url(request_options: request_options)}/resource/#{resource_id}"
         end
         SeedMixedCaseClient::Service::Resource.from_json(json_object: response.body)
@@ -118,6 +123,7 @@ module SeedMixedCaseClient
             "page_limit": page_limit,
             "beforeDate": before_date
           }.compact
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact unless request_options.nil?
           req.url "#{@request_client.get_url(request_options: request_options)}/resource"
         end
         parsed_json = JSON.parse(response.body)

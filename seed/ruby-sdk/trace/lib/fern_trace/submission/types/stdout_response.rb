@@ -35,8 +35,8 @@ module SeedTraceClient
       # @return [SeedTraceClient::Submission::StdoutResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        submission_id = struct["submissionId"]
-        stdout = struct["stdout"]
+        submission_id = parsed_json["submissionId"]
+        stdout = parsed_json["stdout"]
         new(
           submission_id: submission_id,
           stdout: stdout,

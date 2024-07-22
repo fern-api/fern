@@ -39,9 +39,9 @@ module SeedTraceClient
       # @return [SeedTraceClient::Submission::SubmissionFileInfo]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        directory = struct["directory"]
-        filename = struct["filename"]
-        contents = struct["contents"]
+        directory = parsed_json["directory"]
+        filename = parsed_json["filename"]
+        contents = parsed_json["contents"]
         new(
           directory: directory,
           filename: filename,

@@ -35,8 +35,8 @@ module SeedExamplesClient
       # @return [SeedExamplesClient::Types::StuntDouble]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        name = struct["name"]
-        actor_or_actress_id = struct["actorOrActressId"]
+        name = parsed_json["name"]
+        actor_or_actress_id = parsed_json["actorOrActressId"]
         new(
           name: name,
           actor_or_actress_id: actor_or_actress_id,

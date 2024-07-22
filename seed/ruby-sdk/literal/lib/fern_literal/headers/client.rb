@@ -40,6 +40,7 @@ module SeedLiteralClient
           "X-Endpoint-Version": "02-12-2024",
           "X-Async": true
         }.compact
+        req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
         req.body = { **(request_options&.additional_body_parameters || {}), query: query }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/headers"
       end
@@ -83,6 +84,7 @@ module SeedLiteralClient
             "X-Endpoint-Version": "02-12-2024",
             "X-Async": true
           }.compact
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
           req.body = { **(request_options&.additional_body_parameters || {}), query: query }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/headers"
         end

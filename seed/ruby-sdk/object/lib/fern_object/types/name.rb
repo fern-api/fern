@@ -34,8 +34,8 @@ module SeedObjectClient
     # @return [SeedObjectClient::Name]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      id = struct["id"]
-      value = struct["value"]
+      id = parsed_json["id"]
+      value = parsed_json["value"]
       new(
         id: id,
         value: value,

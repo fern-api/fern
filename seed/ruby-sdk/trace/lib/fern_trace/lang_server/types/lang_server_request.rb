@@ -31,7 +31,7 @@ module SeedTraceClient
       # @return [SeedTraceClient::LangServer::LangServerRequest]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        request = struct["request"]
+        request = parsed_json["request"]
         new(request: request, additional_properties: struct)
       end
 

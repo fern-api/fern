@@ -52,15 +52,15 @@ module SeedPaginationClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        page = struct["page"]
+        page = parsed_json["page"]
         if parsed_json["next"].nil?
           next_ = nil
         else
           next_ = parsed_json["next"].to_json
           next_ = SeedPaginationClient::Users::NextPage.from_json(json_object: next_)
         end
-        per_page = struct["per_page"]
-        total_page = struct["total_page"]
+        per_page = parsed_json["per_page"]
+        total_page = parsed_json["total_page"]
         new(
           page: page,
           next_: next_,

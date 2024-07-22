@@ -43,10 +43,10 @@ module SeedTraceClient
       # @return [SeedTraceClient::Playlist::Playlist]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        playlist_id = struct["playlist_id"]
-        owner_id = struct["owner-id"]
-        name = struct["name"]
-        problems = struct["problems"]
+        playlist_id = parsed_json["playlist_id"]
+        owner_id = parsed_json["owner-id"]
+        name = parsed_json["name"]
+        problems = parsed_json["problems"]
         new(
           playlist_id: playlist_id,
           owner_id: owner_id,

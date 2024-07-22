@@ -35,8 +35,8 @@ module SeedTraceClient
       # @return [SeedTraceClient::Playlist::PlaylistCreateRequest]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        name = struct["name"]
-        problems = struct["problems"]
+        name = parsed_json["name"]
+        problems = parsed_json["problems"]
         new(
           name: name,
           problems: problems,

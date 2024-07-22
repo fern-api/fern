@@ -31,6 +31,7 @@ module SeedExhaustiveClient
           **(request_options&.additional_headers || {}),
           "X-TEST-ENDPOINT-HEADER": x_test_endpoint_header
         }.compact
+        req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/test-headers/custom-header"
       end
@@ -65,6 +66,7 @@ module SeedExhaustiveClient
             **(request_options&.additional_headers || {}),
             "X-TEST-ENDPOINT-HEADER": x_test_endpoint_header
           }.compact
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact unless request_options.nil?
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/test-headers/custom-header"
         end
