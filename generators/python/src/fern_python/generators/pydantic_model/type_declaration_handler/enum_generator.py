@@ -1,3 +1,4 @@
+import sys
 from typing import Optional, Union
 
 import fern.ir.resources as ir_types
@@ -44,17 +45,24 @@ class EnumGenerator(AbstractTypeGenerator):
                 should_export=True,
             )
         else:
-            enum_class = AST.ClassDeclaration(
-                name=self._get_class_name(),
-                extends=[
-                    AST.ClassReference(
-                        qualified_name_excluding_import=("str",),
-                    ),
+            # If using python 3.11+, generate classes with StrEnum instead of (str, Enum)
+            if sys.version_info >= (3, 11):
+                extends = [
                     AST.ClassReference(
                         import_=AST.ReferenceImport(module=AST.Module.built_in(("enum",))),
-                        qualified_name_excluding_import=("Enum",),
+                        qualified_name_excluding_import=("StrEnum",),
                     ),
                 ],
+            else:
+                extends = [
+                    AST.ClassReference(
+                        import_=AST.ReferenceImport(module=AST.Module.built_in(("enum",))),
+                        qualified_name_excluding_import=("StrEnum",),
+                    ),
+                ],
+            enum_class = AST.ClassDeclaration(
+                name=self._get_class_name(),
+                extends=extends,
                 docstring=AST.Docstring(self._docs) if self._docs is not None else None,
                 snippet=self._snippet,
             )
