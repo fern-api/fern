@@ -1,4 +1,3 @@
-from re import A
 from typing import List, Optional, Set
 
 import fern.ir.resources as ir_types
@@ -378,17 +377,20 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
 
                     writer.write("return ")
                     writer.write_node(sub_union_instantiation)
+
                 return AST.CodeWriter(write_condition_for_root)
 
-            writer.write_node(AST.ConditionalTree(
-                conditions=[
-                    AST.IfConditionLeaf(
-                        condition=AST.Expression(self._context.core_utilities.get_is_pydantic_v2()),
-                        code=[AST.Expression(write_condition("root"))]
-                    )
-                ],
-                else_code=[AST.Expression(write_condition("__root__"))]
-            ))
+            writer.write_node(
+                AST.ConditionalTree(
+                    conditions=[
+                        AST.IfConditionLeaf(
+                            condition=AST.Expression(self._context.core_utilities.get_is_pydantic_v2()),
+                            code=[AST.Expression(write_condition("root"))],
+                        )
+                    ],
+                    else_code=[AST.Expression(write_condition("__root__"))],
+                )
+            )
 
         return write
 

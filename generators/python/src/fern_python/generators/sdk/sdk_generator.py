@@ -267,7 +267,7 @@ class SdkGenerator(AbstractGenerator):
 
         context.core_utilities.copy_to_project(project=project)
 
-        if not(generator_config.output.mode.get_as_union().type == "downloadFiles"):
+        if not (generator_config.output.mode.get_as_union().type == "downloadFiles"):
             as_is_copier.copy_to_project(project=project)
 
         snippet_template_source_file = SourceFileFactory.create_snippet()

@@ -22,6 +22,7 @@ def _export(*name: str) -> AST.ClassReference:
         qualified_name_excluding_import=name, import_=AST.ReferenceImport(module=STARLETTE_MODULE)
     )
 
+
 def _export_exception(*name: str) -> AST.ClassReference:
     return AST.ClassReference(
         qualified_name_excluding_import=name, import_=AST.ReferenceImport(module=STARLETTE_EXCEPTIONS_MODULE)
