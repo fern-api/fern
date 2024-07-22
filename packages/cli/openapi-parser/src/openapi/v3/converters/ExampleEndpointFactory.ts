@@ -62,8 +62,6 @@ export class ExampleEndpointFactory {
                 });
                 if (example != null) {
                     requestExamples.push([undefined, example]);
-                } else {
-                    this.logger.error(`Received null request for ${endpoint.method} ${endpoint.path}`);
                 }
             } else {
                 for (const { name: exampleId, value: rawExample } of requestSchemaIdResponse.examples) {
