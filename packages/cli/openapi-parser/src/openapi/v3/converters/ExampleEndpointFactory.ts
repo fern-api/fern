@@ -62,6 +62,8 @@ export class ExampleEndpointFactory {
                 });
                 if (example != null) {
                     requestExamples.push([undefined, example]);
+                } else {
+                    this.logger.error(`Received null request for ${endpoint.method} ${endpoint.path}`);
                 }
             } else {
                 for (const { name: exampleId, value: rawExample } of requestSchemaIdResponse.examples) {
@@ -76,6 +78,8 @@ export class ExampleEndpointFactory {
                     });
                     if (example != null) {
                         requestExamples.push([exampleId, example]);
+                    } else {
+                        this.logger.error(`Received null request for ${endpoint.method} ${endpoint.path}`);
                     }
                 }
             }
@@ -225,7 +229,18 @@ export class ExampleEndpointFactory {
             }
         }
 
-        const requestResponsePairs = consolidateRequestResponseExamples(requestExamples, responseExamples);
+        let requestResponsePairs: RequestResponsePair[] = [];
+        if (endpoint.request != null && endpoint.response != null) {
+            requestResponsePairs = consolidateRequestResponseExamples(requestExamples, responseExamples);
+        } else if (endpoint.request != null) {
+            requestResponsePairs = requestExamples.map(([id, example]) => {
+                return { id, request: example, response: undefined };
+            });
+        } else if (endpoint.response != null) {
+            requestResponsePairs = responseExamples.map(([id, example]) => {
+                return { id, request: undefined, response: example };
+            });
+        }
 
         // Get all the code samples from incomplete examples
         const codeSamples = endpoint.examples
