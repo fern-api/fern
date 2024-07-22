@@ -55,8 +55,8 @@ module SeedTraceClient
           item = item.to_json
           SeedTraceClient::Submission::TestSubmissionUpdate.from_json(json_object: item)
         end
-        problem_id = struct["problemId"]
-        problem_version = struct["problemVersion"]
+        problem_id = parsed_json["problemId"]
+        problem_version = parsed_json["problemVersion"]
         if parsed_json["problemInfo"].nil?
           problem_info = nil
         else

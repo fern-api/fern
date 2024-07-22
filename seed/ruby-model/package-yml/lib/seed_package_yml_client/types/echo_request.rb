@@ -34,8 +34,9 @@ module SeedPackageYmlClient
     # @return [SeedPackageYmlClient::EchoRequest]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      name = struct["name"]
-      size = struct["size"]
+      parsed_json = JSON.parse(json_object)
+      name = parsed_json["name"]
+      size = parsed_json["size"]
       new(
         name: name,
         size: size,

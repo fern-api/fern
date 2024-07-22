@@ -100,24 +100,24 @@ module SeedExhaustiveClient
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
-          string = struct["string"]
-          integer = struct["integer"]
-          long = struct["long"]
-          double = struct["double"]
-          bool = struct["bool"]
+          string = parsed_json["string"]
+          integer = parsed_json["integer"]
+          long = parsed_json["long"]
+          double = parsed_json["double"]
+          bool = parsed_json["bool"]
           datetime = (DateTime.parse(parsed_json["datetime"]) unless parsed_json["datetime"].nil?)
           date = (Date.parse(parsed_json["date"]) unless parsed_json["date"].nil?)
-          uuid = struct["uuid"]
-          base_64 = struct["base64"]
-          list = struct["list"]
+          uuid = parsed_json["uuid"]
+          base_64 = parsed_json["base64"]
+          list = parsed_json["list"]
           if parsed_json["set"].nil?
             set = nil
           else
             set = parsed_json["set"].to_json
             set = Set.new(set)
           end
-          map = struct["map"]
-          bigint = struct["bigint"]
+          map = parsed_json["map"]
+          bigint = parsed_json["bigint"]
           new(
             string: string,
             integer: integer,

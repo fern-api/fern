@@ -32,7 +32,8 @@ module SeedExhaustiveClient
         # @return [SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          string = struct["string"]
+          parsed_json = JSON.parse(json_object)
+          string = parsed_json["string"]
           new(string: string, additional_properties: struct)
         end
 

@@ -43,7 +43,7 @@ module SeedExamplesClient
           type = parsed_json["type"].to_json
           type = SeedExamplesClient::Type.from_json(json_object: type)
         end
-        name = struct["name"]
+        name = parsed_json["name"]
         new(
           type: type,
           name: name,
