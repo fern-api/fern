@@ -153,7 +153,9 @@ exports[`open api parser superagent docs 1`] = `
                 "path-parameters": {
                   "agentId": "agentId",
                 },
-                "request": {},
+                "request": {
+                  "key": "value",
+                },
                 "response": {
                   "body": {
                     "key": "value",
@@ -188,7 +190,9 @@ exports[`open api parser superagent docs 1`] = `
                   "agentId": "agentId",
                 },
                 "request": {
-                  "input": {},
+                  "input": {
+                    "key": "value",
+                  },
                 },
                 "response": {
                   "body": {
@@ -726,7 +730,9 @@ exports[`open api parser superagent docs 1`] = `
                 "path-parameters": {
                   "promptId": "promptId",
                 },
-                "request": {},
+                "request": {
+                  "key": "value",
+                },
                 "response": {
                   "body": {
                     "key": "value",
@@ -1284,7 +1290,9 @@ exports[`open api parser superagent simple 1`] = `
                 "path-parameters": {
                   "agentId": "agentId",
                 },
-                "request": {},
+                "request": {
+                  "key": "value",
+                },
                 "response": {
                   "body": {
                     "key": "value",
@@ -1319,7 +1327,9 @@ exports[`open api parser superagent simple 1`] = `
                   "agentId": "agentId",
                 },
                 "request": {
-                  "input": {},
+                  "input": {
+                    "key": "value",
+                  },
                 },
                 "response": {
                   "body": {
@@ -1857,7 +1867,9 @@ exports[`open api parser superagent simple 1`] = `
                 "path-parameters": {
                   "promptId": "promptId",
                 },
-                "request": {},
+                "request": {
+                  "key": "value",
+                },
                 "response": {
                   "body": {
                     "key": "value",

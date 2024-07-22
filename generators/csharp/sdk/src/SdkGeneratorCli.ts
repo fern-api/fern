@@ -1,5 +1,5 @@
 import { AbstractCsharpGeneratorCli, TestFileGenerator } from "@fern-api/csharp-codegen";
-import { generateModels } from "@fern-api/fern-csharp-model";
+import { generateModels, generateTests } from "@fern-api/fern-csharp-model";
 import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
@@ -62,6 +62,10 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         const models = generateModels({ context });
         for (const file of models) {
             context.project.addSourceFiles(file);
+        }
+        const tests = generateTests({ context });
+        for (const file of tests) {
+            context.project.addTestFiles(file);
         }
         for (const [_, subpackage] of Object.entries(context.ir.subpackages)) {
             const service = subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined;

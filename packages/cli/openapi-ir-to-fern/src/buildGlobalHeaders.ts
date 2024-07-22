@@ -31,33 +31,6 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
         (context.ir.globalHeaders ?? []).map((header) => [header.header, header])
     );
 
-    const globalHeaders: Record<string, HeaderWithCount> = {};
-    for (const endpoint of context.ir.endpoints) {
-        for (const header of endpoint.headers) {
-            if (HEADERS_TO_IGNORE.has(header.name)) {
-                continue;
-            }
-            let headerWithCount = globalHeaders[header.name];
-            if (headerWithCount == null) {
-                const predefinedHeader = predefinedGlobalHeaders[header.name];
-                const convertedHeader = buildHeader({
-                    header: {
-                        ...header,
-                        schema: predefinedHeader?.schema ?? header.schema,
-                        name: predefinedHeader?.name ?? header.name
-                    },
-                    fileContainingReference: RelativeFilePath.of(ROOT_API_FILENAME),
-                    context
-                });
-                headerWithCount = new HeaderWithCount(convertedHeader);
-                globalHeaders[header.name] = headerWithCount;
-            }
-            headerWithCount.increment();
-        }
-    }
-
-    const globalHeaderThreshold = context.ir.endpoints.length * GLOBAL_HEADER_PERCENTAGE_THRESHOLD;
-
     for (const [headerName, header] of Object.entries(predefinedGlobalHeaders)) {
         let schema: RawSchemas.HttpHeaderSchema = "optional<string>";
 
@@ -85,22 +58,51 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
         });
     }
 
-    for (const [headerName, header] of Object.entries(globalHeaders)) {
-        const predefinedHeader = predefinedGlobalHeaders[headerName];
-        const isRequired = header.count === context.ir.endpoints.length;
-        const isOptional = header.count >= globalHeaderThreshold;
-        if (predefinedHeader != null) {
-            continue; // already added
-        } else if (isRequired) {
-            context.builder.addGlobalHeader({
-                name: headerName,
-                schema: header.schema
-            });
-        } else if (isOptional) {
-            context.builder.addGlobalHeader({
-                name: headerName,
-                schema: wrapTypeReferenceAsOptional(header.schema)
-            });
+    if (context.detectGlobalHeaders) {
+        const globalHeaders: Record<string, HeaderWithCount> = {};
+        for (const endpoint of context.ir.endpoints) {
+            for (const header of endpoint.headers) {
+                if (HEADERS_TO_IGNORE.has(header.name)) {
+                    continue;
+                }
+                let headerWithCount = globalHeaders[header.name];
+                if (headerWithCount == null) {
+                    const predefinedHeader = predefinedGlobalHeaders[header.name];
+                    const convertedHeader = buildHeader({
+                        header: {
+                            ...header,
+                            schema: predefinedHeader?.schema ?? header.schema,
+                            name: predefinedHeader?.name ?? header.name
+                        },
+                        fileContainingReference: RelativeFilePath.of(ROOT_API_FILENAME),
+                        context
+                    });
+                    headerWithCount = new HeaderWithCount(convertedHeader);
+                    globalHeaders[header.name] = headerWithCount;
+                }
+                headerWithCount.increment();
+            }
+        }
+
+        const globalHeaderThreshold = context.ir.endpoints.length * GLOBAL_HEADER_PERCENTAGE_THRESHOLD;
+
+        for (const [headerName, header] of Object.entries(globalHeaders)) {
+            const predefinedHeader = predefinedGlobalHeaders[headerName];
+            const isRequired = header.count === context.ir.endpoints.length;
+            const isOptional = header.count >= globalHeaderThreshold;
+            if (predefinedHeader != null) {
+                continue; // already added
+            } else if (isRequired) {
+                context.builder.addGlobalHeader({
+                    name: headerName,
+                    schema: header.schema
+                });
+            } else if (isOptional) {
+                context.builder.addGlobalHeader({
+                    name: headerName,
+                    schema: wrapTypeReferenceAsOptional(header.schema)
+                });
+            }
         }
     }
 }

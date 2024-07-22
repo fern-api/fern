@@ -1,0 +1,518 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`availability availability docs 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "path-parameters": {
+                "active_id": "active_id",
+                "deprecated_ref_id": "deprecated_ref_id",
+                "id": "id",
+                "x-fern-availability_path_param": "x-fern-availability_path_param",
+              },
+              "response": {
+                "body": {
+                  "fine_setting": true,
+                },
+              },
+            },
+          ],
+          "method": "GET",
+          "pagination": undefined,
+          "path": "/collection/{id}/{active_id}/{deprecated_ref_id}/{x-fern-availability_path_param}",
+          "path-parameters": {
+            "active_id": {
+              "docs": "active header",
+              "type": "string",
+            },
+            "deprecated_ref_id": "DeprecatedParam",
+            "id": {
+              "availability": "deprecated",
+              "docs": "collection id",
+              "type": "string",
+            },
+            "x-fern-availability_path_param": {
+              "availability": "pre-release",
+              "docs": "active beta header",
+              "type": "string",
+            },
+          },
+          "request": {
+            "headers": {
+              "X-Active-Header": {
+                "docs": "active header",
+                "name": "activeHeader",
+                "type": "optional<string>",
+              },
+              "X-Deprecated-Header": {
+                "availability": "deprecated",
+                "docs": "deprecated header",
+                "name": "deprecatedHeader",
+                "type": "optional<string>",
+              },
+              "X-Deprecated-Ref-Header": {
+                "name": "deprecatedRefHeader",
+                "type": "optional<DeprecatedParam>",
+              },
+              "x-fern-availability_header": {
+                "availability": "pre-release",
+                "docs": "active beta header",
+                "name": "fernAvailabilityHeader",
+                "type": "optional<string>",
+              },
+            },
+            "name": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequest",
+            "query-parameters": {
+              "active_lang": {
+                "docs": "language code",
+                "type": "optional<string>",
+              },
+              "deprecated_lang": {
+                "availability": "deprecated",
+                "docs": "language code",
+                "type": "optional<string>",
+              },
+              "deprecated_ref_lang": "optional<DeprecatedParam>",
+              "x-fern-availability_query_param": {
+                "availability": "pre-release",
+                "docs": "active beta query param",
+                "type": "optional<string>",
+              },
+            },
+          },
+          "response": {
+            "docs": "OK",
+            "type": "WholeDeprecatedSettings",
+          },
+        },
+        "postSuccessInlineBetaBody": {
+          "auth": false,
+          "availability": "pre-release",
+          "docs": undefined,
+          "examples": [
+            {
+              "request": {},
+              "response": {
+                "body": {
+                  "not_deprecated_setting": true,
+                },
+              },
+            },
+          ],
+          "method": "POST",
+          "pagination": undefined,
+          "path": "/success-inline-beta-body",
+          "request": {
+            "body": {
+              "properties": {
+                "fine_setting": "optional<boolean>",
+              },
+            },
+            "headers": undefined,
+            "name": "PostSuccessInlineBetaBodyRequest",
+            "query-parameters": undefined,
+          },
+          "response": {
+            "docs": "OK",
+            "type": "NotDeprecatedSettings",
+          },
+        },
+        "postSuccessInlineObjectDeprecation": {
+          "auth": false,
+          "availability": "deprecated",
+          "docs": undefined,
+          "examples": [
+            {
+              "request": {},
+              "response": {
+                "body": {
+                  "not_deprecated_setting": true,
+                },
+              },
+            },
+          ],
+          "method": "POST",
+          "pagination": undefined,
+          "path": "/success-inline-object-deprecation",
+          "request": {
+            "body": {
+              "properties": {
+                "fine_setting": "optional<boolean>",
+              },
+            },
+            "headers": undefined,
+            "name": "PostSuccessInlineObjectDeprecationRequest",
+            "query-parameters": undefined,
+          },
+          "response": {
+            "docs": "OK",
+            "type": "NotDeprecatedSettings",
+          },
+        },
+        "postSuccessInlinePropertyDeprecation": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "request": {},
+              "response": {
+                "body": {
+                  "not_deprecated_setting": true,
+                },
+              },
+            },
+          ],
+          "method": "POST",
+          "pagination": undefined,
+          "path": "/success-inline-property-deprecation",
+          "request": {
+            "body": {
+              "properties": {
+                "deprecated_setting": {
+                  "availability": "deprecated",
+                  "type": "optional<boolean>",
+                },
+                "new_setting": "optional<boolean>",
+              },
+            },
+            "headers": undefined,
+            "name": "PostSuccessInlinePropertyDeprecationRequest",
+            "query-parameters": undefined,
+          },
+          "response": {
+            "docs": "OK",
+            "type": "NotDeprecatedSettings",
+          },
+        },
+        "postSuccessRef": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "request": {},
+              "response": {
+                "body": {
+                  "not_deprecated_setting": true,
+                },
+              },
+            },
+          ],
+          "method": "POST",
+          "pagination": undefined,
+          "path": "/success-ref",
+          "request": {
+            "body": {
+              "properties": {
+                "deprecated_setting": {
+                  "availability": "deprecated",
+                  "type": "optional<boolean>",
+                },
+                "new_setting": "optional<boolean>",
+              },
+            },
+            "headers": undefined,
+            "name": "Settings",
+            "query-parameters": undefined,
+          },
+          "response": {
+            "docs": "OK",
+            "type": "NotDeprecatedSettings",
+          },
+        },
+      },
+    },
+    "types": {
+      "DeprecatedParam": "string",
+      "NotDeprecatedSettings": {
+        "docs": undefined,
+        "properties": {
+          "not_deprecated_setting": "optional<boolean>",
+        },
+      },
+      "WholeDeprecatedSettings": {
+        "availability": "deprecated",
+        "docs": undefined,
+        "properties": {
+          "fine_setting": "optional<boolean>",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Deprecated params and fields",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
+
+exports[`availability availability simple 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "path-parameters": {
+                "active_id": "active_id",
+                "deprecated_ref_id": "deprecated_ref_id",
+                "id": "id",
+                "x-fern-availability_path_param": "x-fern-availability_path_param",
+              },
+              "response": {
+                "body": {
+                  "fine_setting": true,
+                },
+              },
+            },
+          ],
+          "method": "GET",
+          "pagination": undefined,
+          "path": "/collection/{id}/{active_id}/{deprecated_ref_id}/{x-fern-availability_path_param}",
+          "path-parameters": {
+            "active_id": {
+              "docs": "active header",
+              "type": "string",
+            },
+            "deprecated_ref_id": "DeprecatedParam",
+            "id": {
+              "availability": "deprecated",
+              "docs": "collection id",
+              "type": "string",
+            },
+            "x-fern-availability_path_param": {
+              "availability": "pre-release",
+              "docs": "active beta header",
+              "type": "string",
+            },
+          },
+          "request": {
+            "headers": {
+              "X-Active-Header": {
+                "docs": "active header",
+                "name": "activeHeader",
+                "type": "optional<string>",
+              },
+              "X-Deprecated-Header": {
+                "availability": "deprecated",
+                "docs": "deprecated header",
+                "name": "deprecatedHeader",
+                "type": "optional<string>",
+              },
+              "X-Deprecated-Ref-Header": {
+                "name": "deprecatedRefHeader",
+                "type": "optional<DeprecatedParam>",
+              },
+              "x-fern-availability_header": {
+                "availability": "pre-release",
+                "docs": "active beta header",
+                "name": "fernAvailabilityHeader",
+                "type": "optional<string>",
+              },
+            },
+            "name": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequest",
+            "query-parameters": {
+              "active_lang": {
+                "docs": "language code",
+                "type": "optional<string>",
+              },
+              "deprecated_lang": {
+                "availability": "deprecated",
+                "docs": "language code",
+                "type": "optional<string>",
+              },
+              "deprecated_ref_lang": "optional<DeprecatedParam>",
+              "x-fern-availability_query_param": {
+                "availability": "pre-release",
+                "docs": "active beta query param",
+                "type": "optional<string>",
+              },
+            },
+          },
+          "response": {
+            "docs": "OK",
+            "type": "WholeDeprecatedSettings",
+          },
+        },
+        "postSuccessInlineBetaBody": {
+          "auth": false,
+          "availability": "pre-release",
+          "docs": undefined,
+          "examples": [
+            {
+              "request": {},
+              "response": {
+                "body": {
+                  "not_deprecated_setting": true,
+                },
+              },
+            },
+          ],
+          "method": "POST",
+          "pagination": undefined,
+          "path": "/success-inline-beta-body",
+          "request": {
+            "body": {
+              "properties": {
+                "fine_setting": "optional<boolean>",
+              },
+            },
+            "headers": undefined,
+            "name": "PostSuccessInlineBetaBodyRequest",
+            "query-parameters": undefined,
+          },
+          "response": {
+            "docs": "OK",
+            "type": "NotDeprecatedSettings",
+          },
+        },
+        "postSuccessInlineObjectDeprecation": {
+          "auth": false,
+          "availability": "deprecated",
+          "docs": undefined,
+          "examples": [
+            {
+              "request": {},
+              "response": {
+                "body": {
+                  "not_deprecated_setting": true,
+                },
+              },
+            },
+          ],
+          "method": "POST",
+          "pagination": undefined,
+          "path": "/success-inline-object-deprecation",
+          "request": {
+            "body": {
+              "properties": {
+                "fine_setting": "optional<boolean>",
+              },
+            },
+            "headers": undefined,
+            "name": "PostSuccessInlineObjectDeprecationRequest",
+            "query-parameters": undefined,
+          },
+          "response": {
+            "docs": "OK",
+            "type": "NotDeprecatedSettings",
+          },
+        },
+        "postSuccessInlinePropertyDeprecation": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "request": {},
+              "response": {
+                "body": {
+                  "not_deprecated_setting": true,
+                },
+              },
+            },
+          ],
+          "method": "POST",
+          "pagination": undefined,
+          "path": "/success-inline-property-deprecation",
+          "request": {
+            "body": {
+              "properties": {
+                "deprecated_setting": {
+                  "availability": "deprecated",
+                  "type": "optional<boolean>",
+                },
+                "new_setting": "optional<boolean>",
+              },
+            },
+            "headers": undefined,
+            "name": "PostSuccessInlinePropertyDeprecationRequest",
+            "query-parameters": undefined,
+          },
+          "response": {
+            "docs": "OK",
+            "type": "NotDeprecatedSettings",
+          },
+        },
+        "postSuccessRef": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "request": {},
+              "response": {
+                "body": {
+                  "not_deprecated_setting": true,
+                },
+              },
+            },
+          ],
+          "method": "POST",
+          "pagination": undefined,
+          "path": "/success-ref",
+          "request": {
+            "body": {
+              "properties": {
+                "deprecated_setting": {
+                  "availability": "deprecated",
+                  "type": "optional<boolean>",
+                },
+                "new_setting": "optional<boolean>",
+              },
+            },
+            "headers": undefined,
+            "name": "Settings",
+            "query-parameters": undefined,
+          },
+          "response": {
+            "docs": "OK",
+            "type": "NotDeprecatedSettings",
+          },
+        },
+      },
+    },
+    "types": {
+      "DeprecatedParam": "string",
+      "NotDeprecatedSettings": {
+        "docs": undefined,
+        "properties": {
+          "not_deprecated_setting": "optional<boolean>",
+        },
+      },
+      "WholeDeprecatedSettings": {
+        "availability": "deprecated",
+        "docs": undefined,
+        "properties": {
+          "fine_setting": "optional<boolean>",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Deprecated params and fields",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "imports": {
+      "root": "__package__.yml",
+    },
+    "name": "api",
+  },
+}
+`;

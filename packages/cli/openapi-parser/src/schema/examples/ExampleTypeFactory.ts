@@ -349,10 +349,26 @@ export class ExampleTypeFactory {
                     }
                     return FullExample.map(kvs);
                 }
+                // In this instance we have an unknown object, which becomes a map of string to unknown
+                // we special case this to not create a nested map, but rather have a cleaner "Any Object" example
+                // of: "object": {"key": "value"} as opposed to "object": {"object": {"key": "value"}}
+                if (schema.key.schema.type === "string" && schema.value.type === "unknown") {
+                    return FullExample.map([
+                        {
+                            key: PrimitiveExample.string("key"),
+                            value: FullExample.unknown(FullExample.primitive(PrimitiveExample.string("value")))
+                        }
+                    ]);
+                }
                 const keyExample = this.buildExampleFromPrimitive({
                     schema: schema.key.schema,
                     example: undefined,
-                    options
+                    options: {
+                        ...options,
+                        // override the name to be "key" for map keys otherwise you can start to get key name
+                        // nesting since primitive examples use their name e.g. "metadata": {"metadata": {...}}
+                        name: "key"
+                    }
                 });
                 const valueExample = this.buildExampleHelper({
                     exampleId,
@@ -360,7 +376,12 @@ export class ExampleTypeFactory {
                     schema: schema.value,
                     visitedSchemaIds,
                     depth: depth + 1,
-                    options
+                    options: {
+                        ...options,
+                        // override the name to be "value" for map value otherwise you can start to get key name
+                        // nesting since primitive examples use their name e.g. "metadata": {"metadata": "metadata"}
+                        name: "value"
+                    }
                 });
                 if (valueExample != null) {
                     return FullExample.map([

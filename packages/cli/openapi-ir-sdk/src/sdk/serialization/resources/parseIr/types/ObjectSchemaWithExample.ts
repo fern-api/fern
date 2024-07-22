@@ -27,10 +27,15 @@ export const ObjectSchemaWithExample: core.serialization.ObjectSchema<
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithName))
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSdkGroupName));
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSdkGroupName))
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAvailability));
 
 export declare namespace ObjectSchemaWithExample {
-    interface Raw extends serializers.WithDescription.Raw, serializers.WithName.Raw, serializers.WithSdkGroupName.Raw {
+    interface Raw
+        extends serializers.WithDescription.Raw,
+            serializers.WithName.Raw,
+            serializers.WithSdkGroupName.Raw,
+            serializers.WithAvailability.Raw {
         allOf: serializers.ReferencedSchema.Raw[];
         properties: serializers.ObjectPropertyWithExample.Raw[];
         allOfPropertyConflicts: serializers.AllOfPropertyConflict.Raw[];

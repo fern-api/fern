@@ -1,7 +1,7 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { assertNever, MediaType } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { Endpoint, EndpointAvailability, EndpointExample, Request, Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
+import { Endpoint, EndpointExample, Request, Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { buildEndpointExample } from "./buildEndpointExample";
 import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefinition";
@@ -10,6 +10,7 @@ import { buildPathParameter } from "./buildPathParameter";
 import { buildQueryParameter } from "./buildQueryParameter";
 import { buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { convertAvailability } from "./utils/convertAvailability";
 import { convertFullExample } from "./utils/convertFullExample";
 import { convertToHttpMethod } from "./utils/convertToHttpMethod";
 import { getDocsFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
@@ -215,12 +216,8 @@ export function buildEndpoint({
         convertedEndpoint.idempotent = true;
     }
 
-    if (endpoint.availability === EndpointAvailability.Beta) {
-        convertedEndpoint.availability = "pre-release";
-    } else if (endpoint.availability === EndpointAvailability.GenerallyAvailable) {
-        convertedEndpoint.availability = "generally-available";
-    } else if (endpoint.availability === EndpointAvailability.Deprecated) {
-        convertedEndpoint.availability = "deprecated";
+    if (endpoint.availability != null) {
+        convertedEndpoint.availability = convertAvailability(endpoint.availability);
     }
 
     Object.entries(endpoint.errors).forEach(([statusCode, httpError]) => {
@@ -396,7 +393,9 @@ function getRequest({
                     context
                 });
 
+                // TODO: clean up conditional logic
                 const name = property.nameOverride ?? property.key;
+                const availability = convertAvailability(property.availability);
                 if (!usedNames.has(name) && property.audiences.length <= 0) {
                     usedNames.add(name);
                     if (property.nameOverride != null) {
@@ -405,11 +404,22 @@ function getRequest({
                             {
                                 type: getTypeFromTypeReference(propertyTypeReference),
                                 docs: getDocsFromTypeReference(propertyTypeReference),
-                                name: property.nameOverride
+                                name: property.nameOverride,
+                                availability
                             }
                         ];
                     }
-                    return [property.key, propertyTypeReference];
+                    return [
+                        property.key,
+                        availability
+                            ? {
+                                  ...(typeof propertyTypeReference === "string"
+                                      ? { type: propertyTypeReference }
+                                      : propertyTypeReference),
+                                  availability
+                              }
+                            : propertyTypeReference
+                    ];
                 }
 
                 const typeReference: RawSchemas.ObjectPropertySchema = {
@@ -423,6 +433,10 @@ function getRequest({
 
                 if (property.audiences.length > 0) {
                     typeReference.audiences = property.audiences;
+                }
+
+                if (availability != null) {
+                    typeReference.availability = availability;
                 }
 
                 usedNames.add(name);

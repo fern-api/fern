@@ -175,3 +175,23 @@ jobs:
           yarn workspace @fern-api/cli dist:cli:dev
           cli_path="$(yarn workspace @fern-api/cli bin fern:dev)"
           ./scripts/live-test.sh "$cli_path" "$FERN_ORG_TOKEN_DEV"
+
+  node-version-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install
+        run: yarn install
+
+      - name: Load NVM
+        run: |
+          source /home/runner/.nvm/nvm.sh
+        shell: bash
+
+      - name: Run file tests
+        run: ./scripts/node-all-versions-test.sh
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code

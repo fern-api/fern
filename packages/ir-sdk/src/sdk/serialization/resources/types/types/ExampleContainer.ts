@@ -9,43 +9,25 @@ import * as core from "../../../../core";
 export const ExampleContainer: core.serialization.Schema<serializers.ExampleContainer.Raw, FernIr.ExampleContainer> =
     core.serialization
         .union("type", {
-            list: core.serialization.object({
-                list: core.serialization.list(
-                    core.serialization.lazyObject(async () => (await import("../../..")).ExampleTypeReference)
-                ),
-            }),
-            set: core.serialization.object({
-                set: core.serialization.list(
-                    core.serialization.lazyObject(async () => (await import("../../..")).ExampleTypeReference)
-                ),
-            }),
-            optional: core.serialization.object({
-                optional: core.serialization
-                    .lazyObject(async () => (await import("../../..")).ExampleTypeReference)
-                    .optional(),
-            }),
-            map: core.serialization.object({
-                map: core.serialization.list(
-                    core.serialization.lazyObject(async () => (await import("../../..")).ExampleKeyValuePair)
-                ),
-            }),
-            literal: core.serialization.object({
-                literal: core.serialization.lazy(async () => (await import("../../..")).ExamplePrimitive),
-            }),
+            list: core.serialization.lazyObject(async () => (await import("../../..")).ExampleListContainer),
+            set: core.serialization.lazyObject(async () => (await import("../../..")).ExampleSetContainer),
+            optional: core.serialization.lazyObject(async () => (await import("../../..")).ExampleOptionalContainer),
+            map: core.serialization.lazyObject(async () => (await import("../../..")).ExampleMapContainer),
+            literal: core.serialization.lazyObject(async () => (await import("../../..")).ExampleLiteralContainer),
         })
         .transform<FernIr.ExampleContainer>({
             transform: (value) => {
                 switch (value.type) {
                     case "list":
-                        return FernIr.ExampleContainer.list(value.list);
+                        return FernIr.ExampleContainer.list(value);
                     case "set":
-                        return FernIr.ExampleContainer.set(value.set);
+                        return FernIr.ExampleContainer.set(value);
                     case "optional":
-                        return FernIr.ExampleContainer.optional(value.optional);
+                        return FernIr.ExampleContainer.optional(value);
                     case "map":
-                        return FernIr.ExampleContainer.map(value.map);
+                        return FernIr.ExampleContainer.map(value);
                     case "literal":
-                        return FernIr.ExampleContainer.literal(value.literal);
+                        return FernIr.ExampleContainer.literal(value);
                     default:
                         return value as FernIr.ExampleContainer;
                 }
@@ -61,28 +43,23 @@ export declare namespace ExampleContainer {
         | ExampleContainer.Map
         | ExampleContainer.Literal;
 
-    interface List {
+    interface List extends serializers.ExampleListContainer.Raw {
         type: "list";
-        list: serializers.ExampleTypeReference.Raw[];
     }
 
-    interface Set {
+    interface Set extends serializers.ExampleSetContainer.Raw {
         type: "set";
-        set: serializers.ExampleTypeReference.Raw[];
     }
 
-    interface Optional {
+    interface Optional extends serializers.ExampleOptionalContainer.Raw {
         type: "optional";
-        optional?: serializers.ExampleTypeReference.Raw | null;
     }
 
-    interface Map {
+    interface Map extends serializers.ExampleMapContainer.Raw {
         type: "map";
-        map: serializers.ExampleKeyValuePair.Raw[];
     }
 
-    interface Literal {
+    interface Literal extends serializers.ExampleLiteralContainer.Raw {
         type: "literal";
-        literal: serializers.ExamplePrimitive.Raw;
     }
 }

@@ -14,10 +14,15 @@ export const MapSchema: core.serialization.ObjectSchema<serializers.MapSchema.Ra
         })
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithName))
-        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSdkGroupName));
+        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSdkGroupName))
+        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAvailability));
 
 export declare namespace MapSchema {
-    interface Raw extends serializers.WithDescription.Raw, serializers.WithName.Raw, serializers.WithSdkGroupName.Raw {
+    interface Raw
+        extends serializers.WithDescription.Raw,
+            serializers.WithName.Raw,
+            serializers.WithSdkGroupName.Raw,
+            serializers.WithAvailability.Raw {
         key: serializers.PrimitiveSchema.Raw;
         value: serializers.Schema.Raw;
     }

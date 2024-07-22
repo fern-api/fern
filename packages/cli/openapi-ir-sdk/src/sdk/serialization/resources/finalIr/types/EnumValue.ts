@@ -14,10 +14,11 @@ export const EnumValue: core.serialization.ObjectSchema<serializers.EnumValue.Ra
             value: core.serialization.string(),
             casing: core.serialization.lazyObject(async () => (await import("../../..")).CasingOverrides).optional(),
         })
-        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
+        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
+        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAvailability));
 
 export declare namespace EnumValue {
-    interface Raw extends serializers.WithDescription.Raw {
+    interface Raw extends serializers.WithDescription.Raw, serializers.WithAvailability.Raw {
         nameOverride?: string | null;
         generatedName: string;
         value: string;

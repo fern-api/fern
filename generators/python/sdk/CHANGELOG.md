@@ -6,12 +6,72 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [3.0.0-rc0] - 2024-07-16
+
 - Break: The generated SDK now supports Pydantic V2 outright, it no longer uses `pydantic.v1` models. This change introduces additional breaks:
   - Wrapped aliases have been removed
-  - Custom root validators for models with a __root__ type have been removed (e.g. only unions with utils still leverages root models)
+  - Custom root validators for models with a **root** type have been removed (e.g. only unions with utils still leverages root models)
   - Public fields previously prefixed with `_` are now prefixed with `f_` (Pydantic V2 does not allow for `_` prefixes on public fields and Python does not allow for a numeric prefix)
 
-## [2.15.2] - 2024-07-10
+## [2.16.0] - 2024-07-16
+
+- Improvement: The generated SDK now allows for specifying whether or not to generate `streaming` functions as overloaded functions or suparate functions.
+  Concretely, you can now specifiy whether or not you'd prefer the generation of your streaming functions as:
+
+  ```
+  def chat(...) -> ChatResponse:
+    ...
+  # and
+  def chat_stream(...) -> typing.Iterator[StreamedChatResponse]:
+    ...
+  ```
+
+  or:
+
+  ```
+  @overload
+  def chat(...) -> ChatResponse:
+    ...
+  # and
+  @overload
+  def chat(..., stream=True) -> typing.Iterator[StreamedChatResponse]:
+    ...
+  ```
+
+  The latter is configurable by specifying `stream-condition` and `response-stream` on your request within your Fern definition:
+
+  ```
+  service:
+  auth: false
+  base-path: /
+  endpoints:
+    listUsers:
+      method: GET
+      path: /users
+      stream-condition: $request.stream
+      request:
+        name: ListUsersRequest
+        query-parameters:
+          page: integer
+        body:
+          properties:
+            stream: optional<boolean>
+      response: ListUsersResponse
+      response-stream: User
+  ```
+
+## [2.15.6] - 2024-07-17
+
+- Fix: The generated python SDK now requires an environment be specified if a default is not provided.
+
+## [2.15.5] - 2024-07-17
+
+- Fix: The generated python SDK Oauth client now no longer checks for an expiry when getting the access token if an expiry field is not configured.
+
+## [2.15.4] - 2024-07-10
+
+- Fix: The generated python SDK now serializes bytes within JSON as a utf-8 encoded string.
+
+## [2.15.3] - 2024-07-10
 
 - Fix: The generated python SDK no longer runs into a recursion error during snippet generation.
 

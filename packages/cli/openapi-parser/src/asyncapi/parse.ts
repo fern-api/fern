@@ -13,6 +13,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../getExtension";
 import { ParseOpenAPIOptions } from "../options";
+import { convertAvailability } from "../schema/convertAvailability";
 import { convertSchema } from "../schema/convertSchemas";
 import { convertUndiscriminatedOneOf } from "../schema/convertUndiscriminatedOneOf";
 import { convertSchemaWithExampleToSchema } from "../schema/utils/convertSchemaWithExampleToSchema";
@@ -86,11 +87,13 @@ export function parseAsyncAPI({
                                       example: undefined
                                   }),
                                   description: undefined,
+                                  availability: undefined,
                                   generatedName: "",
                                   groupName: undefined,
                                   nameOverride: undefined
                               }),
-                    variableReference: undefined
+                    variableReference: undefined,
+                    availability: convertAvailability(parameter)
                 });
             }
         }
@@ -105,7 +108,8 @@ export function parseAsyncAPI({
                     schema: convertSchema(resolvedHeader, !required.includes(name), context, breadcrumbs),
                     description: resolvedHeader.description,
                     parameterNameOverride: undefined,
-                    env: undefined
+                    env: undefined,
+                    availability: convertAvailability(resolvedHeader)
                 });
             }
         }
@@ -121,7 +125,8 @@ export function parseAsyncAPI({
                     name,
                     schema: convertSchema(resolvedQueryParameter, !required.includes(name), context, breadcrumbs),
                     description: resolvedQueryParameter.description,
-                    parameterNameOverride: undefined
+                    parameterNameOverride: undefined,
+                    availability: convertAvailability(resolvedQueryParameter)
                 });
             }
         }
@@ -244,6 +249,7 @@ function convertMessageToSchema({
         }
         return convertUndiscriminatedOneOf({
             description: event.description ?? event.message.description,
+            availability: convertAvailability(event.message),
             subtypes,
             nameOverride: event.operationId,
             generatedName,

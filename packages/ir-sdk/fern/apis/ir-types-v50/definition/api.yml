@@ -1,0 +1,4 @@
+name: ir-v50
+docs: |
+ - Add primitive type v2 (with defaults) to booleans, longs and big ints
+ - Add API version scheme

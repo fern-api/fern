@@ -15,13 +15,14 @@ types:
       headers: list<HeaderWithExample>
 
   EndpointWithExample:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithDescription
+      - commons.WithAvailability
     properties:
       authed: boolean
       internal: optional<boolean>
       idempotent: optional<boolean>
       method: finalIr.HttpMethod
-      availability: optional<finalIr.EndpointAvailability>
       audiences: list<string>
       path:
         type: string
@@ -100,14 +101,18 @@ types:
       fullExamples: optional<list<NamedFullExample>>
 
   PathParameterWithExample:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithDescription
+      - commons.WithAvailability
     properties:
       name: string
       schema: SchemaWithExample
       variableReference: optional<string>
 
   QueryParameterWithExample:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithDescription
+      - commons.WithAvailability
     properties:
       name: string
       schema: SchemaWithExample
@@ -116,8 +121,11 @@ types:
         docs: |
           Populated by `x-fern-parameter-name` on a parameter object.
 
+
   HeaderWithExample:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithDescription
+      - commons.WithAvailability
     properties:
       name: string
       schema: SchemaWithExample
@@ -146,6 +154,7 @@ types:
       - commons.WithSdkGroupName
       - commons.WithName
       - commons.WithDescription
+      - commons.WithAvailability
     properties:
       value: SchemaWithExample
       example: optional<list<unknown>>
@@ -155,6 +164,7 @@ types:
       - commons.WithSdkGroupName
       - commons.WithName
       - commons.WithDescription
+      - commons.WithAvailability
     properties:
       key: PrimitiveSchemaWithExample
       value: SchemaWithExample
@@ -165,6 +175,7 @@ types:
       - commons.WithSdkGroupName
       - commons.WithName
       - commons.WithDescription
+      - commons.WithAvailability
     properties:
       value: SchemaWithExample
 
@@ -173,6 +184,7 @@ types:
       - commons.WithSdkGroupName
       - commons.WithName
       - commons.WithDescription
+      - commons.WithAvailability
     properties:
       value: SchemaWithExample
 
@@ -181,6 +193,7 @@ types:
       - commons.WithDescription
       - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithAvailability
     properties:
       values: list<finalIr.EnumValue>
       example: optional<string>
@@ -190,6 +203,7 @@ types:
       - commons.WithSdkGroupName
       - commons.WithName
       - commons.WithDescription
+      - commons.WithAvailability
     properties:
       example: unknown
 
@@ -198,6 +212,7 @@ types:
       - commons.WithDescription
       - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithAvailability
     properties:
       allOf: list<finalIr.ReferencedSchema>
       properties: list<ObjectPropertyWithExample>
@@ -206,6 +221,8 @@ types:
       additionalProperties: boolean
 
   ObjectPropertyWithExample:
+    extends:
+      - commons.WithAvailability
     properties:
       key: string
       schema: SchemaWithExample
@@ -232,6 +249,7 @@ types:
       - commons.WithDescription
       - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithAvailability
     properties:
       discriminantProperty: string
       commonProperties: list<CommonPropertyWithExample>
@@ -247,6 +265,7 @@ types:
       - commons.WithDescription
       - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithAvailability
     properties:
       schemas: list<SchemaWithExample>
 
@@ -255,6 +274,7 @@ types:
       - commons.WithDescription
       - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithAvailability
     properties:
       schema: PrimitiveSchemaValueWithExample
 

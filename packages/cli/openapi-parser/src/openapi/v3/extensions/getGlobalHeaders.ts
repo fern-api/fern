@@ -23,6 +23,7 @@ export function getGlobalHeaders(document: OpenAPIV3.Document): GlobalHeader[] {
                     ? getSchemaFromFernType({
                           fernType: header.type,
                           description: undefined,
+                          availability: undefined,
                           generatedName: header.name ?? header.header,
                           groupName: undefined,
                           nameOverride: undefined

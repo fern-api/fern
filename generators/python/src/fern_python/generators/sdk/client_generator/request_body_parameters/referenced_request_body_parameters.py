@@ -179,9 +179,6 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
     def get_files(self) -> Optional[AST.Expression]:
         return None
 
-    def get_pre_fetch_statements(self, names_to_deconflict: Optional[List[str]] = None) -> Optional[AST.CodeWriter]:
-        return None
-
     def is_default_body_parameter_used(self) -> bool:
         return self._are_any_properties_optional
 

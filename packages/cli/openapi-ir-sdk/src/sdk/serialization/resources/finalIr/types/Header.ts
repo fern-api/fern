@@ -13,10 +13,11 @@ export const Header: core.serialization.ObjectSchema<serializers.Header.Raw, Fer
         env: core.serialization.string().optional(),
         parameterNameOverride: core.serialization.string().optional(),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAvailability));
 
 export declare namespace Header {
-    interface Raw extends serializers.WithDescription.Raw {
+    interface Raw extends serializers.WithDescription.Raw, serializers.WithAvailability.Raw {
         name: string;
         schema: serializers.Schema.Raw;
         env?: string | null;

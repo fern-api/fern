@@ -5,6 +5,7 @@ import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Parameter } from "./Parameter";
 import { Type } from "./Type";
+import { Annotation } from "./Annotation";
 
 export enum MethodType {
     INSTANCE,
@@ -31,6 +32,8 @@ export declare namespace Method {
         type?: MethodType;
         /* The class this method belongs to, if any */
         classReference?: ClassReference;
+        /* Any annotations to add to the method */
+        annotations?: Annotation[];
     }
 }
 
@@ -43,9 +46,21 @@ export class Method extends AstNode {
     public readonly summary: string | undefined;
     public readonly type: MethodType;
     public readonly reference: ClassReference | undefined;
-    private parameters: Parameter[];
+    private readonly parameters: Parameter[];
+    private readonly annotations: Annotation[];
 
-    constructor({ name, isAsync, access, return_, body, summary, type, classReference, parameters }: Method.Args) {
+    constructor({
+        name,
+        isAsync,
+        access,
+        return_,
+        body,
+        summary,
+        type,
+        classReference,
+        parameters,
+        annotations
+    }: Method.Args) {
         super();
         this.name = name;
         this.isAsync = isAsync;
@@ -56,6 +71,7 @@ export class Method extends AstNode {
         this.type = type ?? MethodType.INSTANCE;
         this.reference = classReference;
         this.parameters = parameters;
+        this.annotations = annotations ?? [];
     }
 
     public addParameter(parameter: Parameter): void {
@@ -71,6 +87,15 @@ export class Method extends AstNode {
             writer.writeLine("/// </summary>");
         }
 
+        if (this.annotations.length > 0) {
+            writer.write("[");
+            this.annotations.forEach((annotation) => {
+                annotation.write(writer);
+            });
+            writer.write("]");
+            writer.writeNewLineIfLastLineNot();
+        }
+
         writer.write(`${this.access} `);
         if (this.type === MethodType.STATIC) {
             writer.write("static ");
@@ -79,7 +104,11 @@ export class Method extends AstNode {
             writer.write("async ");
         }
         if (this.return == null) {
-            writer.write("Task ");
+            if (this.isAsync) {
+                writer.write("Task ");
+            } else {
+                writer.write("void ");
+            }
         } else {
             if (this.isAsync) {
                 writer.write("Task<");

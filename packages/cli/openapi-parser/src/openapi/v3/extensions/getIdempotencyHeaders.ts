@@ -25,6 +25,7 @@ export function getIdempotencyHeaders(document: OpenAPIV3.Document): Idempotency
                     ? getSchemaFromFernType({
                           fernType: header.type,
                           description: undefined,
+                          availability: undefined,
                           generatedName: header.name ?? header.header,
                           groupName: undefined,
                           nameOverride: undefined

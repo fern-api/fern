@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable jest/no-disabled-tests */
-import { fetcher, FormDataWrapper, Stream } from "@fern-typescript/fetcher";
+import { fetcher, newFormData, Stream } from "@fern-typescript/fetcher";
 import * as fs from "fs";
 import path from "path";
 import * as stream from "stream";
@@ -18,11 +18,10 @@ describe("Fetcher Tests", () => {
     it.skip("Formdata request", async () => {
         const file = fs.createReadStream(path.join(__dirname, "addresses.csv"));
 
-        const formData = new FormDataWrapper();
-        await formData.append("data", file);
+        const formData = await newFormData();
+        formData.append("data", file);
 
-        const formDataRequest = formData.getRequest();
-        const headers = await formDataRequest.getHeaders();
+        const { headers, body } = await formData.getRequest();
         const response = await fetcher({
             url: "https://api.cohere.ai/v1/datasets",
             method: "POST",
@@ -34,7 +33,7 @@ describe("Fetcher Tests", () => {
                 name: "my-dataset",
                 type: "embed-input"
             },
-            body: await formDataRequest.getBody()
+            body
         });
         expect((response as any)?.ok).toEqual(true);
     }, 90_000);

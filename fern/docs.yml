@@ -168,11 +168,17 @@ navigation:
           #   icon: pro
       - section: Package Managers
         contents:
-          - page: npm
+          - page: NPM
             path: ./pages/sdks/integration/npm.mdx
           - page: PyPi
             slug: pypi
             path: ./pages/sdks/integration/pypi.mdx
+      
+      - section: Alternatives
+        hidden: true
+        contents: 
+          - page: Speakeasy
+            path: ./pages/sdks/comparison/speakeasy.mdx
   - tab: docs
     layout:
       - section: Getting Started
@@ -288,6 +294,12 @@ navigation:
             path: ./pages/docs/components/endpoint-response-snippet.mdx
             icon: "turn-down"
             slug: response-snippet
+      - section: Alternatives
+        hidden: true
+        contents: 
+          - page: ReadMe
+            slug: readme
+            path: ./pages/docs/comparison/readme.mdx
   - tab: cli-api
     layout:
       - section: CLI Reference

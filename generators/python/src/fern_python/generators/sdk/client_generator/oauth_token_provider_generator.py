@@ -70,9 +70,10 @@ class OAuthTokenProviderGenerator:
                 initializer=AST.Expression("2"),
             ),
         )
-        class_declaration.add_method(self._get_token_function_declaration())
+        class_declaration.add_method(self._get_token_function_declaration(client_credentials=client_credentials))
         class_declaration.add_method(self._get_refresh_function_declaration(client_credentials=client_credentials))
-        class_declaration.add_method(self._get_expires_at_function_declaration())
+        if self._has_expires_in_property(client_credentials):
+            class_declaration.add_method(self._get_expires_at_function_declaration())
 
         return class_declaration
 
@@ -234,6 +235,12 @@ class OAuthTokenProviderGenerator:
 
         return _write_member_initialization
 
+    def _has_expires_in_property(self, client_credentials: ir_types.OAuthClientCredentials) -> bool:
+        return client_credentials.token_endpoint.response_properties.expires_in is not None or (
+            client_credentials.refresh_endpoint is not None
+            and client_credentials.refresh_endpoint.response_properties.expires_in is not None
+        )
+
     def _get_write_auth_client_initialization(
         self,
         subpackage_id: ir_types.SubpackageId,
@@ -256,12 +263,17 @@ class OAuthTokenProviderGenerator:
 
         return _write_auth_client_initialization
 
-    def _get_token_function_declaration(self) -> AST.FunctionDeclaration:
+    def _get_token_function_declaration(
+        self, client_credentials: ir_types.OAuthClientCredentials
+    ) -> AST.FunctionDeclaration:
         def _write_get_token_body(writer: AST.NodeWriter) -> None:
-            writer.write(
-                f"if self.{self._get_access_token_member_name()} and self.{self._get_expires_at_member_name()} > "
-            )
-            writer.write_node(AST.Expression(self._get_datetime_now_invocation()))
+            if self._has_expires_in_property(client_credentials):
+                writer.write(
+                    f"if self.{self._get_access_token_member_name()} and self.{self._get_expires_at_member_name()} > "
+                )
+                writer.write_node(AST.Expression(self._get_datetime_now_invocation()))
+            else:
+                writer.write(f"if self.{self._get_access_token_member_name()}")
             writer.write_line(":")
             with writer.indent():
                 writer.write_line(f"return self.{self._get_access_token_member_name()}")

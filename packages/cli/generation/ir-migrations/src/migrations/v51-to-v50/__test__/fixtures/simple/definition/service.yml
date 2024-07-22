@@ -1,0 +1,50 @@
+types:
+  User:
+    properties:
+      name: string
+      type: literal<"goose">
+
+  ListUsersResponse:
+    properties:
+      users: list<User>
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    list:
+      method: GET
+      path: /list
+      request:
+        name: ListRequest
+        query-parameters:
+          pageNum: integer
+      response:
+        status-code: 201
+        type: ListUsersResponse
+      examples:
+        - request:
+            pageNum: 1
+          response:
+            body:
+              users:
+                - name: Alice
+                  type: goose
+                - name: Bob
+                  type: goose
+    
+    get:
+      method: GET
+      path: /{userId}
+      path-parameters:
+        userId: string
+      response:
+        status-code: 201
+        type: User
+      examples:
+        - code-samples: 
+            - language: typescript
+              code: | 
+                const client = new Client();
+                const user = client.users.get(1234);
+        

@@ -1173,6 +1173,7 @@ The default response lists only recent transactions. Normally, this is transacti
                   "type": "optional<root.CheckNumberRange>",
                 },
                 "createdOn": {
+                  "availability": "deprecated",
                   "docs": "Return only transactions whose \`createdOn\` date is in this date range. Example date ranges are the same format as the \`occurredOn\` query parameter.<br>**Warning**: The parameter \`createdOn\` was deprecated on version \`v0.6.0\` of the API. Use the \`?occurredOn=\` query parameter instead. \`createdOn\` will be removed on version \`v0.9.0\` of the API.",
                   "type": "optional<root.DateRange>",
                 },
@@ -1189,6 +1190,7 @@ The default response lists only recent transactions. Normally, this is transacti
                   "type": "optional<boolean>",
                 },
                 "postedOn": {
+                  "availability": "deprecated",
                   "docs": "Return only transactions whose \`postedOn\` date is in this date range. Example date ranges are the same format as the \`occurredOn\` query parameter.<br>**Warning**: The parameter \`postedOn\` was deprecated on version \`v0.6.0\` of the API. Use the \`?occurredOn=\` query parameter instead. \`postedOn\` will be removed on version \`v0.9.0\` of the API.",
                   "type": "optional<root.DateRange>",
                 },
@@ -5057,6 +5059,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
           "check": "optional<TransactionCheck>",
           "createdOn": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "The date when the transaction occurred in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived and immutable.<br>**Warning**: The property \`createdOn\` was deprecated on version \`v2.1.0\` of the schema. Use the \`occurredOn\` property instead. \`createdOn\` will be removed on version \`v3.0.0\` of the schema.",
             "type": "optional<string>",
@@ -5117,6 +5120,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "validation": undefined,
           },
           "postedOn": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "The date when this transaction was posted (cleared and applied to the account balance) in [RFC 3339](https://tools.ietf.org/html/rfc3339) date \`YYYY-MM-DD\` format, UTC. This is derived and immutable and only present if \`posted\` is \`true\`.<br>**Warning**: The property \`postedOn\` was deprecated on version \`v2.1.0\` of the schema. Use the \`occurredOn\` property instead. \`postedOn\` will be removed on version \`v3.0.0\` of the schema.",
             "type": "optional<string>",
@@ -5912,9 +5916,6 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
     },
     "error-discrimination": {
       "strategy": "status-code",
-    },
-    "imports": {
-      "root": "__package__.yml",
     },
     "name": "api",
   },
@@ -7094,6 +7095,7 @@ The default response lists only recent transactions. Normally, this is transacti
                   "type": "optional<root.CheckNumberRange>",
                 },
                 "createdOn": {
+                  "availability": "deprecated",
                   "docs": "Return only transactions whose \`createdOn\` date is in this date range. Example date ranges are the same format as the \`occurredOn\` query parameter.<br>**Warning**: The parameter \`createdOn\` was deprecated on version \`v0.6.0\` of the API. Use the \`?occurredOn=\` query parameter instead. \`createdOn\` will be removed on version \`v0.9.0\` of the API.",
                   "type": "optional<root.DateRange>",
                 },
@@ -7110,6 +7112,7 @@ The default response lists only recent transactions. Normally, this is transacti
                   "type": "optional<boolean>",
                 },
                 "postedOn": {
+                  "availability": "deprecated",
                   "docs": "Return only transactions whose \`postedOn\` date is in this date range. Example date ranges are the same format as the \`occurredOn\` query parameter.<br>**Warning**: The parameter \`postedOn\` was deprecated on version \`v0.6.0\` of the API. Use the \`?occurredOn=\` query parameter instead. \`postedOn\` will be removed on version \`v0.9.0\` of the API.",
                   "type": "optional<root.DateRange>",
                 },
@@ -9291,6 +9294,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
           "check": "optional<TransactionCheck>",
           "createdOn": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "The date when the transaction occurred in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived and immutable.<br>**Warning**: The property \`createdOn\` was deprecated on version \`v2.1.0\` of the schema. Use the \`occurredOn\` property instead. \`createdOn\` will be removed on version \`v3.0.0\` of the schema.",
             "type": "optional<string>",
@@ -9351,6 +9355,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "validation": undefined,
           },
           "postedOn": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "The date when this transaction was posted (cleared and applied to the account balance) in [RFC 3339](https://tools.ietf.org/html/rfc3339) date \`YYYY-MM-DD\` format, UTC. This is derived and immutable and only present if \`posted\` is \`true\`.<br>**Warning**: The property \`postedOn\` was deprecated on version \`v2.1.0\` of the schema. Use the \`occurredOn\` property instead. \`postedOn\` will be removed on version \`v3.0.0\` of the schema.",
             "type": "optional<string>",

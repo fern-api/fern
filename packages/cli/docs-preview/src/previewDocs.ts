@@ -33,7 +33,11 @@ export async function getPreviewDocsDefinition({
 
     const fernWorkspaces = await Promise.all(
         apiWorkspaces.map(
-            async (workspace) => await workspace.toFernWorkspace({ context }, { enableUniqueErrorsPerEndpoint: true })
+            async (workspace) =>
+                await workspace.toFernWorkspace(
+                    { context },
+                    { enableUniqueErrorsPerEndpoint: true, detectGlobalHeaders: false }
+                )
         )
     );
 

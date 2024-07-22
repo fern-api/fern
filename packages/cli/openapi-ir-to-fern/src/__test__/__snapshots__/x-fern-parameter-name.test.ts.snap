@@ -13,7 +13,9 @@ exports[`x-fern-parameter-name x-fern-parameter-name docs 1`] = `
           "docs": undefined,
           "examples": [
             {
-              "headers": {},
+              "headers": {
+                "X-API-Version": "X-API-Version",
+              },
               "query-parameters": {
                 "foo": "foo",
               },
@@ -26,6 +28,12 @@ exports[`x-fern-parameter-name x-fern-parameter-name docs 1`] = `
           "pagination": undefined,
           "path": "/user",
           "request": {
+            "headers": {
+              "X-API-Version": {
+                "name": "version",
+                "type": "string",
+              },
+            },
             "name": "GetUserRequest",
             "query-parameters": {
               "foo": {
@@ -46,12 +54,6 @@ exports[`x-fern-parameter-name x-fern-parameter-name docs 1`] = `
     "display-name": "Test extension \`x-fern-parameter-name\` for parameters.",
     "error-discrimination": {
       "strategy": "status-code",
-    },
-    "headers": {
-      "X-API-Version": {
-        "name": "version",
-        "type": "string",
-      },
     },
     "name": "api",
   },

@@ -27,6 +27,7 @@ import {
     buildUnknownTypeReference
 } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { convertAvailability } from "./utils/convertAvailability";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export interface ConvertedTypeDeclaration {
@@ -107,24 +108,17 @@ export function buildObjectTypeDeclaration({
             context,
             fileContainingReference: declarationFile
         });
+
         const audiences = property.audiences;
         const name = property.nameOverride;
-        if (audiences.length > 0 && name != null) {
-            properties[property.key] =
-                typeof typeReference === "string"
-                    ? { type: typeReference, audiences, name }
-                    : { ...typeReference, audiences, name };
-        } else if (name != null) {
-            properties[property.key] =
-                typeof typeReference === "string" ? { type: typeReference, name } : { ...typeReference, name };
-        } else if (audiences.length > 0) {
-            properties[property.key] =
-                typeof typeReference === "string"
-                    ? { type: typeReference, audiences }
-                    : { ...typeReference, audiences };
-        } else {
-            properties[property.key] = typeReference;
-        }
+        const availability = convertAvailability(property.availability);
+
+        properties[property.key] = convertPropertyTypeReferenceToTypeDefinition(
+            typeReference,
+            audiences,
+            name,
+            availability
+        );
     }
     const propertiesToSetToUnknown: Set<string> = new Set<string>();
 
@@ -207,6 +201,11 @@ export function buildObjectTypeDeclaration({
     if (schema.additionalProperties) {
         objectTypeDeclaration["extra-properties"] = true;
     }
+
+    if (schema.availability != null) {
+        objectTypeDeclaration.availability = convertAvailability(schema.availability);
+    }
+
     return {
         name: schema.nameOverride ?? schema.generatedName,
         schema: objectTypeDeclaration
@@ -297,6 +296,7 @@ export function buildMapTypeDeclaration({
 
 export function buildPrimitiveTypeDeclaration(schema: PrimitiveSchema): ConvertedTypeDeclaration {
     const typeReference = buildPrimitiveTypeReference(schema);
+
     if (typeof typeReference === "string") {
         return {
             name: schema.nameOverride ?? schema.generatedName,
@@ -329,6 +329,7 @@ export function buildEnumTypeDeclaration(schema: EnumSchema): ConvertedTypeDecla
             ) {
                 return name;
             }
+
             const enumValueDeclaration: RawSchemas.EnumValueSchema = {
                 value: enumValue.value
             };
@@ -518,4 +519,22 @@ function getSchemaIdOfResolvedType({
         return getSchemaIdOfResolvedType({ context, schema: resolvedSchema.schema });
     }
     return schema;
+}
+
+function convertPropertyTypeReferenceToTypeDefinition(
+    typeReference: RawSchemas.TypeReferenceWithDocsSchema,
+    audiences: string[],
+    name?: string | undefined,
+    availability?: RawSchemas.AvailabilityUnionSchema
+): RawSchemas.ObjectPropertySchema {
+    if (audiences.length === 0 && name == null && availability == null) {
+        return typeReference;
+    } else {
+        return {
+            ...(typeof typeReference === "string" ? { type: typeReference } : { ...typeReference }),
+            ...(audiences.length > 0 ? { audiences } : {}),
+            ...(name != null ? { name } : {}),
+            ...(availability != null ? { availability } : {})
+        };
+    }
 }

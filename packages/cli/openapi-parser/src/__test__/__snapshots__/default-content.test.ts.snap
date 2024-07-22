@@ -2,6 +2,7 @@
 
 exports[`open api parser default-content parse open api 1`] = `
 {
+  "apiVersion": null,
   "basePath": null,
   "channel": [],
   "description": null,
@@ -23,9 +24,11 @@ exports[`open api parser default-content parse open api 1`] = `
       "path": "/generateContent",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "model",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "GenerateContentRequestModel",
             "groupName": null,
@@ -50,6 +53,7 @@ exports[`open api parser default-content parse open api 1`] = `
         "description": "Successful operation",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "GenerateContentResponse",
           "groupName": null,

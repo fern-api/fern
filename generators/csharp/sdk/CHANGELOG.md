@@ -5,9 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.2 - 2024-07-17]
+
+- Chore: Bump IR to 51.
+- Feature: Generate serialization unit tests for models, as well as GH workflow to run them. These tests do not include instantiated object equality assertions, which should be included at a later time.
+
 ## [0.1.1 - 2024-07-10]
+
 - Improvement: Enable generating unions with up to 32 types by adding the OneOf.Extended package.
-- Fix: The generator now handles double optional fields properly and only adds a single `?` to the type. 
+- Fix: The generator now handles double optional fields properly and only adds a single `?` to the type.
 
 ## [0.1.0 - 2024-07-09]
 
@@ -27,19 +33,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.0.34 - 2024-07-02]
 
 - Fix: Base client methods are now implemented rather than being empty.
-- Fix: All  `Core` files are now generated to the corresponding `Core` namespace.
-
+- Fix: All `Core` files are now generated to the corresponding `Core` namespace.
 
 ## [0.0.33 - 2024-06-21]
 
 - Improvement: The C# generator now supports configuration to specify extra dependencies. Below
-  is an example of the `generators.yml` configuration:  
+  is an example of the `generators.yml` configuration:
 
   ```yml
   - name: fernapi/fern-csharp-sdk
     version: 0.0.33
-    config: 
-      extra-dependencies: 
+    config:
+      extra-dependencies:
         moq: "0.23.4"
   ```
 

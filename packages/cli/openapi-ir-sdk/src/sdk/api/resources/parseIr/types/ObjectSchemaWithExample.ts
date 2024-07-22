@@ -7,7 +7,8 @@ import * as FernOpenapiIr from "../../..";
 export interface ObjectSchemaWithExample
     extends FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithName,
-        FernOpenapiIr.WithSdkGroupName {
+        FernOpenapiIr.WithSdkGroupName,
+        FernOpenapiIr.WithAvailability {
     allOf: FernOpenapiIr.ReferencedSchema[];
     properties: FernOpenapiIr.ObjectPropertyWithExample[];
     allOfPropertyConflicts: FernOpenapiIr.AllOfPropertyConflict[];

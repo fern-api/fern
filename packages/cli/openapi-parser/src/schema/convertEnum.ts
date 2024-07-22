@@ -1,4 +1,4 @@
-import { EnumValue, SchemaWithExample, SdkGroupName } from "@fern-api/openapi-ir-sdk";
+import { Availability, EnumValue, SchemaWithExample, SdkGroupName } from "@fern-api/openapi-ir-sdk";
 import { camelCase, upperFirst } from "lodash-es";
 import { FernEnumConfig } from "../openapi/v3/extensions/getFernEnum";
 import { SchemaParserContext } from "./SchemaParserContext";
@@ -13,6 +13,7 @@ export function convertEnum({
     enumVarNames,
     enumValues,
     description,
+    availability,
     wrapAsNullable,
     groupName,
     context
@@ -23,6 +24,7 @@ export function convertEnum({
     enumVarNames: string[] | undefined;
     enumValues: string[];
     description: string | undefined;
+    availability: Availability | undefined;
     wrapAsNullable: boolean;
     groupName: SdkGroupName | undefined;
     context: SchemaParserContext | undefined;
@@ -48,6 +50,8 @@ export function convertEnum({
             generatedName,
             value,
             description: fernEnumValue?.description,
+            // not supported as of now, due to lack of support from openapi
+            availability: undefined,
             casing: {
                 snake: fernEnumValue?.casing?.snake ?? undefined,
                 pascal: fernEnumValue?.casing?.pascal ?? undefined,
@@ -62,6 +66,7 @@ export function convertEnum({
         generatedName,
         values,
         description,
+        availability,
         groupName
     });
 }
@@ -72,6 +77,7 @@ export function wrapEnum({
     generatedName,
     values,
     description,
+    availability,
     groupName
 }: {
     wrapAsNullable: boolean;
@@ -79,6 +85,7 @@ export function wrapEnum({
     generatedName: string;
     values: EnumValue[];
     description: string | undefined;
+    availability: Availability | undefined;
     groupName: SdkGroupName | undefined;
 }): SchemaWithExample {
     if (wrapAsNullable) {
@@ -90,10 +97,12 @@ export function wrapEnum({
                 generatedName,
                 values,
                 description,
+                availability: undefined,
                 example: undefined,
                 groupName
             }),
             description,
+            availability,
             groupName
         });
     }
@@ -102,6 +111,7 @@ export function wrapEnum({
         generatedName,
         values,
         description,
+        availability,
         example: undefined,
         groupName
     });
@@ -117,7 +127,11 @@ const HARDCODED_ENUM_NAMES: Record<string, string> = {
     "==": "EQUAL_TO",
     "*": "ALL",
     "": "EMPTY",
-    '""': "EMPTY_STRING"
+    '""': "EMPTY_STRING",
+    "-": "HYPHEN",
+    "|": "PIPE",
+    ".": "DOT",
+    "/": "SLASH"
 };
 
 export function generateEnumNameFromValue(value: string): string {

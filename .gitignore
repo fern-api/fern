@@ -20,6 +20,7 @@ generators/**/out
 seed/**/gradlew
 seed/**/gradlew.bat
 seed/**/gradle
+generators/csharp/playground/**/obj/
 
 # don't ignore the ruby lib within the playground
 !generators/ruby/playground/lib

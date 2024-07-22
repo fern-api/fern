@@ -8,6 +8,7 @@ import * as FernIr from "../../..";
  * Complete representation of the API schema
  */
 export interface IntermediateRepresentation {
+    apiVersion: FernIr.ApiVersionScheme | undefined;
     /** This is the human readable unique id for the API. */
     apiName: FernIr.Name;
     apiDisplayName: string | undefined;

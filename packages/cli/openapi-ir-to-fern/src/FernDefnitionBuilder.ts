@@ -26,6 +26,8 @@ export interface FernDefinitionBuilder {
 
     setBasePath(basePath: string): void;
 
+    setApiVersion(apiVersionScheme: unknown): void;
+
     getEnvironmentType(): "single" | "multi" | undefined;
 
     addAudience(name: string): void;
@@ -154,6 +156,10 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         this.basePath = basePath;
     }
 
+    public setApiVersion(apiVersionScheme: unknown): void {
+        this.rootApiFile.version = apiVersionScheme as RawSchemas.VersionDeclarationSchema;
+    }
+
     public getEnvironmentType(): "single" | "multi" | undefined {
         const environmentEntry = Object.entries(this.rootApiFile.environments ?? {})[0];
         if (environmentEntry == null) {
@@ -173,10 +179,19 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     }
 
     public getGlobalHeaderNames(): Set<string> {
-        return new Set(Object.keys(this.rootApiFile.headers ?? {}));
+        const headerNames = Object.keys(this.rootApiFile.headers ?? {});
+        const maybeVersionHeader = this.getVersionHeader();
+        if (maybeVersionHeader != null) {
+            headerNames.push(maybeVersionHeader);
+        }
+        return new Set(headerNames);
     }
 
     public addGlobalHeader({ name, schema }: { name: string; schema: RawSchemas.HttpHeaderSchema }): void {
+        const maybeVersionHeader = this.getVersionHeader();
+        if (maybeVersionHeader != null && maybeVersionHeader === name) {
+            return;
+        }
         if (this.rootApiFile.headers == null) {
             this.rootApiFile.headers = {};
         }
@@ -508,6 +523,15 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         } else {
             return (this.definitionFiles[file] ??= {});
         }
+    }
+
+    private getVersionHeader(): string | undefined {
+        if (this.rootApiFile.version == null) {
+            return undefined;
+        }
+        return typeof this.rootApiFile.version.header === "string"
+            ? this.rootApiFile.version.header
+            : this.rootApiFile.version.header.value;
     }
 }
 

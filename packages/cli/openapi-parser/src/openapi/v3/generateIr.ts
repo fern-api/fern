@@ -35,6 +35,7 @@ import { ConvertedOperation } from "./converters/operation/convertOperation";
 import { FernOpenAPIExtension } from "./extensions/fernExtensions";
 import { getFernBasePath } from "./extensions/getFernBasePath";
 import { getFernGroups } from "./extensions/getFernGroups";
+import { getFernVersion } from "./extensions/getFernVersion";
 import { getGlobalHeaders } from "./extensions/getGlobalHeaders";
 import { getIdempotencyHeaders } from "./extensions/getIdempotencyHeaders";
 import { getVariableDefinitions } from "./extensions/getVariableDefinitions";
@@ -219,7 +220,8 @@ export function generateIr({
                     description: queryParameter.description,
                     name: queryParameter.name,
                     schema: convertSchemaWithExampleToSchema(queryParameter.schema),
-                    parameterNameOverride: queryParameter.parameterNameOverride
+                    parameterNameOverride: queryParameter.parameterNameOverride,
+                    availability: queryParameter.availability
                 };
             }),
             pathParameters: endpointWithExample.pathParameters.map((pathParameter) => {
@@ -227,7 +229,8 @@ export function generateIr({
                     description: pathParameter.description,
                     name: pathParameter.name,
                     schema: convertSchemaWithExampleToSchema(pathParameter.schema),
-                    variableReference: pathParameter.variableReference
+                    variableReference: pathParameter.variableReference,
+                    availability: pathParameter.availability
                 };
             }),
             headers: endpointWithExample.headers.map((header) => {
@@ -236,7 +239,8 @@ export function generateIr({
                     name: header.name,
                     schema: convertSchemaWithExampleToSchema(header.schema),
                     parameterNameOverride: header.parameterNameOverride,
-                    env: header.env
+                    env: header.env,
+                    availability: header.availability
                 };
             }),
             examples,
@@ -269,6 +273,10 @@ export function generateIr({
     const groupInfo = getFernGroups({ document: openApi, context });
 
     const ir: OpenApiIntermediateRepresentation = {
+        apiVersion: getFernVersion({
+            context,
+            document: openApi
+        }),
         basePath: getFernBasePath(openApi),
         title: openApi.info.title,
         description: openApi.info.description,
@@ -384,7 +392,8 @@ function maybeAddBackDiscriminantsFromSchemas(
                             generatedName: getGeneratedTypeName([schema.generatedName, discriminantValue]),
                             value: LiteralSchemaValue.string(discriminantValue),
                             groupName: undefined,
-                            description: undefined
+                            description: undefined,
+                            availability: schema.availability
                         })
                     });
                 }

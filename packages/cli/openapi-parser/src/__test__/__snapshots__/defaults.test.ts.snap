@@ -2,6 +2,7 @@
 
 exports[`open api parser defaults parse open api 1`] = `
 {
+  "apiVersion": null,
   "basePath": null,
   "channel": [],
   "description": null,
@@ -16,6 +17,7 @@ exports[`open api parser defaults parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": "Fields used to compose other joint owner invitation schemas.",
       "generatedName": "JointOwnerInvitationFields",
       "groupName": null,
@@ -23,11 +25,13 @@ exports[`open api parser defaults parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "jointOwnerInvitationFieldsFirstName",
           "key": "firstName",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "The invitee's first name.",
             "generatedName": "JointOwnerInvitationFieldsFirstName",
             "groupName": null,
@@ -45,11 +49,13 @@ exports[`open api parser defaults parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "jointOwnerInvitationFieldsLastName",
           "key": "lastName",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "The invitee's last name.",
             "generatedName": "JointOwnerInvitationFieldsLastName",
             "groupName": null,
@@ -67,11 +73,13 @@ exports[`open api parser defaults parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "jointOwnerInvitationFieldsAge",
           "key": "age",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "The invitee's age.",
             "generatedName": "JointOwnerInvitationFieldsAge",
             "groupName": null,
@@ -90,11 +98,13 @@ exports[`open api parser defaults parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "jointOwnerInvitationFieldsDisallowDebitCardAccess",
           "key": "disallowDebitCardAccess",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "If \`true\`, the invitee is not allowed to order or manage debit cards for the account.",
             "generatedName": "JointOwnerInvitationFieldsDisallowDebitCardAccess",
             "groupName": null,
