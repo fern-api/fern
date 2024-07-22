@@ -294,6 +294,12 @@ navigation:
             path: ./pages/docs/components/endpoint-response-snippet.mdx
             icon: "turn-down"
             slug: response-snippet
+      - section: Alternatives
+        hidden: true
+        contents: 
+          - page: ReadMe
+            slug: readme
+            path: ./pages/docs/comparison/readme.mdx
   - tab: cli-api
     layout:
       - section: CLI Reference
