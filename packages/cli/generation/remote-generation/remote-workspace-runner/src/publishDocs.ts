@@ -273,8 +273,14 @@ function startDocsRegisterFailed(
             return context.failAndThrow(
                 "Please make sure that none of your custom domains are not overlapping (i.e. one is a substring of another)"
             );
-        case "FernTokenForbiddenError":
-            return context.failAndThrow("Please make sure that your FERN_TOKEN is valid and set correctly.");
+        case "UnauthorizedError":
+            return context.failAndThrow("Please make sure that your FERN_TOKEN is set.");
+        case "UserNotInOrgError":
+            return context.failAndThrow(
+                "Please verify if you have access to the organization you are trying to publish the docs to. If you are not a member of the organization, please reach out to the organization owner."
+            );
+        case "UnavailableError":
+            return context.failAndThrow("Failed to publish docs. Please try again later or reach out to Fern support.");
         default:
             return context.failAndThrow("Failed to publish docs.", error);
     }

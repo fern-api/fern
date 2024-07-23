@@ -8,4 +8,5 @@ export interface PageConfiguration {
     slug?: string;
     icon?: string;
     hidden?: boolean;
+    noindex?: boolean;
 }

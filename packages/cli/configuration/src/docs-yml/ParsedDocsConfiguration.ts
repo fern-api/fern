@@ -2,7 +2,7 @@ import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { Audiences } from "../commons";
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
-import { DocsInstance, VersionAvailability, ExperimentalConfig } from "./schemas";
+import { DocsInstance, ExperimentalConfig, VersionAvailability } from "./schemas";
 
 export interface ParsedDocsConfiguration {
     instances: DocsInstance[];
@@ -55,7 +55,10 @@ export interface DocsColorsConfiguration {
 }
 
 export interface ParsedMetadataConfig
-    extends Omit<WithoutQuestionMarks<DocsV1Write.MetadataConfig>, "og:image" | "og:logo" | "twitter:image"> {
+    extends Omit<
+        WithoutQuestionMarks<DocsV1Write.MetadataConfig>,
+        "og:image" | "og:logo" | "twitter:image" | "noindex" | "nofollow"
+    > {
     "og:image": FilepathOrUrl | undefined;
     "og:logo": FilepathOrUrl | undefined;
     "twitter:image": FilepathOrUrl | undefined;
@@ -191,6 +194,7 @@ export declare namespace DocsNavigationItem {
         absolutePath: AbsoluteFilePath;
         slug: string | undefined;
         hidden: boolean | undefined;
+        noindex: boolean | undefined;
     }
 
     export interface Section {

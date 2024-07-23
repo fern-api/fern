@@ -97,7 +97,8 @@ export class ApiReferenceNodeConverter {
             }),
             children: this.#children,
             availability: undefined,
-            pointsTo
+            pointsTo,
+            noindex: undefined
         };
     }
 
@@ -135,7 +136,8 @@ export class ApiReferenceNodeConverter {
                             title: page.title,
                             slug: pageSlug.get(),
                             icon: page.icon,
-                            hidden: page.hidden
+                            hidden: page.hidden,
+                            noindex: page.noindex
                         };
                     },
                     package: (pkg) => this.#convertPackage(pkg, parentSlug, idgen),
@@ -206,7 +208,8 @@ export class ApiReferenceNodeConverter {
                 overviewPageId,
                 availability: undefined,
                 apiDefinitionId: this.apiDefinitionId,
-                pointsTo: undefined
+                pointsTo: undefined,
+                noindex: undefined
             };
         } else {
             this.taskContext.logger.warn(
@@ -230,7 +233,8 @@ export class ApiReferenceNodeConverter {
                 overviewPageId,
                 availability: undefined,
                 apiDefinitionId: this.apiDefinitionId,
-                pointsTo: undefined
+                pointsTo: undefined,
+                noindex: undefined
             };
         }
     }
@@ -289,7 +293,8 @@ export class ApiReferenceNodeConverter {
             overviewPageId,
             availability: undefined,
             apiDefinitionId: this.apiDefinitionId,
-            pointsTo: undefined
+            pointsTo: undefined,
+            noindex: undefined
         };
     }
 
@@ -330,7 +335,8 @@ export class ApiReferenceNodeConverter {
                 overviewPageId: undefined,
                 availability: undefined,
                 apiDefinitionId: this.apiDefinitionId,
-                pointsTo: undefined
+                pointsTo: undefined,
+                noindex: undefined
             };
         }
 
@@ -590,7 +596,8 @@ export class ApiReferenceNodeConverter {
                     overviewPageId: undefined,
                     availability: undefined,
                     apiDefinitionId: this.apiDefinitionId,
-                    pointsTo: FernNavigation.utils.followRedirects(subpackageChildren)
+                    pointsTo: FernNavigation.utils.followRedirects(subpackageChildren),
+                    noindex: undefined
                 });
             }
         });
