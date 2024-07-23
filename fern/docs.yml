@@ -170,7 +170,7 @@ navigation:
         contents:
           - page: NPM
             path: ./pages/sdks/integration/npm.mdx
-          - page: PyPi
+          - page: PyPI
             slug: pypi
             path: ./pages/sdks/integration/pypi.mdx
           - page: NuGet
