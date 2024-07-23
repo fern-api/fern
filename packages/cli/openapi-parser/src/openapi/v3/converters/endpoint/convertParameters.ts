@@ -52,6 +52,12 @@ export function convertParameters({
         const parameterBreadcrumbs = [...requestBreadcrumbs, resolvedParameter.name];
         const generatedName = getGeneratedTypeName(parameterBreadcrumbs);
 
+        if (getExamplesString({ schema: resolvedParameter, logger: context.logger })?.includes(" ")) {
+            context.logger.warn(
+                "Parameter example contains a space, which is ambiguous. Consider using enums for multiple examples, or use an encoding if a space is part of the parameter."
+            );
+        }
+
         let schema =
             resolvedParameter.schema != null
                 ? convertSchema(

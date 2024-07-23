@@ -50,7 +50,7 @@ function convertPrimitive(primitiveExample: PrimitiveExample): RawSchemas.Exampl
         case "datetime":
             try {
                 // remove milliseconds from the datetime
-                if (!primitiveExample.value.endsWith("Z")) {
+                if (!primitiveExample.value.endsWith("Z") && !primitiveExample.value.includes("+")) {
                     primitiveExample.value += "Z";
                 }
                 return new Date(primitiveExample.value).toISOString().replace(/\.\d{3}Z$/, "Z");
