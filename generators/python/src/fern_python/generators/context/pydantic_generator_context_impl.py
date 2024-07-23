@@ -8,9 +8,15 @@ from fern_python.declaration_referencer import AbstractDeclarationReferencer
 
 from .pydantic_generator_context import PydanticGeneratorContext
 from .type_reference_to_type_hint_converter import TypeReferenceToTypeHintConverter
+from poetry.core.constraints.version import parse_constraint
+
+from ..sdk.custom_config import ALLOWED_PYTHON_VERSIONS
+from ..sdk.custom_config import DEFAULT_PYTHON_VERSION_CONSTRAINT
+from ..sdk.custom_config import SDKCustomConfig
 
 
 class PydanticGeneratorContextImpl(PydanticGeneratorContext):
+
     def __init__(
         self,
         ir: ir_types.IntermediateRepresentation,
@@ -27,6 +33,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         self._type_declaration_referencer = type_declaration_referencer
         self._project_module_path = project_module_path
         self._allow_leveraging_defaults = allow_leveraging_defaults
+        self._python_version_constraint = SDKCustomConfig.parse_obj(generator_config.custom_config or {}).pyproject_python_version or DEFAULT_PYTHON_VERSION_CONSTRAINT
 
     def get_module_path_in_project(self, module_path: AST.ModulePath) -> AST.ModulePath:
         return self._project_module_path + module_path
@@ -160,3 +167,14 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
             named=lambda type_name: set([type_name.type_id]),
             unknown=lambda: set(),
         )
+
+    def get_target_python_version(self) -> tuple[int, int]:
+        constraint = parse_constraint(self._python_version_constraint)
+
+        # For the sake of demonstration, we'll use a fixed version that satisfies the constraint
+        # Normally, you'd have a list of available versions and find the highest that satisfies the constraint
+        for version in ALLOWED_PYTHON_VERSIONS:
+            if constraint.allows(version):
+                return version.major, version.minor or 0
+
+        raise ValueError(f"No Python version satisfies the constraint {self._python_version_constraint}")

@@ -93,3 +93,7 @@ class PydanticGeneratorContext(ABC):
     @abstractmethod
     def get_all_properties_including_extensions(self, type_id: ir_types.TypeId) -> List[ir_types.ObjectProperty]:
         ...
+
+    @abstractmethod
+    def get_target_python_version(self) -> tuple[int, int]:
+        ...

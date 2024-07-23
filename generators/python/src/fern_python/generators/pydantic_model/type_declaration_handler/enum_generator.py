@@ -46,7 +46,7 @@ class EnumGenerator(AbstractTypeGenerator):
             )
         else:
             # If using python 3.11+, generate classes with StrEnum instead of (str, Enum)
-            if sys.version_info >= (3, 11):
+            if self._context.get_target_python_version() >= (3, 11):
                 extends = [
                     AST.ClassReference(
                         import_=AST.ReferenceImport(module=AST.Module.built_in(("enum",))),
