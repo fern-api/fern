@@ -14,7 +14,16 @@ from ..sdk.custom_config import ALLOWED_PYTHON_VERSIONS
 from ..sdk.custom_config import DEFAULT_PYTHON_VERSION_CONSTRAINT
 from ..sdk.custom_config import SDKCustomConfig
 
+def solve_python_constraint(constraint_str: str) -> tuple[int, int]:
+    constraint = parse_constraint(constraint_str)
 
+    # For the sake of demonstration, we'll use a fixed version that satisfies the constraint
+    # Normally, you'd have a list of available versions and find the highest that satisfies the constraint
+    for version in ALLOWED_PYTHON_VERSIONS:
+        if constraint.allows(version):
+            return version.major, version.minor or 0
+
+    raise ValueError(f"No Python version satisfies the constraint {constraint}")
 class PydanticGeneratorContextImpl(PydanticGeneratorContext):
 
     def __init__(
@@ -33,7 +42,8 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         self._type_declaration_referencer = type_declaration_referencer
         self._project_module_path = project_module_path
         self._allow_leveraging_defaults = allow_leveraging_defaults
-        self._python_version_constraint = SDKCustomConfig.parse_obj(generator_config.custom_config or {}).pyproject_python_version or DEFAULT_PYTHON_VERSION_CONSTRAINT
+        python_version_constraint = SDKCustomConfig.parse_obj(generator_config.custom_config or {}).pyproject_python_version or DEFAULT_PYTHON_VERSION_CONSTRAINT
+        self._target_python_version = solve_python_constraint(python_version_constraint)
 
     def get_module_path_in_project(self, module_path: AST.ModulePath) -> AST.ModulePath:
         return self._project_module_path + module_path
@@ -169,12 +179,4 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         )
 
     def get_target_python_version(self) -> tuple[int, int]:
-        constraint = parse_constraint(self._python_version_constraint)
-
-        # For the sake of demonstration, we'll use a fixed version that satisfies the constraint
-        # Normally, you'd have a list of available versions and find the highest that satisfies the constraint
-        for version in ALLOWED_PYTHON_VERSIONS:
-            if constraint.allows(version):
-                return version.major, version.minor or 0
-
-        raise ValueError(f"No Python version satisfies the constraint {self._python_version_constraint}")
+        return self._target_python_version
