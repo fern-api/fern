@@ -20,40 +20,47 @@ class AbstractEndpointsParamsService(AbstractFernService):
     with FastAPI when you register your implementation using Fern's register()
     function.
     """
+    
     @abc.abstractmethod
     def get_with_path(self, *, param: str, auth: ApiAuth) -> str:
         """
         GET with path param
         """
         ...
+    
     @abc.abstractmethod
     def get_with_query(self, *, query: str, number: int, auth: ApiAuth) -> None:
         """
         GET with query param
         """
         ...
+    
     @abc.abstractmethod
     def get_with_allow_multiple_query(self, *, query: typing.List[str], numer: typing.List[int], auth: ApiAuth) -> None:
         """
         GET with multiple of same query param
         """
         ...
+    
     @abc.abstractmethod
     def get_with_path_and_query(self, *, param: str, query: str, auth: ApiAuth) -> None:
         """
         GET with path and query params
         """
         ...
+    
     @abc.abstractmethod
     def modify_with_path(self, *, body: str, param: str, auth: ApiAuth) -> str:
         """
         PUT to update with path param
         """
         ...
+    
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
     """
+    
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
         cls.__init_get_with_path(router=router)
@@ -61,6 +68,7 @@ class AbstractEndpointsParamsService(AbstractFernService):
         cls.__init_get_with_allow_multiple_query(router=router)
         cls.__init_get_with_path_and_query(router=router)
         cls.__init_modify_with_path(router=router)
+    
     @classmethod
     def __init_get_with_path(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_with_path)
@@ -98,6 +106,7 @@ class AbstractEndpointsParamsService(AbstractFernService):
             description=AbstractEndpointsParamsService.get_with_path.__doc__,
             **get_route_args(cls.get_with_path, default_tag="endpoints.params"),
         )(wrapper)
+    
     @classmethod
     def __init_get_with_query(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_with_query)
@@ -138,6 +147,7 @@ class AbstractEndpointsParamsService(AbstractFernService):
             description=AbstractEndpointsParamsService.get_with_query.__doc__,
             **get_route_args(cls.get_with_query, default_tag="endpoints.params"),
         )(wrapper)
+    
     @classmethod
     def __init_get_with_allow_multiple_query(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_with_allow_multiple_query)
@@ -178,6 +188,7 @@ class AbstractEndpointsParamsService(AbstractFernService):
             description=AbstractEndpointsParamsService.get_with_allow_multiple_query.__doc__,
             **get_route_args(cls.get_with_allow_multiple_query, default_tag="endpoints.params"),
         )(wrapper)
+    
     @classmethod
     def __init_get_with_path_and_query(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_with_path_and_query)
@@ -218,6 +229,7 @@ class AbstractEndpointsParamsService(AbstractFernService):
             description=AbstractEndpointsParamsService.get_with_path_and_query.__doc__,
             **get_route_args(cls.get_with_path_and_query, default_tag="endpoints.params"),
         )(wrapper)
+    
     @classmethod
     def __init_modify_with_path(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.modify_with_path)

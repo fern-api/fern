@@ -46,12 +46,12 @@ async def test_get_and_return_set_of_objects(client: SeedExhaustive, async_clien
     expected_response: typing.Any = [{"string": "string"}]
     expected_types: typing.Any = ("set", {0: {"string": None}})
     response = client.endpoints.container.get_and_return_set_of_objects(
-        request={ObjectWithRequiredField(string="string")}
+        request=[ObjectWithRequiredField(string="string")]
     )
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.endpoints.container.get_and_return_set_of_objects(
-        request={ObjectWithRequiredField(string="string")}
+        request=[ObjectWithRequiredField(string="string")]
     )
     validate_response(async_response, expected_response, expected_types)
 

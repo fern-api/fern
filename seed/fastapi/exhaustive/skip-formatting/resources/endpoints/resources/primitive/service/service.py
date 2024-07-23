@@ -21,37 +21,48 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
     with FastAPI when you register your implementation using Fern's register()
     function.
     """
+    
     @abc.abstractmethod
     def get_and_return_string(self, *, body: str, auth: ApiAuth) -> str:
         ...
+    
     @abc.abstractmethod
     def get_and_return_int(self, *, body: int, auth: ApiAuth) -> int:
         ...
+    
     @abc.abstractmethod
     def get_and_return_long(self, *, body: int, auth: ApiAuth) -> int:
         ...
+    
     @abc.abstractmethod
     def get_and_return_double(self, *, body: float, auth: ApiAuth) -> float:
         ...
+    
     @abc.abstractmethod
     def get_and_return_bool(self, *, body: bool, auth: ApiAuth) -> bool:
         ...
+    
     @abc.abstractmethod
     def get_and_return_datetime(self, *, body: dt.datetime, auth: ApiAuth) -> dt.datetime:
         ...
+    
     @abc.abstractmethod
     def get_and_return_date(self, *, body: dt.date, auth: ApiAuth) -> dt.date:
         ...
+    
     @abc.abstractmethod
     def get_and_return_uuid(self, *, body: uuid.UUID, auth: ApiAuth) -> uuid.UUID:
         ...
+    
     @abc.abstractmethod
     def get_and_return_base_64(self, *, body: str, auth: ApiAuth) -> str:
         ...
+    
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
     """
+    
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
         cls.__init_get_and_return_string(router=router)
@@ -63,6 +74,7 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
         cls.__init_get_and_return_date(router=router)
         cls.__init_get_and_return_uuid(router=router)
         cls.__init_get_and_return_base_64(router=router)
+    
     @classmethod
     def __init_get_and_return_string(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_string)
@@ -100,6 +112,7 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             description=AbstractEndpointsPrimitiveService.get_and_return_string.__doc__,
             **get_route_args(cls.get_and_return_string, default_tag="endpoints.primitive"),
         )(wrapper)
+    
     @classmethod
     def __init_get_and_return_int(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_int)
@@ -137,6 +150,7 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             description=AbstractEndpointsPrimitiveService.get_and_return_int.__doc__,
             **get_route_args(cls.get_and_return_int, default_tag="endpoints.primitive"),
         )(wrapper)
+    
     @classmethod
     def __init_get_and_return_long(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_long)
@@ -174,6 +188,7 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             description=AbstractEndpointsPrimitiveService.get_and_return_long.__doc__,
             **get_route_args(cls.get_and_return_long, default_tag="endpoints.primitive"),
         )(wrapper)
+    
     @classmethod
     def __init_get_and_return_double(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_double)
@@ -211,6 +226,7 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             description=AbstractEndpointsPrimitiveService.get_and_return_double.__doc__,
             **get_route_args(cls.get_and_return_double, default_tag="endpoints.primitive"),
         )(wrapper)
+    
     @classmethod
     def __init_get_and_return_bool(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_bool)
@@ -248,6 +264,7 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             description=AbstractEndpointsPrimitiveService.get_and_return_bool.__doc__,
             **get_route_args(cls.get_and_return_bool, default_tag="endpoints.primitive"),
         )(wrapper)
+    
     @classmethod
     def __init_get_and_return_datetime(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_datetime)
@@ -285,6 +302,7 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             description=AbstractEndpointsPrimitiveService.get_and_return_datetime.__doc__,
             **get_route_args(cls.get_and_return_datetime, default_tag="endpoints.primitive"),
         )(wrapper)
+    
     @classmethod
     def __init_get_and_return_date(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_date)
@@ -322,6 +340,7 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             description=AbstractEndpointsPrimitiveService.get_and_return_date.__doc__,
             **get_route_args(cls.get_and_return_date, default_tag="endpoints.primitive"),
         )(wrapper)
+    
     @classmethod
     def __init_get_and_return_uuid(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_uuid)
@@ -359,6 +378,7 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             description=AbstractEndpointsPrimitiveService.get_and_return_uuid.__doc__,
             **get_route_args(cls.get_and_return_uuid, default_tag="endpoints.primitive"),
         )(wrapper)
+    
     @classmethod
     def __init_get_and_return_base_64(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_base_64)

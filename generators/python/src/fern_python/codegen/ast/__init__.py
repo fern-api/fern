@@ -20,6 +20,7 @@ from .nodes import (
     CodeWriter,
     CodeWriterFunction,
     ConditionalExpression,
+    ConditionalTree,
     Declaration,
     DictionaryInstantiation,
     Docstring,
@@ -29,6 +30,7 @@ from .nodes import (
     FunctionInvocation,
     FunctionParameter,
     FunctionSignature,
+    IfConditionLeaf,
     NamedFunctionParameter,
     ReferenceNode,
     TypeAliasDeclaration,
@@ -84,4 +86,6 @@ __all__ = [
     "NamedFunctionParameter",
     "DependencyCompatibility",
     "ConditionalExpression",
+    "ConditionalTree",
+    "IfConditionLeaf",
 ]

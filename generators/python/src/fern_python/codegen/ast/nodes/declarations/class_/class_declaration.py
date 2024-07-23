@@ -220,6 +220,7 @@ class ClassDeclaration(AstNode):
                 writer.write_newline_if_last_line_not()
                 did_write_statement = True
             for statement in self.statements:
+                writer.write_line()
                 writer.write_node(statement)
                 writer.write_newline_if_last_line_not()
                 did_write_statement = True

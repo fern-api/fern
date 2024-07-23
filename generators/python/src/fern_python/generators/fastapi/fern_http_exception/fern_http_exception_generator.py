@@ -99,6 +99,11 @@ class FernHTTPExceptionGenerator:
             version=self._custom_config.pydantic_config.version,
             smart_union=False,
             require_optional_fields=self._custom_config.pydantic_config.require_optional_fields,
+            pydantic_base_model=self._context.core_utilities.get_universal_base_model(),
+            is_pydantic_v2=self._context.core_utilities.get_is_pydantic_v2(),
+            universal_field_validator=self._context.core_utilities.universal_field_validator,
+            universal_root_validator=self._context.core_utilities.universal_root_validator,
+            update_forward_ref_function_reference=self._context.core_utilities.get_update_forward_refs(),
         ) as body_pydantic_model:
             body_pydantic_model.add_field(
                 PydanticField(

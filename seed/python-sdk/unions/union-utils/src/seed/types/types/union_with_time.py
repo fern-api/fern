@@ -5,30 +5,54 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import pydantic
 import typing_extensions
 
-from ...core.datetime_utils import serialize_datetime
-from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
 
 class _Factory:
     def value(self, value: int) -> UnionWithTime:
-        return UnionWithTime(__root__=_UnionWithTime.Value(type="value", value=value))
+        if IS_PYDANTIC_V2:
+            return UnionWithTime(root=_UnionWithTime.Value(type="value", value=value))
+        else:
+            return UnionWithTime(__root__=_UnionWithTime.Value(type="value", value=value))
 
     def date(self, value: dt.date) -> UnionWithTime:
-        return UnionWithTime(__root__=_UnionWithTime.Date(type="date", value=value))
+        if IS_PYDANTIC_V2:
+            return UnionWithTime(root=_UnionWithTime.Date(type="date", value=value))
+        else:
+            return UnionWithTime(__root__=_UnionWithTime.Date(type="date", value=value))
 
     def datetime(self, value: dt.datetime) -> UnionWithTime:
-        return UnionWithTime(__root__=_UnionWithTime.Datetime(type="datetime", value=value))
+        if IS_PYDANTIC_V2:
+            return UnionWithTime(root=_UnionWithTime.Datetime(type="datetime", value=value))
+        else:
+            return UnionWithTime(__root__=_UnionWithTime.Datetime(type="datetime", value=value))
 
 
-class UnionWithTime(pydantic_v1.BaseModel):
+class UnionWithTime(UniversalRootModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get_as_union(self) -> typing.Union[_UnionWithTime.Value, _UnionWithTime.Date, _UnionWithTime.Datetime]:
-        return self.__root__
+    if IS_PYDANTIC_V2:
+        root: typing_extensions.Annotated[
+            typing.Union[_UnionWithTime.Value, _UnionWithTime.Date, _UnionWithTime.Datetime],
+            pydantic.Field(discriminator="type"),
+        ]
+
+        def get_as_union(self) -> typing.Union[_UnionWithTime.Value, _UnionWithTime.Date, _UnionWithTime.Datetime]:
+            return self.root
+
+    else:
+        __root__: typing_extensions.Annotated[
+            typing.Union[_UnionWithTime.Value, _UnionWithTime.Date, _UnionWithTime.Datetime],
+            pydantic.Field(discriminator="type"),
+        ]
+
+        def get_as_union(self) -> typing.Union[_UnionWithTime.Value, _UnionWithTime.Date, _UnionWithTime.Datetime]:
+            return self.__root__
 
     def visit(
         self,
@@ -36,61 +60,51 @@ class UnionWithTime(pydantic_v1.BaseModel):
         date: typing.Callable[[dt.date], T_Result],
         datetime: typing.Callable[[dt.datetime], T_Result],
     ) -> T_Result:
-        if self.__root__.type == "value":
-            return value(self.__root__.value)
-        if self.__root__.type == "date":
-            return date(self.__root__.value)
-        if self.__root__.type == "datetime":
-            return datetime(self.__root__.value)
-
-    __root__: typing_extensions.Annotated[
-        typing.Union[_UnionWithTime.Value, _UnionWithTime.Date, _UnionWithTime.Datetime],
-        pydantic_v1.Field(discriminator="type"),
-    ]
-
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
-
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        frozen = True
-        smart_union = True
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "value":
+            return value(unioned_value.value)
+        if unioned_value.type == "date":
+            return date(unioned_value.value)
+        if unioned_value.type == "datetime":
+            return datetime(unioned_value.value)
 
 
 class _UnionWithTime:
-    class Value(pydantic_v1.BaseModel):
+    class Value(UniversalBaseModel):
         type: typing.Literal["value"] = "value"
         value: int
 
-        class Config:
-            frozen = True
-            smart_union = True
+        if IS_PYDANTIC_V2:
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+        else:
 
-    class Date(pydantic_v1.BaseModel):
+            class Config:
+                frozen = True
+                smart_union = True
+
+    class Date(UniversalBaseModel):
         type: typing.Literal["date"] = "date"
         value: dt.date
 
-        class Config:
-            frozen = True
-            smart_union = True
+        if IS_PYDANTIC_V2:
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+        else:
 
-    class Datetime(pydantic_v1.BaseModel):
+            class Config:
+                frozen = True
+                smart_union = True
+
+    class Datetime(UniversalBaseModel):
         type: typing.Literal["datetime"] = "datetime"
         value: dt.datetime
 
-        class Config:
-            frozen = True
-            smart_union = True
+        if IS_PYDANTIC_V2:
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+        else:
+
+            class Config:
+                frozen = True
+                smart_union = True
 
 
-UnionWithTime.update_forward_refs()
+update_forward_refs(UnionWithTime)

@@ -2,11 +2,9 @@
 
 from __future__ import annotations
 
-import datetime as dt
 import typing
 
-from ....core.datetime_utils import serialize_datetime
-from ....core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
 from .foo import Foo as resources_types_types_foo_Foo
 
 T_Result = typing.TypeVar("T_Result")
@@ -14,47 +12,40 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def foo(self, value: resources_types_types_foo_Foo) -> UnionWithSingleElement:
-        return UnionWithSingleElement(
-            __root__=_UnionWithSingleElement.Foo(**value.dict(exclude_unset=True), type="foo")
-        )
+        if IS_PYDANTIC_V2:
+            return UnionWithSingleElement(
+                root=_UnionWithSingleElement.Foo(**value.dict(exclude_unset=True), type="foo")
+            )
+        else:
+            return UnionWithSingleElement(
+                __root__=_UnionWithSingleElement.Foo(**value.dict(exclude_unset=True), type="foo")
+            )
 
 
-class UnionWithSingleElement(pydantic_v1.BaseModel):
+class UnionWithSingleElement(UniversalRootModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get_as_union(self) -> _UnionWithSingleElement.Foo:
-        return self.__root__
+    if IS_PYDANTIC_V2:
+        root: typing.Union[_UnionWithSingleElement.Foo]
+
+        def get_as_union(self) -> typing.Union[_UnionWithSingleElement.Foo]:
+            return self.root
+
+    else:
+        __root__: typing.Union[_UnionWithSingleElement.Foo]
+
+        def get_as_union(self) -> typing.Union[_UnionWithSingleElement.Foo]:
+            return self.__root__
 
     def visit(self, foo: typing.Callable[[resources_types_types_foo_Foo], T_Result]) -> T_Result:
-        if self.__root__.type == "foo":
-            return foo(resources_types_types_foo_Foo(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
-
-    __root__: _UnionWithSingleElement.Foo
-
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
-
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        extra = pydantic_v1.Extra.forbid
-        json_encoders = {dt.datetime: serialize_datetime}
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "foo":
+            return foo(resources_types_types_foo_Foo(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
 
 
 class _UnionWithSingleElement:
     class Foo(resources_types_types_foo_Foo):
         type: typing.Literal["foo"] = "foo"
 
-        class Config:
-            allow_population_by_field_name = True
-            populate_by_name = True
 
-
-UnionWithSingleElement.update_forward_refs()
+update_forward_refs(UnionWithSingleElement)

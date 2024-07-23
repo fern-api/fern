@@ -96,6 +96,7 @@ class EndpointResponseCodeWriter:
                             ),
                         ),
                     )
+                    writer.write_newline_if_last_line_not()
                 writer.write_line("except:")
                 with writer.indent():
                     writer.write_line("pass")
@@ -127,6 +128,7 @@ class EndpointResponseCodeWriter:
                             AST.Expression(Json.loads(AST.Expression(EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE))),
                         ),
                     )
+                    writer.write_newline_if_last_line_not()
                 writer.write_line("except:")
                 with writer.indent():
                     writer.write_line("pass")

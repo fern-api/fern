@@ -9,6 +9,7 @@ class FernHTTPException(abc.ABC, fastapi.HTTPException):
         self.name = name
         self.status_code = status_code
         self.content = content
+    
     def to_json_response(self) -> fastapi.responses.JSONResponse:
         content = fastapi.encoders.jsonable_encoder(self.content, exclude_none=True)
         return fastapi.responses.JSONResponse(content=content, status_code=self.status_code)

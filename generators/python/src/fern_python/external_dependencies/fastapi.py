@@ -6,7 +6,7 @@ FAST_API_MODULE = AST.Module.external(
     module_path=("fastapi",),
     dependency=AST.Dependency(
         name="fastapi",
-        version="^0.79.0",
+        version="^0.111.0",
     ),
 )
 

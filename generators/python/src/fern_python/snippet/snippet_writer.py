@@ -103,9 +103,14 @@ class SnippetWriter:
                 ),
             )
             if value is not None:
+                # TODO: we really need to centralize a lot of this logic,
+                # especially around renaming and models in general
                 maybe_rewritten_name = (
                     request_parameter_names.get(property.name.name) or property.name.name.snake_case.safe_name
                 )
+                if maybe_rewritten_name.startswith("_"):
+                    maybe_rewritten_name = "f_" + maybe_rewritten_name.lstrip("_")
+
                 args.append(
                     self.get_snippet_for_named_parameter(
                         parameter_name=maybe_rewritten_name,
@@ -217,13 +222,23 @@ class SnippetWriter:
         self, example_type_references: List[ir_types.ExampleTypeReference], is_list: bool
     ) -> Optional[AST.Expression]:
         values: List[AST.Expression] = []
+        # We use lists for sets if the inner type is non-primitive because Pydantic models aren't hashable
+        contents_are_primitive = False
         for example_type_reference in example_type_references:
+            contents_are_primitive = example_type_reference.shape.visit(
+                primitive=lambda _: True,
+                container=lambda _: False,
+                unknown=lambda _: False,
+                named=lambda _: False,
+            )
             expression = self.get_snippet_for_example_type_reference(
                 example_type_reference=example_type_reference,
             )
             if expression is not None:
                 values.append(expression)
-        return self._write_list(values=values) if is_list else self._write_set(values=values)
+        return (
+            self._write_list(values=values) if is_list or not contents_are_primitive else self._write_set(values=values)
+        )
 
     def _get_snippet_for_map(
         self,

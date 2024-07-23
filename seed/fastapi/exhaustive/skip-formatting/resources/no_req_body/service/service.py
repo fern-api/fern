@@ -20,20 +20,25 @@ class AbstractNoReqBodyService(AbstractFernService):
     with FastAPI when you register your implementation using Fern's register()
     function.
     """
+    
     @abc.abstractmethod
     def get_with_no_request_body(self, *, auth: ApiAuth) -> ObjectWithOptionalField:
         ...
+    
     @abc.abstractmethod
     def post_with_no_request_body(self, *, auth: ApiAuth) -> str:
         ...
+    
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
     """
+    
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
         cls.__init_get_with_no_request_body(router=router)
         cls.__init_post_with_no_request_body(router=router)
+    
     @classmethod
     def __init_get_with_no_request_body(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_with_no_request_body)
@@ -69,6 +74,7 @@ class AbstractNoReqBodyService(AbstractFernService):
             description=AbstractNoReqBodyService.get_with_no_request_body.__doc__,
             **get_route_args(cls.get_with_no_request_body, default_tag="no_req_body"),
         )(wrapper)
+    
     @classmethod
     def __init_post_with_no_request_body(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.post_with_no_request_body)
