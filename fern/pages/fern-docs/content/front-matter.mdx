@@ -173,21 +173,21 @@ Fern also supports adding SEO-specific metadata in the frontmatter.
 
 | Property | Description | Type |
 | -------- | ----------- | ---- | 
-| og:site_name | The name of your website as it should appear when your content is shared. | string |
-| og:title | The title of your page as it should appear when your content is shared. | string |
-| og:description | The description of your page as it should appear when your content is shared. | string |
-| og:url | The URL of your page. | string |
-| og:image | The URL or identifier of the image that will be displayed when your content is shared. | File ID or URL |
-| og:image:width | The width of the image in pixels. | number |
-| og:image:height | The height of the image in pixels. | number |
-| og:locale | The locale of the page, typically in the format `language_TERRITORY` (e.g., `en_US`). | string |
-| og:logo | The URL or identifier of the logo image of your website that will be displayed when your content is shared. | File ID or URL |
-| twitter:title | The title of your page as it should appear in a tweet. | string |
-| twitter:description | The description of your page as it should appear in a tweet. | string |
-| twitter:handle | The Twitter handle of the page creator or site. | string |
-| twitter:image | The URL or identifier of the image that will be displayed in a tweet. | File ID or URL |
-| twitter:site | The name of your website as it should appear in a tweet. | string |
-| twitter:url | The URL of your page. | string |
-| twitter:card | The type of card to be used for sharing on Twitter. | `summary`, `summary_large_image`, `app`, `player` |
-| noindex | If set to `true`, the page will not be indexed by search engines.  | boolean |
-| nofollow | If set to `true`, a search engine will not follow any links present on the page. | boolean |
+| `og:site_name` | The name of your website as it should appear when your content is shared. | string |
+| `og:title` | The title of your page as it should appear when your content is shared. | string |
+| `og:description` | The description of your page as it should appear when your content is shared. | string |
+| `og:url` | The URL of your page. | string |
+| `og:image` | The URL or identifier of the image that will be displayed when your content is shared. | URL or relative path to file |
+| `og:image:width` | The width of the image in pixels. | number |
+| `og:image:height` | The height of the image in pixels. | number |
+| `og:locale` | The locale of the page, typically in the format `language_TERRITORY` (e.g., `en_US`). | string |
+| `og:logo` | The URL or identifier of the logo image of your website that will be displayed when your content is shared. | URL or relative path to file |
+| `twitter:title` | The title of your page as it should appear in a tweet. | string |
+| `twitter:description` | The description of your page as it should appear in a tweet. | string |
+| `twitter:handle`| The Twitter handle of the page creator or site. | string |
+| `twitter:image` | The URL or identifier of the image that will be displayed in a tweet. | URL or relative path to file |
+| `twitter:site` | The name of your website as it should appear in a tweet. | string |
+| `twitter:url` | The URL of your page. | string |
+| `twitter:card` | The type of card to be used for sharing on Twitter. | `summary`, `summary_large_image`, `app`, `player` |
+| `noindex` | If set to `true`, the page will not be indexed by search engines. Defaults to `false`. | boolean |
+| `nofollow` | If set to `true`, a search engine will not follow any links present on the page. Defaults to `false`. | boolean |
