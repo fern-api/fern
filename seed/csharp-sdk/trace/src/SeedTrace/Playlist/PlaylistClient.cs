@@ -23,11 +23,11 @@ public class PlaylistClient
     {
         var _query = new Dictionary<string, object>()
         {
-            { "datetime", request.Datetime.ToString("o") },
+            { "datetime", request.Datetime.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ssK") },
         };
         if (request.OptionalDatetime != null)
         {
-            _query["optionalDatetime"] = request.OptionalDatetime.Value.ToString("o");
+            _query["optionalDatetime"] = request.OptionalDatetime.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ssK");
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

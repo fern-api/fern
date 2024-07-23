@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Text.Json;
 using SeedQueryParameters;
 using SeedQueryParameters.Core;
 
@@ -23,18 +22,20 @@ public class UserClient
             { "limit", request.Limit.ToString() },
             { "id", request.Id.ToString() },
             { "date", request.Date.ToString() },
-            { "deadline", request.Deadline.ToString("o") },
+            { "deadline", request.Deadline.ToString(Constants.DateTimeFormat) },
             { "bytes", request.Bytes.ToString() },
             { "user", request.User.ToString() },
             { "userList", request.UserList.ToString() },
             { "keyValue", request.KeyValue.ToString() },
-            { "nestedUser", request.NestedUser.ToString() },
+            { "nestedUser", request.NestedUser.ToString() }, 
             { "excludeUser", request.ExcludeUser.ToString() },
             { "filter", request.Filter },
         };
         if (request.OptionalDeadline != null)
         {
-            _query["optionalDeadline"] = request.OptionalDeadline.Value.ToString("o");
+            _query["optionalDeadline"] = request.OptionalDeadline.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.OptionalString != null)
         {
@@ -55,7 +56,7 @@ public class UserClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<User>(responseBody)!;
+            return JsonUtils.Deserialize<User>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
