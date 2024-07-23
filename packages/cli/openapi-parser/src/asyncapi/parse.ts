@@ -16,6 +16,7 @@ import { ParseOpenAPIOptions } from "../options";
 import { convertAvailability } from "../schema/convertAvailability";
 import { convertSchema } from "../schema/convertSchemas";
 import { convertUndiscriminatedOneOf } from "../schema/convertUndiscriminatedOneOf";
+import { ExampleTypeFactory } from "../schema/examples/ExampleTypeFactory";
 import { convertSchemaWithExampleToSchema } from "../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../schema/utils/isReferenceObject";
 import { AsyncAPIV2ParserContext } from "./AsyncAPIParserContext";
@@ -60,6 +61,7 @@ export function parseAsyncAPI({
         schemas[schemaId] = convertedSchema;
     }
 
+    const exampleTypeFactory = new ExampleTypeFactory(schemas);
     const exampleFactory = new ExampleWebsocketSessionFactory(schemas, taskContext.logger);
 
     for (const [channelPath, channel] of Object.entries(document.channels ?? {})) {
@@ -186,27 +188,32 @@ export function parseAsyncAPI({
                     headers: headers.map((header) => {
                         return {
                             ...header,
-                            schema: convertSchemaWithExampleToSchema(header.schema),
+                            schema: convertSchemaWithExampleToSchema({ schema: header.schema, exampleTypeFactory }),
                             env: header.env
                         };
                     }),
                     queryParameters: queryParameters.map((param) => {
                         return {
                             ...param,
-                            schema: convertSchemaWithExampleToSchema(param.schema)
+                            schema: convertSchemaWithExampleToSchema({ schema: param.schema, exampleTypeFactory })
                         };
                     }),
                     pathParameters: pathParameters.map((param) => {
                         return {
                             ...param,
-                            schema: convertSchemaWithExampleToSchema(param.schema)
+                            schema: convertSchemaWithExampleToSchema({ schema: param.schema, exampleTypeFactory })
                         };
                     })
                 },
                 groupName: tag?.name != null ? [tag.name] : ["Websocket"],
-                publish: publishSchema != null ? convertSchemaWithExampleToSchema(publishSchema) : publishSchema,
+                publish:
+                    publishSchema != null
+                        ? convertSchemaWithExampleToSchema({ schema: publishSchema, exampleTypeFactory })
+                        : publishSchema,
                 subscribe:
-                    subscribeSchema != null ? convertSchemaWithExampleToSchema(subscribeSchema) : subscribeSchema,
+                    subscribeSchema != null
+                        ? convertSchemaWithExampleToSchema({ schema: subscribeSchema, exampleTypeFactory })
+                        : subscribeSchema,
                 summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
                 path: channelPath,
                 description: undefined,
@@ -218,7 +225,10 @@ export function parseAsyncAPI({
 
     return {
         schemas: Object.fromEntries(
-            Object.entries(schemas).map(([id, schema]) => [id, convertSchemaWithExampleToSchema(schema)])
+            Object.entries(schemas).map(([id, schema]) => [
+                id,
+                convertSchemaWithExampleToSchema({ schema, exampleTypeFactory })
+            ])
         ),
         channel: parsedChannel,
         basePath: getExtension<string | undefined>(document, FernAsyncAPIExtension.BASE_PATH)

@@ -3,6 +3,8 @@ import { MultipartRequestProperty, MultipartSchema, RequestWithExample } from "@
 import { OpenAPIV3 } from "openapi-types";
 import { isAdditionalPropertiesAny } from "../../../../schema/convertAdditionalProperties";
 import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../../../../schema/convertSchemas";
+import { ExampleTypeFactory } from "../../../../schema/examples/ExampleTypeFactory";
+import { convertSchemaWithExampleToSchema } from "../../../../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { getApplicationJsonSchemaMediaObject } from "./getApplicationJsonSchema";
@@ -147,7 +149,12 @@ export function convertRequest({
 
                 properties.push({
                     key: property.key,
-                    schema: MultipartSchema.json(property.schema),
+                    schema: MultipartSchema.json(
+                        convertSchemaWithExampleToSchema({
+                            schema: property.schema,
+                            exampleTypeFactory: new ExampleTypeFactory({})
+                        })
+                    ),
                     description: undefined
                 });
             }

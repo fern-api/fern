@@ -10,4 +10,5 @@ export interface PrimitiveSchema
         FernOpenapiIr.WithSdkGroupName,
         FernOpenapiIr.WithAvailability {
     schema: FernOpenapiIr.PrimitiveSchemaValue;
+    examples: FernOpenapiIr.FullExample[] | undefined;
 }

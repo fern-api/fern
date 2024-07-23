@@ -12,4 +12,5 @@ export interface DiscriminatedOneOfSchema
     discriminantProperty: string;
     commonProperties: FernOpenapiIr.CommonProperty[];
     schemas: Record<string, FernOpenapiIr.Schema>;
+    examples: FernOpenapiIr.FullExample[] | undefined;
 }

@@ -13,6 +13,9 @@ export const EnumValue: core.serialization.ObjectSchema<serializers.EnumValue.Ra
             generatedName: core.serialization.string(),
             value: core.serialization.string(),
             casing: core.serialization.lazyObject(async () => (await import("../../..")).CasingOverrides).optional(),
+            examples: core.serialization
+                .list(core.serialization.lazy(async () => (await import("../../..")).FullExample))
+                .optional(),
         })
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAvailability));
@@ -23,5 +26,6 @@ export declare namespace EnumValue {
         generatedName: string;
         value: string;
         casing?: serializers.CasingOverrides.Raw | null;
+        examples?: serializers.FullExample.Raw[] | null;
     }
 }

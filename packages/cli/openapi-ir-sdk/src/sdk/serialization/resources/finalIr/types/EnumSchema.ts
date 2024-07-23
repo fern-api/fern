@@ -12,6 +12,9 @@ export const EnumSchema: core.serialization.ObjectSchema<serializers.EnumSchema.
             values: core.serialization.list(
                 core.serialization.lazyObject(async () => (await import("../../..")).EnumValue)
             ),
+            examples: core.serialization
+                .list(core.serialization.lazy(async () => (await import("../../..")).FullExample))
+                .optional(),
         })
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithName))
@@ -25,5 +28,6 @@ export declare namespace EnumSchema {
             serializers.WithSdkGroupName.Raw,
             serializers.WithAvailability.Raw {
         values: serializers.EnumValue.Raw[];
+        examples?: serializers.FullExample.Raw[] | null;
     }
 }

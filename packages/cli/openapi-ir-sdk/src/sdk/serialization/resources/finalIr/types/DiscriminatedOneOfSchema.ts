@@ -19,6 +19,9 @@ export const DiscriminatedOneOfSchema: core.serialization.ObjectSchema<
             core.serialization.string(),
             core.serialization.lazy(async () => (await import("../../..")).Schema)
         ),
+        examples: core.serialization
+            .list(core.serialization.lazy(async () => (await import("../../..")).FullExample))
+            .optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithName))
@@ -34,5 +37,6 @@ export declare namespace DiscriminatedOneOfSchema {
         discriminantProperty: string;
         commonProperties: serializers.CommonProperty.Raw[];
         schemas: Record<string, serializers.Schema.Raw>;
+        examples?: serializers.FullExample.Raw[] | null;
     }
 }

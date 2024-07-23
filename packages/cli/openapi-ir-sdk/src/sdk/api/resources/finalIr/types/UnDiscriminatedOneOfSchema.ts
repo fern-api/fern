@@ -10,4 +10,5 @@ export interface UnDiscriminatedOneOfSchema
         FernOpenapiIr.WithSdkGroupName,
         FernOpenapiIr.WithAvailability {
     schemas: FernOpenapiIr.Schema[];
+    examples: FernOpenapiIr.FullExample[] | undefined;
 }

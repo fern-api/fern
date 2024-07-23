@@ -69,7 +69,8 @@ export function convertAsyncSyncOperation({
             description: undefined,
             availability: undefined,
             value: LiteralSchemaValue.string(headerValue),
-            groupName: undefined
+            groupName: undefined,
+            examples: undefined,
         }),
         description: undefined,
         parameterNameOverride: undefined,

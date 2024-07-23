@@ -52,7 +52,8 @@ export function convertSchemaToSchemaWithExample(schema: Schema): SchemaWithExam
                 value: schema.value,
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
-                groupName: schema.groupName
+                groupName: schema.groupName,
+                examples: undefined
             });
         case "nullable":
             return SchemaWithExample.nullable({

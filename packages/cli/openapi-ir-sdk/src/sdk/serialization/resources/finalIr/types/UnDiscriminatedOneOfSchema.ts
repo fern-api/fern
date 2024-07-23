@@ -12,6 +12,9 @@ export const UnDiscriminatedOneOfSchema: core.serialization.ObjectSchema<
 > = core.serialization
     .objectWithoutOptionalProperties({
         schemas: core.serialization.list(core.serialization.lazy(async () => (await import("../../..")).Schema)),
+        examples: core.serialization
+            .list(core.serialization.lazy(async () => (await import("../../..")).FullExample))
+            .optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithName))
@@ -25,5 +28,6 @@ export declare namespace UnDiscriminatedOneOfSchema {
             serializers.WithSdkGroupName.Raw,
             serializers.WithAvailability.Raw {
         schemas: serializers.Schema.Raw[];
+        examples?: serializers.FullExample.Raw[] | null;
     }
 }

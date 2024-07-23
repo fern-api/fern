@@ -32,7 +32,8 @@ export function getVariableDefinitions(document: OpenAPIV3.Document): Record<str
                         }),
                         description: schema.description,
                         availability: undefined,
-                        groupName: undefined
+                        groupName: undefined,
+                        examples: []
                     }
                 ];
             } else {

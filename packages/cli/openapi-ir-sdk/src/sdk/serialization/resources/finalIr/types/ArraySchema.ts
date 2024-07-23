@@ -10,6 +10,9 @@ export const ArraySchema: core.serialization.ObjectSchema<serializers.ArraySchem
     core.serialization
         .objectWithoutOptionalProperties({
             value: core.serialization.lazy(async () => (await import("../../..")).Schema),
+            examples: core.serialization
+                .list(core.serialization.lazy(async () => (await import("../../..")).FullExample))
+                .optional(),
         })
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithName))
@@ -23,5 +26,6 @@ export declare namespace ArraySchema {
             serializers.WithSdkGroupName.Raw,
             serializers.WithAvailability.Raw {
         value: serializers.Schema.Raw;
+        examples?: serializers.FullExample.Raw[] | null;
     }
 }

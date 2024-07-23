@@ -12,6 +12,9 @@ export const PrimitiveSchema: core.serialization.ObjectSchema<
 > = core.serialization
     .objectWithoutOptionalProperties({
         schema: core.serialization.lazy(async () => (await import("../../..")).PrimitiveSchemaValue),
+        examples: core.serialization
+            .list(core.serialization.lazy(async () => (await import("../../..")).FullExample))
+            .optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithName))
@@ -25,5 +28,6 @@ export declare namespace PrimitiveSchema {
             serializers.WithSdkGroupName.Raw,
             serializers.WithAvailability.Raw {
         schema: serializers.PrimitiveSchemaValue.Raw;
+        examples?: serializers.FullExample.Raw[] | null;
     }
 }

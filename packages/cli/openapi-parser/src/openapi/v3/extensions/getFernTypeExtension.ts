@@ -244,7 +244,8 @@ export function getSchemaFromFernType({
                     }),
                     description,
                     availability,
-                    groupName
+                    groupName,
+                    examples: []
                 }),
             named: () => {
                 return undefined;

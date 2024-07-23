@@ -40,7 +40,8 @@ export function testConvertOpenAPI(fixtureName: string, filename: string, asyncA
                 ir: openApiIr,
                 taskContext: mockTaskContext,
                 enableUniqueErrorsPerEndpoint: false,
-                detectGlobalHeaders: true
+                detectGlobalHeaders: true,
+                generateSchemaExamples: true
             });
             expect(fernDefinition).toMatchSnapshot();
         });
@@ -74,7 +75,8 @@ export function testConvertOpenAPI(fixtureName: string, filename: string, asyncA
                 ir: openApiIr,
                 taskContext: mockTaskContext,
                 enableUniqueErrorsPerEndpoint: true,
-                detectGlobalHeaders: false
+                detectGlobalHeaders: false,
+                generateSchemaExamples: 
             });
             expect(fernDefinition).toMatchSnapshot();
         });
