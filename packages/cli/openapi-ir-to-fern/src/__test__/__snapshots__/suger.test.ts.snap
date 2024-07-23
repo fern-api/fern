@@ -3120,7 +3120,7 @@ exports[`open api parser suger docs 1`] = `
             "examples": [
               {
                 "headers": {
-                  "Authorization": "Authorization",
+                  "Authorization": "Bearer <token>",
                 },
                 "path-parameters": {
                   "orgId": "orgId",
@@ -11464,7 +11464,7 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "headers": {
-                  "Authorization": "Authorization",
+                  "Authorization": "Bearer <token>",
                 },
                 "path-parameters": {
                   "orgId": "orgId",
