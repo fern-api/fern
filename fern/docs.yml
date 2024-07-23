@@ -173,6 +173,9 @@ navigation:
           - page: PyPi
             slug: pypi
             path: ./pages/sdks/integration/pypi.mdx
+          - page: NuGet
+            slug: nuget
+            path: ./pages/sdks/integration/nuget.mdx
       
       - section: Alternatives
         hidden: true
