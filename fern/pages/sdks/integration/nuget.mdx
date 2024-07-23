@@ -9,12 +9,15 @@ To authenticate and integrate NuGet within your C#/.NET SDK, you'll need to [cre
 ### Log In
 Log into [NuGet](https://www.nuget.org/users/account/LogOn?returnUrl=%2F). 
 ### Navigate to API Keys
-Click on your profile picture and select **API Keys**. 
+Click on your username in the top-right corner and select **API Keys**. 
 ### Generate API Key
 - Click on **Create**. 
 - Name your key. 
-- Select **Push** as the **Select Scopes** type.
+- Select **Push > Push new packages and package versions** as the **Select Scopes** type.
 - Enter `*` under **Select Packages > Glob Patten**. 
+  <Note title="Replacing an existing NuGet package">
+    If you are overriding an existing package, you can select the relevant package instead of entering `*`. 
+  </Note>
 - Click **Create**. 
 
 <Note title='Save your API key'>
