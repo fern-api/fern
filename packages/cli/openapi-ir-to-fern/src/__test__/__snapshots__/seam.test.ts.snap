@@ -4700,7 +4700,7 @@ exports[`seam seam docs 1`] = `
                       "connected_account_id": "connected_account_id",
                       "created_at": "2024-01-15T09:30:00Z",
                       "custom_metadata": {
-                        "custom_metadata": "custom_metadata",
+                        "key": "value",
                       },
                       "custom_redirect_failure_url": "custom_redirect_failure_url",
                       "custom_redirect_url": "custom_redirect_url",
@@ -4829,7 +4829,7 @@ exports[`seam seam docs 1`] = `
                       "connected_account_id": "connected_account_id",
                       "created_at": "2024-01-15T09:30:00Z",
                       "custom_metadata": {
-                        "custom_metadata": "custom_metadata",
+                        "key": "value",
                       },
                       "custom_redirect_failure_url": "custom_redirect_failure_url",
                       "custom_redirect_url": "custom_redirect_url",
@@ -4902,7 +4902,7 @@ exports[`seam seam docs 1`] = `
                         "connected_account_id": "connected_account_id",
                         "created_at": "2024-01-15T09:30:00Z",
                         "custom_metadata": {
-                          "custom_metadata": "custom_metadata",
+                          "key": "value",
                         },
                         "custom_redirect_failure_url": "custom_redirect_failure_url",
                         "custom_redirect_url": "custom_redirect_url",
@@ -5151,7 +5151,7 @@ exports[`seam seam docs 1`] = `
                       "connected_account_id": "connected_account_id",
                       "created_at": "2024-01-15T09:30:00Z",
                       "custom_metadata": {
-                        "custom_metadata": "custom_metadata",
+                        "key": "value",
                       },
                       "errors": {
                         "key": "value",
@@ -5205,7 +5205,7 @@ exports[`seam seam docs 1`] = `
                         "connected_account_id": "connected_account_id",
                         "created_at": "2024-01-15T09:30:00Z",
                         "custom_metadata": {
-                          "custom_metadata": "custom_metadata",
+                          "key": "value",
                         },
                         "errors": {
                           "key": "value",
@@ -5266,7 +5266,7 @@ exports[`seam seam docs 1`] = `
                       "connected_account_id": "connected_account_id",
                       "created_at": "2024-01-15T09:30:00Z",
                       "custom_metadata": {
-                        "custom_metadata": "custom_metadata",
+                        "key": "value",
                       },
                       "errors": {
                         "key": "value",
@@ -5490,7 +5490,7 @@ exports[`seam seam docs 1`] = `
                       "connected_account_id": "connected_account_id",
                       "created_at": "2024-01-15T09:30:00Z",
                       "custom_metadata": {
-                        "custom_metadata": "custom_metadata",
+                        "key": "value",
                       },
                       "device_id": "device_id",
                       "device_type": "akuvox_lock",
@@ -5792,7 +5792,7 @@ exports[`seam seam docs 1`] = `
                         "connected_account_id": "connected_account_id",
                         "created_at": "2024-01-15T09:30:00Z",
                         "custom_metadata": {
-                          "custom_metadata": "custom_metadata",
+                          "key": "value",
                         },
                         "device_id": "device_id",
                         "device_type": "akuvox_lock",
@@ -7519,7 +7519,7 @@ exports[`seam seam docs 1`] = `
                       "connected_account_id": "connected_account_id",
                       "created_at": "2024-01-15T09:30:00Z",
                       "custom_metadata": {
-                        "custom_metadata": "custom_metadata",
+                        "key": "value",
                       },
                       "device_id": "device_id",
                       "device_type": "akuvox_lock",
@@ -7772,7 +7772,7 @@ exports[`seam seam docs 1`] = `
                       "connected_account_id": "connected_account_id",
                       "created_at": "2024-01-15T09:30:00Z",
                       "custom_metadata": {
-                        "custom_metadata": "custom_metadata",
+                        "key": "value",
                       },
                       "device_id": "device_id",
                       "device_type": "akuvox_lock",
@@ -8074,7 +8074,7 @@ exports[`seam seam docs 1`] = `
                         "connected_account_id": "connected_account_id",
                         "created_at": "2024-01-15T09:30:00Z",
                         "custom_metadata": {
-                          "custom_metadata": "custom_metadata",
+                          "key": "value",
                         },
                         "device_id": "device_id",
                         "device_type": "akuvox_lock",
@@ -8122,7 +8122,7 @@ exports[`seam seam docs 1`] = `
                         "connected_account_id": "connected_account_id",
                         "created_at": "2024-01-15T09:30:00Z",
                         "custom_metadata": {
-                          "custom_metadata": "custom_metadata",
+                          "key": "value",
                         },
                         "device_id": "device_id",
                         "device_type": "akuvox_lock",
@@ -9158,7 +9158,7 @@ exports[`seam seam docs 1`] = `
                         ],
                         "created_at": "2024-01-15T09:30:00Z",
                         "custom_metadata": {
-                          "custom_metadata": "custom_metadata",
+                          "key": "value",
                         },
                         "device_id": "device_id",
                         "device_type": "android_phone",
@@ -9269,7 +9269,7 @@ exports[`seam seam docs 1`] = `
                       ],
                       "created_at": "2024-01-15T09:30:00Z",
                       "custom_metadata": {
-                        "custom_metadata": "custom_metadata",
+                        "key": "value",
                       },
                       "device_id": "device_id",
                       "device_type": "android_phone",
@@ -9520,7 +9520,7 @@ exports[`seam seam docs 1`] = `
                       "connected_account_id": "connected_account_id",
                       "created_at": "2024-01-15T09:30:00Z",
                       "custom_metadata": {
-                        "custom_metadata": "custom_metadata",
+                        "key": "value",
                       },
                       "device_id": "device_id",
                       "device_type": "akuvox_lock",
@@ -9948,7 +9948,7 @@ exports[`seam seam docs 1`] = `
                         "connected_account_id": "connected_account_id",
                         "created_at": "2024-01-15T09:30:00Z",
                         "custom_metadata": {
-                          "custom_metadata": "custom_metadata",
+                          "key": "value",
                         },
                         "device_id": "device_id",
                         "device_type": "akuvox_lock",
@@ -11231,7 +11231,7 @@ exports[`seam seam docs 1`] = `
                         "connected_account_id": "connected_account_id",
                         "created_at": "2024-01-15T09:30:00Z",
                         "custom_metadata": {
-                          "custom_metadata": "custom_metadata",
+                          "key": "value",
                         },
                         "device_id": "device_id",
                         "device_type": "akuvox_lock",
@@ -11279,7 +11279,7 @@ exports[`seam seam docs 1`] = `
                         "connected_account_id": "connected_account_id",
                         "created_at": "2024-01-15T09:30:00Z",
                         "custom_metadata": {
-                          "custom_metadata": "custom_metadata",
+                          "key": "value",
                         },
                         "device_id": "device_id",
                         "device_type": "akuvox_lock",
@@ -22636,7 +22636,7 @@ exports[`seam seam simple 1`] = `
                       "connected_account_id": "connected_account_id",
                       "created_at": "2024-01-15T09:30:00Z",
                       "custom_metadata": {
-                        "custom_metadata": "custom_metadata",
+                        "key": "value",
                       },
                       "custom_redirect_failure_url": "custom_redirect_failure_url",
                       "custom_redirect_url": "custom_redirect_url",
@@ -22765,7 +22765,7 @@ exports[`seam seam simple 1`] = `
                       "connected_account_id": "connected_account_id",
                       "created_at": "2024-01-15T09:30:00Z",
                       "custom_metadata": {
-                        "custom_metadata": "custom_metadata",
+                        "key": "value",
                       },
                       "custom_redirect_failure_url": "custom_redirect_failure_url",
                       "custom_redirect_url": "custom_redirect_url",
@@ -22838,7 +22838,7 @@ exports[`seam seam simple 1`] = `
                         "connected_account_id": "connected_account_id",
                         "created_at": "2024-01-15T09:30:00Z",
                         "custom_metadata": {
-                          "custom_metadata": "custom_metadata",
+                          "key": "value",
                         },
                         "custom_redirect_failure_url": "custom_redirect_failure_url",
                         "custom_redirect_url": "custom_redirect_url",
@@ -23087,7 +23087,7 @@ exports[`seam seam simple 1`] = `
                       "connected_account_id": "connected_account_id",
                       "created_at": "2024-01-15T09:30:00Z",
                       "custom_metadata": {
-                        "custom_metadata": "custom_metadata",
+                        "key": "value",
                       },
                       "errors": {
                         "key": "value",
@@ -23141,7 +23141,7 @@ exports[`seam seam simple 1`] = `
                         "connected_account_id": "connected_account_id",
                         "created_at": "2024-01-15T09:30:00Z",
                         "custom_metadata": {
-                          "custom_metadata": "custom_metadata",
+                          "key": "value",
                         },
                         "errors": {
                           "key": "value",
@@ -23202,7 +23202,7 @@ exports[`seam seam simple 1`] = `
                       "connected_account_id": "connected_account_id",
                       "created_at": "2024-01-15T09:30:00Z",
                       "custom_metadata": {
-                        "custom_metadata": "custom_metadata",
+                        "key": "value",
                       },
                       "errors": {
                         "key": "value",
@@ -23426,7 +23426,7 @@ exports[`seam seam simple 1`] = `
                       "connected_account_id": "connected_account_id",
                       "created_at": "2024-01-15T09:30:00Z",
                       "custom_metadata": {
-                        "custom_metadata": "custom_metadata",
+                        "key": "value",
                       },
                       "device_id": "device_id",
                       "device_type": "akuvox_lock",
@@ -23728,7 +23728,7 @@ exports[`seam seam simple 1`] = `
                         "connected_account_id": "connected_account_id",
                         "created_at": "2024-01-15T09:30:00Z",
                         "custom_metadata": {
-                          "custom_metadata": "custom_metadata",
+                          "key": "value",
                         },
                         "device_id": "device_id",
                         "device_type": "akuvox_lock",
@@ -25455,7 +25455,7 @@ exports[`seam seam simple 1`] = `
                       "connected_account_id": "connected_account_id",
                       "created_at": "2024-01-15T09:30:00Z",
                       "custom_metadata": {
-                        "custom_metadata": "custom_metadata",
+                        "key": "value",
                       },
                       "device_id": "device_id",
                       "device_type": "akuvox_lock",
@@ -25708,7 +25708,7 @@ exports[`seam seam simple 1`] = `
                       "connected_account_id": "connected_account_id",
                       "created_at": "2024-01-15T09:30:00Z",
                       "custom_metadata": {
-                        "custom_metadata": "custom_metadata",
+                        "key": "value",
                       },
                       "device_id": "device_id",
                       "device_type": "akuvox_lock",
@@ -26010,7 +26010,7 @@ exports[`seam seam simple 1`] = `
                         "connected_account_id": "connected_account_id",
                         "created_at": "2024-01-15T09:30:00Z",
                         "custom_metadata": {
-                          "custom_metadata": "custom_metadata",
+                          "key": "value",
                         },
                         "device_id": "device_id",
                         "device_type": "akuvox_lock",
@@ -26058,7 +26058,7 @@ exports[`seam seam simple 1`] = `
                         "connected_account_id": "connected_account_id",
                         "created_at": "2024-01-15T09:30:00Z",
                         "custom_metadata": {
-                          "custom_metadata": "custom_metadata",
+                          "key": "value",
                         },
                         "device_id": "device_id",
                         "device_type": "akuvox_lock",
@@ -27094,7 +27094,7 @@ exports[`seam seam simple 1`] = `
                         ],
                         "created_at": "2024-01-15T09:30:00Z",
                         "custom_metadata": {
-                          "custom_metadata": "custom_metadata",
+                          "key": "value",
                         },
                         "device_id": "device_id",
                         "device_type": "android_phone",
@@ -27205,7 +27205,7 @@ exports[`seam seam simple 1`] = `
                       ],
                       "created_at": "2024-01-15T09:30:00Z",
                       "custom_metadata": {
-                        "custom_metadata": "custom_metadata",
+                        "key": "value",
                       },
                       "device_id": "device_id",
                       "device_type": "android_phone",
@@ -27456,7 +27456,7 @@ exports[`seam seam simple 1`] = `
                       "connected_account_id": "connected_account_id",
                       "created_at": "2024-01-15T09:30:00Z",
                       "custom_metadata": {
-                        "custom_metadata": "custom_metadata",
+                        "key": "value",
                       },
                       "device_id": "device_id",
                       "device_type": "akuvox_lock",
@@ -27884,7 +27884,7 @@ exports[`seam seam simple 1`] = `
                         "connected_account_id": "connected_account_id",
                         "created_at": "2024-01-15T09:30:00Z",
                         "custom_metadata": {
-                          "custom_metadata": "custom_metadata",
+                          "key": "value",
                         },
                         "device_id": "device_id",
                         "device_type": "akuvox_lock",
@@ -29167,7 +29167,7 @@ exports[`seam seam simple 1`] = `
                         "connected_account_id": "connected_account_id",
                         "created_at": "2024-01-15T09:30:00Z",
                         "custom_metadata": {
-                          "custom_metadata": "custom_metadata",
+                          "key": "value",
                         },
                         "device_id": "device_id",
                         "device_type": "akuvox_lock",
@@ -29215,7 +29215,7 @@ exports[`seam seam simple 1`] = `
                         "connected_account_id": "connected_account_id",
                         "created_at": "2024-01-15T09:30:00Z",
                         "custom_metadata": {
-                          "custom_metadata": "custom_metadata",
+                          "key": "value",
                         },
                         "device_id": "device_id",
                         "device_type": "akuvox_lock",

@@ -21,5 +21,5 @@ export interface JustFileWithQueryParamsRequet {
     maybeInteger?: number;
     listOfStrings: string | string[];
     optionalListOfStrings?: string | string[];
-    file: File | fs.ReadStream;
+    file: File | fs.ReadStream | Blob;
 }

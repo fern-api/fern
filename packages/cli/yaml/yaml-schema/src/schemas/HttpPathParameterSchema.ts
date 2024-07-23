@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { TypeReferenceWithDocsSchema } from "./TypeReferenceSchema";
+import { TypeReferenceWithDocsAndAvailabilitySchema } from "./TypeReferenceSchema";
 import { VariableReferenceSchema } from "./VariableReferenceSchema";
 
 export const HttpPathParameterSchema = z.union([
-    TypeReferenceWithDocsSchema,
+    TypeReferenceWithDocsAndAvailabilitySchema,
     // pathParam: $myVariable
     z.string(),
     VariableReferenceSchema

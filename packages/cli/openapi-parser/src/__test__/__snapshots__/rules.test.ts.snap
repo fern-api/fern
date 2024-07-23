@@ -2,6 +2,7 @@
 
 exports[`rules rules parse open api 1`] = `
 {
+  "apiVersion": null,
   "basePath": null,
   "channel": [],
   "description": null,
@@ -68,12 +69,14 @@ exports[`rules rules parse open api 1`] = `
         "schema": {
           "type": "oneOf",
           "value": {
+            "availability": null,
             "description": null,
             "generatedName": "GetExampleResponse",
             "groupName": null,
             "nameOverride": null,
             "schemas": [
               {
+                "availability": null,
                 "description": null,
                 "generatedName": "GetExampleResponseZero",
                 "groupName": null,
@@ -85,6 +88,7 @@ exports[`rules rules parse open api 1`] = `
                 "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
+                "availability": null,
                 "description": null,
                 "generatedName": "GetExampleResponseMessage",
                 "groupName": null,
@@ -92,17 +96,20 @@ exports[`rules rules parse open api 1`] = `
                 "properties": [
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "getExampleResponseMessageMessage",
                     "key": "message",
                     "nameOverride": null,
                     "schema": {
+                      "availability": null,
                       "description": null,
                       "generatedName": "getExampleResponseMessageMessage",
                       "groupName": null,
                       "nameOverride": null,
                       "type": "optional",
                       "value": {
+                        "availability": null,
                         "description": null,
                         "generatedName": "GetExampleResponseMessageMessage",
                         "groupName": null,
@@ -146,6 +153,7 @@ exports[`rules rules parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Schema",
       "groupName": null,
@@ -153,17 +161,20 @@ exports[`rules rules parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "schemaId",
           "key": "id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "schemaId",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "SchemaId",
               "groupName": null,
@@ -183,17 +194,20 @@ exports[`rules rules parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "schemaName",
           "key": "name",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "schemaName",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "SchemaName",
               "groupName": null,
@@ -212,17 +226,20 @@ exports[`rules rules parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "schemaValue",
           "key": "value",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "schemaValue",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "SchemaValue",
               "groupName": null,

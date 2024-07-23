@@ -44,7 +44,7 @@ module SeedObjectsWithImportsClient
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
-          name = struct["name"]
+          name = parsed_json["name"]
           files = parsed_json["files"]&.map do |item|
             item = item.to_json
             SeedObjectsWithImportsClient::File::File.from_json(json_object: item)

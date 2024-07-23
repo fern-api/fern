@@ -46,9 +46,10 @@ module SeedOauthClientCredentialsClient
       # @return [SeedOauthClientCredentialsClient::Auth::TokenResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        access_token = struct["access_token"]
-        expires_in = struct["expires_in"]
-        refresh_token = struct["refresh_token"]
+        parsed_json = JSON.parse(json_object)
+        access_token = parsed_json["access_token"]
+        expires_in = parsed_json["expires_in"]
+        refresh_token = parsed_json["refresh_token"]
         new(
           access_token: access_token,
           expires_in: expires_in,

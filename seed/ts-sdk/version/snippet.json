@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/users/{userId}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getUser"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedVersionClient } from \"@fern/version\";\n\nconst client = new SeedVersionClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getUser(\"string\");\n"
+            }
+        }
+    ],
+    "types": {}
+}

@@ -2,6 +2,7 @@
 
 exports[`open api parser gen-yml-make-undisc-unions parse open api 1`] = `
 {
+  "apiVersion": null,
   "basePath": null,
   "channel": [],
   "description": "The Batch API provides access to Hume models through an asynchronous job-based interface. You can submit a job to have many different files processed in parallel. The status of a job can then be checked with the job ID. Email notifications are available to alert on completed jobs.",
@@ -15,12 +16,14 @@ exports[`open api parser gen-yml-make-undisc-unions parse open api 1`] = `
     "UnionJob": {
       "type": "oneOf",
       "value": {
+        "availability": null,
         "description": null,
         "generatedName": "UnionJob",
         "groupName": null,
         "nameOverride": null,
         "schemas": [
           {
+            "availability": null,
             "description": null,
             "generatedName": "ComponentsSchemasUnionJobJobEmbeddingGeneration",
             "groupName": null,
@@ -29,6 +32,7 @@ exports[`open api parser gen-yml-make-undisc-unions parse open api 1`] = `
             "type": "reference",
           },
           {
+            "availability": null,
             "description": null,
             "generatedName": "ComponentsSchemasUnionJobJobInference",
             "groupName": null,
@@ -37,6 +41,7 @@ exports[`open api parser gen-yml-make-undisc-unions parse open api 1`] = `
             "type": "reference",
           },
           {
+            "availability": null,
             "description": null,
             "generatedName": "ComponentsSchemasUnionJobJobTlInference",
             "groupName": null,
@@ -45,6 +50,7 @@ exports[`open api parser gen-yml-make-undisc-unions parse open api 1`] = `
             "type": "reference",
           },
           {
+            "availability": null,
             "description": null,
             "generatedName": "ComponentsSchemasUnionJobJobTraining",
             "groupName": null,

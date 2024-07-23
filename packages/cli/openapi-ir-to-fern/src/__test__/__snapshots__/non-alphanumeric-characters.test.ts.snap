@@ -1,0 +1,155 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`non alphanumeric characters non-alphanumeric-characters docs 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "patchSettings": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "request": {},
+              "response": {
+                "body": {
+                  "separator": "/",
+                },
+              },
+            },
+          ],
+          "method": "PATCH",
+          "pagination": undefined,
+          "path": "/settings",
+          "request": {
+            "body": "Settings",
+          },
+          "response": {
+            "docs": "OK",
+            "type": "Settings",
+          },
+        },
+      },
+    },
+    "types": {
+      "DocumentIdSeparators": {
+        "enum": [
+          {
+            "name": "SLASH",
+            "value": "/",
+          },
+          {
+            "name": "HYPHEN",
+            "value": "-",
+          },
+          {
+            "name": "PIPE",
+            "value": "|",
+          },
+          {
+            "name": "DOT",
+            "value": ".",
+          },
+          {
+            "name": "EMPTY",
+            "value": "",
+          },
+        ],
+      },
+      "Settings": {
+        "docs": undefined,
+        "properties": {
+          "separator": "optional<DocumentIdSeparators>",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Enum of separator characters",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
+
+exports[`non alphanumeric characters non-alphanumeric-characters simple 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "patchSettings": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "request": {},
+              "response": {
+                "body": {
+                  "separator": "/",
+                },
+              },
+            },
+          ],
+          "method": "PATCH",
+          "pagination": undefined,
+          "path": "/settings",
+          "request": {
+            "body": "Settings",
+          },
+          "response": {
+            "docs": "OK",
+            "type": "Settings",
+          },
+        },
+      },
+    },
+    "types": {
+      "DocumentIdSeparators": {
+        "enum": [
+          {
+            "name": "SLASH",
+            "value": "/",
+          },
+          {
+            "name": "HYPHEN",
+            "value": "-",
+          },
+          {
+            "name": "PIPE",
+            "value": "|",
+          },
+          {
+            "name": "DOT",
+            "value": ".",
+          },
+          {
+            "name": "EMPTY",
+            "value": "",
+          },
+        ],
+      },
+      "Settings": {
+        "docs": undefined,
+        "properties": {
+          "separator": "optional<DocumentIdSeparators>",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Enum of separator characters",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;

@@ -35,8 +35,9 @@ module SeedQueryParametersClient
       # @return [SeedQueryParametersClient::User::User]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        name = struct["name"]
-        tags = struct["tags"]
+        parsed_json = JSON.parse(json_object)
+        name = parsed_json["name"]
+        tags = parsed_json["tags"]
         new(
           name: name,
           tags: tags,

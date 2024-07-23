@@ -52,6 +52,9 @@ module SeedPaginationClient
           "order": order,
           "starting_after": starting_after
         }.compact
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
         req.url "#{@request_client.get_url(request_options: request_options)}/users"
       end
       SeedPaginationClient::Users::ListUsersPaginationResponse.from_json(json_object: response.body)
@@ -74,6 +77,9 @@ module SeedPaginationClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request_options&.additional_body_parameters || {}), pagination: pagination }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/users"
       end
@@ -111,6 +117,9 @@ module SeedPaginationClient
           "order": order,
           "starting_after": starting_after
         }.compact
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
         req.url "#{@request_client.get_url(request_options: request_options)}/users"
       end
       SeedPaginationClient::Users::ListUsersPaginationResponse.from_json(json_object: response.body)
@@ -133,6 +142,9 @@ module SeedPaginationClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request_options&.additional_body_parameters || {}), pagination: pagination }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/users"
       end
@@ -168,6 +180,9 @@ module SeedPaginationClient
           "limit": limit,
           "order": order
         }.compact
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
         req.url "#{@request_client.get_url(request_options: request_options)}/users"
       end
       SeedPaginationClient::Users::ListUsersPaginationResponse.from_json(json_object: response.body)
@@ -189,6 +204,9 @@ module SeedPaginationClient
       **(request_options&.additional_headers || {})
         }.compact
         req.params = { **(request_options&.additional_query_parameters || {}), "cursor": cursor }.compact
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
         req.url "#{@request_client.get_url(request_options: request_options)}/users"
       end
       SeedPaginationClient::Users::ListUsersExtendedResponse.from_json(json_object: response.body)
@@ -214,6 +232,9 @@ module SeedPaginationClient
           **(request_options&.additional_query_parameters || {}),
           "starting_after": starting_after
         }.compact
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
         req.url "#{@request_client.get_url(request_options: request_options)}/users"
       end
       SeedPaginationClient::UsernameCursor.from_json(json_object: response.body)
@@ -235,6 +256,9 @@ module SeedPaginationClient
       **(request_options&.additional_headers || {})
         }.compact
         req.params = { **(request_options&.additional_query_parameters || {}), "offset": offset }.compact
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
         req.url "#{@request_client.get_url(request_options: request_options)}/users"
       end
       SeedPaginationClient::Users::UsernameContainer.from_json(json_object: response.body)
@@ -283,6 +307,9 @@ module SeedPaginationClient
             "order": order,
             "starting_after": starting_after
           }.compact
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/users"
         end
         SeedPaginationClient::Users::ListUsersPaginationResponse.from_json(json_object: response.body)
@@ -307,6 +334,9 @@ module SeedPaginationClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request_options&.additional_body_parameters || {}), pagination: pagination }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/users"
         end
@@ -346,6 +376,9 @@ module SeedPaginationClient
             "order": order,
             "starting_after": starting_after
           }.compact
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/users"
         end
         SeedPaginationClient::Users::ListUsersPaginationResponse.from_json(json_object: response.body)
@@ -370,6 +403,9 @@ module SeedPaginationClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request_options&.additional_body_parameters || {}), pagination: pagination }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/users"
         end
@@ -407,6 +443,9 @@ module SeedPaginationClient
             "limit": limit,
             "order": order
           }.compact
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/users"
         end
         SeedPaginationClient::Users::ListUsersPaginationResponse.from_json(json_object: response.body)
@@ -430,6 +469,9 @@ module SeedPaginationClient
         **(request_options&.additional_headers || {})
           }.compact
           req.params = { **(request_options&.additional_query_parameters || {}), "cursor": cursor }.compact
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/users"
         end
         SeedPaginationClient::Users::ListUsersExtendedResponse.from_json(json_object: response.body)
@@ -457,6 +499,9 @@ module SeedPaginationClient
             **(request_options&.additional_query_parameters || {}),
             "starting_after": starting_after
           }.compact
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/users"
         end
         SeedPaginationClient::UsernameCursor.from_json(json_object: response.body)
@@ -480,6 +525,9 @@ module SeedPaginationClient
         **(request_options&.additional_headers || {})
           }.compact
           req.params = { **(request_options&.additional_query_parameters || {}), "offset": offset }.compact
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/users"
         end
         SeedPaginationClient::Users::UsernameContainer.from_json(json_object: response.body)

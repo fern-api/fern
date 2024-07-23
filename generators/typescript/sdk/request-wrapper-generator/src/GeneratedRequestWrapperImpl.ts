@@ -470,6 +470,10 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                     this.maybeWrapFileArray({
                         property,
                         value: context.externalDependencies.fs.ReadStream._getReferenceToType()
+                    }),
+                    this.maybeWrapFileArray({
+                        property,
+                        value: ts.factory.createTypeReferenceNode("Blob")
                     })
                 );
             },

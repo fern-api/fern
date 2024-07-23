@@ -7,17 +7,24 @@ import {
     CoreClassReference,
     Dictionary,
     Enum,
+    EnumInstantiation,
     Field,
+    Interface,
+    List,
     Method,
+    MethodInvocation,
     Parameter,
-    Type,
-    MethodType
+    Set,
+    TestClass,
+    Type
 } from "./ast";
-import { Interface } from "./ast/Interface";
-import { MethodInvocation } from "./ast/MethodInvocation";
 
 export function class_(args: Class.Args): Class {
     return new Class(args);
+}
+
+export function testClass(args: TestClass.Args): TestClass {
+    return new TestClass(args);
 }
 
 export function annotation(args: Annotation.Args): Annotation {
@@ -68,6 +75,18 @@ export function dictionary(args: Dictionary.Args): Dictionary {
     return new Dictionary(args);
 }
 
+export function list(args: List.Args): List {
+    return new List(args);
+}
+
+export function set(args: Set.Args): Set {
+    return new Set(args);
+}
+
+export function enumInstantiation(args: EnumInstantiation.Args): EnumInstantiation {
+    return new EnumInstantiation(args);
+}
+
 export const Types = Type;
 export {
     Annotation,
@@ -78,9 +97,11 @@ export {
     Dictionary,
     Enum,
     Field,
+    InstantiatedPrimitive,
     Method,
     MethodInvocation,
+    MethodType,
     Parameter,
-    Type,
-    MethodType
+    Type
 } from "./ast";
+export { AstNode } from "./ast/core/AstNode";

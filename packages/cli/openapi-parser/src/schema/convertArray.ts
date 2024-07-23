@@ -1,4 +1,4 @@
-import { SchemaWithExample, SdkGroupName } from "@fern-api/openapi-ir-sdk";
+import { Availability, SchemaWithExample, SdkGroupName } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { convertSchema } from "./convertSchemas";
 import { SchemaParserContext } from "./SchemaParserContext";
@@ -9,6 +9,7 @@ export function convertArray({
     breadcrumbs,
     item,
     description,
+    availability,
     wrapAsNullable,
     context,
     groupName,
@@ -19,6 +20,7 @@ export function convertArray({
     breadcrumbs: string[];
     item: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
     description: string | undefined;
+    availability: Availability | undefined;
     wrapAsNullable: boolean;
     context: SchemaParserContext;
     groupName: SdkGroupName | undefined;
@@ -30,6 +32,7 @@ export function convertArray({
                   nameOverride,
                   generatedName,
                   description: undefined,
+                  availability: undefined,
                   example: undefined,
                   groupName
               })
@@ -41,6 +44,7 @@ export function convertArray({
         itemSchema,
         wrapAsNullable,
         description,
+        availability,
         example
     });
 }
@@ -51,6 +55,7 @@ export function wrapArray({
     itemSchema,
     wrapAsNullable,
     description,
+    availability,
     groupName,
     example
 }: {
@@ -59,6 +64,7 @@ export function wrapArray({
     itemSchema: SchemaWithExample;
     wrapAsNullable: boolean;
     description: string | undefined;
+    availability: Availability | undefined;
     groupName: SdkGroupName | undefined;
     example: unknown[] | undefined;
 }): SchemaWithExample {
@@ -71,10 +77,13 @@ export function wrapArray({
                 generatedName,
                 value: itemSchema,
                 description,
+                // TODO: maybe undefined?
+                availability,
                 groupName,
                 example
             }),
             description,
+            availability,
             groupName
         });
     }
@@ -83,6 +92,7 @@ export function wrapArray({
         generatedName,
         value: itemSchema,
         description,
+        availability,
         groupName,
         example
     });

@@ -2,6 +2,7 @@
 
 exports[`open api parser gen-yml-use-title parse open api 1`] = `
 {
+  "apiVersion": null,
   "basePath": null,
   "channel": [],
   "description": null,
@@ -16,6 +17,7 @@ exports[`open api parser gen-yml-use-title parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SchemaWithALongNameIsRightHereAndNotSomewhereElse",
       "groupName": null,
@@ -23,17 +25,20 @@ exports[`open api parser gen-yml-use-title parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "schemaWithALongNameIsRightHereAndNotSomewhereElseId",
           "key": "id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "schemaWithALongNameIsRightHereAndNotSomewhereElseId",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "SchemaWithALongNameIsRightHereAndNotSomewhereElseId",
               "groupName": null,

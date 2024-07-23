@@ -485,7 +485,8 @@ export async function visitPathParameters({
                 await visitObject(pathParameter, {
                     docs: createDocsVisitor(visitor, nodePathForPathParameter),
                     variable: async (variable) =>
-                        await visitor.variableReference?.(variable, [...nodePathForPathParameter, "variable"])
+                        await visitor.variableReference?.(variable, [...nodePathForPathParameter, "variable"]),
+                    availability: noop
                 });
             }
         } else {
@@ -501,7 +502,8 @@ export async function visitPathParameters({
                         });
                     },
                     default: noop,
-                    validation: noop
+                    validation: noop,
+                    availability: noop
                 });
             }
         }

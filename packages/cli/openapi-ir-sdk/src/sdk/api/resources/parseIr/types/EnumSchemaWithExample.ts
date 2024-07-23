@@ -7,7 +7,8 @@ import * as FernOpenapiIr from "../../..";
 export interface EnumSchemaWithExample
     extends FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithName,
-        FernOpenapiIr.WithSdkGroupName {
+        FernOpenapiIr.WithSdkGroupName,
+        FernOpenapiIr.WithAvailability {
     values: FernOpenapiIr.EnumValue[];
     example: string | undefined;
 }

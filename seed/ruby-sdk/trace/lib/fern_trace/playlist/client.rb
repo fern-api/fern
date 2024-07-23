@@ -106,6 +106,9 @@ module SeedTraceClient
           "optionalMultipleField": optional_multiple_field,
           "multipleField": multiple_field
         }.compact
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
         req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/all"
       end
       parsed_json = JSON.parse(response.body)
@@ -138,6 +141,12 @@ module SeedTraceClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
         req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/#{playlist_id}"
       end
       SeedTraceClient::Playlist::Playlist.from_json(json_object: response.body)
@@ -173,6 +182,9 @@ module SeedTraceClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/#{playlist_id}"
       end
@@ -202,6 +214,12 @@ module SeedTraceClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
         req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/#{playlist_id}"
       end
     end
@@ -307,6 +325,9 @@ module SeedTraceClient
             "optionalMultipleField": optional_multiple_field,
             "multipleField": multiple_field
           }.compact
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/all"
         end
         parsed_json = JSON.parse(response.body)
@@ -341,6 +362,12 @@ module SeedTraceClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/#{playlist_id}"
         end
         SeedTraceClient::Playlist::Playlist.from_json(json_object: response.body)
@@ -378,6 +405,9 @@ module SeedTraceClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/#{playlist_id}"
         end
@@ -409,6 +439,12 @@ module SeedTraceClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/#{playlist_id}"
         end
       end

@@ -7,7 +7,8 @@ import * as FernOpenapiIr from "../../..";
 export interface ArraySchemaWithExample
     extends FernOpenapiIr.WithSdkGroupName,
         FernOpenapiIr.WithName,
-        FernOpenapiIr.WithDescription {
+        FernOpenapiIr.WithDescription,
+        FernOpenapiIr.WithAvailability {
     value: FernOpenapiIr.SchemaWithExample;
     example: unknown[] | undefined;
 }

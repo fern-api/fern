@@ -279,23 +279,24 @@ class RootClientGenerator:
                     snippet_writer=self._snippet_writer,
                     endpoint_metadata_collector=self._endpoint_metadata_collector,
                 )
-                generated_endpoint_function = endpoint_function_generator.generate()
-                class_declaration.add_method(generated_endpoint_function.function)
-                if (
-                    not self._is_default_body_parameter_used
-                    and generated_endpoint_function.is_default_body_parameter_used
-                ):
-                    self._is_default_body_parameter_used = True
+                generated_endpoint_functions = endpoint_function_generator.generate()
+                for generated_endpoint_function in generated_endpoint_functions:
+                    class_declaration.add_method(generated_endpoint_function.function)
+                    if (
+                        not self._is_default_body_parameter_used
+                        and generated_endpoint_function.is_default_body_parameter_used
+                    ):
+                        self._is_default_body_parameter_used = True
 
-                for val in generated_endpoint_function.snippets or []:
-                    if is_async:
-                        self._snippet_registry.register_async_client_endpoint_snippet(
-                            endpoint=endpoint, expr=val.snippet, example_id=val.example_id
-                        )
-                    else:
-                        self._snippet_registry.register_sync_client_endpoint_snippet(
-                            endpoint=endpoint, expr=val.snippet, example_id=val.example_id
-                        )
+                    for val in generated_endpoint_function.snippets or []:
+                        if is_async:
+                            self._snippet_registry.register_async_client_endpoint_snippet(
+                                endpoint=endpoint, expr=val.snippet, example_id=val.example_id
+                            )
+                        else:
+                            self._snippet_registry.register_sync_client_endpoint_snippet(
+                                endpoint=endpoint, expr=val.snippet, example_id=val.example_id
+                            )
 
         return class_declaration
 
@@ -391,9 +392,7 @@ class RootClientGenerator:
             parameters.append(
                 RootClientConstructorParameter(
                     constructor_parameter_name=RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME,
-                    type_hint=AST.TypeHint(self._context.get_reference_to_environments_class())
-                    if environments_config.default_environment is not None
-                    else AST.TypeHint.optional(AST.TypeHint(self._context.get_reference_to_environments_class())),
+                    type_hint=AST.TypeHint(self._context.get_reference_to_environments_class()),
                     private_member_name=None,
                     initializer=default_environment if default_environment is not None else None,
                     docs=environment_docs,

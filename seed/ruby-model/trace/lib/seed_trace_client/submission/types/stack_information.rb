@@ -39,7 +39,7 @@ module SeedTraceClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        num_stack_frames = struct["numStackFrames"]
+        num_stack_frames = parsed_json["numStackFrames"]
         if parsed_json["topStackFrame"].nil?
           top_stack_frame = nil
         else

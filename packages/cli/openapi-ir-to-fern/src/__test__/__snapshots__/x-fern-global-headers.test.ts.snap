@@ -16,7 +16,9 @@ exports[`x-fern-global-headers x-fern-global-headers docs 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "headers": {},
+                "headers": {
+                  "x-api-key": "x-api-key",
+                },
                 "path-parameters": {
                   "userId": "userId",
                 },
@@ -49,7 +51,12 @@ exports[`x-fern-global-headers x-fern-global-headers docs 1`] = `
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "x-api-key": {
+                  "name": "apiKey",
+                  "type": "string",
+                },
+              },
               "name": "UserGetRequest",
               "query-parameters": undefined,
             },
@@ -79,7 +86,12 @@ exports[`x-fern-global-headers x-fern-global-headers docs 1`] = `
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "x-api-key": {
+                  "name": "apiKey",
+                  "type": "string",
+                },
+              },
               "name": "UserGetStreamRequest",
               "query-parameters": undefined,
             },
@@ -152,12 +164,16 @@ exports[`x-fern-global-headers x-fern-global-headers docs 1`] = `
         "name": "Square-Version",
         "type": "literal<"2024-06-04">",
       },
-      "x-api-key": {
-        "name": "apiKey",
-        "type": "string",
-      },
     },
     "name": "api",
+    "version": {
+      "default": "1.0",
+      "header": "my-api-version",
+      "values": [
+        "1.0",
+        "latest",
+      ],
+    },
   },
 }
 `;
@@ -320,6 +336,14 @@ exports[`x-fern-global-headers x-fern-global-headers simple 1`] = `
       },
     },
     "name": "api",
+    "version": {
+      "default": "1.0",
+      "header": "my-api-version",
+      "values": [
+        "1.0",
+        "latest",
+      ],
+    },
   },
 }
 `;

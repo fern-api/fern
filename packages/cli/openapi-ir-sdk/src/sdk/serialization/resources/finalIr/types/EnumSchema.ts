@@ -15,10 +15,15 @@ export const EnumSchema: core.serialization.ObjectSchema<serializers.EnumSchema.
         })
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithName))
-        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSdkGroupName));
+        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSdkGroupName))
+        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAvailability));
 
 export declare namespace EnumSchema {
-    interface Raw extends serializers.WithDescription.Raw, serializers.WithName.Raw, serializers.WithSdkGroupName.Raw {
+    interface Raw
+        extends serializers.WithDescription.Raw,
+            serializers.WithName.Raw,
+            serializers.WithSdkGroupName.Raw,
+            serializers.WithAvailability.Raw {
         values: serializers.EnumValue.Raw[];
     }
 }

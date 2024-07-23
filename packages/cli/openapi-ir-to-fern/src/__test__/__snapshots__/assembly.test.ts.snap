@@ -536,14 +536,14 @@ The parameter should map to a JSON encoded list of strings.
                           "sentences_idx_end": 1,
                           "sentences_idx_start": 1,
                           "severity_score_summary": {
-                            "severity_score_summary": {
+                            "key": {
                               "high": 1.1,
                               "low": 1.1,
                               "medium": 1.1,
                             },
                           },
                           "summary": {
-                            "summary": 1.1,
+                            "key": 1.1,
                           },
                           "text": "text",
                           "timestamp": {
@@ -586,7 +586,7 @@ The parameter should map to a JSON encoded list of strings.
                       ],
                       "status": "success",
                       "summary": {
-                        "summary": 1.1,
+                        "key": 1.1,
                       },
                     },
                     "id": "id",
@@ -754,14 +754,14 @@ The parameter should map to a JSON encoded list of strings.
                           "sentences_idx_end": 1,
                           "sentences_idx_start": 1,
                           "severity_score_summary": {
-                            "severity_score_summary": {
+                            "key": {
                               "high": 1.1,
                               "low": 1.1,
                               "medium": 1.1,
                             },
                           },
                           "summary": {
-                            "summary": 1.1,
+                            "key": 1.1,
                           },
                           "text": "text",
                           "timestamp": {
@@ -804,7 +804,7 @@ The parameter should map to a JSON encoded list of strings.
                       ],
                       "status": "success",
                       "summary": {
-                        "summary": 1.1,
+                        "key": 1.1,
                       },
                     },
                     "id": "id",
@@ -962,14 +962,14 @@ The parameter should map to a JSON encoded list of strings.
                           "sentences_idx_end": 1,
                           "sentences_idx_start": 1,
                           "severity_score_summary": {
-                            "severity_score_summary": {
+                            "key": {
                               "high": 1.1,
                               "low": 1.1,
                               "medium": 1.1,
                             },
                           },
                           "summary": {
-                            "summary": 1.1,
+                            "key": 1.1,
                           },
                           "text": "text",
                           "timestamp": {
@@ -1012,7 +1012,7 @@ The parameter should map to a JSON encoded list of strings.
                       ],
                       "status": "success",
                       "summary": {
-                        "summary": 1.1,
+                        "key": 1.1,
                       },
                     },
                     "id": "id",
@@ -3094,6 +3094,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": "A transcript object",
         "properties": {
           "acoustic_model": {
+            "availability": "deprecated",
             "docs": "The acoustic model that was used for the transcription",
             "type": "string",
           },
@@ -3265,6 +3266,7 @@ The default value is 'en_us'.
             "validation": undefined,
           },
           "language_model": {
+            "availability": "deprecated",
             "docs": "The language model that was used for the transcription",
             "type": "string",
           },
@@ -3343,6 +3345,7 @@ Valid values are in the range [0, 1] inclusive.
             "validation": undefined,
           },
           "speed_boost": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "Whether speed boost was enabled in the transcription request",
             "type": "optional<boolean>",
@@ -4326,14 +4329,14 @@ The parameter should map to a JSON encoded list of strings.
                           "sentences_idx_end": 1,
                           "sentences_idx_start": 1,
                           "severity_score_summary": {
-                            "severity_score_summary": {
+                            "key": {
                               "high": 1.1,
                               "low": 1.1,
                               "medium": 1.1,
                             },
                           },
                           "summary": {
-                            "summary": 1.1,
+                            "key": 1.1,
                           },
                           "text": "text",
                           "timestamp": {
@@ -4376,7 +4379,7 @@ The parameter should map to a JSON encoded list of strings.
                       ],
                       "status": "success",
                       "summary": {
-                        "summary": 1.1,
+                        "key": 1.1,
                       },
                     },
                     "id": "id",
@@ -4544,14 +4547,14 @@ The parameter should map to a JSON encoded list of strings.
                           "sentences_idx_end": 1,
                           "sentences_idx_start": 1,
                           "severity_score_summary": {
-                            "severity_score_summary": {
+                            "key": {
                               "high": 1.1,
                               "low": 1.1,
                               "medium": 1.1,
                             },
                           },
                           "summary": {
-                            "summary": 1.1,
+                            "key": 1.1,
                           },
                           "text": "text",
                           "timestamp": {
@@ -4594,7 +4597,7 @@ The parameter should map to a JSON encoded list of strings.
                       ],
                       "status": "success",
                       "summary": {
-                        "summary": 1.1,
+                        "key": 1.1,
                       },
                     },
                     "id": "id",
@@ -4752,14 +4755,14 @@ The parameter should map to a JSON encoded list of strings.
                           "sentences_idx_end": 1,
                           "sentences_idx_start": 1,
                           "severity_score_summary": {
-                            "severity_score_summary": {
+                            "key": {
                               "high": 1.1,
                               "low": 1.1,
                               "medium": 1.1,
                             },
                           },
                           "summary": {
-                            "summary": 1.1,
+                            "key": 1.1,
                           },
                           "text": "text",
                           "timestamp": {
@@ -4802,7 +4805,7 @@ The parameter should map to a JSON encoded list of strings.
                       ],
                       "status": "success",
                       "summary": {
-                        "summary": 1.1,
+                        "key": 1.1,
                       },
                     },
                     "id": "id",
@@ -6359,6 +6362,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": "A transcript object",
         "properties": {
           "acoustic_model": {
+            "availability": "deprecated",
             "docs": "The acoustic model that was used for the transcription",
             "type": "string",
           },
@@ -6530,6 +6534,7 @@ The default value is 'en_us'.
             "validation": undefined,
           },
           "language_model": {
+            "availability": "deprecated",
             "docs": "The language model that was used for the transcription",
             "type": "string",
           },
@@ -6608,6 +6613,7 @@ Valid values are in the range [0, 1] inclusive.
             "validation": undefined,
           },
           "speed_boost": {
+            "availability": "deprecated",
             "default": undefined,
             "docs": "Whether speed boost was enabled in the transcription request",
             "type": "optional<boolean>",

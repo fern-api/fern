@@ -1018,7 +1018,7 @@ func (f *fileWriter) WriteClient(
 				f.P(content.Name.PascalCase.UnsafeName, " json.RawMessage `json:\"", content.WireValue, "\"`")
 				f.P("}")
 				f.P("if err := decoder.Decode(&discriminant); err != nil {")
-				f.P("return err")
+				f.P("return apiError")
 				f.P("}")
 			}
 			f.P("switch ", switchValue, " {")

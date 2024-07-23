@@ -75,7 +75,8 @@ export class GeneratedQueryParams {
                                                 context.retainOriginalCasing
                                                     ? queryParameter.name.name.originalName
                                                     : queryParameter.name.name.camelCase.unsafeName
-                                            ]
+                                            ],
+                                            omitUndefined: context.omitUndefined
                                         });
                                 } else if (objectType != null) {
                                     assignmentExpression = referenceToQueryParameter;
@@ -122,7 +123,8 @@ export class GeneratedQueryParams {
                                                     context.retainOriginalCasing
                                                         ? queryParameter.name.name.originalName
                                                         : queryParameter.name.name.camelCase.unsafeName
-                                                ]
+                                                ],
+                                                omitUndefined: context.omitUndefined
                                             });
                                 } else if (objectType != null) {
                                     getAssignmentExpression = (itemReference) => itemReference;

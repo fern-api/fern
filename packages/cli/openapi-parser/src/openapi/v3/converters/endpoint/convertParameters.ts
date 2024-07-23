@@ -8,6 +8,7 @@ import {
     SchemaWithExample
 } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
+import { convertAvailability } from "../../../../schema/convertAvailability";
 import { convertSchema } from "../../../../schema/convertSchemas";
 import { getExamplesString } from "../../../../schema/examples/getExample";
 import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
@@ -46,6 +47,7 @@ export function convertParameters({
             : parameter;
 
         const isRequired = resolvedParameter.required ?? false;
+        const availability = convertAvailability(resolvedParameter);
 
         const parameterBreadcrumbs = [...requestBreadcrumbs, resolvedParameter.name];
         const generatedName = getGeneratedTypeName(parameterBreadcrumbs);
@@ -66,6 +68,7 @@ export function convertParameters({
                           example: getExamplesString(resolvedParameter.example)
                       }),
                       description: undefined,
+                      availability,
                       groupName: undefined
                   })
                 : SchemaWithExample.optional({
@@ -83,9 +86,11 @@ export function convertParameters({
                               example: getExamplesString(resolvedParameter.example)
                           }),
                           description: undefined,
+                          availability: undefined,
                           groupName: undefined
                       }),
                       description: undefined,
+                      availability,
                       groupName: undefined
                   });
         if (
@@ -103,6 +108,7 @@ export function convertParameters({
                     generatedName,
                     value: LiteralSchemaValue.string(defaultValue),
                     description: undefined,
+                    availability,
                     groupName: undefined
                 });
             }
@@ -112,7 +118,8 @@ export function convertParameters({
             name: resolvedParameter.name,
             schema,
             description: resolvedParameter.description,
-            parameterNameOverride: getParameterName(resolvedParameter)
+            parameterNameOverride: getParameterName(resolvedParameter),
+            availability
         };
         if (resolvedParameter.in === "query") {
             convertedParameters.queryParameters.push(convertedParameter);

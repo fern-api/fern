@@ -12,29 +12,24 @@ export type ExampleContainer =
     | FernIr.ExampleContainer.Literal;
 
 export declare namespace ExampleContainer {
-    interface List extends _Utils {
+    interface List extends FernIr.ExampleListContainer, _Utils {
         type: "list";
-        list: FernIr.ExampleTypeReference[];
     }
 
-    interface Set extends _Utils {
+    interface Set extends FernIr.ExampleSetContainer, _Utils {
         type: "set";
-        set: FernIr.ExampleTypeReference[];
     }
 
-    interface Optional extends _Utils {
+    interface Optional extends FernIr.ExampleOptionalContainer, _Utils {
         type: "optional";
-        optional: FernIr.ExampleTypeReference | undefined;
     }
 
-    interface Map extends _Utils {
+    interface Map extends FernIr.ExampleMapContainer, _Utils {
         type: "map";
-        map: FernIr.ExampleKeyValuePair[];
     }
 
-    interface Literal extends _Utils {
+    interface Literal extends FernIr.ExampleLiteralContainer, _Utils {
         type: "literal";
-        literal: FernIr.ExamplePrimitive;
     }
 
     interface _Utils {
@@ -42,19 +37,19 @@ export declare namespace ExampleContainer {
     }
 
     interface _Visitor<_Result> {
-        list: (value: FernIr.ExampleTypeReference[]) => _Result;
-        set: (value: FernIr.ExampleTypeReference[]) => _Result;
-        optional: (value: FernIr.ExampleTypeReference | undefined) => _Result;
-        map: (value: FernIr.ExampleKeyValuePair[]) => _Result;
-        literal: (value: FernIr.ExamplePrimitive) => _Result;
+        list: (value: FernIr.ExampleListContainer) => _Result;
+        set: (value: FernIr.ExampleSetContainer) => _Result;
+        optional: (value: FernIr.ExampleOptionalContainer) => _Result;
+        map: (value: FernIr.ExampleMapContainer) => _Result;
+        literal: (value: FernIr.ExampleLiteralContainer) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
 
 export const ExampleContainer = {
-    list: (value: FernIr.ExampleTypeReference[]): FernIr.ExampleContainer.List => {
+    list: (value: FernIr.ExampleListContainer): FernIr.ExampleContainer.List => {
         return {
-            list: value,
+            ...value,
             type: "list",
             _visit: function <_Result>(
                 this: FernIr.ExampleContainer.List,
@@ -65,9 +60,9 @@ export const ExampleContainer = {
         };
     },
 
-    set: (value: FernIr.ExampleTypeReference[]): FernIr.ExampleContainer.Set => {
+    set: (value: FernIr.ExampleSetContainer): FernIr.ExampleContainer.Set => {
         return {
-            set: value,
+            ...value,
             type: "set",
             _visit: function <_Result>(
                 this: FernIr.ExampleContainer.Set,
@@ -78,9 +73,9 @@ export const ExampleContainer = {
         };
     },
 
-    optional: (value?: FernIr.ExampleTypeReference): FernIr.ExampleContainer.Optional => {
+    optional: (value: FernIr.ExampleOptionalContainer): FernIr.ExampleContainer.Optional => {
         return {
-            optional: value,
+            ...value,
             type: "optional",
             _visit: function <_Result>(
                 this: FernIr.ExampleContainer.Optional,
@@ -91,9 +86,9 @@ export const ExampleContainer = {
         };
     },
 
-    map: (value: FernIr.ExampleKeyValuePair[]): FernIr.ExampleContainer.Map => {
+    map: (value: FernIr.ExampleMapContainer): FernIr.ExampleContainer.Map => {
         return {
-            map: value,
+            ...value,
             type: "map",
             _visit: function <_Result>(
                 this: FernIr.ExampleContainer.Map,
@@ -104,9 +99,9 @@ export const ExampleContainer = {
         };
     },
 
-    literal: (value: FernIr.ExamplePrimitive): FernIr.ExampleContainer.Literal => {
+    literal: (value: FernIr.ExampleLiteralContainer): FernIr.ExampleContainer.Literal => {
         return {
-            literal: value,
+            ...value,
             type: "literal",
             _visit: function <_Result>(
                 this: FernIr.ExampleContainer.Literal,
@@ -120,15 +115,15 @@ export const ExampleContainer = {
     _visit: <_Result>(value: FernIr.ExampleContainer, visitor: FernIr.ExampleContainer._Visitor<_Result>): _Result => {
         switch (value.type) {
             case "list":
-                return visitor.list(value.list);
+                return visitor.list(value);
             case "set":
-                return visitor.set(value.set);
+                return visitor.set(value);
             case "optional":
-                return visitor.optional(value.optional);
+                return visitor.optional(value);
             case "map":
-                return visitor.map(value.map);
+                return visitor.map(value);
             case "literal":
-                return visitor.literal(value.literal);
+                return visitor.literal(value);
             default:
                 return visitor._other(value as any);
         }

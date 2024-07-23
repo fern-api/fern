@@ -35,8 +35,9 @@ module SeedTraceClient
       # @return [SeedTraceClient::Submission::StderrResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        submission_id = struct["submissionId"]
-        stderr = struct["stderr"]
+        parsed_json = JSON.parse(json_object)
+        submission_id = parsed_json["submissionId"]
+        stderr = parsed_json["stderr"]
         new(
           submission_id: submission_id,
           stderr: stderr,

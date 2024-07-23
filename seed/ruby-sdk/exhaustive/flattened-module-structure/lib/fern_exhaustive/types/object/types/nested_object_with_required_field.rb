@@ -39,7 +39,7 @@ module SeedExhaustiveClient
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             parsed_json = JSON.parse(json_object)
-            string = struct["string"]
+            string = parsed_json["string"]
             if parsed_json["NestedObject"].nil?
               nested_object = nil
             else

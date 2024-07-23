@@ -8,6 +8,7 @@ Taken from FastAPI, and made a bit simpler
 https://github.com/tiangolo/fastapi/blob/master/fastapi/encoders.py
 """
 
+import base64
 import dataclasses
 import datetime as dt
 from collections import defaultdict
@@ -55,6 +56,8 @@ def jsonable_encoder(obj: Any, custom_encoder: Optional[Dict[Any, Callable[[Any]
     if dataclasses.is_dataclass(obj):
         obj_dict = dataclasses.asdict(obj)
         return jsonable_encoder(obj_dict, custom_encoder=custom_encoder)
+    if isinstance(obj, bytes):
+        return base64.b64encode(obj).decode("utf-8")
     if isinstance(obj, Enum):
         return obj.value
     if isinstance(obj, PurePath):

@@ -51,6 +51,7 @@ export class Optional {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body:
                 request != null
                     ? serializers.optional.sendOptionalBody.Request.jsonOrThrow(request, {

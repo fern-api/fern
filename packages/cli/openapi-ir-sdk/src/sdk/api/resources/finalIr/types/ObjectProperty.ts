@@ -4,7 +4,7 @@
 
 import * as FernOpenapiIr from "../../..";
 
-export interface ObjectProperty {
+export interface ObjectProperty extends FernOpenapiIr.WithAvailability {
     key: string;
     schema: FernOpenapiIr.Schema;
     /** The schemas that conflict with this property */

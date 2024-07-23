@@ -43,6 +43,9 @@ module SeedTraceClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/admin/store-test-submission-status/#{submission_id}"
       end
@@ -71,6 +74,9 @@ module SeedTraceClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/admin/store-test-submission-status-v2/#{submission_id}"
       end
@@ -97,6 +103,9 @@ module SeedTraceClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/admin/store-workspace-submission-status/#{submission_id}"
       end
@@ -125,6 +134,9 @@ module SeedTraceClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/admin/store-workspace-submission-status-v2/#{submission_id}"
       end
@@ -176,6 +188,9 @@ module SeedTraceClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = {
           **(request_options&.additional_body_parameters || {}),
           result: result,
@@ -227,6 +242,9 @@ module SeedTraceClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/admin/store-test-trace-v2/submission/#{submission_id}/testCase/#{test_case_id}"
       end
@@ -277,6 +295,9 @@ module SeedTraceClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = {
           **(request_options&.additional_body_parameters || {}),
           workspaceRunDetails: workspace_run_details,
@@ -323,6 +344,9 @@ module SeedTraceClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/admin/store-workspace-trace-v2/submission/#{submission_id}"
       end
@@ -361,6 +385,9 @@ module SeedTraceClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/admin/store-test-submission-status/#{submission_id}"
         end
@@ -391,6 +418,9 @@ module SeedTraceClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/admin/store-test-submission-status-v2/#{submission_id}"
         end
@@ -419,6 +449,9 @@ module SeedTraceClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/admin/store-workspace-submission-status/#{submission_id}"
         end
@@ -449,6 +482,9 @@ module SeedTraceClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/admin/store-workspace-submission-status-v2/#{submission_id}"
         end
@@ -502,6 +538,9 @@ module SeedTraceClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = {
             **(request_options&.additional_body_parameters || {}),
             result: result,
@@ -555,6 +594,9 @@ module SeedTraceClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/admin/store-test-trace-v2/submission/#{submission_id}/testCase/#{test_case_id}"
         end
@@ -607,6 +649,9 @@ module SeedTraceClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = {
             **(request_options&.additional_body_parameters || {}),
             workspaceRunDetails: workspace_run_details,
@@ -655,6 +700,9 @@ module SeedTraceClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/admin/store-workspace-trace-v2/submission/#{submission_id}"
         end

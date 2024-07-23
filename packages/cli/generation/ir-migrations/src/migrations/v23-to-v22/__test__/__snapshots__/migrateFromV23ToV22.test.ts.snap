@@ -12952,6 +12952,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "shape": {
         "_type": "enum",
         "_visit": [Function],
+        "default": undefined,
         "type": "enum",
         "values": [
           {

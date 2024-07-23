@@ -53,7 +53,7 @@ module SeedTraceClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        passed = struct["passed"]
+        passed = parsed_json["passed"]
         if parsed_json["actualResult"].nil?
           actual_result = nil
         else
@@ -66,7 +66,7 @@ module SeedTraceClient
           exception = parsed_json["exception"].to_json
           exception = SeedTraceClient::Submission::ExceptionV2.from_json(json_object: exception)
         end
-        stdout = struct["stdout"]
+        stdout = parsed_json["stdout"]
         new(
           passed: passed,
           actual_result: actual_result,

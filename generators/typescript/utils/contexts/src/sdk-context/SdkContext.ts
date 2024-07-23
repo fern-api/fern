@@ -12,6 +12,7 @@ import { SdkErrorContext } from "./sdk-error";
 import { SdkErrorSchemaContext } from "./sdk-error-schema";
 import { SdkInlinedRequestBodySchemaContext } from "./sdk-inlined-request-body-schema";
 import { TimeoutSdkErrorContext } from "./timeout-sdk-error";
+import { VersionContext } from "./version";
 
 export interface SdkContext extends ModelContext {
     ir: IntermediateRepresentation;
@@ -27,9 +28,11 @@ export interface SdkContext extends ModelContext {
     timeoutSdkError: TimeoutSdkErrorContext;
     requestWrapper: RequestWrapperContext;
     sdkClientClass: SdkClientClassContext;
+    version: VersionContext;
     targetRuntime: JavaScriptRuntime;
     includeSerdeLayer: boolean;
     retainOriginalCasing: boolean;
     generateOAuthClients: boolean;
     inlineFileProperties: boolean;
+    omitUndefined: boolean;
 }

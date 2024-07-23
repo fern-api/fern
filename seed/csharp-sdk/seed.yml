@@ -1,5 +1,5 @@
 
-irVersion: v33
+irVersion: v51
 docker: fernapi/fern-csharp-sdk:latest
 dockerCommand: yarn workspace @fern-api/fern-csharp-sdk dockerTagLatest
 language: csharp

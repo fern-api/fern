@@ -225,7 +225,18 @@ export class ExampleEndpointFactory {
             }
         }
 
-        const requestResponsePairs = consolidateRequestResponseExamples(requestExamples, responseExamples);
+        let requestResponsePairs: RequestResponsePair[] = [];
+        if (endpoint.request != null && endpoint.response != null) {
+            requestResponsePairs = consolidateRequestResponseExamples(requestExamples, responseExamples);
+        } else if (endpoint.request != null) {
+            requestResponsePairs = requestExamples.map(([id, example]) => {
+                return { id, request: example, response: undefined };
+            });
+        } else if (endpoint.response != null) {
+            requestResponsePairs = responseExamples.map(([id, example]) => {
+                return { id, request: undefined, response: example };
+            });
+        }
 
         // Get all the code samples from incomplete examples
         const codeSamples = endpoint.examples
@@ -544,7 +555,8 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
                     audiences: [],
                     conflict: {},
                     generatedName: property.key,
-                    nameOverride: undefined
+                    nameOverride: undefined,
+                    availability: undefined
                 };
             })
             .filter(isNonNullish),
@@ -555,6 +567,7 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
         nameOverride: undefined,
         generatedName: "",
         groupName: undefined,
-        additionalProperties: false
+        additionalProperties: false,
+        availability: undefined
     });
 }

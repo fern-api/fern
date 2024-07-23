@@ -210,6 +210,13 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                         value: context.externalDependencies.fs.ReadStream._getReferenceToType()
                     })
                 );
+
+                types.push(
+                    this.maybeWrapFileArray({
+                        property,
+                        value: context.externalDependencies.blob.Blob._getReferenceToType()
+                    })
+                );
             },
             browser: () => {
                 types.push(
@@ -252,7 +259,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                             GeneratedFileUploadEndpointRequest.FORM_DATA_VARIABLE_NAME,
                             undefined,
                             undefined,
-                            context.coreUtilities.formDataUtils._instantiate()
+                            context.coreUtilities.formDataUtils.newFormData()
                         )
                     ],
                     ts.NodeFlags.Const
@@ -282,11 +289,13 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                             GeneratedFileUploadEndpointRequest.FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME,
                             undefined,
                             undefined,
-                            context.coreUtilities.formDataUtils.getRequest({
-                                referencetoFormData: ts.factory.createIdentifier(
-                                    GeneratedFileUploadEndpointRequest.FORM_DATA_VARIABLE_NAME
-                                )
-                            })
+                            ts.factory.createAwaitExpression(
+                                context.coreUtilities.formDataUtils.getRequest({
+                                    referencetoFormData: ts.factory.createIdentifier(
+                                        GeneratedFileUploadEndpointRequest.FORM_DATA_VARIABLE_NAME
+                                    )
+                                })
+                            )
                         )
                     ],
                     ts.NodeFlags.Const
@@ -299,12 +308,18 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
 
     public getFetcherRequestArgs(
         context: SdkContext
-    ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType"> {
+    ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "requestType" | "duplex"> {
         return {
             headers: this.getHeaders(context),
             queryParameters: this.queryParams != null ? this.queryParams.getReferenceTo(context) : undefined,
+            requestType: "file",
             body: context.coreUtilities.formDataUtils.getBody({
-                referencetoFormDataRequest: ts.factory.createIdentifier(
+                referencetoFormData: ts.factory.createIdentifier(
+                    GeneratedFileUploadEndpointRequest.FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME
+                )
+            }),
+            duplex: context.coreUtilities.formDataUtils.getDuplexSetting({
+                referencetoFormData: ts.factory.createIdentifier(
                     GeneratedFileUploadEndpointRequest.FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME
                 )
             })
@@ -321,7 +336,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
             endpoint: this.endpoint,
             additionalSpreadHeaders: [
                 context.coreUtilities.formDataUtils.getHeaders({
-                    referencetoFormDataRequest: ts.factory.createIdentifier(
+                    referencetoFormData: ts.factory.createIdentifier(
                         GeneratedFileUploadEndpointRequest.FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME
                     )
                 })

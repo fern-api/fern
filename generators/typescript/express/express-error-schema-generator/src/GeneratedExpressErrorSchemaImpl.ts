@@ -72,7 +72,8 @@ export class GeneratedExpressErrorSchemaImpl
                     .getSchemaOfNamedType(this.type, { isGeneratingSchema: false })
                     .jsonOrThrow(referenceToBody, {
                         ...getSchemaOptions({
-                            allowExtraFields: this.allowExtraFields
+                            allowExtraFields: this.allowExtraFields,
+                            omitUndefined: false
                         })
                     });
             case "unknown":
@@ -81,7 +82,8 @@ export class GeneratedExpressErrorSchemaImpl
             case "container":
                 return this.getReferenceToZurgSchema(context).jsonOrThrow(referenceToBody, {
                     ...getSchemaOptions({
-                        allowExtraFields: this.allowExtraFields
+                        allowExtraFields: this.allowExtraFields,
+                        omitUndefined: false
                     })
                 });
             default:

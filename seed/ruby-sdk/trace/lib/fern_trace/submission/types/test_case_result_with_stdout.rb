@@ -43,7 +43,7 @@ module SeedTraceClient
           result = parsed_json["result"].to_json
           result = SeedTraceClient::Submission::TestCaseResult.from_json(json_object: result)
         end
-        stdout = struct["stdout"]
+        stdout = parsed_json["stdout"]
         new(
           result: result,
           stdout: stdout,

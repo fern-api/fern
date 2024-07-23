@@ -9,20 +9,22 @@ import * as core from "../../../../core";
 export const ObjectProperty: core.serialization.ObjectSchema<
     serializers.ObjectProperty.Raw,
     FernOpenapiIr.ObjectProperty
-> = core.serialization.objectWithoutOptionalProperties({
-    key: core.serialization.string(),
-    schema: core.serialization.lazy(async () => (await import("../../..")).Schema),
-    conflict: core.serialization.record(
-        core.serialization.lazy(async () => (await import("../../..")).SchemaId),
-        core.serialization.lazyObject(async () => (await import("../../..")).ObjectPropertyConflictInfo)
-    ),
-    generatedName: core.serialization.string(),
-    nameOverride: core.serialization.string().optional(),
-    audiences: core.serialization.list(core.serialization.string()),
-});
+> = core.serialization
+    .objectWithoutOptionalProperties({
+        key: core.serialization.string(),
+        schema: core.serialization.lazy(async () => (await import("../../..")).Schema),
+        conflict: core.serialization.record(
+            core.serialization.lazy(async () => (await import("../../..")).SchemaId),
+            core.serialization.lazyObject(async () => (await import("../../..")).ObjectPropertyConflictInfo)
+        ),
+        generatedName: core.serialization.string(),
+        nameOverride: core.serialization.string().optional(),
+        audiences: core.serialization.list(core.serialization.string()),
+    })
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAvailability));
 
 export declare namespace ObjectProperty {
-    interface Raw {
+    interface Raw extends serializers.WithAvailability.Raw {
         key: string;
         schema: serializers.Schema.Raw;
         conflict: Record<serializers.SchemaId.Raw, serializers.ObjectPropertyConflictInfo.Raw>;

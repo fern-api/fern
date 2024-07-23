@@ -2,6 +2,7 @@
 
 exports[`optional-multipart optional-multipart parse open api 1`] = `
 {
+  "apiVersion": null,
   "basePath": null,
   "channel": [],
   "description": null,
@@ -16,17 +17,20 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "generatedRequestName": "SpeechOperationRequest",
       "headers": [
         {
+          "availability": null,
           "description": "Your API key.",
           "env": null,
           "name": "an-api-key",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Your API key.",
             "generatedName": "SpeechOperationRequestAnApiKey",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": "Your API key.",
               "generatedName": "SpeechOperationRequestAnApiKey",
               "groupName": null,
@@ -52,9 +56,11 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "path": "/v1/speech/{voice_id}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "voice_id",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "SpeechOperationRequestVoiceId",
             "groupName": null,
@@ -74,16 +80,19 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "some_query_param",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "SpeechOperationRequestSomeQueryParam",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "SpeechOperationRequestSomeQueryParam",
               "groupName": null,
@@ -121,12 +130,14 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "speechOperationRequestModelId",
                 "groupName": null,
                 "nameOverride": "SpeechBody",
                 "type": "optional",
                 "value": {
+                  "availability": null,
                   "description": null,
                   "generatedName": "SpeechOperationRequestModelId",
                   "groupName": null,
@@ -150,12 +161,14 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "speechOperationRequestVoiceSettings",
                 "groupName": null,
                 "nameOverride": "SpeechBody",
                 "type": "optional",
                 "value": {
+                  "availability": null,
                   "description": "Voice settings.",
                   "generatedName": "SpeechOperationRequestVoiceSettings",
                   "groupName": null,
@@ -222,17 +235,20 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "generatedRequestName": "SpeechStreamOperationRequest",
       "headers": [
         {
+          "availability": null,
           "description": "Your API key.",
           "env": null,
           "name": "an-api-key",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": "Your API key.",
             "generatedName": "SpeechStreamOperationRequestAnApiKey",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": "Your API key.",
               "generatedName": "SpeechStreamOperationRequestAnApiKey",
               "groupName": null,
@@ -258,9 +274,11 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "path": "/v1/speech/{voice_id}/stream",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "voice_id",
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "SpeechStreamOperationRequestVoiceId",
             "groupName": null,
@@ -280,16 +298,19 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       ],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "some_query_param",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "SpeechStreamOperationRequestSomeQueryParam",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "SpeechStreamOperationRequestSomeQueryParam",
               "groupName": null,
@@ -327,12 +348,14 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "speechStreamOperationRequestModelId",
                 "groupName": null,
                 "nameOverride": "SpeechBodyStream",
                 "type": "optional",
                 "value": {
+                  "availability": null,
                   "description": null,
                   "generatedName": "SpeechStreamOperationRequestModelId",
                   "groupName": null,
@@ -356,12 +379,14 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "speechStreamOperationRequestVoiceSettings",
                 "groupName": null,
                 "nameOverride": "SpeechBodyStream",
                 "type": "optional",
                 "value": {
+                  "availability": null,
                   "description": "Voice settings.",
                   "generatedName": "SpeechStreamOperationRequestVoiceSettings",
                   "groupName": null,
@@ -385,12 +410,14 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "speechStreamOperationRequestMyEnum",
                 "groupName": null,
                 "nameOverride": "SpeechBodyStream",
                 "type": "optional",
                 "value": {
+                  "availability": null,
                   "description": null,
                   "generatedName": "SpeechStreamOperationRequestMyEnum",
                   "groupName": null,
@@ -398,6 +425,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "availability": null,
                       "casing": {
                         "camel": null,
                         "pascal": null,
@@ -410,6 +438,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
                       "value": "default",
                     },
                     {
+                      "availability": null,
                       "casing": {
                         "camel": null,
                         "pascal": null,
@@ -432,12 +461,14 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
             "schema": {
               "type": "json",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "speechStreamOperationRequestMyRef",
                 "groupName": null,
                 "nameOverride": "SpeechBodyStream",
                 "type": "optional",
                 "value": {
+                  "availability": null,
                   "description": null,
                   "generatedName": "SpeechStreamOperationRequestMyRef",
                   "groupName": null,
@@ -471,6 +502,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SpeechBody",
       "groupName": null,
@@ -478,11 +510,13 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "speechBodyAudio",
           "key": "audio",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "The audio file.",
             "generatedName": "SpeechBodyAudio",
             "groupName": null,
@@ -500,17 +534,20 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "speechBodyModelId",
           "key": "model_id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "speechBodyModelId",
             "groupName": null,
             "nameOverride": "SpeechBody",
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "SpeechBodyModelId",
               "groupName": null,
@@ -529,17 +566,20 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "speechBodyVoiceSettings",
           "key": "voice_settings",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "speechBodyVoiceSettings",
             "groupName": null,
             "nameOverride": "SpeechBody",
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "Voice settings.",
               "generatedName": "SpeechBodyVoiceSettings",
               "groupName": null,
@@ -563,6 +603,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SpeechBodyStream",
       "groupName": null,
@@ -570,11 +611,13 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "speechBodyStreamAudio",
           "key": "audio",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": "The audio file.",
             "generatedName": "SpeechBodyStreamAudio",
             "groupName": null,
@@ -592,17 +635,20 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "speechBodyStreamModelId",
           "key": "model_id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "speechBodyStreamModelId",
             "groupName": null,
             "nameOverride": "SpeechBodyStream",
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "SpeechBodyStreamModelId",
               "groupName": null,
@@ -621,17 +667,20 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "speechBodyStreamVoiceSettings",
           "key": "voice_settings",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "speechBodyStreamVoiceSettings",
             "groupName": null,
             "nameOverride": "SpeechBodyStream",
             "type": "optional",
             "value": {
+              "availability": null,
               "description": "Voice settings.",
               "generatedName": "SpeechBodyStreamVoiceSettings",
               "groupName": null,
@@ -650,17 +699,20 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "speechBodyStreamMyEnum",
           "key": "my_enum",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "speechBodyStreamMyEnum",
             "groupName": null,
             "nameOverride": "SpeechBodyStream",
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "SpeechBodyStreamMyEnum",
               "groupName": null,
@@ -668,6 +720,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "type": "enum",
               "values": [
                 {
+                  "availability": null,
                   "casing": {
                     "camel": null,
                     "pascal": null,
@@ -680,6 +733,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
                   "value": "default",
                 },
                 {
+                  "availability": null,
                   "casing": {
                     "camel": null,
                     "pascal": null,
@@ -697,17 +751,20 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "speechBodyStreamMyRef",
           "key": "my_ref",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "speechBodyStreamMyRef",
             "groupName": null,
             "nameOverride": "SpeechBodyStream",
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "SpeechBodyStreamMyRef",
               "groupName": null,
@@ -724,6 +781,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "RequestModel",
       "groupName": null,
@@ -731,11 +789,13 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "requestModelVoiceId",
           "key": "voice_id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "RequestModelVoiceId",
             "groupName": null,

@@ -8,7 +8,8 @@ export const makeRequest = async (
     requestBody: BodyInit | undefined,
     timeoutMs?: number,
     abortSignal?: AbortSignal,
-    withCredentials?: boolean
+    withCredentials?: boolean,
+    duplex?: "half"
 ): Promise<Response> => {
     const signals: AbortSignal[] = [];
 
@@ -31,6 +32,8 @@ export const makeRequest = async (
         body: requestBody,
         signal: newSignals,
         credentials: withCredentials ? "include" : undefined,
+        // @ts-ignore
+        duplex,
     });
 
     if (timeoutAbortId != null) {

@@ -2,6 +2,7 @@
 
 exports[`x-fern-token-variable-name x-fern-token-variable-name parse open api 1`] = `
 {
+  "apiVersion": null,
   "basePath": null,
   "channel": [],
   "description": null,
@@ -57,6 +58,7 @@ exports[`x-fern-token-variable-name x-fern-token-variable-name parse open api 1`
         "contentType": null,
         "description": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "ChatCompletionsCreateRequest",
           "groupName": null,
@@ -71,6 +73,7 @@ exports[`x-fern-token-variable-name x-fern-token-variable-name parse open api 1`
         "description": "Success!",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "ChatCompletionsCreateResponse",
           "groupName": null,
@@ -108,6 +111,7 @@ exports[`x-fern-token-variable-name x-fern-token-variable-name parse open api 1`
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Completion",
       "groupName": null,
@@ -115,17 +119,20 @@ exports[`x-fern-token-variable-name x-fern-token-variable-name parse open api 1`
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "completionText",
           "key": "text",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "completionText",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "CompletionText",
               "groupName": null,
@@ -149,6 +156,7 @@ exports[`x-fern-token-variable-name x-fern-token-variable-name parse open api 1`
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "CompletionChunk",
       "groupName": null,
@@ -156,17 +164,20 @@ exports[`x-fern-token-variable-name x-fern-token-variable-name parse open api 1`
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "completionChunkText",
           "key": "text",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "completionChunkText",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "CompletionChunkText",
               "groupName": null,
@@ -190,6 +201,7 @@ exports[`x-fern-token-variable-name x-fern-token-variable-name parse open api 1`
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "CreateCompletionRequest",
       "groupName": null,
@@ -197,17 +209,20 @@ exports[`x-fern-token-variable-name x-fern-token-variable-name parse open api 1`
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createCompletionRequestStream",
           "key": "stream",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "createCompletionRequestStream",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "CreateCompletionRequestStream",
               "groupName": null,
@@ -222,11 +237,13 @@ exports[`x-fern-token-variable-name x-fern-token-variable-name parse open api 1`
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "createCompletionRequestPrompt",
           "key": "prompt",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "CreateCompletionRequestPrompt",
             "groupName": null,

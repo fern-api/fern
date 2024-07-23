@@ -31,7 +31,8 @@ module SeedExhaustiveClient
       # @return [SeedExhaustiveClient::GeneralErrors::BadObjectRequestInfo]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        message = struct["message"]
+        parsed_json = JSON.parse(json_object)
+        message = parsed_json["message"]
         new(message: message, additional_properties: struct)
       end
 

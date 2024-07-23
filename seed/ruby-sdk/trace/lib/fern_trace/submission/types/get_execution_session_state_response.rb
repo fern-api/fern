@@ -50,8 +50,8 @@ module SeedTraceClient
           value = value.to_json
           SeedTraceClient::Submission::ExecutionSessionState.from_json(json_object: value)
         end
-        num_warming_instances = struct["numWarmingInstances"]
-        warming_session_ids = struct["warmingSessionIds"]
+        num_warming_instances = parsed_json["numWarmingInstances"]
+        warming_session_ids = parsed_json["warmingSessionIds"]
         new(
           states: states,
           num_warming_instances: num_warming_instances,

@@ -67,12 +67,14 @@ export function convertAsyncSyncOperation({
             nameOverride: undefined,
             generatedName: getGeneratedTypeName([headerToIgnore]),
             description: undefined,
+            availability: undefined,
             value: LiteralSchemaValue.string(headerValue),
             groupName: undefined
         }),
         description: undefined,
         parameterNameOverride: undefined,
-        env: undefined
+        env: undefined,
+        availability: undefined
     });
 
     return {

@@ -50,7 +50,7 @@ module SeedPaginationClient
           page = parsed_json["page"].to_json
           page = SeedPaginationClient::Users::Page.from_json(json_object: page)
         end
-        total_count = struct["total_count"]
+        total_count = parsed_json["total_count"]
         data = parsed_json["data"]&.map do |item|
           item = item.to_json
           SeedPaginationClient::Users::User.from_json(json_object: item)

@@ -52,10 +52,11 @@ module SeedTraceClient
       # @return [SeedTraceClient::Submission::ExecutionSessionResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        session_id = struct["sessionId"]
-        execution_session_url = struct["executionSessionUrl"]
-        language = struct["language"]
-        status = struct["status"]
+        parsed_json = JSON.parse(json_object)
+        session_id = parsed_json["sessionId"]
+        execution_session_url = parsed_json["executionSessionUrl"]
+        language = parsed_json["language"]
+        status = parsed_json["status"]
         new(
           session_id: session_id,
           execution_session_url: execution_session_url,

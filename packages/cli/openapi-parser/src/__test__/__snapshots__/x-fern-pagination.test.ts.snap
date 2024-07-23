@@ -2,6 +2,7 @@
 
 exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
 {
+  "apiVersion": null,
   "basePath": null,
   "channel": [],
   "description": null,
@@ -83,16 +84,19 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "pageNumber",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ListRequestPageNumber",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ListRequestPageNumber",
               "groupName": null,
@@ -117,6 +121,7 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
         "description": "Success",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "ListResponse",
           "groupName": null,
@@ -208,16 +213,19 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "pageNumber",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ListRequestPageNumber",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ListRequestPageNumber",
               "groupName": null,
@@ -236,16 +244,19 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
           },
         },
         {
+          "availability": null,
           "description": null,
           "name": "limit",
           "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "ListRequestLimit",
             "groupName": null,
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "ListRequestLimit",
               "groupName": null,
@@ -270,6 +281,7 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
         "description": "Success",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "ListResponse",
           "groupName": null,
@@ -298,6 +310,7 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "User",
       "groupName": null,
@@ -305,17 +318,20 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "userId",
           "key": "id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "userId",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "UserId",
               "groupName": null,
@@ -334,17 +350,20 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "userName",
           "key": "name",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "userName",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "UserName",
               "groupName": null,
@@ -363,17 +382,20 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "userEmail",
           "key": "email",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "userEmail",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "UserEmail",
               "groupName": null,
@@ -392,17 +414,20 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "userAge",
           "key": "age",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "userAge",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "UserAge",
               "groupName": null,
@@ -427,6 +452,7 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "UsersResponse",
       "groupName": null,
@@ -434,23 +460,27 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "usersResponseUsers",
           "key": "users",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "usersResponseUsers",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "UsersResponseUsers",
               "groupName": null,
               "nameOverride": null,
               "type": "array",
               "value": {
+                "availability": null,
                 "description": null,
                 "generatedName": "UsersResponseUsersItem",
                 "groupName": null,

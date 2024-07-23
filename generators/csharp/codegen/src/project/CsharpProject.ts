@@ -319,7 +319,7 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
         const result: string[] = [];
         result.push('<PackageReference Include="OneOf" Version="3.0.263" />');
         result.push('<PackageReference Include="OneOf.Extended" Version="3.0.263" />');
-        result.push('<PackageReference Include="System.Text.Json" Version="8.0.3" />');
+        result.push('<PackageReference Include="System.Text.Json" Version="8.0.4" />');
         for (const [name, version] of Object.entries(this.context.getExtraDependencies())) {
             result.push(`<PackageReference Include="${name}" Version="${version}" />`);
         }
