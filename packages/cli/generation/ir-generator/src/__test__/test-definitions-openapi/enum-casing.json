@@ -206,7 +206,8 @@
                                         "packagePath": [],
                                         "file": null
                                     },
-                                    "typeId": "type_:ExampleResponseStatus"
+                                    "typeId": "type_:ExampleResponseStatus",
+                                    "default": null
                                 }
                             }
                         },
@@ -510,7 +511,8 @@
                                         "packagePath": [],
                                         "file": null
                                     },
-                                    "typeId": "type_:ExampleResponse"
+                                    "typeId": "type_:ExampleResponse",
+                                    "default": null
                                 },
                                 "docs": "Successful response"
                             }
@@ -680,7 +682,8 @@
                                                                                 "packagePath": [],
                                                                                 "file": null
                                                                             },
-                                                                            "typeId": "type_:ExampleResponseStatus"
+                                                                            "typeId": "type_:ExampleResponseStatus",
+                                                                            "default": null
                                                                         }
                                                                     }
                                                                 },
@@ -1127,7 +1130,8 @@
                                                                                 "packagePath": [],
                                                                                 "file": null
                                                                             },
-                                                                            "typeId": "type_:ExampleResponseStatus"
+                                                                            "typeId": "type_:ExampleResponseStatus",
+                                                                            "default": null
                                                                         }
                                                                     }
                                                                 },
@@ -1408,7 +1412,7 @@
                                         }
                                     }
                                 },
-                                "id": "0edd746d92598770fa1ea83360bdb11526fc6701",
+                                "id": "1046203d3b3e49ed55f9081d6790df3b5e2e97b0",
                                 "docs": null
                             }
                         }

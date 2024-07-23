@@ -26,6 +26,8 @@ export * from "./PrimitiveSchemaWithExample";
 export * from "./PrimitiveSchemaValueWithExample";
 export * from "./IntWithExample";
 export * from "./Int64WithExample";
+export * from "./UintWithExample";
+export * from "./Uint64WithExample";
 export * from "./FloatWithExample";
 export * from "./DoubleWithExample";
 export * from "./StringSchemaWithExample";

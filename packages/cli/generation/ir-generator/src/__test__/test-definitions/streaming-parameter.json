@@ -708,7 +708,8 @@
                                                 }
                                             }
                                         },
-                                        "typeId": "type_dummy:RegularResponse"
+                                        "typeId": "type_dummy:RegularResponse",
+                                        "default": null
                                     },
                                     "docs": null
                                 }
@@ -779,7 +780,8 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_dummy:StreamResponse"
+                                    "typeId": "type_dummy:StreamResponse",
+                                    "default": null
                                 },
                                 "terminator": null,
                                 "docs": null

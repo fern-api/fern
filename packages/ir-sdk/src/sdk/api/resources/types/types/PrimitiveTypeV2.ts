@@ -5,6 +5,8 @@
 import * as FernIr from "../../..";
 
 export type PrimitiveTypeV2 =
+    | FernIr.PrimitiveTypeV2.Uint
+    | FernIr.PrimitiveTypeV2.Uint64
     | FernIr.PrimitiveTypeV2.Integer
     | FernIr.PrimitiveTypeV2.Double
     | FernIr.PrimitiveTypeV2.String
@@ -13,6 +15,14 @@ export type PrimitiveTypeV2 =
     | FernIr.PrimitiveTypeV2.BigInteger;
 
 export declare namespace PrimitiveTypeV2 {
+    interface Uint extends _Utils {
+        type: "uint";
+    }
+
+    interface Uint64 extends _Utils {
+        type: "uint64";
+    }
+
     interface Integer extends FernIr.IntegerType, _Utils {
         type: "integer";
     }
@@ -42,6 +52,8 @@ export declare namespace PrimitiveTypeV2 {
     }
 
     interface _Visitor<_Result> {
+        uint: () => _Result;
+        uint64: () => _Result;
         integer: (value: FernIr.IntegerType) => _Result;
         double: (value: FernIr.DoubleType) => _Result;
         string: (value: FernIr.StringType) => _Result;
@@ -53,6 +65,30 @@ export declare namespace PrimitiveTypeV2 {
 }
 
 export const PrimitiveTypeV2 = {
+    uint: (): FernIr.PrimitiveTypeV2.Uint => {
+        return {
+            type: "uint",
+            _visit: function <_Result>(
+                this: FernIr.PrimitiveTypeV2.Uint,
+                visitor: FernIr.PrimitiveTypeV2._Visitor<_Result>
+            ) {
+                return FernIr.PrimitiveTypeV2._visit(this, visitor);
+            },
+        };
+    },
+
+    uint64: (): FernIr.PrimitiveTypeV2.Uint64 => {
+        return {
+            type: "uint64",
+            _visit: function <_Result>(
+                this: FernIr.PrimitiveTypeV2.Uint64,
+                visitor: FernIr.PrimitiveTypeV2._Visitor<_Result>
+            ) {
+                return FernIr.PrimitiveTypeV2._visit(this, visitor);
+            },
+        };
+    },
+
     integer: (value: FernIr.IntegerType): FernIr.PrimitiveTypeV2.Integer => {
         return {
             ...value,
@@ -133,6 +169,10 @@ export const PrimitiveTypeV2 = {
 
     _visit: <_Result>(value: FernIr.PrimitiveTypeV2, visitor: FernIr.PrimitiveTypeV2._Visitor<_Result>): _Result => {
         switch (value.type) {
+            case "uint":
+                return visitor.uint();
+            case "uint64":
+                return visitor.uint64();
             case "integer":
                 return visitor.integer(value);
             case "double":

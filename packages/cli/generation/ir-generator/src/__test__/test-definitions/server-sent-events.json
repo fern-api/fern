@@ -479,7 +479,8 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_completions:StreamedCompletion"
+                                    "typeId": "type_completions:StreamedCompletion",
+                                    "default": null
                                 },
                                 "terminator": "[[DONE]]",
                                 "docs": null
@@ -1157,7 +1158,7 @@
                                         ]
                                     }
                                 },
-                                "id": "2e6369348386d907da9a1e29451dc69b6288e307",
+                                "id": "d4666c26814c4aa9f387b5b3dd8a0a44c1eef4ff",
                                 "docs": null
                             }
                         }

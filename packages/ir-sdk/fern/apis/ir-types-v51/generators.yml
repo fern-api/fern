@@ -1,16 +1,4 @@
-default-group: local
 groups:
-  local:
-    generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 0.8.13
-        output:
-          location: local-file-system
-          path: ../../../src/sdk
-        config:
-          outputSourceFiles: true
-          includeUtilsOnUnionMembers: true
-          noOptionalProperties: true
   node:
     generators:
       - name: fernapi/fern-typescript-node-sdk

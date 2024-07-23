@@ -443,7 +443,8 @@
                                 "packagePath": [],
                                 "file": null
                             },
-                            "typeId": "type_:Color"
+                            "typeId": "type_:Color",
+                            "default": null
                         },
                         "docs": null
                     },
@@ -474,7 +475,8 @@
                                 "packagePath": [],
                                 "file": null
                             },
-                            "typeId": "type_:Operand"
+                            "typeId": "type_:Operand",
+                            "default": null
                         },
                         "docs": null
                     }
@@ -744,7 +746,8 @@
                                         "packagePath": [],
                                         "file": null
                                     },
-                                    "typeId": "type_:Operand"
+                                    "typeId": "type_:Operand",
+                                    "default": null
                                 },
                                 "docs": null
                             },
@@ -801,7 +804,8 @@
                                                 "packagePath": [],
                                                 "file": null
                                             },
-                                            "typeId": "type_:Operand"
+                                            "typeId": "type_:Operand",
+                                            "default": null
                                         }
                                     }
                                 },
@@ -856,7 +860,8 @@
                                         "packagePath": [],
                                         "file": null
                                     },
-                                    "typeId": "type_:ColorOrOperand"
+                                    "typeId": "type_:ColorOrOperand",
+                                    "default": null
                                 },
                                 "docs": null
                             },
@@ -913,7 +918,8 @@
                                                 "packagePath": [],
                                                 "file": null
                                             },
-                                            "typeId": "type_:ColorOrOperand"
+                                            "typeId": "type_:ColorOrOperand",
+                                            "default": null
                                         }
                                     }
                                 },
@@ -1637,7 +1643,8 @@
                                     "packagePath": [],
                                     "file": null
                                 },
-                                "typeId": "type_:Operand"
+                                "typeId": "type_:Operand",
+                                "default": null
                             },
                             "location": "ENDPOINT",
                             "variable": null,
@@ -1693,7 +1700,8 @@
                                             "packagePath": [],
                                             "file": null
                                         },
-                                        "typeId": "type_:Operand"
+                                        "typeId": "type_:Operand",
+                                        "default": null
                                     }
                                 }
                             },
@@ -1747,7 +1755,8 @@
                                     "packagePath": [],
                                     "file": null
                                 },
-                                "typeId": "type_:ColorOrOperand"
+                                "typeId": "type_:ColorOrOperand",
+                                "default": null
                             },
                             "location": "ENDPOINT",
                             "variable": null,
@@ -1803,7 +1812,8 @@
                                             "packagePath": [],
                                             "file": null
                                         },
-                                        "typeId": "type_:ColorOrOperand"
+                                        "typeId": "type_:ColorOrOperand",
+                                        "default": null
                                     }
                                 }
                             },
@@ -1859,7 +1869,8 @@
                                     "packagePath": [],
                                     "file": null
                                 },
-                                "typeId": "type_:Operand"
+                                "typeId": "type_:Operand",
+                                "default": null
                             },
                             "location": "ENDPOINT",
                             "variable": null,
@@ -1915,7 +1926,8 @@
                                             "packagePath": [],
                                             "file": null
                                         },
-                                        "typeId": "type_:Operand"
+                                        "typeId": "type_:Operand",
+                                        "default": null
                                     }
                                 }
                             },
@@ -1969,7 +1981,8 @@
                                     "packagePath": [],
                                     "file": null
                                 },
-                                "typeId": "type_:ColorOrOperand"
+                                "typeId": "type_:ColorOrOperand",
+                                "default": null
                             },
                             "location": "ENDPOINT",
                             "variable": null,
@@ -2025,7 +2038,8 @@
                                             "packagePath": [],
                                             "file": null
                                         },
-                                        "typeId": "type_:ColorOrOperand"
+                                        "typeId": "type_:ColorOrOperand",
+                                        "default": null
                                     }
                                 }
                             },
@@ -2239,7 +2253,8 @@
                                                             "packagePath": [],
                                                             "file": null
                                                         },
-                                                        "typeId": "type_:Operand"
+                                                        "typeId": "type_:Operand",
+                                                        "default": null
                                                     }
                                                 }
                                             },
@@ -2508,7 +2523,8 @@
                                                             "packagePath": [],
                                                             "file": null
                                                         },
-                                                        "typeId": "type_:ColorOrOperand"
+                                                        "typeId": "type_:ColorOrOperand",
+                                                        "default": null
                                                     }
                                                 }
                                             },
@@ -2728,7 +2744,8 @@
                                                             "packagePath": [],
                                                             "file": null
                                                         },
-                                                        "typeId": "type_:Operand"
+                                                        "typeId": "type_:Operand",
+                                                        "default": null
                                                     }
                                                 }
                                             },
@@ -2997,7 +3014,8 @@
                                                             "packagePath": [],
                                                             "file": null
                                                         },
-                                                        "typeId": "type_:ColorOrOperand"
+                                                        "typeId": "type_:ColorOrOperand",
+                                                        "default": null
                                                     }
                                                 }
                                             },
@@ -3017,7 +3035,7 @@
                                         "value": null
                                     }
                                 },
-                                "id": "0abe30496b450999092745ee541eb74b89976463",
+                                "id": "d100c26e3f9e0c64ee1c300523f84d1366c3ce64",
                                 "docs": null
                             }
                         }
@@ -3169,7 +3187,8 @@
                                     "packagePath": [],
                                     "file": null
                                 },
-                                "typeId": "type_:Operand"
+                                "typeId": "type_:Operand",
+                                "default": null
                             },
                             "allowMultiple": false,
                             "availability": null,
@@ -3228,7 +3247,8 @@
                                             "packagePath": [],
                                             "file": null
                                         },
-                                        "typeId": "type_:Operand"
+                                        "typeId": "type_:Operand",
+                                        "default": null
                                     }
                                 }
                             },
@@ -3285,7 +3305,8 @@
                                     "packagePath": [],
                                     "file": null
                                 },
-                                "typeId": "type_:ColorOrOperand"
+                                "typeId": "type_:ColorOrOperand",
+                                "default": null
                             },
                             "allowMultiple": false,
                             "availability": null,
@@ -3344,7 +3365,8 @@
                                             "packagePath": [],
                                             "file": null
                                         },
-                                        "typeId": "type_:ColorOrOperand"
+                                        "typeId": "type_:ColorOrOperand",
+                                        "default": null
                                     }
                                 }
                             },
@@ -3854,7 +3876,8 @@
                                                             "packagePath": [],
                                                             "file": null
                                                         },
-                                                        "typeId": "type_:Operand"
+                                                        "typeId": "type_:Operand",
+                                                        "default": null
                                                     }
                                                 }
                                             },
@@ -4129,7 +4152,8 @@
                                                             "packagePath": [],
                                                             "file": null
                                                         },
-                                                        "typeId": "type_:ColorOrOperand"
+                                                        "typeId": "type_:ColorOrOperand",
+                                                        "default": null
                                                     }
                                                 }
                                             },
@@ -4146,7 +4170,7 @@
                                         "value": null
                                     }
                                 },
-                                "id": "3719ab4a5604653a10e9fa06a41ea864af097a6b",
+                                "id": "0269ea0c0aa0f335ff3384e7d1f573b8fb319cce",
                                 "docs": null
                             }
                         }
@@ -4241,7 +4265,8 @@
                                     "packagePath": [],
                                     "file": null
                                 },
-                                "typeId": "type_:Operand"
+                                "typeId": "type_:Operand",
+                                "default": null
                             },
                             "allowMultiple": true,
                             "availability": null,
@@ -4300,7 +4325,8 @@
                                             "packagePath": [],
                                             "file": null
                                         },
-                                        "typeId": "type_:Operand"
+                                        "typeId": "type_:Operand",
+                                        "default": null
                                     }
                                 }
                             },
@@ -4357,7 +4383,8 @@
                                     "packagePath": [],
                                     "file": null
                                 },
-                                "typeId": "type_:ColorOrOperand"
+                                "typeId": "type_:ColorOrOperand",
+                                "default": null
                             },
                             "allowMultiple": true,
                             "availability": null,
@@ -4416,7 +4443,8 @@
                                             "packagePath": [],
                                             "file": null
                                         },
-                                        "typeId": "type_:ColorOrOperand"
+                                        "typeId": "type_:ColorOrOperand",
+                                        "default": null
                                     }
                                 }
                             },
@@ -4700,7 +4728,8 @@
                                                             "packagePath": [],
                                                             "file": null
                                                         },
-                                                        "typeId": "type_:Operand"
+                                                        "typeId": "type_:Operand",
+                                                        "default": null
                                                     }
                                                 }
                                             },
@@ -4975,7 +5004,8 @@
                                                             "packagePath": [],
                                                             "file": null
                                                         },
-                                                        "typeId": "type_:ColorOrOperand"
+                                                        "typeId": "type_:ColorOrOperand",
+                                                        "default": null
                                                     }
                                                 }
                                             },
@@ -4992,7 +5022,7 @@
                                         "value": null
                                     }
                                 },
-                                "id": "dad3d75fc2f8ad852ada6e8d7892664ef2bb5c9c",
+                                "id": "32010cc5814da83294a669c568819f920c009756",
                                 "docs": null
                             }
                         }

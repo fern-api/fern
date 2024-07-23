@@ -218,6 +218,18 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): A
                             type: "string"
                         };
                     },
+                    uint: () => {
+                        // TODO(amckinney): Add support for uint in FDR.
+                        return {
+                            type: "integer"
+                        };
+                    },
+                    uint64: () => {
+                        // TODO(amckinney): Add support for uint64 in FDR.
+                        return {
+                            type: "integer"
+                        };
+                    },
                     _other: () => {
                         throw new Error("Unknown primitive: " + primitive.v1);
                     }

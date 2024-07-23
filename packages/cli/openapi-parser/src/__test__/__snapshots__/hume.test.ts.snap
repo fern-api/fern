@@ -759,6 +759,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
     },
     "Bcp47Tag": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "Bcp47Tag",
       "groupName": null,
@@ -1538,6 +1539,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
     },
     "Direction": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "Direction",
       "groupName": null,
@@ -2450,6 +2452,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
     },
     "Granularity": {
       "availability": null,
+      "default": null,
       "description": "The granularity at which to generate predictions. \`utterance\` corresponds to a natural pause or break in conversation, while \`conversational_turn\` corresponds to a change in speaker.",
       "generatedName": "Granularity",
       "groupName": null,
@@ -5187,6 +5190,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
     },
     "SortBy": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "SortBy",
       "groupName": null,
@@ -5533,6 +5537,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
     },
     "Status": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "Status",
       "groupName": null,
@@ -5857,6 +5862,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
     },
     "When": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "When",
       "groupName": null,

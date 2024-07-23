@@ -431,7 +431,8 @@
                                     }
                                 }
                             },
-                            "typeId": "type_user:UserId"
+                            "typeId": "type_user:UserId",
+                            "default": null
                         },
                         "availability": null,
                         "docs": null
@@ -671,7 +672,8 @@
                                         }
                                     }
                                 },
-                                "typeId": "type_user:UserId"
+                                "typeId": "type_user:UserId",
+                                "default": null
                             },
                             "location": "ENDPOINT",
                             "variable": null,
@@ -763,7 +765,8 @@
                                         }
                                     }
                                 },
-                                "typeId": "type_user:UserId"
+                                "typeId": "type_user:UserId",
+                                "default": null
                             },
                             "location": "ENDPOINT",
                             "variable": null,
@@ -843,7 +846,8 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_user:User"
+                                    "typeId": "type_user:User",
+                                    "default": null
                                 },
                                 "docs": null
                             }
@@ -1333,7 +1337,7 @@
                                         }
                                     }
                                 },
-                                "id": "d6e58036dec3ee131ffbdda3f429178d976e60c1",
+                                "id": "9a346ffd576198ccb27f1dc4e68560e883cc887f",
                                 "docs": null
                             }
                         }

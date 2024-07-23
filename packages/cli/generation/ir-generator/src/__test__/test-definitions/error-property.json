@@ -300,7 +300,8 @@
                         }
                     }
                 },
-                "typeId": "type_errors:PropertyBasedErrorTestBody"
+                "typeId": "type_errors:PropertyBasedErrorTestBody",
+                "default": null
             },
             "examples": [],
             "docs": null

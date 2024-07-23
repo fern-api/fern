@@ -167,7 +167,8 @@
                                 "packagePath": [],
                                 "file": null
                             },
-                            "typeId": "type_:StringResponse"
+                            "typeId": "type_:StringResponse",
+                            "default": null
                         }
                     }
                 },
@@ -201,7 +202,8 @@
                                 "packagePath": [],
                                 "file": null
                             },
-                            "typeId": "type_:StringResponse"
+                            "typeId": "type_:StringResponse",
+                            "default": null
                         }
                     }
                 }
@@ -561,7 +563,8 @@
                                     }
                                 }
                             },
-                            "typeId": "type_service:WithDocs"
+                            "typeId": "type_service:WithDocs",
+                            "default": null
                         }
                     }
                 },
@@ -633,7 +636,8 @@
                                     }
                                 }
                             },
-                            "typeId": "type_service:WithDocs"
+                            "typeId": "type_service:WithDocs",
+                            "default": null
                         }
                     }
                 }
@@ -1049,7 +1053,8 @@
                                     }
                                 }
                             },
-                            "typeId": "type_service:Movie"
+                            "typeId": "type_service:Movie",
+                            "default": null
                         },
                         "availability": null,
                         "docs": null
@@ -1289,7 +1294,8 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_service:Response"
+                                    "typeId": "type_service:Response",
+                                    "default": null
                                 },
                                 "responseProperty": {
                                     "name": {
@@ -1378,7 +1384,8 @@
                                                 }
                                             }
                                         },
-                                        "typeId": "type_service:Movie"
+                                        "typeId": "type_service:Movie",
+                                        "default": null
                                     },
                                     "availability": null,
                                     "docs": null
@@ -1701,7 +1708,7 @@
                                         }
                                     }
                                 },
-                                "id": "cb19bc6cec276bee1feff4978764514fa6bc638d",
+                                "id": "41282de84322f3199bdde250ef773a8a6b727a25",
                                 "docs": null
                             }
                         }
@@ -1874,7 +1881,8 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_service:Response"
+                                    "typeId": "type_service:Response",
+                                    "default": null
                                 },
                                 "responseProperty": {
                                     "name": {
@@ -2097,7 +2105,8 @@
                                         "packagePath": [],
                                         "file": null
                                     },
-                                    "typeId": "type_:StringResponse"
+                                    "typeId": "type_:StringResponse",
+                                    "default": null
                                 },
                                 "responseProperty": {
                                     "name": {
@@ -2358,7 +2367,8 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_service:Response"
+                                    "typeId": "type_service:Response",
+                                    "default": null
                                 },
                                 "responseProperty": {
                                     "name": {
@@ -2689,7 +2699,8 @@
                                                     }
                                                 }
                                             },
-                                            "typeId": "type_service:Response"
+                                            "typeId": "type_service:Response",
+                                            "default": null
                                         }
                                     }
                                 },
@@ -2780,7 +2791,8 @@
                                                 }
                                             }
                                         },
-                                        "typeId": "type_service:Movie"
+                                        "typeId": "type_service:Movie",
+                                        "default": null
                                     },
                                     "availability": null,
                                     "docs": null
@@ -3103,7 +3115,7 @@
                                         }
                                     }
                                 },
-                                "id": "cb19bc6cec276bee1feff4978764514fa6bc638d",
+                                "id": "41282de84322f3199bdde250ef773a8a6b727a25",
                                 "docs": null
                             }
                         }
@@ -3276,7 +3288,8 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_service:OptionalWithDocs"
+                                    "typeId": "type_service:OptionalWithDocs",
+                                    "default": null
                                 },
                                 "responseProperty": {
                                     "name": {
@@ -3499,7 +3512,8 @@
                                         "packagePath": [],
                                         "file": null
                                     },
-                                    "typeId": "type_:OptionalStringResponse"
+                                    "typeId": "type_:OptionalStringResponse",
+                                    "default": null
                                 },
                                 "responseProperty": {
                                     "name": {

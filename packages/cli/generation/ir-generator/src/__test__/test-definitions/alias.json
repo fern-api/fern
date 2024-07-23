@@ -208,7 +208,8 @@
                                 "packagePath": [],
                                 "file": null
                             },
-                            "typeId": "type_:TypeId"
+                            "typeId": "type_:TypeId",
+                            "default": null
                         },
                         "availability": null,
                         "docs": null
@@ -511,7 +512,8 @@
                         "packagePath": [],
                         "file": null
                     },
-                    "typeId": "type_:Type"
+                    "typeId": "type_:Type",
+                    "default": null
                 },
                 "resolvedType": {
                     "_type": "named",
@@ -898,7 +900,8 @@
                                     "packagePath": [],
                                     "file": null
                                 },
-                                "typeId": "type_:TypeId"
+                                "typeId": "type_:TypeId",
+                                "default": null
                             },
                             "location": "ENDPOINT",
                             "variable": null,
@@ -952,7 +955,8 @@
                                     "packagePath": [],
                                     "file": null
                                 },
-                                "typeId": "type_:TypeId"
+                                "typeId": "type_:TypeId",
+                                "default": null
                             },
                             "location": "ENDPOINT",
                             "variable": null,
@@ -1058,7 +1062,7 @@
                                         "value": null
                                     }
                                 },
-                                "id": "ff3520154aecd07a7ff2313587f7761ae34dd4a9",
+                                "id": "e02271412f7540dc640cc737622cf9f080e7aae3",
                                 "docs": null
                             }
                         }

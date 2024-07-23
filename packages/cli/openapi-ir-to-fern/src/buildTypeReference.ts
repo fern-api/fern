@@ -112,6 +112,8 @@ export function buildPrimitiveTypeReference(primitiveSchema: PrimitiveSchema): R
     const typeReference = primitiveSchema.schema._visit({
         int: () => "integer",
         int64: () => "long",
+        uint: () => "uint",
+        uint64: () => "uint64",
         float: () => "double",
         double: () => "double",
         string: () => "string",

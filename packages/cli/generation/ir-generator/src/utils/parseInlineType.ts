@@ -26,12 +26,13 @@ export function parseInlineType({ type, file, _default, validation }: parseInlin
             optional: (valueType) => TypeReference.container(ContainerType.optional(valueType)),
             literal: (literal) => TypeReference.container(ContainerType.literal(literal)),
             named: (namedType) =>
-                TypeReference.named(
-                    parseTypeName({
+                TypeReference.named({
+                    ...parseTypeName({
                         typeName: namedType,
                         file
-                    })
-                )
+                    }),
+                    default: undefined
+                })
         }
     });
 }

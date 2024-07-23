@@ -225,7 +225,8 @@
                                         "packagePath": [],
                                         "file": null
                                     },
-                                    "typeId": "type_:TelemetryData"
+                                    "typeId": "type_:TelemetryData",
+                                    "default": null
                                 }
                             }
                         },
@@ -607,7 +608,8 @@
                                         "packagePath": [],
                                         "file": null
                                     },
-                                    "typeId": "type_:TelemetryResponse"
+                                    "typeId": "type_:TelemetryResponse",
+                                    "default": null
                                 },
                                 "docs": "successful operation"
                             }
@@ -1168,7 +1170,8 @@
                                                                                 "packagePath": [],
                                                                                 "file": null
                                                                             },
-                                                                            "typeId": "type_:TelemetryData"
+                                                                            "typeId": "type_:TelemetryData",
+                                                                            "default": null
                                                                         }
                                                                     }
                                                                 },
@@ -1851,7 +1854,8 @@
                                                                                 "packagePath": [],
                                                                                 "file": null
                                                                             },
-                                                                            "typeId": "type_:TelemetryData"
+                                                                            "typeId": "type_:TelemetryData",
+                                                                            "default": null
                                                                         }
                                                                     }
                                                                 },
@@ -1904,7 +1908,7 @@
                                         }
                                     }
                                 },
-                                "id": "b26c30accaa1d8a375f3a96f41c9137700df7ad4",
+                                "id": "776a6218687268a9a2e7ccaf02b2c338fdb021cf",
                                 "docs": null
                             }
                         }

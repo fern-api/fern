@@ -963,7 +963,8 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_user:User"
+                                    "typeId": "type_user:User",
+                                    "default": null
                                 },
                                 "docs": null
                             }
@@ -1491,7 +1492,7 @@
                                         }
                                     }
                                 },
-                                "id": "1acccd6158464ddc826f3cc9418c9df4cca6a17b",
+                                "id": "bee754bd3c4bd18ceccc133107c61331b70dd0ac",
                                 "docs": null
                             }
                         }

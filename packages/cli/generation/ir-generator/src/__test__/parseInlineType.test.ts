@@ -38,7 +38,8 @@ describe("parse inline types", () => {
                                 relativeFilepath: dummyFilepath,
                                 casingsGenerator
                             }),
-                            name: casingsGenerator.generateName(dummyTypeName)
+                            name: casingsGenerator.generateName(dummyTypeName),
+                            default: undefined
                         })
                     )
                 )

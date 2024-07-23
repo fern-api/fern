@@ -6,6 +6,8 @@ import * as FernIr from "../../..";
 
 export type ExamplePrimitive =
     | FernIr.ExamplePrimitive.Integer
+    | FernIr.ExamplePrimitive.Uint
+    | FernIr.ExamplePrimitive.Uint64
     | FernIr.ExamplePrimitive.Double
     | FernIr.ExamplePrimitive.String
     | FernIr.ExamplePrimitive.Boolean
@@ -18,6 +20,16 @@ export declare namespace ExamplePrimitive {
     interface Integer extends _Utils {
         type: "integer";
         integer: number;
+    }
+
+    interface Uint extends _Utils {
+        type: "uint";
+        uint: number;
+    }
+
+    interface Uint64 extends _Utils {
+        type: "uint64";
+        uint64: number;
     }
 
     interface Double extends _Utils {
@@ -61,6 +73,8 @@ export declare namespace ExamplePrimitive {
 
     interface _Visitor<_Result> {
         integer: (value: number) => _Result;
+        uint: (value: number) => _Result;
+        uint64: (value: number) => _Result;
         double: (value: number) => _Result;
         string: (value: FernIr.EscapedString) => _Result;
         boolean: (value: boolean) => _Result;
@@ -79,6 +93,32 @@ export const ExamplePrimitive = {
             type: "integer",
             _visit: function <_Result>(
                 this: FernIr.ExamplePrimitive.Integer,
+                visitor: FernIr.ExamplePrimitive._Visitor<_Result>
+            ) {
+                return FernIr.ExamplePrimitive._visit(this, visitor);
+            },
+        };
+    },
+
+    uint: (value: number): FernIr.ExamplePrimitive.Uint => {
+        return {
+            uint: value,
+            type: "uint",
+            _visit: function <_Result>(
+                this: FernIr.ExamplePrimitive.Uint,
+                visitor: FernIr.ExamplePrimitive._Visitor<_Result>
+            ) {
+                return FernIr.ExamplePrimitive._visit(this, visitor);
+            },
+        };
+    },
+
+    uint64: (value: number): FernIr.ExamplePrimitive.Uint64 => {
+        return {
+            uint64: value,
+            type: "uint64",
+            _visit: function <_Result>(
+                this: FernIr.ExamplePrimitive.Uint64,
                 visitor: FernIr.ExamplePrimitive._Visitor<_Result>
             ) {
                 return FernIr.ExamplePrimitive._visit(this, visitor);
@@ -181,6 +221,10 @@ export const ExamplePrimitive = {
         switch (value.type) {
             case "integer":
                 return visitor.integer(value.integer);
+            case "uint":
+                return visitor.uint(value.uint);
+            case "uint64":
+                return visitor.uint64(value.uint64);
             case "double":
                 return visitor.double(value.double);
             case "string":

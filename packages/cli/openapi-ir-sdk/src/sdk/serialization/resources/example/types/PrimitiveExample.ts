@@ -17,6 +17,12 @@ export const PrimitiveExample: core.serialization.Schema<
         int64: core.serialization.object({
             value: core.serialization.number(),
         }),
+        uint: core.serialization.object({
+            value: core.serialization.number(),
+        }),
+        uint64: core.serialization.object({
+            value: core.serialization.number(),
+        }),
         float: core.serialization.object({
             value: core.serialization.number(),
         }),
@@ -46,6 +52,10 @@ export const PrimitiveExample: core.serialization.Schema<
                     return FernOpenapiIr.PrimitiveExample.int(value.value);
                 case "int64":
                     return FernOpenapiIr.PrimitiveExample.int64(value.value);
+                case "uint":
+                    return FernOpenapiIr.PrimitiveExample.uint(value.value);
+                case "uint64":
+                    return FernOpenapiIr.PrimitiveExample.uint64(value.value);
                 case "float":
                     return FernOpenapiIr.PrimitiveExample.float(value.value);
                 case "double":
@@ -71,6 +81,8 @@ export declare namespace PrimitiveExample {
     type Raw =
         | PrimitiveExample.Int
         | PrimitiveExample.Int64
+        | PrimitiveExample.Uint
+        | PrimitiveExample.Uint64
         | PrimitiveExample.Float
         | PrimitiveExample.Double
         | PrimitiveExample.String
@@ -86,6 +98,16 @@ export declare namespace PrimitiveExample {
 
     interface Int64 {
         type: "int64";
+        value: number;
+    }
+
+    interface Uint {
+        type: "uint";
+        value: number;
+    }
+
+    interface Uint64 {
+        type: "uint64";
         value: number;
     }
 

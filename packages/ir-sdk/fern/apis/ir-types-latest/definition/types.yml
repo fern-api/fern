@@ -126,12 +126,25 @@ types:
       container:
         type: ContainerType
         key: container
-      enum: EnumTypeReference
-      named: DeclaredTypeName
+      named: NamedType
       primitive:
         type: PrimitiveType
         key: primitive
       unknown: {}
+
+  NamedType:
+    docs: |
+      A reference to a named type. For backwards compatbility, this type must be fully compatible
+      with the DeclaredTypeName.
+    properties:
+      typeId: commons.TypeId
+      fernFilepath: commons.FernFilepath
+      name: commons.Name
+      default: optional<NamedTypeDefault>
+
+  NamedTypeDefault:
+    union:
+      enum: EnumValue
 
   EnumTypeReference:
     properties:
@@ -215,6 +228,7 @@ types:
   #     exclusiveMin: optional<boolean>
   #     exclusiveMax: optional<boolean>
   #     multipleOf: optional<uint64>
+
   IntegerType:
     properties:
       default: optional<integer>
@@ -401,6 +415,16 @@ types:
       integer:
         type: integer
         key: integer
+      # TODO: Refactor the following once the uint types are available.
+      #
+      # We can safely use an integer here since they have the same wire
+      # representation (i.e. a JSON number).
+      uint:
+        type: integer
+        key: uint
+      uint64:
+        type: integer
+        key: uint64
       double:
         type: double
         key: double

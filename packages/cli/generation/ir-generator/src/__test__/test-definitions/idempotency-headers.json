@@ -504,7 +504,8 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_payment:Currency"
+                                    "typeId": "type_payment:Currency",
+                                    "default": null
                                 },
                                 "docs": null
                             }
@@ -785,7 +786,7 @@
                                         }
                                     }
                                 },
-                                "id": "26004e287fd7f9453a5c67666857e8047dc12c75",
+                                "id": "5dab7e126904d2210b7994b8974a7c11b29c625a",
                                 "docs": null
                             }
                         }

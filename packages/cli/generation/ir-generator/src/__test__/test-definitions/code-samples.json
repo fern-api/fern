@@ -479,7 +479,8 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_service:MyResponse"
+                                    "typeId": "type_service:MyResponse",
+                                    "default": null
                                 },
                                 "docs": null
                             }

@@ -95,6 +95,7 @@ export function convertUndiscriminatedOneOf({
             fernEnum: enumDescriptions,
             enumVarNames: undefined,
             enumValues,
+            _default: undefined,
             groupName,
             context
         });
@@ -202,6 +203,7 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
             fernEnum: enumDescriptions,
             enumVarNames: undefined,
             enumValues,
+            _default: undefined,
             groupName,
             context
         });

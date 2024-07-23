@@ -735,6 +735,7 @@ The parameter should map to a JSON encoded list of strings.
               "type": "nullable",
               "value": {
                 "availability": null,
+                "default": null,
                 "description": "The status of your transcription. Possible values are queued, processing, completed, or error.",
                 "generatedName": "TranscriptListRequestStatus",
                 "groupName": null,
@@ -6676,6 +6677,7 @@ The LLM response data, as well as any context provided in the original request w
     },
     "AudioIntelligenceModelStatus": {
       "availability": null,
+      "default": null,
       "description": "Will be either success, or unavailable in the rare case that the model failed.",
       "generatedName": "AudioIntelligenceModelStatus",
       "groupName": null,
@@ -8547,6 +8549,7 @@ Valid values are in the range [0, 1] inclusive.
     },
     "EntityType": {
       "availability": null,
+      "default": null,
       "description": "The type of entity for the detected entity",
       "generatedName": "EntityType",
       "groupName": null,
@@ -9382,6 +9385,7 @@ Can be any value between 0.0 and 1.0 inclusive.
     },
     "LemurModel": {
       "availability": null,
+      "default": null,
       "description": "The model that is used for the final prompt after compression is performed (options: "basic" and "default").
 ",
       "generatedName": "LemurModel",
@@ -9951,6 +9955,7 @@ Can be any value between 0.0 and 1.0 inclusive.
     },
     "MessageType": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "MessageType",
       "groupName": null,
@@ -10318,6 +10323,7 @@ Can be any value between 0.0 and 1.0 inclusive.
     },
     "PiiPolicy": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "PiiPolicy",
       "groupName": null,
@@ -11109,6 +11115,7 @@ Can be any value between 0.0 and 1.0 inclusive.
     },
     "RealtimeTranscriptType": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "RealtimeTranscriptType",
       "groupName": null,
@@ -11323,6 +11330,7 @@ Can be any value between 0.0 and 1.0 inclusive.
     },
     "Sentiment": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "Sentiment",
       "groupName": null,
@@ -11771,6 +11779,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "type": "nullable",
       "value": {
         "availability": null,
+        "default": null,
         "description": "The replacement logic for detected PII, can be "entity_type" or "hash". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
         "generatedName": "SubstitutionPolicy",
         "groupName": null,
@@ -11808,6 +11817,7 @@ Can be any value between 0.0 and 1.0 inclusive.
     },
     "SubtitleFormat": {
       "availability": null,
+      "default": null,
       "description": "Format of the subtitles",
       "generatedName": "SubtitleFormat",
       "groupName": null,
@@ -11844,6 +11854,19 @@ Can be any value between 0.0 and 1.0 inclusive.
     },
     "SummaryModel": {
       "availability": null,
+      "default": {
+        "availability": null,
+        "casing": {
+          "camel": null,
+          "pascal": null,
+          "screamingSnake": null,
+          "snake": null,
+        },
+        "description": null,
+        "generatedName": "informative",
+        "nameOverride": null,
+        "value": "informative",
+      },
       "description": "The model to summarize the transcript",
       "generatedName": "SummaryModel",
       "groupName": null,
@@ -11893,6 +11916,19 @@ Can be any value between 0.0 and 1.0 inclusive.
     },
     "SummaryType": {
       "availability": null,
+      "default": {
+        "availability": null,
+        "casing": {
+          "camel": null,
+          "pascal": null,
+          "screamingSnake": null,
+          "snake": null,
+        },
+        "description": null,
+        "generatedName": "bullets",
+        "nameOverride": null,
+        "value": "bullets",
+      },
       "description": "The type of summary",
       "generatedName": "SummaryType",
       "groupName": null,
@@ -14327,6 +14363,7 @@ Valid values are in the range [0, 1] inclusive.
     },
     "TranscriptBoostParam": {
       "availability": null,
+      "default": null,
       "description": "The word boost parameter value, if provided in the transcription request.",
       "generatedName": "TranscriptBoostParam",
       "groupName": null,
@@ -14454,6 +14491,19 @@ The default value is 'en_us'.
       "type": "nullable",
       "value": {
         "availability": null,
+        "default": {
+          "availability": null,
+          "casing": {
+            "camel": null,
+            "pascal": null,
+            "screamingSnake": null,
+            "snake": null,
+          },
+          "description": null,
+          "generatedName": "en_us",
+          "nameOverride": null,
+          "value": "en_us",
+        },
         "description": "The language of your audio file. Possible values are found in [Supported Languages](https://www.assemblyai.com/docs/Concepts/supported_languages).
 The default value is 'en_us'.
 ",
@@ -15399,6 +15449,7 @@ The default value is 'en_us'.
     },
     "TranscriptStatus": {
       "availability": null,
+      "default": null,
       "description": "The status of your transcription. Possible values are queued, processing, completed, or error.",
       "generatedName": "TranscriptStatus",
       "groupName": null,

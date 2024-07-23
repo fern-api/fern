@@ -356,6 +356,9 @@
                           "validation": {
                             "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/validation"
                           },
+                          "availability": {
+                            "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+                          },
                           "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" }
                         },
                         "required": ["type"],
@@ -368,7 +371,10 @@
                     "type": "object",
                     "properties": {
                       "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
-                      "variable": { "type": "string" }
+                      "variable": { "type": "string" },
+                      "availability": {
+                        "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+                      }
                     },
                     "required": ["variable"],
                     "additionalProperties": false

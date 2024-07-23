@@ -152,7 +152,8 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_a:A"
+                                    "typeId": "type_a:A",
+                                    "default": null
                                 }
                             }
                         },
@@ -561,7 +562,8 @@
                                         }
                                     }
                                 },
-                                "typeId": "type_ast:PrimitiveValue"
+                                "typeId": "type_ast:PrimitiveValue",
+                                "default": null
                             }
                         },
                         "docs": null
@@ -768,7 +770,8 @@
                                         }
                                     }
                                 },
-                                "typeId": "type_ast:ContainerValue"
+                                "typeId": "type_ast:ContainerValue",
+                                "default": null
                             }
                         },
                         "docs": null
@@ -994,7 +997,8 @@
                                                 }
                                             }
                                         },
-                                        "typeId": "type_ast:FieldValue"
+                                        "typeId": "type_ast:FieldValue",
+                                        "default": null
                                     }
                                 }
                             }
@@ -1116,7 +1120,8 @@
                                                 }
                                             }
                                         },
-                                        "typeId": "type_ast:FieldValue"
+                                        "typeId": "type_ast:FieldValue",
+                                        "default": null
                                     }
                                 }
                             }

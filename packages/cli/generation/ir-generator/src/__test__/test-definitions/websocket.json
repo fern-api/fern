@@ -229,7 +229,8 @@
                                         }
                                     }
                                 },
-                                "typeId": "type_realtime:Model"
+                                "typeId": "type_realtime:Model",
+                                "default": null
                             }
                         }
                     },

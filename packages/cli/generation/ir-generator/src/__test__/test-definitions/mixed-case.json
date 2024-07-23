@@ -1139,7 +1139,8 @@
                                     }
                                 }
                             },
-                            "typeId": "type_service:User"
+                            "typeId": "type_service:User",
+                            "default": null
                         },
                         "availability": null,
                         "docs": null
@@ -2198,7 +2199,8 @@
                                     }
                                 }
                             },
-                            "typeId": "type_service:ResourceStatus"
+                            "typeId": "type_service:ResourceStatus",
+                            "default": null
                         },
                         "availability": null,
                         "docs": null
@@ -3137,7 +3139,8 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_service:Resource"
+                                    "typeId": "type_service:Resource",
+                                    "default": null
                                 },
                                 "docs": null
                             }
@@ -4622,7 +4625,8 @@
                                                     }
                                                 }
                                             },
-                                            "typeId": "type_service:Resource"
+                                            "typeId": "type_service:Resource",
+                                            "default": null
                                         }
                                     }
                                 },
@@ -5362,7 +5366,8 @@
                                                                 }
                                                             }
                                                         },
-                                                        "typeId": "type_service:Resource"
+                                                        "typeId": "type_service:Resource",
+                                                        "default": null
                                                     }
                                                 }
                                             },
@@ -6099,7 +6104,8 @@
                                                                 }
                                                             }
                                                         },
-                                                        "typeId": "type_service:Resource"
+                                                        "typeId": "type_service:Resource",
+                                                        "default": null
                                                     }
                                                 }
                                             },
@@ -6120,7 +6126,7 @@
                                         }
                                     }
                                 },
-                                "id": "881a1bde562788f6bb4bf016cb8e9f3daf129b18",
+                                "id": "e84b1aa3d1db57f242cf8c6b65837d3151a54772",
                                 "docs": null
                             }
                         }

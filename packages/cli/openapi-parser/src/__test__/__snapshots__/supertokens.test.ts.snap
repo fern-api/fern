@@ -2971,6 +2971,7 @@ exports[`open api parser supertokens parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "UserIdMappingGetMappingRequestUserIdType",
               "groupName": null,
@@ -3909,6 +3910,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": null,
                   "description": null,
                   "generatedName": "UserIdMappingRemoveMappingRequestUserIdType",
                   "groupName": null,
@@ -4348,6 +4350,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": null,
                   "description": null,
                   "generatedName": "UserIdMappingUpateExternalUserIdInfoRequestUserIdType",
                   "groupName": null,
@@ -5021,6 +5024,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                       "type": "optional",
                       "value": {
                         "availability": null,
+                        "default": null,
                         "description": null,
                         "generatedName": "PasswordlessTryUseCodeResponseFailedCodeInputAttemptCountStatus",
                         "groupName": null,
@@ -5894,6 +5898,7 @@ Passing the optional deviceId signifies a resend code flow.
                       "type": "optional",
                       "value": {
                         "availability": null,
+                        "default": null,
                         "description": null,
                         "generatedName": "PasswordlessStartSignInResponseOneStatus",
                         "groupName": null,
@@ -7807,6 +7812,7 @@ Note that there is an invisible character at the end of the path, this was to av
                       "type": "optional",
                       "value": {
                         "availability": null,
+                        "default": null,
                         "description": null,
                         "generatedName": "PasswordlessGetUserResponseOneStatus",
                         "groupName": null,
@@ -8214,6 +8220,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": null,
                   "description": null,
                   "generatedName": "PasswordlessPutUserResponseStatus",
                   "groupName": null,
@@ -9491,6 +9498,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                       "type": "optional",
                       "value": {
                         "availability": null,
+                        "default": null,
                         "description": null,
                         "generatedName": "EmailPasswordGetUserResponseOneStatus",
                         "groupName": null,
@@ -9884,6 +9892,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": null,
                   "description": null,
                   "generatedName": "EmailPasswordPutUserResponseStatus",
                   "groupName": null,
@@ -10635,6 +10644,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "EmailPasswordGetUsersRequestTimeJoinedOrder",
               "groupName": null,
@@ -11843,6 +11853,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": null,
                   "description": null,
                   "generatedName": "UserImportRequestHashingAlgorithm",
                   "groupName": null,
@@ -12935,6 +12946,7 @@ Note that there is an invisible character at the end of the path, this was to av
                       "type": "optional",
                       "value": {
                         "availability": null,
+                        "default": null,
                         "description": null,
                         "generatedName": "ThirdPartyGetUserResponseOneStatus",
                         "groupName": null,
@@ -13674,6 +13686,7 @@ Note that there is an invisible character at the end of the path, this was to av
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "ThirdPartyGetUsersRequestTimeJoinedOrder",
               "groupName": null,
@@ -32178,6 +32191,7 @@ e.g.:
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "GetUsersRequestTimeJoinedOrder",
               "groupName": null,
@@ -32416,6 +32430,7 @@ e.g.:
                         "nameOverride": null,
                         "schema": {
                           "availability": null,
+                          "default": null,
                           "description": null,
                           "generatedName": "GetUsersResponseUsersItemRecipeId",
                           "groupName": null,

@@ -171,7 +171,8 @@
                                 "packagePath": [],
                                 "file": null
                             },
-                            "typeId": "type_:NotFound"
+                            "typeId": "type_:NotFound",
+                            "default": null
                         },
                         "docs": null
                     },
@@ -202,7 +203,8 @@
                                 "packagePath": [],
                                 "file": null
                             },
-                            "typeId": "type_:Schema1"
+                            "typeId": "type_:Schema1",
+                            "default": null
                         },
                         "docs": null
                     },
@@ -233,7 +235,8 @@
                                 "packagePath": [],
                                 "file": null
                             },
-                            "typeId": "type_:Schema2"
+                            "typeId": "type_:Schema2",
+                            "default": null
                         },
                         "docs": null
                     }
@@ -594,7 +597,8 @@
                                         "packagePath": [],
                                         "file": null
                                     },
-                                    "typeId": "type_:GetExampleResponse"
+                                    "typeId": "type_:GetExampleResponse",
+                                    "default": null
                                 },
                                 "docs": "Successful response"
                             }

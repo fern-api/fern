@@ -382,7 +382,8 @@
                                     }
                                 }
                             },
-                            "typeId": "type_user:User"
+                            "typeId": "type_user:User",
+                            "default": null
                         },
                         "availability": null,
                         "docs": null
@@ -754,7 +755,8 @@
                                         }
                                     }
                                 },
-                                "typeId": "type_user:User"
+                                "typeId": "type_user:User",
+                                "default": null
                             },
                             "allowMultiple": false,
                             "availability": null,
@@ -851,7 +853,8 @@
                                                 }
                                             }
                                         },
-                                        "typeId": "type_user:User"
+                                        "typeId": "type_user:User",
+                                        "default": null
                                     }
                                 }
                             },
@@ -1085,7 +1088,8 @@
                                         }
                                     }
                                 },
-                                "typeId": "type_user:NestedUser"
+                                "typeId": "type_user:NestedUser",
+                                "default": null
                             },
                             "allowMultiple": false,
                             "availability": null,
@@ -1182,7 +1186,8 @@
                                                 }
                                             }
                                         },
-                                        "typeId": "type_user:User"
+                                        "typeId": "type_user:User",
+                                        "default": null
                                     }
                                 }
                             },
@@ -1277,7 +1282,8 @@
                                         }
                                     }
                                 },
-                                "typeId": "type_user:User"
+                                "typeId": "type_user:User",
+                                "default": null
                             },
                             "allowMultiple": true,
                             "availability": null,
@@ -1456,7 +1462,8 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_user:User"
+                                    "typeId": "type_user:User",
+                                    "default": null
                                 },
                                 "docs": null
                             }
@@ -2379,7 +2386,8 @@
                                                                 }
                                                             }
                                                         },
-                                                        "typeId": "type_user:User"
+                                                        "typeId": "type_user:User",
+                                                        "default": null
                                                     }
                                                 }
                                             },
@@ -3588,7 +3596,8 @@
                                                                 }
                                                             }
                                                         },
-                                                        "typeId": "type_user:User"
+                                                        "typeId": "type_user:User",
+                                                        "default": null
                                                     }
                                                 }
                                             },
@@ -4283,7 +4292,7 @@
                                         }
                                     }
                                 },
-                                "id": "4088bfb97e077bb7208c0d7c473d6c7879c6e09e",
+                                "id": "982933bc64cf2c9c82feb6fe984b1435657dc716",
                                 "docs": null
                             }
                         }

@@ -195,6 +195,7 @@ types:
       - commons.WithSdkGroupName
       - commons.WithAvailability
     properties:
+      default: optional<finalIr.EnumValue>
       values: list<finalIr.EnumValue>
       example: optional<string>
 
@@ -282,6 +283,8 @@ types:
     union:
       int: IntWithExample
       int64: Int64WithExample
+      uint: UintWithExample
+      uint64: Uint64WithExample
       float: FloatWithExample
       double: DoubleWithExample
       string: StringSchemaWithExample
@@ -304,6 +307,37 @@ types:
     properties:
       default: optional<long>
       example: optional<integer>
+
+  # TODO: Refactor the following once the uint types are available.
+  #
+  # UintWithExample:
+  #   properties:
+  #     default: optional<uint>
+  #     minimum: optional<uint>
+  #     maximum: optional<uint>
+  #     exclusiveMinimum: optional<boolean>
+  #     exclusiveMaximum: optional<boolean>
+  #     multipleOf: optional<uint>
+  #     example: optional<uint>
+  #
+  # Uint64WithExample:
+  #   properties:
+  #     default: optional<uint64>
+  #     minimum: optional<uint64>
+  #     maximum: optional<uint64>
+  #     exclusiveMinimum: optional<boolean>
+  #     exclusiveMaximum: optional<boolean>
+  #     multipleOf: optional<uint64>
+  #     example: optional<uint64>
+  UintWithExample:
+    properties:
+      default: optional<integer>
+      example: optional<integer>
+
+  Uint64WithExample:
+    properties:
+      default: optional<long>
+      example: optional<long>
 
   FloatWithExample:
     properties:

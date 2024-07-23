@@ -813,7 +813,8 @@
                                 "packagePath": [],
                                 "file": null
                             },
-                            "typeId": "type_:Name"
+                            "typeId": "type_:Name",
+                            "default": null
                         },
                         "availability": null,
                         "docs": null

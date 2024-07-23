@@ -365,7 +365,8 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_folder-b/common:Foo"
+                                    "typeId": "type_folder-b/common:Foo",
+                                    "default": null
                                 }
                             }
                         },
@@ -623,7 +624,8 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_folder-c/common:Foo"
+                                    "typeId": "type_folder-c/common:Foo",
+                                    "default": null
                                 }
                             }
                         },
@@ -949,7 +951,8 @@
                                     }
                                 }
                             },
-                            "typeId": "type_commons:Imported"
+                            "typeId": "type_commons:Imported",
+                            "default": null
                         },
                         "availability": null,
                         "docs": null
@@ -1478,7 +1481,8 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_folder-a/service:Response"
+                                    "typeId": "type_folder-a/service:Response",
+                                    "default": null
                                 },
                                 "docs": null
                             }
@@ -1858,7 +1862,8 @@
                                                                                     }
                                                                                 }
                                                                             },
-                                                                            "typeId": "type_folder-b/common:Foo"
+                                                                            "typeId": "type_folder-b/common:Foo",
+                                                                            "default": null
                                                                         }
                                                                     }
                                                                 },
@@ -1978,7 +1983,7 @@
                                         }
                                     }
                                 },
-                                "id": "5885102356954f33273e7c5c09fa3ac3c20535c8",
+                                "id": "6fd78a1b1fca11418b8632b1d04b1a2224712c9e",
                                 "docs": null
                             }
                         }
@@ -2168,7 +2173,8 @@
                                         }
                                     }
                                 },
-                                "typeId": "type_foo:OptionalString"
+                                "typeId": "type_foo:OptionalString",
+                                "default": null
                             },
                             "allowMultiple": false,
                             "availability": null,
@@ -2419,7 +2425,8 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_foo:ImportingType"
+                                    "typeId": "type_foo:ImportingType",
+                                    "default": null
                                 },
                                 "docs": null
                             }
@@ -2950,7 +2957,7 @@
                                         }
                                     }
                                 },
-                                "id": "c5add766a880dd133f815bb3e8ba7eaea078ef68",
+                                "id": "d57286770baac16a86285d1ae41ebf3a4c46d0da",
                                 "docs": null
                             }
                         }
