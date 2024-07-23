@@ -16,9 +16,9 @@ export declare namespace CoreUtility {
             path: RelativeFilePath;
             ignoreGlob?: string;
         };
-        testsInfo?: {
-            useTests?: boolean;
-            testFolderName?: string;
+        tests?: {
+            absolutePathOnDocker: AbsoluteFilePath;
+            path: RelativeFilePath;
         };
         originalPathOnDocker: AbsoluteFilePath;
         pathInCoreUtilities: ExportedDirectory[];

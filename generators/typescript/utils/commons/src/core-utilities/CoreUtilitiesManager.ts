@@ -96,7 +96,7 @@ export class CoreUtilitiesManager {
                 if (utility.testsInfo?.useTests) {
                     const unitTestDestinationPath = path.join(
                         pathToRoot,
-                        RelativeFilePath.of(`tests/unit/${utility.testsInfo?.testFolderName || utility.name}`)
+                        RelativeFilePath.of(`tests/unit/${utility.testsInfo?.testFolderName ?? utility.name}`)
                     );
                     await mkdir(unitTestDestinationPath, { recursive: true });
 
