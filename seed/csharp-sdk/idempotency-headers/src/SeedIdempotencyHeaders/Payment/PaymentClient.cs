@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Text.Json;
 using SeedIdempotencyHeaders;
 using SeedIdempotencyHeaders.Core;
 
@@ -29,7 +28,7 @@ public class PaymentClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Guid>(responseBody)!;
+            return JsonUtils.Deserialize<Guid>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

@@ -27,7 +27,7 @@ public class UserClient
             { "user", request.User.ToString() },
             { "userList", request.UserList.ToString() },
             { "keyValue", request.KeyValue.ToString() },
-            { "nestedUser", request.NestedUser.ToString() }, 
+            { "nestedUser", request.NestedUser.ToString() },
             { "excludeUser", request.ExcludeUser.ToString() },
             { "filter", request.Filter },
         };
