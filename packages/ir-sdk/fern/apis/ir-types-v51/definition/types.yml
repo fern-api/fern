@@ -53,13 +53,13 @@ types:
     properties:
       name: DeclaredTypeName
       shape: ShapeType
-
   ShapeType:
     enum:
       - ENUM
       - OBJECT
       - UNION
       - UNDISCRIMINATED_UNION
+
   EnumTypeDeclaration:
     properties:
       default: optional<EnumValue>
@@ -126,18 +126,11 @@ types:
       container:
         type: ContainerType
         key: container
-      enum: EnumTypeReference
       named: DeclaredTypeName
       primitive:
         type: PrimitiveType
         key: primitive
       unknown: {}
-
-  EnumTypeReference:
-    properties:
-      default: optional<EnumValue>
-      name: DeclaredTypeName
-
   ContainerType:
     discriminant:
       value: _type
@@ -168,8 +161,6 @@ types:
   PrimitiveTypeV1:
     enum:
       - INTEGER
-      - UINT
-      - UINT_64
       - DOUBLE
       - STRING
       - BOOLEAN
@@ -182,8 +173,6 @@ types:
       - BIG_INTEGER
   PrimitiveTypeV2:
     union:
-      uint: {}
-      uint64: {}
       integer: IntegerType
       double: DoubleType
       string: StringType
@@ -191,30 +180,6 @@ types:
       long: LongType
       bigInteger: BigIntegerType
 
-  # TODO: Add the following once the uint types are available.
-  #
-  # UintType:
-  #   properties:
-  #     default: optional<uint>
-  #     validation: optional<UintValidationRules>
-  # UintValidationRules:
-  #   properties:
-  #     min: optional<uint>
-  #     max: optional<uint>
-  #     exclusiveMin: optional<boolean>
-  #     exclusiveMax: optional<boolean>
-  #     multipleOf: optional<uint>
-  # Uint64Type:
-  #   properties:
-  #     default: optional<uint64>
-  #     validation: optional<Uint64ValidationRules>
-  # Uint64ValidationRules:
-  #   properties:
-  #     min: optional<uint64>
-  #     max: optional<uint64>
-  #     exclusiveMin: optional<boolean>
-  #     exclusiveMax: optional<boolean>
-  #     multipleOf: optional<uint64>
   IntegerType:
     properties:
       default: optional<integer>
