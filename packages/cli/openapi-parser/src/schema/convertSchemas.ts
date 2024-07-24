@@ -19,6 +19,7 @@ import { convertArray } from "./convertArray";
 import { convertAvailability } from "./convertAvailability";
 import { convertDiscriminatedOneOf, convertDiscriminatedOneOfWithVariants } from "./convertDiscriminatedOneOf";
 import { convertEnum } from "./convertEnum";
+import { convertInteger } from "./convertInteger";
 import { convertLiteral } from "./convertLiteral";
 import { convertNumber } from "./convertNumber";
 import { convertObject } from "./convertObject";
@@ -26,7 +27,7 @@ import {
     convertUndiscriminatedOneOf,
     convertUndiscriminatedOneOfWithDiscriminant
 } from "./convertUndiscriminatedOneOf";
-import { getDefaultAsNumber, getDefaultAsString } from "./defaults/getDefault";
+import { getDefaultAsString } from "./defaults/getDefault";
 import { getExampleAsArray, getExampleAsBoolean, getExampleAsNumber, getExamplesString } from "./examples/getExample";
 import { SchemaParserContext } from "./SchemaParserContext";
 import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
@@ -338,21 +339,20 @@ export function convertSchemaObject(
         });
     }
     if (schema === "integer" || schema.type === "integer") {
-        return wrapPrimitive({
+        return convertInteger({
             nameOverride,
             generatedName,
-            primitive: PrimitiveSchemaValueWithExample.int({
-                default: getDefaultAsNumber(schema),
-                minimum: schema.minimum,
-                maximum: schema.maximum,
-                exclusiveMinimum: getValueIfBoolean(schema.exclusiveMinimum),
-                exclusiveMaximum: getValueIfBoolean(schema.exclusiveMaximum),
-                multipleOf: schema.multipleOf,
-                example: getExampleAsNumber({ schema, logger: context.logger, fallback })
-            }),
-            wrapAsNullable,
+            format: schema.format,
+            _default: schema.default,
+            minimum: schema.minimum,
+            maximum: schema.maximum,
+            exclusiveMinimum: getValueIfBoolean(schema.exclusiveMinimum),
+            exclusiveMaximum: getValueIfBoolean(schema.exclusiveMaximum),
+            multipleOf: schema.multipleOf,
             description,
             availability,
+            wrapAsNullable,
+            example: getExampleAsNumber({ schema, logger: context.logger, fallback }),
             groupName
         });
     }
