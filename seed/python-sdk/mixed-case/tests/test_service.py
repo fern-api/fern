@@ -32,7 +32,7 @@ async def test_list_resources(client: SeedMixedCase, async_client: AsyncSeedMixe
             "EXTRA_PROPERTIES": {"foo": "bar", "baz": "qux"},
         }
     ]
-    expected_types: typing.Any = ("list", {0: "no_validate"})
+    expected_types: typing.Tuple[typing.Any, typing.Any] = ("list", {0: "no_validate"})
     response = client.service.list_resources(page_limit=10, before_date=datetime.date.fromisoformat("2023-01-01"))
     validate_response(response, expected_response, expected_types)
 

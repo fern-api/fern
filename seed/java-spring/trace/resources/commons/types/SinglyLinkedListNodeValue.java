@@ -127,7 +127,7 @@ public final class SinglyLinkedListNodeValue {
 
     @java.lang.Override
     public _FinalStage next(NodeId next) {
-      this.next = Optional.of(next);
+      this.next = Optional.ofNullable(next);
       return this;
     }
 

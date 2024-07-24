@@ -97,7 +97,7 @@ public final class FilteredType {
 
         @java.lang.Override
         public _FinalStage publicProperty(String publicProperty) {
-            this.publicProperty = Optional.of(publicProperty);
+            this.publicProperty = Optional.ofNullable(publicProperty);
             return this;
         }
 

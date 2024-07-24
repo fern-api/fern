@@ -158,7 +158,7 @@ public final class TestCaseNonHiddenGrade {
 
         @java.lang.Override
         public _FinalStage exception(ExceptionV2 exception) {
-            this.exception = Optional.of(exception);
+            this.exception = Optional.ofNullable(exception);
             return this;
         }
 
@@ -171,7 +171,7 @@ public final class TestCaseNonHiddenGrade {
 
         @java.lang.Override
         public _FinalStage actualResult(VariableValue actualResult) {
-            this.actualResult = Optional.of(actualResult);
+            this.actualResult = Optional.ofNullable(actualResult);
             return this;
         }
 

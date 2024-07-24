@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Text.Json;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
 
@@ -29,7 +28,7 @@ public class EnumClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<WeatherReport>(responseBody)!;
+            return JsonUtils.Deserialize<WeatherReport>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

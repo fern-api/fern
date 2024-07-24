@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Text.Json;
 using SeedUnknownAsAny.Core;
 
 #nullable enable
@@ -28,7 +27,7 @@ public class UnknownClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<IEnumerable<object>>(responseBody)!;
+            return JsonUtils.Deserialize<IEnumerable<object>>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

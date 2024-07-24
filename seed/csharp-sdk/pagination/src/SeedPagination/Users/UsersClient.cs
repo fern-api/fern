@@ -48,7 +48,7 @@ public class UsersClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ListUsersPaginationResponse>(responseBody)!;
+            return JsonUtils.Deserialize<ListUsersPaginationResponse>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -68,7 +68,7 @@ public class UsersClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ListUsersPaginationResponse>(responseBody)!;
+            return JsonUtils.Deserialize<ListUsersPaginationResponse>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -105,7 +105,7 @@ public class UsersClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ListUsersPaginationResponse>(responseBody)!;
+            return JsonUtils.Deserialize<ListUsersPaginationResponse>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -125,7 +125,7 @@ public class UsersClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ListUsersPaginationResponse>(responseBody)!;
+            return JsonUtils.Deserialize<ListUsersPaginationResponse>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -158,7 +158,7 @@ public class UsersClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ListUsersPaginationResponse>(responseBody)!;
+            return JsonUtils.Deserialize<ListUsersPaginationResponse>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -183,7 +183,7 @@ public class UsersClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ListUsersExtendedResponse>(responseBody)!;
+            return JsonUtils.Deserialize<ListUsersExtendedResponse>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -206,7 +206,7 @@ public class UsersClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<UsernameCursor>(responseBody)!;
+            return JsonUtils.Deserialize<UsernameCursor>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -231,7 +231,7 @@ public class UsersClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<UsernameContainer>(responseBody)!;
+            return JsonUtils.Deserialize<UsernameContainer>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

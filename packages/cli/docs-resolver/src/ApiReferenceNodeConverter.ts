@@ -23,6 +23,7 @@ export class ApiReferenceNodeConverter {
     #children: FernNavigation.ApiPackageChild[] = [];
     #overviewPageId: FernNavigation.PageId | undefined;
     #slug: FernNavigation.SlugGenerator;
+    private disableEndpointPairs;
     constructor(
         private apiSection: docsYml.DocsNavigationItem.ApiSection,
         api: APIV1Read.ApiDefinition,
@@ -32,6 +33,7 @@ export class ApiReferenceNodeConverter {
         private taskContext: TaskContext,
         private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string>
     ) {
+        this.disableEndpointPairs = docsWorkspace.config.experimental?.disableStreamToggle ?? false;
         this.apiDefinitionId = FernNavigation.ApiDefinitionId(api.id);
         this.#holder = ApiDefinitionHolder.create(api, taskContext);
 
@@ -137,7 +139,7 @@ export class ApiReferenceNodeConverter {
                             slug: pageSlug.get(),
                             icon: page.icon,
                             hidden: page.hidden,
-                            noindex: undefined
+                            noindex: page.noindex
                         };
                     },
                     package: (pkg) => this.#convertPackage(pkg, parentSlug, idgen),
@@ -632,6 +634,10 @@ export class ApiReferenceNodeConverter {
     }
 
     private mergeEndpointPairs(children: FernNavigation.ApiPackageChild[]): FernNavigation.ApiPackageChild[] {
+        if (this.disableEndpointPairs) {
+            return children;
+        }
+
         const toRet: FernNavigation.ApiPackageChild[] = [];
 
         const methodAndPathToEndpointNode = new Map<string, FernNavigation.EndpointNode>();

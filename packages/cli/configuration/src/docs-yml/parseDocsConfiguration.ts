@@ -258,12 +258,10 @@ function convertLayoutConfig(layout: RawDocs.LayoutConfig | undefined): ParsedDo
 
         searchbarPlacement:
             layout.searchbarPlacement === "header"
-                ? DocsV1Write.SidebarOrHeaderPlacement.Header
-                : DocsV1Write.SidebarOrHeaderPlacement.Sidebar,
+                ? DocsV1Write.SearchbarPlacement.Header
+                : DocsV1Write.SearchbarPlacement.Sidebar,
         tabsPlacement:
-            layout.tabsPlacement === "header"
-                ? DocsV1Write.SidebarOrHeaderPlacement.Header
-                : DocsV1Write.SidebarOrHeaderPlacement.Sidebar,
+            layout.tabsPlacement === "header" ? DocsV1Write.TabsPlacement.Header : DocsV1Write.TabsPlacement.Sidebar,
         contentAlignment:
             layout.contentAlignment === "left"
                 ? DocsV1Write.ContentAlignment.Left
@@ -665,7 +663,8 @@ function parsePageConfig(
         absolutePath: resolveFilepath(item.path, absolutePathToConfig),
         slug: item.slug,
         icon: item.icon,
-        hidden: item.hidden
+        hidden: item.hidden,
+        noindex: item.noindex
     };
 }
 
@@ -886,7 +885,9 @@ async function convertMetadata(
         "twitter:handle": metadata.twitterHandle,
         "twitter:site": metadata.twitterSite,
         "twitter:url": metadata.twitterUrl,
-        "twitter:card": metadata.twitterCard
+        "twitter:card": metadata.twitterCard,
+        nofollow: undefined,
+        noindex: undefined
     };
 }
 

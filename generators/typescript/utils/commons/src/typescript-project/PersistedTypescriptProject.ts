@@ -50,6 +50,10 @@ export class PersistedTypescriptProject {
         return join(this.directory, this.srcDirectory);
     }
 
+    public getRootDirectory(): AbsoluteFilePath {
+        return this.directory;
+    }
+
     public async installDependencies(logger: Logger): Promise<void> {
         if (this.hasInstalled) {
             return;

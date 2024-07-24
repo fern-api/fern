@@ -572,7 +572,7 @@ public final class Type {
 
         @java.lang.Override
         public _FinalStage thirteen(Long thirteen) {
-            this.thirteen = Optional.of(thirteen);
+            this.thirteen = Optional.ofNullable(thirteen);
             return this;
         }
 

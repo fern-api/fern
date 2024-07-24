@@ -198,7 +198,7 @@ public final class GetPlaylistsRequest {
 
         @java.lang.Override
         public _FinalStage optionalMultipleField(String optionalMultipleField) {
-            this.optionalMultipleField = Optional.of(optionalMultipleField);
+            this.optionalMultipleField = Optional.ofNullable(optionalMultipleField);
             return this;
         }
 
@@ -211,7 +211,7 @@ public final class GetPlaylistsRequest {
 
         @java.lang.Override
         public _FinalStage limit(Integer limit) {
-            this.limit = Optional.of(limit);
+            this.limit = Optional.ofNullable(limit);
             return this;
         }
 

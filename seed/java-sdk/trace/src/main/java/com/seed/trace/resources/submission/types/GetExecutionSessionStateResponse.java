@@ -132,7 +132,7 @@ public final class GetExecutionSessionStateResponse {
         }
 
         public Builder numWarmingInstances(Integer numWarmingInstances) {
-            this.numWarmingInstances = Optional.of(numWarmingInstances);
+            this.numWarmingInstances = Optional.ofNullable(numWarmingInstances);
             return this;
         }
 
