@@ -10,7 +10,7 @@ import Foundation
 public struct Circle: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case radius = "radius"
+        case radius
     }
 
     public let radius: Double

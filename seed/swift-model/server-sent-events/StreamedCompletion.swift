@@ -10,8 +10,8 @@ import Foundation
 public struct StreamedCompletion: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case delta = "delta"
-        case tokens = "tokens"
+        case delta
+        case tokens
     }
 
     public let delta: String

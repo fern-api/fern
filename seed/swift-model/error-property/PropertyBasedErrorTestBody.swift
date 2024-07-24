@@ -10,7 +10,7 @@ import Foundation
 public struct PropertyBasedErrorTestBody: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case message = "message"
+        case message
     }
 
     public let message: String

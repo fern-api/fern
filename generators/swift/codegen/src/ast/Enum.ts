@@ -43,8 +43,8 @@ export class Enum extends AstNode {
 
     public write(writer: Writer): void {
 
-        // example: enum CodingKeys: String, CodingKey {
-        writer.openBlock(["enum", this.buildTitle()], "{", () => {
+        // example: public enum CodingKeys: String, CodingKey {
+        writer.openBlock([this.accessLevel, "enum", this.buildTitle()], "{", () => {
 
             if (this.enumCases) {
                 this.enumCases.forEach(value => {

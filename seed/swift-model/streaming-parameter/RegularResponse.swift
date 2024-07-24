@@ -10,8 +10,8 @@ import Foundation
 public struct RegularResponse: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case id = "id"
-        case name = "name"
+        case id
+        case name
     }
 
     public let id: String

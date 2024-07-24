@@ -21,25 +21,23 @@ export default class EnumBuilder extends CodeBuilder<SwiftFile> {
 
   public build(): SwiftFile {
 
+    // Get the file name
     const name = this.typeDeclaration.name.name.pascalCase.safeName;
+
+    // Value for the type of enum used
+    // TODO: Handle more enum types in the future
+    const inheritanceClass = Swift.factories.primatives.makeString();
     
+    // Break up the fields and values
     const fields = this.enumDeclaration.values.map(enumValue => {
 
-      const name = enumValue.name.name;
-
-      // const type = enumValue.valueType._visit<Type>({
-      //   container:                 (value) => Swift.makeType({ name: value.type }),
-      //   named:                     (value) => Swift.makeType({ name: value.name.pascalCase.safeName }),
-      //   primitive:             (valueType) => Swift.makePrimative({ key: valueType.v2?.type }),
-      //   unknown:                        () => Swift.makeType({ name: "Unknown" }),
-      //   _other: (value: { type: string; }) => Swift.makeType({ name: value.type }),
-      // });
+      const name = enumValue.name;
       
       // example: case name = "name"
       return Swift.makeEnumCase({
-        name: name.camelCase.safeName,
-        // key: name.originalName,
-        key: enumValue.name.wireValue,
+        name: name.name.camelCase.safeName,
+        value: `"${name.wireValue}"`,
+        comment: enumValue.docs,
       });
 
     });
@@ -49,6 +47,7 @@ export default class EnumBuilder extends CodeBuilder<SwiftFile> {
       node: Swift.makeEnum({
         accessLevel: AccessLevel.Public,
         name: name,
+        inheritance: [inheritanceClass],
         enumCases: fields,
       })
     });

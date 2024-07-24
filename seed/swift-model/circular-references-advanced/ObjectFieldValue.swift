@@ -10,8 +10,8 @@ import Foundation
 public struct ObjectFieldValue: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case name = "name"
-        case value = "value"
+        case name
+        case value
     }
 
     public let name: FieldName

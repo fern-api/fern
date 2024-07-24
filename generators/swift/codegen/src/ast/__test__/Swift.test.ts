@@ -25,7 +25,7 @@ describe("Swift Language", () => {
     it("makes enum case", () => {
         const output = Swift.makeEnumCase({
             name: "fallbackContent",
-            key: "fallback_content",
+            value: "fallback_content",
         });
         expect(output.render()).toMatchSnapshot();
     });
@@ -43,7 +43,7 @@ describe("Swift Language", () => {
                 }),
                 Swift.makeEnumCase({
                     name: "fallbackContent",
-                    key: "fallback_content",
+                    value: "fallback_content",
                 }),
             ]
         });
@@ -153,7 +153,7 @@ describe("Swift Language", () => {
                             }),
                             Swift.makeEnumCase({
                                 name: "small",
-                                key: "sml"
+                                value: "sml"
                             }),
                         ]
                     })

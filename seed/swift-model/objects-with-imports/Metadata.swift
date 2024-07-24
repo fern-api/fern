@@ -10,8 +10,8 @@ import Foundation
 public struct Metadata: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case id = "id"
-        case data = "data"
+        case id
+        case data
     }
 
     public let id: String

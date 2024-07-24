@@ -10,7 +10,7 @@ import Foundation
 public struct WithMetadata: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case metadata = "metadata"
+        case metadata
     }
 
     public let metadata: primitive :: map TODO

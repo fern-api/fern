@@ -10,9 +10,9 @@ import Foundation
 public struct SendRequest: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case prompt = "prompt"
-        case query = "query"
-        case stream = "stream"
+        case prompt
+        case query
+        case stream
     }
 
     public let prompt: string :: literal TODO

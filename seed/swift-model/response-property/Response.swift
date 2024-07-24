@@ -10,7 +10,7 @@ import Foundation
 public struct Response: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case data = "data"
+        case data
     }
 
     public let data: Movie

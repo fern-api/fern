@@ -10,9 +10,9 @@ import Foundation
 public struct Node: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case id = "id"
-        case label = "label"
-        case metadata = "metadata"
+        case id
+        case label
+        case metadata
     }
 
     public let id: String
