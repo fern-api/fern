@@ -28,7 +28,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         self._type_declaration_referencer = type_declaration_referencer
         self._project_module_path = project_module_path
         self._allow_leveraging_defaults = allow_leveraging_defaults
-        self._reserved_names = reserved_names
+        self._reserved_names: Set[str] = reserved_names or set()
 
     def get_module_path_in_project(self, module_path: AST.ModulePath) -> AST.ModulePath:
         return self._project_module_path + module_path
