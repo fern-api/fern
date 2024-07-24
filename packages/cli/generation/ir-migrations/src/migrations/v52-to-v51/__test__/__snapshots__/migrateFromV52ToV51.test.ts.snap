@@ -388,7 +388,6 @@ exports[`migrateFromV52ToV51 simple 1`] = `
                                   "container": {
                                     "itemType": {
                                       "_type": "named",
-                                      "default": null,
                                       "fernFilepath": {
                                         "allParts": [
                                           {
@@ -432,7 +431,6 @@ exports[`migrateFromV52ToV51 simple 1`] = `
                                         },
                                         "packagePath": [],
                                       },
-                                      "inline": null,
                                       "name": {
                                         "camelCase": {
                                           "safeName": "user",
@@ -1074,7 +1072,6 @@ exports[`migrateFromV52ToV51 simple 1`] = `
               },
               "valueType": {
                 "_type": "named",
-                "default": null,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -1118,7 +1115,6 @@ exports[`migrateFromV52ToV51 simple 1`] = `
                   },
                   "packagePath": [],
                 },
-                "inline": null,
                 "name": {
                   "camelCase": {
                     "safeName": "userType",
@@ -1150,7 +1146,6 @@ exports[`migrateFromV52ToV51 simple 1`] = `
                 "docs": null,
                 "responseBodyType": {
                   "_type": "named",
-                  "default": null,
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -1194,7 +1189,6 @@ exports[`migrateFromV52ToV51 simple 1`] = `
                     },
                     "packagePath": [],
                   },
-                  "inline": null,
                   "name": {
                     "camelCase": {
                       "safeName": "listUsersResponse",
@@ -1525,7 +1519,6 @@ exports[`migrateFromV52ToV51 simple 1`] = `
                 "_type": "list",
                 "list": {
                   "_type": "named",
-                  "default": null,
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -1569,7 +1562,6 @@ exports[`migrateFromV52ToV51 simple 1`] = `
                     },
                     "packagePath": [],
                   },
-                  "inline": null,
                   "name": {
                     "camelCase": {
                       "safeName": "user",
@@ -1702,7 +1694,6 @@ exports[`migrateFromV52ToV51 simple 1`] = `
             },
             "valueType": {
               "_type": "named",
-              "default": null,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -1746,7 +1737,6 @@ exports[`migrateFromV52ToV51 simple 1`] = `
                 },
                 "packagePath": [],
               },
-              "inline": null,
               "name": {
                 "camelCase": {
                   "safeName": "userType",
