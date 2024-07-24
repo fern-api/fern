@@ -1,6 +1,5 @@
 using System.Net.Http;
 using System.Text;
-using System.Text.Json;
 
 namespace SeedMultiUrlEnvironmentNoDefault.Core;
 
@@ -44,9 +43,8 @@ public class RawClient(Dictionary<string, string> headers, ClientOptions clientO
         {
             if (jsonRequest.Body != null)
             {
-                var serializerOptions = new JsonSerializerOptions { WriteIndented = true, };
                 httpRequest.Content = new StringContent(
-                    JsonSerializer.Serialize(jsonRequest.Body, serializerOptions),
+                    JsonUtils.Serialize(jsonRequest.Body),
                     Encoding.UTF8,
                     "application/json"
                 );

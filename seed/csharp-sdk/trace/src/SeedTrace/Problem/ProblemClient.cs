@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Text.Json;
 using SeedTrace;
 using SeedTrace.Core;
 
@@ -32,7 +31,7 @@ public class ProblemClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<object>(responseBody)!;
+            return JsonUtils.Deserialize<object>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -56,7 +55,7 @@ public class ProblemClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<UpdateProblemResponse>(responseBody)!;
+            return JsonUtils.Deserialize<UpdateProblemResponse>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -93,7 +92,7 @@ public class ProblemClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<GetDefaultStarterFilesResponse>(responseBody)!;
+            return JsonUtils.Deserialize<GetDefaultStarterFilesResponse>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

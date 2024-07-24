@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Text.Json;
 using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
@@ -35,7 +34,7 @@ public class InlinedRequestsClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ObjectWithOptionalField>(responseBody)!;
+            return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
