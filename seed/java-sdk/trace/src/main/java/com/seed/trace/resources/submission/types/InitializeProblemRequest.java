@@ -113,7 +113,7 @@ public final class InitializeProblemRequest {
 
         @java.lang.Override
         public _FinalStage problemVersion(Integer problemVersion) {
-            this.problemVersion = Optional.of(problemVersion);
+            this.problemVersion = Optional.ofNullable(problemVersion);
             return this;
         }
 

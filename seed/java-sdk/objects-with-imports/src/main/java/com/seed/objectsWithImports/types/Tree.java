@@ -85,7 +85,7 @@ public final class Tree {
         }
 
         public Builder nodes(List<Node> nodes) {
-            this.nodes = Optional.of(nodes);
+            this.nodes = Optional.ofNullable(nodes);
             return this;
         }
 

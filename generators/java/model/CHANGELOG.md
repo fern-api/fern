@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.2] - 2024-07-23
+
+* Improvement: Generated builder methods for optional fields can now accept null directly.
+  
 ## [0.9.1-rc0] - 2024-07-02
 
 * Improvement: The generator now adds a class-level `@JsonInclude(JsonInclude.Include.NON_ABSENT)` annotation to

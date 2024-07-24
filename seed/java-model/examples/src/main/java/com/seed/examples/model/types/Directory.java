@@ -113,7 +113,7 @@ public final class Directory {
 
         @java.lang.Override
         public _FinalStage directories(List<Directory> directories) {
-            this.directories = Optional.of(directories);
+            this.directories = Optional.ofNullable(directories);
             return this;
         }
 
@@ -126,7 +126,7 @@ public final class Directory {
 
         @java.lang.Override
         public _FinalStage files(List<File> files) {
-            this.files = Optional.of(files);
+            this.files = Optional.ofNullable(files);
             return this;
         }
 

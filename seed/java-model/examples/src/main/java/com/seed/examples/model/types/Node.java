@@ -113,7 +113,7 @@ public final class Node {
 
         @java.lang.Override
         public _FinalStage trees(List<Tree> trees) {
-            this.trees = Optional.of(trees);
+            this.trees = Optional.ofNullable(trees);
             return this;
         }
 
@@ -126,7 +126,7 @@ public final class Node {
 
         @java.lang.Override
         public _FinalStage nodes(List<Node> nodes) {
-            this.nodes = Optional.of(nodes);
+            this.nodes = Optional.ofNullable(nodes);
             return this;
         }
 
