@@ -9,4 +9,5 @@ export interface FernFile {
 export interface ParsedFernFile<Schema> {
     rawContents: string;
     contents: Schema;
+    defaultUrl: string | undefined;
 }

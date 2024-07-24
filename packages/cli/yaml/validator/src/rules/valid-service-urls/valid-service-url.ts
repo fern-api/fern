@@ -13,6 +13,10 @@ export const ValidServiceUrlsRule: Rule = {
                 return [];
             }
 
+            if (urlIds.length === 0 && workspace.definition.rootApiFile.contents?.["default-url"] != null) {
+                return [];
+            }
+
             if (urlIds.length === 0) {
                 return [
                     {
@@ -44,6 +48,10 @@ export const ValidServiceUrlsRule: Rule = {
                     return validateBaseUrl(url);
                 },
                 endpointBaseUrl: ({ baseUrl, service }) => {
+                    if (workspace.definition.rootApiFile.contents?.["default-url"]) {
+                        return [];
+                    }
+
                     if (baseUrl == null) {
                         if (urlIds.length === 0 || service.url != null) {
                             return [];
@@ -55,15 +63,6 @@ export const ValidServiceUrlsRule: Rule = {
                                     '"url" is missing. Please specify one of the configured environment URLs:',
                                     ...urlIds.map((urlId) => `  - ${urlId}`)
                                 ].join("\n")
-                            }
-                        ];
-                    }
-
-                    if (service.url != null) {
-                        return [
-                            {
-                                severity: "error",
-                                message: '"url" cannot be specified on both the service and endpoint'
                             }
                         ];
                     }

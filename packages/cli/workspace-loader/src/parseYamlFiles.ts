@@ -24,6 +24,7 @@ export async function parseYamlFiles(files: readonly FernFile[]): Promise<Parser
     function parseFilePath(file: FernFile) {
         try {
             parsedFiles[file.relativeFilepath] = {
+                defaultUrl: undefined,
                 contents: yaml.load(file.fileContents, {
                     schema: yaml.CORE_SCHEMA
                 }),

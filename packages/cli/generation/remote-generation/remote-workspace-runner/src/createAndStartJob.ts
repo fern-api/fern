@@ -279,7 +279,8 @@ async function writeFernDefinition({
                 absolutePathToDefinitionDirectory,
                 RelativeFilePath.of(relativePath)
             ),
-            definition: importedDefinition
+            // TODO write with the defaulted url
+            definition: importedDefinition.definition
         });
     }
 }
