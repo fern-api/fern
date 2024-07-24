@@ -111,8 +111,6 @@ exports[`x-fern-global-headers x-fern-global-headers docs 1`] = `
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -128,8 +126,6 @@ exports[`x-fern-global-headers x-fern-global-headers docs 1`] = `
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -277,8 +273,6 @@ exports[`x-fern-global-headers x-fern-global-headers simple 1`] = `
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -294,8 +288,6 @@ exports[`x-fern-global-headers x-fern-global-headers simple 1`] = `
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",

@@ -40,9 +40,7 @@ exports[`open api parser superagent docs 1`] = `
                   "documentId": "optional<string>",
                   "has_memory": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "llm": "optional<map<string, unknown>>",
                   "name": "string",
@@ -212,9 +210,7 @@ exports[`open api parser superagent docs 1`] = `
                 "properties": {
                   "has_streaming": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "input": "map<string, unknown>",
                 },
@@ -491,9 +487,7 @@ exports[`open api parser superagent docs 1`] = `
                     "default": [
                       1,
                     ],
-                    "docs": undefined,
                     "type": "optional<integer>",
-                    "validation": undefined,
                   },
                   "name": "string",
                   "splitter": "optional<map<string, unknown>>",
@@ -1184,9 +1178,7 @@ exports[`open api parser superagent simple 1`] = `
                   "documentId": "optional<string>",
                   "has_memory": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "llm": "optional<map<string, unknown>>",
                   "name": "string",
@@ -1356,9 +1348,7 @@ exports[`open api parser superagent simple 1`] = `
                 "properties": {
                   "has_streaming": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "input": "map<string, unknown>",
                 },
@@ -1635,9 +1625,7 @@ exports[`open api parser superagent simple 1`] = `
                     "default": [
                       1,
                     ],
-                    "docs": undefined,
                     "type": "optional<integer>",
-                    "validation": undefined,
                   },
                   "name": "string",
                   "splitter": "optional<map<string, unknown>>",
