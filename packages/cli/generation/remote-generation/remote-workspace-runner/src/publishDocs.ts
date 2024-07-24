@@ -264,6 +264,12 @@ function startDocsRegisterFailed(
     error: DocsV2Write.startDocsPreviewRegister.Error | DocsV2Write.startDocsRegister.Error,
     context: TaskContext
 ): never {
+    context.instrumentPostHogEvent({
+        command: "docs-generation",
+        properties: {
+            error: JSON.stringify(error)
+        }
+    });
     switch (error.error) {
         case "InvalidCustomDomainError":
             return context.failAndThrow(
@@ -272,6 +278,16 @@ function startDocsRegisterFailed(
         case "InvalidDomainError":
             return context.failAndThrow(
                 "Please make sure that none of your custom domains are not overlapping (i.e. one is a substring of another)"
+            );
+        case "UnauthorizedError":
+            return context.failAndThrow("Please make sure that your FERN_TOKEN is set.");
+        case "UserNotInOrgError":
+            return context.failAndThrow(
+                "Please verify if you have access to the organization you are trying to publish the docs to. If you are not a member of the organization, please reach out to the organization owner."
+            );
+        case "UnavailableError":
+            return context.failAndThrow(
+                "Failed to publish docs. Please try again later or reach out to Fern support at support@buildwithfern.com."
             );
         default:
             return context.failAndThrow("Failed to publish docs.", error);
