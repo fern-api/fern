@@ -13,6 +13,10 @@ export const ValidServiceUrlsRule: Rule = {
                 return [];
             }
 
+            if (urlIds.length === 0 && workspace.definition.rootApiFile.contents?.["default-url"] != null) {
+                return [];
+            }
+
             if (urlIds.length === 0) {
                 return [
                     {

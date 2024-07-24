@@ -10,6 +10,7 @@ import { parseInlineType } from "./utils/parseInlineType";
  * here is a description
  */
 export interface FernFileContext {
+    defaultUrl: string | undefined;
     relativeFilepath: RelativeFilePath;
     fernFilepath: FernFilepath;
     imports: Record<string, RelativeFilePath>;
@@ -34,22 +35,26 @@ export function constructRootApiFileContext({
             imports: rootApiFile.imports
         },
         casingsGenerator,
-        rootApiFile
+        rootApiFile,
+        defaultUrl: undefined,
     });
 }
 
 export function constructFernFileContext({
+    defaultUrl,
     relativeFilepath,
     definitionFile,
     casingsGenerator,
     rootApiFile
 }: {
+    defaultUrl: string | undefined,
     relativeFilepath: RelativeFilePath;
     definitionFile: DefinitionFileSchema;
     casingsGenerator: CasingsGenerator;
     rootApiFile: RootApiFileSchema;
 }): FernFileContext {
     const file: FernFileContext = {
+        defaultUrl,
         relativeFilepath,
         fernFilepath: convertToFernFilepath({ relativeFilepath, casingsGenerator }),
         imports: mapValues(definitionFile.imports ?? {}, RelativeFilePath.of),

@@ -239,6 +239,7 @@ export async function generateIntermediateRepresentation({
                 }
 
                 const convertedHttpService = await convertHttpService({
+                    rootDefaultUrl: file.defaultUrl ?? workspace.definition.rootApiFile.contents["default-url"],
                     rootPathParameters: intermediateRepresentation.pathParameters,
                     serviceDefinition: service,
                     file,
@@ -335,13 +336,14 @@ export async function generateIntermediateRepresentation({
         });
     };
 
-    await visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
+    await visitAllDefinitionFiles(workspace, async (relativeFilepath, file, metadata) => {
         await visitDefinitionFile(
             constructFernFileContext({
                 relativeFilepath,
                 definitionFile: file,
                 casingsGenerator,
-                rootApiFile: workspace.definition.rootApiFile.contents
+                rootApiFile: workspace.definition.rootApiFile.contents,
+                defaultUrl: metadata.defaultUrl
             })
         );
     });
