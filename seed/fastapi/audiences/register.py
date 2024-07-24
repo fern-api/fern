@@ -7,7 +7,7 @@ import types
 import typing
 
 import fastapi
-import starlette
+import starlette.exceptions
 from fastapi import params
 
 from .core.abstract_fern_service import AbstractFernService
@@ -27,9 +27,9 @@ def register(
     _app.include_router(__register_service(folder_a_service), dependencies=dependencies)
     _app.include_router(__register_service(foo), dependencies=dependencies)
 
-    _app.add_exception_handler(FernHTTPException, fern_http_exception_handler)
-    _app.add_exception_handler(starlette.exceptions.HTTPException, http_exception_handler)
-    _app.add_exception_handler(Exception, default_exception_handler)
+    _app.add_exception_handler(FernHTTPException, fern_http_exception_handler)  # type: ignore
+    _app.add_exception_handler(starlette.exceptions.HTTPException, http_exception_handler)  # type: ignore
+    _app.add_exception_handler(Exception, default_exception_handler)  # type: ignore
 
 
 def __register_service(service: AbstractFernService) -> fastapi.APIRouter:

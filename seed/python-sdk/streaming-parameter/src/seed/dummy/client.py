@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.pydantic_utilities import pydantic_v1
+from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from .types.regular_response import RegularResponse
 from .types.stream_response import StreamResponse
@@ -106,7 +106,7 @@ class DummyClient:
                                 try:
                                     if len(_text) == 0:
                                         continue
-                                    yield pydantic_v1.parse_obj_as(StreamResponse, json.loads(_text))  # type: ignore
+                                    yield typing.cast(StreamResponse, parse_obj_as(type_=StreamResponse, object_=json.loads(_text)))  # type: ignore
                                 except:
                                     pass
                             return
@@ -123,7 +123,7 @@ class DummyClient:
             )
             try:
                 if 200 <= _response.status_code < 300:
-                    return pydantic_v1.parse_obj_as(RegularResponse, _response.json())  # type: ignore
+                    return typing.cast(RegularResponse, parse_obj_as(type_=RegularResponse, object_=_response.json()))  # type: ignore
                 _response_json = _response.json()
             except JSONDecodeError:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -237,7 +237,7 @@ class AsyncDummyClient:
                                 try:
                                     if len(_text) == 0:
                                         continue
-                                    yield pydantic_v1.parse_obj_as(StreamResponse, json.loads(_text))  # type: ignore
+                                    yield typing.cast(StreamResponse, parse_obj_as(type_=StreamResponse, object_=json.loads(_text)))  # type: ignore
                                 except:
                                     pass
                             return
@@ -254,7 +254,7 @@ class AsyncDummyClient:
             )
             try:
                 if 200 <= _response.status_code < 300:
-                    return pydantic_v1.parse_obj_as(RegularResponse, _response.json())  # type: ignore
+                    return typing.cast(RegularResponse, parse_obj_as(type_=RegularResponse, object_=_response.json()))  # type: ignore
                 _response_json = _response.json()
             except JSONDecodeError:
                 raise ApiError(status_code=_response.status_code, body=_response.text)

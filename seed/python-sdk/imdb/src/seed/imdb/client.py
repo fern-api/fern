@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pydantic_utilities import pydantic_v1
+from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from .errors.movie_does_not_exist_error import MovieDoesNotExistError
 from .types.movie import Movie
@@ -61,7 +61,7 @@ class ImdbClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(MovieId, _response.json())  # type: ignore
+                return typing.cast(MovieId, parse_obj_as(type_=MovieId, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -97,9 +97,11 @@ class ImdbClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(Movie, _response.json())  # type: ignore
+                return typing.cast(Movie, parse_obj_as(type_=Movie, object_=_response.json()))  # type: ignore
             if _response.status_code == 404:
-                raise MovieDoesNotExistError(pydantic_v1.parse_obj_as(MovieId, _response.json()))  # type: ignore
+                raise MovieDoesNotExistError(
+                    typing.cast(MovieId, parse_obj_as(type_=MovieId, object_=_response.json()))  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -159,7 +161,7 @@ class AsyncImdbClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(MovieId, _response.json())  # type: ignore
+                return typing.cast(MovieId, parse_obj_as(type_=MovieId, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -203,9 +205,11 @@ class AsyncImdbClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(Movie, _response.json())  # type: ignore
+                return typing.cast(Movie, parse_obj_as(type_=Movie, object_=_response.json()))  # type: ignore
             if _response.status_code == 404:
-                raise MovieDoesNotExistError(pydantic_v1.parse_obj_as(MovieId, _response.json()))  # type: ignore
+                raise MovieDoesNotExistError(
+                    typing.cast(MovieId, parse_obj_as(type_=MovieId, object_=_response.json()))  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

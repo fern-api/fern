@@ -160,7 +160,7 @@ function buildLongTypeReference({
     description: string | undefined;
     schema: PrimitiveSchemaValue.Int64;
 }): RawSchemas.TypeReferenceWithDocsSchema {
-    const type = "int64";
+    const type = "long";
     if (description == null && schema.default == null) {
         return type;
     }

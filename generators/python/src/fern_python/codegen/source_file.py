@@ -47,6 +47,10 @@ class SourceFile(ClassParent):
     def get_imports_manager(self) -> ImportsManager:
         ...
 
+    @abstractmethod
+    def get_dummy_class_declaration(self, declaration: AST.ClassDeclaration) -> LocalClassReference:
+        ...
+
 
 class SourceFileImpl(SourceFile):
     def __init__(
@@ -114,6 +118,36 @@ class SourceFileImpl(SourceFile):
             declaration=declaration,
             should_export=should_export if not declaration.name.startswith("_") else False,
         )
+        return LocalClassReferenceImpl(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path),
+                named_import=declaration.name,
+            ),
+        )
+
+    def get_dummy_class_declaration(
+        self,
+        declaration: AST.ClassDeclaration,
+    ) -> LocalClassReference:
+        new_declaration = declaration
+
+        class LocalClassReferenceImpl(LocalClassReference):
+            def add_class_declaration(
+                class_reference_self,
+                declaration: AST.ClassDeclaration,
+                should_export: bool = None,
+            ) -> LocalClassReference:
+                return LocalClassReferenceImpl(
+                    qualified_name_excluding_import=(
+                        class_reference_self.qualified_name_excluding_import + (declaration.name,)
+                    ),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path),
+                        named_import=new_declaration.name,
+                    ),
+                )
+
         return LocalClassReferenceImpl(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(

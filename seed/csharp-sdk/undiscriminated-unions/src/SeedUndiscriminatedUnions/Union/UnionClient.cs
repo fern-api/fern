@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Text.Json;
 using OneOf;
 using SeedUndiscriminatedUnions;
 using SeedUndiscriminatedUnions.Core;
@@ -48,7 +47,7 @@ public class UnionClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<
+            return JsonUtils.Deserialize<
                 OneOf<
                     string,
                     IEnumerable<string>,
@@ -70,9 +69,7 @@ public class UnionClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Dictionary<OneOf<KeyType, string>, string>>(
-                responseBody
-            )!;
+            return JsonUtils.Deserialize<Dictionary<OneOf<KeyType, string>, string>>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

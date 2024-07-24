@@ -3123,7 +3123,7 @@ exports[`open api parser flexport docs 1`] = `
               {
                 "name": "response",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "K67EZV1K8cQ5afQErZwk1Q",
                 },
                 "request": {},
                 "response": {
@@ -3919,7 +3919,7 @@ exports[`open api parser flexport docs 1`] = `
               {
                 "name": "response",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "FHLKEFHHoW8nwh9UVOMpw",
                 },
                 "request": {},
                 "response": {
@@ -4943,6 +4943,11 @@ exports[`open api parser flexport docs 1`] = `
             ],
             "examples": [
               {
+                "query-parameters": {
+                  "f.occurred_at.gte": "2020-01-10T20:00:00.000Z",
+                  "f.occurred_at.lte": "2020-01-10T20:00:00.000Z",
+                  "f.type": "/shipment_leg#departed",
+                },
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -18418,7 +18423,7 @@ exports[`open api parser flexport simple 1`] = `
               {
                 "name": "response",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "K67EZV1K8cQ5afQErZwk1Q",
                 },
                 "request": {},
                 "response": {
@@ -19214,7 +19219,7 @@ exports[`open api parser flexport simple 1`] = `
               {
                 "name": "response",
                 "path-parameters": {
-                  "id": "id",
+                  "id": "FHLKEFHHoW8nwh9UVOMpw",
                 },
                 "request": {},
                 "response": {
@@ -20238,6 +20243,11 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "query-parameters": {
+                  "f.occurred_at.gte": "2020-01-10T20:00:00.000Z",
+                  "f.occurred_at.lte": "2020-01-10T20:00:00.000Z",
+                  "f.type": "/shipment_leg#departed",
+                },
                 "response": {
                   "body": {
                     "_object": "/api/response",

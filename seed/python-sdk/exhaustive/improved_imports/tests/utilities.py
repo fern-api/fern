@@ -6,13 +6,6 @@ import uuid
 import pydantic
 from dateutil import parser
 
-IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
-
-if IS_PYDANTIC_V2:
-    import pydantic.v1 as pydantic_v1  # type: ignore  # nopycln: import
-else:
-    import pydantic as pydantic_v1  # type: ignore  # nopycln: import
-
 
 def cast_field(json_expectation: typing.Any, type_expectation: typing.Any) -> typing.Any:
     # Cast these specific types which come through as string and expect our
@@ -96,28 +89,45 @@ def validate_response(response: typing.Any, json_expectation: typing.Any, type_e
     if type_expectations == "no_validate":
         return
 
-    if not isinstance(response, dict) and not issubclass(type(response), pydantic_v1.BaseModel):
+    if (
+        not isinstance(response, list)
+        and not isinstance(response, dict)
+        and not issubclass(type(response), pydantic.BaseModel)
+    ):
         validate_field(response=response, json_expectation=json_expectation, type_expectation=type_expectations)
         return
 
-    response_json = response
-    if issubclass(type(response), pydantic_v1.BaseModel):
-        response_json = response.dict(by_alias=True)
+    if isinstance(response, list):
+        assert len(response) == len(json_expectation), "Length mismatch, expected: {0}, Actual: {1}".format(
+            len(response), len(json_expectation)
+        )
+        for idx, item in enumerate(response):
+            validate_response(
+                response=item, json_expectation=json_expectation[idx], type_expectations=type_expectations[idx]
+            )
+    else:
+        response_json = response
+        if issubclass(type(response), pydantic.BaseModel):
+            response_json = response.dict(by_alias=True)
 
-    for key, value in json_expectation.items():
-        assert key in response_json, "Field {0} not found within the response object: {1}".format(key, response_json)
+        for key, value in json_expectation.items():
+            assert key in response_json, "Field {0} not found within the response object: {1}".format(
+                key, response_json
+            )
 
-        type_expectation = None
-        if type_expectations is not None and isinstance(type_expectations, dict):
-            type_expectation = type_expectations.get(key)
+            type_expectation = None
+            if type_expectations is not None and isinstance(type_expectations, dict):
+                type_expectation = type_expectations.get(key)
 
-        # If your type_expectation is a tuple then you have a container field, process it as such
-        # Otherwise, we're just validating a single field that's a pydantic model.
-        if isinstance(value, dict) and not isinstance(type_expectation, tuple):
-            validate_response(response=response_json[key], json_expectation=value, type_expectations=type_expectation)
-        else:
-            validate_field(response=response_json[key], json_expectation=value, type_expectation=type_expectation)
+            # If your type_expectation is a tuple then you have a container field, process it as such
+            # Otherwise, we're just validating a single field that's a pydantic model.
+            if isinstance(value, dict) and not isinstance(type_expectation, tuple):
+                validate_response(
+                    response=response_json[key], json_expectation=value, type_expectations=type_expectation
+                )
+            else:
+                validate_field(response=response_json[key], json_expectation=value, type_expectation=type_expectation)
 
-        # Ensure there are no additional fields here either
-        del response_json[key]
-    assert len(response_json) == 0, "Additional fields found, expected None: {0}".format(response_json)
+            # Ensure there are no additional fields here either
+            del response_json[key]
+        assert len(response_json) == 0, "Additional fields found, expected None: {0}".format(response_json)

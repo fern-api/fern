@@ -2,26 +2,31 @@
 
 from __future__ import annotations
 
-import datetime as dt
 import typing
 
+import pydantic
 import typing_extensions
 
-from ....core.datetime_utils import serialize_datetime
-from ....core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
 
 class _Factory:
     def html(self, value: str) -> Metadata:
-        return Metadata(__root__=_Metadata.Html(type="html", value=value))
+        if IS_PYDANTIC_V2:
+            return Metadata(root=_Metadata.Html(type="html", value=value))
+        else:
+            return Metadata(__root__=_Metadata.Html(type="html", value=value))
 
     def markdown(self, value: str) -> Metadata:
-        return Metadata(__root__=_Metadata.Markdown(type="markdown", value=value))
+        if IS_PYDANTIC_V2:
+            return Metadata(root=_Metadata.Markdown(type="markdown", value=value))
+        else:
+            return Metadata(__root__=_Metadata.Markdown(type="markdown", value=value))
 
 
-class Metadata(pydantic_v1.BaseModel):
+class Metadata(UniversalRootModel):
     """
     Examples
     --------
@@ -32,44 +37,38 @@ class Metadata(pydantic_v1.BaseModel):
 
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get_as_union(self) -> typing.Union[_Metadata.Html, _Metadata.Markdown]:
-        return self.__root__
+    if IS_PYDANTIC_V2:
+        root: typing_extensions.Annotated[
+            typing.Union[_Metadata.Html, _Metadata.Markdown], pydantic.Field(discriminator="type")
+        ]
+
+        def get_as_union(self) -> typing.Union[_Metadata.Html, _Metadata.Markdown]:
+            return self.root
+
+    else:
+        __root__: typing_extensions.Annotated[
+            typing.Union[_Metadata.Html, _Metadata.Markdown], pydantic.Field(discriminator="type")
+        ]
+
+        def get_as_union(self) -> typing.Union[_Metadata.Html, _Metadata.Markdown]:
+            return self.__root__
 
     def visit(self, html: typing.Callable[[str], T_Result], markdown: typing.Callable[[str], T_Result]) -> T_Result:
-        if self.__root__.type == "html":
-            return html(self.__root__.value)
-        if self.__root__.type == "markdown":
-            return markdown(self.__root__.value)
-
-    __root__: typing_extensions.Annotated[
-        typing.Union[_Metadata.Html, _Metadata.Markdown], pydantic_v1.Field(discriminator="type")
-    ]
-
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
-
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        extra = pydantic_v1.Extra.forbid
-        json_encoders = {dt.datetime: serialize_datetime}
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "html":
+            return html(unioned_value.value)
+        if unioned_value.type == "markdown":
+            return markdown(unioned_value.value)
 
 
 class _Metadata:
-    class Html(pydantic_v1.BaseModel):
+    class Html(UniversalBaseModel):
         type: typing.Literal["html"] = "html"
         value: str
 
-    class Markdown(pydantic_v1.BaseModel):
+    class Markdown(UniversalBaseModel):
         type: typing.Literal["markdown"] = "markdown"
         value: str
 
 
-Metadata.update_forward_refs()
+update_forward_refs(Metadata)

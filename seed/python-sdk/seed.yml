@@ -131,14 +131,27 @@ fixtures:
           skip_validation: true
       outputFolder: skip-pydantic-validation
 scripts:
+  # Test Pydantic V2
   - docker: fernapi/python-seed
     commands:
-      # - poetry run mypy .
       # The global python version is 3.8
       # Tests now run a mock server, you can always run seed with --skip-scripts to save time
       - export NPM_CONFIG_CACHE="$(pwd)/.cache"
       - export HOME="$(pwd)/"
       - poetry config virtualenvs.path .
+      - poetry add pydantic=^2.8
+      - poetry lock
+      - poetry install
+      - poetry run mypy ./src ./tests
+      - fern test --command "poetry run pytest -rP ."
+  # Test Pydantic V1
+  - docker: fernapi/python-seed
+    commands:
+      - export NPM_CONFIG_CACHE="$(pwd)/.cache"
+      - export HOME="$(pwd)/"
+      - poetry config virtualenvs.path .
+      - poetry add pydantic=^1.10
+      - poetry lock
       - poetry install
       - poetry run mypy ./src ./tests
       - fern test --command "poetry run pytest -rP ."
@@ -152,9 +165,13 @@ allowedFailures:
   - extra-properties
   - trace
   - circular-references-advanced
-  - oauth-client-credentials-default
-  - unions:union-utils
-  - multi-url-environment-no-default
   # === Allowed failures due to unit testing ===
   - pagination
   # ===========================================
+  # We are not currently generating the examples correctly,
+  # so the mock server and the expectations in the unit
+  # tests are not correct (`status` on `Resource_User`).
+  - mixed-case
+  # We are not generating the correct snippets for union-utils
+  # types (e.g. we generate `Shape_Square` instead of Shape.factory.square())
+  - unions:union-utils

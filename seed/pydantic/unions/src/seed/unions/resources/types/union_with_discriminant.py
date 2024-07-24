@@ -4,27 +4,21 @@ from __future__ import annotations
 
 import typing
 
-from ...core.pydantic_utilities import pydantic_v1
+import pydantic
+
+from ...core.pydantic_utilities import UniversalBaseModel
 from .bar import Bar
 from .foo import Foo
 
 
-class UnionWithDiscriminant_Foo(pydantic_v1.BaseModel):
+class UnionWithDiscriminant_Foo(UniversalBaseModel):
     foo: Foo
-    type: typing.Literal["foo"] = pydantic_v1.Field(alias="_type", default="foo")
-
-    class Config:
-        allow_population_by_field_name = True
-        populate_by_name = True
+    type: typing.Literal["foo"] = pydantic.Field(alias="_type", default="foo")
 
 
-class UnionWithDiscriminant_Bar(pydantic_v1.BaseModel):
+class UnionWithDiscriminant_Bar(UniversalBaseModel):
     bar: Bar
-    type: typing.Literal["bar"] = pydantic_v1.Field(alias="_type", default="bar")
-
-    class Config:
-        allow_population_by_field_name = True
-        populate_by_name = True
+    type: typing.Literal["bar"] = pydantic.Field(alias="_type", default="bar")
 
 
 UnionWithDiscriminant = typing.Union[UnionWithDiscriminant_Foo, UnionWithDiscriminant_Bar]

@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Text.Json;
 using SeedValidation;
 using SeedValidation.Core;
 
@@ -32,7 +31,7 @@ public partial class SeedValidationClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Type>(responseBody)!;
+            return JsonUtils.Deserialize<Type>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -56,7 +55,7 @@ public partial class SeedValidationClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Type>(responseBody)!;
+            return JsonUtils.Deserialize<Type>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

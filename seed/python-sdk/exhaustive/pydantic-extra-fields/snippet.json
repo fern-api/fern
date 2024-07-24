@@ -48,8 +48,8 @@
                 "identifier_override": "endpoint_endpoints/container.getAndReturnSetOfObjects"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedExhaustive\nfrom seed.types import ObjectWithRequiredField\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.container.get_and_return_set_of_objects(\n    request={\n        ObjectWithRequiredField(\n            string=\"string\",\n        )\n    },\n)\n",
-                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedExhaustive\nfrom seed.types import ObjectWithRequiredField\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.container.get_and_return_set_of_objects(\n        request={\n            ObjectWithRequiredField(\n                string=\"string\",\n            )\n        },\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed.client import SeedExhaustive\nfrom seed.types import ObjectWithRequiredField\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.container.get_and_return_set_of_objects(\n    request=[\n        ObjectWithRequiredField(\n            string=\"string\",\n        )\n    ],\n)\n",
+                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedExhaustive\nfrom seed.types import ObjectWithRequiredField\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.container.get_and_return_set_of_objects(\n        request=[\n            ObjectWithRequiredField(\n                string=\"string\",\n            )\n        ],\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },

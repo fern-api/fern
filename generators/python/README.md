@@ -140,15 +140,6 @@ shape.visit(
 When enabled, the python generator will not run Black formatting in the generated code.
 Black is slow so this can potentially speed up code generation quite a bit.
 
-#### ✨ `pydantic_config.wrapped_aliases`
-
-**Type:** boolean
-
-**Default:** `false`
-
-When enabled, any alias types defined in your Fern Definition will be generated
-as an individual class.
-
 #### ✨ `pydantic_config.version`
 
 **Type:** "v1" or "v2" or "both"

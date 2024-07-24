@@ -20,16 +20,20 @@ class AbstractReqWithHeadersService(AbstractFernService):
     with FastAPI when you register your implementation using Fern's register()
     function.
     """
+    
     @abc.abstractmethod
     def get_with_custom_header(self, *, body: str, x_test_endpoint_header: str, auth: ApiAuth) -> None:
         ...
+    
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
     """
+    
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
         cls.__init_get_with_custom_header(router=router)
+    
     @classmethod
     def __init_get_with_custom_header(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_with_custom_header)
