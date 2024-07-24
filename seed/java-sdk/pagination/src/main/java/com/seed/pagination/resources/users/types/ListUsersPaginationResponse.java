@@ -159,7 +159,7 @@ public final class ListUsersPaginationResponse {
 
         @java.lang.Override
         public _FinalStage page(Page page) {
-            this.page = Optional.of(page);
+            this.page = Optional.ofNullable(page);
             return this;
         }
 

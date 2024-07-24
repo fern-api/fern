@@ -105,7 +105,7 @@ public final class GenericValue {
 
     @java.lang.Override
     public _FinalStage stringifiedType(String stringifiedType) {
-      this.stringifiedType = Optional.of(stringifiedType);
+      this.stringifiedType = Optional.ofNullable(stringifiedType);
       return this;
     }
 

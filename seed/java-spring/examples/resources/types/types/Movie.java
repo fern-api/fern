@@ -273,7 +273,7 @@ public final class Movie implements IMovie {
 
     @java.lang.Override
     public _FinalStage book(String book) {
-      this.book = Optional.of(book);
+      this.book = Optional.ofNullable(book);
       return this;
     }
 
@@ -289,7 +289,7 @@ public final class Movie implements IMovie {
 
     @java.lang.Override
     public _FinalStage prequel(MovieId prequel) {
-      this.prequel = Optional.of(prequel);
+      this.prequel = Optional.ofNullable(prequel);
       return this;
     }
 

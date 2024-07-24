@@ -113,7 +113,7 @@ public final class ListType {
      */
     @java.lang.Override
     public _FinalStage isFixedLength(Boolean isFixedLength) {
-      this.isFixedLength = Optional.of(isFixedLength);
+      this.isFixedLength = Optional.ofNullable(isFixedLength);
       return this;
     }
 

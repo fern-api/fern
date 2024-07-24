@@ -166,7 +166,7 @@ public final class GetSubmissionStateResponse {
 
         @java.lang.Override
         public _FinalStage timeSubmitted(OffsetDateTime timeSubmitted) {
-            this.timeSubmitted = Optional.of(timeSubmitted);
+            this.timeSubmitted = Optional.ofNullable(timeSubmitted);
             return this;
         }
 

@@ -145,7 +145,7 @@ public final class SendEnumInlinedRequest {
 
     @java.lang.Override
     public _FinalStage maybeOperandOrColor(ColorOrOperand maybeOperandOrColor) {
-      this.maybeOperandOrColor = Optional.of(maybeOperandOrColor);
+      this.maybeOperandOrColor = Optional.ofNullable(maybeOperandOrColor);
       return this;
     }
 
@@ -161,7 +161,7 @@ public final class SendEnumInlinedRequest {
 
     @java.lang.Override
     public _FinalStage maybeOperand(Operand maybeOperand) {
-      this.maybeOperand = Optional.of(maybeOperand);
+      this.maybeOperand = Optional.ofNullable(maybeOperand);
       return this;
     }
 

@@ -184,7 +184,7 @@ public final class RecordingResponseNotification {
 
         @java.lang.Override
         public _FinalStage tracedFile(TracedFile tracedFile) {
-            this.tracedFile = Optional.of(tracedFile);
+            this.tracedFile = Optional.ofNullable(tracedFile);
             return this;
         }
 
@@ -197,7 +197,7 @@ public final class RecordingResponseNotification {
 
         @java.lang.Override
         public _FinalStage testCaseId(String testCaseId) {
-            this.testCaseId = Optional.of(testCaseId);
+            this.testCaseId = Optional.ofNullable(testCaseId);
             return this;
         }
 

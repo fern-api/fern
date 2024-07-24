@@ -69,7 +69,7 @@ public final class WithPage {
         }
 
         public Builder page(Integer page) {
-            this.page = Optional.of(page);
+            this.page = Optional.ofNullable(page);
             return this;
         }
 

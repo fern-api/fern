@@ -142,7 +142,7 @@ public final class CreatePlaylistRequest {
 
         @java.lang.Override
         public _FinalStage optionalDatetime(OffsetDateTime optionalDatetime) {
-            this.optionalDatetime = Optional.of(optionalDatetime);
+            this.optionalDatetime = Optional.ofNullable(optionalDatetime);
             return this;
         }
 

@@ -161,7 +161,7 @@ public final class TestCaseV2 {
 
         @java.lang.Override
         public _FinalStage expects(TestCaseExpects expects) {
-            this.expects = Optional.of(expects);
+            this.expects = Optional.ofNullable(expects);
             return this;
         }
 

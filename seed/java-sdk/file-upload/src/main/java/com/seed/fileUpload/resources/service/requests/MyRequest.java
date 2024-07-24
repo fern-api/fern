@@ -193,7 +193,7 @@ public final class MyRequest {
 
         @java.lang.Override
         public _FinalStage optionalListOfStrings(List<String> optionalListOfStrings) {
-            this.optionalListOfStrings = Optional.of(optionalListOfStrings);
+            this.optionalListOfStrings = Optional.ofNullable(optionalListOfStrings);
             return this;
         }
 
@@ -206,7 +206,7 @@ public final class MyRequest {
 
         @java.lang.Override
         public _FinalStage maybeInteger(Integer maybeInteger) {
-            this.maybeInteger = Optional.of(maybeInteger);
+            this.maybeInteger = Optional.ofNullable(maybeInteger);
             return this;
         }
 
@@ -219,7 +219,7 @@ public final class MyRequest {
 
         @java.lang.Override
         public _FinalStage maybeString(String maybeString) {
-            this.maybeString = Optional.of(maybeString);
+            this.maybeString = Optional.ofNullable(maybeString);
             return this;
         }
 

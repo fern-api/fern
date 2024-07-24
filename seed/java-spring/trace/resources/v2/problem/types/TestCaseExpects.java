@@ -80,7 +80,7 @@ public final class TestCaseExpects {
     }
 
     public Builder expectedStdout(String expectedStdout) {
-      this.expectedStdout = Optional.of(expectedStdout);
+      this.expectedStdout = Optional.ofNullable(expectedStdout);
       return this;
     }
 

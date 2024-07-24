@@ -85,7 +85,7 @@ public final class ListUsersBodyCursorPaginationRequest {
     }
 
     public Builder pagination(WithCursor pagination) {
-      this.pagination = Optional.of(pagination);
+      this.pagination = Optional.ofNullable(pagination);
       return this;
     }
 
