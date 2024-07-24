@@ -1,11 +1,11 @@
 {
   "search.exclude": {
     "**/.pnp.*": true,
-    "**/.yarn": true
+    "**/.yarn": true,
   },
   "eslint.nodePath": ".yarn/sdks",
   "eslint.execArgv": ["--max_old_space_size=16384"],
-  "eslint.workingDirectories": ["./packages"],
+  "eslint.workingDirectories": [ "./packages" ],
   "prettier.prettierPath": ".yarn/sdks/prettier/index.js",
   "typescript.tsdk": ".yarn/sdks/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
@@ -15,6 +15,5 @@
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "python.analysis.typeCheckingMode": "basic",
-  "java.configuration.updateBuildConfiguration": "disabled"
+  "python.analysis.typeCheckingMode": "basic"
 }
