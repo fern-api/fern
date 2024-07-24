@@ -68,7 +68,10 @@ export function validateStructureOfYamlFiles({
             const maybeValidFileContents = PackageMarkerFileSchema.safeParse(parsedFileContents);
             if (maybeValidFileContents.success) {
                 packageMarkers[relativeFilepath] = {
-                    defaultUrl: typeof maybeValidFileContents.data.export === "object" ? maybeValidFileContents.data.export.url : undefined,
+                    defaultUrl:
+                        typeof maybeValidFileContents.data.export === "object"
+                            ? maybeValidFileContents.data.export.url
+                            : undefined,
                     contents: maybeValidFileContents.data,
                     rawContents: file.rawContents
                 };
