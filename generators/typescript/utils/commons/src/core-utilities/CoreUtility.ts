@@ -17,6 +17,7 @@ export declare namespace CoreUtility {
             ignoreGlob?: string;
         };
         unitTests?: {
+            fromDirectory: RelativeFilePath;
             /**
              * Import strings that we want to find + replace
              */
