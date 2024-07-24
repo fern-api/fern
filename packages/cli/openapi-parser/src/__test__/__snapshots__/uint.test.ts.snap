@@ -38,7 +38,7 @@ exports[`open api parser uint parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "uint64",
-                  "value": 1,
+                  "value": 1000000,
                 },
               },
             },

@@ -18,7 +18,7 @@ export const INT64 = 1000000;
 
 export const UINT = 1;
 
-export const UINT64 = 1;
+export const UINT64 = 1000000;
 
 export const UUID = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32";
 

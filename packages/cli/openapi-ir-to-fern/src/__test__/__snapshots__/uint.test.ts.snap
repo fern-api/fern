@@ -17,7 +17,7 @@ exports[`uint uint docs 1`] = `
               "response": {
                 "body": {
                   "id": 1.1,
-                  "value": 1,
+                  "value": 1000000,
                 },
               },
             },
@@ -81,7 +81,7 @@ exports[`uint uint simple 1`] = `
               "response": {
                 "body": {
                   "id": 1.1,
-                  "value": 1,
+                  "value": 1000000,
                 },
               },
             },
