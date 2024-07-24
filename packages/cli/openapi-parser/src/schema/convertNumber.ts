@@ -98,7 +98,7 @@ export function convertNumber({
             availability,
             groupName
         });
-    } else if (format === "uint") {
+    } else if (format === "uint32") {
         return wrapPrimitive({
             nameOverride,
             generatedName,
