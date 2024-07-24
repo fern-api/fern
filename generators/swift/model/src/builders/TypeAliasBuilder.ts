@@ -2,7 +2,7 @@
 /* eslint-disable object-shorthand */
 /* eslint-disable @typescript-eslint/no-extraneous-class */
 /* eslint-disable no-console */
-import Swift, { Class_, PrimativeKey, SwiftFile } from "@fern-api/swift-codegen";
+import Swift, { PrimativeKey, SwiftClass, SwiftFile } from "@fern-api/swift-codegen";
 import { EnumTypeDeclaration, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ModelGeneratorContext } from "../ModelGeneratorCli";
 import { CodeBuilder } from "./CodeBuilder";
@@ -20,7 +20,7 @@ export default class TypeAliasBuilder extends CodeBuilder<SwiftFile | undefined>
 
     const name = this.typeDeclaration.name.name.pascalCase.safeName;
 
-    const type = this.typeDeclaration.shape._visit<Class_ | undefined>({
+    const type = this.typeDeclaration.shape._visit<SwiftClass | undefined>({
       alias: (value) => {
 
         // TODO: Doc strings
