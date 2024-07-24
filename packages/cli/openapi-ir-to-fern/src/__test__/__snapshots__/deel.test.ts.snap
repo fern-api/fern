@@ -121,7 +121,7 @@ exports[`open api parser deel docs 1`] = `
             "path-parameters": {
               "invoice_id": {
                 "docs": "ID of an existing invoice",
-                "type": "int64",
+                "type": "long",
               },
             },
             "response": {
@@ -167,7 +167,7 @@ exports[`open api parser deel docs 1`] = `
             "path-parameters": {
               "invoice_id": {
                 "docs": "ID of an existing invoice",
-                "type": "int64",
+                "type": "long",
               },
             },
             "response": {
@@ -545,7 +545,7 @@ exports[`open api parser deel docs 1`] = `
                 },
                 "offset": {
                   "docs": "Return a page of results with given number of records.",
-                  "type": "optional<int64>",
+                  "type": "optional<long>",
                 },
               },
             },
@@ -583,7 +583,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "request": {
                   "data": {
@@ -656,7 +656,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "request": {
                   "data": {},
@@ -1527,7 +1527,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
               },
             ],
@@ -1569,7 +1569,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "response": {
                   "body": {
@@ -1622,7 +1622,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "request": {
                   "data": {},
@@ -1693,7 +1693,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "request": {},
                 "response": {
@@ -1748,7 +1748,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "response": {
                   "body": {
@@ -1792,7 +1792,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "request": {
                   "data": {
@@ -1845,7 +1845,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "response": {
                   "body": {
@@ -1920,7 +1920,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "request": {},
                 "response": {
@@ -1975,7 +1975,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "response": {
                   "body": [
@@ -2020,7 +2020,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "response": {
                   "body": {
@@ -2306,7 +2306,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "request": {
                   "data": {
@@ -2431,7 +2431,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "request": {
                   "data": {
@@ -2490,7 +2490,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "response": {
                   "body": {
@@ -3089,7 +3089,7 @@ exports[`open api parser deel docs 1`] = `
                 },
                 "invoice_id": {
                   "docs": "ID of an existing invoice; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<int64>",
+                  "type": "optional<long>",
                 },
                 "limit": {
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
@@ -3097,7 +3097,7 @@ exports[`open api parser deel docs 1`] = `
                 },
                 "offset": {
                   "docs": "Return a page of results after given index of row; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<int64>",
+                  "type": "optional<long>",
                 },
                 "reporter_id": {
                   "docs": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
@@ -3139,7 +3139,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "response": {
                   "body": {
@@ -3224,7 +3224,7 @@ exports[`open api parser deel docs 1`] = `
                 },
                 "invoice_id": {
                   "docs": "ID of an existing invoice; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<int64>",
+                  "type": "optional<long>",
                 },
                 "limit": {
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
@@ -3232,7 +3232,7 @@ exports[`open api parser deel docs 1`] = `
                 },
                 "offset": {
                   "docs": "Return a page of results after given index of row; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<int64>",
+                  "type": "optional<long>",
                 },
                 "reporter_id": {
                   "docs": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
@@ -3457,7 +3457,7 @@ exports[`open api parser deel docs 1`] = `
                 },
                 "limit": {
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<int64>",
+                  "type": "optional<long>",
                 },
               },
             },
@@ -3505,7 +3505,7 @@ exports[`open api parser deel docs 1`] = `
               "query-parameters": {
                 "limit": {
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<int64>",
+                  "type": "optional<long>",
                 },
               },
             },
@@ -3583,7 +3583,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "request": {
                   "data": {
@@ -3644,7 +3644,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                   "milestone_id": "milestone_id",
                 },
                 "request": {
@@ -3708,7 +3708,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "request": {
                   "data": {
@@ -3770,7 +3770,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                   "milestone_id": "milestone_id",
                 },
                 "response": {
@@ -3819,7 +3819,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "response": {
                   "body": {
@@ -3879,7 +3879,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                   "milestone_id": "milestone_id",
                 },
                 "response": {
@@ -3955,7 +3955,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "request": {
                   "data": {
@@ -4015,7 +4015,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                   "offcycle_payment_id": "offcycle_payment_id",
                 },
                 "response": {
@@ -4081,7 +4081,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "response": {
                   "body": {
@@ -4152,6 +4152,9 @@ exports[`open api parser deel docs 1`] = `
             ],
             "examples": [
               {
+                "query-parameters": {
+                  "contract_id": "37nex2x",
+                },
                 "response": {
                   "body": {
                     "data": [
@@ -4353,7 +4356,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "request": {
                   "data": {
@@ -4413,7 +4416,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "request": {
                   "data": {
@@ -4486,7 +4489,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                   "task_id": "task_id",
                 },
                 "request": {
@@ -4560,7 +4563,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                   "task_id": "task_id",
                 },
                 "response": {
@@ -4618,7 +4621,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "response": {
                   "body": {
@@ -4682,7 +4685,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "request": {
                   "data": {
@@ -4811,8 +4814,8 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
-                  "timeoff_id": "timeoff_id",
+                  "contract_id": "37nex2x",
+                  "timeoff_id": "12345",
                 },
                 "response": {
                   "body": {
@@ -4857,8 +4860,8 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
-                  "timeoff_id": "timeoff_id",
+                  "contract_id": "37nex2x",
+                  "timeoff_id": "12345",
                 },
                 "request": {
                   "data": {
@@ -5086,7 +5089,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "response": {
                   "body": {
@@ -5146,7 +5149,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "response": {
                   "body": {
@@ -5245,7 +5248,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "timeoff_id": "timeoff_id",
+                  "timeoff_id": "12345",
                 },
                 "request": {
                   "data": {
@@ -5396,7 +5399,7 @@ exports[`open api parser deel docs 1`] = `
             "path-parameters": {
               "timesheet_id": {
                 "docs": "ID of an existing timesheet",
-                "type": "int64",
+                "type": "long",
               },
             },
             "request": {
@@ -5503,7 +5506,7 @@ exports[`open api parser deel docs 1`] = `
             "path-parameters": {
               "timesheet_id": {
                 "docs": "ID of an existing timesheet",
-                "type": "int64",
+                "type": "long",
               },
             },
             "request": {
@@ -5603,7 +5606,7 @@ exports[`open api parser deel docs 1`] = `
             "path-parameters": {
               "timesheet_id": {
                 "docs": "ID of an existing timesheet",
-                "type": "int64",
+                "type": "long",
               },
             },
             "response": {
@@ -5704,11 +5707,11 @@ exports[`open api parser deel docs 1`] = `
                 },
                 "limit": {
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<int64>",
+                  "type": "optional<long>",
                 },
                 "offset": {
                   "docs": "Return a page of results after given index of row",
-                  "type": "optional<int64>",
+                  "type": "optional<long>",
                 },
                 "reporter_id": {
                   "docs": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
@@ -5745,7 +5748,7 @@ exports[`open api parser deel docs 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "response": {
                   "body": {
@@ -5824,11 +5827,11 @@ exports[`open api parser deel docs 1`] = `
                 },
                 "limit": {
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<int64>",
+                  "type": "optional<long>",
                 },
                 "offset": {
                   "docs": "Return a page of results after given index of row",
-                  "type": "optional<int64>",
+                  "type": "optional<long>",
                 },
                 "reporter_id": {
                   "docs": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
@@ -5888,7 +5891,7 @@ exports[`open api parser deel docs 1`] = `
             "path-parameters": {
               "timesheet_id": {
                 "docs": "ID of an existing timesheet",
-                "type": "int64",
+                "type": "long",
               },
             },
             "request": {
@@ -9411,7 +9414,7 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "email": "optional<EmailType>",
-          "id": "int64",
+          "id": "long",
           "name": "string",
           "registration_number": "string",
           "subtype": "LegalEntitySubType",
@@ -9430,7 +9433,7 @@ exports[`open api parser deel docs 1`] = `
         "properties": {
           "email": "optional<EmailType>",
           "full_name": "string",
-          "id": "int64",
+          "id": "long",
           "legal_entity": "optional<ClientLegalEntity>",
           "team": "TeamOfContract",
         },
@@ -14771,7 +14774,7 @@ exports[`open api parser deel docs 1`] = `
               "pattern": undefined,
             },
           },
-          "id": "int64",
+          "id": "long",
           "image": "optional<UrlType>",
         },
       },
@@ -14804,7 +14807,7 @@ exports[`open api parser deel docs 1`] = `
               "pattern": undefined,
             },
           },
-          "id": "optional<int64>",
+          "id": "optional<long>",
           "image": "optional<string>",
           "last_name": {
             "default": undefined,
@@ -14972,7 +14975,7 @@ exports[`open api parser deel simple 1`] = `
             "path-parameters": {
               "invoice_id": {
                 "docs": "ID of an existing invoice",
-                "type": "int64",
+                "type": "long",
               },
             },
             "response": {
@@ -15018,7 +15021,7 @@ exports[`open api parser deel simple 1`] = `
             "path-parameters": {
               "invoice_id": {
                 "docs": "ID of an existing invoice",
-                "type": "int64",
+                "type": "long",
               },
             },
             "response": {
@@ -15396,7 +15399,7 @@ exports[`open api parser deel simple 1`] = `
                 },
                 "offset": {
                   "docs": "Return a page of results with given number of records.",
-                  "type": "optional<int64>",
+                  "type": "optional<long>",
                 },
               },
             },
@@ -15434,7 +15437,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "request": {
                   "data": {
@@ -15507,7 +15510,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "request": {
                   "data": {},
@@ -16378,7 +16381,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
               },
             ],
@@ -16420,7 +16423,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "response": {
                   "body": {
@@ -16473,7 +16476,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "request": {
                   "data": {},
@@ -16544,7 +16547,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "request": {},
                 "response": {
@@ -16599,7 +16602,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "response": {
                   "body": {
@@ -16643,7 +16646,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "request": {
                   "data": {
@@ -16696,7 +16699,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "response": {
                   "body": {
@@ -16771,7 +16774,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "request": {},
                 "response": {
@@ -16826,7 +16829,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "response": {
                   "body": [
@@ -16871,7 +16874,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "response": {
                   "body": {
@@ -17157,7 +17160,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "request": {
                   "data": {
@@ -17282,7 +17285,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "request": {
                   "data": {
@@ -17341,7 +17344,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "response": {
                   "body": {
@@ -17940,7 +17943,7 @@ exports[`open api parser deel simple 1`] = `
                 },
                 "invoice_id": {
                   "docs": "ID of an existing invoice; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<int64>",
+                  "type": "optional<long>",
                 },
                 "limit": {
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
@@ -17948,7 +17951,7 @@ exports[`open api parser deel simple 1`] = `
                 },
                 "offset": {
                   "docs": "Return a page of results after given index of row; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<int64>",
+                  "type": "optional<long>",
                 },
                 "reporter_id": {
                   "docs": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
@@ -17990,7 +17993,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "response": {
                   "body": {
@@ -18075,7 +18078,7 @@ exports[`open api parser deel simple 1`] = `
                 },
                 "invoice_id": {
                   "docs": "ID of an existing invoice; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<int64>",
+                  "type": "optional<long>",
                 },
                 "limit": {
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
@@ -18083,7 +18086,7 @@ exports[`open api parser deel simple 1`] = `
                 },
                 "offset": {
                   "docs": "Return a page of results after given index of row; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<int64>",
+                  "type": "optional<long>",
                 },
                 "reporter_id": {
                   "docs": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
@@ -18308,7 +18311,7 @@ exports[`open api parser deel simple 1`] = `
                 },
                 "limit": {
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<int64>",
+                  "type": "optional<long>",
                 },
               },
             },
@@ -18356,7 +18359,7 @@ exports[`open api parser deel simple 1`] = `
               "query-parameters": {
                 "limit": {
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<int64>",
+                  "type": "optional<long>",
                 },
               },
             },
@@ -18434,7 +18437,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "request": {
                   "data": {
@@ -18495,7 +18498,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                   "milestone_id": "milestone_id",
                 },
                 "request": {
@@ -18559,7 +18562,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "request": {
                   "data": {
@@ -18621,7 +18624,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                   "milestone_id": "milestone_id",
                 },
                 "response": {
@@ -18670,7 +18673,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "response": {
                   "body": {
@@ -18730,7 +18733,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                   "milestone_id": "milestone_id",
                 },
                 "response": {
@@ -18806,7 +18809,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "request": {
                   "data": {
@@ -18866,7 +18869,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                   "offcycle_payment_id": "offcycle_payment_id",
                 },
                 "response": {
@@ -18932,7 +18935,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "response": {
                   "body": {
@@ -19003,6 +19006,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
+                "query-parameters": {
+                  "contract_id": "37nex2x",
+                },
                 "response": {
                   "body": {
                     "data": [
@@ -19204,7 +19210,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "request": {
                   "data": {
@@ -19264,7 +19270,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "request": {
                   "data": {
@@ -19337,7 +19343,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                   "task_id": "task_id",
                 },
                 "request": {
@@ -19411,7 +19417,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                   "task_id": "task_id",
                 },
                 "response": {
@@ -19469,7 +19475,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "response": {
                   "body": {
@@ -19533,7 +19539,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "request": {
                   "data": {
@@ -19662,8 +19668,8 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
-                  "timeoff_id": "timeoff_id",
+                  "contract_id": "37nex2x",
+                  "timeoff_id": "12345",
                 },
                 "response": {
                   "body": {
@@ -19708,8 +19714,8 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
-                  "timeoff_id": "timeoff_id",
+                  "contract_id": "37nex2x",
+                  "timeoff_id": "12345",
                 },
                 "request": {
                   "data": {
@@ -19937,7 +19943,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "response": {
                   "body": {
@@ -19997,7 +20003,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "response": {
                   "body": {
@@ -20096,7 +20102,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "timeoff_id": "timeoff_id",
+                  "timeoff_id": "12345",
                 },
                 "request": {
                   "data": {
@@ -20247,7 +20253,7 @@ exports[`open api parser deel simple 1`] = `
             "path-parameters": {
               "timesheet_id": {
                 "docs": "ID of an existing timesheet",
-                "type": "int64",
+                "type": "long",
               },
             },
             "request": {
@@ -20354,7 +20360,7 @@ exports[`open api parser deel simple 1`] = `
             "path-parameters": {
               "timesheet_id": {
                 "docs": "ID of an existing timesheet",
-                "type": "int64",
+                "type": "long",
               },
             },
             "request": {
@@ -20454,7 +20460,7 @@ exports[`open api parser deel simple 1`] = `
             "path-parameters": {
               "timesheet_id": {
                 "docs": "ID of an existing timesheet",
-                "type": "int64",
+                "type": "long",
               },
             },
             "response": {
@@ -20555,11 +20561,11 @@ exports[`open api parser deel simple 1`] = `
                 },
                 "limit": {
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<int64>",
+                  "type": "optional<long>",
                 },
                 "offset": {
                   "docs": "Return a page of results after given index of row",
-                  "type": "optional<int64>",
+                  "type": "optional<long>",
                 },
                 "reporter_id": {
                   "docs": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
@@ -20596,7 +20602,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "contract_id",
+                  "contract_id": "37nex2x",
                 },
                 "response": {
                   "body": {
@@ -20675,11 +20681,11 @@ exports[`open api parser deel simple 1`] = `
                 },
                 "limit": {
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<int64>",
+                  "type": "optional<long>",
                 },
                 "offset": {
                   "docs": "Return a page of results after given index of row",
-                  "type": "optional<int64>",
+                  "type": "optional<long>",
                 },
                 "reporter_id": {
                   "docs": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
@@ -20739,7 +20745,7 @@ exports[`open api parser deel simple 1`] = `
             "path-parameters": {
               "timesheet_id": {
                 "docs": "ID of an existing timesheet",
-                "type": "int64",
+                "type": "long",
               },
             },
             "request": {
@@ -21587,7 +21593,7 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "email": "optional<EmailType>",
-          "id": "int64",
+          "id": "long",
           "name": "string",
           "registration_number": "string",
           "subtype": "LegalEntitySubType",
@@ -21606,7 +21612,7 @@ exports[`open api parser deel simple 1`] = `
         "properties": {
           "email": "optional<EmailType>",
           "full_name": "string",
-          "id": "int64",
+          "id": "long",
           "legal_entity": "optional<ClientLegalEntity>",
           "team": "TeamOfContract",
         },
@@ -26947,7 +26953,7 @@ exports[`open api parser deel simple 1`] = `
               "pattern": undefined,
             },
           },
-          "id": "int64",
+          "id": "long",
           "image": "optional<UrlType>",
         },
       },
@@ -26980,7 +26986,7 @@ exports[`open api parser deel simple 1`] = `
               "pattern": undefined,
             },
           },
-          "id": "optional<int64>",
+          "id": "optional<long>",
           "image": "optional<string>",
           "last_name": {
             "default": undefined,

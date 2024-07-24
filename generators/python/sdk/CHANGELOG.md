@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0-rc2] - 2024-07-24
+
+- Fix: `update_forward_refs` no longer raises errors, preserving original behavior, pre-3.x.
+
+## [3.0.0-rc1] - 2024-07-23
+
+- Fix: Sometimes mypy will error on the typing of `expected_types` within our test suite, despite them being labeled as `typing.Any`. This updates the types for tuples to `typing.Tuple[tying.Any, typing.Any]` to appease mypy.
+
+## [3.0.0-rc0] - 2024-07-23
+
+- Break: The generated SDK now supports Pydantic V2 outright, it no longer uses `pydantic.v1` models. This change introduces additional breaks:
+  - Wrapped aliases have been removed
+  - Custom root validators for models with a **root** type have been removed (e.g. only unions with utils still leverages root models)
+  - Public fields previously prefixed with `_` are now prefixed with `f_` (Pydantic V2 does not allow for `_` prefixes on public fields and Python does not allow for a numeric prefix)
+
 ## [2.16.0] - 2024-07-16
 
 - Improvement: The generated SDK now allows for specifying whether or not to generate `streaming` functions as overloaded functions or suparate functions.

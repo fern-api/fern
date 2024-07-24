@@ -85,7 +85,7 @@ public final class Response {
         }
 
         public Builder foo(Foo foo) {
-            this.foo = Optional.of(foo);
+            this.foo = Optional.ofNullable(foo);
             return this;
         }
 

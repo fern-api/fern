@@ -10,7 +10,6 @@ class SdkPydanticModelCustomConfig(PydanticModelCustomConfig):
     orm_mode: bool = False
     smart_union: bool = True
     include_union_utils: bool = False
-    wrapped_aliases: bool = False
     require_optional_fields: bool = False
 
 

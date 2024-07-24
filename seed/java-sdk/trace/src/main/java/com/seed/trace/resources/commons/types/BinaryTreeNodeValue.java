@@ -154,7 +154,7 @@ public final class BinaryTreeNodeValue {
 
         @java.lang.Override
         public _FinalStage left(String left) {
-            this.left = Optional.of(left);
+            this.left = Optional.ofNullable(left);
             return this;
         }
 
@@ -167,7 +167,7 @@ public final class BinaryTreeNodeValue {
 
         @java.lang.Override
         public _FinalStage right(String right) {
-            this.right = Optional.of(right);
+            this.right = Optional.ofNullable(right);
             return this;
         }
 

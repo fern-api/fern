@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Text.Json;
 using SeedLiteral;
 using SeedLiteral.Core;
 
@@ -24,7 +23,7 @@ public class PathClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<SendResponse>(responseBody)!;
+            return JsonUtils.Deserialize<SendResponse>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

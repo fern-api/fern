@@ -23,6 +23,7 @@ export class ApiReferenceNodeConverter {
     #children: FernNavigation.ApiPackageChild[] = [];
     #overviewPageId: FernNavigation.PageId | undefined;
     #slug: FernNavigation.SlugGenerator;
+    private disableEndpointPairs;
     constructor(
         private apiSection: docsYml.DocsNavigationItem.ApiSection,
         api: APIV1Read.ApiDefinition,
@@ -32,6 +33,7 @@ export class ApiReferenceNodeConverter {
         private taskContext: TaskContext,
         private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string>
     ) {
+        this.disableEndpointPairs = docsWorkspace.config.experimental?.disableStreamToggle ?? false;
         this.apiDefinitionId = FernNavigation.ApiDefinitionId(api.id);
         this.#holder = ApiDefinitionHolder.create(api, taskContext);
 
@@ -97,7 +99,8 @@ export class ApiReferenceNodeConverter {
             }),
             children: this.#children,
             availability: undefined,
-            pointsTo
+            pointsTo,
+            noindex: undefined
         };
     }
 
@@ -135,7 +138,8 @@ export class ApiReferenceNodeConverter {
                             title: page.title,
                             slug: pageSlug.get(),
                             icon: page.icon,
-                            hidden: page.hidden
+                            hidden: page.hidden,
+                            noindex: page.noindex
                         };
                     },
                     package: (pkg) => this.#convertPackage(pkg, parentSlug, idgen),
@@ -206,7 +210,8 @@ export class ApiReferenceNodeConverter {
                 overviewPageId,
                 availability: undefined,
                 apiDefinitionId: this.apiDefinitionId,
-                pointsTo: undefined
+                pointsTo: undefined,
+                noindex: undefined
             };
         } else {
             this.taskContext.logger.warn(
@@ -230,7 +235,8 @@ export class ApiReferenceNodeConverter {
                 overviewPageId,
                 availability: undefined,
                 apiDefinitionId: this.apiDefinitionId,
-                pointsTo: undefined
+                pointsTo: undefined,
+                noindex: undefined
             };
         }
     }
@@ -289,7 +295,8 @@ export class ApiReferenceNodeConverter {
             overviewPageId,
             availability: undefined,
             apiDefinitionId: this.apiDefinitionId,
-            pointsTo: undefined
+            pointsTo: undefined,
+            noindex: undefined
         };
     }
 
@@ -330,7 +337,8 @@ export class ApiReferenceNodeConverter {
                 overviewPageId: undefined,
                 availability: undefined,
                 apiDefinitionId: this.apiDefinitionId,
-                pointsTo: undefined
+                pointsTo: undefined,
+                noindex: undefined
             };
         }
 
@@ -590,7 +598,8 @@ export class ApiReferenceNodeConverter {
                     overviewPageId: undefined,
                     availability: undefined,
                     apiDefinitionId: this.apiDefinitionId,
-                    pointsTo: FernNavigation.utils.followRedirects(subpackageChildren)
+                    pointsTo: FernNavigation.utils.followRedirects(subpackageChildren),
+                    noindex: undefined
                 });
             }
         });
@@ -625,6 +634,10 @@ export class ApiReferenceNodeConverter {
     }
 
     private mergeEndpointPairs(children: FernNavigation.ApiPackageChild[]): FernNavigation.ApiPackageChild[] {
+        if (this.disableEndpointPairs) {
+            return children;
+        }
+
         const toRet: FernNavigation.ApiPackageChild[] = [];
 
         const methodAndPathToEndpointNode = new Map<string, FernNavigation.EndpointNode>();

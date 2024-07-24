@@ -3,7 +3,7 @@
 from collections import ChainMap
 from typing import Any, Dict, Optional
 
-from .pydantic_utilities import pydantic_v1
+import pydantic
 
 
 # Flattens dicts to be of the form {"key[subkey][subkey2]": value} where value is not a dict
@@ -19,8 +19,8 @@ def traverse_query_dict(dict_flat: Dict[str, Any], key_prefix: Optional[str] = N
 
 
 def single_query_encoder(query_key: str, query_value: Any) -> Dict[str, Any]:
-    if isinstance(query_value, pydantic_v1.BaseModel) or isinstance(query_value, dict):
-        if isinstance(query_value, pydantic_v1.BaseModel):
+    if isinstance(query_value, pydantic.BaseModel) or isinstance(query_value, dict):
+        if isinstance(query_value, pydantic.BaseModel):
             obj_dict = query_value.dict(by_alias=True)
         else:
             obj_dict = query_value

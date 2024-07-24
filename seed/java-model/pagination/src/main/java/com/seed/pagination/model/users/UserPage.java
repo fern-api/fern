@@ -100,7 +100,7 @@ public final class UserPage implements IUserPage {
 
         @java.lang.Override
         public _FinalStage next(UUID next) {
-            this.next = Optional.of(next);
+            this.next = Optional.ofNullable(next);
             return this;
         }
 

@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Text.Json;
 using SeedExhaustive.Core;
 
 #nullable enable
@@ -28,7 +27,7 @@ public class PrimitiveClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<string>(responseBody)!;
+            return JsonUtils.Deserialize<string>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -46,7 +45,7 @@ public class PrimitiveClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<int>(responseBody)!;
+            return JsonUtils.Deserialize<int>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -64,7 +63,7 @@ public class PrimitiveClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<long>(responseBody)!;
+            return JsonUtils.Deserialize<long>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -82,7 +81,7 @@ public class PrimitiveClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<double>(responseBody)!;
+            return JsonUtils.Deserialize<double>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -100,7 +99,7 @@ public class PrimitiveClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<bool>(responseBody)!;
+            return JsonUtils.Deserialize<bool>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -118,7 +117,7 @@ public class PrimitiveClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<DateTime>(responseBody)!;
+            return JsonUtils.Deserialize<DateTime>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -136,7 +135,7 @@ public class PrimitiveClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<DateOnly>(responseBody)!;
+            return JsonUtils.Deserialize<DateOnly>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -154,7 +153,7 @@ public class PrimitiveClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Guid>(responseBody)!;
+            return JsonUtils.Deserialize<Guid>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -172,7 +171,7 @@ public class PrimitiveClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<string>(responseBody)!;
+            return JsonUtils.Deserialize<string>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

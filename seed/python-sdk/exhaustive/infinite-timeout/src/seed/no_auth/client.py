@@ -5,7 +5,7 @@ from json.decoder import JSONDecodeError
 
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.pydantic_utilities import pydantic_v1
+from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..general_errors.errors.bad_request_body import BadRequestBody
 from ..general_errors.types.bad_object_request_info import BadObjectRequestInfo
@@ -52,9 +52,11 @@ class NoAuthClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(bool, _response.json())  # type: ignore
+                return typing.cast(bool, parse_obj_as(type_=bool, object_=_response.json()))  # type: ignore
             if _response.status_code == 400:
-                raise BadRequestBody(pydantic_v1.parse_obj_as(BadObjectRequestInfo, _response.json()))  # type: ignore
+                raise BadRequestBody(
+                    typing.cast(BadObjectRequestInfo, parse_obj_as(type_=BadObjectRequestInfo, object_=_response.json()))  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -107,9 +109,11 @@ class AsyncNoAuthClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(bool, _response.json())  # type: ignore
+                return typing.cast(bool, parse_obj_as(type_=bool, object_=_response.json()))  # type: ignore
             if _response.status_code == 400:
-                raise BadRequestBody(pydantic_v1.parse_obj_as(BadObjectRequestInfo, _response.json()))  # type: ignore
+                raise BadRequestBody(
+                    typing.cast(BadObjectRequestInfo, parse_obj_as(type_=BadObjectRequestInfo, object_=_response.json()))  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

@@ -4,15 +4,15 @@ from __future__ import annotations
 
 import typing
 
-from .....core.pydantic_utilities import pydantic_v1
+from .....core.pydantic_utilities import UniversalBaseModel
 
 
-class Data_String(pydantic_v1.BaseModel):
+class Data_String(UniversalBaseModel):
     value: str
     type: typing.Literal["string"] = "string"
 
 
-class Data_Base64(pydantic_v1.BaseModel):
+class Data_Base64(UniversalBaseModel):
     value: str
     type: typing.Literal["base64"] = "base64"
 

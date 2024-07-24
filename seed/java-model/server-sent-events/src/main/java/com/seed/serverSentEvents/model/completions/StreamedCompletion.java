@@ -97,7 +97,7 @@ public final class StreamedCompletion {
 
         @java.lang.Override
         public _FinalStage tokens(Integer tokens) {
-            this.tokens = Optional.of(tokens);
+            this.tokens = Optional.ofNullable(tokens);
             return this;
         }
 

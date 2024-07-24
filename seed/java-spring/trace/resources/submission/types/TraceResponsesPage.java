@@ -98,7 +98,7 @@ public final class TraceResponsesPage {
     }
 
     public Builder offset(Integer offset) {
-      this.offset = Optional.of(offset);
+      this.offset = Optional.ofNullable(offset);
       return this;
     }
 

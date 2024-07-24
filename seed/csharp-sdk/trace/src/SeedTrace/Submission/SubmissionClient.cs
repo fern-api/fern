@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Text.Json;
 using SeedTrace;
 using SeedTrace.Core;
 
@@ -31,7 +30,7 @@ public class SubmissionClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ExecutionSessionResponse>(responseBody)!;
+            return JsonUtils.Deserialize<ExecutionSessionResponse>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -51,7 +50,7 @@ public class SubmissionClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ExecutionSessionResponse?>(responseBody)!;
+            return JsonUtils.Deserialize<ExecutionSessionResponse?>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -82,7 +81,7 @@ public class SubmissionClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<GetExecutionSessionStateResponse>(responseBody)!;
+            return JsonUtils.Deserialize<GetExecutionSessionStateResponse>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

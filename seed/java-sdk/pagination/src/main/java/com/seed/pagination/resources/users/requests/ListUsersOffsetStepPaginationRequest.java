@@ -120,7 +120,7 @@ public final class ListUsersOffsetStepPaginationRequest {
         }
 
         public Builder page(Integer page) {
-            this.page = Optional.of(page);
+            this.page = Optional.ofNullable(page);
             return this;
         }
 
@@ -131,7 +131,7 @@ public final class ListUsersOffsetStepPaginationRequest {
         }
 
         public Builder limit(Integer limit) {
-            this.limit = Optional.of(limit);
+            this.limit = Optional.ofNullable(limit);
             return this;
         }
 
@@ -142,7 +142,7 @@ public final class ListUsersOffsetStepPaginationRequest {
         }
 
         public Builder order(Order order) {
-            this.order = Optional.of(order);
+            this.order = Optional.ofNullable(order);
             return this;
         }
 

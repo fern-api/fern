@@ -260,7 +260,7 @@ public final class ObjectWithOptionalField {
         }
 
         public Builder string(String string) {
-            this.string = Optional.of(string);
+            this.string = Optional.ofNullable(string);
             return this;
         }
 
@@ -271,7 +271,7 @@ public final class ObjectWithOptionalField {
         }
 
         public Builder integer(Integer integer) {
-            this.integer = Optional.of(integer);
+            this.integer = Optional.ofNullable(integer);
             return this;
         }
 
@@ -282,7 +282,7 @@ public final class ObjectWithOptionalField {
         }
 
         public Builder long_(Long long_) {
-            this.long_ = Optional.of(long_);
+            this.long_ = Optional.ofNullable(long_);
             return this;
         }
 
@@ -293,7 +293,7 @@ public final class ObjectWithOptionalField {
         }
 
         public Builder double_(Double double_) {
-            this.double_ = Optional.of(double_);
+            this.double_ = Optional.ofNullable(double_);
             return this;
         }
 
@@ -304,7 +304,7 @@ public final class ObjectWithOptionalField {
         }
 
         public Builder bool(Boolean bool) {
-            this.bool = Optional.of(bool);
+            this.bool = Optional.ofNullable(bool);
             return this;
         }
 
@@ -315,7 +315,7 @@ public final class ObjectWithOptionalField {
         }
 
         public Builder datetime(OffsetDateTime datetime) {
-            this.datetime = Optional.of(datetime);
+            this.datetime = Optional.ofNullable(datetime);
             return this;
         }
 
@@ -326,7 +326,7 @@ public final class ObjectWithOptionalField {
         }
 
         public Builder date(String date) {
-            this.date = Optional.of(date);
+            this.date = Optional.ofNullable(date);
             return this;
         }
 
@@ -337,7 +337,7 @@ public final class ObjectWithOptionalField {
         }
 
         public Builder uuid(UUID uuid) {
-            this.uuid = Optional.of(uuid);
+            this.uuid = Optional.ofNullable(uuid);
             return this;
         }
 
@@ -348,7 +348,7 @@ public final class ObjectWithOptionalField {
         }
 
         public Builder base64(byte[] base64) {
-            this.base64 = Optional.of(base64);
+            this.base64 = Optional.ofNullable(base64);
             return this;
         }
 
@@ -359,7 +359,7 @@ public final class ObjectWithOptionalField {
         }
 
         public Builder list(List<String> list) {
-            this.list = Optional.of(list);
+            this.list = Optional.ofNullable(list);
             return this;
         }
 
@@ -370,7 +370,7 @@ public final class ObjectWithOptionalField {
         }
 
         public Builder set(Set<String> set) {
-            this.set = Optional.of(set);
+            this.set = Optional.ofNullable(set);
             return this;
         }
 
@@ -381,7 +381,7 @@ public final class ObjectWithOptionalField {
         }
 
         public Builder map(Map<Integer, String> map) {
-            this.map = Optional.of(map);
+            this.map = Optional.ofNullable(map);
             return this;
         }
 
@@ -392,7 +392,7 @@ public final class ObjectWithOptionalField {
         }
 
         public Builder bigint(BigInteger bigint) {
-            this.bigint = Optional.of(bigint);
+            this.bigint = Optional.ofNullable(bigint);
             return this;
         }
 

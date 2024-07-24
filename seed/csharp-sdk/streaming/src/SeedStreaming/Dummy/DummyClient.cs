@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Text.Json;
 using SeedStreaming;
 using SeedStreaming.Core;
 
@@ -41,7 +40,7 @@ public class DummyClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<StreamResponse>(responseBody)!;
+            return JsonUtils.Deserialize<StreamResponse>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

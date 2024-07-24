@@ -20,16 +20,20 @@ class AbstractEndpointsUnionService(AbstractFernService):
     with FastAPI when you register your implementation using Fern's register()
     function.
     """
+    
     @abc.abstractmethod
     def get_and_return_union(self, *, body: Animal, auth: ApiAuth) -> Animal:
         ...
+    
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
     """
+    
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
         cls.__init_get_and_return_union(router=router)
+    
     @classmethod
     def __init_get_and_return_union(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_union)

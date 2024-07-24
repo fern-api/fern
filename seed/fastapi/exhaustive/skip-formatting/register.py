@@ -16,7 +16,7 @@ import typing
 from fastapi import params
 from .core.exceptions.fern_http_exception import FernHTTPException
 from .core.exceptions import fern_http_exception_handler
-import starlette
+import starlette.exceptions
 from .core.exceptions import http_exception_handler
 from .core.exceptions import default_exception_handler
 from .core.abstract_fern_service import AbstractFernService
@@ -37,9 +37,9 @@ def register(_app: fastapi.FastAPI, *, endpoints_container: AbstractEndpointsCon
     _app.include_router(__register_service(no_req_body), dependencies=dependencies)
     _app.include_router(__register_service(req_with_headers), dependencies=dependencies)
     
-    _app.add_exception_handler(FernHTTPException, fern_http_exception_handler)
-    _app.add_exception_handler(starlette.exceptions.HTTPException, http_exception_handler)
-    _app.add_exception_handler(Exception, default_exception_handler)
+    _app.add_exception_handler(FernHTTPException, fern_http_exception_handler)  # type: ignore
+    _app.add_exception_handler(starlette.exceptions.HTTPException, http_exception_handler)  # type: ignore
+    _app.add_exception_handler(Exception, default_exception_handler)  # type: ignore
 def __register_service(service: AbstractFernService) -> fastapi.APIRouter:
     router = fastapi.APIRouter()
     type(service)._init_fern(router)

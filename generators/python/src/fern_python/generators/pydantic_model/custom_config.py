@@ -19,7 +19,6 @@ class PydanticModelCustomConfig(BasePydanticModelCustomConfig):
     # DEPRECATED: use `extra_fields` instead
     forbid_extra_fields: bool = False
     extra_fields: Optional[Literal["allow", "forbid"]] = "allow"
-    wrapped_aliases: bool = False
     skip_formatting: bool = False
     include_union_utils: bool = False
     # Skip validation of fields (automatically includes additional fields)

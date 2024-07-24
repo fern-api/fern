@@ -79,7 +79,28 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "totp",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -512,7 +533,28 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "totp",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -896,7 +938,28 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "totp",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [
@@ -1384,7 +1447,28 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "totp",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -1749,7 +1833,28 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "totp",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -2163,7 +2268,28 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "totp",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -2629,7 +2755,28 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "useridmapping",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [
@@ -3073,7 +3220,28 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "useridmapping",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -3531,7 +3699,28 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "useridmapping",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -3953,7 +4142,28 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "useridmapping",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -4348,7 +4558,28 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "passwordless",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -5022,7 +5253,28 @@ Passing the optional deviceId signifies a resend code flow.
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "passwordless",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -5766,7 +6018,28 @@ Passing the optional deviceId signifies a resend code flow.
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "passwordless",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -6060,7 +6333,28 @@ Passing the optional deviceId signifies a resend code flow.
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "passwordless",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [
@@ -6765,7 +7059,28 @@ Passing the optional deviceId signifies a resend code flow.
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "passwordless",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -7103,7 +7418,28 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "passwordless",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [
@@ -7609,7 +7945,28 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "passwordless",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -8003,7 +8360,28 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "emailpassword",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -8375,7 +8753,28 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "emailpassword",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -8750,7 +9149,28 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "emailpassword",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [
@@ -9195,7 +9615,28 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "emailpassword",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -9576,7 +10017,28 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "emailpassword",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -9904,10 +10366,42 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "emailpassword",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "paginationToken",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ZmE3YTA4NDEtY...MjM5MTgwMzIyMzE=",
+                },
+              },
+            },
+          ],
           "request": null,
           "response": {
             "properties": {
@@ -10360,7 +10854,28 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "emailpassword",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -10751,7 +11266,28 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "emailpassword",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -11039,7 +11575,28 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "emailpassword",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -11516,7 +12073,28 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "thirdparty",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -11966,7 +12544,28 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "thirdparty",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [
@@ -12445,7 +13044,28 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "thirdparty",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [
@@ -12804,10 +13424,42 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "thirdparty",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "paginationToken",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ZmE3YTA4NDEtY...MjM5MTgwMzIyMzE=",
+                },
+              },
+            },
+          ],
           "request": null,
           "response": {
             "properties": {
@@ -13273,7 +13925,28 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "thirdparty",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -13561,7 +14234,28 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "emailverification",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -13863,7 +14557,28 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "emailverification",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -14131,7 +14846,28 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "emailverification",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [
@@ -14493,7 +15229,28 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "emailverification",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -14884,7 +15641,28 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "emailverification",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -15152,7 +15930,28 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "usermetadata",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [
@@ -15547,7 +16346,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "usermetadata",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -15971,7 +16791,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "usermetadata",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -16265,7 +17106,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "userroles",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -16620,7 +17482,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "userroles",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -16975,7 +17858,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "userroles",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [
@@ -17302,7 +18206,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "userroles",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [
@@ -17631,7 +18556,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "userroles",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -18000,7 +18946,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "userroles",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [
@@ -18336,7 +19303,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "userroles",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -18671,7 +19659,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "userroles",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [
@@ -19005,7 +20014,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "userroles",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -19334,7 +20364,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "userroles",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -19634,7 +20685,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "session",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [
@@ -20139,7 +21211,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "session",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -20735,7 +21828,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "session",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -21117,7 +22231,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "session",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -21673,7 +22808,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "session",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -22309,7 +23465,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "session",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [
@@ -22636,7 +23813,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "session",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -23073,7 +24271,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "session",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [
@@ -23677,7 +24896,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "jwt",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -24308,7 +25548,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "session",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [
@@ -25006,7 +26267,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "dashboard",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -25553,7 +26835,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "dashboard",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -26266,7 +27569,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "dashboard",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [
@@ -26631,7 +27955,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "dashboard",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -27082,7 +28427,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "dashboard",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -27432,7 +28798,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "dashboard",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [
@@ -27722,7 +29109,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "dashboard",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -28144,7 +29552,28 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "dashboard",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [
@@ -28600,7 +30029,18 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -28806,7 +30246,18 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -29473,7 +30924,18 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -29786,7 +31248,18 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [
@@ -30085,7 +31558,18 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [
@@ -30377,7 +31861,18 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [
@@ -30388,6 +31883,16 @@ e.g.:
                 "value": {
                   "type": "string",
                   "value": "val1,val2,val3..",
+                },
+              },
+            },
+            {
+              "name": "paginationToken",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ZmE3YTA4NDEtY...MjM5MTgwMzIyMzE=",
                 },
               },
             },
@@ -31107,7 +32612,18 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -31370,7 +32886,18 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -31639,7 +33166,18 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -31965,7 +33503,18 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -32211,7 +33760,18 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
@@ -32482,7 +34042,18 @@ e.g.:
         {
           "codeSamples": [],
           "description": null,
-          "headers": [],
+          "headers": [
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
           "name": null,
           "pathParameters": [],
           "queryParameters": [],

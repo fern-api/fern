@@ -99,7 +99,7 @@ public final class SinglyLinkedListValue {
         }
 
         public Builder head(String head) {
-            this.head = Optional.of(head);
+            this.head = Optional.ofNullable(head);
             return this;
         }
 

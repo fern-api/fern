@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-import datetime as dt
 import typing
 
-from ...core.datetime_utils import serialize_datetime
-from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+import pydantic
+
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from .binary_tree_node_value import BinaryTreeNodeValue
 from .binary_tree_value import BinaryTreeValue
 from .doubly_linked_list_node_value import DoublyLinkedListNodeValue
@@ -16,143 +16,96 @@ from .singly_linked_list_node_value import SinglyLinkedListNodeValue
 from .singly_linked_list_value import SinglyLinkedListValue
 
 
-class VariableValue_IntegerValue(pydantic_v1.BaseModel):
+class VariableValue_IntegerValue(UniversalBaseModel):
     value: int
     type: typing.Literal["integerValue"] = "integerValue"
 
 
-class VariableValue_BooleanValue(pydantic_v1.BaseModel):
+class VariableValue_BooleanValue(UniversalBaseModel):
     value: bool
     type: typing.Literal["booleanValue"] = "booleanValue"
 
 
-class VariableValue_DoubleValue(pydantic_v1.BaseModel):
+class VariableValue_DoubleValue(UniversalBaseModel):
     value: float
     type: typing.Literal["doubleValue"] = "doubleValue"
 
 
-class VariableValue_StringValue(pydantic_v1.BaseModel):
+class VariableValue_StringValue(UniversalBaseModel):
     value: str
     type: typing.Literal["stringValue"] = "stringValue"
 
 
-class VariableValue_CharValue(pydantic_v1.BaseModel):
+class VariableValue_CharValue(UniversalBaseModel):
     value: str
     type: typing.Literal["charValue"] = "charValue"
 
 
-class VariableValue_MapValue(pydantic_v1.BaseModel):
-    key_value_pairs: typing.List[KeyValuePair] = pydantic_v1.Field(alias="keyValuePairs")
+class VariableValue_MapValue(UniversalBaseModel):
+    key_value_pairs: typing.List[KeyValuePair] = pydantic.Field(alias="keyValuePairs")
     type: typing.Literal["mapValue"] = "mapValue"
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        allow_population_by_field_name = True
-        populate_by_name = True
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            extra = pydantic.Extra.allow
 
 
-class VariableValue_ListValue(pydantic_v1.BaseModel):
+class VariableValue_ListValue(UniversalBaseModel):
     value: typing.List[VariableValue]
     type: typing.Literal["listValue"] = "listValue"
 
 
-class VariableValue_BinaryTreeValue(pydantic_v1.BaseModel):
+class VariableValue_BinaryTreeValue(UniversalBaseModel):
     root: typing.Optional[NodeId] = None
     nodes: typing.Dict[NodeId, BinaryTreeNodeValue]
     type: typing.Literal["binaryTreeValue"] = "binaryTreeValue"
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            extra = pydantic.Extra.allow
 
 
-class VariableValue_SinglyLinkedListValue(pydantic_v1.BaseModel):
+class VariableValue_SinglyLinkedListValue(UniversalBaseModel):
     head: typing.Optional[NodeId] = None
     nodes: typing.Dict[NodeId, SinglyLinkedListNodeValue]
     type: typing.Literal["singlyLinkedListValue"] = "singlyLinkedListValue"
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            extra = pydantic.Extra.allow
 
 
-class VariableValue_DoublyLinkedListValue(pydantic_v1.BaseModel):
+class VariableValue_DoublyLinkedListValue(UniversalBaseModel):
     head: typing.Optional[NodeId] = None
     nodes: typing.Dict[NodeId, DoublyLinkedListNodeValue]
     type: typing.Literal["doublyLinkedListValue"] = "doublyLinkedListValue"
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            extra = pydantic.Extra.allow
 
 
-class VariableValue_NullValue(pydantic_v1.BaseModel):
+class VariableValue_NullValue(UniversalBaseModel):
     type: typing.Literal["nullValue"] = "nullValue"
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 VariableValue = typing.Union[
@@ -171,4 +124,4 @@ VariableValue = typing.Union[
 from .key_value_pair import KeyValuePair  # noqa: E402
 from .map_value import MapValue  # noqa: E402
 
-VariableValue_ListValue.update_forward_refs(KeyValuePair=KeyValuePair)
+update_forward_refs(VariableValue_ListValue, KeyValuePair=KeyValuePair)

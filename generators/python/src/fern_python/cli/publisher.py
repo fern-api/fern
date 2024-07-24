@@ -8,7 +8,6 @@ from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 
 
 class Publisher:
-
     _REMOTE_PYPI_REPO_NAME: str = "remote"
 
     def __init__(

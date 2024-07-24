@@ -112,7 +112,7 @@ public final class FunctionImplementation {
 
         @java.lang.Override
         public _FinalStage imports(String imports) {
-            this.imports = Optional.of(imports);
+            this.imports = Optional.ofNullable(imports);
             return this;
         }
 
