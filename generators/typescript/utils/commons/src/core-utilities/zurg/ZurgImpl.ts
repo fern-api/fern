@@ -12,11 +12,13 @@ export class ZurgImpl extends CoreUtility implements Zurg {
             path: RelativeFilePath.of("generators/typescript/utils/core-utilities/zurg/src"),
             ignoreGlob: "**/__test__"
         },
-        testsInfo: {
-            useTests: true,
-            testFolderName: "serializer"
+        unitTests: {
+            findAndReplace: {
+                "../../builders": "../../../../src/core/schemas/builders",
+                "../builders": "../../../src/core/schemas/builders",
+                "../../Schema": "../../../../src/core/schemas/Schema"
+            }
         },
-
         originalPathOnDocker: AbsoluteFilePath.of("/assets/zurg"),
         pathInCoreUtilities: [{ nameOnDisk: "schemas", exportDeclaration: { namespaceExport: "serialization" } }]
     };
