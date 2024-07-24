@@ -70,7 +70,8 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
         const typescriptProject = await expressGenerator.generate();
         const persistedTypescriptProject = await typescriptProject.persist();
         await expressGenerator.copyCoreUtilities({
-            pathToSrc: persistedTypescriptProject.getSrcDirectory()
+            pathToSrc: persistedTypescriptProject.getSrcDirectory(),
+            pathToRoot: persistedTypescriptProject.getRootDirectory()
         });
 
         return persistedTypescriptProject;

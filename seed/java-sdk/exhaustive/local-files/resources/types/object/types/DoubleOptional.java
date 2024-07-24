@@ -95,7 +95,7 @@ public final class DoubleOptional {
     }
 
     public Builder optionalAlias(String optionalAlias) {
-      this.optionalAlias = Optional.of(optionalAlias);
+      this.optionalAlias = Optional.ofNullable(optionalAlias);
       return this;
     }
 

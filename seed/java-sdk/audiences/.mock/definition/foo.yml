@@ -10,12 +10,16 @@ service:
     find:
       audiences:
         - public
+        - private
       path: ""
       method: POST
       request:
         name: FindRequest
         query-parameters:
-          optionalString: OptionalString
+          optionalString:
+            type: OptionalString
+            audiences:
+              - private
         body: 
           properties: 
             publicProperty: 

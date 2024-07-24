@@ -127,7 +127,7 @@ public final class TokenResponse {
 
     @java.lang.Override
     public _FinalStage refreshToken(String refreshToken) {
-      this.refreshToken = Optional.of(refreshToken);
+      this.refreshToken = Optional.ofNullable(refreshToken);
       return this;
     }
 

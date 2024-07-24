@@ -411,7 +411,7 @@ public final class GetUsersRequest {
 
         @java.lang.Override
         public _FinalStage optionalUser(User optionalUser) {
-            this.optionalUser = Optional.of(optionalUser);
+            this.optionalUser = Optional.ofNullable(optionalUser);
             return this;
         }
 
@@ -424,7 +424,7 @@ public final class GetUsersRequest {
 
         @java.lang.Override
         public _FinalStage optionalString(String optionalString) {
-            this.optionalString = Optional.of(optionalString);
+            this.optionalString = Optional.ofNullable(optionalString);
             return this;
         }
 
@@ -457,7 +457,7 @@ public final class GetUsersRequest {
 
         @java.lang.Override
         public _FinalStage optionalDeadline(OffsetDateTime optionalDeadline) {
-            this.optionalDeadline = Optional.of(optionalDeadline);
+            this.optionalDeadline = Optional.ofNullable(optionalDeadline);
             return this;
         }
 

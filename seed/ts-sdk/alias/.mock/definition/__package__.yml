@@ -25,13 +25,3 @@ types:
         value:
           id: kljasc85
           name: bar
-
-service:
-  auth: false
-  base-path: /
-  endpoints:
-    get:
-      path: "/{typeId}"
-      path-parameters:
-        typeId: TypeId
-      method: GET

@@ -85,7 +85,7 @@ public final class ListUsersExtendedRequest {
         }
 
         public Builder cursor(UUID cursor) {
-            this.cursor = Optional.of(cursor);
+            this.cursor = Optional.ofNullable(cursor);
             return this;
         }
 

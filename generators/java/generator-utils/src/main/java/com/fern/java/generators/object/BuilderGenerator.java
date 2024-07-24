@@ -399,7 +399,7 @@ public final class BuilderGenerator {
                     .build());
             implSetterConsumer.accept(createOptionalItemTypeNameSetter(
                             enrichedObjectProperty, propertyTypeName, finalStageClassName, implsOverride)
-                    .addStatement("this.$L = $T.of($L)", fieldSpec.name, Optional.class, fieldSpec.name)
+                    .addStatement("this.$L = $T.ofNullable($L)", fieldSpec.name, Optional.class, fieldSpec.name)
                     .addStatement("return this")
                     .build());
         } else if (isEqual(propertyTypeName, ClassName.get(Map.class))) {

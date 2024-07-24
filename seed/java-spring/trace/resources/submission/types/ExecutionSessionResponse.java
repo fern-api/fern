@@ -151,7 +151,7 @@ public final class ExecutionSessionResponse {
 
     @java.lang.Override
     public _FinalStage executionSessionUrl(String executionSessionUrl) {
-      this.executionSessionUrl = Optional.of(executionSessionUrl);
+      this.executionSessionUrl = Optional.ofNullable(executionSessionUrl);
       return this;
     }
 

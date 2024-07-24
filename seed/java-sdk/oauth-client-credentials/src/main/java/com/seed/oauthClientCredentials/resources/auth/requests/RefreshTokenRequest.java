@@ -174,7 +174,7 @@ public final class RefreshTokenRequest {
 
         @java.lang.Override
         public _FinalStage scope(String scope) {
-            this.scope = Optional.of(scope);
+            this.scope = Optional.ofNullable(scope);
             return this;
         }
 

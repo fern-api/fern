@@ -196,7 +196,7 @@ public final class ExecutionSessionState {
 
     @java.lang.Override
     public _FinalStage awsTaskId(String awsTaskId) {
-      this.awsTaskId = Optional.of(awsTaskId);
+      this.awsTaskId = Optional.ofNullable(awsTaskId);
       return this;
     }
 
@@ -212,7 +212,7 @@ public final class ExecutionSessionState {
 
     @java.lang.Override
     public _FinalStage lastTimeContacted(String lastTimeContacted) {
-      this.lastTimeContacted = Optional.of(lastTimeContacted);
+      this.lastTimeContacted = Optional.ofNullable(lastTimeContacted);
       return this;
     }
 

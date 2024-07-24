@@ -113,7 +113,7 @@ public final class Metadata {
 
         @java.lang.Override
         public _FinalStage jsonString(String jsonString) {
-            this.jsonString = Optional.of(jsonString);
+            this.jsonString = Optional.ofNullable(jsonString);
             return this;
         }
 
@@ -126,7 +126,7 @@ public final class Metadata {
 
         @java.lang.Override
         public _FinalStage data(Map<String, String> data) {
-            this.data = Optional.of(data);
+            this.data = Optional.ofNullable(data);
             return this;
         }
 
