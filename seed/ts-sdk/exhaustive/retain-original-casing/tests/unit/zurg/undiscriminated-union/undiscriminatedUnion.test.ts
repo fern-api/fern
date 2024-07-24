@@ -1,6 +1,4 @@
-import { object, property } from "../../../../src/core/schemas/builders/object";
-import { number, string } from "../../../../src/core/schemas/builders/primitives";
-import { undiscriminatedUnion } from "../../../../src/core/schemas/builders/undiscriminated-union/undiscriminatedUnion";
+import { number, object, property, string, undiscriminatedUnion } from "../../../../src/core/schemas/builders";
 import { itSchema, itSchemaIdentity } from "../utils/itSchema";
 
 describe("undiscriminatedUnion", () => {

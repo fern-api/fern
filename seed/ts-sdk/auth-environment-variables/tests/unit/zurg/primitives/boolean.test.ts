@@ -1,6 +1,6 @@
+import { boolean } from "../../../../src/core/schemas/builders";
 import { itSchemaIdentity } from "../utils/itSchema";
 import { itValidate } from "../utils/itValidate";
-import { boolean } from "../../../../src/core/schemas/builders/primitives/boolean";
 
 describe("boolean", () => {
     itSchemaIdentity(boolean(), true);

@@ -1,6 +1,6 @@
+import { number } from "../../../../src/core/schemas/builders";
 import { itSchemaIdentity } from "../utils/itSchema";
 import { itValidate } from "../utils/itValidate";
-import { number } from "../../../../src/core/schemas/builders/primitives/number";
 
 describe("number", () => {
     itSchemaIdentity(number(), 42);

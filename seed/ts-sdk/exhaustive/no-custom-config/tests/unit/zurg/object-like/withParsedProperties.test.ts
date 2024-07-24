@@ -1,7 +1,4 @@
-import { stringLiteral } from "../../../../src/core/schemas/builders/literals";
-import { object } from "../../../../src/core/schemas/builders/object/object";
-import { property } from "../../../../src/core/schemas/builders/object/property";
-import { string } from "../../../../src/core/schemas/builders/primitives";
+import { object, property, string, stringLiteral } from "../../../../src/core/schemas/builders";
 
 describe("withParsedProperties", () => {
     it("Added properties included on parsed object", async () => {

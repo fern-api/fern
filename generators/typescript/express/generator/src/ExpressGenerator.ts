@@ -263,7 +263,13 @@ export class ExpressGenerator {
         });
     }
 
-    public async copyCoreUtilities({ pathToSrc, pathToRoot }: { pathToSrc: AbsoluteFilePath, pathToRoot: AbsoluteFilePath }): Promise<void> {
+    public async copyCoreUtilities({
+        pathToSrc,
+        pathToRoot
+    }: {
+        pathToSrc: AbsoluteFilePath;
+        pathToRoot: AbsoluteFilePath;
+    }): Promise<void> {
         await this.coreUtilitiesManager.copyCoreUtilities({ pathToSrc, pathToRoot });
     }
 

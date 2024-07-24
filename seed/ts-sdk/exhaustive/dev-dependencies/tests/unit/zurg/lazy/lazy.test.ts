@@ -1,8 +1,5 @@
-import { lazy } from "../../../../src/core/schemas/builders/lazy";
-import { list } from "../../../../src/core/schemas/builders/list";
-import { object } from "../../../../src/core/schemas/builders/object";
-import { string } from "../../../../src/core/schemas/builders/primitives";
 import { Schema } from "../../../../src/core/schemas/Schema";
+import { lazy, list, object, string } from "../../../../src/core/schemas/builders";
 import { itSchemaIdentity } from "../utils/itSchema";
 
 describe("lazy", () => {

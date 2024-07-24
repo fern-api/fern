@@ -1,5 +1,4 @@
-import { string } from "../../../../src/core/schemas/builders/primitives";
-import { object } from "../../../../src/core/schemas/builders/object";
+import { object, string } from "../../../../src/core/schemas/builders";
 import { itSchema } from "../utils/itSchema";
 
 describe("getSchemaUtils", () => {
@@ -50,6 +49,35 @@ describe("getSchemaUtils", () => {
         it("throws on invalid value", async () => {
             const value = () => object({ a: string(), b: string() }).jsonOrThrow({ a: 24 });
             expect(value).toThrowError(new Error('a: Expected string. Received 24.; Missing required key "b"'));
+        });
+    });
+
+    describe("omitUndefined", () => {
+        it("serializes undefined as null", async () => {
+            const value = object({
+                a: string().optional(),
+                b: string().optional(),
+            }).jsonOrThrow({
+                a: "hello",
+                b: undefined,
+            });
+            expect(value).toEqual({ a: "hello", b: null });
+        });
+
+        it("omits undefined values", async () => {
+            const value = object({
+                a: string().optional(),
+                b: string().optional(),
+            }).jsonOrThrow(
+                {
+                    a: "hello",
+                    b: undefined,
+                },
+                {
+                    omitUndefined: true,
+                }
+            );
+            expect(value).toEqual({ a: "hello" });
         });
     });
 });

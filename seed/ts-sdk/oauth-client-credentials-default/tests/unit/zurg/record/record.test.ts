@@ -1,5 +1,4 @@
-import { number, string } from "../../../../src/core/schemas/builders/primitives";
-import { record } from "../../../../src/core/schemas/builders/record";
+import { number, record, string } from "../../../../src/core/schemas/builders";
 import { itSchemaIdentity } from "../utils/itSchema";
 import { itValidate } from "../utils/itValidate";
 

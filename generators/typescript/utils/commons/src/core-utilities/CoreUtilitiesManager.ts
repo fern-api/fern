@@ -142,7 +142,7 @@ export class CoreUtilitiesManager {
         absoluteFilePath: AbsoluteFilePath,
         files: { path: AbsoluteFilePath; file: File }[]
     ): void {
-        if (fileOrDirectory.type == "directory") {
+        if (fileOrDirectory.type === "directory") {
             for (const content of fileOrDirectory.contents) {
                 this.getAllFiles(content, join(absoluteFilePath, RelativeFilePath.of(fileOrDirectory.name)), files);
             }

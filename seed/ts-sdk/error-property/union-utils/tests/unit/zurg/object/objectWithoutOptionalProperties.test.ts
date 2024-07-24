@@ -1,6 +1,4 @@
-import { stringLiteral } from "../../../../src/core/schemas/builders/literals";
-import { string } from "../../../../src/core/schemas/builders/primitives";
-import { objectWithoutOptionalProperties } from "../../../../src/core/schemas/builders/object/objectWithoutOptionalProperties";
+import { objectWithoutOptionalProperties, string, stringLiteral } from "../../../../src/core/schemas/builders";
 import { itSchema } from "../utils/itSchema";
 
 describe("objectWithoutOptionalProperties", () => {

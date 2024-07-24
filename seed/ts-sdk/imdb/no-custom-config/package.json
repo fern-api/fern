@@ -13,19 +13,11 @@
     },
     "dependencies": {
         "url-join": "4.0.1",
-<<<<<<< HEAD:seed/ts-sdk/imdb/no-custom-config/package.json
         "form-data": "^4.0.0",
-=======
-        "form-data": "4.0.0",
->>>>>>> 6e88aae091 (run seed):seed/ts-sdk/imdb/package.json
         "formdata-node": "^6.0.3",
         "node-fetch": "2.7.0",
-<<<<<<< HEAD:seed/ts-sdk/imdb/no-custom-config/package.json
-        "qs": "6.11.2"
-=======
         "qs": "6.11.2",
         "js-base64": "3.7.2"
->>>>>>> 6e88aae091 (run seed):seed/ts-sdk/imdb/package.json
     },
     "devDependencies": {
         "@types/url-join": "4.0.1",

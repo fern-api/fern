@@ -1,6 +1,6 @@
 import { lazyObject, number, object, string } from "../../builders";
 import { itSchemaIdentity } from "../utils/itSchema";
- 
+
 describe("lazy", () => {
     itSchemaIdentity(
         lazyObject(() => object({ foo: string() })),

@@ -1,5 +1,4 @@
-import { string } from "../../../../src/core/schemas/builders/primitives";
-import { set } from "../../../../src/core/schemas/builders/set";
+import { set, string } from "../../../../src/core/schemas/builders";
 import { itSchema } from "../utils/itSchema";
 import { itValidateJson, itValidateParse } from "../utils/itValidate";
 

@@ -1,9 +1,6 @@
+import { any, number, object, property, string, stringLiteral, unknown } from "../../../../src/core/schemas/builders";
 import { itJson, itParse, itSchema, itSchemaIdentity } from "../utils/itSchema";
 import { itValidate } from "../utils/itValidate";
-import { stringLiteral } from "../../../../src/core/schemas/builders/literals";
-import { any, number, string, unknown } from "../../../../src/core/schemas/builders/primitives";
-import { object } from "../../../../src/core/schemas/builders/object";
-import { property } from "../../../../src/core/schemas/builders/object/property";
 
 describe("object", () => {
     itSchemaIdentity(
@@ -192,14 +189,6 @@ describe("object", () => {
                     }
                 );
             });
-        });
-    });
-
-    describe("compile", () => {
-        // eslint-disable-next-line jest/expect-expect
-        it("doesn't compile with non-object in schema", () => {
-            // @ts-expect-error
-            object([]);
         });
     });
 

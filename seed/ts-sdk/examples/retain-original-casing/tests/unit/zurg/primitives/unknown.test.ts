@@ -1,4 +1,4 @@
-import { unknown } from "../../../../src/core/schemas/builders/primitives/unknown";
+import { unknown } from "../../../../src/core/schemas/builders";
 import { itSchemaIdentity } from "../utils/itSchema";
 
 describe("unknown", () => {

@@ -1,6 +1,6 @@
+import { enum_ } from "../../../../src/core/schemas/builders/enum";
 import { itSchemaIdentity } from "../utils/itSchema";
 import { itValidate } from "../utils/itValidate";
-import { enum_ } from "../../../../src/core/schemas/builders/enum";
 
 describe("enum", () => {
     itSchemaIdentity(enum_(["A", "B", "C"]), "A");

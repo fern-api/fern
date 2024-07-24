@@ -1,7 +1,4 @@
-import { object } from "../../../../src/core/schemas/builders/object";
-import { boolean, number, string } from "../../../../src/core/schemas/builders/primitives";
-import { union } from "../../../../src/core/schemas/builders/union";
-import { discriminant } from "../../../../src/core/schemas/builders/union/discriminant";
+import { boolean, discriminant, number, object, string, union } from "../../../../src/core/schemas/builders";
 import { itSchema, itSchemaIdentity } from "../utils/itSchema";
 import { itValidate } from "../utils/itValidate";
 

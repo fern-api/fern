@@ -1,6 +1,6 @@
+import { stringLiteral } from "../../../../src/core/schemas/builders";
 import { itSchemaIdentity } from "../utils/itSchema";
 import { itValidate } from "../utils/itValidate";
-import { stringLiteral } from "../../../../src/core/schemas/builders/literals/stringLiteral";
 
 describe("stringLiteral", () => {
     itSchemaIdentity(stringLiteral("A"), "A");
