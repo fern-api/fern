@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { Class_ } from "..";
+import { SwiftClass } from "..";
 
 /*
 
@@ -29,7 +29,7 @@ export declare namespace Primative {
     }
 }
 
-export class Primative extends Class_ {
+export class Primative extends SwiftClass {
 
     public readonly key?: PrimativeKey;
 

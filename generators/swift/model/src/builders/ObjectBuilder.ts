@@ -1,7 +1,7 @@
 /* eslint-disable object-shorthand */
 /* eslint-disable @typescript-eslint/no-extraneous-class */
 /* eslint-disable no-console */
-import Swift, { AccessLevel, Class_, EnumCase, Field, SwiftFile, VariableType } from "@fern-api/swift-codegen";
+import Swift, { AccessLevel, EnumCase, Field, SwiftClass, SwiftFile, VariableType } from "@fern-api/swift-codegen";
 import { ContainerType, DeclaredTypeName, Literal, MapType, ObjectProperty, ObjectTypeDeclaration, PrimitiveType, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 import { ModelGeneratorContext } from "../ModelGeneratorCli";
 import { CodeBuilder } from "./CodeBuilder";
@@ -19,8 +19,8 @@ export default class ObjectBuilder extends CodeBuilder<SwiftFile> {
     this.objectDeclaration = objectDeclaration;
   }
 
-  private getClassForTypeReference(typeReference: TypeReference): Class_ {
-    return typeReference._visit<Class_>({
+  private getClassForTypeReference(typeReference: TypeReference): SwiftClass {
+    return typeReference._visit<SwiftClass>({
       container: (value: ContainerType) => {
         return this.getClassForContainer(value);
       },
@@ -39,8 +39,8 @@ export default class ObjectBuilder extends CodeBuilder<SwiftFile> {
     });
   }
 
-  private getClassForContainer(value: ContainerType): Class_ {
-    return value._visit<Class_>({
+  private getClassForContainer(value: ContainerType): SwiftClass {
+    return value._visit<SwiftClass>({
       list: (value: TypeReference) => {
         return this.getClassForTypeReference(value).toArray();
       },

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-extraneous-class */
 // Swift Imports
 import { AccessLevel } from "./ast/AccessLevel";
-import { Class_ } from "./ast/Class_";
 import { Enum } from "./ast/Enum";
 import { EnumCase } from "./ast/EnumCase";
 import { Field } from "./ast/Field";
@@ -14,11 +13,11 @@ import { Param } from "./ast/Param";
 import { Primative } from "./ast/Primative";
 import { Struct } from "./ast/Struct";
 import { SwiftArray } from "./ast/SwiftArray";
+import { SwiftClass } from "./ast/SwiftClass";
 import { TypeAlias } from "./ast/TypeAlias";
 
 // Swift Exports
 export { AccessLevel } from "./ast/AccessLevel";
-export { Class_ } from "./ast/Class_";
 export { Enum } from "./ast/Enum";
 export { EnumCase } from "./ast/EnumCase";
 export { Field } from "./ast/Field";
@@ -32,6 +31,7 @@ export { Primative } from "./ast/Primative";
 export type { PrimativeKey } from "./ast/Primative";
 export { Struct } from "./ast/Struct";
 export { SwiftArray } from "./ast/SwiftArray";
+export { SwiftClass } from "./ast/SwiftClass";
 export { VariableType } from "./ast/VariableType";
 export { SwiftFile } from "./project/SwiftFile";
 
@@ -87,8 +87,8 @@ export default class Swift {
     return new Struct(args);
   }
 
-  public static makeClass(args: Class_.Args): Class_ {
-    return new Class_(args);
+  public static makeClass(args: SwiftClass.Args): SwiftClass {
+    return new SwiftClass(args);
   }
 
   public static makeArray(args: SwiftArray.Args): SwiftArray {
@@ -179,7 +179,7 @@ export default class Swift {
       /**
        * @returns class Codable { ... }
        */
-      makeCodable(): Class_ {
+      makeCodable(): SwiftClass {
         return Swift.makeClass({
           name: "Codable"
         });

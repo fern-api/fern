@@ -1,5 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Swift, { AccessLevel, Class_, Enum, Field } from "..";
+import Swift, { AccessLevel, Enum, Field, SwiftClass } from "..";
 
 /*
 
@@ -27,9 +27,9 @@ export declare namespace Struct {
         /* The name of the struct */
         name: string;
         /* The inheritance hierarchy of this type */
-        inheritance?: Class_[];
+        inheritance?: SwiftClass[];
         /* Subclasses */
-        subclasses?: (Enum | Class_)[];
+        subclasses?: (Enum | SwiftClass)[];
         /* The field variables in the class */
         fields?: Field[];
     }
@@ -39,8 +39,8 @@ export class Struct extends AstNode {
     public readonly accessLevel?: AccessLevel;
     public readonly name: string;
     public readonly fields?: Field[];
-    public readonly inheritance?: Class_[];
-    public readonly subclasses?: (Enum | Class_)[];
+    public readonly inheritance?: SwiftClass[];
+    public readonly subclasses?: (Enum | SwiftClass)[];
 
     constructor(args: Struct.Args) {
         super(Swift.indentSize);

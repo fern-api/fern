@@ -35,33 +35,33 @@ Breakdown:
 
 */
 
-export declare namespace Class_ {
+export declare namespace SwiftClass {
     interface Args {
         /* The access level of the type */
         accessLevel?: AccessLevel;
         /* The name of the type */
         name: string;
         /* The subclasses of this type, which can be other types or enums */
-        subclasses?: (Class_ | Enum)[];
+        subclasses?: (SwiftClass | Enum)[];
         /* The field variables in the class */
         fields?: Field[];
         /* The functions associated with this type */
         functions?: Func[];
         /* The inheritance hierarchy of this type */
-        inheritance?: Class_[];
+        inheritance?: SwiftClass[];
     }
 }
 
-export class Class_ extends AstNode {
+export class SwiftClass extends AstNode {
 
     public readonly accessLevel?: AccessLevel;
     public readonly name: string;
-    public readonly subclasses?: (Class_ | Enum)[];
+    public readonly subclasses?: (SwiftClass | Enum)[];
     public readonly fields?: Field[];
     public readonly functions?: Func[];
-    public readonly inheritance?: Class_[];
+    public readonly inheritance?: SwiftClass[];
 
-    constructor(args: Class_.Args) {
+    constructor(args: SwiftClass.Args) {
         super(Swift.indentSize);
         this.accessLevel = args.accessLevel;
         this.name = args.name;

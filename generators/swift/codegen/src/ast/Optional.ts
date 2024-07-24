@@ -1,5 +1,5 @@
 import { Writer } from "@fern-api/generator-commons";
-import { Class_ } from "..";
+import { SwiftClass } from "..";
 
 /*
 
@@ -14,11 +14,11 @@ Person?
 
 export declare namespace Optional {
     interface Args {
-        class: Class_
+        class: SwiftClass
     }
 }
 
-export class Optional extends Class_ {
+export class Optional extends SwiftClass {
 
     constructor(args: Optional.Args) {
         super({
