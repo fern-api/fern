@@ -12,6 +12,7 @@ export const NamedType: core.serialization.ObjectSchema<serializers.NamedType.Ra
         fernFilepath: core.serialization.lazyObject(async () => (await import("../../..")).FernFilepath),
         name: core.serialization.lazyObject(async () => (await import("../../..")).Name),
         default: core.serialization.lazy(async () => (await import("../../..")).NamedTypeDefault).optional(),
+        inline: core.serialization.boolean().optional(),
     });
 
 export declare namespace NamedType {
@@ -20,5 +21,6 @@ export declare namespace NamedType {
         fernFilepath: serializers.FernFilepath.Raw;
         name: serializers.Name.Raw;
         default?: serializers.NamedTypeDefault.Raw | null;
+        inline?: boolean | null;
     }
 }

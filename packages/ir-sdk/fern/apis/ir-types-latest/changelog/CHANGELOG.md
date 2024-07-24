@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Feature: Add `uint` and `uint64` primitive types.
 - Feature: Add support for default enum values.
+- Feature: Add support for in-lined type references (e.g. enums).
 
 ## [v51.0.0] - 2024-07-18
 

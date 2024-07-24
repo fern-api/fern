@@ -39,7 +39,8 @@ describe("parse inline types", () => {
                                 casingsGenerator
                             }),
                             name: casingsGenerator.generateName(dummyTypeName),
-                            default: undefined
+                            default: undefined,
+                            inline: undefined
                         })
                     )
                 )
