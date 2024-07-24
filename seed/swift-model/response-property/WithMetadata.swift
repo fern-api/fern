@@ -13,6 +13,6 @@ public struct WithMetadata: Codable {
         case metadata = "metadata"
     }
 
-    public let metadata: map: primitive
+    public let metadata: primitive :: map TODO
 
 }

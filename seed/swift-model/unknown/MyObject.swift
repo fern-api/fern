@@ -13,5 +13,6 @@ public struct MyObject: Codable {
         case unknown = "unknown"
     }
 
+    public let unknown: Any
 
 }

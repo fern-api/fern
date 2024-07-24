@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-extraneous-class */
 /* eslint-disable no-console */
 import Swift, { AccessLevel, Class_, EnumCase, Field, SwiftFile, VariableType } from "@fern-api/swift-codegen";
-import { ContainerType, ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { ContainerType, DeclaredTypeName, Literal, MapType, ObjectProperty, ObjectTypeDeclaration, PrimitiveType, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 import { ModelGeneratorContext } from "../ModelGeneratorCli";
 import { CodeBuilder } from "./CodeBuilder";
 
@@ -19,47 +19,45 @@ export default class ObjectBuilder extends CodeBuilder<SwiftFile> {
     this.objectDeclaration = objectDeclaration;
   }
 
-  private buildContainer(value: ContainerType): Class_ {
-    return value._visit<Class_>({
-      list: (value) => {
-        const type = value._visit<Class_>({
-          container:                 (value) => Swift.factories.types.makeAny(),
-          named:                     (value) => Swift.makeClass({ name: value.name.pascalCase.safeName }),
-          primitive:             (valueType) => Swift.makePrimative({ key: valueType.v2?.type }),
-          unknown:                        () => Swift.factories.types.makeAny(),
-          _other: (value: { type: string; }) => Swift.factories.types.makeAny(),
-        });
-        return type; // TODO: Support lists
+  private getClassForTypeReference(typeReference: TypeReference): Class_ {
+    return typeReference._visit<Class_>({
+      container: (value: ContainerType) => {
+        return this.getClassForContainer(value);
       },
-      map: (value) => {
-        return Swift.makeClass({
-          name: "map: " + value.valueType.type
-        });
+      named: (value: DeclaredTypeName) => {
+        return Swift.makeClass({ name: value.name.originalName });
       },
-      optional: (value) => {
-        const type = value._visit<Class_>({
-          container:                 (value) => Swift.factories.types.makeAny(),
-          named:                     (value) => Swift.makeClass({ name: value.name.pascalCase.safeName }),
-          primitive:             (valueType) => Swift.makePrimative({ key: valueType.v2?.type }),
-          unknown:                        () => Swift.factories.types.makeAny(),
-          _other: (value: { type: string; }) => Swift.factories.types.makeAny(),
-        });
-        return type.toOptional();
+      primitive: (value: PrimitiveType) => {
+        return Swift.makePrimative({ key: value.v2?.type });
       },
-      set: (value) => {
-        return Swift.makeClass({
-          name: "set: " + value.type
-        });
-      },
-      literal: (value) => {
-        return Swift.makeClass({
-          name: "literal: " + value.type
-        });
+      unknown: () => {
+        return Swift.factories.types.makeAny();
       },
       _other: (value: { type: string; }) => {
-        return Swift.makeClass({
-          name: "_other: " + value.type
-        });
+        return Swift.factories.types.makeAny();
+      }
+    });
+  }
+
+  private getClassForContainer(value: ContainerType): Class_ {
+    return value._visit<Class_>({
+      list: (value: TypeReference) => {
+        return this.getClassForTypeReference(value).toArray();
+      },
+      map: (value: MapType) => {
+        return Swift.makeClass({ name: `${value.valueType.type} :: map TODO` });
+      },
+      optional: (value: TypeReference) => {
+        return this.getClassForTypeReference(value).toOptional();
+      },
+      set: (value: TypeReference) => {
+        return Swift.makeClass({ name: `${value.type} :: set TODO` });
+      },
+      literal: (value: Literal) => {
+        return Swift.makeClass({ name: `${value.type} :: literal TODO` });
+      },
+      _other: (value: { type: string; }) => {
+        return Swift.makeClass({ name: `${value.type} :: _other TODO` });
       }
     });
   }
@@ -77,15 +75,10 @@ export default class ObjectBuilder extends CodeBuilder<SwiftFile> {
 
     const fields = properties.map(property => {
 
-      const type = property.valueType._visit<Class_ | undefined>({
-        container:                 (value) => this.buildContainer(value),
-        named:                     (value) => Swift.makeClass({ name: value.name.pascalCase.safeName }),
-        primitive:             (valueType) => Swift.makePrimative({ key: valueType.v2?.type }),
-        unknown:                        () => undefined,
-        _other: (value: { type: string; }) => undefined,
-      });
+      // Build the object type
+      const type = this.getClassForTypeReference(property.valueType);
 
-      // Drop if undefined
+      // Skip if undefined
       if (!type) {
         return undefined;
       }

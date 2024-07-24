@@ -1,10 +1,3 @@
-/**
- * Demo:
- * 1. Generator commons
- * 2. Swift Ast
- * 3. Files are generating! 🙌
- */
-
 /* eslint-disable @typescript-eslint/no-extraneous-class */
 // Swift Imports
 import { AccessLevel } from "./ast/AccessLevel";
@@ -20,6 +13,7 @@ import { Optional } from "./ast/Optional";
 import { Param } from "./ast/Param";
 import { Primative } from "./ast/Primative";
 import { Struct } from "./ast/Struct";
+import { SwiftArray } from "./ast/SwiftArray";
 import { TypeAlias } from "./ast/TypeAlias";
 
 // Swift Exports
@@ -37,6 +31,7 @@ export { Param } from "./ast/Param";
 export { Primative } from "./ast/Primative";
 export type { PrimativeKey } from "./ast/Primative";
 export { Struct } from "./ast/Struct";
+export { SwiftArray } from "./ast/SwiftArray";
 export { VariableType } from "./ast/VariableType";
 export { SwiftFile } from "./project/SwiftFile";
 
@@ -96,6 +91,10 @@ export default class Swift {
     return new Class_(args);
   }
 
+  public static makeArray(args: SwiftArray.Args): SwiftArray {
+    return new SwiftArray(args);
+  }
+
   public static makeOptional(args: Optional.Args): Optional {
     return new Optional(args);
   }
@@ -103,11 +102,6 @@ export default class Swift {
   public static makeFile(args: File.Args): File {
     return new File(args);
   }
-
-  // // eslint-disable-next-line @typescript-eslint/array-type
-  // public static makeArray(args: Array_.Args): Array_ {
-  //   return new Array_(args);
-  // }
 
   /**
    * 🏭 Factories

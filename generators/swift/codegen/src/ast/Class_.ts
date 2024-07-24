@@ -2,6 +2,7 @@ import { AstNode, Writer } from "@fern-api/generator-commons";
 import Swift, { AccessLevel, Enum, Func } from "..";
 import { Field } from "./Field";
 import { Optional } from "./Optional";
+import { SwiftArray } from "./SwiftArray";
 
 /*
 
@@ -76,12 +77,11 @@ export class Class_ extends AstNode {
         });
     }
 
-    // eslint-disable-next-line @typescript-eslint/array-type
-    // public toArray(): Array_ {
-    //     return Swift.makeArray({
-    //         class: this
-    //     });
-    // }
+    public toArray(): SwiftArray {
+        return Swift.makeArray({
+            class: this
+        });
+    }
 
     private buildTitle(): string | undefined {
 

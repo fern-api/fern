@@ -14,7 +14,7 @@ public struct Record: Codable {
         case _3D = "3d"
     }
 
-    public let foo: map: primitive
+    public let foo: primitive :: map TODO
     public let _3D: Int
 
 }

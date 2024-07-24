@@ -13,6 +13,6 @@ public struct Tree: Codable {
         case nodes = "nodes"
     }
 
-    public let nodes: Any?
+    public let nodes: [Node]?
 
 }

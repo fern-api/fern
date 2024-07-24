@@ -10,11 +10,11 @@ import Foundation
 public struct User: Codable {
 
     enum CodingKeys: String, CodingKey {
+        case id = "id"
         case name = "name"
-        case tags = "tags"
     }
 
+    public let id: UserId
     public let name: String
-    public let tags: [String]
 
 }

@@ -15,6 +15,6 @@ public struct Metadata: Codable {
     }
 
     public let id: String
-    public let data: Any?
+    public let data: primitive :: map TODO?
 
 }

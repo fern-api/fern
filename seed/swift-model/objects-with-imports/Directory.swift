@@ -16,7 +16,7 @@ public struct Directory: Codable {
     }
 
     public let name: String
-    public let files: Any?
-    public let directories: Any?
+    public let files: [File]?
+    public let directories: [Directory]?
 
 }

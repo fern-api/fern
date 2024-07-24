@@ -15,8 +15,8 @@ public struct SendRequest: Codable {
         case stream = "stream"
     }
 
-    public let prompt: literal: string
+    public let prompt: string :: literal TODO
     public let query: String
-    public let stream: literal: boolean
+    public let stream: boolean :: literal TODO
 
 }
