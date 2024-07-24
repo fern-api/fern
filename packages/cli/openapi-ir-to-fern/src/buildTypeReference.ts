@@ -517,13 +517,19 @@ export function buildEnumTypeReference({
         schema: enumTypeDeclaration.schema
     });
     const prefixedType = getPrefixedType({ type: name, fileContainingReference, declarationFile, context });
-    if (schema.description == null) {
+    if (schema.description == null && schema.default == null) {
         return prefixedType;
     }
-    return {
-        type: prefixedType,
-        docs: schema.description
+    const result: RawSchemas.TypeReferenceWithDocsSchema = {
+        type: prefixedType
     };
+    if (schema.description != null) {
+        result.docs = schema.description;
+    }
+    if (schema.default != null) {
+        result.default = schema.default.value;
+    }
+    return result;
 }
 
 export function buildObjectTypeReference({
