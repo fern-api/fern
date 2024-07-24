@@ -37,25 +37,7 @@ export function convertInteger({
     example: number | undefined;
     groupName: SdkGroupName | undefined;
 }): SchemaWithExample {
-    if (format === "int32") {
-        return wrapPrimitive({
-            nameOverride,
-            generatedName,
-            primitive: PrimitiveSchemaValueWithExample.int({
-                default: _default,
-                minimum,
-                maximum,
-                exclusiveMinimum,
-                exclusiveMaximum,
-                multipleOf,
-                example
-            }),
-            wrapAsNullable,
-            description,
-            availability,
-            groupName
-        });
-    } else if (format === "int64") {
+    if (format === "int64") {
         return wrapPrimitive({
             nameOverride,
             generatedName,
