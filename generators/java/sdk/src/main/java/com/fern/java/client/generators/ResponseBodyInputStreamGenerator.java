@@ -23,24 +23,25 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-public final class CoreMediaTypesGenerator extends AbstractFileGenerator {
+public final class ResponseBodyInputStreamGenerator extends AbstractFileGenerator {
 
-    public static final String APPLICATION_JSON_FIELD_CONSTANT = "APPLICATION_JSON";
-
-    public CoreMediaTypesGenerator(ClientGeneratorContext clientGeneratorContext) {
-        super(clientGeneratorContext.getPoetClassNameFactory().getMediaTypesClassName(), clientGeneratorContext);
+    public ResponseBodyInputStreamGenerator(ClientGeneratorContext clientGeneratorContext) {
+        super(
+                clientGeneratorContext.getPoetClassNameFactory().getResponseBodyInputStreamClassName(),
+                clientGeneratorContext);
     }
 
     @Override
     public GeneratedResourcesJavaFile generateFile() {
-        try (InputStream is = CoreMediaTypesGenerator.class.getResourceAsStream("/MediaTypes.java")) {
+        try (InputStream is =
+                ResponseBodyInputStreamGenerator.class.getResourceAsStream("/ResponseBodyInputStream.java")) {
             String contents = new String(is.readAllBytes(), StandardCharsets.UTF_8);
             return GeneratedResourcesJavaFile.builder()
                     .className(className)
                     .contents(contents)
                     .build();
         } catch (IOException e) {
-            throw new RuntimeException("Failed to read MediaTypes.java");
+            throw new RuntimeException("Failed to read ResponseBodyInputStream.java");
         }
     }
 }
