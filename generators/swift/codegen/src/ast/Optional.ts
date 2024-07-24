@@ -1,5 +1,5 @@
 import { Writer } from "@fern-api/generator-commons";
-import { SwiftClass } from "..";
+import { SwiftClass } from "./SwiftClass";
 
 /*
 

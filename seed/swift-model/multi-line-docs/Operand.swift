@@ -6,7 +6,7 @@
 //
 
 enum Operand {
-    case greaterThan = GREATER_THAN
-    case equalTo = EQUAL_TO
+    case greaterThan = >
+    case equalTo = =
     case lessThan = less_than
 }

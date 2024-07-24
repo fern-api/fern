@@ -13,20 +13,15 @@ export class EnumCase extends AstNode {
     public readonly name: string;
     public readonly key?: string;
 
-    constructor({ 
-        name, 
-        key,
-    }: EnumCase.Args) {
+    constructor(args: EnumCase.Args) {
         super(Swift.indentSize);
-        this.name = name;
-        this.key = key;
+        this.name = args.name;
+        this.key = args.key;
     }
 
     public write(writer: Writer): void {
-
         const statement = this.key ? `case ${this.name} = ${this.key}` : `case ${this.name}`;
         writer.write(statement);
-
     }
 
 }

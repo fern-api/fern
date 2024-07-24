@@ -1,8 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Swift, { AccessLevel, Enum, Func } from "..";
-import { Field } from "./Field";
-import { Optional } from "./Optional";
-import { SwiftArray } from "./SwiftArray";
+import Swift, { AccessLevel, Enum, Field, Func, Optional, SwiftArray } from "..";
 
 /*
 

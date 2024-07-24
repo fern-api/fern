@@ -6,6 +6,6 @@
 //
 
 enum Color {
-    case red = RED
-    case blue = BLUE
+    case red = red
+    case blue = blue
 }

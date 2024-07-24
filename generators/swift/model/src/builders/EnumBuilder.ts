@@ -38,7 +38,8 @@ export default class EnumBuilder extends CodeBuilder<SwiftFile> {
       // example: case name = "name"
       return Swift.makeEnumCase({
         name: name.camelCase.safeName,
-        key: name.originalName,
+        // key: name.originalName,
+        key: enumValue.name.wireValue,
       });
 
     });

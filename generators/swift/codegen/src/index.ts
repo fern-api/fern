@@ -26,6 +26,7 @@ export { FileHeader } from "./ast/FileHeader";
 export { Func } from "./ast/Func";
 export { FunctionModifier } from "./ast/FunctionModifier";
 export { Import } from "./ast/Import";
+export { Optional } from "./ast/Optional";
 export { Param } from "./ast/Param";
 export { Primative } from "./ast/Primative";
 export type { PrimativeKey } from "./ast/Primative";
