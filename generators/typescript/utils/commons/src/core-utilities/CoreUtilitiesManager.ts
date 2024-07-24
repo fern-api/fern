@@ -117,7 +117,7 @@ export class CoreUtilitiesManager {
                     );
                     await mkdir(toUnitTestPath, { recursive: true });
 
-                    const fromUnitTestPath = join(utility.originalPathOnDocker, RelativeFilePath.of("__test__"));
+                    const fromUnitTestPath = join(utility.originalPathOnDocker, utility.unitTests.fromDirectory);
                     const files: { path: AbsoluteFilePath; file: File }[] = [];
                     const contents = await getDirectoryContents(fromUnitTestPath);
                     for (const fileOrDirectory of contents) {

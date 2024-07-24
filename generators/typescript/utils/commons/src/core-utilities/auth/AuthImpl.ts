@@ -12,6 +12,13 @@ export class AuthImpl extends CoreUtility implements Auth {
             ignoreGlob: "**/__test__"
         },
         originalPathOnDocker: AbsoluteFilePath.of("/assets/auth"),
+        unitTests: {
+            fromDirectory: RelativeFilePath.of("__test__"),
+            findAndReplace: {
+                "../BasicAuth": "../../../src/core/auth/BasicAuth",
+                "../BearerToken": "../../../src/core/auth/BearerToken"
+            }
+        },
         pathInCoreUtilities: [{ nameOnDisk: "auth", exportDeclaration: { exportAll: true } }],
         addDependencies: (dependencyManager: DependencyManager): void => {
             dependencyManager.addDependency("js-base64", "3.7.2");
