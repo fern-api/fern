@@ -7,7 +7,7 @@ public class DateTimeSerializer : JsonConverter<DateTime>
 {
     public override DateTime Read(
         ref Utf8JsonReader reader,
-        Type typeToConvert,
+        System.Type typeToConvert,
         JsonSerializerOptions options
     )
     {
