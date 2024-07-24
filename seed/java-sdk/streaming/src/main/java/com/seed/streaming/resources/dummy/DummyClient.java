@@ -61,8 +61,7 @@ public class DummyClient {
             Response response = client.newCall(okhttpRequest).execute();
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                ResponseBodyReader reader = new ResponseBodyReader(responseBody.charStream(), response);
-                return new Stream<StreamResponse>(StreamResponse.class, reader, "\n");
+                return new Stream<StreamResponse>(StreamResponse.class, new ResponseBodyReader(response), "\n");
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedStreamingApiException(

@@ -48,7 +48,7 @@ public class ServiceClient {
             Response response = client.newCall(okhttpRequest).execute();
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new ResponseBodyInputStream(responseBody.byteStream(), response);
+                return new ResponseBodyInputStream(response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedFileDownloadApiException(

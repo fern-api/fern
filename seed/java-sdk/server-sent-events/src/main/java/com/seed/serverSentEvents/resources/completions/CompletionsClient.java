@@ -60,8 +60,8 @@ public class CompletionsClient {
             Response response = client.newCall(okhttpRequest).execute();
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                ResponseBodyReader reader = new ResponseBodyReader(responseBody.charStream(), response);
-                return new Stream<StreamedCompletion>(StreamedCompletion.class, reader, "[[DONE]]");
+                return new Stream<StreamedCompletion>(
+                        StreamedCompletion.class, new ResponseBodyReader(response), "[[DONE]]");
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedServerSentEventsApiException(

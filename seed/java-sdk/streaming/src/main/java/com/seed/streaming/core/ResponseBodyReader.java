@@ -5,30 +5,28 @@ package com.seed.streaming.core;
 
 import java.io.FilterReader;
 import java.io.IOException;
-import java.io.Reader;
 import okhttp3.Response;
 
 /**
- * A custom Reader that wraps the original Reader and ensures that the
+ * A custom Reader that wraps the Reader from the OkHttp Response and ensures that the
  * OkHttp Response object is properly closed when the reader is closed.
  *
- * This class extends FilterReader and takes an OkHttp Response object as an additional
- * parameter. It overrides the close method to close both the Reader and the Response
- * object, ensuring proper resource management and preventing premature closure of the underlying
- * HTTP connection.
+ * This class extends FilterReader and takes an OkHttp Response object as a parameter.
+ * It retrieves the Reader from the Response and overrides the close method to close
+ * both the Reader and the Response object, ensuring proper resource management and preventing
+ * premature closure of the underlying HTTP connection.
  */
 public class ResponseBodyReader extends FilterReader {
     private final Response response;
 
     /**
-     * Constructs a ResponseBodyReader that wraps the given Reader and associates it
-     * with the provided OkHttp Response object.
+     * Constructs a ResponseBodyReader that wraps the Reader from the given OkHttp Response object.
      *
-     * @param in the original Reader to be wrapped
-     * @param response the OkHttp Response object associated with the Reader
+     * @param response the OkHttp Response object from which the Reader is retrieved
+     * @throws IOException if an I/O error occurs while retrieving the Reader
      */
-    public ResponseBodyReader(Reader in, Response response) {
-        super(in);
+    public ResponseBodyReader(Response response) throws IOException {
+        super(response.body().charStream());
         this.response = response;
     }
 

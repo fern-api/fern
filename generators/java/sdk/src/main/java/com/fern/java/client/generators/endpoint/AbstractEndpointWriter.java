@@ -510,10 +510,6 @@ public abstract class AbstractEndpointWriter {
         return getVariableName("responseBody");
     }
 
-    private String getReaderName() {
-        return getVariableName("reader");
-    }
-
     private String getParsedResponseVariableName() {
         return getVariableName("parsedResponse");
     }
@@ -846,9 +842,8 @@ public abstract class AbstractEndpointWriter {
             addNonTryWithResourcesVariant(httpResponseBuilder);
             endpointMethodBuilder.returns(InputStream.class);
             httpResponseBuilder.addStatement(
-                    "return new $T($L.byteStream(), $L)",
+                    "return new $T($L)",
                     clientGeneratorContext.getPoetClassNameFactory().getResponseBodyInputStreamClassName(),
-                    getResponseBodyName(),
                     getResponseName());
             return null;
         }
@@ -893,18 +888,12 @@ public abstract class AbstractEndpointWriter {
             endpointMethodBuilder.returns(ParameterizedTypeName.get(ClassName.get(Iterable.class), bodyTypeName));
 
             httpResponseBuilder.addStatement(
-                    "$T $L = new $T($L.charStream(), $L)",
-                    clientGeneratorContext.getPoetClassNameFactory().getResponseBodyReaderClassName(),
-                    getReaderName(),
-                    clientGeneratorContext.getPoetClassNameFactory().getResponseBodyReaderClassName(),
-                    getResponseBodyName(),
-                    getResponseName());
-            httpResponseBuilder.addStatement(
-                    "return new $T<$T>($T.class, $L, $S)",
+                    "return new $T<$T>($T.class, new $T($L), $S)",
                     clientGeneratorContext.getPoetClassNameFactory().getStreamClassName(),
                     bodyTypeName,
                     bodyTypeName,
-                    getReaderName(),
+                    clientGeneratorContext.getPoetClassNameFactory().getResponseBodyReaderClassName(),
+                    getResponseName(),
                     terminator);
 
             return null;
