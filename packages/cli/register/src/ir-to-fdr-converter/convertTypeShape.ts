@@ -13,6 +13,7 @@ export function convertTypeShape(irType: Ir.types.Type): APIV1Write.TypeShape {
         enum: (enum_) => {
             return {
                 type: "enum",
+                default: enum_.default != null ? enum_.default.name.wireValue : undefined,
                 values: enum_.values.map(
                     (value): APIV1Write.EnumValue => ({
                         description: value.docs ?? undefined,
