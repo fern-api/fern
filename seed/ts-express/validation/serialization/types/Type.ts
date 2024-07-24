@@ -11,6 +11,7 @@ export const Type: core.serialization.ObjectSchema<serializers.Type.Raw, SeedVal
         decimal: core.serialization.number(),
         even: core.serialization.number(),
         name: core.serialization.string(),
+        shape: core.serialization.lazy(() => serializers.Shape),
     });
 
 export declare namespace Type {
@@ -18,5 +19,6 @@ export declare namespace Type {
         decimal: number;
         even: number;
         name: string;
+        shape: serializers.Shape.Raw;
     }
 }

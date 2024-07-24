@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.validation.core.ObjectMappers;
+import com.seed.validation.types.Shape;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -24,12 +25,16 @@ public final class CreateRequest {
 
     private final String name;
 
+    private final Shape shape;
+
     private final Map<String, Object> additionalProperties;
 
-    private CreateRequest(double decimal, int even, String name, Map<String, Object> additionalProperties) {
+    private CreateRequest(
+            double decimal, int even, String name, Shape shape, Map<String, Object> additionalProperties) {
         this.decimal = decimal;
         this.even = even;
         this.name = name;
+        this.shape = shape;
         this.additionalProperties = additionalProperties;
     }
 
@@ -48,6 +53,11 @@ public final class CreateRequest {
         return name;
     }
 
+    @JsonProperty("shape")
+    public Shape getShape() {
+        return shape;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -60,12 +70,12 @@ public final class CreateRequest {
     }
 
     private boolean equalTo(CreateRequest other) {
-        return decimal == other.decimal && even == other.even && name.equals(other.name);
+        return decimal == other.decimal && even == other.even && name.equals(other.name) && shape.equals(other.shape);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.decimal, this.even, this.name);
+        return Objects.hash(this.decimal, this.even, this.name, this.shape);
     }
 
     @java.lang.Override
@@ -88,7 +98,11 @@ public final class CreateRequest {
     }
 
     public interface NameStage {
-        _FinalStage name(String name);
+        ShapeStage name(String name);
+    }
+
+    public interface ShapeStage {
+        _FinalStage shape(Shape shape);
     }
 
     public interface _FinalStage {
@@ -96,12 +110,14 @@ public final class CreateRequest {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements DecimalStage, EvenStage, NameStage, _FinalStage {
+    public static final class Builder implements DecimalStage, EvenStage, NameStage, ShapeStage, _FinalStage {
         private double decimal;
 
         private int even;
 
         private String name;
+
+        private Shape shape;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -113,6 +129,7 @@ public final class CreateRequest {
             decimal(other.getDecimal());
             even(other.getEven());
             name(other.getName());
+            shape(other.getShape());
             return this;
         }
 
@@ -132,14 +149,21 @@ public final class CreateRequest {
 
         @java.lang.Override
         @JsonSetter("name")
-        public _FinalStage name(String name) {
+        public ShapeStage name(String name) {
             this.name = name;
             return this;
         }
 
         @java.lang.Override
+        @JsonSetter("shape")
+        public _FinalStage shape(Shape shape) {
+            this.shape = shape;
+            return this;
+        }
+
+        @java.lang.Override
         public CreateRequest build() {
-            return new CreateRequest(decimal, even, name, additionalProperties);
+            return new CreateRequest(decimal, even, name, shape, additionalProperties);
         }
     }
 }

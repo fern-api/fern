@@ -34,7 +34,7 @@
         "auth": null,
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"decimal\": 0,\n    \"even\": 0,\n    \"name\": \"example\"\n}",
+          "raw": "{\n    \"decimal\": 0,\n    \"even\": 0,\n    \"name\": \"example\",\n    \"shape\": \"SQUARE\"\n}",
           "options": {
             "raw": {
               "language": "json"
