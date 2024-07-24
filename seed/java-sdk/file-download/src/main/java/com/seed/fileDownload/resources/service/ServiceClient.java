@@ -6,6 +6,7 @@ package com.seed.fileDownload.resources.service;
 import com.seed.fileDownload.core.ClientOptions;
 import com.seed.fileDownload.core.ObjectMappers;
 import com.seed.fileDownload.core.RequestOptions;
+import com.seed.fileDownload.core.ResponseBodyInputStream;
 import com.seed.fileDownload.core.SeedFileDownloadApiException;
 import com.seed.fileDownload.core.SeedFileDownloadException;
 import java.io.IOException;
@@ -43,10 +44,11 @@ public class ServiceClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
+        try {
+            Response response = client.newCall(okhttpRequest).execute();
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return responseBody.byteStream();
+                return new ResponseBodyInputStream(responseBody.byteStream(), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedFileDownloadApiException(

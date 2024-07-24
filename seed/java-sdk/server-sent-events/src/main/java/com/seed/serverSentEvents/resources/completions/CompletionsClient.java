@@ -8,6 +8,7 @@ import com.seed.serverSentEvents.core.ClientOptions;
 import com.seed.serverSentEvents.core.MediaTypes;
 import com.seed.serverSentEvents.core.ObjectMappers;
 import com.seed.serverSentEvents.core.RequestOptions;
+import com.seed.serverSentEvents.core.ResponseBodyReader;
 import com.seed.serverSentEvents.core.SeedServerSentEventsApiException;
 import com.seed.serverSentEvents.core.SeedServerSentEventsException;
 import com.seed.serverSentEvents.core.Stream;
@@ -55,10 +56,12 @@ public class CompletionsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
+        try {
+            Response response = client.newCall(okhttpRequest).execute();
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new Stream<StreamedCompletion>(StreamedCompletion.class, responseBody.charStream(), "[[DONE]]");
+                ResponseBodyReader reader = new ResponseBodyReader(responseBody.charStream(), response);
+                return new Stream<StreamedCompletion>(StreamedCompletion.class, reader, "[[DONE]]");
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedServerSentEventsApiException(
