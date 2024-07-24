@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Text.Json;
 using SeedAudiences;
 using SeedAudiences.Core;
 
@@ -34,7 +33,7 @@ public class FooClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ImportingType>(responseBody)!;
+            return JsonUtils.Deserialize<ImportingType>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
