@@ -86,12 +86,7 @@ exports[`open api parser defaults parse open api 1`] = `
             "nameOverride": null,
             "schema": {
               "default": 1000000,
-              "exclusiveMaximum": null,
-              "exclusiveMinimum": null,
-              "maximum": null,
-              "minimum": null,
-              "multipleOf": null,
-              "type": "int",
+              "type": "int64",
             },
             "type": "primitive",
           },

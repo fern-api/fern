@@ -57,8 +57,6 @@ exports[`x-fern-auth-variables x-fern-auth-variables docs 1`] = `
           "docs": undefined,
           "properties": {
             "id": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uuid",
@@ -73,8 +71,6 @@ exports[`x-fern-auth-variables x-fern-auth-variables docs 1`] = `
           "docs": undefined,
           "properties": {
             "id": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uuid",
@@ -170,8 +166,6 @@ exports[`x-fern-auth-variables x-fern-auth-variables simple 1`] = `
           "docs": undefined,
           "properties": {
             "id": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uuid",
@@ -186,8 +180,6 @@ exports[`x-fern-auth-variables x-fern-auth-variables simple 1`] = `
           "docs": undefined,
           "properties": {
             "id": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uuid",

@@ -114,16 +114,12 @@ API endpoints",
           "docs": "A Val",
           "properties": {
             "author": {
-              "default": undefined,
               "docs": "The user who created this val",
               "type": "optional<AliasValResponseAuthor>",
-              "validation": undefined,
             },
             "code": {
-              "default": undefined,
               "docs": "TypeScript code associated with this val",
               "type": "optional<string>",
-              "validation": undefined,
             },
             "createdAt": "datetime",
             "id": {
@@ -161,10 +157,8 @@ API endpoints",
               "type": "boolean",
             },
             "readme": {
-              "default": undefined,
               "docs": "This val’s readme, as Markdown",
               "type": "optional<string>",
-              "validation": undefined,
             },
             "referenceCount": {
               "type": "integer",
@@ -393,16 +387,12 @@ API endpoints",
           "properties": {
             "key": "string",
             "lastModified": {
-              "default": undefined,
               "docs": "Creation date of the object",
               "type": "optional<datetime>",
-              "validation": undefined,
             },
             "size": {
-              "default": undefined,
               "docs": "Size in bytes of the object",
               "type": "optional<integer>",
-              "validation": undefined,
             },
           },
         },
@@ -445,53 +435,37 @@ API endpoints",
               "body": {
                 "properties": {
                   "attachments": {
-                    "default": undefined,
                     "docs": "A list of attachments to add to the email",
                     "type": "optional<list<AttachmentObject>>",
-                    "validation": undefined,
                   },
                   "bcc": {
-                    "default": undefined,
                     "docs": "A single email or list of emails for one of the address fields",
                     "type": "optional<EmailDataInput>",
-                    "validation": undefined,
                   },
                   "cc": {
-                    "default": undefined,
                     "docs": "A single email or list of emails for one of the address fields",
                     "type": "optional<EmailDataInput>",
-                    "validation": undefined,
                   },
                   "from": "optional<EmailData>",
                   "html": {
-                    "default": undefined,
                     "docs": "HTML content of the email. Can be specified alongside text",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "replyToList": {
-                    "default": undefined,
                     "docs": "A reply-to list of email addresses",
                     "type": "optional<ReplyToList>",
-                    "validation": undefined,
                   },
                   "subject": {
-                    "default": undefined,
                     "docs": "The subject line of the email",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "text": {
-                    "default": undefined,
                     "docs": "Text content of the email, for email clients that may not support HTML",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "to": {
-                    "default": undefined,
                     "docs": "A single email or list of emails for one of the address fields",
                     "type": "optional<EmailDataInput>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -800,6 +774,7 @@ give access to details and data from the requesting user.",
       },
       "types": {
         "MeCommentsRequestRelationship": {
+          "default": "any",
           "enum": [
             "any",
             "received",
@@ -854,10 +829,8 @@ give access to details and data from the requesting user.",
           "docs": undefined,
           "properties": {
             "author": {
-              "default": undefined,
               "docs": "The user who created this val",
               "type": "optional<MeCommentsResponseDataItemValAuthor>",
-              "validation": undefined,
             },
             "id": {
               "type": "string",
@@ -915,10 +888,8 @@ give access to details and data from the requesting user.",
           "docs": "Your user information, with tier and email included",
           "properties": {
             "bio": {
-              "default": undefined,
               "docs": "The user’s biography, if they have provided one",
               "type": "optional<string>",
-              "validation": undefined,
             },
             "email": {
               "docs": "Your email address",
@@ -936,7 +907,6 @@ give access to details and data from the requesting user.",
             },
             "links": "MeGetResponseLinks",
             "profileImageUrl": {
-              "default": undefined,
               "docs": "URL that points to the user’s profile image, if one exists",
               "type": "optional<string>",
               "validation": {
@@ -947,10 +917,8 @@ give access to details and data from the requesting user.",
               },
             },
             "tier": {
-              "default": undefined,
               "docs": "Your account tier",
               "type": "optional<MeGetResponseTier>",
-              "validation": undefined,
             },
             "url": {
               "docs": "URL of this user’s profile on Val Town’s website",
@@ -963,10 +931,8 @@ give access to details and data from the requesting user.",
               },
             },
             "username": {
-              "default": undefined,
               "docs": "The user’s handle that they chose for themselves. Does not include the @ symbol",
               "type": "optional<string>",
-              "validation": undefined,
             },
           },
         },
@@ -1024,7 +990,6 @@ give access to details and data from the requesting user.",
           "docs": "A val in a dependency relationship",
           "properties": {
             "author_id": {
-              "default": undefined,
               "docs": "The ID of the person who authored this val",
               "type": "optional<string>",
               "validation": {
@@ -1049,10 +1014,8 @@ give access to details and data from the requesting user.",
               "type": "string",
             },
             "username": {
-              "default": undefined,
               "docs": "The username of the person who authored this val",
               "type": "optional<string>",
-              "validation": undefined,
             },
           },
         },
@@ -1060,7 +1023,6 @@ give access to details and data from the requesting user.",
           "docs": "A val in a dependency relationship",
           "properties": {
             "author_id": {
-              "default": undefined,
               "docs": "The ID of the person who authored this val",
               "type": "optional<string>",
               "validation": {
@@ -1085,10 +1047,8 @@ give access to details and data from the requesting user.",
               "type": "string",
             },
             "username": {
-              "default": undefined,
               "docs": "The username of the person who authored this val",
               "type": "optional<string>",
-              "validation": undefined,
             },
           },
         },
@@ -1625,7 +1585,6 @@ let you get, create, and run vals.",
                     },
                   },
                   "name": {
-                    "default": undefined,
                     "docs": "This val’s name",
                     "type": "optional<string>",
                     "validation": {
@@ -1636,13 +1595,10 @@ let you get, create, and run vals.",
                     },
                   },
                   "privacy": {
-                    "default": undefined,
                     "docs": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
                     "type": "optional<ValsCreateRequestPrivacy>",
-                    "validation": undefined,
                   },
                   "readme": {
-                    "default": undefined,
                     "docs": "Readme contents, as Markdown",
                     "type": "optional<string>",
                     "validation": {
@@ -1653,10 +1609,9 @@ let you get, create, and run vals.",
                     },
                   },
                   "type": {
-                    "default": undefined,
+                    "default": "script",
                     "docs": "The type of the val you want to create. Note that this does not include interval vals, because they cannot be created through the API yet.",
                     "type": "optional<ValsCreateRequestType>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -1734,7 +1689,6 @@ let you get, create, and run vals.",
                     },
                   },
                   "name": {
-                    "default": undefined,
                     "docs": "This val’s name",
                     "type": "optional<string>",
                     "validation": {
@@ -1745,13 +1699,10 @@ let you get, create, and run vals.",
                     },
                   },
                   "privacy": {
-                    "default": undefined,
                     "docs": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
                     "type": "optional<ValsCreateVersionRequestPrivacy>",
-                    "validation": undefined,
                   },
                   "readme": {
-                    "default": undefined,
                     "docs": "Readme contents, as Markdown",
                     "type": "optional<string>",
                     "validation": {
@@ -1762,10 +1713,9 @@ let you get, create, and run vals.",
                     },
                   },
                   "type": {
-                    "default": undefined,
+                    "default": "script",
                     "docs": "The type of the val you want to create. Note that this does not include interval vals, because they cannot be created through the API yet.",
                     "type": "optional<ValsCreateVersionRequestType>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -1901,10 +1851,8 @@ let you get, create, and run vals.",
               "body": {
                 "properties": {
                   "args": {
-                    "default": undefined,
                     "docs": "Array of arguments passed to the given function. If this is present, the default export should be a function and will be called with these arguments, and the function result will be returned. If \`args\` is not present, no function calls are made, but you can still return a value using \`export default myVariable\`.",
                     "type": "optional<list<unknown>>",
-                    "validation": undefined,
                   },
                   "code": {
                     "docs": "TypeScript source code",
@@ -2251,7 +2199,6 @@ let you get, create, and run vals.",
               "body": {
                 "properties": {
                   "name": {
-                    "default": undefined,
                     "docs": "This val’s name",
                     "type": "optional<string>",
                     "validation": {
@@ -2262,13 +2209,10 @@ let you get, create, and run vals.",
                     },
                   },
                   "privacy": {
-                    "default": undefined,
                     "docs": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
                     "type": "optional<ValsUpdateRequestPrivacy>",
-                    "validation": undefined,
                   },
                   "readme": {
-                    "default": undefined,
                     "docs": "Readme contents, as Markdown",
                     "type": "optional<string>",
                     "validation": {
@@ -2279,10 +2223,8 @@ let you get, create, and run vals.",
                     },
                   },
                   "type": {
-                    "default": undefined,
                     "docs": "The type of the val you want to update. Note that this does not include interval vals, because they cannot be created through the API yet.",
                     "type": "optional<ValsUpdateRequestType>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -2334,6 +2276,7 @@ let you get, create, and run vals.",
           ],
         },
         "ValsCreateRequestType": {
+          "default": "script",
           "docs": "The type of the val you want to create. Note that this does not include interval vals, because they cannot be created through the API yet.",
           "enum": [
             "http",
@@ -2350,6 +2293,7 @@ let you get, create, and run vals.",
           ],
         },
         "ValsCreateVersionRequestType": {
+          "default": "script",
           "docs": "The type of the val you want to create. Note that this does not include interval vals, because they cannot be created through the API yet.",
           "enum": [
             "http",
@@ -2458,16 +2402,12 @@ let you get, create, and run vals.",
         "docs": "A Val",
         "properties": {
           "author": {
-            "default": undefined,
             "docs": "The user who created this val",
             "type": "optional<BasicValAuthor>",
-            "validation": undefined,
           },
           "code": {
-            "default": undefined,
             "docs": "TypeScript code associated with this val",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "createdAt": "datetime",
           "id": {
@@ -2614,16 +2554,12 @@ let you get, create, and run vals.",
         "docs": "A Val",
         "properties": {
           "author": {
-            "default": undefined,
             "docs": "The user who created this val",
             "type": "optional<ExtendedValAuthor>",
-            "validation": undefined,
           },
           "code": {
-            "default": undefined,
             "docs": "TypeScript code associated with this val",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "createdAt": "datetime",
           "id": {
@@ -2661,10 +2597,8 @@ let you get, create, and run vals.",
             "type": "boolean",
           },
           "readme": {
-            "default": undefined,
             "docs": "This val’s readme, as Markdown",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "referenceCount": {
             "type": "integer",
@@ -2777,7 +2711,6 @@ let you get, create, and run vals.",
         "docs": "Links to use for pagination",
         "properties": {
           "next": {
-            "default": undefined,
             "docs": "URL of the next page, if any",
             "type": "optional<string>",
             "validation": {
@@ -2788,7 +2721,6 @@ let you get, create, and run vals.",
             },
           },
           "prev": {
-            "default": undefined,
             "docs": "URL of the previous page, if any",
             "type": "optional<string>",
             "validation": {
@@ -2830,12 +2762,10 @@ SELECT author AS author, COUNT(*) AS count FROM books GROUP BY author
             "type": "list<string>",
           },
           "lastInsertRowid": {
-            "default": undefined,
             "docs": "ROWID of the last inserted row.
 
 This value is not specified if the SQL statement was not an INSERT or if the table was not a ROWID table.",
             "type": "optional<ResultSetLastInsertRowid>",
-            "validation": undefined,
           },
           "rows": {
             "docs": "Rows produced by the statement.",
@@ -2863,10 +2793,8 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
         "docs": "User object",
         "properties": {
           "bio": {
-            "default": undefined,
             "docs": "The user’s biography, if they have provided one",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "id": {
             "docs": "The ID of this user",
@@ -2880,7 +2808,6 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
           },
           "links": "UserLinks",
           "profileImageUrl": {
-            "default": undefined,
             "docs": "URL that points to the user’s profile image, if one exists",
             "type": "optional<string>",
             "validation": {
@@ -2901,10 +2828,8 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
             },
           },
           "username": {
-            "default": undefined,
             "docs": "The user’s handle that they chose for themselves. Does not include the @ symbol",
             "type": "optional<string>",
-            "validation": undefined,
           },
         },
       },
@@ -3059,16 +2984,12 @@ API endpoints",
           "docs": "A Val",
           "properties": {
             "author": {
-              "default": undefined,
               "docs": "The user who created this val",
               "type": "optional<AliasValResponseAuthor>",
-              "validation": undefined,
             },
             "code": {
-              "default": undefined,
               "docs": "TypeScript code associated with this val",
               "type": "optional<string>",
-              "validation": undefined,
             },
             "createdAt": "datetime",
             "id": {
@@ -3106,10 +3027,8 @@ API endpoints",
               "type": "boolean",
             },
             "readme": {
-              "default": undefined,
               "docs": "This val’s readme, as Markdown",
               "type": "optional<string>",
-              "validation": undefined,
             },
             "referenceCount": {
               "type": "integer",
@@ -3338,16 +3257,12 @@ API endpoints",
           "properties": {
             "key": "string",
             "lastModified": {
-              "default": undefined,
               "docs": "Creation date of the object",
               "type": "optional<datetime>",
-              "validation": undefined,
             },
             "size": {
-              "default": undefined,
               "docs": "Size in bytes of the object",
               "type": "optional<integer>",
-              "validation": undefined,
             },
           },
         },
@@ -3390,53 +3305,37 @@ API endpoints",
               "body": {
                 "properties": {
                   "attachments": {
-                    "default": undefined,
                     "docs": "A list of attachments to add to the email",
                     "type": "optional<list<AttachmentObject>>",
-                    "validation": undefined,
                   },
                   "bcc": {
-                    "default": undefined,
                     "docs": "A single email or list of emails for one of the address fields",
                     "type": "optional<EmailDataInput>",
-                    "validation": undefined,
                   },
                   "cc": {
-                    "default": undefined,
                     "docs": "A single email or list of emails for one of the address fields",
                     "type": "optional<EmailDataInput>",
-                    "validation": undefined,
                   },
                   "from": "optional<EmailData>",
                   "html": {
-                    "default": undefined,
                     "docs": "HTML content of the email. Can be specified alongside text",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "replyToList": {
-                    "default": undefined,
                     "docs": "A reply-to list of email addresses",
                     "type": "optional<ReplyToList>",
-                    "validation": undefined,
                   },
                   "subject": {
-                    "default": undefined,
                     "docs": "The subject line of the email",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "text": {
-                    "default": undefined,
                     "docs": "Text content of the email, for email clients that may not support HTML",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "to": {
-                    "default": undefined,
                     "docs": "A single email or list of emails for one of the address fields",
                     "type": "optional<EmailDataInput>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -3745,6 +3644,7 @@ give access to details and data from the requesting user.",
       },
       "types": {
         "MeCommentsRequestRelationship": {
+          "default": "any",
           "enum": [
             "any",
             "received",
@@ -3799,10 +3699,8 @@ give access to details and data from the requesting user.",
           "docs": undefined,
           "properties": {
             "author": {
-              "default": undefined,
               "docs": "The user who created this val",
               "type": "optional<MeCommentsResponseDataItemValAuthor>",
-              "validation": undefined,
             },
             "id": {
               "type": "string",
@@ -3860,10 +3758,8 @@ give access to details and data from the requesting user.",
           "docs": "Your user information, with tier and email included",
           "properties": {
             "bio": {
-              "default": undefined,
               "docs": "The user’s biography, if they have provided one",
               "type": "optional<string>",
-              "validation": undefined,
             },
             "email": {
               "docs": "Your email address",
@@ -3881,7 +3777,6 @@ give access to details and data from the requesting user.",
             },
             "links": "MeGetResponseLinks",
             "profileImageUrl": {
-              "default": undefined,
               "docs": "URL that points to the user’s profile image, if one exists",
               "type": "optional<string>",
               "validation": {
@@ -3892,10 +3787,8 @@ give access to details and data from the requesting user.",
               },
             },
             "tier": {
-              "default": undefined,
               "docs": "Your account tier",
               "type": "optional<MeGetResponseTier>",
-              "validation": undefined,
             },
             "url": {
               "docs": "URL of this user’s profile on Val Town’s website",
@@ -3908,10 +3801,8 @@ give access to details and data from the requesting user.",
               },
             },
             "username": {
-              "default": undefined,
               "docs": "The user’s handle that they chose for themselves. Does not include the @ symbol",
               "type": "optional<string>",
-              "validation": undefined,
             },
           },
         },
@@ -3969,7 +3860,6 @@ give access to details and data from the requesting user.",
           "docs": "A val in a dependency relationship",
           "properties": {
             "author_id": {
-              "default": undefined,
               "docs": "The ID of the person who authored this val",
               "type": "optional<string>",
               "validation": {
@@ -3994,10 +3884,8 @@ give access to details and data from the requesting user.",
               "type": "string",
             },
             "username": {
-              "default": undefined,
               "docs": "The username of the person who authored this val",
               "type": "optional<string>",
-              "validation": undefined,
             },
           },
         },
@@ -4005,7 +3893,6 @@ give access to details and data from the requesting user.",
           "docs": "A val in a dependency relationship",
           "properties": {
             "author_id": {
-              "default": undefined,
               "docs": "The ID of the person who authored this val",
               "type": "optional<string>",
               "validation": {
@@ -4030,10 +3917,8 @@ give access to details and data from the requesting user.",
               "type": "string",
             },
             "username": {
-              "default": undefined,
               "docs": "The username of the person who authored this val",
               "type": "optional<string>",
-              "validation": undefined,
             },
           },
         },
@@ -4570,7 +4455,6 @@ let you get, create, and run vals.",
                     },
                   },
                   "name": {
-                    "default": undefined,
                     "docs": "This val’s name",
                     "type": "optional<string>",
                     "validation": {
@@ -4581,13 +4465,10 @@ let you get, create, and run vals.",
                     },
                   },
                   "privacy": {
-                    "default": undefined,
                     "docs": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
                     "type": "optional<ValsCreateRequestPrivacy>",
-                    "validation": undefined,
                   },
                   "readme": {
-                    "default": undefined,
                     "docs": "Readme contents, as Markdown",
                     "type": "optional<string>",
                     "validation": {
@@ -4598,10 +4479,9 @@ let you get, create, and run vals.",
                     },
                   },
                   "type": {
-                    "default": undefined,
+                    "default": "script",
                     "docs": "The type of the val you want to create. Note that this does not include interval vals, because they cannot be created through the API yet.",
                     "type": "optional<ValsCreateRequestType>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -4679,7 +4559,6 @@ let you get, create, and run vals.",
                     },
                   },
                   "name": {
-                    "default": undefined,
                     "docs": "This val’s name",
                     "type": "optional<string>",
                     "validation": {
@@ -4690,13 +4569,10 @@ let you get, create, and run vals.",
                     },
                   },
                   "privacy": {
-                    "default": undefined,
                     "docs": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
                     "type": "optional<ValsCreateVersionRequestPrivacy>",
-                    "validation": undefined,
                   },
                   "readme": {
-                    "default": undefined,
                     "docs": "Readme contents, as Markdown",
                     "type": "optional<string>",
                     "validation": {
@@ -4707,10 +4583,9 @@ let you get, create, and run vals.",
                     },
                   },
                   "type": {
-                    "default": undefined,
+                    "default": "script",
                     "docs": "The type of the val you want to create. Note that this does not include interval vals, because they cannot be created through the API yet.",
                     "type": "optional<ValsCreateVersionRequestType>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -4846,10 +4721,8 @@ let you get, create, and run vals.",
               "body": {
                 "properties": {
                   "args": {
-                    "default": undefined,
                     "docs": "Array of arguments passed to the given function. If this is present, the default export should be a function and will be called with these arguments, and the function result will be returned. If \`args\` is not present, no function calls are made, but you can still return a value using \`export default myVariable\`.",
                     "type": "optional<list<unknown>>",
-                    "validation": undefined,
                   },
                   "code": {
                     "docs": "TypeScript source code",
@@ -5196,7 +5069,6 @@ let you get, create, and run vals.",
               "body": {
                 "properties": {
                   "name": {
-                    "default": undefined,
                     "docs": "This val’s name",
                     "type": "optional<string>",
                     "validation": {
@@ -5207,13 +5079,10 @@ let you get, create, and run vals.",
                     },
                   },
                   "privacy": {
-                    "default": undefined,
                     "docs": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
                     "type": "optional<ValsUpdateRequestPrivacy>",
-                    "validation": undefined,
                   },
                   "readme": {
-                    "default": undefined,
                     "docs": "Readme contents, as Markdown",
                     "type": "optional<string>",
                     "validation": {
@@ -5224,10 +5093,8 @@ let you get, create, and run vals.",
                     },
                   },
                   "type": {
-                    "default": undefined,
                     "docs": "The type of the val you want to update. Note that this does not include interval vals, because they cannot be created through the API yet.",
                     "type": "optional<ValsUpdateRequestType>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -5279,6 +5146,7 @@ let you get, create, and run vals.",
           ],
         },
         "ValsCreateRequestType": {
+          "default": "script",
           "docs": "The type of the val you want to create. Note that this does not include interval vals, because they cannot be created through the API yet.",
           "enum": [
             "http",
@@ -5295,6 +5163,7 @@ let you get, create, and run vals.",
           ],
         },
         "ValsCreateVersionRequestType": {
+          "default": "script",
           "docs": "The type of the val you want to create. Note that this does not include interval vals, because they cannot be created through the API yet.",
           "enum": [
             "http",
@@ -5394,16 +5263,12 @@ let you get, create, and run vals.",
         "docs": "A Val",
         "properties": {
           "author": {
-            "default": undefined,
             "docs": "The user who created this val",
             "type": "optional<BasicValAuthor>",
-            "validation": undefined,
           },
           "code": {
-            "default": undefined,
             "docs": "TypeScript code associated with this val",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "createdAt": "datetime",
           "id": {
@@ -5530,16 +5395,12 @@ let you get, create, and run vals.",
         "docs": "A Val",
         "properties": {
           "author": {
-            "default": undefined,
             "docs": "The user who created this val",
             "type": "optional<ExtendedValAuthor>",
-            "validation": undefined,
           },
           "code": {
-            "default": undefined,
             "docs": "TypeScript code associated with this val",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "createdAt": "datetime",
           "id": {
@@ -5577,10 +5438,8 @@ let you get, create, and run vals.",
             "type": "boolean",
           },
           "readme": {
-            "default": undefined,
             "docs": "This val’s readme, as Markdown",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "referenceCount": {
             "type": "integer",
@@ -5699,7 +5558,6 @@ let you get, create, and run vals.",
         "docs": "Links to use for pagination",
         "properties": {
           "next": {
-            "default": undefined,
             "docs": "URL of the next page, if any",
             "type": "optional<string>",
             "validation": {
@@ -5710,7 +5568,6 @@ let you get, create, and run vals.",
             },
           },
           "prev": {
-            "default": undefined,
             "docs": "URL of the previous page, if any",
             "type": "optional<string>",
             "validation": {
@@ -5752,12 +5609,10 @@ SELECT author AS author, COUNT(*) AS count FROM books GROUP BY author
             "type": "list<string>",
           },
           "lastInsertRowid": {
-            "default": undefined,
             "docs": "ROWID of the last inserted row.
 
 This value is not specified if the SQL statement was not an INSERT or if the table was not a ROWID table.",
             "type": "optional<ResultSetLastInsertRowid>",
-            "validation": undefined,
           },
           "rows": {
             "docs": "Rows produced by the statement.",
@@ -5785,10 +5640,8 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
         "docs": "User object",
         "properties": {
           "bio": {
-            "default": undefined,
             "docs": "The user’s biography, if they have provided one",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "id": {
             "docs": "The ID of this user",
@@ -5802,7 +5655,6 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
           },
           "links": "UserLinks",
           "profileImageUrl": {
-            "default": undefined,
             "docs": "URL that points to the user’s profile image, if one exists",
             "type": "optional<string>",
             "validation": {
@@ -5823,10 +5675,8 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
             },
           },
           "username": {
-            "default": undefined,
             "docs": "The user’s handle that they chose for themselves. Does not include the @ symbol",
             "type": "optional<string>",
-            "validation": undefined,
           },
         },
       },

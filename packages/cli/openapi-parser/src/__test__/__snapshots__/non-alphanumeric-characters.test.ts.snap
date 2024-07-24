@@ -94,6 +94,7 @@ exports[`non alphanumeric characters non-alphanumeric-characters parse open api 
   "schemas": {
     "DocumentIDSeparators": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "DocumentIdSeparators",
       "groupName": null,

@@ -418,6 +418,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": null,
                   "description": null,
                   "generatedName": "SpeechStreamOperationRequestMyEnum",
                   "groupName": null,
@@ -713,6 +714,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "SpeechBodyStreamMyEnum",
               "groupName": null,

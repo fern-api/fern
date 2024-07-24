@@ -1,4 +1,11 @@
 types:
+  Primitive:
+    default: BOOLEAN
+    enum:
+      - INTEGER
+      - DOUBLE
+      - STRING
+
   Object:
     docs: |
       Defines properties with default values and validation rules.
@@ -55,6 +62,11 @@ types:
           Big integers must be valid numbers.
         type: bigint
         default: "hello"
+      enumWithInvalidDefault:
+        docs: |
+          Enums must have valid default values.
+        type: Primitive
+        default: INVALID
 
 service:
   auth: false

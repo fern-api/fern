@@ -8,7 +8,7 @@ exports[`webhooks webhooks docs 1`] = `
       "Pet": {
         "docs": undefined,
         "properties": {
-          "id": "integer",
+          "id": "long",
           "name": "string",
           "tag": "optional<string>",
         },
@@ -52,7 +52,7 @@ exports[`webhooks webhooks simple 1`] = `
       "Pet": {
         "docs": undefined,
         "properties": {
-          "id": "integer",
+          "id": "long",
           "name": "string",
           "tag": "optional<string>",
         },

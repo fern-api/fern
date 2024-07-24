@@ -5872,6 +5872,7 @@ exports[`open api parser vocode parse open api 1`] = `
     },
     "CallStatus": {
       "availability": null,
+      "default": null,
       "description": "An enumeration.",
       "generatedName": "CallStatus",
       "groupName": null,
@@ -7372,6 +7373,7 @@ exports[`open api parser vocode parse open api 1`] = `
     },
     "EventType": {
       "availability": null,
+      "default": null,
       "description": "An enumeration.",
       "generatedName": "EventType",
       "groupName": null,
@@ -7460,6 +7462,7 @@ exports[`open api parser vocode parse open api 1`] = `
     },
     "HTTPMethod": {
       "availability": null,
+      "default": null,
       "description": "An enumeration.",
       "generatedName": "HttpMethod",
       "groupName": null,
@@ -7542,6 +7545,7 @@ exports[`open api parser vocode parse open api 1`] = `
     },
     "InterruptSensitivity": {
       "availability": null,
+      "default": null,
       "description": "An enumeration.",
       "generatedName": "InterruptSensitivity",
       "groupName": null,
@@ -7578,6 +7582,7 @@ exports[`open api parser vocode parse open api 1`] = `
     },
     "Language": {
       "availability": null,
+      "default": null,
       "description": "An enumeration.",
       "generatedName": "Language",
       "groupName": null,
@@ -9156,6 +9161,7 @@ exports[`open api parser vocode parse open api 1`] = `
     },
     "PlanType": {
       "availability": null,
+      "default": null,
       "description": "An enumeration.",
       "generatedName": "PlanType",
       "groupName": null,

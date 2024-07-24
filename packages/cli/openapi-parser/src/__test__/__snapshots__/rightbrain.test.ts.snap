@@ -299,6 +299,7 @@ Brain Core API. 🚀
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "OrganizationIamListMembersRequestType",
               "groupName": null,
@@ -6068,6 +6069,7 @@ Brain Core API. 🚀
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "ProjectIamListMembersRequestType",
               "groupName": null,
@@ -10560,6 +10562,7 @@ Brain Core API. 🚀
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "CollectionIamListMembersRequestType",
               "groupName": null,
@@ -12117,6 +12120,7 @@ Brain Core API. 🚀
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "DocumentListOrgOrgIdProjectProjectIdDocumentGetRequestSource",
               "groupName": null,
@@ -15348,6 +15352,7 @@ Brain Core API. 🚀
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "DocumentIamListMembersRequestType",
               "groupName": null,
@@ -18225,6 +18230,7 @@ Brain Core API. 🚀
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "ChatIamListMembersRequestType",
               "groupName": null,
@@ -43734,6 +43740,7 @@ Brain Core API. 🚀
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "TaskIamListMembersRequestType",
               "groupName": null,
@@ -48334,6 +48341,19 @@ Brain Core API. 🚀
             "type": "optional",
             "value": {
               "availability": null,
+              "default": {
+                "availability": null,
+                "casing": {
+                  "camel": null,
+                  "pascal": null,
+                  "screamingSnake": null,
+                  "snake": null,
+                },
+                "description": null,
+                "generatedName": "Gpt35Turbo",
+                "nameOverride": null,
+                "value": "gpt-3.5-turbo",
+              },
               "description": null,
               "generatedName": "ChatConfigInputLlm",
               "groupName": null,
@@ -48704,6 +48724,19 @@ Brain Core API. 🚀
             "type": "optional",
             "value": {
               "availability": null,
+              "default": {
+                "availability": null,
+                "casing": {
+                  "camel": null,
+                  "pascal": null,
+                  "screamingSnake": null,
+                  "snake": null,
+                },
+                "description": null,
+                "generatedName": "Gpt35Turbo",
+                "nameOverride": null,
+                "value": "gpt-3.5-turbo",
+              },
               "description": null,
               "generatedName": "ChatConfigOutputLlm",
               "groupName": null,
@@ -49326,6 +49359,7 @@ Brain Core API. 🚀
               "type": "nullable",
               "value": {
                 "availability": null,
+                "default": null,
                 "description": null,
                 "generatedName": "ChatDocumentSource",
                 "groupName": null,
@@ -50055,6 +50089,7 @@ Brain Core API. 🚀
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": null,
             "generatedName": "ChatGuardrailId",
             "groupName": null,
@@ -50160,6 +50195,7 @@ Brain Core API. 🚀
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": null,
             "generatedName": "ChatGuardrailType",
             "groupName": null,
@@ -50235,6 +50271,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "type": "array",
               "value": {
                 "availability": null,
+                "default": null,
                 "description": null,
                 "generatedName": "ChatIamMemberRoleUpdateAddItem",
                 "groupName": null,
@@ -50308,6 +50345,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "type": "array",
               "value": {
                 "availability": null,
+                "default": null,
                 "description": null,
                 "generatedName": "ChatIamMemberRoleUpdateRemoveItem",
                 "groupName": null,
@@ -50423,6 +50461,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "type": "array",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "ChatIamPermissionTestPermissionsItem",
               "groupName": null,
@@ -50625,6 +50664,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": "LLM reference name.",
             "generatedName": "ChatModelName",
             "groupName": null,
@@ -51120,6 +51160,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
     },
     "CollectionChatShow": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "CollectionChatShow",
       "groupName": null,
@@ -51314,6 +51355,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "type": "array",
               "value": {
                 "availability": null,
+                "default": null,
                 "description": null,
                 "generatedName": "CollectionIamMemberRoleUpdateAddItem",
                 "groupName": null,
@@ -51387,6 +51429,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "type": "array",
               "value": {
                 "availability": null,
+                "default": null,
                 "description": null,
                 "generatedName": "CollectionIamMemberRoleUpdateRemoveItem",
                 "groupName": null,
@@ -51502,6 +51545,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "type": "array",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "CollectionIamPermissionTestPermissionsItem",
               "groupName": null,
@@ -52521,6 +52565,19 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "type": "optional",
             "value": {
               "availability": null,
+              "default": {
+                "availability": null,
+                "casing": {
+                  "camel": null,
+                  "pascal": null,
+                  "screamingSnake": null,
+                  "snake": null,
+                },
+                "description": null,
+                "generatedName": "english_british",
+                "nameOverride": null,
+                "value": "english_british",
+              },
               "description": null,
               "generatedName": "ComposeInitLanguage",
               "groupName": null,
@@ -53670,6 +53727,19 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "type": "optional",
             "value": {
               "availability": null,
+              "default": {
+                "availability": null,
+                "casing": {
+                  "camel": null,
+                  "pascal": null,
+                  "screamingSnake": null,
+                  "snake": null,
+                },
+                "description": null,
+                "generatedName": "pending",
+                "nameOverride": null,
+                "value": "pending",
+              },
               "description": null,
               "generatedName": "DatasourceSyncRunStatus",
               "groupName": null,
@@ -53951,6 +54021,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": null,
             "generatedName": "DocumentCreateTaskState",
             "groupName": null,
@@ -54130,6 +54201,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "type": "array",
               "value": {
                 "availability": null,
+                "default": null,
                 "description": null,
                 "generatedName": "DocumentIamMemberRoleUpdateAddItem",
                 "groupName": null,
@@ -54203,6 +54275,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "type": "array",
               "value": {
                 "availability": null,
+                "default": null,
                 "description": null,
                 "generatedName": "DocumentIamMemberRoleUpdateRemoveItem",
                 "groupName": null,
@@ -54318,6 +54391,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "type": "array",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "DocumentIamPermissionTestPermissionsItem",
               "groupName": null,
@@ -55262,6 +55336,7 @@ Some entities, such as Organizations, may contain members that exist without any
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": null,
             "generatedName": "InputConversationalGuardrailDefinitionName",
             "groupName": null,
@@ -56319,6 +56394,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": null,
             "generatedName": "KratosWebhookDetailedMessageType",
             "groupName": null,
@@ -57187,6 +57263,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
     },
     "OAuthClientProfile": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "OAuthClientProfile",
       "groupName": null,
@@ -57573,6 +57650,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
     },
     "ObjectTags": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "ObjectTags",
       "groupName": null,
@@ -57609,6 +57687,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
     },
     "ObjectType": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "ObjectType",
       "groupName": null,
@@ -57916,6 +57995,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
     },
     "OrgInviteShow": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "OrgInviteShow",
       "groupName": null,
@@ -57965,6 +58045,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
     },
     "OrgMembership": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "OrgMembership",
       "groupName": null,
@@ -58145,6 +58226,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": null,
             "generatedName": "OrganizationDomainStatus",
             "groupName": null,
@@ -58257,6 +58339,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "type": "array",
               "value": {
                 "availability": null,
+                "default": null,
                 "description": null,
                 "generatedName": "OrganizationIamMemberRoleUpdateAddItem",
                 "groupName": null,
@@ -58330,6 +58413,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "type": "array",
               "value": {
                 "availability": null,
+                "default": null,
                 "description": null,
                 "generatedName": "OrganizationIamMemberRoleUpdateRemoveItem",
                 "groupName": null,
@@ -58445,6 +58529,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "type": "array",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "OrganizationIamPermissionTestPermissionsItem",
               "groupName": null,
@@ -60330,6 +60415,19 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "type": "optional",
             "value": {
               "availability": null,
+              "default": {
+                "availability": null,
+                "casing": {
+                  "camel": null,
+                  "pascal": null,
+                  "screamingSnake": null,
+                  "snake": null,
+                },
+                "description": null,
+                "generatedName": "Gpt35Turbo",
+                "nameOverride": null,
+                "value": "gpt-3.5-turbo",
+              },
               "description": null,
               "generatedName": "ProjectConfigInputLlm",
               "groupName": null,
@@ -60700,6 +60798,19 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "type": "optional",
             "value": {
               "availability": null,
+              "default": {
+                "availability": null,
+                "casing": {
+                  "camel": null,
+                  "pascal": null,
+                  "screamingSnake": null,
+                  "snake": null,
+                },
+                "description": null,
+                "generatedName": "Gpt35Turbo",
+                "nameOverride": null,
+                "value": "gpt-3.5-turbo",
+              },
               "description": null,
               "generatedName": "ProjectConfigOutputLlm",
               "groupName": null,
@@ -61118,6 +61229,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "type": "array",
               "value": {
                 "availability": null,
+                "default": null,
                 "description": null,
                 "generatedName": "ProjectIamMemberRoleUpdateAddItem",
                 "groupName": null,
@@ -61256,6 +61368,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "type": "array",
               "value": {
                 "availability": null,
+                "default": null,
                 "description": null,
                 "generatedName": "ProjectIamMemberRoleUpdateRemoveItem",
                 "groupName": null,
@@ -61436,6 +61549,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "type": "array",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "ProjectIamPermissionTestPermissionsItem",
               "groupName": null,
@@ -62175,6 +62289,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": null,
             "generatedName": "SourceRowSource",
             "groupName": null,
@@ -62582,6 +62697,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": "The LLM model to use for the Task.",
             "generatedName": "TaskCreateLlmModel",
             "groupName": null,
@@ -62803,6 +62919,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "type": "map",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "TaskCreateOutputFormatValue",
               "groupName": null,
@@ -63736,6 +63853,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "type": "array",
               "value": {
                 "availability": null,
+                "default": null,
                 "description": null,
                 "generatedName": "TaskIamMemberRoleUpdateAddItem",
                 "groupName": null,
@@ -63809,6 +63927,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "type": "array",
               "value": {
                 "availability": null,
+                "default": null,
                 "description": null,
                 "generatedName": "TaskIamMemberRoleUpdateRemoveItem",
                 "groupName": null,
@@ -63924,6 +64043,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "type": "array",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "TaskIamPermissionTestPermissionsItem",
               "groupName": null,
@@ -64259,6 +64379,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": "The LLM model to use for the Task.",
             "generatedName": "TaskRevisionLlmModel",
             "groupName": null,
@@ -64480,6 +64601,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "type": "map",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "TaskRevisionOutputFormatValue",
               "groupName": null,
@@ -65004,6 +65126,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "type": "nullable",
               "value": {
                 "availability": null,
+                "default": null,
                 "description": null,
                 "generatedName": "TaskUpdateLlmModel",
                 "groupName": null,
@@ -65256,6 +65379,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                   "type": "nullable",
                   "value": {
                     "availability": null,
+                    "default": null,
                     "description": null,
                     "generatedName": "TaskUpdateOutputFormatValue",
                     "groupName": null,

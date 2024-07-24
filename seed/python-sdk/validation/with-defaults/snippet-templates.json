@@ -73,6 +73,24 @@
                             ],
                             "type": "generic"
                         }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "shape=$FERN_INPUT",
+                            "values": {
+                                "SQUARE": "\"SQUARE\"",
+                                "CIRCLE": "\"CIRCLE\"",
+                                "TRIANGLE": "\"TRIANGLE\""
+                            },
+                            "templateInput": {
+                                "location": "BODY",
+                                "path": "shape"
+                            },
+                            "type": "enum"
+                        }
                     }
                 ],
                 "inputDelimiter": ",\n\t",
@@ -143,6 +161,24 @@
                                     }
                                 ],
                                 "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "shape=$FERN_INPUT",
+                                "values": {
+                                    "SQUARE": "\"SQUARE\"",
+                                    "CIRCLE": "\"CIRCLE\"",
+                                    "TRIANGLE": "\"TRIANGLE\""
+                                },
+                                "templateInput": {
+                                    "location": "BODY",
+                                    "path": "shape"
+                                },
+                                "type": "enum"
                             }
                         }
                     ],

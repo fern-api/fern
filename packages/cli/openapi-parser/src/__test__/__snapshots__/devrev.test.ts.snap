@@ -558,8 +558,8 @@ authenticated user.
               "expires_in": {
                 "type": "primitive",
                 "value": {
-                  "type": "int",
-                  "value": 1,
+                  "type": "int64",
+                  "value": 1000000,
                 },
               },
               "refresh_token": {
@@ -12345,6 +12345,7 @@ authentication connection.
     },
     "auth-connection-toggle": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "AuthConnectionToggle",
       "groupName": null,
@@ -12381,6 +12382,7 @@ authentication connection.
     },
     "auth-connection-type": {
       "availability": null,
+      "default": null,
       "description": "Defines the type for the authentication connection. The configuration
 for each authentication connection will depend on the type value.
 ",
@@ -12722,6 +12724,7 @@ token. Only applicable for application access tokens.
     },
     "auth-token-grant-type": {
       "availability": null,
+      "default": null,
       "description": "Specifies the process of obtaining a token.",
       "generatedName": "AuthTokenGrantType",
       "groupName": null,
@@ -12758,6 +12761,7 @@ token. Only applicable for application access tokens.
     },
     "auth-token-requested-token-type": {
       "availability": null,
+      "default": null,
       "description": "The type of the requested token.",
       "generatedName": "AuthTokenRequestedTokenType",
       "groupName": null,
@@ -12885,6 +12889,7 @@ token. Only applicable for application access tokens.
     },
     "auth-token-status": {
       "availability": null,
+      "default": null,
       "description": "The status of the token.",
       "generatedName": "AuthTokenStatus",
       "groupName": null,
@@ -12934,6 +12939,7 @@ token. Only applicable for application access tokens.
     },
     "auth-token-subject-token-type": {
       "availability": null,
+      "default": null,
       "description": "The type of the subject token.",
       "generatedName": "AuthTokenSubjectTokenType",
       "groupName": null,
@@ -13157,12 +13163,7 @@ This client_id is only associated with an AAT.
               "nameOverride": null,
               "schema": {
                 "default": null,
-                "exclusiveMaximum": null,
-                "exclusiveMinimum": null,
-                "maximum": null,
-                "minimum": null,
-                "multipleOf": null,
-                "type": "int",
+                "type": "int64",
               },
               "type": "primitive",
             },
@@ -13462,12 +13463,7 @@ epoch.
             "nameOverride": null,
             "schema": {
               "default": null,
-              "exclusiveMaximum": null,
-              "exclusiveMinimum": null,
-              "maximum": null,
-              "minimum": null,
-              "multipleOf": null,
-              "type": "int",
+              "type": "int64",
             },
             "type": "primitive",
           },
@@ -14253,6 +14249,7 @@ it would appear on the login button as 'Log in to abclogin'.
     },
     "dev-org-auth-connections-create-request-type": {
       "availability": null,
+      "default": null,
       "description": "Defines the type for the authentication connection. Different types of
 authentication connections have different configuration parameters.
 ",
@@ -14645,6 +14642,7 @@ organization.
     },
     "dev-org-auth-connections-update-request-type": {
       "availability": null,
+      "default": null,
       "description": "Specifies the type for the authentication connection. Different types
 of authentication connections have different configuration parameters
 that can be updated.
@@ -15249,6 +15247,7 @@ sort order. If not set, then no prior elements exist.
     },
     "error-bad-request-type": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "ErrorBadRequestType",
       "groupName": null,
@@ -16488,6 +16487,7 @@ sort order. If not set, then no prior elements exist.
     },
     "issue-priority": {
       "availability": null,
+      "default": null,
       "description": "Priority of the work based upon impact and criticality.",
       "generatedName": "IssuePriority",
       "groupName": null,
@@ -16550,6 +16550,7 @@ sort order. If not set, then no prior elements exist.
     },
     "list-mode": {
       "availability": null,
+      "default": null,
       "description": "The iteration mode to use. If "after", then entries after the provided
 cursor will be returned, or if no cursor is provided, then from the
 beginning. If "before", then entries before the provided cursor will be
@@ -16699,6 +16700,7 @@ always be returned in the specified sort-by order.
     },
     "org-environment": {
       "availability": null,
+      "default": null,
       "description": "The environment of the Org. Defaults to 'production' if not specified.
 ",
       "generatedName": "OrgEnvironment",
@@ -17102,6 +17104,7 @@ always be returned in the specified sort-by order.
     },
     "part-type": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "PartType",
       "groupName": null,
@@ -20088,6 +20091,7 @@ tags.
     },
     "ticket-severity": {
       "availability": null,
+      "default": null,
       "description": "Severity of the ticket.",
       "generatedName": "TicketSeverity",
       "groupName": null,
@@ -20308,6 +20312,7 @@ will appear in the response.
     },
     "timeline-comment-body-type": {
       "availability": null,
+      "default": null,
       "description": "The type of the body to use for the comment.",
       "generatedName": "TimelineCommentBodyType",
       "groupName": null,
@@ -21541,6 +21546,7 @@ default visibility.
     },
     "user-state": {
       "availability": null,
+      "default": null,
       "description": "State of the user.",
       "generatedName": "UserState",
       "groupName": null,
@@ -21658,6 +21664,7 @@ default visibility.
     },
     "user-type": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "UserType",
       "groupName": null,
@@ -22466,6 +22473,7 @@ be set for other request types.
     },
     "webhook-event-type": {
       "availability": null,
+      "default": null,
       "description": "The event types that the webhook will receive.",
       "generatedName": "WebhookEventType",
       "groupName": null,
@@ -22760,6 +22768,7 @@ be set for other request types.
     },
     "webhook-status": {
       "availability": null,
+      "default": null,
       "description": "The status of the webhook.",
       "generatedName": "WebhookStatus",
       "groupName": null,
@@ -23078,6 +23087,7 @@ response.
     },
     "webhooks-update-action": {
       "availability": null,
+      "default": null,
       "description": "The action to update the webhook's status.",
       "generatedName": "WebhooksUpdateAction",
       "groupName": null,
@@ -23736,6 +23746,7 @@ event types. Note this is mutually exclusive with 'add' and
     },
     "work-type": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "WorkType",
       "groupName": null,

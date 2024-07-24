@@ -6182,6 +6182,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "nameOverride": null,
               "schema": {
                 "availability": null,
+                "default": null,
                 "description": null,
                 "generatedName": "CreateLobbyRequestVisibility",
                 "groupName": null,
@@ -10460,6 +10461,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": null,
             "generatedName": "BuildStatus",
             "groupName": null,
@@ -11338,6 +11340,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": null,
             "generatedName": "LobbyVisibility",
             "groupName": null,
@@ -11442,6 +11445,7 @@ exports[`open api parser hathora parse open api 1`] = `
     },
     "MetricName": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "MetricName",
       "groupName": null,
@@ -11690,6 +11694,7 @@ exports[`open api parser hathora parse open api 1`] = `
     },
     "PlanName": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "PlanName",
       "groupName": null,
@@ -12374,6 +12379,7 @@ exports[`open api parser hathora parse open api 1`] = `
     },
     "Region": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "Region",
       "groupName": null,
@@ -12753,6 +12759,7 @@ exports[`open api parser hathora parse open api 1`] = `
     },
     "RoomStatus": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "RoomStatus",
       "groupName": null,
@@ -12854,6 +12861,7 @@ exports[`open api parser hathora parse open api 1`] = `
     },
     "TransportType": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "TransportType",
       "groupName": null,

@@ -340,7 +340,9 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_infra/telemetry:TelemetryData"
+                                    "typeId": "type_infra/telemetry:TelemetryData",
+                                    "default": null,
+                                    "inline": null
                                 }
                             }
                         },
@@ -875,7 +877,9 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_telemetry:TelemetryGetTelemetryDataResponse"
+                                    "typeId": "type_telemetry:TelemetryGetTelemetryDataResponse",
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": "successful operation"
                             }
@@ -1935,7 +1939,9 @@
                                                                                     }
                                                                                 }
                                                                             },
-                                                                            "typeId": "type_infra/telemetry:TelemetryData"
+                                                                            "typeId": "type_infra/telemetry:TelemetryData",
+                                                                            "default": null,
+                                                                            "inline": null
                                                                         }
                                                                     }
                                                                 },
@@ -3133,7 +3139,9 @@
                                                                                     }
                                                                                 }
                                                                             },
-                                                                            "typeId": "type_infra/telemetry:TelemetryData"
+                                                                            "typeId": "type_infra/telemetry:TelemetryData",
+                                                                            "default": null,
+                                                                            "inline": null
                                                                         }
                                                                     }
                                                                 },
@@ -3224,7 +3232,7 @@
                                         }
                                     }
                                 },
-                                "id": "e1a416a9e783773a211d8ca3a11c3574c907ca49",
+                                "id": "2255a07a66b7ddee736cdeb1a81134a0182790ba",
                                 "docs": null
                             }
                         }

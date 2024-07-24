@@ -98,6 +98,32 @@ export function convertNumber({
             availability,
             groupName
         });
+    } else if (format === "uint32") {
+        return wrapPrimitive({
+            nameOverride,
+            generatedName,
+            primitive: PrimitiveSchemaValueWithExample.uint({
+                default: _default,
+                example
+            }),
+            wrapAsNullable,
+            description,
+            availability,
+            groupName
+        });
+    } else if (format === "uint64") {
+        return wrapPrimitive({
+            nameOverride,
+            generatedName,
+            primitive: PrimitiveSchemaValueWithExample.uint64({
+                default: _default,
+                example
+            }),
+            wrapAsNullable,
+            description,
+            availability,
+            groupName
+        });
     } else if (format === "time-delta") {
         return wrapPrimitive({
             nameOverride,

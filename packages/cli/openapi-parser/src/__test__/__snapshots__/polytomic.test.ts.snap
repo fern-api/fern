@@ -846,6 +846,7 @@ exports[`polytomic polytomic parse open api 1`] = `
     },
     "BulkSelectiveMode": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "BulkSelectiveMode",
       "groupName": null,
@@ -1049,6 +1050,7 @@ exports[`polytomic polytomic parse open api 1`] = `
     },
     "ScheduleFrequency": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "ScheduleFrequency",
       "groupName": null,

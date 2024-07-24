@@ -30,10 +30,8 @@ exports[`open api parser streaming docs 1`] = `
             "body": {
               "properties": {
                 "id": {
-                  "default": undefined,
                   "docs": "",
                   "type": "optional<string>",
-                  "validation": undefined,
                 },
                 "stream": "literal<false>",
               },
@@ -57,10 +55,8 @@ exports[`open api parser streaming docs 1`] = `
             "body": {
               "properties": {
                 "id": {
-                  "default": undefined,
                   "docs": "",
                   "type": "optional<string>",
-                  "validation": undefined,
                 },
                 "stream": "literal<true>",
               },
@@ -99,10 +95,8 @@ exports[`open api parser streaming docs 1`] = `
             "body": {
               "properties": {
                 "id": {
-                  "default": undefined,
                   "docs": "",
                   "type": "optional<string>",
-                  "validation": undefined,
                 },
                 "stream": "literal<false>",
               },
@@ -126,10 +120,8 @@ exports[`open api parser streaming docs 1`] = `
             "body": {
               "properties": {
                 "id": {
-                  "default": undefined,
                   "docs": "",
                   "type": "optional<string>",
-                  "validation": undefined,
                 },
                 "stream": "literal<true>",
               },
@@ -167,10 +159,8 @@ exports[`open api parser streaming docs 1`] = `
             "body": {
               "properties": {
                 "id": {
-                  "default": undefined,
                   "docs": "",
                   "type": "optional<string>",
-                  "validation": undefined,
                 },
                 "stream": "literal<false>",
               },
@@ -194,10 +184,8 @@ exports[`open api parser streaming docs 1`] = `
             "body": {
               "properties": {
                 "id": {
-                  "default": undefined,
                   "docs": "",
                   "type": "optional<string>",
-                  "validation": undefined,
                 },
                 "stream": "literal<true>",
               },
@@ -219,8 +207,6 @@ exports[`open api parser streaming docs 1`] = `
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -235,8 +221,6 @@ exports[`open api parser streaming docs 1`] = `
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -253,8 +237,6 @@ exports[`open api parser streaming docs 1`] = `
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -269,8 +251,6 @@ exports[`open api parser streaming docs 1`] = `
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -287,8 +267,6 @@ exports[`open api parser streaming docs 1`] = `
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -304,8 +282,6 @@ exports[`open api parser streaming docs 1`] = `
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -360,10 +336,8 @@ exports[`open api parser streaming simple 1`] = `
             "body": {
               "properties": {
                 "id": {
-                  "default": undefined,
                   "docs": "",
                   "type": "optional<string>",
-                  "validation": undefined,
                 },
                 "stream": "literal<false>",
               },
@@ -387,10 +361,8 @@ exports[`open api parser streaming simple 1`] = `
             "body": {
               "properties": {
                 "id": {
-                  "default": undefined,
                   "docs": "",
                   "type": "optional<string>",
-                  "validation": undefined,
                 },
                 "stream": "literal<true>",
               },
@@ -429,10 +401,8 @@ exports[`open api parser streaming simple 1`] = `
             "body": {
               "properties": {
                 "id": {
-                  "default": undefined,
                   "docs": "",
                   "type": "optional<string>",
-                  "validation": undefined,
                 },
                 "stream": "literal<false>",
               },
@@ -456,10 +426,8 @@ exports[`open api parser streaming simple 1`] = `
             "body": {
               "properties": {
                 "id": {
-                  "default": undefined,
                   "docs": "",
                   "type": "optional<string>",
-                  "validation": undefined,
                 },
                 "stream": "literal<true>",
               },
@@ -497,10 +465,8 @@ exports[`open api parser streaming simple 1`] = `
             "body": {
               "properties": {
                 "id": {
-                  "default": undefined,
                   "docs": "",
                   "type": "optional<string>",
-                  "validation": undefined,
                 },
                 "stream": "literal<false>",
               },
@@ -524,10 +490,8 @@ exports[`open api parser streaming simple 1`] = `
             "body": {
               "properties": {
                 "id": {
-                  "default": undefined,
                   "docs": "",
                   "type": "optional<string>",
-                  "validation": undefined,
                 },
                 "stream": "literal<true>",
               },
@@ -549,8 +513,6 @@ exports[`open api parser streaming simple 1`] = `
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -565,8 +527,6 @@ exports[`open api parser streaming simple 1`] = `
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -583,8 +543,6 @@ exports[`open api parser streaming simple 1`] = `
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -599,8 +557,6 @@ exports[`open api parser streaming simple 1`] = `
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -617,8 +573,6 @@ exports[`open api parser streaming simple 1`] = `
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -634,8 +588,6 @@ exports[`open api parser streaming simple 1`] = `
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",

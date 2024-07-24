@@ -7,6 +7,8 @@ import * as FernOpenapiIr from "../../..";
 export type PrimitiveSchemaValueWithExample =
     | FernOpenapiIr.PrimitiveSchemaValueWithExample.Int
     | FernOpenapiIr.PrimitiveSchemaValueWithExample.Int64
+    | FernOpenapiIr.PrimitiveSchemaValueWithExample.Uint
+    | FernOpenapiIr.PrimitiveSchemaValueWithExample.Uint64
     | FernOpenapiIr.PrimitiveSchemaValueWithExample.Float
     | FernOpenapiIr.PrimitiveSchemaValueWithExample.Double
     | FernOpenapiIr.PrimitiveSchemaValueWithExample.String
@@ -22,6 +24,14 @@ export declare namespace PrimitiveSchemaValueWithExample {
 
     interface Int64 extends FernOpenapiIr.Int64WithExample, _Utils {
         type: "int64";
+    }
+
+    interface Uint extends FernOpenapiIr.UintWithExample, _Utils {
+        type: "uint";
+    }
+
+    interface Uint64 extends FernOpenapiIr.Uint64WithExample, _Utils {
+        type: "uint64";
     }
 
     interface Float extends FernOpenapiIr.FloatWithExample, _Utils {
@@ -59,6 +69,8 @@ export declare namespace PrimitiveSchemaValueWithExample {
     interface _Visitor<_Result> {
         int: (value: FernOpenapiIr.IntWithExample) => _Result;
         int64: (value: FernOpenapiIr.Int64WithExample) => _Result;
+        uint: (value: FernOpenapiIr.UintWithExample) => _Result;
+        uint64: (value: FernOpenapiIr.Uint64WithExample) => _Result;
         float: (value: FernOpenapiIr.FloatWithExample) => _Result;
         double: (value: FernOpenapiIr.DoubleWithExample) => _Result;
         string: (value: FernOpenapiIr.StringSchemaWithExample) => _Result;
@@ -90,6 +102,32 @@ export const PrimitiveSchemaValueWithExample = {
             type: "int64",
             _visit: function <_Result>(
                 this: FernOpenapiIr.PrimitiveSchemaValueWithExample.Int64,
+                visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>
+            ) {
+                return FernOpenapiIr.PrimitiveSchemaValueWithExample._visit(this, visitor);
+            },
+        };
+    },
+
+    uint: (value: FernOpenapiIr.UintWithExample): FernOpenapiIr.PrimitiveSchemaValueWithExample.Uint => {
+        return {
+            ...value,
+            type: "uint",
+            _visit: function <_Result>(
+                this: FernOpenapiIr.PrimitiveSchemaValueWithExample.Uint,
+                visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>
+            ) {
+                return FernOpenapiIr.PrimitiveSchemaValueWithExample._visit(this, visitor);
+            },
+        };
+    },
+
+    uint64: (value: FernOpenapiIr.Uint64WithExample): FernOpenapiIr.PrimitiveSchemaValueWithExample.Uint64 => {
+        return {
+            ...value,
+            type: "uint64",
+            _visit: function <_Result>(
+                this: FernOpenapiIr.PrimitiveSchemaValueWithExample.Uint64,
                 visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.PrimitiveSchemaValueWithExample._visit(this, visitor);
@@ -197,6 +235,10 @@ export const PrimitiveSchemaValueWithExample = {
                 return visitor.int(value);
             case "int64":
                 return visitor.int64(value);
+            case "uint":
+                return visitor.uint(value);
+            case "uint64":
+                return visitor.uint64(value);
             case "float":
                 return visitor.float(value);
             case "double":

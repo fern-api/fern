@@ -271,7 +271,9 @@
                                 "packagePath": [],
                                 "file": null
                             },
-                            "typeId": "type_:EchoRequest"
+                            "typeId": "type_:EchoRequest",
+                            "default": null,
+                            "inline": null
                         },
                         "contentType": null,
                         "docs": null
@@ -307,7 +309,9 @@
                                         "packagePath": [],
                                         "file": null
                                     },
-                                    "typeId": "type_:EchoRequest"
+                                    "typeId": "type_:EchoRequest",
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "contentType": null,
                                 "docs": null
