@@ -213,21 +213,18 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): A
                         };
                     },
                     bigInteger: () => {
-                        // TODO(amckinney): Add support for bigInteger in FDR.
                         return {
-                            type: "string"
+                            type: "bigInteger"
                         };
                     },
                     uint: () => {
-                        // TODO(amckinney): Add support for uint in FDR.
                         return {
-                            type: "integer"
+                            type: "uint"
                         };
                     },
                     uint64: () => {
-                        // TODO(amckinney): Add support for uint64 in FDR.
                         return {
-                            type: "integer"
+                            type: "uint64"
                         };
                     },
                     _other: () => {
