@@ -55,10 +55,7 @@ export interface DocsColorsConfiguration {
 }
 
 export interface ParsedMetadataConfig
-    extends Omit<
-        WithoutQuestionMarks<DocsV1Write.MetadataConfig>,
-        "og:image" | "og:logo" | "twitter:image" | "noindex" | "nofollow"
-    > {
+    extends Omit<WithoutQuestionMarks<DocsV1Write.MetadataConfig>, "og:image" | "og:logo" | "twitter:image"> {
     "og:image": FilepathOrUrl | undefined;
     "og:logo": FilepathOrUrl | undefined;
     "twitter:image": FilepathOrUrl | undefined;

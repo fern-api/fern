@@ -885,7 +885,9 @@ async function convertMetadata(
         "twitter:handle": metadata.twitterHandle,
         "twitter:site": metadata.twitterSite,
         "twitter:url": metadata.twitterUrl,
-        "twitter:card": metadata.twitterCard
+        "twitter:card": metadata.twitterCard,
+        nofollow: undefined,
+        noindex: undefined
     };
 }
 
