@@ -5,9 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.36.0] - 2024-07-16
+
+- Fix: Now, there are generated unit tests for the `schemas` core directory which makes sure that
+  Fern's request + response validation will work as expected!
+
 ## [0.35.0] - 2024-07-16
+
 - Fix: Support Multipart Form uploads where `fs.createReadStream` is passed. This requires
-  coercing the stream into a `File`. 
+  coercing the stream into a `File`.
 
 ## [0.34.0] - 2024-07-16
 
@@ -54,15 +60,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.33.0] - 2024-07-16
 
-- Fix: This release comes with numerous improvements to multipart uploads: 
+- Fix: This release comes with numerous improvements to multipart uploads:
 
   1. `Fetcher.ts` no longer depends on form-data and formdata-node which reduces
-      the size of the SDK for all consumers that are not leveraging multipart form 
-      data uploads. 
-  2.  The SDK now accepts `fs.ReadStream`, `Blob` and `File` as inputs and handles
-      parsing them appropriately. 
-  3.  By accepting a `Blob` as a file parameter, the SDK now supports sending the 
-      filename when making a request. 
+     the size of the SDK for all consumers that are not leveraging multipart form
+     data uploads.
+  2. The SDK now accepts `fs.ReadStream`, `Blob` and `File` as inputs and handles
+     parsing them appropriately.
+  3. By accepting a `Blob` as a file parameter, the SDK now supports sending the
+     filename when making a request.
 
 ## [0.32.0] - 2024-07-15
 
