@@ -14,10 +14,12 @@ from .ast import (
     ObjectValue,
     PrimitiveValue,
 )
+from .client import AsyncSeedApi, SeedApi
 from .version import __version__
 
 __all__ = [
     "A",
+    "AsyncSeedApi",
     "ContainerValue",
     "ContainerValue_List",
     "ContainerValue_Optional",
@@ -29,6 +31,7 @@ __all__ = [
     "ObjectValue",
     "PrimitiveValue",
     "RootType",
+    "SeedApi",
     "__version__",
     "a",
     "ast",

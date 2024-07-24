@@ -36,12 +36,15 @@ from .types import (
     Type,
 )
 from . import commons, file, health, service, types
+from .base_client import AsyncBaseSeedExhaustive, BaseSeedExhaustive
 from .environment import SeedExhaustiveEnvironment
 from .version import __version__
 
 __all__ = [
     "Actor",
     "Actress",
+    "AsyncBaseSeedExhaustive",
+    "BaseSeedExhaustive",
     "BasicType",
     "CastMember",
     "ComplexType",

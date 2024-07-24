@@ -179,14 +179,14 @@ class RootClientGenerator:
             source_file.add_arbitrary_code(AST.CodeWriter(self._write_default_param))
         source_file.add_class_declaration(
             declaration=class_declaration,
-            should_export=False,
+            should_export=True,
         )
         source_file.add_class_declaration(
             declaration=self._create_class_declaration(
                 is_async=True,
                 generated_root_client=generated_root_client,
             ),
-            should_export=False,
+            should_export=True,
         )
         if self._environments_config is not None:
             environments_union = self._environments_config.environments.get_as_union()

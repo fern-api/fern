@@ -15,14 +15,17 @@ from .types import (
     UnionWithoutKey,
 )
 from . import types, union
+from .client import AsyncSeedUnions, SeedUnions
 from .union import Circle, GetShapeRequest, Shape, Square
 from .version import __version__
 
 __all__ = [
+    "AsyncSeedUnions",
     "Bar",
     "Circle",
     "Foo",
     "GetShapeRequest",
+    "SeedUnions",
     "Shape",
     "Square",
     "Union",

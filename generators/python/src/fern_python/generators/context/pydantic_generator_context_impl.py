@@ -19,6 +19,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         project_module_path: AST.ModulePath,
         allow_skipping_validation: bool,
         allow_leveraging_defaults: bool,
+        reserved_names: Optional[Set[str]] = None,
     ):
         super().__init__(ir=ir, generator_config=generator_config, allow_skipping_validation=allow_skipping_validation)
         self._type_reference_to_type_hint_converter = TypeReferenceToTypeHintConverter(
@@ -27,6 +28,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         self._type_declaration_referencer = type_declaration_referencer
         self._project_module_path = project_module_path
         self._allow_leveraging_defaults = allow_leveraging_defaults
+        self._reserved_names = reserved_names
 
     def get_module_path_in_project(self, module_path: AST.ModulePath) -> AST.ModulePath:
         return self._project_module_path + module_path
@@ -98,7 +100,10 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
 
     def get_class_name_for_type_id(self, type_id: ir_types.TypeId) -> str:
         declaration = self.get_declaration_for_type_id(type_id)
-        return self._type_declaration_referencer.get_class_name(name=declaration.name)
+        name = self._type_declaration_referencer.get_class_name(name=declaration.name)
+        if name in self._reserved_names:
+            return f"{name}Model"
+        return name
 
     def get_filepath_for_type_id(self, type_id: ir_types.TypeId) -> Filepath:
         declaration = self.get_declaration_for_type_id(type_id)
