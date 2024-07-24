@@ -25,7 +25,6 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             });
         }
     };
-
     public readonly Fetcher: Fetcher["Fetcher"] = {
         Args: {
             properties: {
