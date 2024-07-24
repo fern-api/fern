@@ -457,12 +457,19 @@ export function buildOptionalTypeReference({
     if (schema.description == null && itemDocs == null && itemDefault == null && itemValidation == null) {
         return type;
     }
-    return {
-        type,
-        docs: schema.description ?? itemDocs,
-        default: itemDefault,
-        validation: itemValidation
+    const result: RawSchemas.TypeReferenceWithDocsSchema = {
+        type
     };
+    if (schema.description != null || itemDocs != null) {
+        result.docs = schema.description ?? itemDocs;
+    }
+    if (itemDefault != null) {
+        result.default = itemDefault;
+    }
+    if (itemValidation != null) {
+        result.validation = itemValidation;
+    }
+    return result;
 }
 
 export function buildUnknownTypeReference(): RawSchemas.TypeReferenceWithDocsSchema {
