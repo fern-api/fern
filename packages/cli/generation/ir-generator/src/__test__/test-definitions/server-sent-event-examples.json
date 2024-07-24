@@ -480,7 +480,8 @@
                                         }
                                     },
                                     "typeId": "type_completions:StreamedCompletion",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "terminator": "[[DONE]]",
                                 "docs": null

@@ -705,7 +705,8 @@
                                 "file": null
                             },
                             "typeId": "type_:Shape",
-                            "default": null
+                            "default": null,
+                            "inline": null
                         },
                         "availability": null,
                         "docs": null
@@ -1306,7 +1307,8 @@
                                         "file": null
                                     },
                                     "typeId": "type_:Shape",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -1408,7 +1410,8 @@
                                         "file": null
                                     },
                                     "typeId": "type_:Type",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -1972,7 +1975,7 @@
                                         }
                                     }
                                 },
-                                "id": "ed4f36220620541eb93dd66bdcb2d3a18e53eaab",
+                                "id": "b2e29598593bf44ad8501986e063385507b138c4",
                                 "docs": null
                             }
                         }
@@ -2247,7 +2250,8 @@
                                         "file": null
                                     },
                                     "typeId": "type_:Type",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -2716,7 +2720,7 @@
                                         }
                                     }
                                 },
-                                "id": "a699ce02a2e338b70cced090755f00de57ff30fc",
+                                "id": "079037cc77a3807e86ea63698c2df4d8b23c0a7f",
                                 "docs": null
                             }
                         }

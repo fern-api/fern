@@ -346,7 +346,8 @@
                     }
                 },
                 "typeId": "type_errors:UnauthorizedRequestErrorBody",
-                "default": null
+                "default": null,
+                "inline": null
             },
             "examples": [],
             "docs": null

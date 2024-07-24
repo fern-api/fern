@@ -146,7 +146,7 @@ exports[`migrateFromV52ToV51 simple 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "5e904c7232cb6f09a17f24cd3a1a469420579ae4",
+                "id": "f777d093099663289549d6e007b88bee09ebd042",
                 "name": null,
                 "queryParameters": [
                   {
@@ -432,6 +432,7 @@ exports[`migrateFromV52ToV51 simple 1`] = `
                                         },
                                         "packagePath": [],
                                       },
+                                      "inline": null,
                                       "name": {
                                         "camelCase": {
                                           "safeName": "user",
@@ -1117,6 +1118,7 @@ exports[`migrateFromV52ToV51 simple 1`] = `
                   },
                   "packagePath": [],
                 },
+                "inline": null,
                 "name": {
                   "camelCase": {
                     "safeName": "userType",
@@ -1192,6 +1194,7 @@ exports[`migrateFromV52ToV51 simple 1`] = `
                     },
                     "packagePath": [],
                   },
+                  "inline": null,
                   "name": {
                     "camelCase": {
                       "safeName": "listUsersResponse",
@@ -1566,6 +1569,7 @@ exports[`migrateFromV52ToV51 simple 1`] = `
                     },
                     "packagePath": [],
                   },
+                  "inline": null,
                   "name": {
                     "camelCase": {
                       "safeName": "user",
@@ -1742,6 +1746,7 @@ exports[`migrateFromV52ToV51 simple 1`] = `
                 },
                 "packagePath": [],
               },
+              "inline": null,
               "name": {
                 "camelCase": {
                   "safeName": "userType",

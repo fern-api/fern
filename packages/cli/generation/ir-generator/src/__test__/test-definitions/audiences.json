@@ -366,7 +366,8 @@
                                         }
                                     },
                                     "typeId": "type_folder-b/common:Foo",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 }
                             }
                         },
@@ -625,7 +626,8 @@
                                         }
                                     },
                                     "typeId": "type_folder-c/common:Foo",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 }
                             }
                         },
@@ -952,7 +954,8 @@
                                 }
                             },
                             "typeId": "type_commons:Imported",
-                            "default": null
+                            "default": null,
+                            "inline": null
                         },
                         "availability": null,
                         "docs": null
@@ -1482,7 +1485,8 @@
                                         }
                                     },
                                     "typeId": "type_folder-a/service:Response",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -1863,7 +1867,8 @@
                                                                                 }
                                                                             },
                                                                             "typeId": "type_folder-b/common:Foo",
-                                                                            "default": null
+                                                                            "default": null,
+                                                                            "inline": null
                                                                         }
                                                                     }
                                                                 },
@@ -1983,7 +1988,7 @@
                                         }
                                     }
                                 },
-                                "id": "6fd78a1b1fca11418b8632b1d04b1a2224712c9e",
+                                "id": "d6f5a1bbfbcd914fd12e306b0695a5a4c6b01565",
                                 "docs": null
                             }
                         }
@@ -2174,7 +2179,8 @@
                                     }
                                 },
                                 "typeId": "type_foo:OptionalString",
-                                "default": null
+                                "default": null,
+                                "inline": null
                             },
                             "allowMultiple": false,
                             "availability": null,
@@ -2426,7 +2432,8 @@
                                         }
                                     },
                                     "typeId": "type_foo:ImportingType",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -2957,7 +2964,7 @@
                                         }
                                     }
                                 },
-                                "id": "d57286770baac16a86285d1ae41ebf3a4c46d0da",
+                                "id": "862b080e4f18a8df48db67db50d4c9c7333e0544",
                                 "docs": null
                             }
                         }

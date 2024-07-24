@@ -814,7 +814,8 @@
                                 "file": null
                             },
                             "typeId": "type_:Name",
-                            "default": null
+                            "default": null,
+                            "inline": null
                         },
                         "availability": null,
                         "docs": null

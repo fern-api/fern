@@ -480,7 +480,8 @@
                                         }
                                     },
                                     "typeId": "type_service:MyResponse",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }

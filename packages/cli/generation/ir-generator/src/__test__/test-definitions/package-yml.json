@@ -272,7 +272,8 @@
                                 "file": null
                             },
                             "typeId": "type_:EchoRequest",
-                            "default": null
+                            "default": null,
+                            "inline": null
                         },
                         "contentType": null,
                         "docs": null
@@ -309,7 +310,8 @@
                                         "file": null
                                     },
                                     "typeId": "type_:EchoRequest",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "contentType": null,
                                 "docs": null

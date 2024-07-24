@@ -357,7 +357,8 @@
                                 }
                             },
                             "typeId": "type_union:Key",
-                            "default": null
+                            "default": null,
+                            "inline": null
                         },
                         "valueType": {
                             "_type": "primitive",
@@ -441,7 +442,8 @@
                                 }
                             },
                             "typeId": "type_union:Key",
-                            "default": null
+                            "default": null,
+                            "inline": null
                         },
                         "valueType": {
                             "_type": "primitive",
@@ -1012,7 +1014,8 @@
                                             }
                                         },
                                         "typeId": "type_union:Key",
-                                        "default": null
+                                        "default": null,
+                                        "inline": null
                                     },
                                     "valueType": {
                                         "_type": "primitive",
@@ -1181,7 +1184,8 @@
                                 }
                             },
                             "typeId": "type_union:KeyType",
-                            "default": null
+                            "default": null,
+                            "inline": null
                         },
                         "docs": null
                     },
@@ -1501,7 +1505,8 @@
                                 }
                             },
                             "typeId": "type_union:MyUnion",
-                            "default": null
+                            "default": null,
+                            "inline": null
                         },
                         "contentType": null,
                         "docs": null
@@ -1576,7 +1581,8 @@
                                         }
                                     },
                                     "typeId": "type_union:MyUnion",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "contentType": null,
                                 "docs": null
@@ -1673,7 +1679,8 @@
                                         }
                                     },
                                     "typeId": "type_union:MyUnion",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -1874,7 +1881,7 @@
                                         }
                                     }
                                 },
-                                "id": "43151a52bfb957af057df194b3f005b8e8af26cf",
+                                "id": "7fa440eab57664d32af8c576ac112417fb1daa10",
                                 "docs": null
                             }
                         }
@@ -1993,7 +2000,8 @@
                                         }
                                     },
                                     "typeId": "type_union:Metadata",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -2634,7 +2642,8 @@
                                                                         }
                                                                     },
                                                                     "typeId": "type_union:Key",
-                                                                    "default": null
+                                                                    "default": null,
+                                                                    "inline": null
                                                                 },
                                                                 "valueType": {
                                                                     "_type": "primitive",
@@ -3302,7 +3311,8 @@
                                                                         }
                                                                     },
                                                                     "typeId": "type_union:Key",
-                                                                    "default": null
+                                                                    "default": null,
+                                                                    "inline": null
                                                                 },
                                                                 "valueType": {
                                                                     "_type": "primitive",
@@ -3333,7 +3343,7 @@
                                         }
                                     }
                                 },
-                                "id": "6b74b5a22f6dfcbaf121c71d5341964e89753555",
+                                "id": "f3667e4e97acc7c5b178234daf1868ecb436fb7f",
                                 "docs": null
                             }
                         }

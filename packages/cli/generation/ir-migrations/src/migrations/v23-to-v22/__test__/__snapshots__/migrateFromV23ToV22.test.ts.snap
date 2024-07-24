@@ -223,6 +223,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
           },
           "packagePath": [],
         },
+        "inline": undefined,
         "name": {
           "camelCase": {
             "safeName": "badObjectRequestInfo",
@@ -461,6 +462,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             },
           ],
         },
+        "inline": undefined,
         "name": {
           "camelCase": {
             "safeName": "weatherReport",
@@ -699,6 +701,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             },
           ],
         },
+        "inline": undefined,
         "name": {
           "camelCase": {
             "safeName": "nestedObjectWithOptionalField",
@@ -937,6 +940,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             },
           ],
         },
+        "inline": undefined,
         "name": {
           "camelCase": {
             "safeName": "nestedObjectWithRequiredField",
@@ -1175,6 +1179,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             },
           ],
         },
+        "inline": undefined,
         "name": {
           "camelCase": {
             "safeName": "objectWithOptionalField",
@@ -1413,6 +1418,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             },
           ],
         },
+        "inline": undefined,
         "name": {
           "camelCase": {
             "safeName": "objectWithRequiredField",
@@ -1651,6 +1657,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             },
           ],
         },
+        "inline": undefined,
         "name": {
           "camelCase": {
             "safeName": "animal",
@@ -1989,6 +1996,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                       },
                     ],
                   },
+                  "inline": undefined,
                   "name": {
                     "camelCase": {
                       "safeName": "objectWithRequiredField",
@@ -2108,6 +2116,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                       },
                     ],
                   },
+                  "inline": undefined,
                   "name": {
                     "camelCase": {
                       "safeName": "objectWithRequiredField",
@@ -2248,6 +2257,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                         },
                       ],
                     },
+                    "inline": undefined,
                     "name": {
                       "camelCase": {
                         "safeName": "objectWithRequiredField",
@@ -2527,6 +2537,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                       },
                     ],
                   },
+                  "inline": undefined,
                   "name": {
                     "camelCase": {
                       "safeName": "objectWithRequiredField",
@@ -2646,6 +2657,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                       },
                     ],
                   },
+                  "inline": undefined,
                   "name": {
                     "camelCase": {
                       "safeName": "objectWithRequiredField",
@@ -2786,6 +2798,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                         },
                       ],
                     },
+                    "inline": undefined,
                     "name": {
                       "camelCase": {
                         "safeName": "objectWithRequiredField",
@@ -3081,6 +3094,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                       },
                     ],
                   },
+                  "inline": undefined,
                   "name": {
                     "camelCase": {
                       "safeName": "objectWithRequiredField",
@@ -3204,6 +3218,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                       },
                     ],
                   },
+                  "inline": undefined,
                   "name": {
                     "camelCase": {
                       "safeName": "objectWithRequiredField",
@@ -3348,6 +3363,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                         },
                       ],
                     },
+                    "inline": undefined,
                     "name": {
                       "camelCase": {
                         "safeName": "objectWithRequiredField",
@@ -3609,6 +3625,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "weatherReport",
@@ -3722,6 +3739,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "weatherReport",
@@ -3856,6 +3874,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                     },
                   ],
                 },
+                "inline": undefined,
                 "name": {
                   "camelCase": {
                     "safeName": "weatherReport",
@@ -4241,6 +4260,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "objectWithRequiredField",
@@ -4354,6 +4374,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "objectWithOptionalField",
@@ -4488,6 +4509,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                     },
                   ],
                 },
+                "inline": undefined,
                 "name": {
                   "camelCase": {
                     "safeName": "objectWithRequiredField",
@@ -4718,6 +4740,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "objectWithRequiredField",
@@ -4831,6 +4854,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "objectWithOptionalField",
@@ -4965,6 +4989,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                     },
                   ],
                 },
+                "inline": undefined,
                 "name": {
                   "camelCase": {
                     "safeName": "objectWithRequiredField",
@@ -5195,6 +5220,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "objectWithOptionalField",
@@ -5308,6 +5334,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "objectWithOptionalField",
@@ -5442,6 +5469,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                     },
                   ],
                 },
+                "inline": undefined,
                 "name": {
                   "camelCase": {
                     "safeName": "objectWithOptionalField",
@@ -5827,6 +5855,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "objectWithOptionalField",
@@ -5940,6 +5969,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "objectWithOptionalField",
@@ -6074,6 +6104,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                     },
                   ],
                 },
+                "inline": undefined,
                 "name": {
                   "camelCase": {
                     "safeName": "objectWithOptionalField",
@@ -6234,6 +6265,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "objectWithRequiredField",
@@ -6347,6 +6379,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "objectWithRequiredField",
@@ -6481,6 +6514,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                     },
                   ],
                 },
+                "inline": undefined,
                 "name": {
                   "camelCase": {
                     "safeName": "objectWithRequiredField",
@@ -6641,6 +6675,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "nestedObjectWithOptionalField",
@@ -6754,6 +6789,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "nestedObjectWithOptionalField",
@@ -6888,6 +6924,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                     },
                   ],
                 },
+                "inline": undefined,
                 "name": {
                   "camelCase": {
                     "safeName": "nestedObjectWithOptionalField",
@@ -7048,6 +7085,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "nestedObjectWithRequiredField",
@@ -7161,6 +7199,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "nestedObjectWithRequiredField",
@@ -7295,6 +7334,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                     },
                   ],
                 },
+                "inline": undefined,
                 "name": {
                   "camelCase": {
                     "safeName": "nestedObjectWithRequiredField",
@@ -9471,6 +9511,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "animal",
@@ -9584,6 +9625,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "animal",
@@ -9718,6 +9760,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                     },
                   ],
                 },
+                "inline": undefined,
                 "name": {
                   "camelCase": {
                     "safeName": "animal",
@@ -10149,6 +10192,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                       },
                     ],
                   },
+                  "inline": undefined,
                   "name": {
                     "camelCase": {
                       "safeName": "objectWithOptionalField",
@@ -10264,6 +10308,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "objectWithOptionalField",
@@ -10768,6 +10813,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "objectWithOptionalField",
@@ -13500,6 +13546,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                       },
                     ],
                   },
+                  "inline": undefined,
                   "name": {
                     "camelCase": {
                       "safeName": "objectWithOptionalField",
@@ -13899,6 +13946,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "objectWithOptionalField",
@@ -15153,6 +15201,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "dog",
@@ -15287,6 +15336,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "cat",

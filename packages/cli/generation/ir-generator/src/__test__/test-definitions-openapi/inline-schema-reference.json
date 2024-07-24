@@ -172,7 +172,8 @@
                                 "file": null
                             },
                             "typeId": "type_:NotFound",
-                            "default": null
+                            "default": null,
+                            "inline": null
                         },
                         "docs": null
                     },
@@ -204,7 +205,8 @@
                                 "file": null
                             },
                             "typeId": "type_:Schema1",
-                            "default": null
+                            "default": null,
+                            "inline": null
                         },
                         "docs": null
                     },
@@ -236,7 +238,8 @@
                                 "file": null
                             },
                             "typeId": "type_:Schema2",
-                            "default": null
+                            "default": null,
+                            "inline": null
                         },
                         "docs": null
                     }
@@ -598,7 +601,8 @@
                                         "file": null
                                     },
                                     "typeId": "type_:GetExampleResponse",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": "Successful response"
                             }

@@ -383,7 +383,8 @@
                                 }
                             },
                             "typeId": "type_user:User",
-                            "default": null
+                            "default": null,
+                            "inline": null
                         },
                         "availability": null,
                         "docs": null
@@ -756,7 +757,8 @@
                                     }
                                 },
                                 "typeId": "type_user:User",
-                                "default": null
+                                "default": null,
+                                "inline": null
                             },
                             "allowMultiple": false,
                             "availability": null,
@@ -854,7 +856,8 @@
                                             }
                                         },
                                         "typeId": "type_user:User",
-                                        "default": null
+                                        "default": null,
+                                        "inline": null
                                     }
                                 }
                             },
@@ -1089,7 +1092,8 @@
                                     }
                                 },
                                 "typeId": "type_user:NestedUser",
-                                "default": null
+                                "default": null,
+                                "inline": null
                             },
                             "allowMultiple": false,
                             "availability": null,
@@ -1187,7 +1191,8 @@
                                             }
                                         },
                                         "typeId": "type_user:User",
-                                        "default": null
+                                        "default": null,
+                                        "inline": null
                                     }
                                 }
                             },
@@ -1283,7 +1288,8 @@
                                     }
                                 },
                                 "typeId": "type_user:User",
-                                "default": null
+                                "default": null,
+                                "inline": null
                             },
                             "allowMultiple": true,
                             "availability": null,
@@ -1463,7 +1469,8 @@
                                         }
                                     },
                                     "typeId": "type_user:User",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -2387,7 +2394,8 @@
                                                             }
                                                         },
                                                         "typeId": "type_user:User",
-                                                        "default": null
+                                                        "default": null,
+                                                        "inline": null
                                                     }
                                                 }
                                             },
@@ -3597,7 +3605,8 @@
                                                             }
                                                         },
                                                         "typeId": "type_user:User",
-                                                        "default": null
+                                                        "default": null,
+                                                        "inline": null
                                                     }
                                                 }
                                             },
@@ -4292,7 +4301,7 @@
                                         }
                                     }
                                 },
-                                "id": "982933bc64cf2c9c82feb6fe984b1435657dc716",
+                                "id": "9f38eff9dea914492621301f98e565b99573b6d7",
                                 "docs": null
                             }
                         }

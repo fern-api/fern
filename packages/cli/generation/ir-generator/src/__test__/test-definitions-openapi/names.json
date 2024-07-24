@@ -341,7 +341,8 @@
                                         }
                                     },
                                     "typeId": "type_infra/telemetry:TelemetryData",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 }
                             }
                         },
@@ -877,7 +878,8 @@
                                         }
                                     },
                                     "typeId": "type_telemetry:TelemetryGetTelemetryDataResponse",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": "successful operation"
                             }
@@ -1938,7 +1940,8 @@
                                                                                 }
                                                                             },
                                                                             "typeId": "type_infra/telemetry:TelemetryData",
-                                                                            "default": null
+                                                                            "default": null,
+                                                                            "inline": null
                                                                         }
                                                                     }
                                                                 },
@@ -3137,7 +3140,8 @@
                                                                                 }
                                                                             },
                                                                             "typeId": "type_infra/telemetry:TelemetryData",
-                                                                            "default": null
+                                                                            "default": null,
+                                                                            "inline": null
                                                                         }
                                                                     }
                                                                 },
@@ -3228,7 +3232,7 @@
                                         }
                                     }
                                 },
-                                "id": "5c2883b50694ba8091ccbfd0ebded523a5f4337f",
+                                "id": "2255a07a66b7ddee736cdeb1a81134a0182790ba",
                                 "docs": null
                             }
                         }

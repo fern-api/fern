@@ -136,7 +136,8 @@
                                 "file": null
                             },
                             "typeId": "type_:UsernamePage",
-                            "default": null
+                            "default": null,
+                            "inline": null
                         },
                         "availability": null,
                         "docs": null
@@ -815,7 +816,8 @@
                                         }
                                     },
                                     "typeId": "type_users:User",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 }
                             }
                         },
@@ -991,7 +993,8 @@
                                 }
                             },
                             "typeId": "type_users:UserListContainer",
-                            "default": null
+                            "default": null,
+                            "inline": null
                         },
                         "availability": null,
                         "docs": null
@@ -1517,7 +1520,8 @@
                                         }
                                     },
                                     "typeId": "type_users:Page",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 }
                             }
                         },
@@ -1653,7 +1657,8 @@
                                         }
                                     },
                                     "typeId": "type_users:User",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 }
                             }
                         },
@@ -1872,7 +1877,8 @@
                                         }
                                     },
                                     "typeId": "type_users:NextPage",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 }
                             }
                         },
@@ -2545,7 +2551,8 @@
                                             }
                                         },
                                         "typeId": "type_users:Order",
-                                        "default": null
+                                        "default": null,
+                                        "inline": null
                                     }
                                 }
                             },
@@ -2733,7 +2740,8 @@
                                         }
                                     },
                                     "typeId": "type_users:ListUsersPaginationResponse",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -3049,7 +3057,8 @@
                                                             }
                                                         },
                                                         "typeId": "type_users:Order",
-                                                        "default": null
+                                                        "default": null,
+                                                        "inline": null
                                                     }
                                                 }
                                             },
@@ -3358,7 +3367,8 @@
                                                                                 }
                                                                             },
                                                                             "typeId": "type_users:Page",
-                                                                            "default": null
+                                                                            "default": null,
+                                                                            "inline": null
                                                                         }
                                                                     }
                                                                 },
@@ -3699,7 +3709,8 @@
                                                                                 }
                                                                             },
                                                                             "typeId": "type_users:User",
-                                                                            "default": null
+                                                                            "default": null,
+                                                                            "inline": null
                                                                         }
                                                                     }
                                                                 },
@@ -3786,7 +3797,7 @@
                                         }
                                     }
                                 },
-                                "id": "4e1d05c7e52b45631ccd1474a7387c5fcf85f52d",
+                                "id": "8d8ee6c41bf7f4f54c5edf1a14b765dd1e2bbcfa",
                                 "docs": null
                             }
                         }
@@ -4014,7 +4025,8 @@
                                                 }
                                             },
                                             "typeId": "type_users:User",
-                                            "default": null
+                                            "default": null,
+                                            "inline": null
                                         }
                                     }
                                 },
@@ -4180,7 +4192,8 @@
                                                 }
                                             },
                                             "typeId": "type_users:WithCursor",
-                                            "default": null
+                                            "default": null,
+                                            "inline": null
                                         }
                                     }
                                 },
@@ -4322,7 +4335,8 @@
                                         }
                                     },
                                     "typeId": "type_users:ListUsersPaginationResponse",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -4636,7 +4650,8 @@
                                                                 }
                                                             },
                                                             "typeId": "type_users:WithCursor",
-                                                            "default": null
+                                                            "default": null,
+                                                            "inline": null
                                                         }
                                                     }
                                                 },
@@ -4897,7 +4912,8 @@
                                                                                 }
                                                                             },
                                                                             "typeId": "type_users:Page",
-                                                                            "default": null
+                                                                            "default": null,
+                                                                            "inline": null
                                                                         }
                                                                     }
                                                                 },
@@ -5238,7 +5254,8 @@
                                                                                 }
                                                                             },
                                                                             "typeId": "type_users:User",
-                                                                            "default": null
+                                                                            "default": null,
+                                                                            "inline": null
                                                                         }
                                                                     }
                                                                 },
@@ -5325,7 +5342,7 @@
                                         }
                                     }
                                 },
-                                "id": "5fc3cb48400f5e855474fc242239b07b954ac253",
+                                "id": "c96f4885a3329ac3d7f6c6dc9412e2ea417d93e0",
                                 "docs": null
                             }
                         }
@@ -5572,7 +5589,8 @@
                                                 }
                                             },
                                             "typeId": "type_users:User",
-                                            "default": null
+                                            "default": null,
+                                            "inline": null
                                         }
                                     }
                                 },
@@ -5801,7 +5819,8 @@
                                             }
                                         },
                                         "typeId": "type_users:Order",
-                                        "default": null
+                                        "default": null,
+                                        "inline": null
                                     }
                                 }
                             },
@@ -5989,7 +6008,8 @@
                                         }
                                     },
                                     "typeId": "type_users:ListUsersPaginationResponse",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -6305,7 +6325,8 @@
                                                             }
                                                         },
                                                         "typeId": "type_users:Order",
-                                                        "default": null
+                                                        "default": null,
+                                                        "inline": null
                                                     }
                                                 }
                                             },
@@ -6614,7 +6635,8 @@
                                                                                 }
                                                                             },
                                                                             "typeId": "type_users:Page",
-                                                                            "default": null
+                                                                            "default": null,
+                                                                            "inline": null
                                                                         }
                                                                     }
                                                                 },
@@ -6955,7 +6977,8 @@
                                                                                 }
                                                                             },
                                                                             "typeId": "type_users:User",
-                                                                            "default": null
+                                                                            "default": null,
+                                                                            "inline": null
                                                                         }
                                                                     }
                                                                 },
@@ -7042,7 +7065,7 @@
                                         }
                                     }
                                 },
-                                "id": "4e1d05c7e52b45631ccd1474a7387c5fcf85f52d",
+                                "id": "8d8ee6c41bf7f4f54c5edf1a14b765dd1e2bbcfa",
                                 "docs": null
                             }
                         }
@@ -7191,7 +7214,8 @@
                                                 }
                                             },
                                             "typeId": "type_users:User",
-                                            "default": null
+                                            "default": null,
+                                            "inline": null
                                         }
                                     }
                                 },
@@ -7358,7 +7382,8 @@
                                                 }
                                             },
                                             "typeId": "type_users:WithPage",
-                                            "default": null
+                                            "default": null,
+                                            "inline": null
                                         }
                                     }
                                 },
@@ -7500,7 +7525,8 @@
                                         }
                                     },
                                     "typeId": "type_users:ListUsersPaginationResponse",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -7812,7 +7838,8 @@
                                                                 }
                                                             },
                                                             "typeId": "type_users:WithPage",
-                                                            "default": null
+                                                            "default": null,
+                                                            "inline": null
                                                         }
                                                     }
                                                 },
@@ -8073,7 +8100,8 @@
                                                                                 }
                                                                             },
                                                                             "typeId": "type_users:Page",
-                                                                            "default": null
+                                                                            "default": null,
+                                                                            "inline": null
                                                                         }
                                                                     }
                                                                 },
@@ -8414,7 +8442,8 @@
                                                                                 }
                                                                             },
                                                                             "typeId": "type_users:User",
-                                                                            "default": null
+                                                                            "default": null,
+                                                                            "inline": null
                                                                         }
                                                                     }
                                                                 },
@@ -8501,7 +8530,7 @@
                                         }
                                     }
                                 },
-                                "id": "8f7196d3fb3cd90326cdfc52b12cf0f8f693e42c",
+                                "id": "695868141204c9e2e9d0cd07f0c25b4b0d4dfee3",
                                 "docs": null
                             }
                         }
@@ -8669,7 +8698,8 @@
                                                 }
                                             },
                                             "typeId": "type_users:User",
-                                            "default": null
+                                            "default": null,
+                                            "inline": null
                                         }
                                     }
                                 },
@@ -8899,7 +8929,8 @@
                                             }
                                         },
                                         "typeId": "type_users:Order",
-                                        "default": null
+                                        "default": null,
+                                        "inline": null
                                     }
                                 }
                             },
@@ -9043,7 +9074,8 @@
                                         }
                                     },
                                     "typeId": "type_users:ListUsersPaginationResponse",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -9359,7 +9391,8 @@
                                                             }
                                                         },
                                                         "typeId": "type_users:Order",
-                                                        "default": null
+                                                        "default": null,
+                                                        "inline": null
                                                     }
                                                 }
                                             },
@@ -9612,7 +9645,8 @@
                                                                                 }
                                                                             },
                                                                             "typeId": "type_users:Page",
-                                                                            "default": null
+                                                                            "default": null,
+                                                                            "inline": null
                                                                         }
                                                                     }
                                                                 },
@@ -9953,7 +9987,8 @@
                                                                                 }
                                                                             },
                                                                             "typeId": "type_users:User",
-                                                                            "default": null
+                                                                            "default": null,
+                                                                            "inline": null
                                                                         }
                                                                     }
                                                                 },
@@ -10040,7 +10075,7 @@
                                         }
                                     }
                                 },
-                                "id": "21171fc930c906a7a644644693ce2cf314e33a0a",
+                                "id": "474e951a42bfd81fa289cea1e75fa07937923dff",
                                 "docs": null
                             }
                         }
@@ -10189,7 +10224,8 @@
                                                 }
                                             },
                                             "typeId": "type_users:User",
-                                            "default": null
+                                            "default": null,
+                                            "inline": null
                                         }
                                     }
                                 },
@@ -10462,7 +10498,8 @@
                                         }
                                     },
                                     "typeId": "type_users:ListUsersExtendedResponse",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -10972,7 +11009,8 @@
                                                                                                     }
                                                                                                 },
                                                                                                 "typeId": "type_users:User",
-                                                                                                "default": null
+                                                                                                "default": null,
+                                                                                                "inline": null
                                                                                             }
                                                                                         }
                                                                                     },
@@ -11251,7 +11289,7 @@
                                         }
                                     }
                                 },
-                                "id": "ab3a859fe82bd64af3b3525ad1bca3b9a2a4a137",
+                                "id": "90357497c87fefa45cfbdca515e0eece12a2e48b",
                                 "docs": null
                             }
                         }
@@ -11458,7 +11496,8 @@
                                                 }
                                             },
                                             "typeId": "type_users:User",
-                                            "default": null
+                                            "default": null,
+                                            "inline": null
                                         }
                                     }
                                 },
@@ -11649,7 +11688,8 @@
                                         "file": null
                                     },
                                     "typeId": "type_:UsernameCursor",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -11861,7 +11901,7 @@
                                         }
                                     }
                                 },
-                                "id": "5d9bf35e139bfef9133c329f4c54520ed5f4f1ad",
+                                "id": "5fbdc71990d0876908b89a1fa7e55a50fa951dbe",
                                 "docs": null
                             }
                         }
@@ -12269,7 +12309,8 @@
                                         }
                                     },
                                     "typeId": "type_users:UsernameContainer",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -12556,7 +12597,7 @@
                                         }
                                     }
                                 },
-                                "id": "42b563bf148e5e5d3b04ecc6917115e3e0aabe4f",
+                                "id": "09c64be5c95b30c626cb3668031c49d53b3a26ac",
                                 "docs": null
                             }
                         }

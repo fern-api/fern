@@ -772,7 +772,8 @@
                                         "file": null
                                     },
                                     "typeId": "type_:SendResponse",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -1898,7 +1899,8 @@
                                         "file": null
                                     },
                                     "typeId": "type_:SendResponse",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -2986,7 +2988,8 @@
                                         "file": null
                                     },
                                     "typeId": "type_:SendResponse",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -3883,7 +3886,8 @@
                                         "file": null
                                     },
                                     "typeId": "type_:SendResponse",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -4790,7 +4794,8 @@
                                 }
                             },
                             "typeId": "type_reference:SendRequest",
-                            "default": null
+                            "default": null,
+                            "inline": null
                         },
                         "contentType": null,
                         "docs": null
@@ -4865,7 +4870,8 @@
                                         }
                                     },
                                     "typeId": "type_reference:SendRequest",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "contentType": null,
                                 "docs": null
@@ -4924,7 +4930,8 @@
                                         "file": null
                                     },
                                     "typeId": "type_:SendResponse",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }

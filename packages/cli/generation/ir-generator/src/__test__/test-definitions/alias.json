@@ -209,7 +209,8 @@
                                 "file": null
                             },
                             "typeId": "type_:TypeId",
-                            "default": null
+                            "default": null,
+                            "inline": null
                         },
                         "availability": null,
                         "docs": null
@@ -513,7 +514,8 @@
                         "file": null
                     },
                     "typeId": "type_:Type",
-                    "default": null
+                    "default": null,
+                    "inline": null
                 },
                 "resolvedType": {
                     "_type": "named",
@@ -901,7 +903,8 @@
                                     "file": null
                                 },
                                 "typeId": "type_:TypeId",
-                                "default": null
+                                "default": null,
+                                "inline": null
                             },
                             "location": "ENDPOINT",
                             "variable": null,
@@ -956,7 +959,8 @@
                                     "file": null
                                 },
                                 "typeId": "type_:TypeId",
-                                "default": null
+                                "default": null,
+                                "inline": null
                             },
                             "location": "ENDPOINT",
                             "variable": null,
@@ -1062,7 +1066,7 @@
                                         "value": null
                                     }
                                 },
-                                "id": "e02271412f7540dc640cc737622cf9f080e7aae3",
+                                "id": "bd5b4c8c347f4c7c33db01bcd23a51f5325101f0",
                                 "docs": null
                             }
                         }

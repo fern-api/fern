@@ -480,7 +480,8 @@
                                         }
                                     },
                                     "typeId": "type_completions:StreamedCompletion",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "terminator": "[[DONE]]",
                                 "docs": null
@@ -1158,7 +1159,7 @@
                                         ]
                                     }
                                 },
-                                "id": "d4666c26814c4aa9f387b5b3dd8a0a44c1eef4ff",
+                                "id": "d287376db6904a24f3d611beade11725babecf42",
                                 "docs": null
                             }
                         }

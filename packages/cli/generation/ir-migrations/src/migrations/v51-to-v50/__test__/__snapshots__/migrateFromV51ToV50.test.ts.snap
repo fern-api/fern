@@ -144,7 +144,7 @@ exports[`migrateFromV51ToV50 simple 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "de5ad83f6341aa5908c15dd9eb197ddd21c41165",
+                "id": "e995a68dd08e99884a03ac329f1cb9ef418188e7",
                 "name": null,
                 "queryParameters": [
                   {
@@ -2046,7 +2046,7 @@ exports[`migrateFromV51ToV50 simple 1`] = `
                     },
                   },
                 ],
-                "id": "324338333f11ed5a565b1e84550ddc8794af0138",
+                "id": "c18ce38a8916dd863c73faf7ca625893b2260874",
                 "name": null,
                 "queryParameters": [],
                 "request": null,

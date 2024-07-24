@@ -234,7 +234,8 @@
                                     }
                                 },
                                 "typeId": "type_types:Foo",
-                                "default": null
+                                "default": null,
+                                "inline": null
                             }
                         },
                         "docs": null
@@ -351,7 +352,8 @@
                                     }
                                 },
                                 "typeId": "type_types:Bar",
-                                "default": null
+                                "default": null,
+                                "inline": null
                             }
                         },
                         "docs": null
@@ -572,7 +574,8 @@
                                     }
                                 },
                                 "typeId": "type_types:Foo",
-                                "default": null
+                                "default": null,
+                                "inline": null
                             }
                         },
                         "docs": "This is a Foo field."
@@ -689,7 +692,8 @@
                                     }
                                 },
                                 "typeId": "type_types:Bar",
-                                "default": null
+                                "default": null,
+                                "inline": null
                             }
                         },
                         "docs": null
@@ -3839,7 +3843,8 @@
                                         }
                                     },
                                     "typeId": "type_union:Shape",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -4232,7 +4237,7 @@
                                         }
                                     }
                                 },
-                                "id": "2b410ef0ccdabdbe4ac9882617244f21d3c126e8",
+                                "id": "0a148524296cc0bea7d3f415f8710d40313b9bd0",
                                 "docs": null
                             }
                         }
@@ -4346,7 +4351,8 @@
                                 }
                             },
                             "typeId": "type_union:Shape",
-                            "default": null
+                            "default": null,
+                            "inline": null
                         },
                         "contentType": null,
                         "docs": null
@@ -4421,7 +4427,8 @@
                                         }
                                     },
                                     "typeId": "type_union:Shape",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "contentType": null,
                                 "docs": null
@@ -4827,7 +4834,7 @@
                                         }
                                     }
                                 },
-                                "id": "917dfd050f061bca8c74b270a1d4b66f2f701029",
+                                "id": "852bda123c11ae99407efb8496902dddad236854",
                                 "docs": null
                             }
                         }

@@ -272,7 +272,8 @@
                                         }
                                     },
                                     "typeId": "type_commons/metadata:Metadata",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 }
                             }
                         },
@@ -1104,7 +1105,8 @@
                                                     }
                                                 },
                                                 "typeId": "type_commons/metadata:Metadata",
-                                                "default": null
+                                                "default": null,
+                                                "inline": null
                                             }
                                         }
                                     },
@@ -1977,7 +1979,8 @@
                                                     }
                                                 },
                                                 "typeId": "type_commons/metadata:Metadata",
-                                                "default": null
+                                                "default": null,
+                                                "inline": null
                                             }
                                         }
                                     },
@@ -2127,7 +2130,8 @@
                                                 "file": null
                                             },
                                             "typeId": "type_:Node",
-                                            "default": null
+                                            "default": null,
+                                            "inline": null
                                         }
                                     }
                                 }
@@ -3029,7 +3033,8 @@
                                                                                                     }
                                                                                                 },
                                                                                                 "typeId": "type_commons/metadata:Metadata",
-                                                                                                "default": null
+                                                                                                "default": null,
+                                                                                                "inline": null
                                                                                             }
                                                                                         }
                                                                                     },
@@ -3912,7 +3917,8 @@
                                                                                                     }
                                                                                                 },
                                                                                                 "typeId": "type_commons/metadata:Metadata",
-                                                                                                "default": null
+                                                                                                "default": null,
+                                                                                                "inline": null
                                                                                             }
                                                                                         }
                                                                                     },
@@ -3995,7 +4001,8 @@
                                                                 "file": null
                                                             },
                                                             "typeId": "type_:Node",
-                                                            "default": null
+                                                            "default": null,
+                                                            "inline": null
                                                         }
                                                     }
                                                 },
@@ -4055,7 +4062,8 @@
                                                             "file": null
                                                         },
                                                         "typeId": "type_:Node",
-                                                        "default": null
+                                                        "default": null,
+                                                        "inline": null
                                                     }
                                                 }
                                             }
@@ -5027,7 +5035,8 @@
                                 }
                             },
                             "typeId": "type_file:FileInfo",
-                            "default": null
+                            "default": null,
+                            "inline": null
                         },
                         "availability": null,
                         "docs": null
@@ -6351,7 +6360,8 @@
                                                 }
                                             },
                                             "typeId": "type_file:File",
-                                            "default": null
+                                            "default": null,
+                                            "inline": null
                                         }
                                     }
                                 }
@@ -6495,7 +6505,8 @@
                                                 }
                                             },
                                             "typeId": "type_file/directory:Directory",
-                                            "default": null
+                                            "default": null,
+                                            "inline": null
                                         }
                                     }
                                 }
@@ -7243,7 +7254,8 @@
                                                                 }
                                                             },
                                                             "typeId": "type_file:File",
-                                                            "default": null
+                                                            "default": null,
+                                                            "inline": null
                                                         }
                                                     }
                                                 },
@@ -7324,7 +7336,8 @@
                                                             }
                                                         },
                                                         "typeId": "type_file:File",
-                                                        "default": null
+                                                        "default": null,
+                                                        "inline": null
                                                     }
                                                 }
                                             }
@@ -8294,7 +8307,8 @@
                                                                                                                 }
                                                                                                             },
                                                                                                             "typeId": "type_file:File",
-                                                                                                            "default": null
+                                                                                                            "default": null,
+                                                                                                            "inline": null
                                                                                                         }
                                                                                                     }
                                                                                                 },
@@ -8375,7 +8389,8 @@
                                                                                                             }
                                                                                                         },
                                                                                                         "typeId": "type_file:File",
-                                                                                                        "default": null
+                                                                                                        "default": null,
+                                                                                                        "inline": null
                                                                                                     }
                                                                                                 }
                                                                                             }
@@ -8613,7 +8628,8 @@
                                                                 }
                                                             },
                                                             "typeId": "type_file/directory:Directory",
-                                                            "default": null
+                                                            "default": null,
+                                                            "inline": null
                                                         }
                                                     }
                                                 },
@@ -8738,7 +8754,8 @@
                                                             }
                                                         },
                                                         "typeId": "type_file/directory:Directory",
-                                                        "default": null
+                                                        "default": null,
+                                                        "inline": null
                                                     }
                                                 }
                                             }

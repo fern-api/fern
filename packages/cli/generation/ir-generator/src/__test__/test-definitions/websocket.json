@@ -230,7 +230,8 @@
                                     }
                                 },
                                 "typeId": "type_realtime:Model",
-                                "default": null
+                                "default": null,
+                                "inline": null
                             }
                         }
                     },

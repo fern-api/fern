@@ -207,7 +207,8 @@
                                         "file": null
                                     },
                                     "typeId": "type_:ExampleResponseStatus",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 }
                             }
                         },
@@ -512,7 +513,8 @@
                                         "file": null
                                     },
                                     "typeId": "type_:ExampleResponse",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": "Successful response"
                             }
@@ -683,7 +685,8 @@
                                                                                 "file": null
                                                                             },
                                                                             "typeId": "type_:ExampleResponseStatus",
-                                                                            "default": null
+                                                                            "default": null,
+                                                                            "inline": null
                                                                         }
                                                                     }
                                                                 },
@@ -1131,7 +1134,8 @@
                                                                                 "file": null
                                                                             },
                                                                             "typeId": "type_:ExampleResponseStatus",
-                                                                            "default": null
+                                                                            "default": null,
+                                                                            "inline": null
                                                                         }
                                                                     }
                                                                 },
@@ -1412,7 +1416,7 @@
                                         }
                                     }
                                 },
-                                "id": "1046203d3b3e49ed55f9081d6790df3b5e2e97b0",
+                                "id": "5a8ef64d0b2822690cc9621c463ed3eb63eca320",
                                 "docs": null
                             }
                         }

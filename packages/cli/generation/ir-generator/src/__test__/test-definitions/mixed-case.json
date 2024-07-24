@@ -1140,7 +1140,8 @@
                                 }
                             },
                             "typeId": "type_service:User",
-                            "default": null
+                            "default": null,
+                            "inline": null
                         },
                         "availability": null,
                         "docs": null
@@ -2200,7 +2201,8 @@
                                 }
                             },
                             "typeId": "type_service:ResourceStatus",
-                            "default": null
+                            "default": null,
+                            "inline": null
                         },
                         "availability": null,
                         "docs": null
@@ -3140,7 +3142,8 @@
                                         }
                                     },
                                     "typeId": "type_service:Resource",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -4626,7 +4629,8 @@
                                                 }
                                             },
                                             "typeId": "type_service:Resource",
-                                            "default": null
+                                            "default": null,
+                                            "inline": null
                                         }
                                     }
                                 },
@@ -5367,7 +5371,8 @@
                                                             }
                                                         },
                                                         "typeId": "type_service:Resource",
-                                                        "default": null
+                                                        "default": null,
+                                                        "inline": null
                                                     }
                                                 }
                                             },
@@ -6105,7 +6110,8 @@
                                                             }
                                                         },
                                                         "typeId": "type_service:Resource",
-                                                        "default": null
+                                                        "default": null,
+                                                        "inline": null
                                                     }
                                                 }
                                             },
@@ -6126,7 +6132,7 @@
                                         }
                                     }
                                 },
-                                "id": "e84b1aa3d1db57f242cf8c6b65837d3151a54772",
+                                "id": "a3447783e8257419556d79b840d8d04c6bc2d7ef",
                                 "docs": null
                             }
                         }

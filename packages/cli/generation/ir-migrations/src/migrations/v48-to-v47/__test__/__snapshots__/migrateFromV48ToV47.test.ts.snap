@@ -144,7 +144,7 @@ exports[`migrateFromV48ToV47 remove-all-pagination 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "90711fee0b6ebe25d84ed6e73654bfd1e2839542",
+                "id": "d5ce4135718bb82a218e345903424f377578f8f6",
                 "name": null,
                 "queryParameters": [
                   {
@@ -1425,7 +1425,7 @@ exports[`migrateFromV48ToV47 simple 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "3ca4dfbf95e7078d9616bcd972ea311af4112ef9",
+                "id": "86cf887d1a836a080dc06059382cebbc9f4be694",
                 "name": null,
                 "queryParameters": [
                   {
@@ -2211,7 +2211,7 @@ exports[`migrateFromV48ToV47 simple 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "90711fee0b6ebe25d84ed6e73654bfd1e2839542",
+                "id": "d5ce4135718bb82a218e345903424f377578f8f6",
                 "name": null,
                 "queryParameters": [
                   {

@@ -153,7 +153,8 @@
                                         }
                                     },
                                     "typeId": "type_a:A",
-                                    "default": null
+                                    "default": null,
+                                    "inline": null
                                 }
                             }
                         },
@@ -567,7 +568,8 @@
                                             }
                                         },
                                         "typeId": "type_ast:FieldValue",
-                                        "default": null
+                                        "default": null,
+                                        "inline": null
                                     }
                                 }
                             }
@@ -690,7 +692,8 @@
                                             }
                                         },
                                         "typeId": "type_ast:FieldValue",
-                                        "default": null
+                                        "default": null,
+                                        "inline": null
                                     }
                                 }
                             }
@@ -1220,7 +1223,8 @@
                                     }
                                 },
                                 "typeId": "type_ast:PrimitiveValue",
-                                "default": null
+                                "default": null,
+                                "inline": null
                             }
                         },
                         "docs": null
@@ -1428,7 +1432,8 @@
                                     }
                                 },
                                 "typeId": "type_ast:ContainerValue",
-                                "default": null
+                                "default": null,
+                                "inline": null
                             }
                         },
                         "docs": null
@@ -1604,7 +1609,8 @@
                                 }
                             },
                             "typeId": "type_ast:FieldName",
-                            "default": null
+                            "default": null,
+                            "inline": null
                         },
                         "availability": null,
                         "docs": null
@@ -1697,7 +1703,8 @@
                                 }
                             },
                             "typeId": "type_ast:FieldValue",
-                            "default": null
+                            "default": null,
+                            "inline": null
                         },
                         "availability": null,
                         "docs": null
