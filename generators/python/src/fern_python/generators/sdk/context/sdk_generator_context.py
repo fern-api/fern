@@ -34,6 +34,7 @@ class SdkGeneratorContext(ABC):
             project_module_path=project_module_path,
             allow_skipping_validation=custom_config.pydantic_config.skip_validation,
             allow_leveraging_defaults=custom_config.pydantic_config.use_provided_defaults,
+            use_typeddict_requests=custom_config.pydantic_config.use_typeddict_requests,
         )
 
         # This should be replaced with `hasPaginatedEndpoints` in the IR, but that's on IR44, not 39, which is what Python's on

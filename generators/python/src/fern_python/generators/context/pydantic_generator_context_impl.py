@@ -19,8 +19,9 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         project_module_path: AST.ModulePath,
         allow_skipping_validation: bool,
         allow_leveraging_defaults: bool,
+        use_typeddict_requests: bool
     ):
-        super().__init__(ir=ir, generator_config=generator_config, allow_skipping_validation=allow_skipping_validation)
+        super().__init__(ir=ir, generator_config=generator_config, allow_skipping_validation=allow_skipping_validation, use_typeddict_requests=use_typeddict_requests)
         self._type_reference_to_type_hint_converter = TypeReferenceToTypeHintConverter(
             type_declaration_referencer=type_declaration_referencer, context=self
         )
@@ -65,15 +66,18 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                 )
         return default_value
 
+    # TODO(armando): DO THIS, e.g. implement for typeddicts
     def get_class_reference_for_type_id(
         self,
         type_id: ir_types.TypeId,
         must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]] = None,
+        as_request: bool = False,
     ) -> AST.ClassReference:
         declaration = self.ir.types[type_id]
         return self._type_declaration_referencer.get_class_reference(
             name=declaration.name,
             must_import_after_current_declaration=must_import_after_current_declaration,
+            as_request=as_request,
         )
 
     def does_circularly_reference_itself(self, type_id: ir_types.TypeId) -> bool:
@@ -96,13 +100,13 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
     ) -> ir_types.TypeDeclaration:
         return self.ir.types[type_id]
 
-    def get_class_name_for_type_id(self, type_id: ir_types.TypeId) -> str:
+    def get_class_name_for_type_id(self, type_id: ir_types.TypeId, as_request: bool = False) -> str:
         declaration = self.get_declaration_for_type_id(type_id)
-        return self._type_declaration_referencer.get_class_name(name=declaration.name)
+        return self._type_declaration_referencer.get_class_name(name=declaration.name, as_request=as_request)
 
-    def get_filepath_for_type_id(self, type_id: ir_types.TypeId) -> Filepath:
+    def get_filepath_for_type_id(self, type_id: ir_types.TypeId, as_request: bool = False) -> Filepath:
         declaration = self.get_declaration_for_type_id(type_id)
-        return self._type_declaration_referencer.get_filepath(name=declaration.name)
+        return self._type_declaration_referencer.get_filepath(name=declaration.name, as_request=as_request)
 
     def get_all_properties_including_extensions(self, type_name: ir_types.TypeId) -> List[ir_types.ObjectProperty]:
         declaration = self.get_declaration_for_type_id(type_name)

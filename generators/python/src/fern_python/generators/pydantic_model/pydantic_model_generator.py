@@ -71,6 +71,7 @@ class PydanticModelGenerator(AbstractGenerator):
             ),
             allow_skipping_validation=custom_config.skip_validation,
             allow_leveraging_defaults=custom_config.use_provided_defaults,
+            use_typeddict_requests=custom_config.use_typeddict_requests,
         )
         snippet_registry = SnippetRegistry()
         snippet_writer = self._build_snippet_writer(
@@ -108,6 +109,17 @@ class PydanticModelGenerator(AbstractGenerator):
                 snippet_registry=snippet_registry,
                 snippet_writer=snippet_writer,
             )
+        for type_to_generate in ir.types.values():
+            self._generate_type(
+                project,
+                type=type_to_generate,
+                generator_exec_wrapper=generator_exec_wrapper,
+                custom_config=custom_config,
+                context=context,
+                snippet_registry=snippet_registry,
+                snippet_writer=snippet_writer,
+                as_request=True,
+            )
 
     def _generate_type(
         self,
@@ -118,8 +130,13 @@ class PydanticModelGenerator(AbstractGenerator):
         context: PydanticGeneratorContext,
         snippet_registry: SnippetRegistry,
         snippet_writer: SnippetWriter,
+        as_request: bool = False,
     ) -> None:
-        filepath = context.get_filepath_for_type_id(type_id=type.name.type_id)
+        # TODO(armando): Handle typeddicts here, likely doing this twice and not returning
+        # anything if you specify to dictify + it's not an object
+        # TODO: Actually flag typeddicts if they're request object ONLY, right now we just always create
+        # the typeddict for any object. This is fine for now, but we should be able to filter the types down.
+        filepath = context.get_filepath_for_type_id(type_id=type.name.type_id, as_request=as_request)
         source_file = SourceFileFactory.create(
             project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
         )
@@ -161,6 +178,8 @@ class PydanticModelGenerator(AbstractGenerator):
             improved_imports=improved_imports,
         )
 
+        # TODO(armando): Handle typeddicts here too, ideally we just call .write on the TypedDict instance
+        # but we won't really have this at that time, I think we'll want a type_id to node map at some point.
         type_declaration_snippet_generator = TypeDeclarationSnippetGenerator(
             alias=lambda example: AliasSnippetGenerator(
                 snippet_writer=snippet_writer,

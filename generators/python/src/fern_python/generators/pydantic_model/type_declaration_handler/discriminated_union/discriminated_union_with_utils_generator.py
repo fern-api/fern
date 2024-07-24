@@ -30,9 +30,10 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
         custom_config: PydanticModelCustomConfig,
         docs: Optional[str],
         snippet: Optional[str] = None,
+        as_request: bool = False,
     ):
         super().__init__(
-            context=context, custom_config=custom_config, source_file=source_file, docs=docs, snippet=snippet
+            context=context, custom_config=custom_config, source_file=source_file, docs=docs, snippet=snippet, as_request=as_request
         )
         self._name = name
         self._union = union
@@ -140,7 +141,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
         factory_declaration = AST.ClassDeclaration(name="_Factory")
         factory = self._source_file.add_class_declaration(factory_declaration)
 
-        model_name = self._context.get_class_name_for_type_id(self._name.type_id)
+        model_name = self._context.get_class_name_for_type_id(self._name.type_id, self._as_request)
         internal_union_class_declaration = AST.ClassDeclaration(name="_" + model_name)
 
         with FernAwarePydanticModel(
@@ -172,7 +173,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
             internal_union = self._source_file.add_class_declaration(declaration=internal_union_class_declaration)
 
             for single_union_type in self._union.types:
-                with PydanticModel(
+                with FernAwarePydanticModel(
                     version=self._custom_config.version,
                     name=single_union_type.discriminant_value.name.pascal_case.safe_name,
                     source_file=self._source_file,
@@ -206,12 +207,10 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     shape = single_union_type.shape.get_as_union()
                     if shape.properties_type == "singleProperty":
                         internal_pydantic_model_for_single_union_type.add_field(
-                            PydanticField(
-                                name=shape.name.name.snake_case.safe_name,
-                                pascal_case_field_name=shape.name.name.pascal_case.safe_name,
-                                json_field_name=shape.name.wire_value,
-                                type_hint=self._context.get_type_hint_for_type_reference(type_reference=shape.type),
-                            )
+                            name=shape.name.name.snake_case.safe_name,
+                            pascal_case_field_name=shape.name.name.pascal_case.safe_name,
+                            json_field_name=shape.name.wire_value,
+                            type_reference=shape.type
                         )
 
                     factory_declaration.add_method(

@@ -32,6 +32,7 @@ class TypeReferenceToTypeHintConverter:
             named=lambda type_name: self._get_type_hint_for_named(
                 type_name=type_name,
                 must_import_after_current_declaration=must_import_after_current_declaration,
+                as_request=in_endpoint if in_endpoint is not None else False,
             ),
             primitive=self._get_type_hint_for_primitive,
             unknown=AST.TypeHint.any,
@@ -55,6 +56,7 @@ class TypeReferenceToTypeHintConverter:
         inner_hint = self._get_type_hint_for_named(
             type_name=name,
             must_import_after_current_declaration=must_import_after_current_declaration,
+            as_request=in_endpoint if in_endpoint is not None else False,
         )
         if is_primative:
             return AST.TypeHint.set(inner_hint)
@@ -144,11 +146,13 @@ class TypeReferenceToTypeHintConverter:
         self,
         type_name: ir_types.DeclaredTypeName,
         must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]],
+        as_request: bool = False,
     ) -> AST.TypeHint:
         return AST.TypeHint(
             type=self._type_declaration_referencer.get_class_reference(
                 name=type_name,
                 must_import_after_current_declaration=must_import_after_current_declaration,
+                as_request=as_request,
             )
         )
 

@@ -129,46 +129,42 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                 base_models.append(class_reference_for_base)
             shape = single_union_type.shape.get_as_union()
             discriminant_value = self._get_discriminant_value_for_single_union_type(single_union_type)
+            discriminant_field_type_reference = ir_types.TypeReference.factory.container(
+                ir_types.ContainerType.factory.literal(
+                    ir_types.Literal.factory.string(single_union_type.discriminant_value.wire_value)
+                )
+            )
             if shape.properties_type == "singleProperty":
-                with PydanticModel(
-                    version=self._custom_config.version,
-                    name=get_single_union_type_class_name(self._name, single_union_type.discriminant_value),
+                with FernAwarePydanticModel(
+                    type_name=None,
+                    class_name=get_single_union_type_class_name(self._name, single_union_type.discriminant_value),
+                    context=self._context,
+                    custom_config=self._custom_config,
                     source_file=self._source_file,
+                    docstring=self._docs,
+                    snippet=self._snippet,
                     base_models=base_models,
-                    frozen=self._custom_config.frozen,
-                    orm_mode=self._custom_config.orm_mode,
-                    smart_union=self._custom_config.smart_union,
-                    pydantic_base_model=self._context.core_utilities.get_unchecked_pydantic_base_model(),
-                    require_optional_fields=self._custom_config.require_optional_fields,
-                    is_pydantic_v2=self._context.core_utilities.get_is_pydantic_v2(),
-                    universal_field_validator=self._context.core_utilities.universal_field_validator,
-                    universal_root_validator=self._context.core_utilities.universal_root_validator,
-                    update_forward_ref_function_reference=self._context.core_utilities.get_update_forward_refs(),
                 ) as internal_pydantic_model_for_single_union_type:
                     internal_pydantic_model_for_single_union_type.add_field(
-                        PydanticField(
-                            name=shape.name.name.snake_case.safe_name,
-                            pascal_case_field_name=shape.name.name.pascal_case.safe_name,
-                            json_field_name=shape.name.wire_value,
-                            type_hint=self._context.get_type_hint_for_type_reference(type_reference=shape.type),
-                        )
+                        name=shape.name.name.snake_case.safe_name,
+                        pascal_case_field_name=shape.name.name.pascal_case.safe_name,
+                        json_field_name=shape.name.wire_value,
+                        type_reference=shape.type
                     )
 
                     internal_pydantic_model_for_single_union_type.add_field(
-                        PydanticField(
-                            name=get_discriminant_parameter_name(self._union.discriminant),
-                            pascal_case_field_name=self._union.discriminant.name.pascal_case.safe_name,
-                            type_hint=AST.TypeHint.literal(discriminant_value),
-                            json_field_name=self._union.discriminant.wire_value,
-                            default_value=discriminant_value,
-                        )
+                        name=get_discriminant_parameter_name(self._union.discriminant),
+                        pascal_case_field_name=self._union.discriminant.name.pascal_case.safe_name,
+                        type_reference=discriminant_field_type_reference,
+                        json_field_name=self._union.discriminant.wire_value,
+                        default_value=discriminant_value
                     )
                     all_referenced_types.append(shape.type)
                     internal_single_union_type = internal_pydantic_model_for_single_union_type.to_reference()
                     single_union_type_references.append(internal_single_union_type)
 
                     self._update_forward_refs(
-                        internal_pydantic_model_for_single_union_type=internal_pydantic_model_for_single_union_type,
+                        internal_pydantic_model_for_single_union_type=internal_pydantic_model_for_single_union_type._pydantic_model,
                         single_union_type=single_union_type,
                     )
 

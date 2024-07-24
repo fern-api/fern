@@ -9,8 +9,9 @@ T = TypeVar("T")
 
 
 class SdkDeclarationReferencer(AbstractDeclarationReferencer[T], Generic[T]):
-    def __init__(self, *, skip_resources_module: bool) -> None:
+    def __init__(self, *, skip_resources_module: bool, use_typeddict_requests: bool = False) -> None:
         self.skip_resources_module = skip_resources_module
+        self.use_typeddict_requests = use_typeddict_requests
 
     def _get_directories_for_fern_filepath_part(
         self,

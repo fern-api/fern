@@ -7,7 +7,7 @@ from fern_python.declaration_referencer import AbstractDeclarationReferencer
 
 
 class TypeDeclarationReferencer(AbstractDeclarationReferencer[ir_types.DeclaredTypeName]):
-    def get_filepath(self, *, name: ir_types.DeclaredTypeName) -> Filepath:
+    def get_filepath(self, *, name: ir_types.DeclaredTypeName, as_request: bool = False) -> Filepath:
         return Filepath(
             directories=self._get_directories_for_fern_filepath(
                 fern_filepath=name.fern_filepath,
@@ -20,6 +20,7 @@ class TypeDeclarationReferencer(AbstractDeclarationReferencer[ir_types.DeclaredT
         *,
         fern_filepath_part: ir_types.Name,
         export_strategy: ExportStrategy,
+        as_request: bool = False
     ) -> Tuple[Filepath.DirectoryFilepathPart, ...]:
         return (
             Filepath.DirectoryFilepathPart(

@@ -14,12 +14,13 @@ class AbstractDeclarationReferencer(ABC, Generic[T]):
         *,
         name: T,
         must_import_after_current_declaration: Optional[Callable[[T], bool]] = None,
+        as_request: bool = False,
     ) -> AST.ClassReference:
-        filepath = self.get_filepath(name=name)
+        filepath = self.get_filepath(name=name, as_request=as_request)
         return AST.ClassReference(
             import_=AST.ReferenceImport(
                 module=filepath.to_module(),
-                named_import=self.get_class_name(name=name),
+                named_import=self.get_class_name(name=name, as_request=as_request),
             ),
             qualified_name_excluding_import=(),
             must_import_after_current_declaration=must_import_after_current_declaration(name)
@@ -28,11 +29,11 @@ class AbstractDeclarationReferencer(ABC, Generic[T]):
         )
 
     @abstractmethod
-    def get_filepath(self, *, name: T) -> Filepath:
+    def get_filepath(self, *, name: T, as_request: bool = False) -> Filepath:
         ...
 
     @abstractmethod
-    def get_class_name(self, *, name: T) -> str:
+    def get_class_name(self, *, name: T, as_request: bool = False) -> str:
         ...
 
     def _get_directories_for_fern_filepath(

@@ -24,9 +24,15 @@ class SnippetWriter:
         self,
         name: ir_types.DeclaredTypeName,
         example_type_shape: ir_types.ExampleTypeShape,
+        as_request: bool = False,
     ) -> Optional[AST.Expression]:
         if self._type_declaration_snippet_generator is None:
             return None
+        
+        # TODO(armando): Handle typeddicts here, ideally with some helper converter
+        # on typeddicts to go from TR to TypedDict to Snippet
+        if as_request and self._context.use_typeddict_requests:
+            ...
 
         return self._type_declaration_snippet_generator.generate_snippet(
             name=name,
@@ -36,6 +42,7 @@ class SnippetWriter:
     def get_class_reference_for_declared_type_name(
         self,
         name: ir_types.DeclaredTypeName,
+        as_request: bool = False,
     ) -> AST.ClassReference:
         return AST.ClassReference(
             qualified_name_excluding_import=(),
@@ -43,6 +50,7 @@ class SnippetWriter:
                 module=AST.Module.snippet(
                     module_path=self.get_module_path_for_declared_type_name(
                         name=name,
+                        as_request=as_request
                     ),
                 ),
                 named_import=name.name.pascal_case.safe_name,
@@ -52,12 +60,18 @@ class SnippetWriter:
     def get_module_path_for_declared_type_name(
         self,
         name: ir_types.DeclaredTypeName,
+        as_request: bool = False,
     ) -> AST.ModulePath:
         module_path = tuple([directory.snake_case.safe_name for directory in name.fern_filepath.package_path])
         if len(module_path) > 0 and not self._improved_imports:
             # If the type is defined in a subpackage, it needs to be imported with the 'resources'
             # intermediary key. Otherwise the types can be imported from the root package.
             module_path = ("resources",) + module_path
+        
+        # We write typeddicts to a `requests/` directory
+        if as_request and self._context.use_typeddict_requests:
+            module_path = module_path + ("requests",)
+
         return self._context.get_module_path_in_project(
             module_path,
         )
@@ -65,6 +79,7 @@ class SnippetWriter:
     def get_snippet_for_example_type_reference(
         self,
         example_type_reference: ir_types.ExampleTypeReference,
+        as_request: bool = False,
     ) -> Optional[AST.Expression]:
         return example_type_reference.shape.visit(
             primitive=lambda primitive: self._get_snippet_for_primitive(
@@ -83,7 +98,7 @@ class SnippetWriter:
         )
 
     def get_snippet_for_object_properties(
-        self, example: ir_types.ExampleObjectType, request_parameter_names: Dict[ir_types.Name, str]
+        self, example: ir_types.ExampleObjectType, request_parameter_names: Dict[ir_types.Name, str], as_request: bool = False,
     ) -> List[AST.Expression]:
         args: List[AST.Expression] = []
         for property in example.properties:
@@ -115,6 +130,7 @@ class SnippetWriter:
                     self.get_snippet_for_named_parameter(
                         parameter_name=maybe_rewritten_name,
                         value=value,
+                        as_request=as_request,
                     ),
                 )
         return args
@@ -123,6 +139,7 @@ class SnippetWriter:
         self,
         parameter_name: str,
         value: AST.Expression,
+        as_request: bool = False,
     ) -> AST.Expression:
         def write_named_parameter(writer: AST.NodeWriter) -> None:
             writer.write(f"{parameter_name}=")

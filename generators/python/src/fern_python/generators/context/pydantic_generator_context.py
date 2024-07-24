@@ -18,10 +18,12 @@ class PydanticGeneratorContext(ABC):
         ir: ir_types.IntermediateRepresentation,
         generator_config: GeneratorConfig,
         allow_skipping_validation: bool,
+        use_typeddict_requests: bool
     ):
         self.ir = ir
         self.generator_config = generator_config
         self.core_utilities = CoreUtilities(allow_skipping_validation=allow_skipping_validation)
+        self.use_typeddict_requests = use_typeddict_requests
 
     @abstractmethod
     def get_module_path_in_project(self, module_path: AST.ModulePath) -> AST.ModulePath:
@@ -41,6 +43,7 @@ class PydanticGeneratorContext(ABC):
         self,
         type_id: ir_types.TypeId,
         must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]] = None,
+        as_request: bool = False,
     ) -> AST.ClassReference:
         ...
 
@@ -61,7 +64,7 @@ class PydanticGeneratorContext(ABC):
         ...
 
     @abstractmethod
-    def get_class_name_for_type_id(self, type_id: ir_types.TypeId) -> str:
+    def get_class_name_for_type_id(self, type_id: ir_types.TypeId, as_request: bool = False) -> str:
         ...
 
     @abstractmethod
@@ -87,7 +90,7 @@ class PydanticGeneratorContext(ABC):
         ...
 
     @abstractmethod
-    def get_filepath_for_type_id(self, type_id: ir_types.TypeId) -> Filepath:
+    def get_filepath_for_type_id(self, type_id: ir_types.TypeId, as_request: bool = False) -> Filepath:
         ...
 
     @abstractmethod

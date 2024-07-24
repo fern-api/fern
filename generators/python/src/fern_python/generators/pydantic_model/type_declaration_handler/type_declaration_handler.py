@@ -33,12 +33,15 @@ class TypeDeclarationHandler:
         source_file: SourceFile,
         custom_config: PydanticModelCustomConfig,
         snippet_writer: SnippetWriter,
+        as_request: bool = False,
     ):
+        # TODO(armando): Handle typeddicts here too
         self._declaration = declaration
         self._context = context
         self._source_file = source_file
         self._custom_config = custom_config
         self._snippet_writer = snippet_writer
+        self._as_request = as_request
 
     def run(self) -> GeneratedType:
         snippet, docstring = self._get_snippet_for_type_declaration(self._declaration)
@@ -63,7 +66,7 @@ class TypeDeclarationHandler:
             ),
             object=lambda object_: ObjectGenerator(
                 name=self._declaration.name,
-                class_name=self._context.get_class_name_for_type_id(self._declaration.name.type_id),
+                class_name=self._context.get_class_name_for_type_id(self._declaration.name.type_id, self._as_request),
                 extends=object_.extends,
                 properties=[
                     ObjectProperty(

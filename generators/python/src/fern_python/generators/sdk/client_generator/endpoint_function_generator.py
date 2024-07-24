@@ -1365,6 +1365,7 @@ class EndpointFunctionSnippetGenerator:
         for path_parameter in all_path_parameters:
             path_parameter_value = self.snippet_writer.get_snippet_for_example_type_reference(
                 example_type_reference=path_parameter.value,
+                as_request=True,
             )
             if not self._is_path_literal(path_parameter.name.original_name):
                 args.append(
@@ -1374,6 +1375,7 @@ class EndpointFunctionSnippetGenerator:
                         value=path_parameter_value
                         if path_parameter_value is not None
                         else AST.Expression(AST.TypeHint.none()),
+                        as_request=True,
                     ),
                 )
 
@@ -1392,6 +1394,7 @@ class EndpointFunctionSnippetGenerator:
                 continue
             example_header_parameter_value = self.snippet_writer.get_snippet_for_example_type_reference(
                 example_type_reference=example_header.value,
+                as_request=True,
             )
             if (
                 not self._is_header_literal(example_header.name.wire_value)
@@ -1401,18 +1404,21 @@ class EndpointFunctionSnippetGenerator:
                     self.snippet_writer.get_snippet_for_named_parameter(
                         parameter_name=get_parameter_name(example_header.name.name),
                         value=example_header_parameter_value,
+                        as_request=True,
                     ),
                 )
 
         for query_parameter in self.example.query_parameters:
             query_parameter_value = self.snippet_writer.get_snippet_for_example_type_reference(
                 example_type_reference=query_parameter.value,
+                as_request=True,
             )
             if not self._is_query_literal(query_parameter.name.wire_value) and query_parameter_value is not None:
                 args.append(
                     self.snippet_writer.get_snippet_for_named_parameter(
                         parameter_name=get_parameter_name(query_parameter.name.name),
                         value=query_parameter_value,
+                        as_request=True,
                     ),
                 )
 
@@ -1483,12 +1489,14 @@ class EndpointFunctionSnippetGenerator:
         for example_property in example_inlined_request_body.properties:
             property_value = self.snippet_writer.get_snippet_for_example_type_reference(
                 example_type_reference=example_property.value,
+                as_request=True,
             )
             if not self._is_inlined_request_literal(example_property.name.wire_value) and property_value is not None:
                 snippets.append(
                     self.snippet_writer.get_snippet_for_named_parameter(
                         parameter_name=get_parameter_name(example_property.name.name),
                         value=property_value,
+                        as_request=True,
                     ),
                 )
         return snippets
@@ -1498,12 +1506,14 @@ class EndpointFunctionSnippetGenerator:
     ) -> List[AST.Expression]:
         request_value = self.snippet_writer.get_snippet_for_example_type_reference(
             example_type_reference=example_type_reference,
+            as_request=True,
         )
         if request_value is not None:
             return [
                 self.snippet_writer.get_snippet_for_named_parameter(
                     parameter_name=self._get_request_parameter_name(),
                     value=request_value,
+                    as_request=True,
                 )
             ]
         return []
@@ -1513,7 +1523,7 @@ class EndpointFunctionSnippetGenerator:
         example_object: ir_types.ExampleObjectType,
         request_parameter_names: Dict[ir_types.Name, str],
     ) -> List[AST.Expression]:
-        return self.snippet_writer.get_snippet_for_object_properties(example_object, request_parameter_names)
+        return self.snippet_writer.get_snippet_for_object_properties(example_object, request_parameter_names, as_request=True,)
 
     def _get_snippet_for_request_reference(
         self,
