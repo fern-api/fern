@@ -54,6 +54,7 @@ class TypeDeclarationHandler:
                 source_file=self._source_file,
                 docs=self._declaration.docs,
                 snippet=docstring,
+                as_request=self._as_request,
             ),
             enum=lambda enum: EnumGenerator(
                 name=self._declaration.name,
@@ -81,6 +82,7 @@ class TypeDeclarationHandler:
                 source_file=self._source_file,
                 docs=self._declaration.docs,
                 snippet=docstring,
+                as_request=self._as_request,
             ),
             union=self._get_union_generator(docstring),
             undiscriminated_union=lambda union: UndiscriminatedUnionGenerator(

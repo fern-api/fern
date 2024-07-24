@@ -29,7 +29,11 @@ class SdkGeneratorContext(ABC):
         self.generator_config = generator_config
         self.pydantic_generator_context = PydanticGeneratorContextImpl(
             ir=ir,
-            type_declaration_referencer=TypeDeclarationReferencer(skip_resources_module=custom_config.improved_imports),
+            type_declaration_referencer=TypeDeclarationReferencer(
+                skip_resources_module=custom_config.improved_imports,
+                use_typeddict_requests=custom_config.pydantic_config.use_typeddict_requests,
+                types=ir.types,
+            ),
             generator_config=generator_config,
             project_module_path=project_module_path,
             allow_skipping_validation=custom_config.pydantic_config.skip_validation,

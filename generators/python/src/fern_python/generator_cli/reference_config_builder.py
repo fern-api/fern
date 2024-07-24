@@ -78,7 +78,9 @@ class ReferenceSectionBuilder:
         type_id = self._visit_type_reference(type_reference)
         if type_id is not None:
             path = self.project.get_relative_source_file_filepath(
-                filepath=self.context.pydantic_generator_context.get_filepath_for_type_id(type_id=type_id, as_request=as_request)
+                filepath=self.context.pydantic_generator_context.get_filepath_for_type_id(
+                    type_id=type_id, as_request=as_request
+                )
             )
 
             return generatorcli.reference.RelativeLocation(path=path) if path is not None else None

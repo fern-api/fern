@@ -1523,7 +1523,11 @@ class EndpointFunctionSnippetGenerator:
         example_object: ir_types.ExampleObjectType,
         request_parameter_names: Dict[ir_types.Name, str],
     ) -> List[AST.Expression]:
-        return self.snippet_writer.get_snippet_for_object_properties(example_object, request_parameter_names, as_request=True,)
+        return self.snippet_writer.get_snippet_for_object_properties(
+            example_object,
+            request_parameter_names,
+            as_request=True,
+        )
 
     def _get_snippet_for_request_reference(
         self,

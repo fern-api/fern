@@ -19,9 +19,15 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         project_module_path: AST.ModulePath,
         allow_skipping_validation: bool,
         allow_leveraging_defaults: bool,
-        use_typeddict_requests: bool
+        use_typeddict_requests: bool,
     ):
-        super().__init__(ir=ir, generator_config=generator_config, allow_skipping_validation=allow_skipping_validation, use_typeddict_requests=use_typeddict_requests)
+        super().__init__(
+            ir=ir,
+            generator_config=generator_config,
+            allow_skipping_validation=allow_skipping_validation,
+            use_typeddict_requests=use_typeddict_requests,
+            type_declaration_referencer=type_declaration_referencer,
+        )
         self._type_reference_to_type_hint_converter = TypeReferenceToTypeHintConverter(
             type_declaration_referencer=type_declaration_referencer, context=self
         )

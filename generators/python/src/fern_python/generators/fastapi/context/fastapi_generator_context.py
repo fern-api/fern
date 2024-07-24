@@ -26,6 +26,7 @@ class FastApiGeneratorContext(ABC):
             project_module_path=project_module_path,
             allow_skipping_validation=False,
             allow_leveraging_defaults=False,
+            use_typeddict_requests=False,
         )
         self.core_utilities = CoreUtilities()
 

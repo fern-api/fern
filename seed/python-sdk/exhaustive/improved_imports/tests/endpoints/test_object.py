@@ -5,7 +5,7 @@ import typing
 import uuid
 
 from seed.client import AsyncSeedExhaustive, SeedExhaustive
-from seed.types import NestedObjectWithRequiredField, ObjectWithOptionalField
+from seed.types.object.types import NestedObjectWithRequiredField, ObjectWithOptionalField
 
 from ..utilities import validate_response
 

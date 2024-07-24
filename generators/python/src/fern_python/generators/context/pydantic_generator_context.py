@@ -7,6 +7,7 @@ import fern.ir.resources as ir_types
 from fern.generator_exec.resources import GeneratorConfig
 
 from fern_python.codegen import AST, Filepath
+from fern_python.declaration_referencer import AbstractDeclarationReferencer
 
 from ..core_utilities import CoreUtilities
 
@@ -16,14 +17,16 @@ class PydanticGeneratorContext(ABC):
         self,
         *,
         ir: ir_types.IntermediateRepresentation,
+        type_declaration_referencer: AbstractDeclarationReferencer[ir_types.DeclaredTypeName],
         generator_config: GeneratorConfig,
         allow_skipping_validation: bool,
-        use_typeddict_requests: bool
+        use_typeddict_requests: bool,
     ):
         self.ir = ir
         self.generator_config = generator_config
         self.core_utilities = CoreUtilities(allow_skipping_validation=allow_skipping_validation)
         self.use_typeddict_requests = use_typeddict_requests
+        self.type_declaration_referencer = type_declaration_referencer
 
     @abstractmethod
     def get_module_path_in_project(self, module_path: AST.ModulePath) -> AST.ModulePath:

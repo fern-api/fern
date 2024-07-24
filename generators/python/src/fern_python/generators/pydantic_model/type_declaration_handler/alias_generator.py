@@ -23,7 +23,12 @@ class AliasGenerator(AbstractTypeGenerator):
         as_request: bool = False,
     ):
         super().__init__(
-            context=context, custom_config=custom_config, source_file=source_file, docs=docs, snippet=snippet, as_request=as_request
+            context=context,
+            custom_config=custom_config,
+            source_file=source_file,
+            docs=docs,
+            snippet=snippet,
+            as_request=as_request,
         )
         self._name = name
         self._alias = alias

@@ -31,9 +31,15 @@ class ObjectGenerator(AbstractTypeGenerator):
         custom_config: PydanticModelCustomConfig,
         docs: Optional[str],
         snippet: Optional[str] = None,
+        as_request: bool = False,
     ):
         super().__init__(
-            context=context, custom_config=custom_config, source_file=source_file, docs=docs, snippet=snippet
+            context=context,
+            custom_config=custom_config,
+            source_file=source_file,
+            docs=docs,
+            snippet=snippet,
+            as_request=as_request,
         )
         self._name = name
         self._class_name = class_name
@@ -50,6 +56,7 @@ class ObjectGenerator(AbstractTypeGenerator):
             source_file=self._source_file,
             docstring=self._docs,
             snippet=self._snippet,
+            as_request=self._as_request,
         ) as pydantic_model:
             for property in self._properties:
                 pydantic_model.add_field(

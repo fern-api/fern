@@ -28,7 +28,7 @@ class SnippetWriter:
     ) -> Optional[AST.Expression]:
         if self._type_declaration_snippet_generator is None:
             return None
-        
+
         # TODO(armando): Handle typeddicts here, ideally with some helper converter
         # on typeddicts to go from TR to TypedDict to Snippet
         if as_request and self._context.use_typeddict_requests:
@@ -48,10 +48,7 @@ class SnippetWriter:
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
                 module=AST.Module.snippet(
-                    module_path=self.get_module_path_for_declared_type_name(
-                        name=name,
-                        as_request=as_request
-                    ),
+                    module_path=self.get_module_path_for_declared_type_name(name=name, as_request=as_request),
                 ),
                 named_import=name.name.pascal_case.safe_name,
             ),
@@ -62,15 +59,8 @@ class SnippetWriter:
         name: ir_types.DeclaredTypeName,
         as_request: bool = False,
     ) -> AST.ModulePath:
-        module_path = tuple([directory.snake_case.safe_name for directory in name.fern_filepath.package_path])
-        if len(module_path) > 0 and not self._improved_imports:
-            # If the type is defined in a subpackage, it needs to be imported with the 'resources'
-            # intermediary key. Otherwise the types can be imported from the root package.
-            module_path = ("resources",) + module_path
-        
-        # We write typeddicts to a `requests/` directory
-        if as_request and self._context.use_typeddict_requests:
-            module_path = module_path + ("requests",)
+        modules = self._context.type_declaration_referencer.get_filepath(name=name, as_request=as_request).directories
+        module_path = tuple([directory.module_name for directory in modules])
 
         return self._context.get_module_path_in_project(
             module_path,
@@ -98,7 +88,10 @@ class SnippetWriter:
         )
 
     def get_snippet_for_object_properties(
-        self, example: ir_types.ExampleObjectType, request_parameter_names: Dict[ir_types.Name, str], as_request: bool = False,
+        self,
+        example: ir_types.ExampleObjectType,
+        request_parameter_names: Dict[ir_types.Name, str],
+        as_request: bool = False,
     ) -> List[AST.Expression]:
         args: List[AST.Expression] = []
         for property in example.properties:

@@ -251,7 +251,7 @@ class ObjectClient:
         import uuid
 
         from seed.client import SeedExhaustive
-        from seed.types import ObjectWithOptionalField
+        from seed.types.object.types import ObjectWithOptionalField
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -327,7 +327,7 @@ class ObjectClient:
         import uuid
 
         from seed.client import SeedExhaustive
-        from seed.types import ObjectWithOptionalField
+        from seed.types.object.types import ObjectWithOptionalField
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -398,7 +398,10 @@ class ObjectClient:
         import uuid
 
         from seed.client import SeedExhaustive
-        from seed.types import NestedObjectWithRequiredField, ObjectWithOptionalField
+        from seed.types.object.types import (
+            NestedObjectWithRequiredField,
+            ObjectWithOptionalField,
+        )
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -704,7 +707,7 @@ class AsyncObjectClient:
         import uuid
 
         from seed.client import AsyncSeedExhaustive
-        from seed.types import ObjectWithOptionalField
+        from seed.types.object.types import ObjectWithOptionalField
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -787,7 +790,7 @@ class AsyncObjectClient:
         import uuid
 
         from seed.client import AsyncSeedExhaustive
-        from seed.types import ObjectWithOptionalField
+        from seed.types.object.types import ObjectWithOptionalField
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -865,7 +868,10 @@ class AsyncObjectClient:
         import uuid
 
         from seed.client import AsyncSeedExhaustive
-        from seed.types import NestedObjectWithRequiredField, ObjectWithOptionalField
+        from seed.types.object.types import (
+            NestedObjectWithRequiredField,
+            ObjectWithOptionalField,
+        )
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",

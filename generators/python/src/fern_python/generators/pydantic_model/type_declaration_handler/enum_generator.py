@@ -26,6 +26,7 @@ class EnumGenerator(AbstractTypeGenerator):
             context=context, custom_config=custom_config, source_file=source_file, docs=docs, snippet=snippet
         )
         self._use_str_enums = custom_config.use_str_enums
+        self._class_name = context.get_class_name_for_type_id(name.type_id, self._as_request)
         self._name = name
         self._enum = enum
 
@@ -39,13 +40,13 @@ class EnumGenerator(AbstractTypeGenerator):
                         ),
                         AST.TypeHint.any(),
                     ),
-                    name=self._name.name.pascal_case.safe_name,
+                    name=self._class_name,
                 ),
                 should_export=True,
             )
         else:
             enum_class = AST.ClassDeclaration(
-                name=self._get_class_name(),
+                name=self._class_name,
                 extends=[
                     AST.ClassReference(
                         qualified_name_excluding_import=("str",),
@@ -75,7 +76,7 @@ class EnumGenerator(AbstractTypeGenerator):
                     items=[
                         VisitableItem(
                             parameter_name=self._get_visitor_parameter_name_for_enum_value(value),
-                            expected_value=f"{self._get_class_name()}.{_get_class_var_name(value.name.name)}",
+                            expected_value=f"{self._class_name}.{_get_class_var_name(value.name.name)}",
                             visitor_argument=None,
                         )
                         for value in self._enum.values
@@ -87,9 +88,6 @@ class EnumGenerator(AbstractTypeGenerator):
 
     def _get_visitor_parameter_name_for_enum_value(self, enum_value: ir_types.EnumValue) -> str:
         return enum_value.name.name.snake_case.safe_name
-
-    def _get_class_name(self) -> str:
-        return self._name.name.pascal_case.safe_name
 
 
 class EnumSnippetGenerator:

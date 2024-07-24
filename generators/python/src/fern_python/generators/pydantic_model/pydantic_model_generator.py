@@ -146,6 +146,7 @@ class PydanticModelGenerator(AbstractGenerator):
             custom_config=custom_config,
             source_file=source_file,
             snippet_writer=snippet_writer,
+            as_request=as_request,
         )
         generated_type = type_declaration_handler.run()
         if generated_type.snippet is not None:

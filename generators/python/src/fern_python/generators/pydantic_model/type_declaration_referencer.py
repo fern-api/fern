@@ -16,11 +16,7 @@ class TypeDeclarationReferencer(AbstractDeclarationReferencer[ir_types.DeclaredT
         )
 
     def _get_directories_for_fern_filepath_part(
-        self,
-        *,
-        fern_filepath_part: ir_types.Name,
-        export_strategy: ExportStrategy,
-        as_request: bool = False
+        self, *, fern_filepath_part: ir_types.Name, export_strategy: ExportStrategy, as_request: bool = False
     ) -> Tuple[Filepath.DirectoryFilepathPart, ...]:
         return (
             Filepath.DirectoryFilepathPart(
@@ -33,5 +29,5 @@ class TypeDeclarationReferencer(AbstractDeclarationReferencer[ir_types.DeclaredT
             ),
         )
 
-    def get_class_name(self, *, name: ir_types.DeclaredTypeName) -> str:
+    def get_class_name(self, *, name: ir_types.DeclaredTypeName, as_request: bool = False) -> str:
         return name.name.pascal_case.safe_name
