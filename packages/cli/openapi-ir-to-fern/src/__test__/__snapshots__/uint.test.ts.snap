@@ -16,7 +16,7 @@ exports[`uint uint docs 1`] = `
               "request": {},
               "response": {
                 "body": {
-                  "id": 1,
+                  "id": 1.1,
                   "value": 1,
                 },
               },
@@ -28,7 +28,7 @@ exports[`uint uint docs 1`] = `
           "request": {
             "body": {
               "properties": {
-                "id": "optional<uint>",
+                "id": "optional<double>",
                 "value": "optional<uint64>",
               },
             },
@@ -48,7 +48,7 @@ exports[`uint uint docs 1`] = `
         "docs": "A generic response type used throughout the API.
 ",
         "properties": {
-          "id": "optional<uint>",
+          "id": "optional<double>",
           "value": "optional<uint64>",
         },
       },
@@ -80,7 +80,7 @@ exports[`uint uint simple 1`] = `
               "request": {},
               "response": {
                 "body": {
-                  "id": 1,
+                  "id": 1.1,
                   "value": 1,
                 },
               },
@@ -92,7 +92,7 @@ exports[`uint uint simple 1`] = `
           "request": {
             "body": {
               "properties": {
-                "id": "optional<uint>",
+                "id": "optional<double>",
                 "value": "optional<uint64>",
               },
             },
@@ -112,7 +112,7 @@ exports[`uint uint simple 1`] = `
         "docs": "A generic response type used throughout the API.
 ",
         "properties": {
-          "id": "optional<uint>",
+          "id": "optional<double>",
           "value": "optional<uint64>",
         },
       },

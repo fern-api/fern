@@ -112,7 +112,7 @@ exports[`open api parser hume docs 1`] = `
               },
               "timestamp_ms": {
                 "docs": "Defaults to the current date and time. See \`when\`.",
-                "type": "optional<integer>",
+                "type": "optional<long>",
               },
               "when": {
                 "docs": "Include only jobs that were created before or after \`timestamp_ms\`.",
@@ -281,11 +281,11 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "properties": {
           "created_timestamp_ms": {
             "docs": "When this job was created (Unix timestamp in milliseconds).",
-            "type": "integer",
+            "type": "long",
           },
           "ended_timestamp_ms": {
             "docs": "When this job ended (Unix timestamp in milliseconds).",
-            "type": "integer",
+            "type": "long",
           },
           "num_errors": {
             "docs": "The number of errors that occurred while running this job.",
@@ -297,7 +297,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "started_timestamp_ms": {
             "docs": "When this job started (Unix timestamp in milliseconds).",
-            "type": "integer",
+            "type": "long",
           },
         },
       },
@@ -368,9 +368,9 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "validation": undefined,
           },
           "min_face_size": {
-            "default": 60,
+            "default": undefined,
             "docs": "Minimum bounding box side length in pixels to treat as a face. Faces detected with a bounding box side length in pixels less than this threshold will be omitted from the response.",
-            "type": "optional<integer>",
+            "type": "optional<uint64>",
             "validation": undefined,
           },
           "prob_threshold": {
@@ -415,7 +415,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "frame": {
             "docs": "Frame number",
-            "type": "integer",
+            "type": "uint64",
           },
           "prob": {
             "docs": "The predicted probability that a detected face was actually a face.",
@@ -454,11 +454,11 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "properties": {
           "created_timestamp_ms": {
             "docs": "When this job was created (Unix timestamp in milliseconds).",
-            "type": "integer",
+            "type": "long",
           },
           "ended_timestamp_ms": {
             "docs": "When this job ended (Unix timestamp in milliseconds).",
-            "type": "integer",
+            "type": "long",
           },
           "message": {
             "docs": "An error message.",
@@ -466,7 +466,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "started_timestamp_ms": {
             "docs": "When this job started (Unix timestamp in milliseconds).",
-            "type": "integer",
+            "type": "long",
           },
         },
       },
@@ -565,11 +565,11 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "properties": {
           "created_timestamp_ms": {
             "docs": "When this job was created (Unix timestamp in milliseconds).",
-            "type": "integer",
+            "type": "long",
           },
           "started_timestamp_ms": {
             "docs": "When this job started (Unix timestamp in milliseconds).",
-            "type": "integer",
+            "type": "long",
           },
         },
       },
@@ -755,11 +755,11 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         "properties": {
           "begin": {
             "docs": "The index of the first character in the text segment, inclusive.",
-            "type": "integer",
+            "type": "uint64",
           },
           "end": {
             "docs": "The index of the last character in the text segment, exclusive.",
-            "type": "integer",
+            "type": "uint64",
           },
         },
       },
@@ -861,7 +861,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         "properties": {
           "created_timestamp_ms": {
             "docs": "When this job was created (Unix timestamp in milliseconds).",
-            "type": "integer",
+            "type": "long",
           },
         },
       },
@@ -1225,7 +1225,7 @@ exports[`open api parser hume simple 1`] = `
               },
               "timestamp_ms": {
                 "docs": "Defaults to the current date and time. See \`when\`.",
-                "type": "optional<integer>",
+                "type": "optional<long>",
               },
               "when": {
                 "docs": "Include only jobs that were created before or after \`timestamp_ms\`.",
@@ -1394,11 +1394,11 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "properties": {
           "created_timestamp_ms": {
             "docs": "When this job was created (Unix timestamp in milliseconds).",
-            "type": "integer",
+            "type": "long",
           },
           "ended_timestamp_ms": {
             "docs": "When this job ended (Unix timestamp in milliseconds).",
-            "type": "integer",
+            "type": "long",
           },
           "num_errors": {
             "docs": "The number of errors that occurred while running this job.",
@@ -1410,7 +1410,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "started_timestamp_ms": {
             "docs": "When this job started (Unix timestamp in milliseconds).",
-            "type": "integer",
+            "type": "long",
           },
         },
       },
@@ -1481,9 +1481,9 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "validation": undefined,
           },
           "min_face_size": {
-            "default": 60,
+            "default": undefined,
             "docs": "Minimum bounding box side length in pixels to treat as a face. Faces detected with a bounding box side length in pixels less than this threshold will be omitted from the response.",
-            "type": "optional<integer>",
+            "type": "optional<uint64>",
             "validation": undefined,
           },
           "prob_threshold": {
@@ -1528,7 +1528,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "frame": {
             "docs": "Frame number",
-            "type": "integer",
+            "type": "uint64",
           },
           "prob": {
             "docs": "The predicted probability that a detected face was actually a face.",
@@ -1567,11 +1567,11 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "properties": {
           "created_timestamp_ms": {
             "docs": "When this job was created (Unix timestamp in milliseconds).",
-            "type": "integer",
+            "type": "long",
           },
           "ended_timestamp_ms": {
             "docs": "When this job ended (Unix timestamp in milliseconds).",
-            "type": "integer",
+            "type": "long",
           },
           "message": {
             "docs": "An error message.",
@@ -1579,7 +1579,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "started_timestamp_ms": {
             "docs": "When this job started (Unix timestamp in milliseconds).",
-            "type": "integer",
+            "type": "long",
           },
         },
       },
@@ -1678,11 +1678,11 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "properties": {
           "created_timestamp_ms": {
             "docs": "When this job was created (Unix timestamp in milliseconds).",
-            "type": "integer",
+            "type": "long",
           },
           "started_timestamp_ms": {
             "docs": "When this job started (Unix timestamp in milliseconds).",
-            "type": "integer",
+            "type": "long",
           },
         },
       },
@@ -1868,11 +1868,11 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         "properties": {
           "begin": {
             "docs": "The index of the first character in the text segment, inclusive.",
-            "type": "integer",
+            "type": "uint64",
           },
           "end": {
             "docs": "The index of the last character in the text segment, exclusive.",
-            "type": "integer",
+            "type": "uint64",
           },
         },
       },
@@ -1974,7 +1974,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         "properties": {
           "created_timestamp_ms": {
             "docs": "When this job was created (Unix timestamp in milliseconds).",
-            "type": "integer",
+            "type": "long",
           },
         },
       },

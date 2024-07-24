@@ -487,7 +487,14 @@ exports[`open api parser superagent docs 1`] = `
               "body": {
                 "properties": {
                   "authorization": "optional<map<string, unknown>>",
-                  "from_page": "optional<integer>",
+                  "from_page": {
+                    "default": [
+                      1,
+                    ],
+                    "docs": undefined,
+                    "type": "optional<integer>",
+                    "validation": undefined,
+                  },
                   "name": "string",
                   "splitter": "optional<map<string, unknown>>",
                   "to_page": "optional<integer>",
@@ -1624,7 +1631,14 @@ exports[`open api parser superagent simple 1`] = `
               "body": {
                 "properties": {
                   "authorization": "optional<map<string, unknown>>",
-                  "from_page": "optional<integer>",
+                  "from_page": {
+                    "default": [
+                      1,
+                    ],
+                    "docs": undefined,
+                    "type": "optional<integer>",
+                    "validation": undefined,
+                  },
                   "name": "string",
                   "splitter": "optional<map<string, unknown>>",
                   "to_page": "optional<integer>",

@@ -558,8 +558,8 @@ authenticated user.
               "expires_in": {
                 "type": "primitive",
                 "value": {
-                  "type": "int",
-                  "value": 1,
+                  "type": "int64",
+                  "value": 1000000,
                 },
               },
               "refresh_token": {
@@ -13163,12 +13163,7 @@ This client_id is only associated with an AAT.
               "nameOverride": null,
               "schema": {
                 "default": null,
-                "exclusiveMaximum": null,
-                "exclusiveMinimum": null,
-                "maximum": null,
-                "minimum": null,
-                "multipleOf": null,
-                "type": "int",
+                "type": "int64",
               },
               "type": "primitive",
             },
@@ -13468,12 +13463,7 @@ epoch.
             "nameOverride": null,
             "schema": {
               "default": null,
-              "exclusiveMaximum": null,
-              "exclusiveMinimum": null,
-              "maximum": null,
-              "minimum": null,
-              "multipleOf": null,
-              "type": "int",
+              "type": "int64",
             },
             "type": "primitive",
           },

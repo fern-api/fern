@@ -1355,7 +1355,7 @@ The parameter should map to a JSON encoded list of strings.
                 },
                 "limit": {
                   "docs": "Maximum amount of transcripts to retrieve",
-                  "type": "optional<integer>",
+                  "type": "optional<long>",
                 },
                 "status": {
                   "docs": "Filter by transcript status",
@@ -3569,14 +3569,8 @@ The default value is 'en_us'.
           "limit": {
             "default": 10,
             "docs": "Maximum amount of transcripts to retrieve",
-            "type": "optional<integer>",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": 200,
-              "min": 1,
-              "multipleOf": undefined,
-            },
+            "type": "optional<long>",
+            "validation": undefined,
           },
           "status": {
             "default": undefined,
@@ -5148,7 +5142,7 @@ The parameter should map to a JSON encoded list of strings.
                 },
                 "limit": {
                   "docs": "Maximum amount of transcripts to retrieve",
-                  "type": "optional<integer>",
+                  "type": "optional<long>",
                 },
                 "status": {
                   "docs": "Filter by transcript status",
@@ -6837,14 +6831,8 @@ The default value is 'en_us'.
           "limit": {
             "default": 10,
             "docs": "Maximum amount of transcripts to retrieve",
-            "type": "optional<integer>",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": 200,
-              "min": 1,
-              "multipleOf": undefined,
-            },
+            "type": "optional<long>",
+            "validation": undefined,
           },
           "status": {
             "default": undefined,

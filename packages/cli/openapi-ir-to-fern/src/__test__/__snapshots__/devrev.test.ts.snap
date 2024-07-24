@@ -346,7 +346,7 @@ authenticated user.
                   "body": {
                     "access_token": "access_token",
                     "client_id": "client_id",
-                    "expires_in": 1,
+                    "expires_in": 1000000,
                     "refresh_token": "refresh_token",
                     "scope": "scope",
                     "token_type": "bearer",
@@ -380,7 +380,7 @@ This client_id is only associated with an AAT.
                     "default": undefined,
                     "docs": "The expected validity lifetime of the token in number of days.
 ",
-                    "type": "optional<integer>",
+                    "type": "optional<long>",
                     "validation": undefined,
                   },
                   "grant_type": "optional<root.AuthTokenGrantType>",
@@ -4473,7 +4473,7 @@ application access token (AAT).
             "docs": "The validity lifetime of the token specified in seconds since Unix
 epoch.
 ",
-            "type": "integer",
+            "type": "long",
           },
           "refresh_token": {
             "default": undefined,
@@ -6810,7 +6810,7 @@ authenticated user.
                   "body": {
                     "access_token": "access_token",
                     "client_id": "client_id",
-                    "expires_in": 1,
+                    "expires_in": 1000000,
                     "refresh_token": "refresh_token",
                     "scope": "scope",
                     "token_type": "bearer",
@@ -6844,7 +6844,7 @@ This client_id is only associated with an AAT.
                     "default": undefined,
                     "docs": "The expected validity lifetime of the token in number of days.
 ",
-                    "type": "optional<integer>",
+                    "type": "optional<long>",
                     "validation": undefined,
                   },
                   "grant_type": "optional<root.AuthTokenGrantType>",
@@ -9452,7 +9452,7 @@ application access token (AAT).
             "docs": "The validity lifetime of the token specified in seconds since Unix
 epoch.
 ",
-            "type": "integer",
+            "type": "long",
           },
           "refresh_token": {
             "default": undefined,

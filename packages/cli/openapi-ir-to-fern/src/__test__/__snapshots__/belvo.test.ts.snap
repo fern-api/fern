@@ -14995,16 +14995,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                 "pattern": "[1-9]\\d{0,9}",
               },
             },
-            {
-              "type": "integer",
-              "validation": {
-                "exclusiveMax": undefined,
-                "exclusiveMin": undefined,
-                "max": undefined,
-                "min": 1,
-                "multipleOf": undefined,
-              },
-            },
+            "long",
           ],
         },
       },
@@ -32411,16 +32402,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "pattern": "[1-9]\\d{0,9}",
             },
           },
-          {
-            "type": "integer",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": undefined,
-              "min": 1,
-              "multipleOf": undefined,
-            },
-          },
+          "long",
         ],
       },
       "CustomerOfpi": {
@@ -57479,16 +57461,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                 "pattern": "[1-9]\\d{0,9}",
               },
             },
-            {
-              "type": "integer",
-              "validation": {
-                "exclusiveMax": undefined,
-                "exclusiveMin": undefined,
-                "max": undefined,
-                "min": 1,
-                "multipleOf": undefined,
-              },
-            },
+            "long",
           ],
         },
       },
@@ -73520,16 +73493,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "pattern": "[1-9]\\d{0,9}",
             },
           },
-          {
-            "type": "integer",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": undefined,
-              "min": 1,
-              "multipleOf": undefined,
-            },
-          },
+          "long",
         ],
       },
       "CustomerOfpi": {
