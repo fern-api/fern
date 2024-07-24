@@ -1,14 +1,15 @@
-import re
 import typing
 from abc import ABC, abstractmethod
-from typing import Optional, Set
+from typing import Optional
 
 import fern.ir.resources as ir_types
 from fern.generator_exec.resources import GeneratorConfig
 
 from fern_python.codegen import AST
 from fern_python.codegen.filepath import Filepath
-from fern_python.generators.sdk.declaration_referencers.root_client_declaration_referencer import RootClientDeclarationReferencer
+from fern_python.generators.sdk.declaration_referencers.root_client_declaration_referencer import (
+    RootClientDeclarationReferencer,
+)
 
 from ...context import PydanticGeneratorContextImpl
 from ..core_utilities.core_utilities import CoreUtilities

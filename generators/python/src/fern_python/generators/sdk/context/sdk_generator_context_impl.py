@@ -53,7 +53,7 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
             generator_config=generator_config,
             custom_config=custom_config,
             project_module_path=project_module_path,
-            exported_root_client=self._root_exported_client_declaration_referencer
+            exported_root_client=self._root_exported_client_declaration_referencer,
         )
 
         self._error_declaration_referencer = ErrorDeclarationReferencer(
