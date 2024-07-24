@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Text.Json;
 using SeedTrace.Core;
 
 #nullable enable
@@ -23,7 +22,7 @@ public class HomepageClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<IEnumerable<string>>(responseBody)!;
+            return JsonUtils.Deserialize<IEnumerable<string>>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

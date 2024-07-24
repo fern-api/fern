@@ -4,31 +4,37 @@ from __future__ import annotations
 
 import typing
 
-from ...core.pydantic_utilities import pydantic_v1
+import pydantic
+
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .bar import Bar
 from .foo import Foo
 
 
-class UnionWithDiscriminant_Foo(pydantic_v1.BaseModel):
+class UnionWithDiscriminant_Foo(UniversalBaseModel):
     foo: Foo
-    type: typing.Literal["foo"] = pydantic_v1.Field(alias="_type", default="foo")
+    type: typing.Literal["foo"] = pydantic.Field(alias="_type", default="foo")
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
-class UnionWithDiscriminant_Bar(pydantic_v1.BaseModel):
+class UnionWithDiscriminant_Bar(UniversalBaseModel):
     bar: Bar
-    type: typing.Literal["bar"] = pydantic_v1.Field(alias="_type", default="bar")
+    type: typing.Literal["bar"] = pydantic.Field(alias="_type", default="bar")
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
 UnionWithDiscriminant = typing.Union[UnionWithDiscriminant_Foo, UnionWithDiscriminant_Bar]

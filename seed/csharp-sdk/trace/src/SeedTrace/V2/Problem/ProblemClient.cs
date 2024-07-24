@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Text.Json;
 using SeedTrace.Core;
 using SeedTrace.V2;
 
@@ -31,7 +30,7 @@ public class ProblemClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<IEnumerable<LightweightProblemInfoV2>>(responseBody)!;
+            return JsonUtils.Deserialize<IEnumerable<LightweightProblemInfoV2>>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -51,7 +50,7 @@ public class ProblemClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<IEnumerable<ProblemInfoV2>>(responseBody)!;
+            return JsonUtils.Deserialize<IEnumerable<ProblemInfoV2>>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -71,7 +70,7 @@ public class ProblemClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ProblemInfoV2>(responseBody)!;
+            return JsonUtils.Deserialize<ProblemInfoV2>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -91,7 +90,7 @@ public class ProblemClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ProblemInfoV2>(responseBody)!;
+            return JsonUtils.Deserialize<ProblemInfoV2>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

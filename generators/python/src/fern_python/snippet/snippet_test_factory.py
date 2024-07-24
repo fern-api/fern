@@ -339,7 +339,7 @@ class SnippetTestFactory:
                 maybe_stringify_expectations = f"'{expectations}'" if type(expectations) is str else expectations
 
                 writer.write(f"{type_expectation_name}: ")
-                writer.write_node(AST.Expression(AST.TypeHint.any()))
+                writer.write_node(AST.Expression(AST.TypeHint.tuple_(AST.TypeHint.any(), AST.TypeHint.any())) if isinstance(expectations, Tuple) else AST.Expression(AST.TypeHint.any()))  # type: ignore
                 writer.write_line(f" = {maybe_stringify_expectations}")
             if sync_expression:
                 if response_json is not None:

@@ -2,13 +2,12 @@
 
 from __future__ import annotations
 
-import datetime as dt
 import typing
 
+import pydantic
 import typing_extensions
 
-from ........core.datetime_utils import serialize_datetime
-from ........core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+from ........core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
 from .test_case_implementation import TestCaseImplementation
 from .test_case_template_id import TestCaseTemplateId
 
@@ -17,69 +16,74 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def template_id(self, value: TestCaseTemplateId) -> TestCaseImplementationReference:
-        return TestCaseImplementationReference(
-            __root__=_TestCaseImplementationReference.TemplateId(type="templateId", value=value)
-        )
+        if IS_PYDANTIC_V2:
+            return TestCaseImplementationReference(
+                root=_TestCaseImplementationReference.TemplateId(type="templateId", value=value)
+            )
+        else:
+            return TestCaseImplementationReference(
+                __root__=_TestCaseImplementationReference.TemplateId(type="templateId", value=value)
+            )
 
     def implementation(self, value: TestCaseImplementation) -> TestCaseImplementationReference:
-        return TestCaseImplementationReference(
-            __root__=_TestCaseImplementationReference.Implementation(
-                **value.dict(exclude_unset=True), type="implementation"
+        if IS_PYDANTIC_V2:
+            return TestCaseImplementationReference(
+                root=_TestCaseImplementationReference.Implementation(
+                    **value.dict(exclude_unset=True), type="implementation"
+                )
             )
-        )
+        else:
+            return TestCaseImplementationReference(
+                __root__=_TestCaseImplementationReference.Implementation(
+                    **value.dict(exclude_unset=True), type="implementation"
+                )
+            )
 
 
-class TestCaseImplementationReference(pydantic_v1.BaseModel):
+class TestCaseImplementationReference(UniversalRootModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get_as_union(
-        self,
-    ) -> typing.Union[_TestCaseImplementationReference.TemplateId, _TestCaseImplementationReference.Implementation]:
-        return self.__root__
+    if IS_PYDANTIC_V2:
+        root: typing_extensions.Annotated[
+            typing.Union[_TestCaseImplementationReference.TemplateId, _TestCaseImplementationReference.Implementation],
+            pydantic.Field(discriminator="type"),
+        ]
+
+        def get_as_union(
+            self,
+        ) -> typing.Union[_TestCaseImplementationReference.TemplateId, _TestCaseImplementationReference.Implementation]:
+            return self.root
+
+    else:
+        __root__: typing_extensions.Annotated[
+            typing.Union[_TestCaseImplementationReference.TemplateId, _TestCaseImplementationReference.Implementation],
+            pydantic.Field(discriminator="type"),
+        ]
+
+        def get_as_union(
+            self,
+        ) -> typing.Union[_TestCaseImplementationReference.TemplateId, _TestCaseImplementationReference.Implementation]:
+            return self.__root__
 
     def visit(
         self,
         template_id: typing.Callable[[TestCaseTemplateId], T_Result],
         implementation: typing.Callable[[TestCaseImplementation], T_Result],
     ) -> T_Result:
-        if self.__root__.type == "templateId":
-            return template_id(self.__root__.value)
-        if self.__root__.type == "implementation":
-            return implementation(TestCaseImplementation(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
-
-    __root__: typing_extensions.Annotated[
-        typing.Union[_TestCaseImplementationReference.TemplateId, _TestCaseImplementationReference.Implementation],
-        pydantic_v1.Field(discriminator="type"),
-    ]
-
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
-
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        extra = pydantic_v1.Extra.forbid
-        json_encoders = {dt.datetime: serialize_datetime}
+        unioned_value = self.get_as_union()
+        if unioned_value.type == "templateId":
+            return template_id(unioned_value.value)
+        if unioned_value.type == "implementation":
+            return implementation(TestCaseImplementation(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
 
 
 class _TestCaseImplementationReference:
-    class TemplateId(pydantic_v1.BaseModel):
+    class TemplateId(UniversalBaseModel):
         type: typing.Literal["templateId"] = "templateId"
         value: TestCaseTemplateId
 
     class Implementation(TestCaseImplementation):
         type: typing.Literal["implementation"] = "implementation"
 
-        class Config:
-            allow_population_by_field_name = True
-            populate_by_name = True
 
-
-TestCaseImplementationReference.update_forward_refs()
+update_forward_refs(TestCaseImplementationReference)

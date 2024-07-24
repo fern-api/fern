@@ -18147,7 +18147,38 @@ we still recommend setting the Content-Type header to the value \`application/js
           "headers": [],
           "name": null,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "f.type",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "/shipment_leg#departed",
+                },
+              },
+            },
+            {
+              "name": "f.occurred_at.gte",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "2020-01-10T20:00:00.000Z",
+                },
+              },
+            },
+            {
+              "name": "f.occurred_at.lte",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "2020-01-10T20:00:00.000Z",
+                },
+              },
+            },
+          ],
           "request": null,
           "response": {
             "properties": {
@@ -26059,7 +26090,7 @@ Other details about this invoice",
                 "type": "primitive",
                 "value": {
                   "type": "string",
-                  "value": "id",
+                  "value": "K67EZV1K8cQ5afQErZwk1Q",
                 },
               },
             },
@@ -31368,7 +31399,7 @@ Other details about this invoice",
                 "type": "primitive",
                 "value": {
                   "type": "string",
-                  "value": "id",
+                  "value": "FHLKEFHHoW8nwh9UVOMpw",
                 },
               },
             },

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
+## [0.22.3 - 2024-07-22]
+
+- Fix: Fix an issue where APIs that specify the `property-name` error discrimination strategy would
+  receive JSON decode errors instead of the server's error.
+
 ## [0.22.2 - 2024-07-04]
 
 - Fix: Request types set to `nil` no longer send an explicit `null` value.

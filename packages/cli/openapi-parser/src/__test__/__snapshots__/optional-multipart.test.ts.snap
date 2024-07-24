@@ -218,7 +218,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
                 "type": "primitive",
                 "value": {
                   "type": "string",
-                  "value": "voice_id",
+                  "value": "1234",
                 },
               },
             },

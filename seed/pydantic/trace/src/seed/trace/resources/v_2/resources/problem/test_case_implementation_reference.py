@@ -2,41 +2,32 @@
 
 from __future__ import annotations
 
-import datetime as dt
 import typing
 
-from .....core.datetime_utils import serialize_datetime
-from .....core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+import pydantic
+
+from .....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .test_case_function import TestCaseFunction
 from .test_case_implementation_description import TestCaseImplementationDescription
 from .test_case_template_id import TestCaseTemplateId
 
 
-class TestCaseImplementationReference_TemplateId(pydantic_v1.BaseModel):
+class TestCaseImplementationReference_TemplateId(UniversalBaseModel):
     value: TestCaseTemplateId
     type: typing.Literal["templateId"] = "templateId"
 
 
-class TestCaseImplementationReference_Implementation(pydantic_v1.BaseModel):
+class TestCaseImplementationReference_Implementation(UniversalBaseModel):
     description: TestCaseImplementationDescription
     function: TestCaseFunction
     type: typing.Literal["implementation"] = "implementation"
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 TestCaseImplementationReference = typing.Union[

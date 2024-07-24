@@ -148,9 +148,17 @@ export class WrappedEndpointRequest extends EndpointRequest {
         if (this.isString(reference)) {
             return csharp.codeblock(`${this.getParameterName()}.${name.pascalCase.safeName}`);
         } else if (this.isDatetime({ typeReference: reference, allowOptionals: false })) {
-            return csharp.codeblock(`${this.getParameterName()}.${name.pascalCase.safeName}.ToString("o0")`);
+            return csharp.codeblock((writer) => {
+                writer.write(`${this.getParameterName()}.${name.pascalCase.safeName}.ToString(`);
+                writer.writeNode(this.context.getConstantsClassReference());
+                writer.write(".DateTimeFormat)");
+            });
         } else if (this.isDatetime({ typeReference: reference, allowOptionals: true })) {
-            return csharp.codeblock(`${this.getParameterName()}.${name.pascalCase.safeName}.Value.ToString("o0")`);
+            return csharp.codeblock((writer) => {
+                writer.write(`${this.getParameterName()}.${name.pascalCase.safeName}.Value.ToString(`);
+                writer.writeNode(this.context.getConstantsClassReference());
+                writer.write(".DateTimeFormat)");
+            });
         } else if (this.isEnum({ typeReference: reference, allowOptionals: false })) {
             return csharp.codeblock((writer) => {
                 writer.writeNode(

@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Text.Json;
 using SeedTrace;
 using SeedTrace.Core;
 
@@ -23,11 +22,13 @@ public class PlaylistClient
     {
         var _query = new Dictionary<string, object>()
         {
-            { "datetime", request.Datetime.ToString("o0") },
+            { "datetime", request.Datetime.ToString(Constants.DateTimeFormat) },
         };
         if (request.OptionalDatetime != null)
         {
-            _query["optionalDatetime"] = request.OptionalDatetime.Value.ToString("o0");
+            _query["optionalDatetime"] = request.OptionalDatetime.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -41,7 +42,7 @@ public class PlaylistClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Playlist>(responseBody)!;
+            return JsonUtils.Deserialize<Playlist>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -79,7 +80,7 @@ public class PlaylistClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<IEnumerable<Playlist>>(responseBody)!;
+            return JsonUtils.Deserialize<IEnumerable<Playlist>>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -99,7 +100,7 @@ public class PlaylistClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Playlist>(responseBody)!;
+            return JsonUtils.Deserialize<Playlist>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -124,7 +125,7 @@ public class PlaylistClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Playlist?>(responseBody)!;
+            return JsonUtils.Deserialize<Playlist?>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

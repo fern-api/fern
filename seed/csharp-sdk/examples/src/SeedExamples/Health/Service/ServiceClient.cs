@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Text.Json;
 using SeedExamples.Core;
 
 #nullable enable
@@ -36,7 +35,7 @@ public class ServiceClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<bool>(responseBody)!;
+            return JsonUtils.Deserialize<bool>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

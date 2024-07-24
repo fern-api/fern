@@ -2,7 +2,17 @@ from __future__ import annotations
 
 import dataclasses
 from types import TracebackType
-from typing import Iterable, List, Literal, Optional, Sequence, Tuple, Type, Union
+from typing import (
+    Callable,
+    Iterable,
+    List,
+    Literal,
+    Optional,
+    Sequence,
+    Tuple,
+    Type,
+    Union,
+)
 
 from fern_python.codegen import AST, ClassParent, LocalClassReference, SourceFile
 from fern_python.external_dependencies import Pydantic, PydanticVersionCompatibility
@@ -28,7 +38,11 @@ class PydanticModel:
         orm_mode: bool,
         smart_union: bool,
         version: PydanticVersionCompatibility,
+        is_pydantic_v2: AST.Expression,
+        universal_root_validator: Callable[[bool], AST.FunctionInvocation],
+        universal_field_validator: Callable[[str, bool], AST.FunctionInvocation],
         require_optional_fields: bool,
+        update_forward_ref_function_reference: AST.Reference,
         should_export: bool = True,
         base_models: Sequence[AST.ClassReference] = [],
         parent: Optional[ClassParent] = None,
@@ -36,10 +50,11 @@ class PydanticModel:
         snippet: Optional[str] = None,
         extra_fields: Optional[Literal["allow", "forbid"]] = None,
         pydantic_base_model: Optional[AST.ClassReference] = None,
+        include_model_config: Optional[bool] = True,
     ):
         self._source_file = source_file
 
-        pydantic_base_model = pydantic_base_model or Pydantic.BaseModel(version)
+        pydantic_base_model = pydantic_base_model or Pydantic.BaseModel()
         self._class_declaration = AST.ClassDeclaration(
             name=name,
             extends=base_models or [pydantic_base_model],
@@ -53,15 +68,21 @@ class PydanticModel:
         )
         self._has_aliases = False
         self._version = version
-        self._root_type: Optional[AST.TypeHint] = None
         self._fields: List[PydanticField] = []
         self._extra_fields = extra_fields
         self._frozen = frozen
         self._orm_mode = orm_mode
         self._smart_union = smart_union
         self.name = name
-        self.json_encoders: List[Tuple[AST.Expression, AST.Expression]] = []
         self._require_optional_fields = require_optional_fields
+        self._is_pydantic_v2 = is_pydantic_v2
+
+        self._universal_root_validator = universal_root_validator
+        self._universal_field_validator = universal_field_validator
+
+        self._include_model_config = include_model_config
+
+        self._update_forward_ref_function_reference = update_forward_ref_function_reference
 
     def to_reference(self) -> LocalClassReference:
         return self._local_class_reference
@@ -72,6 +93,21 @@ class PydanticModel:
             if unsanitized_field.name in BASE_MODEL_PROPERTIES
             else unsanitized_field
         )
+
+        # These are public fields so they should not start with an underscore
+        # Fern will automatically add the underscore in the beginning for fields
+        # that start with a number so we actually expect some public fields to
+        # start with an underscore that we need to strip
+        # This isn't just nice to have, Pydantic V2 also disallows underscore prefixes
+        # Python also does not allow fields to start with a number, so we need a new prefix
+        if field.name.startswith("_"):
+            sanitized_name = "f_" + field.name.lstrip("_")
+            prev_fields = field.__dict__
+            del prev_fields["name"]
+            field = PydanticField(
+                **(field.__dict__),
+                name=sanitized_name,
+            )
 
         is_aliased = field.json_field_name != field.name
         self._has_aliases |= is_aliased
@@ -116,12 +152,15 @@ class PydanticModel:
                 type_hint=type_hint,
                 initializer=AST.Expression(
                     AST.ClassInstantiation(
-                        Pydantic.PrivateAttr(self._version),
+                        Pydantic.PrivateAttr(),
                         kwargs=[("default_factory", default_factory)] if default_factory is not None else [],
                     )
                 ),
             )
         )
+
+    def add_statement(self, statement: AST.AstNode) -> None:
+        self._class_declaration.add_statement(statement)
 
     def add_class_var(self, name: str, type_hint: AST.TypeHint, initializer: Optional[AST.Expression] = None) -> None:
         self._class_declaration.add_class_var(
@@ -131,27 +170,6 @@ class PydanticModel:
                 initializer=initializer,
             )
         )
-
-    def set_root_type(self, root_type: AST.TypeHint, annotation: Optional[AST.Expression] = None) -> None:
-        if self._root_type is not None:
-            raise RuntimeError("__root__ was already added")
-        self._root_type = root_type
-
-        root_type_with_annotation = (
-            AST.TypeHint.annotated(
-                type=root_type,
-                annotation=AST.Expression(annotation),
-            )
-            if annotation is not None
-            else root_type
-        )
-
-        self._class_declaration.add_statement(
-            AST.VariableDeclaration(name="__root__", type_hint=root_type_with_annotation)
-        )
-
-    def get_root_type(self) -> Optional[AST.TypeHint]:
-        return self._root_type
 
     def add_method(
         self,
@@ -193,7 +211,7 @@ class PydanticModel:
                     return_type=field_type,
                 ),
                 body=body,
-                decorators=[Pydantic.validator(self._version, field_name, pre)],
+                decorators=[self._universal_field_validator(field_name, pre)],
             ),
         )
 
@@ -217,18 +235,15 @@ class PydanticModel:
                     return_type=value_type,
                 ),
                 body=body,
-                decorators=[Pydantic.root_validator(pre=pre, version=self._version)],
+                decorators=[self._universal_root_validator(pre)],
             ),
         )
-
-    def add_json_encoder(self, key: AST.Expression, value: AST.Expression) -> None:
-        self.json_encoders.append((key, value))
 
     def add_inner_class(self, inner_class: AST.ClassDeclaration) -> None:
         self._class_declaration.add_class(declaration=inner_class)
 
     def finish(self) -> None:
-        self._add_config_class()
+        self._maybe_model_config()
 
     def add_partial_class(self) -> None:
         partial_class = AST.ClassDeclaration(
@@ -266,17 +281,48 @@ class PydanticModel:
             is_forward_reference=True,
         )
 
+    def _maybe_model_config(self) -> None:
+        extra_fields = self._extra_fields
+        config_kwargs: List[Tuple[str, AST.Expression]] = []
+        if extra_fields == "allow" or extra_fields == "forbid":
+            config_kwargs.append(("extra", AST.Expression(f'"{extra_fields}"')))
+        if self._frozen:
+            config_kwargs.append(("frozen", AST.Expression("True")))
+        if self._orm_mode:
+            config_kwargs.append(("from_attributes", AST.Expression("True")))
+
+        def write_extras(writer: AST.NodeWriter) -> None:
+            config_class = self._get_config_class()
+            if len(config_kwargs) > 0:
+                writer.write("if ")
+                # TODO: this class needs a context, then we can call get_is_pydantic_v2
+                writer.write_node(self._is_pydantic_v2)
+                writer.write_line(":")
+                with writer.indent():
+                    writer.write("model_config: ")
+                    writer.write_node(AST.TypeHint.class_var(AST.TypeHint(type=Pydantic.ConfigDict())))
+                    writer.write(" = ")
+                    writer.write_node(
+                        AST.Expression(AST.ClassInstantiation(Pydantic.ConfigDict(), kwargs=config_kwargs))
+                    )
+                    writer.write("  # type: ignore # Pydantic v2")
+                writer.write_newline_if_last_line_not()
+                writer.write_line("else:")
+                with writer.indent():
+                    if config_class is not None:
+                        writer.write_node(config_class)
+            elif config_class is not None:
+                writer.write_node(config_class)
+
+        if self._include_model_config:
+            self._class_declaration.add_expression(AST.Expression(AST.CodeWriter(write_extras)))
+
     def update_forward_refs(self, localns: Iterable[AST.ClassReference] = []) -> None:
         self._source_file.add_footer_expression(
             AST.Expression(
                 AST.FunctionInvocation(
-                    function_definition=dataclasses.replace(
-                        self._local_class_reference,
-                        qualified_name_excluding_import=(
-                            *self._local_class_reference.qualified_name_excluding_import,
-                            "update_forward_refs",
-                        ),
-                    ),
+                    function_definition=self._update_forward_ref_function_reference,
+                    args=[AST.Expression(self._local_class_reference)],
                     kwargs=sorted(
                         [(get_named_import_or_throw(reference), AST.Expression(reference)) for reference in localns],
                         # sort by name for consistency
@@ -286,7 +332,7 @@ class PydanticModel:
             )
         )
 
-    def _add_config_class(self) -> None:
+    def _get_config_class(self) -> Optional[AST.ClassDeclaration]:
         config = AST.ClassDeclaration(name="Config")
 
         if self._frozen:
@@ -313,47 +359,24 @@ class PydanticModel:
                 )
             )
 
-        if self._has_aliases or len(self._base_models) > 0:
-            config.add_class_var(
-                AST.VariableDeclaration(
-                    name="allow_population_by_field_name",
-                    initializer=AST.Expression("True"),
-                )
-            )
-            config.add_class_var(
-                AST.VariableDeclaration(
-                    name="populate_by_name",
-                    initializer=AST.Expression("True"),
-                )
-            )
-
         if self._extra_fields == "forbid":
             config.add_class_var(
                 AST.VariableDeclaration(
                     name="extra",
-                    initializer=Pydantic.Extra.forbid(self._version),
+                    initializer=Pydantic.Extra.forbid(),
                 )
             )
         elif self._extra_fields == "allow":
             config.add_class_var(
                 AST.VariableDeclaration(
                     name="extra",
-                    initializer=Pydantic.Extra.allow(self._version),
-                )
-            )
-
-        if len(self.json_encoders) > 0:
-            config.add_class_var(
-                AST.VariableDeclaration(
-                    name="json_encoders",
-                    initializer=AST.Expression(
-                        AST.DictionaryInstantiation(entries=self.json_encoders),
-                    ),
+                    initializer=Pydantic.Extra.allow(),
                 )
             )
 
         if len(config.class_vars) > 0:
-            self._class_declaration.add_class(declaration=config)
+            return config
+        return None
 
     def __enter__(self) -> PydanticModel:
         return self
@@ -379,7 +402,7 @@ def get_field_name_initializer(
         return default
 
     def write(writer: AST.NodeWriter) -> None:
-        writer.write_reference(Pydantic.Field(version=version))
+        writer.write_reference(Pydantic.Field())
         writer.write("(")
         arg_present = False
         if alias is not None:

@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Text.Json;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
 
@@ -31,7 +30,7 @@ public class ObjectClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ObjectWithOptionalField>(responseBody)!;
+            return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -51,7 +50,7 @@ public class ObjectClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ObjectWithRequiredField>(responseBody)!;
+            return JsonUtils.Deserialize<ObjectWithRequiredField>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -69,7 +68,7 @@ public class ObjectClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ObjectWithMapOfMap>(responseBody)!;
+            return JsonUtils.Deserialize<ObjectWithMapOfMap>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -89,7 +88,7 @@ public class ObjectClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<NestedObjectWithOptionalField>(responseBody)!;
+            return JsonUtils.Deserialize<NestedObjectWithOptionalField>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -110,7 +109,7 @@ public class ObjectClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<NestedObjectWithRequiredField>(responseBody)!;
+            return JsonUtils.Deserialize<NestedObjectWithRequiredField>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -130,7 +129,7 @@ public class ObjectClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<NestedObjectWithRequiredField>(responseBody)!;
+            return JsonUtils.Deserialize<NestedObjectWithRequiredField>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

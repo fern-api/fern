@@ -26,10 +26,16 @@ def get_visit_method(
     items: Sequence[VisitableItem],
     reference_to_current_value: str,
     should_use_is_for_equality_check: bool = False,
+    pre_tree_expressions: Optional[Sequence[AST.Expression]] = None,
 ) -> AST.FunctionDeclaration:
     def write_visitor_body(
         writer: AST.NodeWriter,
     ) -> None:
+        if pre_tree_expressions is not None:
+            for expression in pre_tree_expressions:
+                writer.write_node(expression)
+                writer.write_newline_if_last_line_not()
+
         for item in items:
             writer.write_line(
                 f"if {reference_to_current_value}"

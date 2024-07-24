@@ -138,10 +138,12 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                     frozen=self._custom_config.frozen,
                     orm_mode=self._custom_config.orm_mode,
                     smart_union=self._custom_config.smart_union,
-                    pydantic_base_model=self._context.core_utilities.get_unchecked_pydantic_base_model(
-                        self._custom_config.version
-                    ),
+                    pydantic_base_model=self._context.core_utilities.get_unchecked_pydantic_base_model(),
                     require_optional_fields=self._custom_config.require_optional_fields,
+                    is_pydantic_v2=self._context.core_utilities.get_is_pydantic_v2(),
+                    universal_field_validator=self._context.core_utilities.universal_field_validator,
+                    universal_root_validator=self._context.core_utilities.universal_root_validator,
+                    update_forward_ref_function_reference=self._context.core_utilities.get_update_forward_refs(),
                 ) as internal_pydantic_model_for_single_union_type:
                     internal_pydantic_model_for_single_union_type.add_field(
                         PydanticField(

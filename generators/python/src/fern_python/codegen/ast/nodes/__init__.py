@@ -15,10 +15,12 @@ from .docstring import Docstring
 from .expressions import (
     ClassInstantiation,
     ConditionalExpression,
+    ConditionalTree,
     DictionaryInstantiation,
     Expression,
     ExpressionSpread,
     FunctionInvocation,
+    IfConditionLeaf,
 )
 from .reference_node import ReferenceNode
 from .type_hint import TypeHint, TypeParameter
@@ -47,4 +49,6 @@ __all__ = [
     "DictionaryInstantiation",
     "NamedFunctionParameter",
     "ConditionalExpression",
+    "ConditionalTree",
+    "IfConditionLeaf",
 ]

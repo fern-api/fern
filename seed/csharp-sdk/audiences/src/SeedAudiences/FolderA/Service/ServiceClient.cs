@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Text.Json;
 using SeedAudiences.Core;
 using SeedAudiences.FolderA;
 
@@ -24,7 +23,7 @@ public class ServiceClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Response>(responseBody)!;
+            return JsonUtils.Deserialize<Response>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

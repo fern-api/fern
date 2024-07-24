@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Text.Json;
 using SeedExamples;
 using SeedExamples.Core;
 
@@ -24,7 +23,7 @@ public class ServiceClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Movie>(responseBody)!;
+            return JsonUtils.Deserialize<Movie>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -42,7 +41,7 @@ public class ServiceClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<string>(responseBody)!;
+            return JsonUtils.Deserialize<string>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -74,7 +73,7 @@ public class ServiceClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<object>(responseBody)!;
+            return JsonUtils.Deserialize<object>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -87,7 +86,7 @@ public class ServiceClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Response>(responseBody)!;
+            return JsonUtils.Deserialize<Response>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

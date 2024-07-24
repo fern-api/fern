@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pydantic_utilities import pydantic_v1
+from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from .types.user import User
 from .types.user_id import UserId
@@ -45,7 +45,7 @@ class UserClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(User, _response.json())  # type: ignore
+                return typing.cast(User, parse_obj_as(type_=User, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -93,7 +93,7 @@ class AsyncUserClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(User, _response.json())  # type: ignore
+                return typing.cast(User, parse_obj_as(type_=User, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

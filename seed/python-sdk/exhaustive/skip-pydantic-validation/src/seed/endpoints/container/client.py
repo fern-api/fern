@@ -167,11 +167,11 @@ class ContainerClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.container.get_and_return_set_of_objects(
-            request={
+            request=[
                 ObjectWithRequiredField(
                     string="string",
                 )
-            },
+            ],
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -497,11 +497,11 @@ class AsyncContainerClient:
 
         async def main() -> None:
             await client.endpoints.container.get_and_return_set_of_objects(
-                request={
+                request=[
                     ObjectWithRequiredField(
                         string="string",
                     )
-                },
+                ],
             )
 
 

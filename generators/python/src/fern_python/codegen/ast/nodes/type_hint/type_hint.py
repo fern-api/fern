@@ -80,6 +80,13 @@ class TypeHint(AstNode):
         )
 
     @staticmethod
+    def tuple_(*subtypes: TypeHint) -> TypeHint:
+        return TypeHint(
+            type=get_reference_to_typing_import("Tuple"),
+            type_parameters=[TypeParameter(subtype) for subtype in subtypes],
+        )
+
+    @staticmethod
     def any_str() -> TypeHint:
         return TypeHint(type=get_reference_to_typing_import("AnyStr"))
 

@@ -73,6 +73,7 @@ class Paginator:
     def init_parsed_response(self, writer: AST.NodeWriter) -> None:
         writer.write(f"{Paginator.PARSED_RESPONSE_VARIABLE} = ")
         writer.write_node(self._pydantic_parse_expression)
+        writer.write_newline_if_last_line_not()
 
     def access_results_property_path(self) -> str:
         return f"{self._response_property_to_dot_access(self.get_results_property())}"
