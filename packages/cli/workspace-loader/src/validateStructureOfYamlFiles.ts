@@ -57,6 +57,7 @@ export function validateStructureOfYamlFiles({
             const maybeValidFileContents = RootApiFileSchema.safeParse(parsedFileContents);
             if (maybeValidFileContents.success) {
                 rootApiFile = {
+                    defaultUrl: maybeValidFileContents.data["default-url"],
                     contents: maybeValidFileContents.data,
                     rawContents: file.rawContents
                 };
@@ -67,6 +68,7 @@ export function validateStructureOfYamlFiles({
             const maybeValidFileContents = PackageMarkerFileSchema.safeParse(parsedFileContents);
             if (maybeValidFileContents.success) {
                 packageMarkers[relativeFilepath] = {
+                    defaultUrl: typeof maybeValidFileContents.data.export === "object" ? maybeValidFileContents.data.export.url : undefined,
                     contents: maybeValidFileContents.data,
                     rawContents: file.rawContents
                 };
@@ -77,6 +79,7 @@ export function validateStructureOfYamlFiles({
             const maybeValidFileContents = DefinitionFileSchema.safeParse(parsedFileContents);
             if (maybeValidFileContents.success) {
                 namesDefinitionFiles[relativeFilepath] = {
+                    defaultUrl: undefined,
                     contents: maybeValidFileContents.data,
                     rawContents: file.rawContents,
                     absoluteFilepath: join(absolutePathToDefinition, relativeFilepath)

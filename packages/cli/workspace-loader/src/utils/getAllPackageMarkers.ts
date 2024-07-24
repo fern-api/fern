@@ -16,9 +16,11 @@ export function getAllPackageMarkers(
     opts: getAllPackageMarkers.Opts = {}
 ): Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>> {
     return {
-        ...entries(definition.packageMarkers).map(([path, file]) => {
-            return [path, { ...file, defaultUrl: opts.defaultURL }];
-        }),
+        ...Object.fromEntries(
+            entries(definition.packageMarkers).map(([path, file]) => {
+                return [path, { ...file, defaultUrl: opts.defaultURL }];
+            })
+        ),
         ...entries(definition.importedDefinitions).reduce((acc, [pathToImportedDefinition, definition]) => {
             return {
                 ...acc,

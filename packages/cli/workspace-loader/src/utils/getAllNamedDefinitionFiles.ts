@@ -16,9 +16,11 @@ export function getAllNamedDefinitionFiles(
     opts: getAllNamedDefinitionFiles.Opts = {}
 ): Record<RelativeFilePath, ParsedFernFile<DefinitionFileSchema>> {
     return {
-        ...entries(definition.namedDefinitionFiles).map(([path, file]) => {
-            return [path, { ...file, defaultUrl: opts.defaultURL }];
-        }),
+        ...Object.fromEntries(
+            entries(definition.namedDefinitionFiles).map(([path, file]) => {
+                return [path, { ...file, defaultUrl: opts.defaultURL }];
+            })
+        ),
         ...entries(definition.importedDefinitions).reduce((acc, [pathToImportedDefinition, definition]) => {
             return {
                 ...acc,

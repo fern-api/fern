@@ -35,8 +35,7 @@ export function constructRootApiFileContext({
             imports: rootApiFile.imports
         },
         casingsGenerator,
-        rootApiFile,
-        defaultUrl: undefined,
+        rootApiFile
     });
 }
 
@@ -47,7 +46,7 @@ export function constructFernFileContext({
     casingsGenerator,
     rootApiFile
 }: {
-    defaultUrl: string | undefined,
+    defaultUrl?: string;
     relativeFilepath: RelativeFilePath;
     definitionFile: DefinitionFileSchema;
     casingsGenerator: CasingsGenerator;
