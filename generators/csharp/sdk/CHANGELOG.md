@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0 - 2024-07-23]
+
+- Break: The `Environments.cs` class is now renamed to be `{OrgName}Environment`. For example, if your
+  org name was Imdb then the environment class would be `ImdbEnvironment`. 
+
+- Feature: If the SDK has endpoints that each hit different URLs then the following class is generated. 
+  ```csharp
+  public record AWSEnvironment
+  {
+      public static AWSEnvironment Production = new AWSEnvironment()
+      {
+          S3 = "https://s3.awsamazon.com",
+          EC2 = "https://ec2.awsamazon.com"
+      };
+      
+      public static AWSEnvironment Staging = new AWSEnvironment()
+      {
+        S3 = "https://staging.s3.awsamazon.com",
+        EC2 = "https://stagng.ec2.awsamazon.com"
+      };
+      
+      public required string S3 { get; init; }
+      public required string EC2 { get; init; }
+  }
+  ```
+
 ## [0.1.4 - 2024-07-23]
 
 - Improvement: More improvements to datetime serialization.

@@ -102,7 +102,7 @@ export class EndpointGenerator {
                 return csharp.codeblock(`_client.Options.Environment.${baseUrl.name.pascalCase.safeName}`);
             }
         }
-        return csharp.codeblock(`_client.Options.BaseURL`);
+        return csharp.codeblock("_client.Options.BaseURL");
     }
 
     private getEndpointRequest({
