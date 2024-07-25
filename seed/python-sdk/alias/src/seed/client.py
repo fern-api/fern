@@ -32,7 +32,7 @@ class SeedAlias:
 
     Examples
     --------
-    from seed.client import SeedAlias
+    from seed import SeedAlias
 
     client = SeedAlias(
         base_url="https://yourhost.com/path/to/api",
@@ -73,7 +73,7 @@ class SeedAlias:
 
         Examples
         --------
-        from seed.client import SeedAlias
+        from seed import SeedAlias
 
         client = SeedAlias(
             base_url="https://yourhost.com/path/to/api",
@@ -114,7 +114,7 @@ class AsyncSeedAlias:
 
     Examples
     --------
-    from seed.client import AsyncSeedAlias
+    from seed import AsyncSeedAlias
 
     client = AsyncSeedAlias(
         base_url="https://yourhost.com/path/to/api",
@@ -157,7 +157,7 @@ class AsyncSeedAlias:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedAlias
+        from seed import AsyncSeedAlias
 
         client = AsyncSeedAlias(
             base_url="https://yourhost.com/path/to/api",

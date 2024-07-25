@@ -3,7 +3,7 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedMultiLineDocs, SeedMultiLineDocs
+from seed import AsyncSeedMultiLineDocs, SeedMultiLineDocs
 
 
 @pytest.fixture

@@ -13,7 +13,7 @@
 <dd>
 
 ```python
-from seed.client import SeedUndiscriminatedUnions
+from seed import SeedUndiscriminatedUnions
 
 client = SeedUndiscriminatedUnions(
     base_url="https://yourhost.com/path/to/api",
@@ -69,7 +69,7 @@ client.union.get(
 <dd>
 
 ```python
-from seed.client import SeedUndiscriminatedUnions
+from seed import SeedUndiscriminatedUnions
 
 client = SeedUndiscriminatedUnions(
     base_url="https://yourhost.com/path/to/api",

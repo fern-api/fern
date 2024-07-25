@@ -30,7 +30,7 @@ class ServiceClient:
 
         Examples
         --------
-        from seed.client import SeedPackageYml
+        from seed import SeedPackageYml
 
         client = SeedPackageYml(
             base_url="https://yourhost.com/path/to/api",
@@ -75,7 +75,7 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedPackageYml
+        from seed import AsyncSeedPackageYml
 
         client = AsyncSeedPackageYml(
             base_url="https://yourhost.com/path/to/api",

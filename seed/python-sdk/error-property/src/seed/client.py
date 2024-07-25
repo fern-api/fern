@@ -28,7 +28,7 @@ class SeedErrorProperty:
 
     Examples
     --------
-    from seed.client import SeedErrorProperty
+    from seed import SeedErrorProperty
 
     client = SeedErrorProperty(
         base_url="https://yourhost.com/path/to/api",
@@ -76,7 +76,7 @@ class AsyncSeedErrorProperty:
 
     Examples
     --------
-    from seed.client import AsyncSeedErrorProperty
+    from seed import AsyncSeedErrorProperty
 
     client = AsyncSeedErrorProperty(
         base_url="https://yourhost.com/path/to/api",

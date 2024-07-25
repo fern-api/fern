@@ -33,7 +33,7 @@ class PrimitiveClient:
 
         Examples
         --------
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -69,7 +69,7 @@ class PrimitiveClient:
 
         Examples
         --------
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -105,7 +105,7 @@ class PrimitiveClient:
 
         Examples
         --------
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -143,7 +143,7 @@ class PrimitiveClient:
 
         Examples
         --------
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -179,7 +179,7 @@ class PrimitiveClient:
 
         Examples
         --------
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -219,7 +219,7 @@ class PrimitiveClient:
         --------
         import datetime
 
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -261,7 +261,7 @@ class PrimitiveClient:
         --------
         import datetime
 
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -303,7 +303,7 @@ class PrimitiveClient:
         --------
         import uuid
 
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -341,7 +341,7 @@ class PrimitiveClient:
 
         Examples
         --------
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -386,7 +386,7 @@ class AsyncPrimitiveClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -430,7 +430,7 @@ class AsyncPrimitiveClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -476,7 +476,7 @@ class AsyncPrimitiveClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -522,7 +522,7 @@ class AsyncPrimitiveClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -568,7 +568,7 @@ class AsyncPrimitiveClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -615,7 +615,7 @@ class AsyncPrimitiveClient:
         import asyncio
         import datetime
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -664,7 +664,7 @@ class AsyncPrimitiveClient:
         import asyncio
         import datetime
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -713,7 +713,7 @@ class AsyncPrimitiveClient:
         import asyncio
         import uuid
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -761,7 +761,7 @@ class AsyncPrimitiveClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",

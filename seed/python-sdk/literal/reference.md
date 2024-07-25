@@ -13,7 +13,7 @@
 <dd>
 
 ```python
-from seed.client import SeedLiteral
+from seed import SeedLiteral
 
 client = SeedLiteral(
     base_url="https://yourhost.com/path/to/api",
@@ -70,7 +70,7 @@ client.headers.send(
 <dd>
 
 ```python
-from seed.client import SeedLiteral
+from seed import SeedLiteral
 
 client = SeedLiteral(
     base_url="https://yourhost.com/path/to/api",
@@ -136,7 +136,7 @@ client.inlined.send(
 <dd>
 
 ```python
-from seed.client import SeedLiteral
+from seed import SeedLiteral
 
 client = SeedLiteral(
     base_url="https://yourhost.com/path/to/api",
@@ -183,7 +183,7 @@ client.path.send()
 <dd>
 
 ```python
-from seed.client import SeedLiteral
+from seed import SeedLiteral
 
 client = SeedLiteral(
     base_url="https://yourhost.com/path/to/api",
@@ -240,7 +240,7 @@ client.query.send(
 <dd>
 
 ```python
-from seed.client import SeedLiteral
+from seed import SeedLiteral
 
 client = SeedLiteral(
     base_url="https://yourhost.com/path/to/api",

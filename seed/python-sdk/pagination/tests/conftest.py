@@ -3,7 +3,7 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedPagination, SeedPagination
+from seed import AsyncSeedPagination, SeedPagination
 
 
 @pytest.fixture

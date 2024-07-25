@@ -28,7 +28,7 @@ class SeedExtraProperties:
 
     Examples
     --------
-    from seed.client import SeedExtraProperties
+    from seed import SeedExtraProperties
 
     client = SeedExtraProperties(
         base_url="https://yourhost.com/path/to/api",
@@ -76,7 +76,7 @@ class AsyncSeedExtraProperties:
 
     Examples
     --------
-    from seed.client import AsyncSeedExtraProperties
+    from seed import AsyncSeedExtraProperties
 
     client = AsyncSeedExtraProperties(
         base_url="https://yourhost.com/path/to/api",

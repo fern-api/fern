@@ -31,7 +31,6 @@ class Shape_Circle(Base):
     else:
 
         class Config:
-            allow_population_by_field_name = True
             extra = pydantic.Extra.allow
 
 
@@ -44,7 +43,6 @@ class Shape_Square(Base):
     else:
 
         class Config:
-            allow_population_by_field_name = True
             extra = pydantic.Extra.allow
 
 

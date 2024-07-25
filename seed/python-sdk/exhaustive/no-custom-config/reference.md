@@ -13,7 +13,7 @@
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -70,7 +70,7 @@ client.endpoints.container.get_and_return_list_of_primitives(
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 from seed.types import ObjectWithRequiredField
 
 client = SeedExhaustive(
@@ -132,7 +132,7 @@ client.endpoints.container.get_and_return_list_of_objects(
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -189,7 +189,7 @@ client.endpoints.container.get_and_return_set_of_primitives(
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 from seed.types import ObjectWithRequiredField
 
 client = SeedExhaustive(
@@ -251,7 +251,7 @@ client.endpoints.container.get_and_return_set_of_objects(
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -308,7 +308,7 @@ client.endpoints.container.get_and_return_map_prim_to_prim(
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 from seed.types import ObjectWithRequiredField
 
 client = SeedExhaustive(
@@ -370,7 +370,7 @@ client.endpoints.container.get_and_return_map_of_prim_to_object(
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 from seed.types import ObjectWithRequiredField
 
 client = SeedExhaustive(
@@ -431,7 +431,7 @@ client.endpoints.container.get_and_return_optional(
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -489,7 +489,7 @@ client.endpoints.enum.get_and_return_enum(
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -546,7 +546,7 @@ client.endpoints.http_methods.test_get(
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -603,7 +603,7 @@ client.endpoints.http_methods.test_post(
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -672,7 +672,7 @@ client.endpoints.http_methods.test_put(
 import datetime
 import uuid
 
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -852,7 +852,7 @@ client.endpoints.http_methods.test_patch(
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -913,7 +913,7 @@ client.endpoints.http_methods.test_delete(
 import datetime
 import uuid
 
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -1084,7 +1084,7 @@ client.endpoints.object.get_and_return_with_optional_field(
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -1141,7 +1141,7 @@ client.endpoints.object.get_and_return_with_required_field(
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -1201,7 +1201,7 @@ client.endpoints.object.get_and_return_with_map_of_map(
 import datetime
 import uuid
 
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 from seed.types import ObjectWithOptionalField
 
 client = SeedExhaustive(
@@ -1291,7 +1291,7 @@ client.endpoints.object.get_and_return_nested_with_optional_field(
 import datetime
 import uuid
 
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 from seed.types import ObjectWithOptionalField
 
 client = SeedExhaustive(
@@ -1390,7 +1390,7 @@ client.endpoints.object.get_and_return_nested_with_required_field(
 import datetime
 import uuid
 
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 from seed.types import NestedObjectWithRequiredField, ObjectWithOptionalField
 
 client = SeedExhaustive(
@@ -1488,7 +1488,7 @@ GET with path param
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -1559,7 +1559,7 @@ GET with query param
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -1639,7 +1639,7 @@ GET with multiple of same query param
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -1719,7 +1719,7 @@ GET with path and query params
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -1799,7 +1799,7 @@ PUT to update with path param
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -1866,7 +1866,7 @@ client.endpoints.params.modify_with_path(
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -1923,7 +1923,7 @@ client.endpoints.primitive.get_and_return_string(
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -1980,7 +1980,7 @@ client.endpoints.primitive.get_and_return_int(
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -2037,7 +2037,7 @@ client.endpoints.primitive.get_and_return_long(
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -2094,7 +2094,7 @@ client.endpoints.primitive.get_and_return_double(
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -2153,7 +2153,7 @@ client.endpoints.primitive.get_and_return_bool(
 ```python
 import datetime
 
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -2214,7 +2214,7 @@ client.endpoints.primitive.get_and_return_datetime(
 ```python
 import datetime
 
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -2275,7 +2275,7 @@ client.endpoints.primitive.get_and_return_date(
 ```python
 import uuid
 
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -2334,7 +2334,7 @@ client.endpoints.primitive.get_and_return_uuid(
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -2392,7 +2392,7 @@ client.endpoints.primitive.get_and_return_base_64(
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 from seed.types import Animal_Dog
 
 client = SeedExhaustive(
@@ -2471,7 +2471,7 @@ POST with custom object in request body, response is an object
 import datetime
 import uuid
 
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 from seed.types import ObjectWithOptionalField
 
 client = SeedExhaustive(
@@ -2582,7 +2582,7 @@ POST request with no auth
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -2640,7 +2640,7 @@ client.no_auth.post_with_no_auth(
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -2687,7 +2687,7 @@ client.no_req_body.get_with_no_request_body()
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -2735,7 +2735,7 @@ client.no_req_body.post_with_no_request_body()
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",

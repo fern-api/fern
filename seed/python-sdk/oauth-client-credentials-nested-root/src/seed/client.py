@@ -32,7 +32,7 @@ class SeedOauthClientCredentials:
 
     Examples
     --------
-    from seed.client import SeedOauthClientCredentials
+    from seed import SeedOauthClientCredentials
 
     client = SeedOauthClientCredentials(
         base_url="https://yourhost.com/path/to/api",
@@ -100,7 +100,7 @@ class AsyncSeedOauthClientCredentials:
 
     Examples
     --------
-    from seed.client import AsyncSeedOauthClientCredentials
+    from seed import AsyncSeedOauthClientCredentials
 
     client = AsyncSeedOauthClientCredentials(
         base_url="https://yourhost.com/path/to/api",

@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedValidation"
+                    "from seed import SeedValidation"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedValidation(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -102,7 +102,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedValidation"
+                        "from seed import AsyncSeedValidation"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedValidation(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -203,7 +203,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedValidation"
+                    "from seed import SeedValidation"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedValidation(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -274,7 +274,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedValidation"
+                        "from seed import AsyncSeedValidation"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedValidation(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",

@@ -2,10 +2,7 @@
 
 import typing
 
-from seed.client import (
-    AsyncSeedOauthClientCredentialsEnvironmentVariables,
-    SeedOauthClientCredentialsEnvironmentVariables,
-)
+from seed import AsyncSeedOauthClientCredentialsEnvironmentVariables, SeedOauthClientCredentialsEnvironmentVariables
 
 from .utilities import validate_response
 

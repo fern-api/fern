@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedNoEnvironment"
+                    "from seed import SeedNoEnvironment"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedNoEnvironment(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -52,7 +52,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedNoEnvironment"
+                        "from seed import AsyncSeedNoEnvironment"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedNoEnvironment(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",

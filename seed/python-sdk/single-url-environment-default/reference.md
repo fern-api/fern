@@ -13,7 +13,7 @@
 <dd>
 
 ```python
-from seed.client import SeedSingleUrlEnvironmentDefault
+from seed import SeedSingleUrlEnvironmentDefault
 
 client = SeedSingleUrlEnvironmentDefault(
     token="YOUR_TOKEN",

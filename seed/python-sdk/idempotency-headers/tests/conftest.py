@@ -3,7 +3,7 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedIdempotencyHeaders, SeedIdempotencyHeaders
+from seed import AsyncSeedIdempotencyHeaders, SeedIdempotencyHeaders
 
 
 @pytest.fixture

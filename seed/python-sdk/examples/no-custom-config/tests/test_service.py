@@ -2,7 +2,7 @@
 
 import typing
 
-from seed.client import AsyncSeedExamples, SeedExamples
+from seed import AsyncSeedExamples, SeedExamples
 
 from .utilities import validate_response
 

@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedBasicAuth"
+                    "from seed import SeedBasicAuth"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedBasicAuth(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -68,7 +68,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedBasicAuth"
+                        "from seed import AsyncSeedBasicAuth"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedBasicAuth(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -135,7 +135,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedBasicAuth"
+                    "from seed import SeedBasicAuth"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedBasicAuth(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -207,7 +207,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedBasicAuth"
+                        "from seed import AsyncSeedBasicAuth"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedBasicAuth(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",

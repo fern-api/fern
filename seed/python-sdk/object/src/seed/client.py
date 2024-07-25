@@ -27,7 +27,7 @@ class SeedObject:
 
     Examples
     --------
-    from seed.client import SeedObject
+    from seed import SeedObject
 
     client = SeedObject(
         base_url="https://yourhost.com/path/to/api",
@@ -74,7 +74,7 @@ class AsyncSeedObject:
 
     Examples
     --------
-    from seed.client import AsyncSeedObject
+    from seed import AsyncSeedObject
 
     client = AsyncSeedObject(
         base_url="https://yourhost.com/path/to/api",

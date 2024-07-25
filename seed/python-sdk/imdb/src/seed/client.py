@@ -29,7 +29,7 @@ class SeedApi:
 
     Examples
     --------
-    from seed.client import SeedApi
+    from seed import SeedApi
 
     client = SeedApi(
         token="YOUR_TOKEN",
@@ -81,7 +81,7 @@ class AsyncSeedApi:
 
     Examples
     --------
-    from seed.client import AsyncSeedApi
+    from seed import AsyncSeedApi
 
     client = AsyncSeedApi(
         token="YOUR_TOKEN",

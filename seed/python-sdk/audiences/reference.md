@@ -13,7 +13,7 @@
 <dd>
 
 ```python
-from seed.client import SeedAudiences
+from seed import SeedAudiences
 
 client = SeedAudiences(
     base_url="https://yourhost.com/path/to/api",
@@ -60,7 +60,7 @@ client.folder_a.service.get_direct_thread()
 <dd>
 
 ```python
-from seed.client import SeedAudiences
+from seed import SeedAudiences
 
 client = SeedAudiences(
     base_url="https://yourhost.com/path/to/api",

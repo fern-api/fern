@@ -3,7 +3,7 @@
 import datetime
 import typing
 
-from seed.client import AsyncSeedMixedCase, SeedMixedCase
+from seed import AsyncSeedMixedCase, SeedMixedCase
 
 from .utilities import validate_response
 

@@ -31,7 +31,7 @@ class ServiceClient:
 
         Examples
         --------
-        from seed.client import SeedMixedCase
+        from seed import SeedMixedCase
 
         client = SeedMixedCase(
             base_url="https://yourhost.com/path/to/api",
@@ -72,7 +72,7 @@ class ServiceClient:
         --------
         import datetime
 
-        from seed.client import SeedMixedCase
+        from seed import SeedMixedCase
 
         client = SeedMixedCase(
             base_url="https://yourhost.com/path/to/api",
@@ -122,7 +122,7 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedMixedCase
+        from seed import AsyncSeedMixedCase
 
         client = AsyncSeedMixedCase(
             base_url="https://yourhost.com/path/to/api",
@@ -170,7 +170,7 @@ class AsyncServiceClient:
         import asyncio
         import datetime
 
-        from seed.client import AsyncSeedMixedCase
+        from seed import AsyncSeedMixedCase
 
         client = AsyncSeedMixedCase(
             base_url="https://yourhost.com/path/to/api",

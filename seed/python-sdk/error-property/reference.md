@@ -27,7 +27,7 @@ GET request that always throws an error
 <dd>
 
 ```python
-from seed.client import SeedErrorProperty
+from seed import SeedErrorProperty
 
 client = SeedErrorProperty(
     base_url="https://yourhost.com/path/to/api",

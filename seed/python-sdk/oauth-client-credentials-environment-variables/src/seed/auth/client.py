@@ -43,7 +43,7 @@ class AuthClient:
 
         Examples
         --------
-        from seed.client import SeedOauthClientCredentialsEnvironmentVariables
+        from seed import SeedOauthClientCredentialsEnvironmentVariables
 
         client = SeedOauthClientCredentialsEnvironmentVariables(
             base_url="https://yourhost.com/path/to/api",
@@ -106,7 +106,7 @@ class AuthClient:
 
         Examples
         --------
-        from seed.client import SeedOauthClientCredentialsEnvironmentVariables
+        from seed import SeedOauthClientCredentialsEnvironmentVariables
 
         client = SeedOauthClientCredentialsEnvironmentVariables(
             base_url="https://yourhost.com/path/to/api",
@@ -175,7 +175,7 @@ class AsyncAuthClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedOauthClientCredentialsEnvironmentVariables
+        from seed import AsyncSeedOauthClientCredentialsEnvironmentVariables
 
         client = AsyncSeedOauthClientCredentialsEnvironmentVariables(
             base_url="https://yourhost.com/path/to/api",
@@ -246,7 +246,7 @@ class AsyncAuthClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedOauthClientCredentialsEnvironmentVariables
+        from seed import AsyncSeedOauthClientCredentialsEnvironmentVariables
 
         client = AsyncSeedOauthClientCredentialsEnvironmentVariables(
             base_url="https://yourhost.com/path/to/api",

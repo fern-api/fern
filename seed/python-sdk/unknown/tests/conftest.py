@@ -3,7 +3,7 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedUnknownAsAny, SeedUnknownAsAny
+from seed import AsyncSeedUnknownAsAny, SeedUnknownAsAny
 
 
 @pytest.fixture

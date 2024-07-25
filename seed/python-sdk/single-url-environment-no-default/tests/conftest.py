@@ -3,7 +3,7 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedSingleUrlEnvironmentNoDefault, SeedSingleUrlEnvironmentNoDefault
+from seed import AsyncSeedSingleUrlEnvironmentNoDefault, SeedSingleUrlEnvironmentNoDefault
 
 
 @pytest.fixture

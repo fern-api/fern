@@ -35,14 +35,17 @@ from .types import (
     Union_Foo,
 )
 from . import types, union
+from .client import AsyncSeedUnions, SeedUnions
 from .union import Circle, GetShapeRequest, Shape, Shape_Circle, Shape_Square, Square
 from .version import __version__
 
 __all__ = [
+    "AsyncSeedUnions",
     "Bar",
     "Circle",
     "Foo",
     "GetShapeRequest",
+    "SeedUnions",
     "Shape",
     "Shape_Circle",
     "Shape_Square",

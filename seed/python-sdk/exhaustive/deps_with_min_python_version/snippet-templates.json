@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -80,7 +80,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -159,7 +159,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -240,7 +240,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -333,7 +333,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -372,7 +372,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -423,7 +423,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -462,7 +462,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -513,7 +513,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -594,7 +594,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -687,7 +687,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -782,7 +782,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -889,7 +889,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -959,7 +959,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -1041,7 +1041,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -1100,7 +1100,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -1171,7 +1171,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -1227,7 +1227,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -1295,7 +1295,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -1351,7 +1351,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -1419,7 +1419,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -1491,7 +1491,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -1575,7 +1575,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -1859,7 +1859,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -2155,7 +2155,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -2211,7 +2211,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -2279,7 +2279,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -2547,7 +2547,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -2827,7 +2827,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -2883,7 +2883,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -2951,7 +2951,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -3057,7 +3057,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -3175,7 +3175,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -3473,7 +3473,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -3783,7 +3783,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -4097,7 +4097,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -4423,7 +4423,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -4746,7 +4746,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -5081,7 +5081,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -5137,7 +5137,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -5205,7 +5205,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -5277,7 +5277,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -5361,7 +5361,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -5433,7 +5433,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -5517,7 +5517,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -5589,7 +5589,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -5673,7 +5673,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -5745,7 +5745,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -5829,7 +5829,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -5885,7 +5885,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -5953,7 +5953,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -6009,7 +6009,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -6077,7 +6077,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -6133,7 +6133,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -6201,7 +6201,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -6257,7 +6257,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -6325,7 +6325,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -6381,7 +6381,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -6449,7 +6449,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -6505,7 +6505,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -6573,7 +6573,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -6629,7 +6629,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -6697,7 +6697,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -6753,7 +6753,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -6821,7 +6821,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -6877,7 +6877,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -6945,7 +6945,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -7084,7 +7084,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -7235,7 +7235,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -7549,7 +7549,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -7875,7 +7875,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -7931,7 +7931,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -7999,7 +7999,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -8038,7 +8038,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -8089,7 +8089,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -8128,7 +8128,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -8179,7 +8179,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive"
+                    "from seed import SeedExhaustive"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -8251,7 +8251,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive"
+                        "from seed import AsyncSeedExhaustive"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",

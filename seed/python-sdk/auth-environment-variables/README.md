@@ -16,7 +16,7 @@ pip install fern_auth-environment-variables
 Instantiate and use the client with the following:
 
 ```python
-from seed.client import SeedAuthEnvironmentVariables
+from seed import SeedAuthEnvironmentVariables
 
 client = SeedAuthEnvironmentVariables(
     x_another_header="YOUR_X_ANOTHER_HEADER",
@@ -33,7 +33,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed.client import AsyncSeedAuthEnvironmentVariables
+from seed import AsyncSeedAuthEnvironmentVariables
 
 client = AsyncSeedAuthEnvironmentVariables(
     x_another_header="YOUR_X_ANOTHER_HEADER",
@@ -92,7 +92,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 ```python
 
-from seed.client import SeedAuthEnvironmentVariables
+from seed import SeedAuthEnvironmentVariables
 
 client = SeedAuthEnvironmentVariables(..., { timeout=20.0 }, )
 
@@ -109,7 +109,7 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 ```python
 import httpx
-from seed.client import SeedAuthEnvironmentVariables
+from seed import SeedAuthEnvironmentVariables
 
 client = SeedAuthEnvironmentVariables(
     ...,
