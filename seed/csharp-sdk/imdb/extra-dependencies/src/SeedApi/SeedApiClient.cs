@@ -1,3 +1,4 @@
+using System;
 using SeedApi;
 using SeedApi.Core;
 
@@ -13,6 +14,7 @@ public partial class SeedApiClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Imdb = new ImdbClient(_client);

@@ -1,3 +1,4 @@
+using System;
 using SeedExtraProperties;
 using SeedExtraProperties.Core;
 
@@ -13,6 +14,7 @@ public partial class SeedExtraPropertiesClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         User = new UserClient(_client);

@@ -1,3 +1,4 @@
+using System;
 using SeedOauthClientCredentials;
 using SeedOauthClientCredentials.Core;
 
@@ -13,6 +14,7 @@ public partial class SeedOauthClientCredentialsClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Auth = new AuthClient(_client);

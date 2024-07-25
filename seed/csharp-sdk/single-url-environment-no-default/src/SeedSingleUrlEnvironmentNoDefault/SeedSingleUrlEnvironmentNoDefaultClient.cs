@@ -1,3 +1,4 @@
+using System;
 using SeedSingleUrlEnvironmentNoDefault;
 using SeedSingleUrlEnvironmentNoDefault.Core;
 
@@ -20,6 +21,7 @@ public partial class SeedSingleUrlEnvironmentNoDefaultClient
                 { "Authorization", $"Bearer {token}" },
                 { "X-Fern-Language", "C#" },
             },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Dummy = new DummyClient(_client);

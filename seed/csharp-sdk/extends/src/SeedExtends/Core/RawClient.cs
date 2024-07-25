@@ -8,7 +8,11 @@ namespace SeedExtends.Core;
 /// <summary>
 /// Utility class for making raw HTTP requests to the API.
 /// </summary>
-public class RawClient(Dictionary<string, string> headers, ClientOptions clientOptions)
+public class RawClient(
+    Dictionary<string, string> headers,
+    Dictionary<string, Func<string>> headerSuppliers,
+    ClientOptions clientOptions
+)
 {
     /// <summary>
     /// The http client used to make requests.
@@ -32,6 +36,11 @@ public class RawClient(Dictionary<string, string> headers, ClientOptions clientO
         foreach (var header in _headers)
         {
             httpRequest.Headers.Add(header.Key, header.Value);
+        }
+        // Add global headers to the request from supplier
+        foreach (var header in headerSuppliers)
+        {
+            httpRequest.Headers.Add(header.Key, header.Value.Invoke());
         }
         // Add request headers to the request
         foreach (var header in request.Headers)
