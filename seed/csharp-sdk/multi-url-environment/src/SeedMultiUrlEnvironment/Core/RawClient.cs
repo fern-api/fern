@@ -13,7 +13,7 @@ public class RawClient(Dictionary<string, string> headers, ClientOptions clientO
     /// <summary>
     /// The http client used to make requests.
     /// </summary>
-    private readonly ClientOptions _clientOptions = clientOptions;
+    public readonly ClientOptions Options = clientOptions;
 
     /// <summary>
     /// Global headers to be sent with every request.
@@ -55,7 +55,7 @@ public class RawClient(Dictionary<string, string> headers, ClientOptions clientO
             httpRequest.Content = new StreamContent(streamRequest.Body);
         }
         // Send the request
-        var response = await _clientOptions.HttpClient.SendAsync(httpRequest);
+        var response = await Options.HttpClient.SendAsync(httpRequest);
         return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
     }
 
