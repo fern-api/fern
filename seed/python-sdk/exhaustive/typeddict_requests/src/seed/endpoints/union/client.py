@@ -36,17 +36,13 @@ class UnionClient:
         Examples
         --------
         from seed import SeedExhaustive
-        from seed.types.union.types import Animal_Dog
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.union.get_and_return_union(
-            request=Animal_Dog(
-                name="string",
-                likes_to_woof=True,
-            ),
+            request={"name": "string", "likes_to_woof": True},
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -85,7 +81,6 @@ class AsyncUnionClient:
         import asyncio
 
         from seed import AsyncSeedExhaustive
-        from seed.types.union.types import Animal_Dog
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -95,10 +90,7 @@ class AsyncUnionClient:
 
         async def main() -> None:
             await client.endpoints.union.get_and_return_union(
-                request=Animal_Dog(
-                    name="string",
-                    likes_to_woof=True,
-                ),
+                request={"name": "string", "likes_to_woof": True},
             )
 
 

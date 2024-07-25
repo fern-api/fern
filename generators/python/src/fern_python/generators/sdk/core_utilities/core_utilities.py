@@ -21,7 +21,11 @@ class CoreUtilities:
     SYNC_CLIENT_WRAPPER_CLASS_NAME = "SyncClientWrapper"
 
     def __init__(
-        self, allow_skipping_validation: bool, has_paginated_endpoints: bool, version: PydanticVersionCompatibility, use_typeddict_requests: bool
+        self,
+        allow_skipping_validation: bool,
+        has_paginated_endpoints: bool,
+        version: PydanticVersionCompatibility,
+        use_typeddict_requests: bool,
     ) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)

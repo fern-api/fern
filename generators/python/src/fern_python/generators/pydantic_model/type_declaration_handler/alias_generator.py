@@ -62,11 +62,17 @@ class AliasSnippetGenerator:
         self,
         snippet_writer: SnippetWriter,
         example: ir_types.ExampleAliasType,
+        use_typeddict_request: bool,
+        as_request: bool,
     ):
         self.snippet_writer = snippet_writer
         self.example = example
+        self.as_request = as_request
+        self.use_typeddict_request = use_typeddict_request
 
     def generate_snippet(self) -> Optional[AST.Expression]:
         return self.snippet_writer.get_snippet_for_example_type_reference(
             example_type_reference=self.example.value,
+            use_typeddict_request=self.use_typeddict_request,
+            as_request=self.as_request,
         )

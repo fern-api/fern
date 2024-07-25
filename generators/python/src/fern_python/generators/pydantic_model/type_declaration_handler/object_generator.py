@@ -101,19 +101,28 @@ class ObjectSnippetGenerator:
         snippet_writer: SnippetWriter,
         name: ir_types.DeclaredTypeName,
         example: ir_types.ExampleObjectType,
+        use_typeddict_request: bool,
+        as_request: bool,
     ):
         self.name = name
         self.example = example
         self.snippet_writer = snippet_writer
+        self.as_request = as_request
+        self.use_typeddict_request = use_typeddict_request
 
     def generate_snippet(self) -> AST.Expression:
+        if self.as_request and self.use_typeddict_request:
+            return FernTypedDict.type_to_snippet(example=self.example, snippet_writer=self.snippet_writer)
         return AST.Expression(
             AST.ClassInstantiation(
                 class_=self.snippet_writer.get_class_reference_for_declared_type_name(
                     name=self.name,
                 ),
                 args=self.snippet_writer.get_snippet_for_object_properties(
-                    example=self.example, request_parameter_names={}
+                    example=self.example,
+                    request_parameter_names={},
+                    use_typeddict_request=self.use_typeddict_request,
+                    as_request=self.as_request,
                 ),
             ),
         )

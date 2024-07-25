@@ -67,12 +67,18 @@ class UndiscriminatedUnionSnippetGenerator:
         snippet_writer: SnippetWriter,
         name: ir_types.DeclaredTypeName,
         example: ir_types.ExampleUndiscriminatedUnionType,
+        use_typeddict_request: bool,
+        as_request: bool,
     ):
         self.snippet_writer = snippet_writer
         self.name = name
         self.example = example
+        self.as_request = as_request
+        self.use_typeddict_request = use_typeddict_request
 
     def generate_snippet(self) -> Optional[AST.Expression]:
         return self.snippet_writer.get_snippet_for_example_type_reference(
             example_type_reference=self.example.single_union_type,
+            use_typeddict_request=self.use_typeddict_request,
+            as_request=self.as_request,
         )

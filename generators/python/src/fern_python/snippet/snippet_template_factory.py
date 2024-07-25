@@ -366,6 +366,8 @@ class SnippetTemplateFactory:
                 example=None,
                 example_expression=AST.Expression(TEMPLATE_SENTINEL),
                 single_union_type=sut,
+                use_typeddict_request=self._context.custom_config.pydantic_config.use_typeddict_requests,
+                as_request=True,
             ).generate_snippet_template()
             if snippet_template is not None:
                 imports, snippet_template_str = self._expression_to_snippet_str_and_imports(snippet_template)
@@ -388,6 +390,8 @@ class SnippetTemplateFactory:
                 example=None,
                 example_expression=AST.Expression(TEMPLATE_SENTINEL),
                 single_union_type=sut,
+                use_typeddict_request=self._context.custom_config.pydantic_config.use_typeddict_requests,
+                as_request=True,
             ).generate_snippet_template()
             child_breadcrumbs = name_breadcrumbs or []
             if wire_or_original_name is not None:
@@ -423,6 +427,8 @@ class SnippetTemplateFactory:
                 example=None,
                 example_expression=AST.Expression(TEMPLATE_SENTINEL),
                 single_union_type=sut,
+                use_typeddict_request=self._context.custom_config.pydantic_config.use_typeddict_requests,
+                as_request=True,
             ).generate_snippet_template()
 
             if snippet_template is not None:

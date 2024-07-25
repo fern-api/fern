@@ -139,6 +139,8 @@ class TypeDeclarationHandler:
         expr = self._snippet_writer.get_snippet_for_example_type_shape(
             name=self._declaration.name,
             example_type_shape=declaration.examples[0].shape,
+            use_typeddict_request=False,
+            as_request=False,
         )
         if expr is None:
             return None, None

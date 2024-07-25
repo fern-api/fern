@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from dataclasses import dataclass
 from types import TracebackType
 from typing import Dict, List, Optional, Sequence, Type
 
@@ -11,6 +12,7 @@ from fern_python.codegen.local_class_reference import LocalClassReference
 from fern_python.external_dependencies.typing_extensions import (
     TYPING_EXTENSIONS_DEPENDENCY,
 )
+from fern_python.snippet.snippet_writer import SnippetWriter
 from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 
 from ..context import PydanticGeneratorContext
@@ -19,6 +21,12 @@ TYPING_EXTENSIONS_MODULE = AST.Module.external(
     module_path=("typing_extensions",),
     dependency=TYPING_EXTENSIONS_DEPENDENCY,
 )
+
+
+@dataclass(frozen=True)
+class SimpleObjectProperty:
+    name: str
+    value: ir_types.ExampleTypeReference
 
 
 class FernTypedDict:
@@ -149,6 +157,47 @@ class FernTypedDict:
         exctb: Optional[TracebackType],
     ) -> None:
         self.finish()
+
+    @classmethod
+    def wrap_string_as_example(cls, string: str) -> ir_types.ExampleTypeReference:
+        return ir_types.ExampleTypeReference(
+            shape=ir_types.ExampleTypeReferenceShape.factory.primitive(
+                ir_types.ExamplePrimitive.factory.string(ir_types.EscapedString(original=string))
+            ),
+            json_example=string,
+        )
+
+    @classmethod
+    def snippet_from_properties(
+        cls, example_properties: List[SimpleObjectProperty], snippet_writer: SnippetWriter
+    ) -> AST.Expression:
+        example_dict_pairs: List[ir_types.ExampleKeyValuePair] = []
+        for property in example_properties:
+            example_dict_pairs.append(
+                ir_types.ExampleKeyValuePair(
+                    key=ir_types.ExampleTypeReference(
+                        shape=ir_types.ExampleTypeReferenceShape.factory.primitive(
+                            ir_types.ExamplePrimitive.factory.string(ir_types.EscapedString(original=property.name))
+                        ),
+                        json_example=property.name,
+                    ),
+                    value=property.value,
+                )
+            )
+        return snippet_writer._get_snippet_for_map(example_dict_pairs, use_typeddict_request=True, as_request=True)
+
+    @classmethod
+    def type_to_snippet(cls, example: ir_types.ExampleObjectType, snippet_writer: SnippetWriter) -> AST.Expression:
+        return cls.snippet_from_properties(
+            example_properties=[
+                SimpleObjectProperty(
+                    name=property.name.name.snake_case.safe_name,
+                    value=property.value,
+                )
+                for property in example.properties
+            ],
+            snippet_writer=snippet_writer,
+        )
 
     @classmethod
     def _can_be_typeddict_tr(

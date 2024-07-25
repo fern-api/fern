@@ -77,18 +77,13 @@ class ContainerClient:
         Examples
         --------
         from seed import SeedExhaustive
-        from seed.types.object.types import ObjectWithRequiredField
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.container.get_and_return_list_of_objects(
-            request=[
-                ObjectWithRequiredField(
-                    string="string",
-                )
-            ],
+            request=[{"string": "string"}],
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -161,18 +156,13 @@ class ContainerClient:
         Examples
         --------
         from seed import SeedExhaustive
-        from seed.types.object.types import ObjectWithRequiredField
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.container.get_and_return_set_of_objects(
-            request=[
-                ObjectWithRequiredField(
-                    string="string",
-                )
-            ],
+            request=[{"string": "string"}],
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -245,18 +235,13 @@ class ContainerClient:
         Examples
         --------
         from seed import SeedExhaustive
-        from seed.types.object.types import ObjectWithRequiredField
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.container.get_and_return_map_of_prim_to_object(
-            request={
-                "string": ObjectWithRequiredField(
-                    string="string",
-                )
-            },
+            request={"string": {"string": "string"}},
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -291,16 +276,13 @@ class ContainerClient:
         Examples
         --------
         from seed import SeedExhaustive
-        from seed.types.object.types import ObjectWithRequiredField
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.container.get_and_return_optional(
-            request=ObjectWithRequiredField(
-                string="string",
-            ),
+            request={"string": "string"},
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -388,7 +370,6 @@ class AsyncContainerClient:
         import asyncio
 
         from seed import AsyncSeedExhaustive
-        from seed.types.object.types import ObjectWithRequiredField
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -398,11 +379,7 @@ class AsyncContainerClient:
 
         async def main() -> None:
             await client.endpoints.container.get_and_return_list_of_objects(
-                request=[
-                    ObjectWithRequiredField(
-                        string="string",
-                    )
-                ],
+                request=[{"string": "string"}],
             )
 
 
@@ -488,7 +465,6 @@ class AsyncContainerClient:
         import asyncio
 
         from seed import AsyncSeedExhaustive
-        from seed.types.object.types import ObjectWithRequiredField
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -498,11 +474,7 @@ class AsyncContainerClient:
 
         async def main() -> None:
             await client.endpoints.container.get_and_return_set_of_objects(
-                request=[
-                    ObjectWithRequiredField(
-                        string="string",
-                    )
-                ],
+                request=[{"string": "string"}],
             )
 
 
@@ -588,7 +560,6 @@ class AsyncContainerClient:
         import asyncio
 
         from seed import AsyncSeedExhaustive
-        from seed.types.object.types import ObjectWithRequiredField
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -598,11 +569,7 @@ class AsyncContainerClient:
 
         async def main() -> None:
             await client.endpoints.container.get_and_return_map_of_prim_to_object(
-                request={
-                    "string": ObjectWithRequiredField(
-                        string="string",
-                    )
-                },
+                request={"string": {"string": "string"}},
             )
 
 
@@ -642,7 +609,6 @@ class AsyncContainerClient:
         import asyncio
 
         from seed import AsyncSeedExhaustive
-        from seed.types.object.types import ObjectWithRequiredField
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -652,9 +618,7 @@ class AsyncContainerClient:
 
         async def main() -> None:
             await client.endpoints.container.get_and_return_optional(
-                request=ObjectWithRequiredField(
-                    string="string",
-                ),
+                request={"string": "string"},
             )
 
 

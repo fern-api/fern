@@ -177,30 +177,36 @@ class PydanticModelGenerator(AbstractGenerator):
             improved_imports=improved_imports,
         )
 
-        # TODO(armando): Handle typeddicts here too, ideally we just call .write on the TypedDict instance
-        # but we won't really have this at that time, I think we'll want a type_id to node map at some point.
         type_declaration_snippet_generator = TypeDeclarationSnippetGenerator(
-            alias=lambda example: AliasSnippetGenerator(
+            alias=lambda example, as_request, use_typeddict_request: AliasSnippetGenerator(
                 snippet_writer=snippet_writer,
                 example=example,
+                as_request=as_request,
+                use_typeddict_request=use_typeddict_request,
             ).generate_snippet(),
             enum=lambda name, example: EnumSnippetGenerator(
                 snippet_writer=snippet_writer, name=name, example=example, use_str_enums=use_str_enums
             ).generate_snippet(),
-            object=lambda name, example: ObjectSnippetGenerator(
+            object=lambda name, example, as_request, use_typeddict_request: ObjectSnippetGenerator(
                 snippet_writer=snippet_writer,
                 name=name,
                 example=example,
+                as_request=as_request,
+                use_typeddict_request=use_typeddict_request,
             ).generate_snippet(),
-            discriminated_union=lambda name, example: DiscriminatedUnionSnippetGenerator(
+            discriminated_union=lambda name, example, as_request, use_typeddict_request: DiscriminatedUnionSnippetGenerator(
                 snippet_writer=snippet_writer,
                 name=name,
                 example=example,
+                as_request=as_request,
+                use_typeddict_request=use_typeddict_request,
             ).generate_snippet(),
-            undiscriminated_union=lambda name, example: UndiscriminatedUnionSnippetGenerator(
+            undiscriminated_union=lambda name, example, as_request, use_typeddict_request: UndiscriminatedUnionSnippetGenerator(
                 snippet_writer=snippet_writer,
                 name=name,
                 example=example,
+                as_request=as_request,
+                use_typeddict_request=use_typeddict_request,
             ).generate_snippet(),
         )
 
