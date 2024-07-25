@@ -54,7 +54,7 @@ public class RawClient(
             {
                 var serializerOptions = new JsonSerializerOptions { WriteIndented = true, };
                 httpRequest.Content = new StringContent(
-                    JsonSerializer.Serialize(jsonRequest.Body, serializerOptions),
+                    JsonUtils.serialize(jsonrequest.Body, serializerOptions),
                     Encoding.UTF8,
                     "application/json"
                 );
