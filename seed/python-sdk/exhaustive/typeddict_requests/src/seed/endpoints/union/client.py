@@ -42,7 +42,7 @@ class UnionClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.union.get_and_return_union(
-            request={"name": "string", "likes_to_woof": True},
+            request={"name": "string", "likes_to_woof": True, "animal": "dog"},
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -90,7 +90,7 @@ class AsyncUnionClient:
 
         async def main() -> None:
             await client.endpoints.union.get_and_return_union(
-                request={"name": "string", "likes_to_woof": True},
+                request={"name": "string", "likes_to_woof": True, "animal": "dog"},
             )
 
 

@@ -120,6 +120,16 @@ class FernTypedDict:
             # need to string reference and import through `if TYPE_CHECKING`.
             as_if_type_checking = True
 
+        is_optional = False
+        type_reference_unioned = type_reference.get_as_union()
+        # For TypedDicts, the NotRequired typehint has to surround the potential Annotation
+        # typehint, so we need to unwrap the optional container if it exists first.
+        if type_reference_unioned.type == "container":
+            container_reference_unioned = type_reference_unioned.container.get_as_union()
+            if container_reference_unioned.type == "optional":
+                type_reference = container_reference_unioned.optional
+                is_optional = True
+
         type_hint = self._get_type_hint_for_type_reference(type_reference, as_if_type_checking)
         if json_field_name != name:
             field_metadata = self._context.core_utilities.get_field_metadata().get_instance()
@@ -129,6 +139,8 @@ class FernTypedDict:
                 type=type_hint,
                 annotation=field_metadata.get_as_node(),
             )
+        if is_optional:
+            type_hint = AST.TypeHint.not_required(type_hint)
 
         self._class_declaration.add_class_var(
             AST.VariableDeclaration(
@@ -187,15 +199,17 @@ class FernTypedDict:
         return snippet_writer._get_snippet_for_map(example_dict_pairs, use_typeddict_request=True, as_request=True)
 
     @classmethod
-    def type_to_snippet(cls, example: ir_types.ExampleObjectType, snippet_writer: SnippetWriter) -> AST.Expression:
-        return cls.snippet_from_properties(
-            example_properties=[
+    def type_to_snippet(cls, example: ir_types.ExampleObjectType, snippet_writer: SnippetWriter, additional_properties: List[SimpleObjectProperty] = []) -> AST.Expression:
+        example_properties = [
                 SimpleObjectProperty(
                     name=property.name.name.snake_case.safe_name,
                     value=property.value,
                 )
                 for property in example.properties
-            ],
+            ]
+        example_properties.extend(additional_properties)
+        return cls.snippet_from_properties(
+            example_properties=example_properties,
             snippet_writer=snippet_writer,
         )
 

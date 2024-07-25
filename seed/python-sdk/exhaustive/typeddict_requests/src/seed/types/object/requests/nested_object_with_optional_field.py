@@ -9,7 +9,7 @@ from .object_with_optional_field import ObjectWithOptionalFieldParams
 
 
 class NestedObjectWithOptionalFieldParams(typing_extensions.TypedDict):
-    string: typing_extensions.NotRequired[str | None]
-    nested_object: typing_extensions.Annotated[
-        typing_extensions.NotRequired[ObjectWithOptionalFieldParams | None], FieldMetadata(alias="NestedObject")
+    string: typing_extensions.NotRequired[str]
+    nested_object: typing_extensions.NotRequired[
+        typing_extensions.Annotated[ObjectWithOptionalFieldParams, FieldMetadata(alias="NestedObject")]
     ]

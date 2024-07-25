@@ -19,6 +19,7 @@ from .pydantic_utilities import (
 from .query_encoder import encode_query
 from .remove_none_from_dict import remove_none_from_dict
 from .request_options import RequestOptions
+from .serialization import FieldMetadata
 from .unchecked_base_model import UncheckedBaseModel, UnionMetadata, construct_type
 
 __all__ = [
@@ -26,6 +27,7 @@ __all__ = [
     "AsyncClientWrapper",
     "AsyncHttpClient",
     "BaseClientWrapper",
+    "FieldMetadata",
     "File",
     "HttpClient",
     "IS_PYDANTIC_V2",

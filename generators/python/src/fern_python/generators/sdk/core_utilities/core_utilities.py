@@ -131,16 +131,15 @@ class CoreUtilities:
             exports={"encode_query"},
         )
 
-        if self._use_typeddict_requests:
-            self._copy_file_to_project(
-                project=project,
-                relative_filepath_on_disk="serialization.py",
-                filepath_in_project=Filepath(
-                    directories=self.filepath,
-                    file=Filepath.FilepathPart(module_name="serialization"),
-                ),
-                exports={"FieldMetadata"},
-            )
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="serialization.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="serialization"),
+            ),
+            exports={"FieldMetadata", "convert_and_respect_annotation_metadata"},
+        )
 
         if self._has_paginated_endpoints:
             self._copy_file_to_project(
@@ -256,6 +255,23 @@ class CoreUtilities:
                     named_import=CoreUtilities.SYNC_CLIENT_WRAPPER_CLASS_NAME,
                 ),
             )
+        
+    def convert_and_respect_annotation_metadata(self, object_: AST.Expression, annotation: AST.TypeHint) -> AST.Expression:
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    qualified_name_excluding_import=(),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path, "serialization"),
+                        named_import="convert_and_respect_annotation_metadata",
+                    ),
+                ),
+                kwargs=[
+                    ("object_", object_),
+                    ("annotation", AST.Expression(annotation)),
+                ],
+            )
+        )
 
     def remove_none_from_dict(self, headers: AST.Expression) -> AST.Expression:
         return AST.Expression(

@@ -2378,7 +2378,7 @@ client = SeedExhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 client.endpoints.union.get_and_return_union(
-    request={"name": "string", "likes_to_woof": True},
+    request={"name": "string", "likes_to_woof": True, "animal": "dog"},
 )
 
 ```

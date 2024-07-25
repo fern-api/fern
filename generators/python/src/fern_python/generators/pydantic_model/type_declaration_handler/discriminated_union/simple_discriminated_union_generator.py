@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from operator import add
 from typing import List, Optional, Set, Union
 
 import fern.ir.resources as ir_types
@@ -463,16 +464,19 @@ class DiscriminatedUnionSnippetGenerator:
             return sut.shape.visit(
                 same_properties_as_object=lambda _: self._get_snippet_for_union_with_same_properties_as_object(
                     name=self.name,
+                    discriminant_field_name=sut.discriminant_value,
                     wire_discriminant_value=sut.discriminant_value,  # type: ignore
                     example=ex,  # type: ignore
                 ),
                 single_property=lambda _: self._get_snippet_for_union_with_single_property(
                     name=self.name,
+                    discriminant_field_name=sut.discriminant_value,
                     wire_discriminant_value=sut.discriminant_value,  # type: ignore
                     example=ex,  # type: ignore
                 ),
                 no_properties=lambda: self._get_snippet_for_union_with_no_properties(
                     name=self.name,
+                    discriminant_field_name=sut.discriminant_value,
                     wire_discriminant_value=sut.discriminant_value,  # type: ignore
                 ),
             )
@@ -485,27 +489,40 @@ class DiscriminatedUnionSnippetGenerator:
             return ex.single_union_type.shape.visit(
                 same_properties_as_object=lambda object: self._get_snippet_for_union_with_same_properties_as_object(
                     name=self.name,
+                    discriminant_field_name=ex.discriminant,
                     wire_discriminant_value=ex.single_union_type.wire_discriminant_value,  # type: ignore
                     example=object,
                 ),
                 single_property=lambda example_type_reference: self._get_snippet_for_union_with_single_property(
                     name=self.name,
+                    discriminant_field_name=ex.discriminant,
                     wire_discriminant_value=ex.single_union_type.wire_discriminant_value,  # type: ignore
                     example=example_type_reference,
                 ),
                 no_properties=lambda: self._get_snippet_for_union_with_no_properties(
-                    name=self.name, wire_discriminant_value=ex.single_union_type.wire_discriminant_value  # type: ignore
+                    name=self.name,
+                    discriminant_field_name=ex.discriminant,
+                    wire_discriminant_value=ex.single_union_type.wire_discriminant_value  # type: ignore
                 ),
             )
 
     def _get_snippet_for_union_with_same_properties_as_object(
         self,
         name: ir_types.DeclaredTypeName,
+        discriminant_field_name: ir_types.NameAndWireValue,
         wire_discriminant_value: ir_types.NameAndWireValue,
         example: Union[ir_types.ExampleObjectTypeWithTypeId, AST.Expression],
     ) -> AST.Expression:
         if isinstance(example, ir_types.ExampleObjectTypeWithTypeId) and self.as_request and self.use_typeddict_request:
-            return FernTypedDict.type_to_snippet(example=example.object, snippet_writer=self.snippet_writer)
+            return FernTypedDict.type_to_snippet(
+                example=example.object,
+                additional_properties=[
+                    SimpleObjectProperty(
+                        name=discriminant_field_name.name.snake_case.safe_name,
+                        value=FernTypedDict.wrap_string_as_example(wire_discriminant_value.wire_value),
+                    )
+                ],
+                snippet_writer=self.snippet_writer)
 
         args: List[AST.Expression] = []
         if isinstance(example, ir_types.ExampleObjectTypeWithTypeId):
@@ -535,12 +552,12 @@ class DiscriminatedUnionSnippetGenerator:
     def _get_snippet_for_union_with_single_property(
         self,
         name: ir_types.DeclaredTypeName,
+        discriminant_field_name: ir_types.NameAndWireValue,
         wire_discriminant_value: ir_types.NameAndWireValue,
         example: Union[ir_types.ExampleTypeReference, AST.Expression],
     ) -> AST.Expression:
         if (
-            self.sut is not None
-            and isinstance(example, ir_types.ExampleTypeReference)
+            isinstance(example, ir_types.ExampleTypeReference)
             and self.as_request
             and self.use_typeddict_request
         ):
@@ -551,7 +568,7 @@ class DiscriminatedUnionSnippetGenerator:
                         value=example,
                     ),
                     SimpleObjectProperty(
-                        name=self.sut.discriminant_value.name.snake_case.safe_name,
+                        name=discriminant_field_name.name.snake_case.safe_name,
                         value=FernTypedDict.wrap_string_as_example(wire_discriminant_value.wire_value),
                     ),
                 ],
@@ -589,13 +606,14 @@ class DiscriminatedUnionSnippetGenerator:
     def _get_snippet_for_union_with_no_properties(
         self,
         name: ir_types.DeclaredTypeName,
+        discriminant_field_name: ir_types.NameAndWireValue,
         wire_discriminant_value: ir_types.NameAndWireValue,
     ) -> AST.Expression:
-        if self.sut is not None and self.as_request and self.use_typeddict_request:
+        if self.as_request and self.use_typeddict_request:
             return FernTypedDict.snippet_from_properties(
                 example_properties=[
                     SimpleObjectProperty(
-                        name=self.sut.discriminant_value.name.snake_case.safe_name,
+                        name=discriminant_field_name.name.snake_case.safe_name,
                         value=FernTypedDict.wrap_string_as_example(wire_discriminant_value.wire_value),
                     )
                 ],

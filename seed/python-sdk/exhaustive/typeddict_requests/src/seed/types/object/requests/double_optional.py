@@ -9,6 +9,6 @@ from ..types.optional_alias import OptionalAlias
 
 
 class DoubleOptionalParams(typing_extensions.TypedDict):
-    optional_alias: typing_extensions.Annotated[
-        typing_extensions.NotRequired[OptionalAlias | None], FieldMetadata(alias="optionalAlias")
+    optional_alias: typing_extensions.NotRequired[
+        typing_extensions.Annotated[OptionalAlias, FieldMetadata(alias="optionalAlias")]
     ]

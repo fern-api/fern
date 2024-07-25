@@ -45,16 +45,15 @@ class CoreUtilities:
         )
         project.add_dependency(PYDANTIC_CORE_DEPENDENCY)
 
-        if self._use_typeddict_requests:
-            self._copy_file_to_project(
-                project=project,
-                relative_filepath_on_disk="serialization.py",
-                filepath_in_project=Filepath(
-                    directories=self.filepath,
-                    file=Filepath.FilepathPart(module_name="serialization"),
-                ),
-                exports={"FieldMetadata"},
-            )
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="serialization.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="serialization"),
+            ),
+            exports={"FieldMetadata"},
+        )
 
         if self._allow_skipping_validation:
             self._copy_file_to_project(

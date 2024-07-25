@@ -20,12 +20,10 @@ class TypeHint(AstNode):
         arguments: Sequence[Expression] = None,
         is_optional: bool = False,
         is_literal: bool = False,
-        should_pipe_separate_type_parameters: bool = False,
     ):
         self._type = type
         self._type_parameters = type_parameters or []
         self._arguments = arguments or []
-        self._should_pipe_separate_type_parameters = should_pipe_separate_type_parameters
 
         self.is_optional = is_optional
         self.is_literal = is_literal
@@ -78,8 +76,7 @@ class TypeHint(AstNode):
     def not_required(wrapped_type: TypeHint) -> TypeHint:
         return TypeHint(
             type=get_reference_to_typing_extensions_import("NotRequired", require_postponed_annotations=True),
-            type_parameters=[TypeParameter(wrapped_type), TypeParameter(TypeHint.none())],
-            should_pipe_separate_type_parameters=True,
+            type_parameters=[TypeParameter(wrapped_type)],
         )
 
     @staticmethod
@@ -231,10 +228,7 @@ class TypeHint(AstNode):
             just_wrote_parameter = False
             for type_parameter in self._type_parameters:
                 if just_wrote_parameter:
-                    if self._should_pipe_separate_type_parameters:
-                        writer.write("|")
-                    else:
-                        writer.write(", ")
+                    writer.write(", ")
                 type_parameter.write(writer=writer)
                 just_wrote_parameter = True
             writer.write("]")
