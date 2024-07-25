@@ -100,11 +100,15 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         });
     }
 
+    private getComputedClientName(): string {
+        return `${upperFirst(camelCase(this.config.organization))}${this.ir.apiName.pascalCase.unsafeName}`;
+    }
+
     public getRootClientClassName(): string {
         if (this.customConfig["client-class-name"] != null) {
             return this.customConfig["client-class-name"];
         }
-        return `${upperFirst(camelCase(this.config.organization))}${this.ir.apiName.pascalCase.unsafeName}Client`;
+        return `${this.getComputedClientName()}Client`;
     }
 
     public getRawClientClassReference(): csharp.ClassReference {
@@ -115,8 +119,14 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getEnvironmentsClassReference(): csharp.ClassReference {
+        let environmentsClassName: string;
+        if (this.customConfig["client-class-name"] != null) {
+            environmentsClassName = `${this.customConfig["client-class-name"]}Environment`;
+        } else {
+            environmentsClassName = `${this.getComputedClientName()}Environment`;
+        }
         return csharp.classReference({
-            name: "Environments",
+            name: environmentsClassName,
             namespace: this.getCoreNamespace()
         });
     }

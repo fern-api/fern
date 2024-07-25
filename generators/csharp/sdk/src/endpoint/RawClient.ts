@@ -6,6 +6,7 @@ export declare namespace RawClient {
     export type RequestBodyType = "json" | "bytes";
 
     export interface MakeRequestArgs {
+        baseUrl: csharp.CodeBlock;
         /** the reference to the client */
         clientReference: string;
         /** the endpoint for the endpoint */
@@ -37,6 +38,7 @@ export class RawClient {
      * Constructs a request to the RawClient
      */
     public makeRequest({
+        baseUrl,
         endpoint,
         bodyReference,
         clientReference,
@@ -46,6 +48,10 @@ export class RawClient {
         requestType
     }: RawClient.MakeRequestArgs): csharp.MethodInvocation {
         const arguments_: csharp.ClassInstantiation.Arguments = [
+            {
+                name: "BaseUrl",
+                assignment: baseUrl
+            },
             {
                 name: "Method",
                 assignment: this.getCsharpHttpMethod(endpoint.method)

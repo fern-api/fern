@@ -10,7 +10,7 @@ public partial class ClientOptions
     /// <summary>
     /// The Base URL for the API.
     /// </summary>
-    public string BaseUrl { get; init; } = Environments.PROD;
+    public string BaseUrl { get; init; } = SeedTraceEnvironment.PROD;
 
     /// <summary>
     /// The http client used to make requests.

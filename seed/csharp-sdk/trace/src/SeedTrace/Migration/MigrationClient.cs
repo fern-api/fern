@@ -26,6 +26,7 @@ public class MigrationClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "/migration-info/all",
                 Headers = _headers

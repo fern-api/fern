@@ -20,6 +20,7 @@ public class InlinedRequestClient
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "inlined",
                 Body = request

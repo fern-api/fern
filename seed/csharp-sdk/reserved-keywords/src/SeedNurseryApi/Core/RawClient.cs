@@ -13,7 +13,7 @@ public class RawClient(Dictionary<string, string> headers, ClientOptions clientO
     /// <summary>
     /// The http client used to make requests.
     /// </summary>
-    private readonly ClientOptions _clientOptions = clientOptions;
+    public readonly ClientOptions Options = clientOptions;
 
     /// <summary>
     /// Global headers to be sent with every request.
@@ -22,7 +22,7 @@ public class RawClient(Dictionary<string, string> headers, ClientOptions clientO
 
     public async Task<ApiResponse> MakeRequestAsync(BaseApiRequest request)
     {
-        var url = BuildUrl(request.Path, request.Query);
+        var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url);
         if (request.ContentType != null)
         {
@@ -55,12 +55,14 @@ public class RawClient(Dictionary<string, string> headers, ClientOptions clientO
             httpRequest.Content = new StreamContent(streamRequest.Body);
         }
         // Send the request
-        var response = await _clientOptions.HttpClient.SendAsync(httpRequest);
+        var response = await Options.HttpClient.SendAsync(httpRequest);
         return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
     }
 
     public record BaseApiRequest
     {
+        public required string BaseUrl { get; init; }
+
         public required HttpMethod Method { get; init; }
 
         public required string Path { get; init; }
@@ -100,15 +102,15 @@ public class RawClient(Dictionary<string, string> headers, ClientOptions clientO
         public required HttpResponseMessage Raw { get; init; }
     }
 
-    private string BuildUrl(string path, Dictionary<string, object> query)
+    private string BuildUrl(BaseApiRequest request)
     {
-        var trimmedBaseUrl = _clientOptions.BaseUrl.TrimEnd('/');
-        var trimmedBasePath = path.TrimStart('/');
+        var trimmedBaseUrl = request.BaseUrl.TrimEnd('/');
+        var trimmedBasePath = request.Path.TrimStart('/');
         var url = $"{trimmedBaseUrl}/{trimmedBasePath}";
-        if (query.Count <= 0)
+        if (request.Query.Count <= 0)
             return url;
         url += "?";
-        url = query.Aggregate(
+        url = request.Query.Aggregate(
             url,
             (current, queryItem) => current + $"{queryItem.Key}={queryItem.Value}&"
         );
