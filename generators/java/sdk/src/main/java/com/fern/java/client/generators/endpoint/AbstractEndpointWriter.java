@@ -330,13 +330,12 @@ public abstract class AbstractEndpointWriter {
             boolean sendContentType);
 
     public final CodeBlock getResponseParserCodeBlock() {
-        String defaultedClientName = "client";
         CodeBlock.Builder httpResponseBuilder = CodeBlock.builder()
                 // Default the request client
                 .addStatement(
                         "$T $L = $N.$N()",
                         OkHttpClient.class,
-                        defaultedClientName,
+                        getDefaultedClientName(),
                         clientOptionsField,
                         generatedClientOptions.httpClient())
                 .beginControlFlow(
@@ -346,19 +345,11 @@ public abstract class AbstractEndpointWriter {
                 // Set the client's callTimeout if requestOptions overrides it has one
                 .addStatement(
                         "$L = $N.$N($L)",
-                        defaultedClientName,
+                        getDefaultedClientName(),
                         clientOptionsField,
                         generatedClientOptions.httpClientWithTimeout(),
                         REQUEST_OPTIONS_PARAMETER_NAME)
-                .endControlFlow()
-                .beginControlFlow(
-                        "try ($T $L = $N.newCall($L).execute())",
-                        Response.class,
-                        getResponseName(),
-                        defaultedClientName,
-                        getOkhttpRequestName())
-                .addStatement("$T $L = $N.body()", ResponseBody.class, getResponseBodyName(), getResponseName())
-                .beginControlFlow("if ($L.isSuccessful())", getResponseName());
+                .endControlFlow();
         if (httpEndpoint.getResponse().isPresent()
                 && httpEndpoint.getResponse().get().getBody().isPresent()) {
             httpEndpoint
@@ -369,6 +360,7 @@ public abstract class AbstractEndpointWriter {
                     .visit(new SuccessResponseWriter(
                             httpResponseBuilder, endpointMethodBuilder, clientGeneratorContext, generatedObjectMapper));
         } else {
+            addTryWithResourcesVariant(httpResponseBuilder);
             httpResponseBuilder.addStatement("return");
         }
         httpResponseBuilder.endControlFlow();
@@ -464,11 +456,40 @@ public abstract class AbstractEndpointWriter {
         }
     }
 
+    private void addNonTryWithResourcesVariant(CodeBlock.Builder httpResponseBuilder) {
+        httpResponseBuilder
+                .beginControlFlow("try")
+                .addStatement(
+                        "$T $L = $N.newCall($L).execute()",
+                        Response.class,
+                        getResponseName(),
+                        getDefaultedClientName(),
+                        getOkhttpRequestName())
+                .addStatement("$T $L = $N.body()", ResponseBody.class, getResponseBodyName(), getResponseName())
+                .beginControlFlow("if ($L.isSuccessful())", getResponseName());
+    }
+
+    private void addTryWithResourcesVariant(CodeBlock.Builder httpResponseBuilder) {
+        httpResponseBuilder
+                .beginControlFlow(
+                        "try ($T $L = $N.newCall($L).execute())",
+                        Response.class,
+                        getResponseName(),
+                        getDefaultedClientName(),
+                        getOkhttpRequestName())
+                .addStatement("$T $L = $N.body()", ResponseBody.class, getResponseBodyName(), getResponseName())
+                .beginControlFlow("if ($L.isSuccessful())", getResponseName());
+    }
+
     public final String getVariableName(String variable) {
         if (this.endpointParameterNames.contains(variable)) {
             return "_" + variable;
         }
         return variable;
+    }
+
+    private String getDefaultedClientName() {
+        return "client";
     }
 
     private String getHttpUrlName() {
@@ -593,6 +614,7 @@ public abstract class AbstractEndpointWriter {
 
         @Override
         public Void visitJson(JsonResponse json) {
+            addTryWithResourcesVariant(httpResponseBuilder);
             JsonResponseBodyWithProperty body = json.visit(new JsonResponse.Visitor<>() {
                 @Override
                 public JsonResponseBodyWithProperty visitResponse(JsonResponseBody response) {
@@ -817,13 +839,18 @@ public abstract class AbstractEndpointWriter {
 
         @Override
         public Void visitFileDownload(FileDownloadResponse fileDownload) {
+            addNonTryWithResourcesVariant(httpResponseBuilder);
             endpointMethodBuilder.returns(InputStream.class);
-            httpResponseBuilder.addStatement("return $L.byteStream()", getResponseBodyName());
+            httpResponseBuilder.addStatement(
+                    "return new $T($L)",
+                    clientGeneratorContext.getPoetClassNameFactory().getResponseBodyInputStreamClassName(),
+                    getResponseName());
             return null;
         }
 
         @Override
         public Void visitText(TextResponse text) {
+            addTryWithResourcesVariant(httpResponseBuilder);
             endpointMethodBuilder.returns(String.class);
             httpResponseBuilder.addStatement("return $L.string()", getResponseBodyName());
             return null;
@@ -831,6 +858,7 @@ public abstract class AbstractEndpointWriter {
 
         @Override
         public Void visitStreaming(StreamingResponse streaming) {
+            addNonTryWithResourcesVariant(httpResponseBuilder);
             com.fern.ir.model.types.TypeReference bodyType = streaming.visit(new StreamingResponse.Visitor<>() {
                 @Override
                 public com.fern.ir.model.types.TypeReference visitJson(JsonStreamChunk json) {
@@ -860,11 +888,12 @@ public abstract class AbstractEndpointWriter {
             endpointMethodBuilder.returns(ParameterizedTypeName.get(ClassName.get(Iterable.class), bodyTypeName));
 
             httpResponseBuilder.addStatement(
-                    "return new $T<$T>($T.class, $L.charStream(), $S)",
+                    "return new $T<$T>($T.class, new $T($L), $S)",
                     clientGeneratorContext.getPoetClassNameFactory().getStreamClassName(),
                     bodyTypeName,
                     bodyTypeName,
-                    getResponseBodyName(),
+                    clientGeneratorContext.getPoetClassNameFactory().getResponseBodyReaderClassName(),
+                    getResponseName(),
                     terminator);
 
             return null;
