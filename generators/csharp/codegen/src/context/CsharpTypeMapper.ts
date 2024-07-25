@@ -90,7 +90,7 @@ export class CsharpTypeMapper {
             long: () => csharp.Type.long(),
             date: () => csharp.Type.date(),
             dateTime: () => csharp.Type.dateTime(),
-            uuid: () => csharp.Type.uuid(),
+            uuid: () => csharp.Type.string(),
             // https://learn.microsoft.com/en-us/dotnet/api/system.convert.tobase64string?view=net-8.0
             base64: () => csharp.Type.string(),
             _other: () => csharp.Type.object(),

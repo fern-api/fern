@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using SeedValidation;
 
 #nullable enable
 
@@ -15,7 +14,4 @@ public record CreateRequest
 
     [JsonPropertyName("name")]
     public required string Name { get; init; }
-
-    [JsonPropertyName("shape")]
-    public required Shape Shape { get; init; }
 }
