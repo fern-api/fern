@@ -49,7 +49,7 @@ export class RawClient {
     }: RawClient.MakeRequestArgs): csharp.MethodInvocation {
         const arguments_: csharp.ClassInstantiation.Arguments = [
             {
-                name: "BaseURL",
+                name: "BaseUrl",
                 assignment: baseUrl
             },
             {

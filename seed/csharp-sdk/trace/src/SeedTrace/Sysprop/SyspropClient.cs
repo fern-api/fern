@@ -20,7 +20,7 @@ public class SyspropClient
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseURL = _client.Options.BaseURL,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Put,
                 Path = $"/sysprop/num-warm-instances/{language}/{numWarmInstances}"
             }
@@ -32,7 +32,7 @@ public class SyspropClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseURL = _client.Options.BaseURL,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "/sysprop/num-warm-instances"
             }

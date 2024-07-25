@@ -19,7 +19,7 @@ public class UnionClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseURL = _client.Options.BaseURL,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"/{id}"
             }
@@ -37,7 +37,7 @@ public class UnionClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseURL = _client.Options.BaseURL,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethodExtensions.Patch,
                 Path = "",
                 Body = request

@@ -20,7 +20,7 @@ public class HttpMethodsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseURL = _client.Options.BaseURL,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"/http-methods/{id}"
             }
@@ -38,7 +38,7 @@ public class HttpMethodsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseURL = _client.Options.BaseURL,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/http-methods",
                 Body = request
@@ -60,7 +60,7 @@ public class HttpMethodsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseURL = _client.Options.BaseURL,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Put,
                 Path = $"/http-methods/{id}",
                 Body = request
@@ -82,7 +82,7 @@ public class HttpMethodsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseURL = _client.Options.BaseURL,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethodExtensions.Patch,
                 Path = $"/http-methods/{id}",
                 Body = request
@@ -101,7 +101,7 @@ public class HttpMethodsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseURL = _client.Options.BaseURL,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Delete,
                 Path = $"/http-methods/{id}"
             }

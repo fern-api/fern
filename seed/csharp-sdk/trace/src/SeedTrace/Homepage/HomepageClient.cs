@@ -19,7 +19,7 @@ public class HomepageClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseURL = _client.Options.BaseURL,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "/homepage-problems"
             }
@@ -37,7 +37,7 @@ public class HomepageClient
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseURL = _client.Options.BaseURL,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/homepage-problems",
                 Body = request

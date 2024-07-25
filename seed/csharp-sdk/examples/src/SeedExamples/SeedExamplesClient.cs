@@ -41,7 +41,7 @@ public partial class SeedExamplesClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseURL = _client.Options.BaseURL,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "",
                 Body = request

@@ -33,7 +33,7 @@ public class PlaylistClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseURL = _client.Options.BaseURL,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"/v2/playlist/{serviceParam}/create",
                 Body = request.Body,
@@ -73,7 +73,7 @@ public class PlaylistClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseURL = _client.Options.BaseURL,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"/v2/playlist/{serviceParam}/all",
                 Query = _query
@@ -95,7 +95,7 @@ public class PlaylistClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseURL = _client.Options.BaseURL,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"/v2/playlist/{serviceParam}/{playlistId}"
             }
@@ -120,7 +120,7 @@ public class PlaylistClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseURL = _client.Options.BaseURL,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Put,
                 Path = $"/v2/playlist/{serviceParam}/{playlistId}",
                 Body = request
@@ -142,7 +142,7 @@ public class PlaylistClient
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseURL = _client.Options.BaseURL,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Delete,
                 Path = $"/v2/playlist/{serviceParam}/{playlistId}"
             }

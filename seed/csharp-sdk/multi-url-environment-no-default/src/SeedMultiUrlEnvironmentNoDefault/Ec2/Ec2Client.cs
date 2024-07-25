@@ -20,7 +20,7 @@ public class Ec2Client
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseURL = _client.Options.Environment.Ec2,
+                BaseUrl = _client.Options.Environment.Ec2,
                 Method = HttpMethod.Post,
                 Path = "/ec2/boot",
                 Body = request
