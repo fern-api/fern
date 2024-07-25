@@ -3,10 +3,13 @@
 import typing
 from json.decoder import JSONDecodeError
 
+import typing_extensions
+
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
+from ...core.serialization import convert_and_respect_annotation_metadata
 from ...types.object.requests.object_with_required_field import ObjectWithRequiredFieldParams
 from ...types.object.types.object_with_required_field import ObjectWithRequiredField
 
@@ -87,7 +90,13 @@ class ContainerClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "container/list-of-objects", method="POST", json=request, request_options=request_options, omit=OMIT
+            "container/list-of-objects",
+            method="POST",
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Sequence[ObjectWithRequiredFieldParams]
+            ),
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -166,7 +175,13 @@ class ContainerClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "container/set-of-objects", method="POST", json=request, request_options=request_options, omit=OMIT
+            "container/set-of-objects",
+            method="POST",
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Sequence[ObjectWithRequiredFieldParams]
+            ),
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -245,7 +260,13 @@ class ContainerClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "container/map-prim-to-object", method="POST", json=request, request_options=request_options, omit=OMIT
+            "container/map-prim-to-object",
+            method="POST",
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Dict[str, ObjectWithRequiredFieldParams]
+            ),
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -286,7 +307,13 @@ class ContainerClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "container/opt-objects", method="POST", json=request, request_options=request_options, omit=OMIT
+            "container/opt-objects",
+            method="POST",
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing_extensions.NotRequired[ObjectWithRequiredFieldParams]
+            ),
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -386,7 +413,13 @@ class AsyncContainerClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "container/list-of-objects", method="POST", json=request, request_options=request_options, omit=OMIT
+            "container/list-of-objects",
+            method="POST",
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Sequence[ObjectWithRequiredFieldParams]
+            ),
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -481,7 +514,13 @@ class AsyncContainerClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "container/set-of-objects", method="POST", json=request, request_options=request_options, omit=OMIT
+            "container/set-of-objects",
+            method="POST",
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Sequence[ObjectWithRequiredFieldParams]
+            ),
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -576,7 +615,13 @@ class AsyncContainerClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "container/map-prim-to-object", method="POST", json=request, request_options=request_options, omit=OMIT
+            "container/map-prim-to-object",
+            method="POST",
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Dict[str, ObjectWithRequiredFieldParams]
+            ),
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -625,7 +670,13 @@ class AsyncContainerClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "container/opt-objects", method="POST", json=request, request_options=request_options, omit=OMIT
+            "container/opt-objects",
+            method="POST",
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing_extensions.NotRequired[ObjectWithRequiredFieldParams]
+            ),
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:

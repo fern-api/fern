@@ -6,6 +6,7 @@ from fern_python.codegen import AST
 from fern_python.codegen.ast.nodes.declarations.function.named_function_parameter import (
     NamedFunctionParameter,
 )
+from fern_python.generators.pydantic_model.typeddict import FernTypedDict
 
 from ...context.sdk_generator_context import SdkGeneratorContext
 from ..constants import DEFAULT_BODY_PARAMETER_VALUE
@@ -162,13 +163,24 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
         return self.get_parameters(names_to_deconflict) + self._get_non_parameter_properties()
 
     def get_json_body(self, names_to_deconflict: Optional[List[str]] = None) -> Optional[AST.Expression]:
-        return (
-            AST.Expression(self._get_request_parameter_name())
-            if not self.should_inline_request_parameters
-            else get_json_body_for_inlined_request(
-                self._context,
-                self._get_properties(names_to_deconflict),
-            )
+        if not self.should_inline_request_parameters:
+            request_param = AST.Expression(self._get_request_parameter_name())
+            request_param_tr = self._request_body.request_body_type
+            if (
+                self._context.custom_config.pydantic_config.use_typeddict_requests
+                and FernTypedDict.can_tr_be_typeddict(request_param_tr, self._context.get_types())
+            ):
+                type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                    request_param_tr, in_endpoint=True, for_typeddict=True
+                )
+                return self._context.core_utilities.convert_and_respect_annotation_metadata(
+                    object_=request_param, annotation=type_hint
+                )
+            return request_param
+
+        return get_json_body_for_inlined_request(
+            self._context,
+            self._get_properties(names_to_deconflict),
         )
 
     def _get_request_parameter_name(self) -> str:

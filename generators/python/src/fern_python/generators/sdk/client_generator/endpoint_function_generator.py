@@ -8,6 +8,7 @@ from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.external_dependencies import HttpX
 from fern_python.external_dependencies.asyncio import Asyncio
+from fern_python.generators.pydantic_model.typeddict import FernTypedDict
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
     EndpointMetadata,
     EndpointMetadataCollector,
@@ -1080,6 +1081,16 @@ class EndpointFunctionGenerator:
                     writer.write(f" if {get_parameter_name(query_parameter.name.name)} is not None else None")
 
                 reference = AST.Expression(AST.CodeWriter(write_ternary))
+
+        elif self._context.custom_config.pydantic_config.use_typeddict_requests and FernTypedDict.can_tr_be_typeddict(
+            query_parameter.value_type, self._context.get_types()
+        ):
+            type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                query_parameter.value_type, in_endpoint=True, for_typeddict=True
+            )
+            reference = self._context.core_utilities.convert_and_respect_annotation_metadata(
+                object_=reference, annotation=type_hint
+            )
 
         elif not self._is_httpx_primitive_data(query_parameter.value_type, allow_optional=True):
             reference = self._context.core_utilities.jsonable_encoder(reference)

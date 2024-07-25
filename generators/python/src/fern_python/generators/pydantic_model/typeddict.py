@@ -122,8 +122,8 @@ class FernTypedDict:
 
         is_optional = False
         type_reference_unioned = type_reference.get_as_union()
-        # For TypedDicts, the NotRequired typehint has to surround the potential Annotation
-        # typehint, so we need to unwrap the optional container if it exists first.
+        # For TypedDicts, the NotRequired typehint has to surround the potential
+        # Annotation typehint, so we need to unwrap the optional container if it exists first.
         if type_reference_unioned.type == "container":
             container_reference_unioned = type_reference_unioned.container.get_as_union()
             if container_reference_unioned.type == "optional":
@@ -199,14 +199,19 @@ class FernTypedDict:
         return snippet_writer._get_snippet_for_map(example_dict_pairs, use_typeddict_request=True, as_request=True)
 
     @classmethod
-    def type_to_snippet(cls, example: ir_types.ExampleObjectType, snippet_writer: SnippetWriter, additional_properties: List[SimpleObjectProperty] = []) -> AST.Expression:
+    def type_to_snippet(
+        cls,
+        example: ir_types.ExampleObjectType,
+        snippet_writer: SnippetWriter,
+        additional_properties: List[SimpleObjectProperty] = [],
+    ) -> AST.Expression:
         example_properties = [
-                SimpleObjectProperty(
-                    name=property.name.name.snake_case.safe_name,
-                    value=property.value,
-                )
-                for property in example.properties
-            ]
+            SimpleObjectProperty(
+                name=property.name.name.snake_case.safe_name,
+                value=property.value,
+            )
+            for property in example.properties
+        ]
         example_properties.extend(additional_properties)
         return cls.snippet_from_properties(
             example_properties=example_properties,
@@ -214,17 +219,17 @@ class FernTypedDict:
         )
 
     @classmethod
-    def _can_be_typeddict_tr(
+    def can_tr_be_typeddict(
         cls, tr: ir_types.TypeReference, types: Dict[ir_types.TypeId, ir_types.TypeDeclaration]
     ) -> bool:
         return tr.visit(
             named=lambda nt: FernTypedDict.can_be_typeddict(types[nt.type_id].shape, types),
             container=lambda ct: ct.visit(
-                list_=lambda list_tr: FernTypedDict._can_be_typeddict_tr(list_tr, types),
-                map_=lambda mt: FernTypedDict._can_be_typeddict_tr(mt.key_type, types)
-                or FernTypedDict._can_be_typeddict_tr(mt.value_type, types),
-                optional=lambda optional_tr: FernTypedDict._can_be_typeddict_tr(optional_tr, types),
-                set_=lambda set_tr: FernTypedDict._can_be_typeddict_tr(set_tr, types),
+                list_=lambda list_tr: FernTypedDict.can_tr_be_typeddict(list_tr, types),
+                map_=lambda mt: FernTypedDict.can_tr_be_typeddict(mt.key_type, types)
+                or FernTypedDict.can_tr_be_typeddict(mt.value_type, types),
+                optional=lambda optional_tr: FernTypedDict.can_tr_be_typeddict(optional_tr, types),
+                set_=lambda set_tr: FernTypedDict.can_tr_be_typeddict(set_tr, types),
                 literal=lambda _: False,
             ),
             primitive=lambda _: False,
@@ -242,11 +247,11 @@ class FernTypedDict:
                     undiscriminated_union=lambda: True,
                 ),
                 container=lambda ct: ct.visit(
-                    list_=lambda list_tr: FernTypedDict._can_be_typeddict_tr(list_tr, types),
-                    map_=lambda mt: FernTypedDict._can_be_typeddict_tr(mt.key_type, types)
-                    or FernTypedDict._can_be_typeddict_tr(mt.value_type, types),
-                    optional=lambda optional_tr: FernTypedDict._can_be_typeddict_tr(optional_tr, types),
-                    set_=lambda set_tr: FernTypedDict._can_be_typeddict_tr(set_tr, types),
+                    list_=lambda list_tr: FernTypedDict.can_tr_be_typeddict(list_tr, types),
+                    map_=lambda mt: FernTypedDict.can_tr_be_typeddict(mt.key_type, types)
+                    or FernTypedDict.can_tr_be_typeddict(mt.value_type, types),
+                    optional=lambda optional_tr: FernTypedDict.can_tr_be_typeddict(optional_tr, types),
+                    set_=lambda set_tr: FernTypedDict.can_tr_be_typeddict(set_tr, types),
                     literal=lambda _: False,
                 ),
                 primitive=lambda _: False,

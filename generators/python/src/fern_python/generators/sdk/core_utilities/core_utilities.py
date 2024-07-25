@@ -255,8 +255,10 @@ class CoreUtilities:
                     named_import=CoreUtilities.SYNC_CLIENT_WRAPPER_CLASS_NAME,
                 ),
             )
-        
-    def convert_and_respect_annotation_metadata(self, object_: AST.Expression, annotation: AST.TypeHint) -> AST.Expression:
+
+    def convert_and_respect_annotation_metadata(
+        self, object_: AST.Expression, annotation: AST.TypeHint
+    ) -> AST.Expression:
         return AST.Expression(
             AST.FunctionInvocation(
                 function_definition=AST.Reference(

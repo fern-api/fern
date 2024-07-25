@@ -75,7 +75,7 @@ class TypeHint(AstNode):
     @staticmethod
     def not_required(wrapped_type: TypeHint) -> TypeHint:
         return TypeHint(
-            type=get_reference_to_typing_extensions_import("NotRequired", require_postponed_annotations=True),
+            type=get_reference_to_typing_extensions_import("NotRequired"),
             type_parameters=[TypeParameter(wrapped_type)],
         )
 

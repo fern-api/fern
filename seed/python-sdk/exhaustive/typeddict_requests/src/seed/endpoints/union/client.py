@@ -7,6 +7,7 @@ from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
+from ...core.serialization import convert_and_respect_annotation_metadata
 from ...types.union.requests.animal import AnimalParams
 from ...types.union.types.animal import Animal
 
@@ -46,7 +47,11 @@ class UnionClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "union", method="POST", json=request, request_options=request_options, omit=OMIT
+            "union",
+            method="POST",
+            json=convert_and_respect_annotation_metadata(object_=request, annotation=AnimalParams),
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -97,7 +102,11 @@ class AsyncUnionClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "union", method="POST", json=request, request_options=request_options, omit=OMIT
+            "union",
+            method="POST",
+            json=convert_and_respect_annotation_metadata(object_=request, annotation=AnimalParams),
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:

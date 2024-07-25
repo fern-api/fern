@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from operator import add
 from typing import List, Optional, Set, Union
 
 import fern.ir.resources as ir_types
@@ -464,19 +463,19 @@ class DiscriminatedUnionSnippetGenerator:
             return sut.shape.visit(
                 same_properties_as_object=lambda _: self._get_snippet_for_union_with_same_properties_as_object(
                     name=self.name,
-                    discriminant_field_name=sut.discriminant_value,
+                    discriminant_field_name=sut.discriminant_value,  # type: ignore
                     wire_discriminant_value=sut.discriminant_value,  # type: ignore
                     example=ex,  # type: ignore
                 ),
                 single_property=lambda _: self._get_snippet_for_union_with_single_property(
                     name=self.name,
-                    discriminant_field_name=sut.discriminant_value,
+                    discriminant_field_name=sut.discriminant_value,  # type: ignore
                     wire_discriminant_value=sut.discriminant_value,  # type: ignore
                     example=ex,  # type: ignore
                 ),
                 no_properties=lambda: self._get_snippet_for_union_with_no_properties(
                     name=self.name,
-                    discriminant_field_name=sut.discriminant_value,
+                    discriminant_field_name=sut.discriminant_value,  # type: ignore
                     wire_discriminant_value=sut.discriminant_value,  # type: ignore
                 ),
             )
@@ -489,20 +488,20 @@ class DiscriminatedUnionSnippetGenerator:
             return ex.single_union_type.shape.visit(
                 same_properties_as_object=lambda object: self._get_snippet_for_union_with_same_properties_as_object(
                     name=self.name,
-                    discriminant_field_name=ex.discriminant,
+                    discriminant_field_name=ex.discriminant,  # type: ignore
                     wire_discriminant_value=ex.single_union_type.wire_discriminant_value,  # type: ignore
                     example=object,
                 ),
                 single_property=lambda example_type_reference: self._get_snippet_for_union_with_single_property(
                     name=self.name,
-                    discriminant_field_name=ex.discriminant,
+                    discriminant_field_name=ex.discriminant,  # type: ignore
                     wire_discriminant_value=ex.single_union_type.wire_discriminant_value,  # type: ignore
                     example=example_type_reference,
                 ),
                 no_properties=lambda: self._get_snippet_for_union_with_no_properties(
                     name=self.name,
-                    discriminant_field_name=ex.discriminant,
-                    wire_discriminant_value=ex.single_union_type.wire_discriminant_value  # type: ignore
+                    discriminant_field_name=ex.discriminant,  # type: ignore
+                    wire_discriminant_value=ex.single_union_type.wire_discriminant_value,  # type: ignore
                 ),
             )
 
@@ -522,7 +521,8 @@ class DiscriminatedUnionSnippetGenerator:
                         value=FernTypedDict.wrap_string_as_example(wire_discriminant_value.wire_value),
                     )
                 ],
-                snippet_writer=self.snippet_writer)
+                snippet_writer=self.snippet_writer,
+            )
 
         args: List[AST.Expression] = []
         if isinstance(example, ir_types.ExampleObjectTypeWithTypeId):
@@ -556,11 +556,7 @@ class DiscriminatedUnionSnippetGenerator:
         wire_discriminant_value: ir_types.NameAndWireValue,
         example: Union[ir_types.ExampleTypeReference, AST.Expression],
     ) -> AST.Expression:
-        if (
-            isinstance(example, ir_types.ExampleTypeReference)
-            and self.as_request
-            and self.use_typeddict_request
-        ):
+        if isinstance(example, ir_types.ExampleTypeReference) and self.as_request and self.use_typeddict_request:
             return FernTypedDict.snippet_from_properties(
                 example_properties=[
                     SimpleObjectProperty(

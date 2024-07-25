@@ -1,6 +1,6 @@
 import typing
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import Dict, Optional
 
 import fern.ir.resources as ir_types
 from fern.generator_exec.resources import GeneratorConfig
@@ -144,4 +144,8 @@ class SdkGeneratorContext(ABC):
 
     @abstractmethod
     def resolved_schema_is_optional_enum(self, reference: ir_types.TypeReference) -> bool:
+        ...
+
+    @abstractmethod
+    def get_types(self) -> Dict[ir_types.TypeId, ir_types.TypeDeclaration]:
         ...

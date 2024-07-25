@@ -195,3 +195,6 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
                 else:
                     break
         return False
+
+    def get_types(self) -> typing.Dict[ir_types.TypeId, ir_types.TypeDeclaration]:
+        return self.ir.types

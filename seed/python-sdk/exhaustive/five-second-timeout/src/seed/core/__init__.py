@@ -19,7 +19,7 @@ from .pydantic_utilities import (
 from .query_encoder import encode_query
 from .remove_none_from_dict import remove_none_from_dict
 from .request_options import RequestOptions
-from .serialization import FieldMetadata
+from .serialization import FieldMetadata, convert_and_respect_annotation_metadata
 
 __all__ = [
     "ApiError",
@@ -34,6 +34,7 @@ __all__ = [
     "SyncClientWrapper",
     "UniversalBaseModel",
     "UniversalRootModel",
+    "convert_and_respect_annotation_metadata",
     "convert_file_dict_to_httpx_tuples",
     "deep_union_pydantic_dicts",
     "encode_query",

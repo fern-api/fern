@@ -78,7 +78,6 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                 )
         return default_value
 
-    # TODO(armando): DO THIS, e.g. implement for typeddicts
     def get_class_reference_for_type_id(
         self,
         type_id: ir_types.TypeId,

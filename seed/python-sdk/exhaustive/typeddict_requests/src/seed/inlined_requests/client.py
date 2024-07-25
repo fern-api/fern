@@ -7,6 +7,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
+from ..core.serialization import convert_and_respect_annotation_metadata
 from ..general_errors.errors.bad_request_body import BadRequestBody
 from ..general_errors.types.bad_object_request_info import BadObjectRequestInfo
 from ..types.object.requests.object_with_optional_field import ObjectWithOptionalFieldParams
@@ -86,7 +87,13 @@ class InlinedRequestsClient:
         _response = self._client_wrapper.httpx_client.request(
             "req-bodies/object",
             method="POST",
-            json={"string": string, "integer": integer, "NestedObject": nested_object},
+            json={
+                "string": string,
+                "integer": integer,
+                "NestedObject": convert_and_respect_annotation_metadata(
+                    object_=nested_object, annotation=ObjectWithOptionalFieldParams
+                ),
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -180,7 +187,13 @@ class AsyncInlinedRequestsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "req-bodies/object",
             method="POST",
-            json={"string": string, "integer": integer, "NestedObject": nested_object},
+            json={
+                "string": string,
+                "integer": integer,
+                "NestedObject": convert_and_respect_annotation_metadata(
+                    object_=nested_object, annotation=ObjectWithOptionalFieldParams
+                ),
+            },
             request_options=request_options,
             omit=OMIT,
         )
