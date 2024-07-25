@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.2.0-rc0] - 2024-07-25
 
-- Improvement: The Python SDK can now be generated such that inputs to requests are TypedDicts, instead of Pydantic models.
+- Improvement: The Python SDK can now be generated such that inputs to requests are TypedDicts, instead of Pydantic models. This allows for consumers of the SDK
+  to continue to have type hinting and autocomplete, but not need to import new object types when creating requests.
+
+  With the following config:
 
   ```yaml
   generators:
