@@ -12,6 +12,7 @@ from fern_python.external_dependencies.pydantic import (
 from fern_python.external_dependencies.typing_extensions import (
     TYPING_EXTENSIONS_DEPENDENCY,
 )
+from fern_python.generators.pydantic_model.field_metadata import FieldMetadata
 from fern_python.source_file_factory import SourceFileFactory
 
 
@@ -123,6 +124,16 @@ class CoreUtilities:
                 file=Filepath.FilepathPart(module_name="query_encoder"),
             ),
             exports={"encode_query"},
+        )
+
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="serialization.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="serialization"),
+            ),
+            exports={"FieldMetadata"},
         )
 
         if self._has_paginated_endpoints:
@@ -338,6 +349,16 @@ class CoreUtilities:
                 kwargs=func_args,
             )
         )
+
+    def get_field_metadata(self) -> FieldMetadata:
+        field_metadata_reference = AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "serialization"), named_import="FieldMetadata"
+            ),
+        )
+
+        return FieldMetadata(reference=field_metadata_reference)
 
     def get_union_metadata(self) -> AST.Reference:
         return AST.Reference(

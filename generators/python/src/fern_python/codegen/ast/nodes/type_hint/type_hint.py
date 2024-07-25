@@ -20,10 +20,12 @@ class TypeHint(AstNode):
         arguments: Sequence[Expression] = None,
         is_optional: bool = False,
         is_literal: bool = False,
+        should_pipe_separate_type_parameters: bool = False,
     ):
         self._type = type
         self._type_parameters = type_parameters or []
         self._arguments = arguments or []
+        self._should_pipe_separate_type_parameters = should_pipe_separate_type_parameters
 
         self.is_optional = is_optional
         self.is_literal = is_literal
@@ -75,8 +77,9 @@ class TypeHint(AstNode):
     @staticmethod
     def not_required(wrapped_type: TypeHint) -> TypeHint:
         return TypeHint(
-            type=get_reference_to_typing_extensions_import("NotRequired"),
-            type_parameters=[TypeParameter(wrapped_type)],
+            type=get_reference_to_typing_extensions_import("NotRequired", require_postponed_annotations=True),
+            type_parameters=[TypeParameter(wrapped_type), TypeParameter(TypeHint.none())],
+            should_pipe_separate_type_parameters=True,
         )
 
     @staticmethod
@@ -146,6 +149,10 @@ class TypeHint(AstNode):
             type=get_reference_to_typing_import("Union"),
             type_parameters=[TypeParameter(subtype) for subtype in subtypes],
         )
+
+    @staticmethod
+    def type_checking() -> TypeHint:
+        return TypeHint(type=get_reference_to_typing_import("TYPE_CHECKING"))
 
     @staticmethod
     def any() -> TypeHint:
@@ -240,10 +247,11 @@ class TypeHint(AstNode):
             writer.write(")")
 
 
-def get_reference_to_typing_extensions_import(name: str) -> ClassReference:
+def get_reference_to_typing_extensions_import(name: str, require_postponed_annotations: bool = False) -> ClassReference:
     return ClassReference(
         import_=ReferenceImport(module=Module.built_in(("typing_extensions",))),
         qualified_name_excluding_import=(name,),
+        require_postponed_annotations=require_postponed_annotations,
     )
 
 

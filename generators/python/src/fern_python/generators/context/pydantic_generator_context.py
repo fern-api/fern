@@ -37,7 +37,9 @@ class PydanticGeneratorContext(ABC):
         self,
         type_reference: ir_types.TypeReference,
         must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]] = None,
+        as_if_type_checking_import: bool = False,
         in_endpoint: Optional[bool] = False,
+        for_typeddict: bool = False,
     ) -> AST.TypeHint:
         ...
 
@@ -46,6 +48,7 @@ class PydanticGeneratorContext(ABC):
         self,
         type_id: ir_types.TypeId,
         must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]] = None,
+        as_if_type_checking_import: bool = False,
         as_request: bool = False,
     ) -> AST.ClassReference:
         ...
@@ -98,4 +101,10 @@ class PydanticGeneratorContext(ABC):
 
     @abstractmethod
     def get_all_properties_including_extensions(self, type_id: ir_types.TypeId) -> List[ir_types.ObjectProperty]:
+        ...
+
+    @abstractmethod
+    def maybe_get_type_ids_for_type_reference(
+        self, type_reference: ir_types.TypeReference
+    ) -> Optional[List[ir_types.TypeId]]:
         ...

@@ -86,7 +86,7 @@ class ReferenceResolverImpl(ReferenceResolver):
             if resolved_import is not None
             else reference.qualified_name_excluding_import
         )
-        return ".".join(
+        resolved_reference = ".".join(
             self._construct_qualified_name_for_reference(
                 AST.Reference(
                     qualified_name_excluding_import=resolved_qualified_name_excluding_import,
@@ -94,6 +94,9 @@ class ReferenceResolverImpl(ReferenceResolver):
                 )
             )
         )
+
+        # Here we string-reference a type reference if the import is marked for `if TYPE_CHECKING`
+        return f'"{resolved_reference}"' if reference.import_if_type_checking else resolved_reference
 
     def resolve_import(self, import_: AST.ReferenceImport) -> ResolvedImport:
         if self._original_import_to_resolved_import is None:

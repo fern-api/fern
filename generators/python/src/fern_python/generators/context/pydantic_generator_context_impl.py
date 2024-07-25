@@ -42,12 +42,16 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         self,
         type_reference: ir_types.TypeReference,
         must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]] = None,
+        as_if_type_checking_import: bool = False,
         in_endpoint: Optional[bool] = False,
+        for_typeddict: bool = False,
     ) -> AST.TypeHint:
         return self._type_reference_to_type_hint_converter.get_type_hint_for_type_reference(
             type_reference,
             must_import_after_current_declaration=must_import_after_current_declaration,
+            as_if_type_checking_import=as_if_type_checking_import,
             in_endpoint=in_endpoint,
+            for_typeddict=for_typeddict,
         )
 
     def get_initializer_for_type_reference(
@@ -77,12 +81,14 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         self,
         type_id: ir_types.TypeId,
         must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]] = None,
+        as_if_type_checking_import: bool = False,
         as_request: bool = False,
     ) -> AST.ClassReference:
         declaration = self.ir.types[type_id]
         return self._type_declaration_referencer.get_class_reference(
             name=declaration.name,
             must_import_after_current_declaration=must_import_after_current_declaration,
+            as_if_type_checking_import=as_if_type_checking_import,
             as_request=as_request,
         )
 
@@ -169,4 +175,22 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
             primitive=lambda primitive: set(),
             named=lambda type_name: set([type_name.type_id]),
             unknown=lambda: set(),
+        )
+
+    def maybe_get_type_ids_for_type_reference(
+        self, type_reference: ir_types.TypeReference
+    ) -> Optional[List[ir_types.TypeId]]:
+        return type_reference.visit(
+            container=lambda ct: ct.visit(
+                list_=lambda list_tr: self.maybe_get_type_ids_for_type_reference(list_tr),
+                map_=lambda mt: (self.maybe_get_type_ids_for_type_reference(mt.key_type) or []).extend(
+                    self.maybe_get_type_ids_for_type_reference(mt.value_type) or []
+                ),
+                optional=lambda optional_tr: self.maybe_get_type_ids_for_type_reference(optional_tr),
+                set_=lambda set_tr: self.maybe_get_type_ids_for_type_reference(set_tr),
+                literal=lambda _: None,
+            ),
+            named=lambda nt: [nt.type_id],
+            primitive=lambda _: None,
+            unknown=lambda: None,
         )

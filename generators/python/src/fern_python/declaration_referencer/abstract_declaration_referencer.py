@@ -14,6 +14,7 @@ class AbstractDeclarationReferencer(ABC, Generic[T]):
         *,
         name: T,
         must_import_after_current_declaration: Optional[Callable[[T], bool]] = None,
+        as_if_type_checking_import: bool = False,
         as_request: bool = False,
     ) -> AST.ClassReference:
         filepath = self.get_filepath(name=name, as_request=as_request)
@@ -26,6 +27,7 @@ class AbstractDeclarationReferencer(ABC, Generic[T]):
             must_import_after_current_declaration=must_import_after_current_declaration(name)
             if must_import_after_current_declaration is not None
             else False,
+            import_if_type_checking=as_if_type_checking_import,
         )
 
     @abstractmethod

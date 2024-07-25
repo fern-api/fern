@@ -1,63 +1,141 @@
 from __future__ import annotations
 
-from typing import Dict, Optional, Sequence
+from types import TracebackType
+from typing import Dict, List, Optional, Sequence, Type
 
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST, SourceFile
+from fern_python.external_dependencies.typing_extensions import (
+    TYPING_EXTENSIONS_DEPENDENCY,
+)
+from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 
 from ..context import PydanticGeneratorContext
-from .custom_config import PydanticModelCustomConfig
+
+TYPING_EXTENSIONS_MODULE = AST.Module.external(
+    module_path=("typing_extensions",),
+    dependency=TYPING_EXTENSIONS_DEPENDENCY,
+)
 
 
-# TODO(armando): DO THIS
-class TypedDictNode:
+class FernTypedDict:
+    TYPEDDICT_REFERENCE = AST.ClassReference(
+        qualified_name_excluding_import=("TypedDict",),
+        import_=AST.ReferenceImport(module=TYPING_EXTENSIONS_MODULE),
+    )
+
     def __init__(
         self,
         context: PydanticGeneratorContext,
         source_file: SourceFile,
-        custom_config: PydanticModelCustomConfig,
         class_name: str,
-        type_name: Optional[ir_types.DeclaredTypeName],
+        type_name: ir_types.DeclaredTypeName,
         should_export: bool = True,
-        extends: Sequence[ir_types.DeclaredTypeName] = [],
+        extends: Optional[Sequence[ir_types.DeclaredTypeName]] = None,
         docstring: Optional[str] = None,
-        snippet: Optional[str] = None,
-        force_update_forward_refs: bool = False,
     ):
-        pass
+        self._context = context
+        self._type_name = type_name
+
+        extends_crs = (
+            [context.get_class_reference_for_type_id(extended.type_id) for extended in extends]
+            if extends is not None
+            else []
+        )
+
+        self._class_declaration = AST.ClassDeclaration(
+            name=class_name,
+            extends=extends_crs or [FernTypedDict.TYPEDDICT_REFERENCE],
+            docstring=AST.Docstring(docstring) if docstring is not None else None,
+        )
+        self._type_declaration = context.get_declaration_for_type_id(type_name.type_id)
+
+        source_file.add_class_declaration(declaration=self._class_declaration, should_export=should_export)
+
+    def _field_type_is_circularly_referened(self, field_types: List[ir_types.TypeId]) -> bool:
+        return any(
+            [
+                self._context.does_type_reference_other_type(field_type, self._type_name.type_id)
+                for field_type in field_types
+            ]
+        )
+
+    def _get_type_hint_for_type_reference(
+        self, type_reference: ir_types.TypeReference, as_if_type_checking_import: bool
+    ) -> AST.TypeHint:
+        return self._context.get_type_hint_for_type_reference(
+            type_reference,
+            as_if_type_checking_import=as_if_type_checking_import,
+            in_endpoint=True,
+            for_typeddict=True,
+        )
 
     def add_field(
         self,
         *,
         name: str,
-        pascal_case_field_name: str,
         json_field_name: str,
         type_reference: ir_types.TypeReference,
         description: Optional[str] = None,
-        default_value: Optional[AST.Expression] = None,
     ) -> None:
-        pass
+        maybe_type_id = self._context.maybe_get_type_ids_for_type_reference(type_reference)
+        as_if_type_checking = False
+        if maybe_type_id is not None and self._field_type_is_circularly_referened(maybe_type_id):
+            # Mark the class reference as if_typechecking since we have a circular ref that we'll
+            # need to string reference and import through `if TYPE_CHECKING`.
+            as_if_type_checking = True
 
-    def write_snippet(self) -> AST.Expression:
+        type_hint = self._get_type_hint_for_type_reference(type_reference, as_if_type_checking)
+        if json_field_name != name:
+            field_metadata = self._context.core_utilities.get_field_metadata().get_instance()
+            field_metadata.add_alias(json_field_name)
+
+            type_hint = AST.TypeHint.annotated(
+                type=type_hint,
+                annotation=field_metadata.get_as_node(),
+            )
+
+        self._class_declaration.add_class_var(
+            AST.VariableDeclaration(
+                name=name,
+                type_hint=type_hint,
+                docstring=AST.Docstring(description) if description is not None else None,
+            )
+        )
+
+    def to_snippet(self) -> AST.Expression:
         return AST.Expression("TODO")
 
-    @classmethod
-    def from_type_declaration(cls, type_declaration: ir_types.TypeDeclaration) -> Optional["TypedDictNode"]:
-        pass
+    def finish(self) -> None:
+        if len(self._type_declaration.examples) > 0:
+            snippet = SourceFileFactory.create_snippet()
+            snippet.add_expression(self.to_snippet())
+            self._class_declaration.add_snippet(snippet.to_str())
+
+    def __enter__(self) -> FernTypedDict:
+        return self
+
+    def __exit__(
+        self,
+        exctype: Optional[Type[BaseException]],
+        excinst: Optional[BaseException],
+        exctb: Optional[TracebackType],
+    ) -> None:
+        self.finish()
 
     @classmethod
     def _can_be_typeddict_tr(
         cls, tr: ir_types.TypeReference, types: Dict[ir_types.TypeId, ir_types.TypeDeclaration]
     ) -> bool:
         return tr.visit(
-            named=lambda nt: TypedDictNode.can_be_typeddict(types[nt.type_id].shape, types),
+            named=lambda nt: FernTypedDict.can_be_typeddict(types[nt.type_id].shape, types),
             container=lambda ct: ct.visit(
-                list_=lambda list_tr: TypedDictNode._can_be_typeddict_tr(list_tr, types),
-                map_=lambda mt: TypedDictNode._can_be_typeddict_tr(mt.key_type, types)
-                or TypedDictNode._can_be_typeddict_tr(mt.value_type, types),
-                optional=lambda optional_tr: TypedDictNode._can_be_typeddict_tr(optional_tr, types),
-                set_=lambda set_tr: TypedDictNode._can_be_typeddict_tr(set_tr, types),
+                list_=lambda list_tr: FernTypedDict._can_be_typeddict_tr(list_tr, types),
+                map_=lambda mt: FernTypedDict._can_be_typeddict_tr(mt.key_type, types)
+                or FernTypedDict._can_be_typeddict_tr(mt.value_type, types),
+                optional=lambda optional_tr: FernTypedDict._can_be_typeddict_tr(optional_tr, types),
+                set_=lambda set_tr: FernTypedDict._can_be_typeddict_tr(set_tr, types),
                 literal=lambda _: False,
             ),
             primitive=lambda _: False,
@@ -75,11 +153,11 @@ class TypedDictNode:
                     undiscriminated_union=lambda: True,
                 ),
                 container=lambda ct: ct.visit(
-                    list_=lambda list_tr: TypedDictNode._can_be_typeddict_tr(list_tr, types),
-                    map_=lambda mt: TypedDictNode._can_be_typeddict_tr(mt.key_type, types)
-                    or TypedDictNode._can_be_typeddict_tr(mt.value_type, types),
-                    optional=lambda optional_tr: TypedDictNode._can_be_typeddict_tr(optional_tr, types),
-                    set_=lambda set_tr: TypedDictNode._can_be_typeddict_tr(set_tr, types),
+                    list_=lambda list_tr: FernTypedDict._can_be_typeddict_tr(list_tr, types),
+                    map_=lambda mt: FernTypedDict._can_be_typeddict_tr(mt.key_type, types)
+                    or FernTypedDict._can_be_typeddict_tr(mt.value_type, types),
+                    optional=lambda optional_tr: FernTypedDict._can_be_typeddict_tr(optional_tr, types),
+                    set_=lambda set_tr: FernTypedDict._can_be_typeddict_tr(set_tr, types),
                     literal=lambda _: False,
                 ),
                 primitive=lambda _: False,
