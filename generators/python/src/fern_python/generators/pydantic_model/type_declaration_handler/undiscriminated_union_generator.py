@@ -17,10 +17,10 @@ class UndiscriminatedUnionGenerator(AbstractTypeGenerator):
         union: ir_types.UndiscriminatedUnionTypeDeclaration,
         context: PydanticGeneratorContext,
         source_file: SourceFile,
+        maybe_requests_source_file: Optional[SourceFile],
         custom_config: PydanticModelCustomConfig,
         docs: Optional[str],
         snippet: Optional[str] = None,
-        as_request: bool = False,
     ):
         super().__init__(
             context=context,
@@ -28,7 +28,7 @@ class UndiscriminatedUnionGenerator(AbstractTypeGenerator):
             source_file=source_file,
             docs=docs,
             snippet=snippet,
-            as_request=as_request,
+            maybe_requests_source_file=maybe_requests_source_file,
         )
         self._name = name
         self._union = union
@@ -39,10 +39,26 @@ class UndiscriminatedUnionGenerator(AbstractTypeGenerator):
                 type_hint=AST.TypeHint.union(
                     *(self._context.get_type_hint_for_type_reference(member.type) for member in self._union.members)
                 ),
-                name=self._name.name.pascal_case.safe_name,
+                name=self._context.get_class_name_for_type_id(self._name.type_id, as_request=False),
             ),
             should_export=True,
         )
+
+        if self._maybe_requests_source_file is not None:
+            self._source_file.add_declaration(
+                AST.TypeAliasDeclaration(
+                    type_hint=AST.TypeHint.union(
+                        *(
+                            self._context.get_type_hint_for_type_reference(
+                                member.type, in_endpoint=True, for_typeddict=True
+                            )
+                            for member in self._union.members
+                        )
+                    ),
+                    name=self._context.get_class_name_for_type_id(self._name.type_id, as_request=True),
+                ),
+                should_export=True,
+            )
 
 
 class UndiscriminatedUnionSnippetGenerator:

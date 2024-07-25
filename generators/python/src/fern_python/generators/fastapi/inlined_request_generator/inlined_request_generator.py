@@ -42,5 +42,6 @@ class InlinedRequestGenerator:
             custom_config=self._pydantic_model_custom_config,
             source_file=source_file,
             docs=None,
+            maybe_requests_source_file=None,
         )
         object_generator.generate()

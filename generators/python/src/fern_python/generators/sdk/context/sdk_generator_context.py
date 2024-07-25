@@ -49,6 +49,7 @@ class SdkGeneratorContext(ABC):
             allow_skipping_validation=custom_config.pydantic_config.skip_validation,
             has_paginated_endpoints=_has_paginated_endpoints,
             version=custom_config.pydantic_config.version,
+            use_typeddict_requests=custom_config.pydantic_config.use_typeddict_requests
         )
         self.custom_config = custom_config
 

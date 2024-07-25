@@ -723,7 +723,7 @@ client.endpoints.http_methods.test_patch(
 <dl>
 <dd>
 
-**string:** `typing.Optional[str]` 
+**string:** `typing.Optional[str]` — This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
     
 </dd>
 </dl>
@@ -955,7 +955,7 @@ client.endpoints.object.get_and_return_with_optional_field(
 <dl>
 <dd>
 
-**string:** `typing.Optional[str]` 
+**string:** `typing.Optional[str]` — This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
     
 </dd>
 </dl>

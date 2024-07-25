@@ -24,7 +24,10 @@ class PydanticGeneratorContext(ABC):
     ):
         self.ir = ir
         self.generator_config = generator_config
-        self.core_utilities = CoreUtilities(allow_skipping_validation=allow_skipping_validation)
+        self.core_utilities = CoreUtilities(
+            allow_skipping_validation=allow_skipping_validation,
+            use_typeddict_requests=use_typeddict_requests,
+        )
         self.use_typeddict_requests = use_typeddict_requests
         self.type_declaration_referencer = type_declaration_referencer
 

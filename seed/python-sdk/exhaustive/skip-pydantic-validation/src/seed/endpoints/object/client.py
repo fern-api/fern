@@ -46,6 +46,7 @@ class ObjectClient:
         Parameters
         ----------
         string : typing.Optional[str]
+            This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
 
         integer : typing.Optional[int]
 
@@ -478,6 +479,7 @@ class AsyncObjectClient:
         Parameters
         ----------
         string : typing.Optional[str]
+            This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
 
         integer : typing.Optional[int]
 

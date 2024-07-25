@@ -6,6 +6,8 @@ from typing import Dict, List, Optional, Sequence, Type
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST, SourceFile
+from fern_python.codegen.ast.references.class_reference import ClassReference
+from fern_python.codegen.local_class_reference import LocalClassReference
 from fern_python.external_dependencies.typing_extensions import (
     TYPING_EXTENSIONS_DEPENDENCY,
 )
@@ -29,36 +31,56 @@ class FernTypedDict:
         self,
         context: PydanticGeneratorContext,
         source_file: SourceFile,
-        class_name: str,
-        type_name: ir_types.DeclaredTypeName,
+        type_name: Optional[ir_types.DeclaredTypeName] = None,
         should_export: bool = True,
-        extends: Optional[Sequence[ir_types.DeclaredTypeName]] = None,
+        extended_types: Optional[Sequence[ir_types.DeclaredTypeName]] = None,
+        extended_references: Optional[Sequence[ClassReference]] = None,
+        class_name: Optional[str] = None,
         docstring: Optional[str] = None,
     ):
         self._context = context
         self._type_name = type_name
 
-        extends_crs = (
-            [context.get_class_reference_for_type_id(extended.type_id) for extended in extends]
-            if extends is not None
+        extends_crs = list((extended_references or []))
+        extends_crs.extend(
+            [context.get_class_reference_for_type_id(extended.type_id) for extended in extended_types]
+            if extended_types is not None
             else []
         )
 
+        if class_name is None and type_name is None:
+            raise ValueError("Either class_name or name must be provided")
+        elif class_name is not None:
+            self._class_name = class_name
+        elif type_name is not None:
+            self._class_name = self._context.get_class_name_for_type_id(type_name.type_id, as_request=True)
+
         self._class_declaration = AST.ClassDeclaration(
-            name=class_name,
+            name=self._class_name,
             extends=extends_crs or [FernTypedDict.TYPEDDICT_REFERENCE],
             docstring=AST.Docstring(docstring) if docstring is not None else None,
         )
-        self._type_declaration = context.get_declaration_for_type_id(type_name.type_id)
+        self._type_declaration = None
+        if type_name is not None:
+            self._type_declaration = context.get_declaration_for_type_id(type_name.type_id)
 
-        source_file.add_class_declaration(declaration=self._class_declaration, should_export=should_export)
+        self._local_class_reference = source_file.add_class_declaration(
+            declaration=self._class_declaration, should_export=should_export
+        )
+
+    def to_reference(self) -> LocalClassReference:
+        return self._local_class_reference
 
     def _field_type_is_circularly_referened(self, field_types: List[ir_types.TypeId]) -> bool:
-        return any(
-            [
-                self._context.does_type_reference_other_type(field_type, self._type_name.type_id)
-                for field_type in field_types
-            ]
+        return (
+            any(
+                [
+                    self._context.does_type_reference_other_type(field_type, self._type_name.type_id)
+                    for field_type in field_types
+                ]
+            )
+            if self._type_name is not None
+            else False
         )
 
     def _get_type_hint_for_type_reference(
@@ -78,6 +100,10 @@ class FernTypedDict:
         json_field_name: str,
         type_reference: ir_types.TypeReference,
         description: Optional[str] = None,
+        # Here to mirror the FernAwarePydanticModel.add_field method signature
+        # which makes it easy to spread args from that method to this one.
+        pascal_case_field_name: Optional[str] = None,
+        default_value: Optional[AST.Expression] = None,
     ) -> None:
         maybe_type_id = self._context.maybe_get_type_ids_for_type_reference(type_reference)
         as_if_type_checking = False
@@ -108,7 +134,7 @@ class FernTypedDict:
         return AST.Expression("TODO")
 
     def finish(self) -> None:
-        if len(self._type_declaration.examples) > 0:
+        if self._type_declaration is not None and len(self._type_declaration.examples) > 0:
             snippet = SourceFileFactory.create_snippet()
             snippet.add_expression(self.to_snippet())
             self._class_declaration.add_snippet(snippet.to_str())

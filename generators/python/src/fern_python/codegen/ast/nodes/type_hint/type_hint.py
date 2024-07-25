@@ -231,7 +231,10 @@ class TypeHint(AstNode):
             just_wrote_parameter = False
             for type_parameter in self._type_parameters:
                 if just_wrote_parameter:
-                    writer.write(", ")
+                    if self._should_pipe_separate_type_parameters:
+                        writer.write("|")
+                    else:
+                        writer.write(", ")
                 type_parameter.write(writer=writer)
                 just_wrote_parameter = True
             writer.write("]")

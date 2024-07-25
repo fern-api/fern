@@ -26,7 +26,7 @@ class EnumGenerator(AbstractTypeGenerator):
             context=context, custom_config=custom_config, source_file=source_file, docs=docs, snippet=snippet
         )
         self._use_str_enums = custom_config.use_str_enums
-        self._class_name = context.get_class_name_for_type_id(name.type_id, self._as_request)
+        self._class_name = context.get_class_name_for_type_id(name.type_id)
         self._name = name
         self._enum = enum
 

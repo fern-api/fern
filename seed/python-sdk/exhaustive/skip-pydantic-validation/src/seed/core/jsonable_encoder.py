@@ -17,9 +17,11 @@ from types import GeneratorType
 from typing import Any, Callable, Dict, List, Optional, Set, Union
 
 import pydantic
+import typing_extensions
 
 from .datetime_utils import serialize_datetime
-from .pydantic_utilities import IS_PYDANTIC_V2, encode_by_type, to_jsonable_with_fallback
+from .pydantic_utilities import IS_PYDANTIC_V2, encode_by_type, get_args, get_origin, to_jsonable_with_fallback
+from .serialization import FieldMetadata
 
 SetIntStr = Set[Union[int, str]]
 DictIntStrAny = Dict[Union[int, str], Any]
@@ -67,7 +69,16 @@ def jsonable_encoder(obj: Any, custom_encoder: Optional[Dict[Any, Callable[[Any]
         allowed_keys = set(obj.keys())
         for key, value in obj.items():
             if key in allowed_keys:
-                encoded_key = jsonable_encoder(key, custom_encoder=custom_encoder)
+                key_type = get_origin(key)
+                is_aliased_field = False
+                if key_type is not None and key_type == typing_extensions.Annotated:
+                    annotated_metadata = get_args(key_type)[1:]
+                    for metadata in annotated_metadata:
+                        if isinstance(metadata, FieldMetadata) and metadata.alias is not None:
+                            encoded_key = metadata.alias
+                            is_aliased_field = True
+                if not is_aliased_field:
+                    encoded_key = jsonable_encoder(key, custom_encoder=custom_encoder)
                 encoded_value = jsonable_encoder(value, custom_encoder=custom_encoder)
                 encoded_dict[encoded_key] = encoded_value
         return encoded_dict

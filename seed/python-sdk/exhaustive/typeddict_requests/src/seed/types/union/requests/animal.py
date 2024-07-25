@@ -4,39 +4,21 @@ from __future__ import annotations
 
 import typing
 
-import pydantic
+import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.serialization import FieldMetadata
 
 
-class Animal_Dog(UniversalBaseModel):
+class Animal_DogParams(typing_extensions.TypedDict):
+    animal: typing.Literal["dog"]
     name: str
-    likes_to_woof: bool = pydantic.Field(alias="likesToWoof")
-    animal: typing.Literal["dog"] = "dog"
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    likes_to_woof: typing_extensions.Annotated[bool, FieldMetadata(alias="likesToWoof")]
 
 
-class Animal_Cat(UniversalBaseModel):
+class Animal_CatParams(typing_extensions.TypedDict):
+    animal: typing.Literal["cat"]
     name: str
-    likes_to_meow: bool = pydantic.Field(alias="likesToMeow")
-    animal: typing.Literal["cat"] = "cat"
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    likes_to_meow: typing_extensions.Annotated[bool, FieldMetadata(alias="likesToMeow")]
 
 
-Animal = typing.Union[Animal_Dog, Animal_Cat]
+AnimalParams = typing.Union[Animal_DogParams, Animal_CatParams]

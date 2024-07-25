@@ -21,13 +21,14 @@ class CoreUtilities:
     SYNC_CLIENT_WRAPPER_CLASS_NAME = "SyncClientWrapper"
 
     def __init__(
-        self, allow_skipping_validation: bool, has_paginated_endpoints: bool, version: PydanticVersionCompatibility
+        self, allow_skipping_validation: bool, has_paginated_endpoints: bool, version: PydanticVersionCompatibility, use_typeddict_requests: bool
     ) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
         # Promotes usage of `from ... import core`
         self._module_path_unnamed = tuple(part.module_name for part in self.filepath[:-1])  # type: ignore
         self._allow_skipping_validation = allow_skipping_validation
+        self._use_typeddict_requests = use_typeddict_requests
         self._has_paginated_endpoints = has_paginated_endpoints
         self._version = version
 
@@ -126,15 +127,16 @@ class CoreUtilities:
             exports={"encode_query"},
         )
 
-        self._copy_file_to_project(
-            project=project,
-            relative_filepath_on_disk="serialization.py",
-            filepath_in_project=Filepath(
-                directories=self.filepath,
-                file=Filepath.FilepathPart(module_name="serialization"),
-            ),
-            exports={"FieldMetadata"},
-        )
+        if self._use_typeddict_requests:
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="serialization.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="serialization"),
+                ),
+                exports={"FieldMetadata"},
+            )
 
         if self._has_paginated_endpoints:
             self._copy_file_to_project(

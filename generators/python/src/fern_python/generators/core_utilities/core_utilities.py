@@ -8,10 +8,11 @@ from fern_python.source_file_factory import SourceFileFactory
 
 
 class CoreUtilities:
-    def __init__(self, allow_skipping_validation: bool) -> None:
+    def __init__(self, allow_skipping_validation: bool, use_typeddict_requests: bool) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
         self._allow_skipping_validation = allow_skipping_validation
+        self._use_typeddict_requests = use_typeddict_requests
 
     def copy_to_project(self, *, project: Project) -> None:
         self._copy_file_to_project(
@@ -44,15 +45,16 @@ class CoreUtilities:
         )
         project.add_dependency(PYDANTIC_CORE_DEPENDENCY)
 
-        self._copy_file_to_project(
-            project=project,
-            relative_filepath_on_disk="serialization.py",
-            filepath_in_project=Filepath(
-                directories=self.filepath,
-                file=Filepath.FilepathPart(module_name="serialization"),
-            ),
-            exports={"FieldMetadata"},
-        )
+        if self._use_typeddict_requests:
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="serialization.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="serialization"),
+                ),
+                exports={"FieldMetadata"},
+            )
 
         if self._allow_skipping_validation:
             self._copy_file_to_project(

@@ -30,7 +30,6 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
         custom_config: PydanticModelCustomConfig,
         docs: Optional[str],
         snippet: Optional[str] = None,
-        as_request: bool = False,
     ):
         super().__init__(
             context=context,
@@ -38,7 +37,6 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
             source_file=source_file,
             docs=docs,
             snippet=snippet,
-            as_request=as_request,
         )
         self._name = name
         self._union = union
@@ -146,7 +144,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
         factory_declaration = AST.ClassDeclaration(name="_Factory")
         factory = self._source_file.add_class_declaration(factory_declaration)
 
-        model_name = self._context.get_class_name_for_type_id(self._name.type_id, self._as_request)
+        model_name = self._context.get_class_name_for_type_id(self._name.type_id)
         internal_union_class_declaration = AST.ClassDeclaration(name="_" + model_name)
 
         with FernAwarePydanticModel(
@@ -162,7 +160,6 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
             # also Pydantic V2's RootModel doesn't allow for a lot of the configuration.
             include_model_config=False,
             force_update_forward_refs=True,
-            as_request=self._as_request,
         ) as external_pydantic_model:
             external_pydantic_model.add_class_var_unsafe(
                 name="factory",
@@ -217,9 +214,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                 name=shape.name.name.snake_case.safe_name,
                                 pascal_case_field_name=shape.name.name.pascal_case.safe_name,
                                 json_field_name=shape.name.wire_value,
-                                type_hint=self._context.get_type_hint_for_type_reference(
-                                    type_reference=shape.type, in_endpoint=self._as_request
-                                ),
+                                type_hint=self._context.get_type_hint_for_type_reference(type_reference=shape.type),
                             )
                         )
 

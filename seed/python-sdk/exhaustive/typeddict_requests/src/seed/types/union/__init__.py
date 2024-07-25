@@ -2,6 +2,16 @@
 
 from .types import Animal, Animal_Cat, Animal_Dog, Cat, Dog
 from .errors import ErrorWithUnionBody
-from .requests import Animal, Animal_Cat, Animal_Dog, CatParams, DogParams
+from .requests import AnimalParams, CatParams, DogParams
 
-__all__ = ["Animal", "Animal_Cat", "Animal_Dog", "Cat", "CatParams", "Dog", "DogParams", "ErrorWithUnionBody"]
+__all__ = [
+    "Animal",
+    "AnimalParams",
+    "Animal_Cat",
+    "Animal_Dog",
+    "Cat",
+    "CatParams",
+    "Dog",
+    "DogParams",
+    "ErrorWithUnionBody",
+]

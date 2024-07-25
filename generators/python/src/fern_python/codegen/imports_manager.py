@@ -28,6 +28,9 @@ class ImportsManager:
             if reference.is_forward_reference:
                 self._postponed_annotations = True
             if reference.import_ is not None:
+                if reference.require_postponed_annotations:
+                    self._postponed_annotations = True
+
                 if reference.must_import_after_current_declaration:
                     self._import_to_statements_that_must_precede_it[reference.import_].add(statement_id)
                     self._postponed_annotations = True
@@ -40,8 +43,6 @@ class ImportsManager:
                     # even if there's no constraints, we still store the import
                     # so that we write it to the file.
                     self._import_to_statements_that_must_precede_it[reference.import_] = OrderedSet()
-                elif reference.require_postponed_annotations:
-                    self._postponed_annotations = True
 
     def write_top_imports_for_file(self, writer: AST.Writer, reference_resolver: ReferenceResolverImpl) -> None:
         if self._postponed_annotations or reference_resolver.does_file_self_import():

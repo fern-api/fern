@@ -31,17 +31,16 @@ class TypeDeclarationHandler:
         declaration: ir_types.TypeDeclaration,
         context: PydanticGeneratorContext,
         source_file: SourceFile,
+        maybe_requests_source_file: Optional[SourceFile],
         custom_config: PydanticModelCustomConfig,
         snippet_writer: SnippetWriter,
-        as_request: bool = False,
     ):
-        # TODO(armando): Handle typeddicts here too
         self._declaration = declaration
         self._context = context
         self._source_file = source_file
+        self._maybe_requests_source_file = maybe_requests_source_file
         self._custom_config = custom_config
         self._snippet_writer = snippet_writer
-        self._as_request = as_request
 
     def run(self) -> GeneratedType:
         snippet, docstring = self._get_snippet_for_type_declaration(self._declaration)
@@ -52,9 +51,9 @@ class TypeDeclarationHandler:
                 context=self._context,
                 custom_config=self._custom_config,
                 source_file=self._source_file,
+                maybe_requests_source_file=self._maybe_requests_source_file,
                 docs=self._declaration.docs,
                 snippet=docstring,
-                as_request=self._as_request,
             ),
             enum=lambda enum: EnumGenerator(
                 name=self._declaration.name,
@@ -67,7 +66,6 @@ class TypeDeclarationHandler:
             ),
             object=lambda object_: ObjectGenerator(
                 name=self._declaration.name,
-                class_name=self._context.get_class_name_for_type_id(self._declaration.name.type_id, self._as_request),
                 extends=object_.extends,
                 properties=[
                     ObjectProperty(
@@ -82,7 +80,7 @@ class TypeDeclarationHandler:
                 source_file=self._source_file,
                 docs=self._declaration.docs,
                 snippet=docstring,
-                as_request=self._as_request,
+                maybe_requests_source_file=self._maybe_requests_source_file,
             ),
             union=self._get_union_generator(docstring),
             undiscriminated_union=lambda union: UndiscriminatedUnionGenerator(
@@ -91,6 +89,7 @@ class TypeDeclarationHandler:
                 context=self._context,
                 custom_config=self._custom_config,
                 source_file=self._source_file,
+                maybe_requests_source_file=self._maybe_requests_source_file,
                 docs=self._declaration.docs,
                 snippet=docstring,
             ),
@@ -116,16 +115,19 @@ class TypeDeclarationHandler:
                     docs=self._declaration.docs,
                     snippet=snippet,
                 )
-            else:
-                return SimpleDiscriminatedUnionGenerator(
-                    name=self._declaration.name,
-                    union=union,
-                    context=self._context,
-                    custom_config=self._custom_config,
-                    source_file=self._source_file,
-                    docs=self._declaration.docs,
-                    snippet=snippet,
-                )
+            # Always try to generate the simple union, given we do not
+            # generate TypedDicts with utils
+            return SimpleDiscriminatedUnionGenerator(
+                name=self._declaration.name,
+                union=union,
+                context=self._context,
+                custom_config=self._custom_config,
+                source_file=self._source_file,
+                docs=self._declaration.docs,
+                snippet=snippet,
+                maybe_requests_source_file=self._maybe_requests_source_file,
+                should_generate=(not self._custom_config.include_union_utils),
+            )
 
         return get_union_generator
 

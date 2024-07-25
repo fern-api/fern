@@ -1,14 +1,16 @@
-from typing import Literal, Tuple
+from typing import Literal, Optional, Tuple
 
 import fern.ir.resources as ir_types
 from fern.generator_exec.resources.config import GeneratorConfig
 
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import Project
+from fern_python.codegen.source_file import SourceFile
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model.type_declaration_handler.undiscriminated_union_generator import (
     UndiscriminatedUnionSnippetGenerator,
 )
+from fern_python.generators.pydantic_model.typeddict import FernTypedDict
 from fern_python.generators.sdk import custom_config
 from fern_python.snippet import (
     SnippetRegistry,
@@ -109,17 +111,6 @@ class PydanticModelGenerator(AbstractGenerator):
                 snippet_registry=snippet_registry,
                 snippet_writer=snippet_writer,
             )
-        for type_to_generate in ir.types.values():
-            self._generate_type(
-                project,
-                type=type_to_generate,
-                generator_exec_wrapper=generator_exec_wrapper,
-                custom_config=custom_config,
-                context=context,
-                snippet_registry=snippet_registry,
-                snippet_writer=snippet_writer,
-                as_request=True,
-            )
 
     def _generate_type(
         self,
@@ -130,23 +121,28 @@ class PydanticModelGenerator(AbstractGenerator):
         context: PydanticGeneratorContext,
         snippet_registry: SnippetRegistry,
         snippet_writer: SnippetWriter,
-        as_request: bool = False,
     ) -> None:
-        # TODO(armando): Handle typeddicts here, likely doing this twice and not returning
-        # anything if you specify to dictify + it's not an object
         # TODO: Actually flag typeddicts if they're request object ONLY, right now we just always create
         # the typeddict for any object. This is fine for now, but we should be able to filter the types down.
-        filepath = context.get_filepath_for_type_id(type_id=type.name.type_id, as_request=as_request)
+        filepath = context.get_filepath_for_type_id(type_id=type.name.type_id, as_request=False)
         source_file = SourceFileFactory.create(
             project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
         )
+
+        maybe_requests_source_file: Optional[SourceFile] = None
+        if custom_config.use_typeddict_requests and FernTypedDict.can_be_typeddict(type.shape, context.ir.types):
+            typed_dict_filepath = context.get_filepath_for_type_id(type_id=type.name.type_id, as_request=True)
+            maybe_requests_source_file = SourceFileFactory.create(
+                project=project, filepath=typed_dict_filepath, generator_exec_wrapper=generator_exec_wrapper
+            )
+
         type_declaration_handler = TypeDeclarationHandler(
             declaration=type,
             context=context,
             custom_config=custom_config,
             source_file=source_file,
+            maybe_requests_source_file=maybe_requests_source_file,
             snippet_writer=snippet_writer,
-            as_request=as_request,
         )
         generated_type = type_declaration_handler.run()
         if generated_type.snippet is not None:
@@ -155,6 +151,8 @@ class PydanticModelGenerator(AbstractGenerator):
                 expr=generated_type.snippet,
             )
         project.write_source_file(source_file=source_file, filepath=filepath)
+        if maybe_requests_source_file is not None:
+            project.write_source_file(source_file=maybe_requests_source_file, filepath=typed_dict_filepath)
 
     def get_sorted_modules(self) -> None:
         return None

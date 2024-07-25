@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from typing import List, Optional, Set, Union
 
 import fern.ir.resources as ir_types
@@ -7,12 +8,19 @@ from fern_python.codegen.ast.references.class_reference import ClassReference
 from fern_python.generators.pydantic_model.fern_aware_pydantic_model import (
     FernAwarePydanticModel,
 )
+from fern_python.generators.pydantic_model.typeddict import FernTypedDict
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
+from fern_python.pydantic_codegen.pydantic_field import FernAwarePydanticField
 from fern_python.snippet import SnippetWriter
 
 from ....context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig
 from ..abstract_type_generator import AbstractTypeGenerator
+
+
+@dataclass(frozen=True)
+class CommonField(PydanticField):
+    type_reference: Optional[ir_types.TypeReference] = None
 
 
 class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
@@ -25,10 +33,11 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
         union: ir_types.UnionTypeDeclaration,
         context: PydanticGeneratorContext,
         source_file: SourceFile,
+        maybe_requests_source_file: Optional[SourceFile],
         custom_config: PydanticModelCustomConfig,
         docs: Optional[str],
         snippet: Optional[str],
-        as_request: bool = False,
+        should_generate: bool = True,
     ):
         super().__init__(
             context=context,
@@ -36,13 +45,14 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
             source_file=source_file,
             docs=docs,
             snippet=snippet,
-            as_request=as_request,
+            maybe_requests_source_file=maybe_requests_source_file,
         )
         self._context = context
         self._name = name
         self._union = union
         self._extended_types = self.get_all_extended_types()
         self._property_type_ids = self.get_direct_references_for_union()
+        self._should_generate = should_generate
 
     def get_type_id(self, tr: ir_types.TypeReference) -> List[Union[ir_types.TypeId, None]]:
         union = tr.get_as_union()
@@ -87,6 +97,7 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
 
     def generate(self) -> None:
         single_union_type_references: List[LocalClassReference] = []
+        single_union_type_dict_references: List[LocalClassReference] = []
         all_referenced_types: List[ir_types.TypeReference] = []
 
         class_reference_for_base = None
@@ -105,6 +116,18 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                 if is_base_class_name_present
                 else SimpleDiscriminatedUnionGenerator.BASE_CLASS_NAME
             )
+
+            property_fields: List[FernAwarePydanticField] = []
+            for property in self._union.base_properties:
+                FernAwarePydanticField(
+                    name=property.name.name.snake_case.safe_name,
+                    pascal_case_field_name=property.name.name.pascal_case.safe_name,
+                    type_reference=property.value_type,
+                    json_field_name=property.name.wire_value,
+                    description=property.docs,
+                )
+                all_referenced_types.append(property.value_type)
+
             with FernAwarePydanticModel(
                 class_name=base_class_name,
                 type_name=self._name,
@@ -115,20 +138,25 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                 docstring=None,
                 snippet=self._snippet,
                 should_export=False,
-                as_request=self._as_request,
             ) as base_union_pydantic_model:
-                for property in self._union.base_properties:
-                    base_union_pydantic_model.add_field(
-                        name=property.name.name.snake_case.safe_name,
-                        pascal_case_field_name=property.name.name.pascal_case.safe_name,
-                        type_reference=property.value_type,
-                        json_field_name=property.name.wire_value,
-                        description=property.docs,
-                    )
-                    all_referenced_types.append(property.value_type)
-                class_reference_for_base = ClassReference(
-                    qualified_name_excluding_import=(base_class_name,),
-                )
+                for field in property_fields:
+                    base_union_pydantic_model.add_field(**vars(field))
+
+            if self._maybe_requests_source_file is not None:
+                with FernTypedDict(
+                    class_name=base_class_name,
+                    type_name=self._name,
+                    context=self._context,
+                    source_file=self._maybe_requests_source_file,
+                    docstring=None,
+                    should_export=False,
+                ) as base_union_typed_dict:
+                    for field in property_fields:
+                        base_union_typed_dict.add_field(**vars(field))
+
+            class_reference_for_base = ClassReference(
+                qualified_name_excluding_import=(base_class_name,),
+            )
 
         for single_union_type in self._union.types:
             base_models = []
@@ -136,10 +164,37 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                 base_models.append(class_reference_for_base)
             shape = single_union_type.shape.get_as_union()
             discriminant_value = self._get_discriminant_value_for_single_union_type(single_union_type)
+            member_class_name = get_single_union_type_class_name(self._name, single_union_type.discriminant_value)
+            typed_dict_member_class_name = (
+                get_single_union_type_class_name(self._name, single_union_type.discriminant_value) + "Params"
+            )
+
             if shape.properties_type == "singleProperty":
+                single_property_property_fields: List[CommonField] = [
+                    CommonField(
+                        name=shape.name.name.snake_case.safe_name,
+                        pascal_case_field_name=shape.name.name.pascal_case.safe_name,
+                        json_field_name=shape.name.wire_value,
+                        type_hint=self._context.get_type_hint_for_type_reference(type_reference=shape.type),
+                        type_reference=shape.type,
+                    ),
+                    CommonField(
+                        name=get_discriminant_parameter_name(self._union.discriminant),
+                        pascal_case_field_name=self._union.discriminant.name.pascal_case.safe_name,
+                        type_hint=AST.TypeHint.literal(discriminant_value),
+                        json_field_name=self._union.discriminant.wire_value,
+                        default_value=discriminant_value,
+                        type_reference=ir_types.TypeReference.factory.container(
+                            ir_types.ContainerType.factory.literal(
+                                ir_types.Literal.factory.string(single_union_type.discriminant_value.wire_value)
+                            )
+                        ),
+                    ),
+                ]
+
                 with PydanticModel(
                     version=self._custom_config.version,
-                    name=get_single_union_type_class_name(self._name, single_union_type.discriminant_value),
+                    name=member_class_name,
                     source_file=self._source_file,
                     base_models=base_models,
                     frozen=self._custom_config.frozen,
@@ -152,26 +207,10 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                     universal_root_validator=self._context.core_utilities.universal_root_validator,
                     update_forward_ref_function_reference=self._context.core_utilities.get_update_forward_refs(),
                 ) as internal_pydantic_model_for_single_union_type:
-                    internal_pydantic_model_for_single_union_type.add_field(
-                        PydanticField(
-                            name=shape.name.name.snake_case.safe_name,
-                            pascal_case_field_name=shape.name.name.pascal_case.safe_name,
-                            json_field_name=shape.name.wire_value,
-                            type_hint=self._context.get_type_hint_for_type_reference(
-                                type_reference=shape.type, in_endpoint=self._as_request
-                            ),
-                        )
-                    )
-
-                    internal_pydantic_model_for_single_union_type.add_field(
-                        PydanticField(
-                            name=get_discriminant_parameter_name(self._union.discriminant),
-                            pascal_case_field_name=self._union.discriminant.name.pascal_case.safe_name,
-                            type_hint=AST.TypeHint.literal(discriminant_value),
-                            json_field_name=self._union.discriminant.wire_value,
-                            default_value=discriminant_value,
-                        )
-                    )
+                    for common_field in single_property_property_fields:
+                        field_dict = common_field.__dict__
+                        del field_dict["type_reference"]
+                        base_union_pydantic_model.add_field(**vars(field_dict))
                     all_referenced_types.append(shape.type)
                     internal_single_union_type = internal_pydantic_model_for_single_union_type.to_reference()
                     single_union_type_references.append(internal_single_union_type)
@@ -180,95 +219,163 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                         internal_pydantic_model_for_single_union_type=internal_pydantic_model_for_single_union_type,
                         single_union_type=single_union_type,
                     )
+                if self._maybe_requests_source_file is not None:
+                    with FernTypedDict(
+                        class_name=typed_dict_member_class_name,
+                        extended_references=base_models,
+                        context=self._context,
+                        source_file=self._maybe_requests_source_file,
+                        docstring=None,
+                        should_export=False,
+                    ) as base_union_typed_dict:
+                        for common_field in single_property_property_fields:
+                            field_dict = common_field.__dict__
+                            del field_dict["type_hint"]
+                            base_union_typed_dict.add_field(**vars(field_dict))
+
+                        single_union_type_dict_references.append(base_union_typed_dict.to_reference())
 
             elif shape.properties_type == "samePropertiesAsObject":
-                with FernAwarePydanticModel(
-                    type_name=None,
-                    class_name=get_single_union_type_class_name(self._name, single_union_type.discriminant_value),
-                    context=self._context,
-                    custom_config=self._custom_config,
-                    source_file=self._source_file,
-                    docstring=self._docs,
-                    snippet=self._snippet,
-                    base_models=base_models,
-                    as_request=self._as_request,
-                ) as internal_pydantic_model_for_single_union_type:
-                    object_properties = self._context.get_all_properties_including_extensions(shape.type_id)
-                    for object_property in object_properties:
-                        internal_pydantic_model_for_single_union_type.add_field(
+                same_properties_as_object_property_fields: List[FernAwarePydanticField] = [
+                    FernAwarePydanticField(
+                        name=get_discriminant_parameter_name(self._union.discriminant),
+                        pascal_case_field_name=self._union.discriminant.name.pascal_case.safe_name,
+                        type_reference=ir_types.TypeReference.factory.container(
+                            ir_types.ContainerType.factory.literal(
+                                ir_types.Literal.factory.string(single_union_type.discriminant_value.wire_value)
+                            )
+                        ),
+                        json_field_name=self._union.discriminant.wire_value,
+                        default_value=discriminant_value,
+                    )
+                ]
+                object_properties = self._context.get_all_properties_including_extensions(shape.type_id)
+                for object_property in object_properties:
+                    same_properties_as_object_property_fields.append(
+                        FernAwarePydanticField(
                             name=object_property.name.name.snake_case.safe_name,
                             pascal_case_field_name=object_property.name.name.pascal_case.safe_name,
                             json_field_name=object_property.name.wire_value,
                             type_reference=object_property.value_type,
                         )
-                    internal_pydantic_model_for_single_union_type.add_field(
-                        name=get_discriminant_parameter_name(self._union.discriminant),
-                        pascal_case_field_name=self._union.discriminant.name.pascal_case.safe_name,
-                        type_reference=ir_types.TypeReference.factory.container(
-                            ir_types.ContainerType.factory.literal(
-                                ir_types.Literal.factory.string(single_union_type.discriminant_value.wire_value)
-                            )
-                        ),
-                        json_field_name=self._union.discriminant.wire_value,
-                        default_value=discriminant_value,
                     )
 
-                    internal_single_union_type = internal_pydantic_model_for_single_union_type.to_reference()
-                    single_union_type_references.append(internal_single_union_type)
-
-            elif shape.properties_type == "noProperties":
                 with FernAwarePydanticModel(
                     type_name=None,
-                    class_name=get_single_union_type_class_name(self._name, single_union_type.discriminant_value),
+                    class_name=member_class_name,
                     context=self._context,
                     custom_config=self._custom_config,
                     source_file=self._source_file,
                     docstring=self._docs,
                     snippet=self._snippet,
                     base_models=base_models,
-                    as_request=self._as_request,
                 ) as internal_pydantic_model_for_single_union_type:
-                    internal_pydantic_model_for_single_union_type.add_field(
-                        name=get_discriminant_parameter_name(self._union.discriminant),
-                        pascal_case_field_name=self._union.discriminant.name.pascal_case.safe_name,
-                        type_reference=ir_types.TypeReference.factory.container(
-                            ir_types.ContainerType.factory.literal(
-                                ir_types.Literal.factory.string(single_union_type.discriminant_value.wire_value)
-                            )
-                        ),
-                        json_field_name=self._union.discriminant.wire_value,
-                        default_value=discriminant_value,
-                    )
+                    for field in same_properties_as_object_property_fields:
+                        internal_pydantic_model_for_single_union_type.add_field(**vars(field))
 
                     internal_single_union_type = internal_pydantic_model_for_single_union_type.to_reference()
                     single_union_type_references.append(internal_single_union_type)
 
-            type_hint = (
-                AST.TypeHint.union(*(AST.TypeHint(ref) for ref in single_union_type_references))
-                if len(single_union_type_references) > 1
-                else AST.TypeHint(single_union_type_references[0])
-            )
-            if self._custom_config.skip_validation:
-                type_hint = AST.TypeHint.annotated(
-                    type=type_hint,
-                    annotation=AST.Expression(
-                        AST.ClassInstantiation(
-                            class_=self._context.core_utilities.get_union_metadata(),
-                            kwargs=[
-                                (
-                                    "discriminant",
-                                    AST.Expression(f'"{self._union.discriminant.wire_value}"'),
-                                )
-                            ],
+                if self._maybe_requests_source_file is not None:
+                    with FernTypedDict(
+                        class_name=typed_dict_member_class_name,
+                        extended_references=base_models,
+                        context=self._context,
+                        source_file=self._maybe_requests_source_file,
+                        docstring=None,
+                        should_export=False,
+                    ) as member_typed_dict:
+                        for field in same_properties_as_object_property_fields:
+                            member_typed_dict.add_field(**vars(field))
+                        single_union_type_dict_references.append(member_typed_dict.to_reference())
+
+            elif shape.properties_type == "noProperties":
+                no_properties_property_field = FernAwarePydanticField(
+                    name=get_discriminant_parameter_name(self._union.discriminant),
+                    pascal_case_field_name=self._union.discriminant.name.pascal_case.safe_name,
+                    type_reference=ir_types.TypeReference.factory.container(
+                        ir_types.ContainerType.factory.literal(
+                            ir_types.Literal.factory.string(single_union_type.discriminant_value.wire_value)
                         )
                     ),
+                    json_field_name=self._union.discriminant.wire_value,
+                    default_value=discriminant_value,
                 )
+                with FernAwarePydanticModel(
+                    type_name=None,
+                    class_name=member_class_name,
+                    context=self._context,
+                    custom_config=self._custom_config,
+                    source_file=self._source_file,
+                    docstring=self._docs,
+                    snippet=self._snippet,
+                    base_models=base_models,
+                ) as internal_pydantic_model_for_single_union_type:
+                    internal_pydantic_model_for_single_union_type.add_field(**vars(no_properties_property_field))
 
+                    internal_single_union_type = internal_pydantic_model_for_single_union_type.to_reference()
+                    single_union_type_references.append(internal_single_union_type)
+
+                if self._maybe_requests_source_file is not None:
+                    with FernTypedDict(
+                        class_name=typed_dict_member_class_name,
+                        extended_references=base_models,
+                        context=self._context,
+                        source_file=self._maybe_requests_source_file,
+                        docstring=None,
+                        should_export=False,
+                    ) as member_typed_dict:
+                        for field in same_properties_as_object_property_fields:
+                            member_typed_dict.add_field(**vars(field))
+                        single_union_type_dict_references.append(member_typed_dict.to_reference())
+
+        type_hint = (
+            AST.TypeHint.union(*(AST.TypeHint(ref) for ref in single_union_type_references))
+            if len(single_union_type_references) > 1
+            else AST.TypeHint(single_union_type_references[0])
+        )
+        if self._custom_config.skip_validation:
+            type_hint = AST.TypeHint.annotated(
+                type=type_hint,
+                annotation=AST.Expression(
+                    AST.ClassInstantiation(
+                        class_=self._context.core_utilities.get_union_metadata(),
+                        kwargs=[
+                            (
+                                "discriminant",
+                                AST.Expression(f'"{self._union.discriminant.wire_value}"'),
+                            )
+                        ],
+                    )
+                ),
+            )
+        union_class_name = self._context.get_class_name_for_type_id(self._name.type_id, as_request=False)
         type_alias_declaration = AST.TypeAliasDeclaration(
             type_hint=type_hint,
-            name=self._name.name.pascal_case.safe_name,
+            name=union_class_name,
             snippet=self._snippet,
         )
+
+        self._source_file.add_declaration(
+            type_alias_declaration,
+            should_export=True,
+        )
+
+        if self._maybe_requests_source_file is not None:
+            td_type_hint = (
+                AST.TypeHint.union(*(AST.TypeHint(ref) for ref in single_union_type_dict_references))
+                if len(single_union_type_dict_references) > 1
+                else AST.TypeHint(single_union_type_dict_references[0])
+            )
+            union_class_name = self._context.get_class_name_for_type_id(self._name.type_id, as_request=True)
+            type_alias_declaration = AST.TypeAliasDeclaration(
+                type_hint=td_type_hint,
+                name=union_class_name,
+            )
+            self._maybe_requests_source_file.add_declaration(
+                type_alias_declaration,
+                should_export=True,
+            )
 
         for referenced_type in all_referenced_types:
             for type_id in self._context.get_type_names_in_type_reference(referenced_type):
@@ -280,11 +387,6 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                         ),
                     ),
                 )
-
-        self._source_file.add_declaration(
-            type_alias_declaration,
-            should_export=True,
-        )
 
     def _update_forward_refs(
         self,

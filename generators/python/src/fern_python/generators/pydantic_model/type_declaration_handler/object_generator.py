@@ -4,6 +4,7 @@ from typing import List, Optional
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST, SourceFile
+from fern_python.generators.pydantic_model.typeddict import FernTypedDict
 from fern_python.snippet import SnippetWriter
 
 from ...context import PydanticGeneratorContext
@@ -23,32 +24,39 @@ class ObjectGenerator(AbstractTypeGenerator):
     def __init__(
         self,
         name: Optional[ir_types.DeclaredTypeName],
-        class_name: str,
         extends: List[ir_types.DeclaredTypeName],
         properties: List[ObjectProperty],
         context: PydanticGeneratorContext,
         source_file: SourceFile,
+        maybe_requests_source_file: Optional[SourceFile],
         custom_config: PydanticModelCustomConfig,
         docs: Optional[str],
+        class_name: Optional[str] = None,
         snippet: Optional[str] = None,
-        as_request: bool = False,
     ):
         super().__init__(
             context=context,
             custom_config=custom_config,
             source_file=source_file,
+            maybe_requests_source_file=maybe_requests_source_file,
             docs=docs,
             snippet=snippet,
-            as_request=as_request,
         )
         self._name = name
-        self._class_name = class_name
         self._extends = extends
         self._properties = properties
+        self._class_name = class_name
 
     def generate(self) -> None:
+        if self._class_name is None and self._name is None:
+            raise ValueError("Either class_name or name must be provided")
+        elif self._class_name is not None:
+            class_name = self._class_name
+        elif self._name is not None:
+            class_name = self._context.get_class_name_for_type_id(self._name.type_id, as_request=False)
+
         with FernAwarePydanticModel(
-            class_name=self._class_name,
+            class_name=class_name,
             type_name=self._name,
             extends=self._extends,
             context=self._context,
@@ -56,7 +64,6 @@ class ObjectGenerator(AbstractTypeGenerator):
             source_file=self._source_file,
             docstring=self._docs,
             snippet=self._snippet,
-            as_request=self._as_request,
         ) as pydantic_model:
             for property in self._properties:
                 pydantic_model.add_field(
@@ -66,6 +73,26 @@ class ObjectGenerator(AbstractTypeGenerator):
                     json_field_name=property.name.wire_value,
                     description=property.docs,
                 )
+
+        if self._maybe_requests_source_file is not None:
+            if self._name is not None:
+                with FernTypedDict(
+                    context=self._context,
+                    source_file=self._maybe_requests_source_file,
+                    type_name=self._name,
+                    should_export=True,
+                    extended_types=self._extends,
+                    docstring=self._docs,
+                ) as typed_dict:
+                    for property in self._properties:
+                        typed_dict.add_field(
+                            name=property.name.name.snake_case.safe_name,
+                            type_reference=property.value_type,
+                            json_field_name=property.name.wire_value,
+                            description=property.docs,
+                        )
+            else:
+                raise ValueError("name must be provided to generate a typed dict")
 
 
 class ObjectSnippetGenerator:
