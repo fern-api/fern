@@ -32,13 +32,6 @@ types:
       minLength: 4
       maxLength: 256
 
-  Shape:
-    default: CIRCLE
-    enum:
-      - SQUARE
-      - CIRCLE
-      - TRIANGLE 
-
   Type:
     docs: |
       Defines properties with default values and validation rules.
@@ -69,16 +62,12 @@ types:
           maxLength: 10
           pattern: "^[a-z]+$"
           format: custom
-      shape:
-        type: Shape
-        default: TRIANGLE
     examples:
       - name: First
         value:
           decimal: 1.1
           even: 2
           name: rules
-          shape: SQUARE
 
 service:
   auth: false
@@ -117,9 +106,6 @@ service:
                 maxLength: 10
                 pattern: "^[a-z]+$"
                 format: custom
-            shape:
-              type: Shape
-              default: SQUARE
       response: Type
 
     get:

@@ -28,7 +28,12 @@ public partial class SeedApiClient
     public async Task FooAsync()
     {
         await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest { Method = HttpMethod.Post, Path = "" }
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Post,
+                Path = ""
+            }
         );
     }
 }

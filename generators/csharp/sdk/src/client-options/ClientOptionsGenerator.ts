@@ -1,6 +1,6 @@
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { SingleBaseUrlEnvironment } from "@fern-fern/ir-sdk/api";
+import { Name } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -67,35 +67,84 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
     }
 
     private getBaseUrlField(): csharp.Field {
-        let defaultEnvironment: SingleBaseUrlEnvironment | undefined = undefined;
-        if (
-            this.context.ir.environments?.defaultEnvironment != null &&
-            this.context.ir.environments?.environments.type === "singleBaseUrl"
-        ) {
-            const singleBaseUrlDefault = this.context.ir.environments.environments.environments.filter(
-                (singleBaseUrl) => {
-                    return singleBaseUrl.id === this.context.ir.environments?.defaultEnvironment;
-                }
-            );
-            if (singleBaseUrlDefault[0] != null) {
-                defaultEnvironment = singleBaseUrlDefault[0];
+        const defaultEnvironmentId = this.context.ir.environments?.defaultEnvironment;
+        let defaultEnvironment: Name | undefined = undefined;
+        if (defaultEnvironmentId != null) {
+            defaultEnvironment = this.context.ir.environments?.environments._visit({
+                singleBaseUrl: (value) => {
+                    return value.environments.find((env) => {
+                        return env.id === defaultEnvironmentId;
+                    })?.name;
+                },
+                multipleBaseUrls: (value) => {
+                    return value.environments.find((env) => {
+                        return env.id === defaultEnvironmentId;
+                    })?.name;
+                },
+                _other: () => undefined
+            });
+        }
+
+        if (this.context.ir.environments != null) {
+            const field = this.context.ir.environments.environments._visit({
+                singleBaseUrl: () => {
+                    return csharp.field({
+                        access: "public",
+                        name: "BaseUrl",
+                        get: true,
+                        init: true,
+                        useRequired: defaultEnvironment != null,
+                        type: csharp.Type.string(),
+                        summary: "The Base URL for the API.",
+                        initializer:
+                            defaultEnvironment != null
+                                ? csharp.codeblock((writer) => {
+                                      writer.writeNode(this.context.getEnvironmentsClassReference());
+                                      writer.write(`.${defaultEnvironment?.screamingSnakeCase.safeName}`);
+                                  })
+                                : csharp.codeblock('""') // TODO: remove this logic since it sets url to ""
+                    });
+                },
+                multipleBaseUrls: () => {
+                    return csharp.field({
+                        access: "public",
+                        name: "Environment",
+                        get: true,
+                        init: true,
+                        useRequired: defaultEnvironment != null,
+                        type: csharp.Type.reference(this.context.getEnvironmentsClassReference()),
+                        summary: "The Environment for the API.",
+                        initializer:
+                            defaultEnvironment != null
+                                ? csharp.codeblock((writer) => {
+                                      writer.writeNode(this.context.getEnvironmentsClassReference());
+                                      writer.write(`.${defaultEnvironment?.screamingSnakeCase.safeName}`);
+                                  })
+                                : csharp.codeblock("null") // TODO: remove this logic since it sets url to null
+                    });
+                },
+                _other: () => undefined
+            });
+            if (field != null) {
+                return field;
             }
         }
+
         return csharp.field({
             access: "public",
             name: "BaseUrl",
             get: true,
             init: true,
+            useRequired: defaultEnvironment != null,
             type: csharp.Type.string(),
             summary: "The Base URL for the API.",
             initializer:
                 defaultEnvironment != null
                     ? csharp.codeblock((writer) => {
                           writer.writeNode(this.context.getEnvironmentsClassReference());
-                          writer.write(`.${defaultEnvironment?.name.screamingSnakeCase.safeName}`);
+                          writer.write(`.${defaultEnvironment?.screamingSnakeCase.safeName}`);
                       })
-                    : csharp.codeblock('""'),
-            useRequired: true
+                    : csharp.codeblock('""') // TODO: remove this logic since it sets url to ""
         });
     }
 }

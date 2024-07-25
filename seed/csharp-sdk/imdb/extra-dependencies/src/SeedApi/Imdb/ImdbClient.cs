@@ -23,6 +23,7 @@ public class ImdbClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/movies/create-movie",
                 Body = request
@@ -39,7 +40,12 @@ public class ImdbClient
     public async Task<Movie> GetMovieAsync(string movieId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = $"/movies/{movieId}" }
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = $"/movies/{movieId}"
+            }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

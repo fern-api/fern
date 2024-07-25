@@ -4,7 +4,8 @@ import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ClientOptionsGenerator } from "./client-options/ClientOptionsGenerator";
-import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
+import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator";
+import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator copy";
 import { RootClientGenerator } from "./root-client/RootClientGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
@@ -94,13 +95,23 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
             this.generateRequests(context, service, rootServiceId);
         }
 
-        if (context.ir.environments?.environments.type === "singleBaseUrl") {
-            const environments = new EnvironmentGenerator({
-                context,
-                singleUrlEnvironments: context.ir.environments?.environments
-            });
-            context.project.addSourceFiles(environments.generate());
-        }
+        context.ir.environments?.environments._visit({
+            singleBaseUrl: (value) => {
+                const environments = new SingleUrlEnvironmentGenerator({
+                    context,
+                    singleUrlEnvironments: value
+                });
+                context.project.addSourceFiles(environments.generate());
+            },
+            multipleBaseUrls: (value) => {
+                const environments = new MultiUrlEnvironmentGenerator({
+                    context,
+                    multiUrlEnvironments: value
+                });
+                context.project.addSourceFiles(environments.generate());
+            },
+            _other: () => undefined
+        });
 
         const testGenerator = new TestFileGenerator(context);
         const test = testGenerator.generate();

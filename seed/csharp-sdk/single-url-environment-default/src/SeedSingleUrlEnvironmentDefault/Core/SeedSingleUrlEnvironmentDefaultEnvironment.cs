@@ -1,6 +1,6 @@
-namespace SeedSingleUrlEnvironmentNoDefault.Core;
+namespace SeedSingleUrlEnvironmentDefault.Core;
 
-public class Environments
+public class SeedSingleUrlEnvironmentDefaultEnvironment
 {
     public static string PRODUCTION = "https://production.com/api";
 
