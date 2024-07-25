@@ -7,6 +7,8 @@ import * as FernOpenapiIr from "../../..";
 export type PrimitiveExample =
     | FernOpenapiIr.PrimitiveExample.Int
     | FernOpenapiIr.PrimitiveExample.Int64
+    | FernOpenapiIr.PrimitiveExample.Uint
+    | FernOpenapiIr.PrimitiveExample.Uint64
     | FernOpenapiIr.PrimitiveExample.Float
     | FernOpenapiIr.PrimitiveExample.Double
     | FernOpenapiIr.PrimitiveExample.String
@@ -23,6 +25,16 @@ export declare namespace PrimitiveExample {
 
     interface Int64 extends _Utils {
         type: "int64";
+        value: number;
+    }
+
+    interface Uint extends _Utils {
+        type: "uint";
+        value: number;
+    }
+
+    interface Uint64 extends _Utils {
+        type: "uint64";
         value: number;
     }
 
@@ -68,6 +80,8 @@ export declare namespace PrimitiveExample {
     interface _Visitor<_Result> {
         int: (value: number) => _Result;
         int64: (value: number) => _Result;
+        uint: (value: number) => _Result;
+        uint64: (value: number) => _Result;
         float: (value: number) => _Result;
         double: (value: number) => _Result;
         string: (value: string) => _Result;
@@ -99,6 +113,32 @@ export const PrimitiveExample = {
             type: "int64",
             _visit: function <_Result>(
                 this: FernOpenapiIr.PrimitiveExample.Int64,
+                visitor: FernOpenapiIr.PrimitiveExample._Visitor<_Result>
+            ) {
+                return FernOpenapiIr.PrimitiveExample._visit(this, visitor);
+            },
+        };
+    },
+
+    uint: (value: number): FernOpenapiIr.PrimitiveExample.Uint => {
+        return {
+            value: value,
+            type: "uint",
+            _visit: function <_Result>(
+                this: FernOpenapiIr.PrimitiveExample.Uint,
+                visitor: FernOpenapiIr.PrimitiveExample._Visitor<_Result>
+            ) {
+                return FernOpenapiIr.PrimitiveExample._visit(this, visitor);
+            },
+        };
+    },
+
+    uint64: (value: number): FernOpenapiIr.PrimitiveExample.Uint64 => {
+        return {
+            value: value,
+            type: "uint64",
+            _visit: function <_Result>(
+                this: FernOpenapiIr.PrimitiveExample.Uint64,
                 visitor: FernOpenapiIr.PrimitiveExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.PrimitiveExample._visit(this, visitor);
@@ -206,6 +246,10 @@ export const PrimitiveExample = {
                 return visitor.int(value.value);
             case "int64":
                 return visitor.int64(value.value);
+            case "uint":
+                return visitor.uint(value.value);
+            case "uint64":
+                return visitor.uint64(value.value);
             case "float":
                 return visitor.float(value.value);
             case "double":

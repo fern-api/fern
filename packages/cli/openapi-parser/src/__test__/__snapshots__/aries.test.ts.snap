@@ -1031,6 +1031,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "GetMatchingConnectionsRequestConnectionProtocol",
               "groupName": null,
@@ -1171,6 +1172,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "GetMatchingConnectionsRequestState",
               "groupName": null,
@@ -1372,6 +1374,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "GetMatchingConnectionsRequestTheirRole",
               "groupName": null,
@@ -14040,6 +14043,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "GetMatchingCredExRecordsV2RequestRole",
               "groupName": null,
@@ -14090,6 +14094,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "GetMatchingCredExRecordsV2RequestState",
               "groupName": null,
@@ -28040,6 +28045,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "GetMatchingCredExRecordsRequestRole",
               "groupName": null,
@@ -28090,6 +28096,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "GetMatchingCredExRecordsRequestState",
               "groupName": null,
@@ -35488,6 +35495,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "GetPublishedDidEndpointRequestEndpointType",
               "groupName": null,
@@ -36335,6 +36343,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "RegisterNymRequestRole",
               "groupName": null,
@@ -37295,6 +37304,19 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": {
+                "availability": null,
+                "casing": {
+                  "camel": null,
+                  "pascal": null,
+                  "screamingSnake": null,
+                  "snake": null,
+                },
+                "description": null,
+                "generatedName": "server",
+                "nameOverride": null,
+                "value": "server",
+              },
               "description": null,
               "generatedName": "GetKeylistsRequestRole",
               "groupName": null,
@@ -38386,6 +38408,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "GetMatchingMediationRecordsRequestState",
               "groupName": null,
@@ -44461,6 +44484,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "GetMatchingPresExRecordsV2RequestRole",
               "groupName": null,
@@ -44511,6 +44535,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "GetMatchingPresExRecordsV2RequestState",
               "groupName": null,
@@ -52108,6 +52133,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "GetMatchingPresExRecordsRequestRole",
               "groupName": null,
@@ -52158,6 +52184,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "GetMatchingPresExRecordsRequestState",
               "groupName": null,
@@ -59551,6 +59578,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "GetCreatedRegistriesRequestState",
               "groupName": null,
@@ -62078,6 +62106,7 @@ exports[`open api parser aries parse open api 1`] = `
           "parameterNameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": null,
             "generatedName": "SetRevocationRegistryStateRequestState",
             "groupName": null,
@@ -65071,6 +65100,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "SetEndorserRoleForConnIdRequestTransactionMyJob",
               "groupName": null,
@@ -66620,6 +66650,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "GetDidsRequestKeyType",
               "groupName": null,
@@ -66670,6 +66701,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "GetDidsRequestMethod",
               "groupName": null,
@@ -66720,6 +66752,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "GetDidsRequestPosture",
               "groupName": null,
@@ -69342,6 +69375,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Attachment type",
               "generatedName": "AttachmentDefType",
               "groupName": null,
@@ -69776,6 +69810,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Connection acceptance: manual or auto",
               "generatedName": "ConnRecordAccept",
               "groupName": null,
@@ -69892,6 +69927,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Connection protocol used",
               "generatedName": "ConnRecordConnectionProtocol",
               "groupName": null,
@@ -70072,6 +70108,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Invitation mode",
               "generatedName": "ConnRecordInvitationMode",
               "groupName": null,
@@ -70265,6 +70302,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Routing state of connection",
               "generatedName": "ConnRecordRoutingState",
               "groupName": null,
@@ -70471,6 +70509,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Their role in the connection protocol",
               "generatedName": "ConnRecordTheirRole",
               "groupName": null,
@@ -71552,6 +71591,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "ConstraintsStatusActive",
               "groupName": null,
@@ -71617,6 +71657,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "ConstraintsStatusRevoked",
               "groupName": null,
@@ -71682,6 +71723,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "ConstraintsStatusSuspended",
               "groupName": null,
@@ -71747,6 +71789,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "SubjectIsIssuer",
               "generatedName": "ConstraintsSubjectIsIssuer",
               "groupName": null,
@@ -72121,6 +72164,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Webhook target dispatch type for this wallet.             default - Dispatch only to webhooks associated with this wallet.             base - Dispatch only to webhooks associated with the base wallet.             both - Dispatch to both webhook targets.",
               "generatedName": "CreateWalletRequestWalletDispatchType",
               "groupName": null,
@@ -72218,6 +72262,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Key derivation",
               "generatedName": "CreateWalletRequestWalletKeyDerivation",
               "groupName": null,
@@ -72315,6 +72360,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Type of the wallet to create",
               "generatedName": "CreateWalletRequestWalletType",
               "groupName": null,
@@ -72458,6 +72504,7 @@ exports[`open api parser aries parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": "Mode regarding management of wallet key",
             "generatedName": "CreateWalletResponseKeyManagementMode",
             "groupName": null,
@@ -75101,6 +75148,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Key type associated with the DID",
               "generatedName": "DidKeyType",
               "groupName": null,
@@ -75185,6 +75233,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Whether DID is current public DID, posted to ledger but not current public DID, or local to the wallet",
               "generatedName": "DidPosture",
               "groupName": null,
@@ -75422,6 +75471,7 @@ exports[`open api parser aries parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": "Key type to use for the DID keypair. Validated with the chosen DID method's supported key types.",
             "generatedName": "DidCreateOptionsKeyType",
             "groupName": null,
@@ -75620,6 +75670,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Endpoint type to set (default 'Endpoint'); affects only public or posted DIDs",
               "generatedName": "DidEndpointWithTypeEndpointType",
               "groupName": null,
@@ -76046,6 +76097,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Preference",
               "generatedName": "DifFieldPredicate",
               "groupName": null,
@@ -76143,6 +76195,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Preference",
               "generatedName": "DifHolderDirective",
               "groupName": null,
@@ -77727,6 +77780,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Ledger role",
               "generatedName": "GetNymRoleResponseRole",
               "groupName": null,
@@ -79346,6 +79400,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Predicate type",
               "generatedName": "IndyGeProofPredPType",
               "groupName": null,
@@ -79987,6 +80042,7 @@ exports[`open api parser aries parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": "Predicate type ('<', '<=', '>=', or '>')",
             "generatedName": "IndyPresPredSpecPredicate",
             "groupName": null,
@@ -81289,6 +81345,7 @@ exports[`open api parser aries parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": "Predicate type ('<', '<=', '>=', or '>')",
             "generatedName": "IndyProofReqPredSpecPType",
             "groupName": null,
@@ -82715,6 +82772,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Issuance type",
               "generatedName": "IndyRevRegDefValueIssuanceType",
               "groupName": null,
@@ -85838,6 +85896,7 @@ exports[`open api parser aries parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": "Action for specific key",
             "generatedName": "KeylistUpdateRuleAction",
             "groupName": null,
@@ -88551,6 +88610,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "OOB Role",
               "generatedName": "OobRecordRole",
               "groupName": null,
@@ -88596,6 +88656,7 @@ exports[`open api parser aries parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": "Out of band message exchange state",
             "generatedName": "OobRecordState",
             "groupName": null,
@@ -89889,6 +89950,7 @@ exports[`open api parser aries parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": "feature type",
             "generatedName": "QueryItemFeatureType",
             "groupName": null,
@@ -90978,6 +91040,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Specify which version of the revocation notification should be sent",
               "generatedName": "RevokeRequestNotifyVersion",
               "groupName": null,
@@ -92764,6 +92827,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Selection",
               "generatedName": "SubmissionRequirementsRule",
               "groupName": null,
@@ -93324,6 +93388,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "My transaction related job",
               "generatedName": "TransactionJobsTransactionMyJob",
               "groupName": null,
@@ -93389,6 +93454,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Their transaction related job",
               "generatedName": "TransactionJobsTransactionTheirJob",
               "groupName": null,
@@ -94469,6 +94535,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Webhook target dispatch type for this wallet.             default - Dispatch only to webhooks associated with this wallet.             base - Dispatch only to webhooks associated with the base wallet.             both - Dispatch to both webhook targets.",
               "generatedName": "UpdateWalletRequestWalletDispatchType",
               "groupName": null,
@@ -95559,6 +95626,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Issue-credential exchange initiator: self or external",
               "generatedName": "V10CredentialExchangeInitiator",
               "groupName": null,
@@ -95732,6 +95800,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Issue-credential exchange role: holder or issuer",
               "generatedName": "V10CredentialExchangeRole",
               "groupName": null,
@@ -97744,6 +97813,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Present-proof exchange initiator: self or external",
               "generatedName": "V10PresentationExchangeInitiator",
               "groupName": null,
@@ -97928,6 +97998,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Present-proof exchange role: prover or verifier",
               "generatedName": "V10PresentationExchangeRole",
               "groupName": null,
@@ -98104,6 +98175,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Whether presentation is verified: true or false",
               "generatedName": "V10PresentationExchangeVerified",
               "groupName": null,
@@ -99456,6 +99528,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Issue-credential exchange initiator: self or external",
               "generatedName": "V20CredExRecordInitiator",
               "groupName": null,
@@ -99540,6 +99613,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Issue-credential exchange role: holder or issuer",
               "generatedName": "V20CredExRecordRole",
               "groupName": null,
@@ -99592,6 +99666,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Issue-credential exchange state",
               "generatedName": "V20CredExRecordState",
               "groupName": null,
@@ -103753,6 +103828,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Present-proof exchange initiator: self or external",
               "generatedName": "V20PresExRecordInitiator",
               "groupName": null,
@@ -103912,6 +103988,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Present-proof exchange role: prover or verifier",
               "generatedName": "V20PresExRecordRole",
               "groupName": null,
@@ -103964,6 +104041,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Present-proof exchange state",
               "generatedName": "V20PresExRecordState",
               "groupName": null,
@@ -104199,6 +104277,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Whether presentation is verified: 'true' or 'false'",
               "generatedName": "V20PresExRecordVerified",
               "groupName": null,
@@ -106633,6 +106712,7 @@ exports[`open api parser aries parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": "Mode regarding management of wallet key",
             "generatedName": "WalletRecordKeyManagementMode",
             "groupName": null,

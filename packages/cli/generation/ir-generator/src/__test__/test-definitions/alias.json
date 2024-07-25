@@ -208,7 +208,9 @@
                                 "packagePath": [],
                                 "file": null
                             },
-                            "typeId": "type_:TypeId"
+                            "typeId": "type_:TypeId",
+                            "default": null,
+                            "inline": null
                         },
                         "availability": null,
                         "docs": null
@@ -511,7 +513,9 @@
                         "packagePath": [],
                         "file": null
                     },
-                    "typeId": "type_:Type"
+                    "typeId": "type_:Type",
+                    "default": null,
+                    "inline": null
                 },
                 "resolvedType": {
                     "_type": "named",
@@ -898,7 +902,9 @@
                                     "packagePath": [],
                                     "file": null
                                 },
-                                "typeId": "type_:TypeId"
+                                "typeId": "type_:TypeId",
+                                "default": null,
+                                "inline": null
                             },
                             "location": "ENDPOINT",
                             "variable": null,
@@ -952,7 +958,9 @@
                                     "packagePath": [],
                                     "file": null
                                 },
-                                "typeId": "type_:TypeId"
+                                "typeId": "type_:TypeId",
+                                "default": null,
+                                "inline": null
                             },
                             "location": "ENDPOINT",
                             "variable": null,
@@ -1058,7 +1066,7 @@
                                         "value": null
                                     }
                                 },
-                                "id": "ff3520154aecd07a7ff2313587f7761ae34dd4a9",
+                                "id": "bd5b4c8c347f4c7c33db01bcd23a51f5325101f0",
                                 "docs": null
                             }
                         }

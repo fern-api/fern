@@ -11,6 +11,7 @@ export const EnumSchemaWithExample: core.serialization.ObjectSchema<
     FernOpenapiIr.EnumSchemaWithExample
 > = core.serialization
     .objectWithoutOptionalProperties({
+        default: core.serialization.lazyObject(async () => (await import("../../..")).EnumValue).optional(),
         values: core.serialization.list(
             core.serialization.lazyObject(async () => (await import("../../..")).EnumValue)
         ),
@@ -27,6 +28,7 @@ export declare namespace EnumSchemaWithExample {
             serializers.WithName.Raw,
             serializers.WithSdkGroupName.Raw,
             serializers.WithAvailability.Raw {
+        default?: serializers.EnumValue.Raw | null;
         values: serializers.EnumValue.Raw[];
         example?: string | null;
     }

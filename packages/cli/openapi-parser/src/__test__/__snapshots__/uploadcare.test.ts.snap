@@ -5273,6 +5273,19 @@ response headers or the \`source_url\`'s path.
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": {
+                    "availability": null,
+                    "casing": {
+                      "camel": null,
+                      "pascal": null,
+                      "screamingSnake": null,
+                      "snake": null,
+                    },
+                    "description": null,
+                    "generatedName": "Zero",
+                    "nameOverride": null,
+                    "value": "0",
+                  },
                   "description": "If set to "1", enables the \`source_url\` duplicates prevention.
 Specifically, if the \`source_url\` had already been fetched and uploaded previously,
 this request will return information about the already uploaded file.
@@ -5327,6 +5340,7 @@ this request will return information about the already uploaded file.
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": null,
                   "description": "Determines if the requested \`source_url\` should be kept in the history of
 fetched/uploaded URLs. If the value is not defined explicitly, it is set
 to the value of the \`check_URL_duplicates\` parameter.
@@ -11794,6 +11808,7 @@ that are tool old (or that have not been created at all).
             "nameOverride": null,
             "schema": {
               "availability": null,
+              "default": null,
               "description": "Image color mode.",
               "generatedName": "ImageInfoColorMode",
               "groupName": null,
@@ -13138,6 +13153,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": "Image color mode.",
             "generatedName": "SchemasImageInfoColorMode",
             "groupName": null,
@@ -13711,6 +13727,19 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
     },
     "storeType": {
       "availability": null,
+      "default": {
+        "availability": null,
+        "casing": {
+          "camel": null,
+          "pascal": null,
+          "screamingSnake": null,
+          "snake": null,
+        },
+        "description": null,
+        "generatedName": "auto",
+        "nameOverride": null,
+        "value": "auto",
+      },
       "description": "Determines if an uploaded file should be marked as temporary or permanent.
 
 The parameter can have the following values:

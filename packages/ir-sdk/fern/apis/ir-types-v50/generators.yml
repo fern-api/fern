@@ -1,4 +1,3 @@
-default-group: local
 groups:
   node:
     generators:

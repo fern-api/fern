@@ -34,7 +34,8 @@ export class SeedValidationClient {
      *     await client.create({
      *         decimal: 1.1,
      *         even: 1,
-     *         name: "string"
+     *         name: "string",
+     *         shape: SeedValidation.Shape.Square
      *     })
      */
     public async create(

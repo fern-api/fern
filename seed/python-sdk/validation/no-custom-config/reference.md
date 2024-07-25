@@ -21,6 +21,7 @@ client.create(
     decimal=1.1,
     even=1,
     name="string",
+    shape="SQUARE",
 )
 
 ```
@@ -54,6 +55,14 @@ client.create(
 <dd>
 
 **name:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**shape:** `Shape` 
     
 </dd>
 </dl>

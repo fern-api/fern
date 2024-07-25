@@ -21,7 +21,7 @@ service:
       examples:
         - response:
             body:
-              - id: 1
+              - id: 1000000
                 name: name
                 tag: tag
     createPets:
@@ -48,6 +48,6 @@ service:
             petId: petId
           response:
             body:
-              id: 1
+              id: 1000000
               name: name
               tag: tag

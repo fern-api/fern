@@ -15,7 +15,7 @@ export async function visitPackageMarkerYamlAst(
         errors: noop,
         channel: noop,
         export: async (export_) => {
-            await visitor.export?.(export_, ["export"]);
+            await visitor.export?.(typeof export_ === "string" ? export_ : export_?.dependency, ["export"]);
         },
         navigation: async (navigation) => {
             await visitor.navigation?.(navigation, ["navigation"]);

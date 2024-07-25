@@ -42,6 +42,7 @@ export function convertSchemaToSchemaWithExample(schema: Schema): SchemaWithExam
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
                 values: schema.values,
+                default: schema.default,
                 groupName: schema.groupName,
                 example: undefined
             });
@@ -267,6 +268,16 @@ function convertToPrimitiveSchemaValue(primitiveSchema: PrimitiveSchemaValue): P
         case "int64":
             return PrimitiveSchemaValueWithExample.int64({
                 default: primitiveSchema.default,
+                example: undefined
+            });
+        case "uint":
+            return PrimitiveSchemaValueWithExample.uint({
+                default: undefined,
+                example: undefined
+            });
+        case "uint64":
+            return PrimitiveSchemaValueWithExample.uint64({
+                default: undefined,
                 example: undefined
             });
         default:

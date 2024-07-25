@@ -6,7 +6,7 @@ exports[`validate petstore 1`] = `
     "contents": "types:
   Pet:
     properties:
-      id: integer
+      id: long
       name: string
       tag: optional<string>
   Pets: list<Pet>
@@ -54,7 +54,7 @@ service:
       examples:
         - response:
             body:
-              - id: 1
+              - id: 1000000
                 name: name
                 tag: tag
     createPets:
@@ -81,7 +81,7 @@ service:
             petId: petId
           response:
             body:
-              id: 1
+              id: 1000000
               name: name
               tag: tag
 ",

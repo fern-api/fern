@@ -25,6 +25,7 @@ client.create(
     decimal=1.1,
     even=1,
     name="string",
+    shape="SQUARE",
 )
 ```
 
@@ -47,6 +48,7 @@ async def main() -> None:
         decimal=1.1,
         even=1,
         name="string",
+        shape="SQUARE",
     )
 
 

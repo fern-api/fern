@@ -74,13 +74,9 @@ exports[`seam seam docs 1`] = `
                   "allow_external_modification": "optional<boolean>",
                   "attempt_for_offline_device": {
                     "default": true,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "code": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": undefined,
@@ -103,15 +99,16 @@ exports[`seam seam docs 1`] = `
                   "is_external_modification_allowed": "optional<boolean>",
                   "is_offline_access_code": "optional<boolean>",
                   "is_one_time_use": "optional<boolean>",
-                  "max_time_rounding": "optional<AccessCodesCreateRequestMaxTimeRounding>",
+                  "max_time_rounding": {
+                    "default": "1hour",
+                    "type": "optional<AccessCodesCreateRequestMaxTimeRounding>",
+                  },
                   "name": "optional<string>",
                   "prefer_native_scheduling": "optional<boolean>",
                   "starts_at": "optional<string>",
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "use_backup_access_code_pool": "optional<boolean>",
                   "use_offline_access_code": "optional<boolean>",
@@ -187,14 +184,13 @@ exports[`seam seam docs 1`] = `
                   "allow_external_modification": "optional<boolean>",
                   "attempt_for_offline_device": {
                     "default": true,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
-                  "behavior_when_code_cannot_be_shared": "optional<AccessCodesCreateMultipleRequestBehaviorWhenCodeCannotBeShared>",
+                  "behavior_when_code_cannot_be_shared": {
+                    "default": "throw",
+                    "type": "optional<AccessCodesCreateMultipleRequestBehaviorWhenCodeCannotBeShared>",
+                  },
                   "code": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": undefined,
@@ -208,7 +204,10 @@ exports[`seam seam docs 1`] = `
                   "is_external_modification_allowed": "optional<boolean>",
                   "is_offline_access_code": "optional<boolean>",
                   "is_one_time_use": "optional<boolean>",
-                  "max_time_rounding": "optional<AccessCodesCreateMultipleRequestMaxTimeRounding>",
+                  "max_time_rounding": {
+                    "default": "1hour",
+                    "type": "optional<AccessCodesCreateMultipleRequestMaxTimeRounding>",
+                  },
                   "name": "optional<string>",
                   "prefer_native_scheduling": "optional<boolean>",
                   "preferred_code_length": "optional<double>",
@@ -270,8 +269,6 @@ exports[`seam seam docs 1`] = `
                     },
                   },
                   "device_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -282,9 +279,7 @@ exports[`seam seam docs 1`] = `
                   },
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -423,8 +418,6 @@ exports[`seam seam docs 1`] = `
               "body": {
                 "properties": {
                   "access_code_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -435,8 +428,6 @@ exports[`seam seam docs 1`] = `
                   },
                   "code": "optional<string>",
                   "device_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -512,8 +503,6 @@ exports[`seam seam docs 1`] = `
                 "properties": {
                   "access_code_ids": "optional<list<string>>",
                   "device_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -654,13 +643,9 @@ exports[`seam seam docs 1`] = `
                   "allow_external_modification": "optional<boolean>",
                   "attempt_for_offline_device": {
                     "default": true,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "code": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": undefined,
@@ -670,8 +655,6 @@ exports[`seam seam docs 1`] = `
                     },
                   },
                   "device_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -685,15 +668,16 @@ exports[`seam seam docs 1`] = `
                   "is_managed": "optional<boolean>",
                   "is_offline_access_code": "optional<boolean>",
                   "is_one_time_use": "optional<boolean>",
-                  "max_time_rounding": "optional<AccessCodesUpdateRequestMaxTimeRounding>",
+                  "max_time_rounding": {
+                    "default": "1hour",
+                    "type": "optional<AccessCodesUpdateRequestMaxTimeRounding>",
+                  },
                   "name": "optional<string>",
                   "prefer_native_scheduling": "optional<boolean>",
                   "starts_at": "optional<string>",
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "type": "optional<AccessCodesUpdateRequestType>",
                   "use_backup_access_code_pool": "optional<boolean>",
@@ -713,12 +697,14 @@ exports[`seam seam docs 1`] = `
       },
       "types": {
         "AccessCodesCreateMultipleRequestBehaviorWhenCodeCannotBeShared": {
+          "default": "throw",
           "enum": [
             "throw",
             "create_random_code",
           ],
         },
         "AccessCodesCreateMultipleRequestMaxTimeRounding": {
+          "default": "1hour",
           "enum": [
             {
               "name": "OneHour",
@@ -746,6 +732,7 @@ exports[`seam seam docs 1`] = `
           },
         },
         "AccessCodesCreateRequestMaxTimeRounding": {
+          "default": "1hour",
           "enum": [
             {
               "name": "OneHour",
@@ -809,6 +796,7 @@ exports[`seam seam docs 1`] = `
           },
         },
         "AccessCodesUpdateRequestMaxTimeRounding": {
+          "default": "1hour",
           "enum": [
             {
               "name": "OneHour",
@@ -988,9 +976,7 @@ exports[`seam seam docs 1`] = `
                   "is_external_modification_allowed": "optional<boolean>",
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -1047,9 +1033,7 @@ exports[`seam seam docs 1`] = `
                   },
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -1105,8 +1089,6 @@ exports[`seam seam docs 1`] = `
               "body": {
                 "properties": {
                   "access_code_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -1117,8 +1099,6 @@ exports[`seam seam docs 1`] = `
                   },
                   "code": "optional<string>",
                   "device_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -1458,8 +1438,6 @@ exports[`seam seam docs 1`] = `
               "body": {
                 "properties": {
                   "acs_system_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -1469,8 +1447,6 @@ exports[`seam seam docs 1`] = `
                     },
                   },
                   "acs_user_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -1778,8 +1754,6 @@ exports[`seam seam docs 1`] = `
               "body": {
                 "properties": {
                   "acs_credential_pool_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -1799,8 +1773,6 @@ exports[`seam seam docs 1`] = `
                     },
                   },
                   "credential_manager_acs_user_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -2031,8 +2003,6 @@ exports[`seam seam docs 1`] = `
                   },
                   "allowed_acs_entrance_ids": "optional<list<string>>",
                   "code": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": undefined,
@@ -2042,8 +2012,6 @@ exports[`seam seam docs 1`] = `
                     },
                   },
                   "credential_manager_acs_system_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -2055,9 +2023,7 @@ exports[`seam seam docs 1`] = `
                   "ends_at": "optional<datetime>",
                   "is_multi_phone_sync_credential": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "starts_at": "optional<datetime>",
                   "visionline_metadata": "optional<CredentialsCreateRequestVisionlineMetadata>",
@@ -2523,8 +2489,6 @@ exports[`seam seam docs 1`] = `
                 "properties": {
                   "acs_credential_id": "string",
                   "code": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": undefined,
@@ -2566,8 +2530,6 @@ exports[`seam seam docs 1`] = `
           "docs": undefined,
           "properties": {
             "assa_abloy_credential_service_mobile_endpoint_id": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uuid",
@@ -2577,16 +2539,17 @@ exports[`seam seam docs 1`] = `
               },
             },
             "card_format": "optional<CredentialsCreateRequestVisionlineMetadataCardFormat>",
-            "card_function_type": "optional<CredentialsCreateRequestVisionlineMetadataCardFunctionType>",
+            "card_function_type": {
+              "default": "guest",
+              "type": "optional<CredentialsCreateRequestVisionlineMetadataCardFunctionType>",
+            },
             "is_override_key": {
-              "default": undefined,
               "docs": "
           ---
           deprecated: use override.
           ---
         ",
               "type": "optional<boolean>",
-              "validation": undefined,
             },
             "joiner_acs_credential_ids": "optional<list<string>>",
             "override": "optional<boolean>",
@@ -2599,6 +2562,7 @@ exports[`seam seam docs 1`] = `
           ],
         },
         "CredentialsCreateRequestVisionlineMetadataCardFunctionType": {
+          "default": "guest",
           "enum": [
             "guest",
             "staff",
@@ -2842,8 +2806,6 @@ exports[`seam seam docs 1`] = `
               "body": {
                 "properties": {
                   "acs_credential_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -2853,8 +2815,6 @@ exports[`seam seam docs 1`] = `
                     },
                   },
                   "acs_system_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -3131,8 +3091,6 @@ exports[`seam seam docs 1`] = `
               "body": {
                 "properties": {
                   "connected_account_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -3382,7 +3340,6 @@ exports[`seam seam docs 1`] = `
                     },
                   },
                   "email": {
-                    "default": undefined,
                     "docs": "
     ---
     deprecated: use email_address.
@@ -3397,8 +3354,6 @@ exports[`seam seam docs 1`] = `
                     },
                   },
                   "email_address": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "email",
@@ -3410,8 +3365,6 @@ exports[`seam seam docs 1`] = `
                   "full_name": "optional<string>",
                   "phone_number": "optional<string>",
                   "user_identity_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -3598,8 +3551,6 @@ exports[`seam seam docs 1`] = `
               "body": {
                 "properties": {
                   "acs_system_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -3610,8 +3561,6 @@ exports[`seam seam docs 1`] = `
                   },
                   "user_identity_email_address": "optional<string>",
                   "user_identity_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -3935,7 +3884,6 @@ exports[`seam seam docs 1`] = `
                     },
                   },
                   "email": {
-                    "default": undefined,
                     "docs": "
     ---
     deprecated: use email_address.
@@ -3950,8 +3898,6 @@ exports[`seam seam docs 1`] = `
                     },
                   },
                   "email_address": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "email",
@@ -3962,8 +3908,6 @@ exports[`seam seam docs 1`] = `
                   },
                   "full_name": "optional<string>",
                   "hid_acs_system_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -4257,8 +4201,6 @@ exports[`seam seam docs 1`] = `
                   "connected_account_ids": "optional<list<string>>",
                   "expires_at": "optional<datetime>",
                   "user_identifier_key": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": undefined,
@@ -4426,8 +4368,6 @@ exports[`seam seam docs 1`] = `
                   "connected_account_ids": "optional<list<string>>",
                   "expires_at": "optional<datetime>",
                   "user_identifier_key": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": undefined,
@@ -4726,9 +4666,7 @@ exports[`seam seam docs 1`] = `
                   "accepted_providers": "optional<list<ConnectWebviewsCreateRequestAcceptedProvidersItem>>",
                   "automatically_manage_new_devices": {
                     "default": true,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "custom_metadata": "optional<map<string, optional<ConnectWebviewsCreateRequestCustomMetadataValue>>>",
                   "custom_redirect_failure_url": "optional<string>",
@@ -4737,9 +4675,7 @@ exports[`seam seam docs 1`] = `
                   "provider_category": "optional<ConnectWebviewsCreateRequestProviderCategory>",
                   "wait_for_device_creation": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -4927,16 +4863,12 @@ exports[`seam seam docs 1`] = `
               "body": {
                 "properties": {
                   "custom_metadata_has": {
-                    "default": undefined,
                     "docs": "Returns devices where the webview's custom_metadata contains all of the provided key/value pairs.",
                     "type": "optional<map<string, ConnectWebviewsListRequestCustomMetadataHasValue>>",
-                    "validation": undefined,
                   },
                   "limit": {
                     "default": 500,
-                    "docs": undefined,
                     "type": "optional<double>",
-                    "validation": undefined,
                   },
                   "user_identifier_key": "optional<string>",
                 },
@@ -5114,9 +5046,7 @@ exports[`seam seam docs 1`] = `
                   },
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -5227,10 +5157,8 @@ exports[`seam seam docs 1`] = `
               "body": {
                 "properties": {
                   "custom_metadata_has": {
-                    "default": undefined,
                     "docs": "Returns devices where the account's custom_metadata contains all of the provided key/value pairs.",
                     "type": "optional<map<string, ConnectedAccountsListRequestCustomMetadataHasValue>>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -5741,8 +5669,6 @@ exports[`seam seam docs 1`] = `
               "body": {
                 "properties": {
                   "device_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -5837,8 +5763,6 @@ exports[`seam seam docs 1`] = `
               "body": {
                 "properties": {
                   "connect_webview_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -5848,7 +5772,6 @@ exports[`seam seam docs 1`] = `
                     },
                   },
                   "connected_account_id": {
-                    "default": undefined,
                     "docs": "List all devices owned by this connected account",
                     "type": "optional<string>",
                     "validation": {
@@ -5868,9 +5791,7 @@ exports[`seam seam docs 1`] = `
                   "include_if": "optional<list<DevicesListRequestIncludeIfItem>>",
                   "limit": {
                     "default": 500,
-                    "docs": undefined,
                     "type": "optional<double>",
-                    "validation": undefined,
                   },
                   "manufacturer": "optional<DevicesListRequestManufacturer>",
                   "user_identifier_key": "optional<string>",
@@ -5971,9 +5892,7 @@ exports[`seam seam docs 1`] = `
                   },
                   "is_managed": {
                     "default": true,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "name": "optional<string>",
                   "properties": "optional<DevicesUpdateRequestProperties>",
@@ -6453,8 +6372,6 @@ exports[`seam seam docs 1`] = `
               "body": {
                 "properties": {
                   "device_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -6541,8 +6458,6 @@ exports[`seam seam docs 1`] = `
               "body": {
                 "properties": {
                   "connect_webview_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -6552,7 +6467,6 @@ exports[`seam seam docs 1`] = `
                     },
                   },
                   "connected_account_id": {
-                    "default": undefined,
                     "docs": "List all devices owned by this connected account",
                     "type": "optional<string>",
                     "validation": {
@@ -6572,9 +6486,7 @@ exports[`seam seam docs 1`] = `
                   "include_if": "optional<list<UnmanagedListRequestIncludeIfItem>>",
                   "limit": {
                     "default": 500,
-                    "docs": undefined,
                     "type": "optional<double>",
-                    "validation": undefined,
                   },
                   "manufacturer": "optional<UnmanagedListRequestManufacturer>",
                   "user_identifier_key": "optional<string>",
@@ -6853,8 +6765,6 @@ exports[`seam seam docs 1`] = `
               "body": {
                 "properties": {
                   "device_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -6864,8 +6774,6 @@ exports[`seam seam docs 1`] = `
                     },
                   },
                   "event_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -6928,8 +6836,6 @@ exports[`seam seam docs 1`] = `
               "body": {
                 "properties": {
                   "access_code_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -6941,8 +6847,6 @@ exports[`seam seam docs 1`] = `
                   "access_code_ids": "optional<list<string>>",
                   "between": "optional<list<EventsListRequestBetweenItem>>",
                   "connected_account_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -6952,8 +6856,6 @@ exports[`seam seam docs 1`] = `
                     },
                   },
                   "device_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -6967,9 +6869,7 @@ exports[`seam seam docs 1`] = `
                   "event_types": "optional<list<EventsListRequestEventTypesItem>>",
                   "limit": {
                     "default": 500,
-                    "docs": undefined,
                     "type": "optional<double>",
-                    "validation": undefined,
                   },
                   "since": "optional<string>",
                 },
@@ -8023,8 +7923,6 @@ exports[`seam seam docs 1`] = `
               "body": {
                 "properties": {
                   "device_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -8167,8 +8065,6 @@ exports[`seam seam docs 1`] = `
               "body": {
                 "properties": {
                   "connect_webview_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -8178,7 +8074,6 @@ exports[`seam seam docs 1`] = `
                     },
                   },
                   "connected_account_id": {
-                    "default": undefined,
                     "docs": "List all devices owned by this connected account",
                     "type": "optional<string>",
                     "validation": {
@@ -8198,9 +8093,7 @@ exports[`seam seam docs 1`] = `
                   "include_if": "optional<list<LocksListRequestIncludeIfItem>>",
                   "limit": {
                     "default": 500,
-                    "docs": undefined,
                     "type": "optional<double>",
-                    "validation": undefined,
                   },
                   "manufacturer": "optional<LocksListRequestManufacturer>",
                   "user_identifier_key": "optional<string>",
@@ -8260,9 +8153,7 @@ exports[`seam seam docs 1`] = `
                   },
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -8320,9 +8211,7 @@ exports[`seam seam docs 1`] = `
                   },
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -8704,9 +8593,7 @@ exports[`seam seam docs 1`] = `
                   "starts_daily_at": "string",
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -8774,9 +8661,7 @@ exports[`seam seam docs 1`] = `
                   },
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -8963,9 +8848,7 @@ exports[`seam seam docs 1`] = `
                   "starts_daily_at": "optional<string>",
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -9192,8 +9075,6 @@ exports[`seam seam docs 1`] = `
               "body": {
                 "properties": {
                   "owner_user_identity_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -9347,39 +9228,27 @@ exports[`seam seam docs 1`] = `
           "properties": {
             "application_version": {
               "default": "1.0.0",
-              "docs": undefined,
               "type": "optional<string>",
-              "validation": undefined,
             },
             "ble_capability": {
               "default": true,
-              "docs": undefined,
               "type": "optional<boolean>",
-              "validation": undefined,
             },
             "hce_capability": {
               "default": false,
-              "docs": undefined,
               "type": "optional<boolean>",
-              "validation": undefined,
             },
             "nfc_capability": {
               "default": false,
-              "docs": undefined,
               "type": "optional<boolean>",
-              "validation": undefined,
             },
             "seos_applet_version": {
               "default": "1.0.0",
-              "docs": undefined,
               "type": "optional<string>",
-              "validation": undefined,
             },
             "seos_tsm_endpoint_id": {
               "default": 1,
-              "docs": undefined,
               "type": "optional<double>",
-              "validation": undefined,
             },
           },
         },
@@ -9388,26 +9257,24 @@ exports[`seam seam docs 1`] = `
           "properties": {
             "device_manufacturer": {
               "default": "Samsung",
-              "docs": undefined,
               "type": "optional<string>",
-              "validation": undefined,
             },
             "device_model": {
               "default": "Samsung Galaxy S10",
-              "docs": undefined,
               "type": "optional<string>",
-              "validation": undefined,
             },
-            "operating_system": "optional<SimulateCreateSandboxPhoneRequestPhoneMetadataOperatingSystem>",
+            "operating_system": {
+              "default": "android",
+              "type": "optional<SimulateCreateSandboxPhoneRequestPhoneMetadataOperatingSystem>",
+            },
             "os_version": {
               "default": "10",
-              "docs": undefined,
               "type": "optional<string>",
-              "validation": undefined,
             },
           },
         },
         "SimulateCreateSandboxPhoneRequestPhoneMetadataOperatingSystem": {
+          "default": "android",
           "enum": [
             "android",
             "ios",
@@ -9476,9 +9343,7 @@ exports[`seam seam docs 1`] = `
                   },
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -9770,8 +9635,6 @@ exports[`seam seam docs 1`] = `
               "body": {
                 "properties": {
                   "device_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -9839,9 +9702,7 @@ exports[`seam seam docs 1`] = `
                   "heating_set_point_fahrenheit": "optional<double>",
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -9903,9 +9764,7 @@ exports[`seam seam docs 1`] = `
                   "heating_set_point_fahrenheit": "optional<double>",
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -9992,8 +9851,6 @@ exports[`seam seam docs 1`] = `
               "body": {
                 "properties": {
                   "connect_webview_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -10003,7 +9860,6 @@ exports[`seam seam docs 1`] = `
                     },
                   },
                   "connected_account_id": {
-                    "default": undefined,
                     "docs": "List all devices owned by this connected account",
                     "type": "optional<string>",
                     "validation": {
@@ -10023,9 +9879,7 @@ exports[`seam seam docs 1`] = `
                   "include_if": "optional<list<ThermostatsListRequestIncludeIfItem>>",
                   "limit": {
                     "default": 500,
-                    "docs": undefined,
                     "type": "optional<double>",
-                    "validation": undefined,
                   },
                   "manufacturer": "optional<ThermostatsListRequestManufacturer>",
                   "user_identifier_key": "optional<string>",
@@ -10085,9 +9939,7 @@ exports[`seam seam docs 1`] = `
                   },
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -10147,9 +9999,7 @@ exports[`seam seam docs 1`] = `
                   "fan_mode_setting": "optional<ThermostatsSetFanModeRequestFanModeSetting>",
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -10618,8 +10468,6 @@ exports[`seam seam docs 1`] = `
               "body": {
                 "properties": {
                   "climate_setting_schedule_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -10629,8 +10477,6 @@ exports[`seam seam docs 1`] = `
                     },
                   },
                   "device_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -10953,8 +10799,6 @@ exports[`seam seam docs 1`] = `
               "body": {
                 "properties": {
                   "email_address": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "email",
@@ -10964,8 +10808,6 @@ exports[`seam seam docs 1`] = `
                     },
                   },
                   "full_name": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": undefined,
@@ -10976,8 +10818,6 @@ exports[`seam seam docs 1`] = `
                   },
                   "phone_number": "optional<string>",
                   "user_identity_key": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": undefined,
@@ -11179,8 +11019,6 @@ exports[`seam seam docs 1`] = `
               "body": {
                 "properties": {
                   "credential_manager_acs_system_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -11633,8 +11471,6 @@ exports[`seam seam docs 1`] = `
               "body": {
                 "properties": {
                   "email_address": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "email",
@@ -11644,8 +11480,6 @@ exports[`seam seam docs 1`] = `
                     },
                   },
                   "full_name": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": undefined,
@@ -11665,8 +11499,6 @@ exports[`seam seam docs 1`] = `
                     },
                   },
                   "user_identity_key": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": undefined,
@@ -11949,8 +11781,6 @@ exports[`seam seam docs 1`] = `
               "body": {
                 "properties": {
                   "acs_credential_pool_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -11970,8 +11800,6 @@ exports[`seam seam docs 1`] = `
                     },
                   },
                   "credential_manager_acs_user_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -12448,20 +12276,16 @@ exports[`seam seam docs 1`] = `
                 "properties": {
                   "company_name": "optional<string>",
                   "connect_partner_name": {
-                    "default": undefined,
                     "docs": "
     ---
     deprecated: use company_name
     ---
   ",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "is_sandbox": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "name": "string",
                   "webview_logo_shape": "optional<WorkspacesCreateRequestWebviewLogoShape>",
@@ -13907,16 +13731,12 @@ exports[`seam seam docs 1`] = `
             },
           },
           "code": {
-            "default": undefined,
             "docs": "Code used for access. Typically, a numeric or alphanumeric string.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "common_code_key": {
-            "default": undefined,
             "docs": "Unique identifier for a group of access codes that share the same code.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "created_at": {
             "docs": "Date and time at which the access code was created.",
@@ -13933,17 +13753,13 @@ exports[`seam seam docs 1`] = `
             },
           },
           "ends_at": {
-            "default": undefined,
             "docs": "Date and time after which the time-bound access code becomes inactive.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "errors": "optional<unknown>",
           "is_backup": {
-            "default": undefined,
             "docs": "Indicates whether the access code is a backup code.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "is_backup_access_code_available": {
             "docs": "Indicates whether a backup access code is available for use if the primary access code is lost or compromised.",
@@ -13966,25 +13782,18 @@ exports[`seam seam docs 1`] = `
             "type": "boolean",
           },
           "is_scheduled_on_device": {
-            "default": undefined,
             "docs": "Indicates whether the code is set on the device according to a preconfigured schedule.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "is_waiting_for_code_assignment": {
-            "default": undefined,
             "docs": "Indicates whether the access code is waiting for a code assignment.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "Name of the access code. Enables administrators and users to identify the access code easily, especially when there are numerous access codes.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "pulled_backup_access_code_id": {
-            "default": undefined,
             "docs": "Identifier of the pulled backup access code. Used to associate the pulled backup access code with the original access code.",
             "type": "optional<string>",
             "validation": {
@@ -13995,10 +13804,8 @@ exports[`seam seam docs 1`] = `
             },
           },
           "starts_at": {
-            "default": undefined,
             "docs": "Date and time at which the time-bound access code becomes active.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "status": {
             "docs": "
@@ -14120,8 +13927,6 @@ exports[`seam seam docs 1`] = `
             },
           },
           "acs_credential_pool_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -14140,8 +13945,6 @@ exports[`seam seam docs 1`] = `
             },
           },
           "acs_user_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -14169,8 +13972,6 @@ exports[`seam seam docs 1`] = `
           "is_multi_phone_sync_credential": "optional<boolean>",
           "latest_desired_state_synced_with_provider_at": "optional<datetime>",
           "parent_acs_credential_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -14429,24 +14230,20 @@ exports[`seam seam docs 1`] = `
           "image_url": "string",
           "name": "string",
           "system_type": {
-            "default": undefined,
             "docs": "
       ---
       deprecated: use external_type
       ---
       ",
             "type": "optional<AcsSystemSystemType>",
-            "validation": undefined,
           },
           "system_type_display_name": {
-            "default": undefined,
             "docs": "
       ---
       deprecated: use external_type_display_name
       ---
       ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "warnings": "list<AcsSystemWarningsItem>",
           "workspace_id": {
@@ -14541,7 +14338,6 @@ exports[`seam seam docs 1`] = `
           "created_at": "datetime",
           "display_name": "string",
           "email": {
-            "default": undefined,
             "docs": "
     ---
     deprecated: use email_address.
@@ -14556,8 +14352,6 @@ exports[`seam seam docs 1`] = `
             },
           },
           "email_address": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "email",
@@ -14570,8 +14364,6 @@ exports[`seam seam docs 1`] = `
           "external_type_display_name": "optional<string>",
           "full_name": "optional<string>",
           "hid_acs_system_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -16061,8 +15853,6 @@ exports[`seam seam docs 1`] = `
             },
           },
           "connected_account_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -16074,8 +15864,6 @@ exports[`seam seam docs 1`] = `
           "created_at": "datetime",
           "custom_metadata": "map<string, ConnectWebviewCustomMetadataValue>",
           "custom_redirect_failure_url": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uri",
@@ -16085,8 +15873,6 @@ exports[`seam seam docs 1`] = `
             },
           },
           "custom_redirect_url": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uri",
@@ -16149,8 +15935,6 @@ exports[`seam seam docs 1`] = `
           "account_type_display_name": "string",
           "automatically_manage_new_devices": "boolean",
           "connected_account_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -16240,16 +16024,12 @@ exports[`seam seam docs 1`] = `
             "type": "boolean",
           },
           "location": {
-            "default": undefined,
             "docs": "Location information for the device.",
             "type": "optional<DeviceLocation>",
-            "validation": undefined,
           },
           "nickname": {
-            "default": undefined,
             "docs": "Optional nickname to describe the device, settable through Seam",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "properties": {
             "docs": "Properties of the device.",
@@ -16338,16 +16118,12 @@ exports[`seam seam docs 1`] = `
         "docs": "Location information for the device.",
         "properties": {
           "location_name": {
-            "default": undefined,
             "docs": "Name of the device location.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "timezone": {
-            "default": undefined,
             "docs": "Time zone of the device location.",
             "type": "optional<string>",
-            "validation": undefined,
           },
         },
       },
@@ -16356,23 +16132,18 @@ exports[`seam seam docs 1`] = `
         "properties": {
           "_experimental_supported_code_from_access_codes_lengths": "optional<list<double>>",
           "accessory_keypad": {
-            "default": undefined,
             "docs": "Represents the accessory keypad state.",
             "type": "optional<DevicePropertiesAccessoryKeypad>",
-            "validation": undefined,
           },
           "appearance": "DevicePropertiesAppearance",
           "assa_abloy_credential_service_metadata": "optional<DevicePropertiesAssaAbloyCredentialServiceMetadata>",
           "august_metadata": "optional<DevicePropertiesAugustMetadata>",
           "avigilon_alta_metadata": "optional<DevicePropertiesAvigilonAltaMetadata>",
           "battery": {
-            "default": undefined,
             "docs": "Represents the current status of the battery charge level. Values are "critical," which indicates an extremely low level, suggesting imminent shutdown or an urgent need for charging; "low," which signifies that the battery is under the preferred threshold and should be charged soon; "good," which denotes a satisfactory charge level, adequate for normal use without the immediate need for recharging; and "full," which represents a battery that is fully charged, providing the maximum duration of usage.",
             "type": "optional<DevicePropertiesBattery>",
-            "validation": undefined,
           },
           "battery_level": {
-            "default": undefined,
             "docs": "Indicates the battery level of the device as a decimal value between 0 and 1, inclusive.",
             "type": "optional<double>",
             "validation": {
@@ -16387,10 +16158,8 @@ exports[`seam seam docs 1`] = `
           "code_constraints": "optional<list<DevicePropertiesCodeConstraintsItem>>",
           "controlbyweb_metadata": "optional<DevicePropertiesControlbywebMetadata>",
           "currently_triggering_noise_threshold_ids": {
-            "default": undefined,
             "docs": "Array of noise threshold IDs that are currently triggering.",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "door_open": "optional<boolean>",
           "dormakaba_oracode_metadata": "optional<DevicePropertiesDormakabaOracodeMetadata>",
@@ -16398,10 +16167,8 @@ exports[`seam seam docs 1`] = `
           "four_suites_metadata": "optional<DevicePropertiesFourSuitesMetadata>",
           "genie_metadata": "optional<DevicePropertiesGenieMetadata>",
           "has_direct_power": {
-            "default": undefined,
             "docs": "Indicates whether the device has direct power.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "has_native_entry_events": "optional<boolean>",
           "honeywell_resideo_metadata": "optional<DevicePropertiesHoneywellResideoMetadata>",
@@ -16409,13 +16176,10 @@ exports[`seam seam docs 1`] = `
           "igloo_metadata": "optional<DevicePropertiesIglooMetadata>",
           "igloohome_metadata": "optional<DevicePropertiesIgloohomeMetadata>",
           "image_alt_text": {
-            "default": undefined,
             "docs": "Alt text for the device image.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "image_url": {
-            "default": undefined,
             "docs": "Image URL for the device.",
             "type": "optional<string>",
             "validation": {
@@ -16430,10 +16194,8 @@ exports[`seam seam docs 1`] = `
           "locked": "optional<boolean>",
           "lockly_metadata": "optional<DevicePropertiesLocklyMetadata>",
           "manufacturer": {
-            "default": undefined,
             "docs": "Manufacturer of the device.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "max_active_codes_supported": "optional<double>",
           "minut_metadata": "optional<DevicePropertiesMinutMetadata>",
@@ -16449,60 +16211,48 @@ exports[`seam seam docs 1`] = `
           },
           "nest_metadata": "optional<DevicePropertiesNestMetadata>",
           "noise_level_decibels": {
-            "default": undefined,
             "docs": "Indicates current noise level in decibels, if the device supports noise detection.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "noiseaware_metadata": "optional<DevicePropertiesNoiseawareMetadata>",
           "nuki_metadata": "optional<DevicePropertiesNukiMetadata>",
           "offline_access_codes_enabled": {
-            "default": undefined,
             "docs": "Indicates whether it is currently possible to use offline access codes for the device.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "online": {
             "docs": "Indicates whether the device is online.",
             "type": "boolean",
           },
           "online_access_codes_enabled": {
-            "default": undefined,
             "docs": "Indicates whether it is currently possible to use online access codes for the device.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "salto_metadata": "optional<DevicePropertiesSaltoMetadata>",
           "schlage_metadata": "optional<DevicePropertiesSchlageMetadata>",
           "seam_bridge_metadata": "optional<DevicePropertiesSeamBridgeMetadata>",
           "serial_number": {
-            "default": undefined,
             "docs": "Serial number of the device.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "smartthings_metadata": "optional<DevicePropertiesSmartthingsMetadata>",
           "supported_code_lengths": "optional<list<double>>",
           "supports_accessory_keypad": {
-            "default": undefined,
             "docs": "
       ---
       deprecated: use device.properties.model.can_connect_accessory_keypad
       ---
       ",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "supports_backup_access_code_pool": "optional<boolean>",
           "supports_offline_access_codes": {
-            "default": undefined,
             "docs": "
       ---
       deprecated: use offline_access_codes_enabled
       ---
       ",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "tedee_metadata": "optional<DevicePropertiesTedeeMetadata>",
           "ttlock_metadata": "optional<DevicePropertiesTtlockMetadata>",
@@ -16514,10 +16264,8 @@ exports[`seam seam docs 1`] = `
         "docs": "Represents the accessory keypad state.",
         "properties": {
           "battery": {
-            "default": undefined,
             "docs": "Indicates if the keypad battery properties.",
             "type": "optional<DevicePropertiesAccessoryKeypadBattery>",
-            "validation": undefined,
           },
           "is_connected": {
             "docs": "Indicates if the accessory_keypad is connected to the device.",
@@ -16836,46 +16584,36 @@ exports[`seam seam docs 1`] = `
         "docs": undefined,
         "properties": {
           "accessory_keypad_supported": {
-            "default": undefined,
             "docs": "
       ---
       deprecated: use device.properties.model.can_connect_accessory_keypad
       ---
       ",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "can_connect_accessory_keypad": {
-            "default": undefined,
             "docs": "Indicates whether the device can connect a accessory keypad.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "display_name": {
             "docs": "Display name of the device model.",
             "type": "string",
           },
           "has_built_in_keypad": {
-            "default": undefined,
             "docs": "Indicates whether the device has a built in accessory keypad.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "manufacturer_display_name": {
             "docs": "Display name that corresponds to the manufacturer-specific terminology for the device.",
             "type": "string",
           },
           "offline_access_codes_supported": {
-            "default": undefined,
             "docs": "Indicates whether the device supports offline access codes.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "online_access_codes_supported": {
-            "default": undefined,
             "docs": "Indicates whether the device supports online access codes.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
         },
       },
@@ -17108,8 +16846,6 @@ exports[`seam seam docs 1`] = `
         "docs": undefined,
         "properties": {
           "acs_credential_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -17119,8 +16855,6 @@ exports[`seam seam docs 1`] = `
             },
           },
           "acs_system_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -17130,8 +16864,6 @@ exports[`seam seam docs 1`] = `
             },
           },
           "acs_user_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -17141,8 +16873,6 @@ exports[`seam seam docs 1`] = `
             },
           },
           "action_attempt_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -17152,8 +16882,6 @@ exports[`seam seam docs 1`] = `
             },
           },
           "client_session_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -17164,8 +16892,6 @@ exports[`seam seam docs 1`] = `
           },
           "created_at": "datetime",
           "device_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -17175,8 +16901,6 @@ exports[`seam seam docs 1`] = `
             },
           },
           "enrollment_automation_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -17303,16 +17027,12 @@ exports[`seam seam docs 1`] = `
             "type": "boolean",
           },
           "location": {
-            "default": undefined,
             "docs": "Location information for the device.",
             "type": "optional<PhoneLocation>",
-            "validation": undefined,
           },
           "nickname": {
-            "default": undefined,
             "docs": "Optional nickname to describe the device, settable through Seam",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "properties": "PhoneProperties",
           "warnings": {
@@ -17366,16 +17086,12 @@ exports[`seam seam docs 1`] = `
         "docs": "Location information for the device.",
         "properties": {
           "location_name": {
-            "default": undefined,
             "docs": "Name of the device location.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "timezone": {
-            "default": undefined,
             "docs": "Time zone of the device location.",
             "type": "optional<string>",
-            "validation": undefined,
           },
         },
       },
@@ -17435,10 +17151,8 @@ exports[`seam seam docs 1`] = `
             },
           },
           "code": {
-            "default": undefined,
             "docs": "Code used for access. Typically, a numeric or alphanumeric string.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "created_at": {
             "docs": "Date and time at which the access code was created.",
@@ -17455,24 +17169,18 @@ exports[`seam seam docs 1`] = `
             },
           },
           "ends_at": {
-            "default": undefined,
             "docs": "Date and time after which the time-bound access code becomes inactive.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "errors": "optional<unknown>",
           "is_managed": "boolean",
           "name": {
-            "default": undefined,
             "docs": "Name of the access code. Enables administrators and users to identify the access code easily, especially when there are numerous access codes.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "starts_at": {
-            "default": undefined,
             "docs": "Date and time at which the time-bound access code becomes active.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "status": "literal<"set">",
           "type": {
@@ -17612,19 +17320,14 @@ exports[`seam seam docs 1`] = `
         "docs": undefined,
         "properties": {
           "accessory_keypad": {
-            "default": undefined,
             "docs": "Represents the accessory keypad state.",
             "type": "optional<UnmanagedDevicePropertiesAccessoryKeypad>",
-            "validation": undefined,
           },
           "battery": {
-            "default": undefined,
             "docs": "Represents the current status of the battery charge level. Values are "critical," which indicates an extremely low level, suggesting imminent shutdown or an urgent need for charging; "low," which signifies that the battery is under the preferred threshold and should be charged soon; "good," which denotes a satisfactory charge level, adequate for normal use without the immediate need for recharging; and "full," which represents a battery that is fully charged, providing the maximum duration of usage.",
             "type": "optional<UnmanagedDevicePropertiesBattery>",
-            "validation": undefined,
           },
           "battery_level": {
-            "default": undefined,
             "docs": "Indicates the battery level of the device as a decimal value between 0 and 1, inclusive.",
             "type": "optional<double>",
             "validation": {
@@ -17636,13 +17339,10 @@ exports[`seam seam docs 1`] = `
             },
           },
           "image_alt_text": {
-            "default": undefined,
             "docs": "Alt text for the device image.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "image_url": {
-            "default": undefined,
             "docs": "Image URL for the device.",
             "type": "optional<string>",
             "validation": {
@@ -17653,10 +17353,8 @@ exports[`seam seam docs 1`] = `
             },
           },
           "manufacturer": {
-            "default": undefined,
             "docs": "Manufacturer of the device.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "model": "UnmanagedDevicePropertiesModel",
           "name": {
@@ -17669,20 +17367,16 @@ exports[`seam seam docs 1`] = `
             "type": "string",
           },
           "offline_access_codes_enabled": {
-            "default": undefined,
             "docs": "Indicates whether it is currently possible to use offline access codes for the device.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "online": {
             "docs": "Indicates whether the device is online.",
             "type": "boolean",
           },
           "online_access_codes_enabled": {
-            "default": undefined,
             "docs": "Indicates whether it is currently possible to use online access codes for the device.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
         },
       },
@@ -17690,10 +17384,8 @@ exports[`seam seam docs 1`] = `
         "docs": "Represents the accessory keypad state.",
         "properties": {
           "battery": {
-            "default": undefined,
             "docs": "Indicates if the keypad battery properties.",
             "type": "optional<UnmanagedDevicePropertiesAccessoryKeypadBattery>",
-            "validation": undefined,
           },
           "is_connected": {
             "docs": "Indicates if the accessory_keypad is connected to the device.",
@@ -17744,46 +17436,36 @@ exports[`seam seam docs 1`] = `
         "docs": undefined,
         "properties": {
           "accessory_keypad_supported": {
-            "default": undefined,
             "docs": "
       ---
       deprecated: use device.properties.model.can_connect_accessory_keypad
       ---
       ",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "can_connect_accessory_keypad": {
-            "default": undefined,
             "docs": "Indicates whether the device can connect a accessory keypad.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "display_name": {
             "docs": "Display name of the device model.",
             "type": "string",
           },
           "has_built_in_keypad": {
-            "default": undefined,
             "docs": "Indicates whether the device has a built in accessory keypad.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "manufacturer_display_name": {
             "docs": "Display name that corresponds to the manufacturer-specific terminology for the device.",
             "type": "string",
           },
           "offline_access_codes_supported": {
-            "default": undefined,
             "docs": "Indicates whether the device supports offline access codes.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "online_access_codes_supported": {
-            "default": undefined,
             "docs": "Indicates whether the device supports online access codes.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
         },
       },
@@ -17808,8 +17490,6 @@ exports[`seam seam docs 1`] = `
             },
           },
           "email_address": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "email",
@@ -17819,8 +17499,6 @@ exports[`seam seam docs 1`] = `
             },
           },
           "full_name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -17840,8 +17518,6 @@ exports[`seam seam docs 1`] = `
             },
           },
           "user_identity_key": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -17875,14 +17551,12 @@ exports[`seam seam docs 1`] = `
         "properties": {
           "company_name": "string",
           "connect_partner_name": {
-            "default": undefined,
             "docs": "
     ---
     deprecated: use company_name
     ---
   ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "is_sandbox": "boolean",
           "name": "string",
@@ -18010,13 +17684,9 @@ exports[`seam seam simple 1`] = `
                   "allow_external_modification": "optional<boolean>",
                   "attempt_for_offline_device": {
                     "default": true,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "code": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": undefined,
@@ -18039,15 +17709,16 @@ exports[`seam seam simple 1`] = `
                   "is_external_modification_allowed": "optional<boolean>",
                   "is_offline_access_code": "optional<boolean>",
                   "is_one_time_use": "optional<boolean>",
-                  "max_time_rounding": "optional<AccessCodesCreateRequestMaxTimeRounding>",
+                  "max_time_rounding": {
+                    "default": "1hour",
+                    "type": "optional<AccessCodesCreateRequestMaxTimeRounding>",
+                  },
                   "name": "optional<string>",
                   "prefer_native_scheduling": "optional<boolean>",
                   "starts_at": "optional<string>",
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "use_backup_access_code_pool": "optional<boolean>",
                   "use_offline_access_code": "optional<boolean>",
@@ -18123,14 +17794,13 @@ exports[`seam seam simple 1`] = `
                   "allow_external_modification": "optional<boolean>",
                   "attempt_for_offline_device": {
                     "default": true,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
-                  "behavior_when_code_cannot_be_shared": "optional<AccessCodesCreateMultipleRequestBehaviorWhenCodeCannotBeShared>",
+                  "behavior_when_code_cannot_be_shared": {
+                    "default": "throw",
+                    "type": "optional<AccessCodesCreateMultipleRequestBehaviorWhenCodeCannotBeShared>",
+                  },
                   "code": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": undefined,
@@ -18144,7 +17814,10 @@ exports[`seam seam simple 1`] = `
                   "is_external_modification_allowed": "optional<boolean>",
                   "is_offline_access_code": "optional<boolean>",
                   "is_one_time_use": "optional<boolean>",
-                  "max_time_rounding": "optional<AccessCodesCreateMultipleRequestMaxTimeRounding>",
+                  "max_time_rounding": {
+                    "default": "1hour",
+                    "type": "optional<AccessCodesCreateMultipleRequestMaxTimeRounding>",
+                  },
                   "name": "optional<string>",
                   "prefer_native_scheduling": "optional<boolean>",
                   "preferred_code_length": "optional<double>",
@@ -18206,8 +17879,6 @@ exports[`seam seam simple 1`] = `
                     },
                   },
                   "device_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -18218,9 +17889,7 @@ exports[`seam seam simple 1`] = `
                   },
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -18359,8 +18028,6 @@ exports[`seam seam simple 1`] = `
               "body": {
                 "properties": {
                   "access_code_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -18371,8 +18038,6 @@ exports[`seam seam simple 1`] = `
                   },
                   "code": "optional<string>",
                   "device_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -18448,8 +18113,6 @@ exports[`seam seam simple 1`] = `
                 "properties": {
                   "access_code_ids": "optional<list<string>>",
                   "device_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -18590,13 +18253,9 @@ exports[`seam seam simple 1`] = `
                   "allow_external_modification": "optional<boolean>",
                   "attempt_for_offline_device": {
                     "default": true,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "code": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": undefined,
@@ -18606,8 +18265,6 @@ exports[`seam seam simple 1`] = `
                     },
                   },
                   "device_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -18621,15 +18278,16 @@ exports[`seam seam simple 1`] = `
                   "is_managed": "optional<boolean>",
                   "is_offline_access_code": "optional<boolean>",
                   "is_one_time_use": "optional<boolean>",
-                  "max_time_rounding": "optional<AccessCodesUpdateRequestMaxTimeRounding>",
+                  "max_time_rounding": {
+                    "default": "1hour",
+                    "type": "optional<AccessCodesUpdateRequestMaxTimeRounding>",
+                  },
                   "name": "optional<string>",
                   "prefer_native_scheduling": "optional<boolean>",
                   "starts_at": "optional<string>",
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "type": "optional<AccessCodesUpdateRequestType>",
                   "use_backup_access_code_pool": "optional<boolean>",
@@ -18649,12 +18307,14 @@ exports[`seam seam simple 1`] = `
       },
       "types": {
         "AccessCodesCreateMultipleRequestBehaviorWhenCodeCannotBeShared": {
+          "default": "throw",
           "enum": [
             "throw",
             "create_random_code",
           ],
         },
         "AccessCodesCreateMultipleRequestMaxTimeRounding": {
+          "default": "1hour",
           "enum": [
             {
               "name": "OneHour",
@@ -18682,6 +18342,7 @@ exports[`seam seam simple 1`] = `
           },
         },
         "AccessCodesCreateRequestMaxTimeRounding": {
+          "default": "1hour",
           "enum": [
             {
               "name": "OneHour",
@@ -18745,6 +18406,7 @@ exports[`seam seam simple 1`] = `
           },
         },
         "AccessCodesUpdateRequestMaxTimeRounding": {
+          "default": "1hour",
           "enum": [
             {
               "name": "OneHour",
@@ -18924,9 +18586,7 @@ exports[`seam seam simple 1`] = `
                   "is_external_modification_allowed": "optional<boolean>",
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -18983,9 +18643,7 @@ exports[`seam seam simple 1`] = `
                   },
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -19041,8 +18699,6 @@ exports[`seam seam simple 1`] = `
               "body": {
                 "properties": {
                   "access_code_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -19053,8 +18709,6 @@ exports[`seam seam simple 1`] = `
                   },
                   "code": "optional<string>",
                   "device_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -19394,8 +19048,6 @@ exports[`seam seam simple 1`] = `
               "body": {
                 "properties": {
                   "acs_system_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -19405,8 +19057,6 @@ exports[`seam seam simple 1`] = `
                     },
                   },
                   "acs_user_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -19714,8 +19364,6 @@ exports[`seam seam simple 1`] = `
               "body": {
                 "properties": {
                   "acs_credential_pool_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -19735,8 +19383,6 @@ exports[`seam seam simple 1`] = `
                     },
                   },
                   "credential_manager_acs_user_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -19967,8 +19613,6 @@ exports[`seam seam simple 1`] = `
                   },
                   "allowed_acs_entrance_ids": "optional<list<string>>",
                   "code": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": undefined,
@@ -19978,8 +19622,6 @@ exports[`seam seam simple 1`] = `
                     },
                   },
                   "credential_manager_acs_system_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -19991,9 +19633,7 @@ exports[`seam seam simple 1`] = `
                   "ends_at": "optional<datetime>",
                   "is_multi_phone_sync_credential": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "starts_at": "optional<datetime>",
                   "visionline_metadata": "optional<CredentialsCreateRequestVisionlineMetadata>",
@@ -20459,8 +20099,6 @@ exports[`seam seam simple 1`] = `
                 "properties": {
                   "acs_credential_id": "string",
                   "code": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": undefined,
@@ -20502,8 +20140,6 @@ exports[`seam seam simple 1`] = `
           "docs": undefined,
           "properties": {
             "assa_abloy_credential_service_mobile_endpoint_id": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uuid",
@@ -20513,16 +20149,17 @@ exports[`seam seam simple 1`] = `
               },
             },
             "card_format": "optional<CredentialsCreateRequestVisionlineMetadataCardFormat>",
-            "card_function_type": "optional<CredentialsCreateRequestVisionlineMetadataCardFunctionType>",
+            "card_function_type": {
+              "default": "guest",
+              "type": "optional<CredentialsCreateRequestVisionlineMetadataCardFunctionType>",
+            },
             "is_override_key": {
-              "default": undefined,
               "docs": "
           ---
           deprecated: use override.
           ---
         ",
               "type": "optional<boolean>",
-              "validation": undefined,
             },
             "joiner_acs_credential_ids": "optional<list<string>>",
             "override": "optional<boolean>",
@@ -20535,6 +20172,7 @@ exports[`seam seam simple 1`] = `
           ],
         },
         "CredentialsCreateRequestVisionlineMetadataCardFunctionType": {
+          "default": "guest",
           "enum": [
             "guest",
             "staff",
@@ -20778,8 +20416,6 @@ exports[`seam seam simple 1`] = `
               "body": {
                 "properties": {
                   "acs_credential_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -20789,8 +20425,6 @@ exports[`seam seam simple 1`] = `
                     },
                   },
                   "acs_system_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -21067,8 +20701,6 @@ exports[`seam seam simple 1`] = `
               "body": {
                 "properties": {
                   "connected_account_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -21318,7 +20950,6 @@ exports[`seam seam simple 1`] = `
                     },
                   },
                   "email": {
-                    "default": undefined,
                     "docs": "
     ---
     deprecated: use email_address.
@@ -21333,8 +20964,6 @@ exports[`seam seam simple 1`] = `
                     },
                   },
                   "email_address": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "email",
@@ -21346,8 +20975,6 @@ exports[`seam seam simple 1`] = `
                   "full_name": "optional<string>",
                   "phone_number": "optional<string>",
                   "user_identity_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -21534,8 +21161,6 @@ exports[`seam seam simple 1`] = `
               "body": {
                 "properties": {
                   "acs_system_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -21546,8 +21171,6 @@ exports[`seam seam simple 1`] = `
                   },
                   "user_identity_email_address": "optional<string>",
                   "user_identity_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -21871,7 +21494,6 @@ exports[`seam seam simple 1`] = `
                     },
                   },
                   "email": {
-                    "default": undefined,
                     "docs": "
     ---
     deprecated: use email_address.
@@ -21886,8 +21508,6 @@ exports[`seam seam simple 1`] = `
                     },
                   },
                   "email_address": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "email",
@@ -21898,8 +21518,6 @@ exports[`seam seam simple 1`] = `
                   },
                   "full_name": "optional<string>",
                   "hid_acs_system_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -22193,8 +21811,6 @@ exports[`seam seam simple 1`] = `
                   "connected_account_ids": "optional<list<string>>",
                   "expires_at": "optional<datetime>",
                   "user_identifier_key": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": undefined,
@@ -22362,8 +21978,6 @@ exports[`seam seam simple 1`] = `
                   "connected_account_ids": "optional<list<string>>",
                   "expires_at": "optional<datetime>",
                   "user_identifier_key": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": undefined,
@@ -22662,9 +22276,7 @@ exports[`seam seam simple 1`] = `
                   "accepted_providers": "optional<list<ConnectWebviewsCreateRequestAcceptedProvidersItem>>",
                   "automatically_manage_new_devices": {
                     "default": true,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "custom_metadata": "optional<map<string, optional<ConnectWebviewsCreateRequestCustomMetadataValue>>>",
                   "custom_redirect_failure_url": "optional<string>",
@@ -22673,9 +22285,7 @@ exports[`seam seam simple 1`] = `
                   "provider_category": "optional<ConnectWebviewsCreateRequestProviderCategory>",
                   "wait_for_device_creation": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -22863,16 +22473,12 @@ exports[`seam seam simple 1`] = `
               "body": {
                 "properties": {
                   "custom_metadata_has": {
-                    "default": undefined,
                     "docs": "Returns devices where the webview's custom_metadata contains all of the provided key/value pairs.",
                     "type": "optional<map<string, ConnectWebviewsListRequestCustomMetadataHasValue>>",
-                    "validation": undefined,
                   },
                   "limit": {
                     "default": 500,
-                    "docs": undefined,
                     "type": "optional<double>",
-                    "validation": undefined,
                   },
                   "user_identifier_key": "optional<string>",
                 },
@@ -23050,9 +22656,7 @@ exports[`seam seam simple 1`] = `
                   },
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -23163,10 +22767,8 @@ exports[`seam seam simple 1`] = `
               "body": {
                 "properties": {
                   "custom_metadata_has": {
-                    "default": undefined,
                     "docs": "Returns devices where the account's custom_metadata contains all of the provided key/value pairs.",
                     "type": "optional<map<string, ConnectedAccountsListRequestCustomMetadataHasValue>>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -23677,8 +23279,6 @@ exports[`seam seam simple 1`] = `
               "body": {
                 "properties": {
                   "device_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -23773,8 +23373,6 @@ exports[`seam seam simple 1`] = `
               "body": {
                 "properties": {
                   "connect_webview_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -23784,7 +23382,6 @@ exports[`seam seam simple 1`] = `
                     },
                   },
                   "connected_account_id": {
-                    "default": undefined,
                     "docs": "List all devices owned by this connected account",
                     "type": "optional<string>",
                     "validation": {
@@ -23804,9 +23401,7 @@ exports[`seam seam simple 1`] = `
                   "include_if": "optional<list<DevicesListRequestIncludeIfItem>>",
                   "limit": {
                     "default": 500,
-                    "docs": undefined,
                     "type": "optional<double>",
-                    "validation": undefined,
                   },
                   "manufacturer": "optional<DevicesListRequestManufacturer>",
                   "user_identifier_key": "optional<string>",
@@ -23907,9 +23502,7 @@ exports[`seam seam simple 1`] = `
                   },
                   "is_managed": {
                     "default": true,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "name": "optional<string>",
                   "properties": "optional<DevicesUpdateRequestProperties>",
@@ -24389,8 +23982,6 @@ exports[`seam seam simple 1`] = `
               "body": {
                 "properties": {
                   "device_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -24477,8 +24068,6 @@ exports[`seam seam simple 1`] = `
               "body": {
                 "properties": {
                   "connect_webview_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -24488,7 +24077,6 @@ exports[`seam seam simple 1`] = `
                     },
                   },
                   "connected_account_id": {
-                    "default": undefined,
                     "docs": "List all devices owned by this connected account",
                     "type": "optional<string>",
                     "validation": {
@@ -24508,9 +24096,7 @@ exports[`seam seam simple 1`] = `
                   "include_if": "optional<list<UnmanagedListRequestIncludeIfItem>>",
                   "limit": {
                     "default": 500,
-                    "docs": undefined,
                     "type": "optional<double>",
-                    "validation": undefined,
                   },
                   "manufacturer": "optional<UnmanagedListRequestManufacturer>",
                   "user_identifier_key": "optional<string>",
@@ -24789,8 +24375,6 @@ exports[`seam seam simple 1`] = `
               "body": {
                 "properties": {
                   "device_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -24800,8 +24384,6 @@ exports[`seam seam simple 1`] = `
                     },
                   },
                   "event_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -24864,8 +24446,6 @@ exports[`seam seam simple 1`] = `
               "body": {
                 "properties": {
                   "access_code_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -24877,8 +24457,6 @@ exports[`seam seam simple 1`] = `
                   "access_code_ids": "optional<list<string>>",
                   "between": "optional<list<EventsListRequestBetweenItem>>",
                   "connected_account_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -24888,8 +24466,6 @@ exports[`seam seam simple 1`] = `
                     },
                   },
                   "device_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -24903,9 +24479,7 @@ exports[`seam seam simple 1`] = `
                   "event_types": "optional<list<EventsListRequestEventTypesItem>>",
                   "limit": {
                     "default": 500,
-                    "docs": undefined,
                     "type": "optional<double>",
-                    "validation": undefined,
                   },
                   "since": "optional<string>",
                 },
@@ -25959,8 +25533,6 @@ exports[`seam seam simple 1`] = `
               "body": {
                 "properties": {
                   "device_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -26103,8 +25675,6 @@ exports[`seam seam simple 1`] = `
               "body": {
                 "properties": {
                   "connect_webview_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -26114,7 +25684,6 @@ exports[`seam seam simple 1`] = `
                     },
                   },
                   "connected_account_id": {
-                    "default": undefined,
                     "docs": "List all devices owned by this connected account",
                     "type": "optional<string>",
                     "validation": {
@@ -26134,9 +25703,7 @@ exports[`seam seam simple 1`] = `
                   "include_if": "optional<list<LocksListRequestIncludeIfItem>>",
                   "limit": {
                     "default": 500,
-                    "docs": undefined,
                     "type": "optional<double>",
-                    "validation": undefined,
                   },
                   "manufacturer": "optional<LocksListRequestManufacturer>",
                   "user_identifier_key": "optional<string>",
@@ -26196,9 +25763,7 @@ exports[`seam seam simple 1`] = `
                   },
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -26256,9 +25821,7 @@ exports[`seam seam simple 1`] = `
                   },
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -26640,9 +26203,7 @@ exports[`seam seam simple 1`] = `
                   "starts_daily_at": "string",
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -26710,9 +26271,7 @@ exports[`seam seam simple 1`] = `
                   },
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -26899,9 +26458,7 @@ exports[`seam seam simple 1`] = `
                   "starts_daily_at": "optional<string>",
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -27128,8 +26685,6 @@ exports[`seam seam simple 1`] = `
               "body": {
                 "properties": {
                   "owner_user_identity_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -27283,39 +26838,27 @@ exports[`seam seam simple 1`] = `
           "properties": {
             "application_version": {
               "default": "1.0.0",
-              "docs": undefined,
               "type": "optional<string>",
-              "validation": undefined,
             },
             "ble_capability": {
               "default": true,
-              "docs": undefined,
               "type": "optional<boolean>",
-              "validation": undefined,
             },
             "hce_capability": {
               "default": false,
-              "docs": undefined,
               "type": "optional<boolean>",
-              "validation": undefined,
             },
             "nfc_capability": {
               "default": false,
-              "docs": undefined,
               "type": "optional<boolean>",
-              "validation": undefined,
             },
             "seos_applet_version": {
               "default": "1.0.0",
-              "docs": undefined,
               "type": "optional<string>",
-              "validation": undefined,
             },
             "seos_tsm_endpoint_id": {
               "default": 1,
-              "docs": undefined,
               "type": "optional<double>",
-              "validation": undefined,
             },
           },
         },
@@ -27324,26 +26867,24 @@ exports[`seam seam simple 1`] = `
           "properties": {
             "device_manufacturer": {
               "default": "Samsung",
-              "docs": undefined,
               "type": "optional<string>",
-              "validation": undefined,
             },
             "device_model": {
               "default": "Samsung Galaxy S10",
-              "docs": undefined,
               "type": "optional<string>",
-              "validation": undefined,
             },
-            "operating_system": "optional<SimulateCreateSandboxPhoneRequestPhoneMetadataOperatingSystem>",
+            "operating_system": {
+              "default": "android",
+              "type": "optional<SimulateCreateSandboxPhoneRequestPhoneMetadataOperatingSystem>",
+            },
             "os_version": {
               "default": "10",
-              "docs": undefined,
               "type": "optional<string>",
-              "validation": undefined,
             },
           },
         },
         "SimulateCreateSandboxPhoneRequestPhoneMetadataOperatingSystem": {
+          "default": "android",
           "enum": [
             "android",
             "ios",
@@ -27412,9 +26953,7 @@ exports[`seam seam simple 1`] = `
                   },
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -27706,8 +27245,6 @@ exports[`seam seam simple 1`] = `
               "body": {
                 "properties": {
                   "device_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -27775,9 +27312,7 @@ exports[`seam seam simple 1`] = `
                   "heating_set_point_fahrenheit": "optional<double>",
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -27839,9 +27374,7 @@ exports[`seam seam simple 1`] = `
                   "heating_set_point_fahrenheit": "optional<double>",
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -27928,8 +27461,6 @@ exports[`seam seam simple 1`] = `
               "body": {
                 "properties": {
                   "connect_webview_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -27939,7 +27470,6 @@ exports[`seam seam simple 1`] = `
                     },
                   },
                   "connected_account_id": {
-                    "default": undefined,
                     "docs": "List all devices owned by this connected account",
                     "type": "optional<string>",
                     "validation": {
@@ -27959,9 +27489,7 @@ exports[`seam seam simple 1`] = `
                   "include_if": "optional<list<ThermostatsListRequestIncludeIfItem>>",
                   "limit": {
                     "default": 500,
-                    "docs": undefined,
                     "type": "optional<double>",
-                    "validation": undefined,
                   },
                   "manufacturer": "optional<ThermostatsListRequestManufacturer>",
                   "user_identifier_key": "optional<string>",
@@ -28021,9 +27549,7 @@ exports[`seam seam simple 1`] = `
                   },
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -28083,9 +27609,7 @@ exports[`seam seam simple 1`] = `
                   "fan_mode_setting": "optional<ThermostatsSetFanModeRequestFanModeSetting>",
                   "sync": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -28554,8 +28078,6 @@ exports[`seam seam simple 1`] = `
               "body": {
                 "properties": {
                   "climate_setting_schedule_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -28565,8 +28087,6 @@ exports[`seam seam simple 1`] = `
                     },
                   },
                   "device_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -28889,8 +28409,6 @@ exports[`seam seam simple 1`] = `
               "body": {
                 "properties": {
                   "email_address": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "email",
@@ -28900,8 +28418,6 @@ exports[`seam seam simple 1`] = `
                     },
                   },
                   "full_name": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": undefined,
@@ -28912,8 +28428,6 @@ exports[`seam seam simple 1`] = `
                   },
                   "phone_number": "optional<string>",
                   "user_identity_key": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": undefined,
@@ -29115,8 +28629,6 @@ exports[`seam seam simple 1`] = `
               "body": {
                 "properties": {
                   "credential_manager_acs_system_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -29569,8 +29081,6 @@ exports[`seam seam simple 1`] = `
               "body": {
                 "properties": {
                   "email_address": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "email",
@@ -29580,8 +29090,6 @@ exports[`seam seam simple 1`] = `
                     },
                   },
                   "full_name": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": undefined,
@@ -29601,8 +29109,6 @@ exports[`seam seam simple 1`] = `
                     },
                   },
                   "user_identity_key": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": undefined,
@@ -29885,8 +29391,6 @@ exports[`seam seam simple 1`] = `
               "body": {
                 "properties": {
                   "acs_credential_pool_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -29906,8 +29410,6 @@ exports[`seam seam simple 1`] = `
                     },
                   },
                   "credential_manager_acs_user_id": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
@@ -30384,20 +29886,16 @@ exports[`seam seam simple 1`] = `
                 "properties": {
                   "company_name": "optional<string>",
                   "connect_partner_name": {
-                    "default": undefined,
                     "docs": "
     ---
     deprecated: use company_name
     ---
   ",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "is_sandbox": {
                     "default": false,
-                    "docs": undefined,
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "name": "string",
                   "webview_logo_shape": "optional<WorkspacesCreateRequestWebviewLogoShape>",
@@ -30583,16 +30081,12 @@ exports[`seam seam simple 1`] = `
             },
           },
           "code": {
-            "default": undefined,
             "docs": "Code used for access. Typically, a numeric or alphanumeric string.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "common_code_key": {
-            "default": undefined,
             "docs": "Unique identifier for a group of access codes that share the same code.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "created_at": {
             "docs": "Date and time at which the access code was created.",
@@ -30609,17 +30103,13 @@ exports[`seam seam simple 1`] = `
             },
           },
           "ends_at": {
-            "default": undefined,
             "docs": "Date and time after which the time-bound access code becomes inactive.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "errors": "optional<unknown>",
           "is_backup": {
-            "default": undefined,
             "docs": "Indicates whether the access code is a backup code.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "is_backup_access_code_available": {
             "docs": "Indicates whether a backup access code is available for use if the primary access code is lost or compromised.",
@@ -30642,25 +30132,18 @@ exports[`seam seam simple 1`] = `
             "type": "boolean",
           },
           "is_scheduled_on_device": {
-            "default": undefined,
             "docs": "Indicates whether the code is set on the device according to a preconfigured schedule.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "is_waiting_for_code_assignment": {
-            "default": undefined,
             "docs": "Indicates whether the access code is waiting for a code assignment.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "Name of the access code. Enables administrators and users to identify the access code easily, especially when there are numerous access codes.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "pulled_backup_access_code_id": {
-            "default": undefined,
             "docs": "Identifier of the pulled backup access code. Used to associate the pulled backup access code with the original access code.",
             "type": "optional<string>",
             "validation": {
@@ -30671,10 +30154,8 @@ exports[`seam seam simple 1`] = `
             },
           },
           "starts_at": {
-            "default": undefined,
             "docs": "Date and time at which the time-bound access code becomes active.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "status": {
             "docs": "
@@ -30796,8 +30277,6 @@ exports[`seam seam simple 1`] = `
             },
           },
           "acs_credential_pool_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -30816,8 +30295,6 @@ exports[`seam seam simple 1`] = `
             },
           },
           "acs_user_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -30845,8 +30322,6 @@ exports[`seam seam simple 1`] = `
           "is_multi_phone_sync_credential": "optional<boolean>",
           "latest_desired_state_synced_with_provider_at": "optional<datetime>",
           "parent_acs_credential_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -31105,24 +30580,20 @@ exports[`seam seam simple 1`] = `
           "image_url": "string",
           "name": "string",
           "system_type": {
-            "default": undefined,
             "docs": "
       ---
       deprecated: use external_type
       ---
       ",
             "type": "optional<AcsSystemSystemType>",
-            "validation": undefined,
           },
           "system_type_display_name": {
-            "default": undefined,
             "docs": "
       ---
       deprecated: use external_type_display_name
       ---
       ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "warnings": "list<AcsSystemWarningsItem>",
           "workspace_id": {
@@ -31217,7 +30688,6 @@ exports[`seam seam simple 1`] = `
           "created_at": "datetime",
           "display_name": "string",
           "email": {
-            "default": undefined,
             "docs": "
     ---
     deprecated: use email_address.
@@ -31232,8 +30702,6 @@ exports[`seam seam simple 1`] = `
             },
           },
           "email_address": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "email",
@@ -31246,8 +30714,6 @@ exports[`seam seam simple 1`] = `
           "external_type_display_name": "optional<string>",
           "full_name": "optional<string>",
           "hid_acs_system_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -32737,8 +32203,6 @@ exports[`seam seam simple 1`] = `
             },
           },
           "connected_account_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -32750,8 +32214,6 @@ exports[`seam seam simple 1`] = `
           "created_at": "datetime",
           "custom_metadata": "map<string, ConnectWebviewCustomMetadataValue>",
           "custom_redirect_failure_url": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uri",
@@ -32761,8 +32223,6 @@ exports[`seam seam simple 1`] = `
             },
           },
           "custom_redirect_url": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uri",
@@ -32825,8 +32285,6 @@ exports[`seam seam simple 1`] = `
           "account_type_display_name": "string",
           "automatically_manage_new_devices": "boolean",
           "connected_account_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -32916,16 +32374,12 @@ exports[`seam seam simple 1`] = `
             "type": "boolean",
           },
           "location": {
-            "default": undefined,
             "docs": "Location information for the device.",
             "type": "optional<DeviceLocation>",
-            "validation": undefined,
           },
           "nickname": {
-            "default": undefined,
             "docs": "Optional nickname to describe the device, settable through Seam",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "properties": {
             "docs": "Properties of the device.",
@@ -33014,16 +32468,12 @@ exports[`seam seam simple 1`] = `
         "docs": "Location information for the device.",
         "properties": {
           "location_name": {
-            "default": undefined,
             "docs": "Name of the device location.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "timezone": {
-            "default": undefined,
             "docs": "Time zone of the device location.",
             "type": "optional<string>",
-            "validation": undefined,
           },
         },
       },
@@ -33032,23 +32482,18 @@ exports[`seam seam simple 1`] = `
         "properties": {
           "_experimental_supported_code_from_access_codes_lengths": "optional<list<double>>",
           "accessory_keypad": {
-            "default": undefined,
             "docs": "Represents the accessory keypad state.",
             "type": "optional<DevicePropertiesAccessoryKeypad>",
-            "validation": undefined,
           },
           "appearance": "DevicePropertiesAppearance",
           "assa_abloy_credential_service_metadata": "optional<DevicePropertiesAssaAbloyCredentialServiceMetadata>",
           "august_metadata": "optional<DevicePropertiesAugustMetadata>",
           "avigilon_alta_metadata": "optional<DevicePropertiesAvigilonAltaMetadata>",
           "battery": {
-            "default": undefined,
             "docs": "Represents the current status of the battery charge level. Values are "critical," which indicates an extremely low level, suggesting imminent shutdown or an urgent need for charging; "low," which signifies that the battery is under the preferred threshold and should be charged soon; "good," which denotes a satisfactory charge level, adequate for normal use without the immediate need for recharging; and "full," which represents a battery that is fully charged, providing the maximum duration of usage.",
             "type": "optional<DevicePropertiesBattery>",
-            "validation": undefined,
           },
           "battery_level": {
-            "default": undefined,
             "docs": "Indicates the battery level of the device as a decimal value between 0 and 1, inclusive.",
             "type": "optional<double>",
             "validation": {
@@ -33063,10 +32508,8 @@ exports[`seam seam simple 1`] = `
           "code_constraints": "optional<list<DevicePropertiesCodeConstraintsItem>>",
           "controlbyweb_metadata": "optional<DevicePropertiesControlbywebMetadata>",
           "currently_triggering_noise_threshold_ids": {
-            "default": undefined,
             "docs": "Array of noise threshold IDs that are currently triggering.",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "door_open": "optional<boolean>",
           "dormakaba_oracode_metadata": "optional<DevicePropertiesDormakabaOracodeMetadata>",
@@ -33074,10 +32517,8 @@ exports[`seam seam simple 1`] = `
           "four_suites_metadata": "optional<DevicePropertiesFourSuitesMetadata>",
           "genie_metadata": "optional<DevicePropertiesGenieMetadata>",
           "has_direct_power": {
-            "default": undefined,
             "docs": "Indicates whether the device has direct power.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "has_native_entry_events": "optional<boolean>",
           "honeywell_resideo_metadata": "optional<DevicePropertiesHoneywellResideoMetadata>",
@@ -33085,13 +32526,10 @@ exports[`seam seam simple 1`] = `
           "igloo_metadata": "optional<DevicePropertiesIglooMetadata>",
           "igloohome_metadata": "optional<DevicePropertiesIgloohomeMetadata>",
           "image_alt_text": {
-            "default": undefined,
             "docs": "Alt text for the device image.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "image_url": {
-            "default": undefined,
             "docs": "Image URL for the device.",
             "type": "optional<string>",
             "validation": {
@@ -33106,10 +32544,8 @@ exports[`seam seam simple 1`] = `
           "locked": "optional<boolean>",
           "lockly_metadata": "optional<DevicePropertiesLocklyMetadata>",
           "manufacturer": {
-            "default": undefined,
             "docs": "Manufacturer of the device.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "max_active_codes_supported": "optional<double>",
           "minut_metadata": "optional<DevicePropertiesMinutMetadata>",
@@ -33125,60 +32561,48 @@ exports[`seam seam simple 1`] = `
           },
           "nest_metadata": "optional<DevicePropertiesNestMetadata>",
           "noise_level_decibels": {
-            "default": undefined,
             "docs": "Indicates current noise level in decibels, if the device supports noise detection.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "noiseaware_metadata": "optional<DevicePropertiesNoiseawareMetadata>",
           "nuki_metadata": "optional<DevicePropertiesNukiMetadata>",
           "offline_access_codes_enabled": {
-            "default": undefined,
             "docs": "Indicates whether it is currently possible to use offline access codes for the device.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "online": {
             "docs": "Indicates whether the device is online.",
             "type": "boolean",
           },
           "online_access_codes_enabled": {
-            "default": undefined,
             "docs": "Indicates whether it is currently possible to use online access codes for the device.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "salto_metadata": "optional<DevicePropertiesSaltoMetadata>",
           "schlage_metadata": "optional<DevicePropertiesSchlageMetadata>",
           "seam_bridge_metadata": "optional<DevicePropertiesSeamBridgeMetadata>",
           "serial_number": {
-            "default": undefined,
             "docs": "Serial number of the device.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "smartthings_metadata": "optional<DevicePropertiesSmartthingsMetadata>",
           "supported_code_lengths": "optional<list<double>>",
           "supports_accessory_keypad": {
-            "default": undefined,
             "docs": "
       ---
       deprecated: use device.properties.model.can_connect_accessory_keypad
       ---
       ",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "supports_backup_access_code_pool": "optional<boolean>",
           "supports_offline_access_codes": {
-            "default": undefined,
             "docs": "
       ---
       deprecated: use offline_access_codes_enabled
       ---
       ",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "tedee_metadata": "optional<DevicePropertiesTedeeMetadata>",
           "ttlock_metadata": "optional<DevicePropertiesTtlockMetadata>",
@@ -33190,10 +32614,8 @@ exports[`seam seam simple 1`] = `
         "docs": "Represents the accessory keypad state.",
         "properties": {
           "battery": {
-            "default": undefined,
             "docs": "Indicates if the keypad battery properties.",
             "type": "optional<DevicePropertiesAccessoryKeypadBattery>",
-            "validation": undefined,
           },
           "is_connected": {
             "docs": "Indicates if the accessory_keypad is connected to the device.",
@@ -33512,46 +32934,36 @@ exports[`seam seam simple 1`] = `
         "docs": undefined,
         "properties": {
           "accessory_keypad_supported": {
-            "default": undefined,
             "docs": "
       ---
       deprecated: use device.properties.model.can_connect_accessory_keypad
       ---
       ",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "can_connect_accessory_keypad": {
-            "default": undefined,
             "docs": "Indicates whether the device can connect a accessory keypad.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "display_name": {
             "docs": "Display name of the device model.",
             "type": "string",
           },
           "has_built_in_keypad": {
-            "default": undefined,
             "docs": "Indicates whether the device has a built in accessory keypad.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "manufacturer_display_name": {
             "docs": "Display name that corresponds to the manufacturer-specific terminology for the device.",
             "type": "string",
           },
           "offline_access_codes_supported": {
-            "default": undefined,
             "docs": "Indicates whether the device supports offline access codes.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "online_access_codes_supported": {
-            "default": undefined,
             "docs": "Indicates whether the device supports online access codes.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
         },
       },
@@ -33784,8 +33196,6 @@ exports[`seam seam simple 1`] = `
         "docs": undefined,
         "properties": {
           "acs_credential_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -33795,8 +33205,6 @@ exports[`seam seam simple 1`] = `
             },
           },
           "acs_system_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -33806,8 +33214,6 @@ exports[`seam seam simple 1`] = `
             },
           },
           "acs_user_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -33817,8 +33223,6 @@ exports[`seam seam simple 1`] = `
             },
           },
           "action_attempt_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -33828,8 +33232,6 @@ exports[`seam seam simple 1`] = `
             },
           },
           "client_session_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -33840,8 +33242,6 @@ exports[`seam seam simple 1`] = `
           },
           "created_at": "datetime",
           "device_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -33851,8 +33251,6 @@ exports[`seam seam simple 1`] = `
             },
           },
           "enrollment_automation_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -33979,16 +33377,12 @@ exports[`seam seam simple 1`] = `
             "type": "boolean",
           },
           "location": {
-            "default": undefined,
             "docs": "Location information for the device.",
             "type": "optional<PhoneLocation>",
-            "validation": undefined,
           },
           "nickname": {
-            "default": undefined,
             "docs": "Optional nickname to describe the device, settable through Seam",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "properties": "PhoneProperties",
           "warnings": {
@@ -34042,16 +33436,12 @@ exports[`seam seam simple 1`] = `
         "docs": "Location information for the device.",
         "properties": {
           "location_name": {
-            "default": undefined,
             "docs": "Name of the device location.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "timezone": {
-            "default": undefined,
             "docs": "Time zone of the device location.",
             "type": "optional<string>",
-            "validation": undefined,
           },
         },
       },
@@ -34111,10 +33501,8 @@ exports[`seam seam simple 1`] = `
             },
           },
           "code": {
-            "default": undefined,
             "docs": "Code used for access. Typically, a numeric or alphanumeric string.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "created_at": {
             "docs": "Date and time at which the access code was created.",
@@ -34131,24 +33519,18 @@ exports[`seam seam simple 1`] = `
             },
           },
           "ends_at": {
-            "default": undefined,
             "docs": "Date and time after which the time-bound access code becomes inactive.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "errors": "optional<unknown>",
           "is_managed": "boolean",
           "name": {
-            "default": undefined,
             "docs": "Name of the access code. Enables administrators and users to identify the access code easily, especially when there are numerous access codes.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "starts_at": {
-            "default": undefined,
             "docs": "Date and time at which the time-bound access code becomes active.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "status": "literal<"set">",
           "type": {
@@ -34288,19 +33670,14 @@ exports[`seam seam simple 1`] = `
         "docs": undefined,
         "properties": {
           "accessory_keypad": {
-            "default": undefined,
             "docs": "Represents the accessory keypad state.",
             "type": "optional<UnmanagedDevicePropertiesAccessoryKeypad>",
-            "validation": undefined,
           },
           "battery": {
-            "default": undefined,
             "docs": "Represents the current status of the battery charge level. Values are "critical," which indicates an extremely low level, suggesting imminent shutdown or an urgent need for charging; "low," which signifies that the battery is under the preferred threshold and should be charged soon; "good," which denotes a satisfactory charge level, adequate for normal use without the immediate need for recharging; and "full," which represents a battery that is fully charged, providing the maximum duration of usage.",
             "type": "optional<UnmanagedDevicePropertiesBattery>",
-            "validation": undefined,
           },
           "battery_level": {
-            "default": undefined,
             "docs": "Indicates the battery level of the device as a decimal value between 0 and 1, inclusive.",
             "type": "optional<double>",
             "validation": {
@@ -34312,13 +33689,10 @@ exports[`seam seam simple 1`] = `
             },
           },
           "image_alt_text": {
-            "default": undefined,
             "docs": "Alt text for the device image.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "image_url": {
-            "default": undefined,
             "docs": "Image URL for the device.",
             "type": "optional<string>",
             "validation": {
@@ -34329,10 +33703,8 @@ exports[`seam seam simple 1`] = `
             },
           },
           "manufacturer": {
-            "default": undefined,
             "docs": "Manufacturer of the device.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "model": "UnmanagedDevicePropertiesModel",
           "name": {
@@ -34345,20 +33717,16 @@ exports[`seam seam simple 1`] = `
             "type": "string",
           },
           "offline_access_codes_enabled": {
-            "default": undefined,
             "docs": "Indicates whether it is currently possible to use offline access codes for the device.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "online": {
             "docs": "Indicates whether the device is online.",
             "type": "boolean",
           },
           "online_access_codes_enabled": {
-            "default": undefined,
             "docs": "Indicates whether it is currently possible to use online access codes for the device.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
         },
       },
@@ -34366,10 +33734,8 @@ exports[`seam seam simple 1`] = `
         "docs": "Represents the accessory keypad state.",
         "properties": {
           "battery": {
-            "default": undefined,
             "docs": "Indicates if the keypad battery properties.",
             "type": "optional<UnmanagedDevicePropertiesAccessoryKeypadBattery>",
-            "validation": undefined,
           },
           "is_connected": {
             "docs": "Indicates if the accessory_keypad is connected to the device.",
@@ -34420,46 +33786,36 @@ exports[`seam seam simple 1`] = `
         "docs": undefined,
         "properties": {
           "accessory_keypad_supported": {
-            "default": undefined,
             "docs": "
       ---
       deprecated: use device.properties.model.can_connect_accessory_keypad
       ---
       ",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "can_connect_accessory_keypad": {
-            "default": undefined,
             "docs": "Indicates whether the device can connect a accessory keypad.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "display_name": {
             "docs": "Display name of the device model.",
             "type": "string",
           },
           "has_built_in_keypad": {
-            "default": undefined,
             "docs": "Indicates whether the device has a built in accessory keypad.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "manufacturer_display_name": {
             "docs": "Display name that corresponds to the manufacturer-specific terminology for the device.",
             "type": "string",
           },
           "offline_access_codes_supported": {
-            "default": undefined,
             "docs": "Indicates whether the device supports offline access codes.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "online_access_codes_supported": {
-            "default": undefined,
             "docs": "Indicates whether the device supports online access codes.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
         },
       },
@@ -34484,8 +33840,6 @@ exports[`seam seam simple 1`] = `
             },
           },
           "email_address": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "email",
@@ -34495,8 +33849,6 @@ exports[`seam seam simple 1`] = `
             },
           },
           "full_name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -34516,8 +33868,6 @@ exports[`seam seam simple 1`] = `
             },
           },
           "user_identity_key": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -34551,14 +33901,12 @@ exports[`seam seam simple 1`] = `
         "properties": {
           "company_name": "string",
           "connect_partner_name": {
-            "default": undefined,
             "docs": "
     ---
     deprecated: use company_name
     ---
   ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "is_sandbox": "boolean",
           "name": "string",

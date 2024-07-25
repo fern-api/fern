@@ -352,6 +352,149 @@
             "availability": null,
             "docs": null
         },
+        "type_:Shape": {
+            "name": {
+                "name": {
+                    "originalName": "Shape",
+                    "camelCase": {
+                        "unsafeName": "shape",
+                        "safeName": "shape"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "shape",
+                        "safeName": "shape"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SHAPE",
+                        "safeName": "SHAPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Shape",
+                        "safeName": "Shape"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "typeId": "type_:Shape"
+            },
+            "shape": {
+                "_type": "enum",
+                "default": {
+                    "name": {
+                        "name": {
+                            "originalName": "CIRCLE",
+                            "camelCase": {
+                                "unsafeName": "circle",
+                                "safeName": "circle"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "circle",
+                                "safeName": "circle"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CIRCLE",
+                                "safeName": "CIRCLE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Circle",
+                                "safeName": "Circle"
+                            }
+                        },
+                        "wireValue": "CIRCLE"
+                    },
+                    "availability": null,
+                    "docs": null
+                },
+                "values": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "SQUARE",
+                                "camelCase": {
+                                    "unsafeName": "square",
+                                    "safeName": "square"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "square",
+                                    "safeName": "square"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SQUARE",
+                                    "safeName": "SQUARE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Square",
+                                    "safeName": "Square"
+                                }
+                            },
+                            "wireValue": "SQUARE"
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "CIRCLE",
+                                "camelCase": {
+                                    "unsafeName": "circle",
+                                    "safeName": "circle"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "circle",
+                                    "safeName": "circle"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CIRCLE",
+                                    "safeName": "CIRCLE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Circle",
+                                    "safeName": "Circle"
+                                }
+                            },
+                            "wireValue": "CIRCLE"
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "TRIANGLE",
+                                "camelCase": {
+                                    "unsafeName": "triangle",
+                                    "safeName": "triangle"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "triangle",
+                                    "safeName": "triangle"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TRIANGLE",
+                                    "safeName": "TRIANGLE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Triangle",
+                                    "safeName": "Triangle"
+                                }
+                            },
+                            "wireValue": "TRIANGLE"
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ]
+            },
+            "referencedTypes": [],
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "availability": null,
+            "docs": null
+        },
         "type_:Type": {
             "name": {
                 "name": {
@@ -511,11 +654,69 @@
                         },
                         "availability": null,
                         "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "shape",
+                                "camelCase": {
+                                    "unsafeName": "shape",
+                                    "safeName": "shape"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "shape",
+                                    "safeName": "shape"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SHAPE",
+                                    "safeName": "SHAPE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Shape",
+                                    "safeName": "Shape"
+                                }
+                            },
+                            "wireValue": "shape"
+                        },
+                        "valueType": {
+                            "_type": "named",
+                            "name": {
+                                "originalName": "Shape",
+                                "camelCase": {
+                                    "unsafeName": "shape",
+                                    "safeName": "shape"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "shape",
+                                    "safeName": "shape"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SHAPE",
+                                    "safeName": "SHAPE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Shape",
+                                    "safeName": "Shape"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [],
+                                "packagePath": [],
+                                "file": null
+                            },
+                            "typeId": "type_:Shape",
+                            "default": null,
+                            "inline": null
+                        },
+                        "availability": null,
+                        "docs": null
                     }
                 ],
                 "extra-properties": false
             },
-            "referencedTypes": [],
+            "referencedTypes": [
+                "type_:Shape"
+            ],
             "userProvidedExamples": [
                 {
                     "name": {
@@ -724,13 +925,123 @@
                                     },
                                     "typeId": "type_:Type"
                                 }
+                            },
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "shape",
+                                        "camelCase": {
+                                            "unsafeName": "shape",
+                                            "safeName": "shape"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "shape",
+                                            "safeName": "shape"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "SHAPE",
+                                            "safeName": "SHAPE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Shape",
+                                            "safeName": "Shape"
+                                        }
+                                    },
+                                    "wireValue": "shape"
+                                },
+                                "value": {
+                                    "shape": {
+                                        "type": "named",
+                                        "typeName": {
+                                            "typeId": "type_:Shape",
+                                            "fernFilepath": {
+                                                "allParts": [],
+                                                "packagePath": [],
+                                                "file": null
+                                            },
+                                            "name": {
+                                                "originalName": "Shape",
+                                                "camelCase": {
+                                                    "unsafeName": "shape",
+                                                    "safeName": "shape"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "shape",
+                                                    "safeName": "shape"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "SHAPE",
+                                                    "safeName": "SHAPE"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Shape",
+                                                    "safeName": "Shape"
+                                                }
+                                            }
+                                        },
+                                        "shape": {
+                                            "type": "enum",
+                                            "value": {
+                                                "name": {
+                                                    "originalName": "SQUARE",
+                                                    "camelCase": {
+                                                        "unsafeName": "square",
+                                                        "safeName": "square"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "square",
+                                                        "safeName": "square"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "SQUARE",
+                                                        "safeName": "SQUARE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Square",
+                                                        "safeName": "Square"
+                                                    }
+                                                },
+                                                "wireValue": "SQUARE"
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": "SQUARE"
+                                },
+                                "originalTypeDeclaration": {
+                                    "name": {
+                                        "originalName": "Type",
+                                        "camelCase": {
+                                            "unsafeName": "type",
+                                            "safeName": "type"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "type",
+                                            "safeName": "type"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "TYPE",
+                                            "safeName": "TYPE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Type",
+                                            "safeName": "Type"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "typeId": "type_:Type"
+                                }
                             }
                         ]
                     },
                     "jsonExample": {
                         "decimal": 1.1,
                         "even": 2,
-                        "name": "rules"
+                        "name": "rules",
+                        "shape": "SQUARE"
                     },
                     "docs": null
                 }
@@ -945,6 +1256,61 @@
                                     }
                                 },
                                 "docs": null
+                            },
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "shape",
+                                        "camelCase": {
+                                            "unsafeName": "shape",
+                                            "safeName": "shape"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "shape",
+                                            "safeName": "shape"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "SHAPE",
+                                            "safeName": "SHAPE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Shape",
+                                            "safeName": "Shape"
+                                        }
+                                    },
+                                    "wireValue": "shape"
+                                },
+                                "valueType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "Shape",
+                                        "camelCase": {
+                                            "unsafeName": "shape",
+                                            "safeName": "shape"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "shape",
+                                            "safeName": "shape"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "SHAPE",
+                                            "safeName": "SHAPE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Shape",
+                                            "safeName": "Shape"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "typeId": "type_:Shape",
+                                    "default": null,
+                                    "inline": null
+                                },
+                                "docs": null
                             }
                         ],
                         "extra-properties": false
@@ -1043,7 +1409,9 @@
                                         "packagePath": [],
                                         "file": null
                                     },
-                                    "typeId": "type_:Type"
+                                    "typeId": "type_:Type",
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -1171,12 +1539,96 @@
                                                 "jsonExample": "string"
                                             },
                                             "originalTypeDeclaration": null
+                                        },
+                                        {
+                                            "name": {
+                                                "name": {
+                                                    "originalName": "shape",
+                                                    "camelCase": {
+                                                        "unsafeName": "shape",
+                                                        "safeName": "shape"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "shape",
+                                                        "safeName": "shape"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "SHAPE",
+                                                        "safeName": "SHAPE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Shape",
+                                                        "safeName": "Shape"
+                                                    }
+                                                },
+                                                "wireValue": "shape"
+                                            },
+                                            "value": {
+                                                "shape": {
+                                                    "type": "named",
+                                                    "typeName": {
+                                                        "name": {
+                                                            "originalName": "Shape",
+                                                            "camelCase": {
+                                                                "unsafeName": "shape",
+                                                                "safeName": "shape"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "shape",
+                                                                "safeName": "shape"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SHAPE",
+                                                                "safeName": "SHAPE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Shape",
+                                                                "safeName": "Shape"
+                                                            }
+                                                        },
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "typeId": "type_:Shape"
+                                                    },
+                                                    "shape": {
+                                                        "type": "enum",
+                                                        "value": {
+                                                            "name": {
+                                                                "originalName": "SQUARE",
+                                                                "camelCase": {
+                                                                    "unsafeName": "square",
+                                                                    "safeName": "square"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "square",
+                                                                    "safeName": "square"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "SQUARE",
+                                                                    "safeName": "SQUARE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Square",
+                                                                    "safeName": "Square"
+                                                                }
+                                                            },
+                                                            "wireValue": "SQUARE"
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": "SQUARE"
+                                            },
+                                            "originalTypeDeclaration": null
                                         }
                                     ],
                                     "jsonExample": {
                                         "decimal": 1.1,
                                         "even": 1,
-                                        "name": "string"
+                                        "name": "string",
+                                        "shape": "SQUARE"
                                     }
                                 },
                                 "name": null,
@@ -1401,6 +1853,115 @@
                                                                 },
                                                                 "typeId": "type_:Type"
                                                             }
+                                                        },
+                                                        {
+                                                            "name": {
+                                                                "name": {
+                                                                    "originalName": "shape",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "shape",
+                                                                        "safeName": "shape"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "shape",
+                                                                        "safeName": "shape"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "SHAPE",
+                                                                        "safeName": "SHAPE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Shape",
+                                                                        "safeName": "Shape"
+                                                                    }
+                                                                },
+                                                                "wireValue": "shape"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "named",
+                                                                    "typeName": {
+                                                                        "typeId": "type_:Shape",
+                                                                        "fernFilepath": {
+                                                                            "allParts": [],
+                                                                            "packagePath": [],
+                                                                            "file": null
+                                                                        },
+                                                                        "name": {
+                                                                            "originalName": "Shape",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "shape",
+                                                                                "safeName": "shape"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "shape",
+                                                                                "safeName": "shape"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SHAPE",
+                                                                                "safeName": "SHAPE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Shape",
+                                                                                "safeName": "Shape"
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "shape": {
+                                                                        "type": "enum",
+                                                                        "value": {
+                                                                            "name": {
+                                                                                "originalName": "SQUARE",
+                                                                                "camelCase": {
+                                                                                    "unsafeName": "square",
+                                                                                    "safeName": "square"
+                                                                                },
+                                                                                "snakeCase": {
+                                                                                    "unsafeName": "square",
+                                                                                    "safeName": "square"
+                                                                                },
+                                                                                "screamingSnakeCase": {
+                                                                                    "unsafeName": "SQUARE",
+                                                                                    "safeName": "SQUARE"
+                                                                                },
+                                                                                "pascalCase": {
+                                                                                    "unsafeName": "Square",
+                                                                                    "safeName": "Square"
+                                                                                }
+                                                                            },
+                                                                            "wireValue": "SQUARE"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "SQUARE"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "name": {
+                                                                    "originalName": "Type",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "type",
+                                                                        "safeName": "type"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "type",
+                                                                        "safeName": "type"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "TYPE",
+                                                                        "safeName": "TYPE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Type",
+                                                                        "safeName": "Type"
+                                                                    }
+                                                                },
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "typeId": "type_:Type"
+                                                            }
                                                         }
                                                     ]
                                                 }
@@ -1408,12 +1969,13 @@
                                             "jsonExample": {
                                                 "decimal": 1.1,
                                                 "even": 2,
-                                                "name": "rules"
+                                                "name": "rules",
+                                                "shape": "SQUARE"
                                             }
                                         }
                                     }
                                 },
-                                "id": "2f2554aa29e1b665f0d79564a7d08096cb7e5ef3",
+                                "id": "b2e29598593bf44ad8501986e063385507b138c4",
                                 "docs": null
                             }
                         }
@@ -1687,7 +2249,9 @@
                                         "packagePath": [],
                                         "file": null
                                     },
-                                    "typeId": "type_:Type"
+                                    "typeId": "type_:Type",
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -2034,6 +2598,115 @@
                                                                 },
                                                                 "typeId": "type_:Type"
                                                             }
+                                                        },
+                                                        {
+                                                            "name": {
+                                                                "name": {
+                                                                    "originalName": "shape",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "shape",
+                                                                        "safeName": "shape"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "shape",
+                                                                        "safeName": "shape"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "SHAPE",
+                                                                        "safeName": "SHAPE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Shape",
+                                                                        "safeName": "Shape"
+                                                                    }
+                                                                },
+                                                                "wireValue": "shape"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "named",
+                                                                    "typeName": {
+                                                                        "typeId": "type_:Shape",
+                                                                        "fernFilepath": {
+                                                                            "allParts": [],
+                                                                            "packagePath": [],
+                                                                            "file": null
+                                                                        },
+                                                                        "name": {
+                                                                            "originalName": "Shape",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "shape",
+                                                                                "safeName": "shape"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "shape",
+                                                                                "safeName": "shape"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SHAPE",
+                                                                                "safeName": "SHAPE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Shape",
+                                                                                "safeName": "Shape"
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "shape": {
+                                                                        "type": "enum",
+                                                                        "value": {
+                                                                            "name": {
+                                                                                "originalName": "SQUARE",
+                                                                                "camelCase": {
+                                                                                    "unsafeName": "square",
+                                                                                    "safeName": "square"
+                                                                                },
+                                                                                "snakeCase": {
+                                                                                    "unsafeName": "square",
+                                                                                    "safeName": "square"
+                                                                                },
+                                                                                "screamingSnakeCase": {
+                                                                                    "unsafeName": "SQUARE",
+                                                                                    "safeName": "SQUARE"
+                                                                                },
+                                                                                "pascalCase": {
+                                                                                    "unsafeName": "Square",
+                                                                                    "safeName": "Square"
+                                                                                }
+                                                                            },
+                                                                            "wireValue": "SQUARE"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "SQUARE"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "name": {
+                                                                    "originalName": "Type",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "type",
+                                                                        "safeName": "type"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "type",
+                                                                        "safeName": "type"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "TYPE",
+                                                                        "safeName": "TYPE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Type",
+                                                                        "safeName": "Type"
+                                                                    }
+                                                                },
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "typeId": "type_:Type"
+                                                            }
                                                         }
                                                     ]
                                                 }
@@ -2041,12 +2714,13 @@
                                             "jsonExample": {
                                                 "decimal": 1.1,
                                                 "even": 2,
-                                                "name": "rules"
+                                                "name": "rules",
+                                                "shape": "SQUARE"
                                             }
                                         }
                                     }
                                 },
-                                "id": "724c37cf6aff665fb72a6d6dfcd6a8edb1fab6dd",
+                                "id": "079037cc77a3807e86ea63698c2df4d8b23c0a7f",
                                 "docs": null
                             }
                         }
@@ -2092,6 +2766,7 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_": [
+                "type_:Shape",
                 "type_:Type"
             ]
         },
@@ -2121,6 +2796,7 @@
             "type_:Double",
             "type_:Word",
             "type_:Sentence",
+            "type_:Shape",
             "type_:Type"
         ],
         "errors": [],

@@ -37,6 +37,10 @@ function convertPrimitive(primitiveExample: PrimitiveExample): RawSchemas.Exampl
             return primitiveExample.value;
         case "int64":
             return primitiveExample.value;
+        case "uint":
+            return primitiveExample.value;
+        case "uint64":
+            return primitiveExample.value;
         case "float":
             return primitiveExample.value;
         case "double":

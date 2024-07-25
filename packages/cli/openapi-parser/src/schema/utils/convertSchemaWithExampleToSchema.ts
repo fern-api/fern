@@ -40,6 +40,7 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
                 values: schema.values,
+                default: schema.default,
                 groupName: schema.groupName
             });
         case "literal":
@@ -213,6 +214,10 @@ function convertToPrimitiveSchemaValue(primitiveSchema: PrimitiveSchemaValueWith
             return PrimitiveSchemaValue.int(primitiveSchema);
         case "int64":
             return PrimitiveSchemaValue.int64(primitiveSchema);
+        case "uint":
+            return PrimitiveSchemaValue.uint();
+        case "uint64":
+            return PrimitiveSchemaValue.uint64();
         default:
             assertNever(primitiveSchema);
     }

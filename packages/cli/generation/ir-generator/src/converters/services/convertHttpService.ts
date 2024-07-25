@@ -31,6 +31,7 @@ import { convertQueryParameter } from "./convertQueryParameter";
 import { convertResponseErrors } from "./convertResponseErrors";
 
 export async function convertHttpService({
+    rootDefaultUrl,
     rootPathParameters,
     serviceDefinition,
     file,
@@ -42,6 +43,7 @@ export async function convertHttpService({
     globalErrors,
     workspace
 }: {
+    rootDefaultUrl: string | undefined;
     rootPathParameters: PathParameter[];
     serviceDefinition: RawSchemas.HttpServiceSchema;
     file: FernFileContext;
@@ -90,7 +92,7 @@ export async function convertHttpService({
                     displayName: endpoint["display-name"],
                     auth: endpoint.auth ?? serviceDefinition.auth,
                     idempotent: endpoint.idempotent ?? serviceDefinition.idempotent ?? false,
-                    baseUrl: endpoint.url ?? serviceDefinition.url,
+                    baseUrl: endpoint.url ?? serviceDefinition.url ?? rootDefaultUrl,
                     method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
                     path: constructHttpPath(endpoint.path),
                     fullPath: constructHttpPath(

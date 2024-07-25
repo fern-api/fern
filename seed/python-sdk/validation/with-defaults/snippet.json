@@ -1,6 +1,6 @@
 {
     "types": {
-        "type_:Type": "from seed import Type\n\nType(\n    decimal=1.1,\n    even=2,\n    name=\"rules\",\n)\n"
+        "type_:Type": "from seed import Type\n\nType(\n    decimal=1.1,\n    even=2,\n    name=\"rules\",\n    shape=\"SQUARE\",\n)\n"
     },
     "endpoints": [
         {
@@ -11,8 +11,8 @@
                 "identifier_override": "endpoint_.create"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedValidation\n\nclient = SeedValidation(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.create(\n    decimal=1.1,\n    even=1,\n    name=\"string\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedValidation\n\nclient = AsyncSeedValidation(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.create(\n        decimal=1.1,\n        even=1,\n        name=\"string\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed.client import SeedValidation\n\nclient = SeedValidation(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.create(\n    decimal=1.1,\n    even=1,\n    name=\"string\",\n    shape=\"SQUARE\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedValidation\n\nclient = AsyncSeedValidation(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.create(\n        decimal=1.1,\n        even=1,\n        name=\"string\",\n        shape=\"SQUARE\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },

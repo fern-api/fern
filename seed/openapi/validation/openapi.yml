@@ -30,10 +30,13 @@ paths:
                   type: integer
                 name:
                   type: string
+                shape:
+                  $ref: '#/components/schemas/Shape'
               required:
                 - decimal
                 - even
                 - name
+                - shape
   /:
     get:
       operationId: get
@@ -81,6 +84,13 @@ components:
     Sentence:
       title: Sentence
       type: string
+    Shape:
+      title: Shape
+      type: string
+      enum:
+        - SQUARE
+        - CIRCLE
+        - TRIANGLE
     Type:
       title: Type
       type: object
@@ -96,8 +106,11 @@ components:
         name:
           type: string
           example: rules
+        shape:
+          $ref: '#/components/schemas/Shape'
       required:
         - decimal
         - even
         - name
+        - shape
   securitySchemes: {}

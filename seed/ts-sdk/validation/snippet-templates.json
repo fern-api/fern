@@ -103,6 +103,25 @@
                                         "type": "generic"
                                     },
                                     "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "values": {
+                                            "SQUARE": "SeedValidation.Shape.Square",
+                                            "CIRCLE": "SeedValidation.Shape.Circle",
+                                            "TRIANGLE": "SeedValidation.Shape.Triangle"
+                                        },
+                                        "templateString": "shape: $FERN_INPUT",
+                                        "templateInput": {
+                                            "location": "BODY",
+                                            "path": "shape",
+                                            "type": "payload"
+                                        },
+                                        "type": "enum"
+                                    },
+                                    "type": "template"
                                 }
                             ],
                             "type": "generic"

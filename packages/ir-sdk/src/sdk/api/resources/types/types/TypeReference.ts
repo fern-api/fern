@@ -16,7 +16,7 @@ export declare namespace TypeReference {
         container: FernIr.ContainerType;
     }
 
-    interface Named extends FernIr.DeclaredTypeName, _Utils {
+    interface Named extends FernIr.NamedType, _Utils {
         type: "named";
     }
 
@@ -35,7 +35,7 @@ export declare namespace TypeReference {
 
     interface _Visitor<_Result> {
         container: (value: FernIr.ContainerType) => _Result;
-        named: (value: FernIr.DeclaredTypeName) => _Result;
+        named: (value: FernIr.NamedType) => _Result;
         primitive: (value: FernIr.PrimitiveType) => _Result;
         unknown: () => _Result;
         _other: (value: { type: string }) => _Result;
@@ -56,7 +56,7 @@ export const TypeReference = {
         };
     },
 
-    named: (value: FernIr.DeclaredTypeName): FernIr.TypeReference.Named => {
+    named: (value: FernIr.NamedType): FernIr.TypeReference.Named => {
         return {
             ...value,
             type: "named",
