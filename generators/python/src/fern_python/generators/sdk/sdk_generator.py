@@ -10,6 +10,7 @@ from fern.generator_exec.resources.config import GeneratorConfig
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import AST, Project
 from fern_python.codegen.filepath import Filepath
+from fern_python.codegen.module_manager import ModuleExport
 from fern_python.generator_cli import README_FILENAME, GeneratorCli
 from fern_python.generator_cli.generator_cli import REFERENCE_FILENAME
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
@@ -195,6 +196,28 @@ class SdkGenerator(AbstractGenerator):
             snippet_writer=snippet_writer,
             endpoint_metadata_collector=endpoint_metadata_collector,
             oauth_scheme=oauth_scheme,
+        )
+
+        # Since you can customize the client export, we handle it here to capture the generated
+        # and non-generated cases. If we were to base this off exporting the class declaration
+        # we would have to handle the case where the exported client is not generated.
+        # So we do it here to have a single source of truth for both cases.
+        root_client_name = context.get_class_name_for_exported_root_client()
+        exported_filename = custom_config.client.exported_filename
+        # Remove .py from the end of the filename
+        if exported_filename.endswith(".py"):
+            exported_filename = exported_filename[:-3]
+        project.add_init_exports(
+            path=(),
+            exports=[
+                ModuleExport(
+                    from_=exported_filename,
+                    imports=[
+                        root_client_name,
+                        "Async" + root_client_name,
+                    ],
+                )
+            ],
         )
 
         for subpackage_id in ir.subpackages.keys():
