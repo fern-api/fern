@@ -1,5 +1,5 @@
-import { Readable, Writable } from "stream";
-import { TextDecoder, TextEncoder } from "util";
+// this should be transpiled away as a type
+import type { Readable, Writable } from "stream";
 import { EventCallback, StreamWrapper } from "./chooseStreamWrapper";
 
 export class NodePre18StreamWrapper implements StreamWrapper<Writable, Buffer> {
@@ -69,14 +69,14 @@ export class NodePre18StreamWrapper implements StreamWrapper<Writable, Buffer> {
 
     public async text(): Promise<string> {
         const chunks: Uint8Array[] = [];
-        const encoder = new TextEncoder();
+        const encoder = new (await import("util")).TextEncoder();
         this.readableStream.setEncoding((this.encoding || "utf-8") as BufferEncoding);
 
         for await (const chunk of this.readableStream) {
             chunks.push(encoder.encode(chunk));
         }
 
-        const decoder = new TextDecoder(this.encoding || "utf-8");
+        const decoder = new (await import("util")).TextDecoder(this.encoding || "utf-8");
         return decoder.decode(Buffer.concat(chunks));
     }
 

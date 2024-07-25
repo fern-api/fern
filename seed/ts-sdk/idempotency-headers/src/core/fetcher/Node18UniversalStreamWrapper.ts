@@ -1,5 +1,5 @@
-import { Writable } from "stream";
-import { TextDecoder } from "util";
+// this should be transpiled away as a type
+import type { Writable } from "stream";
 import { EventCallback, StreamWrapper } from "./chooseStreamWrapper";
 
 export class Node18UniversalStreamWrapper
@@ -42,10 +42,10 @@ export class Node18UniversalStreamWrapper
     public pipe(
         dest: Node18UniversalStreamWrapper | Writable | WritableStream<Uint8Array>
     ): Node18UniversalStreamWrapper | Writable | WritableStream<Uint8Array> {
-        this.on("data", (chunk) => {
+        this.on("data", async (chunk) => {
             if (dest instanceof Node18UniversalStreamWrapper) {
                 dest._write(chunk);
-            } else if (dest instanceof Writable) {
+            } else if (dest instanceof (await import("stream")).Writable) {
                 dest.write(chunk);
             } else {
                 const writer = dest.getWriter();
@@ -53,10 +53,10 @@ export class Node18UniversalStreamWrapper
             }
         });
 
-        this.on("end", () => {
+        this.on("end", async () => {
             if (dest instanceof Node18UniversalStreamWrapper) {
                 dest._end();
-            } else if (dest instanceof Writable) {
+            } else if (dest instanceof (await import("stream")).Writable) {
                 dest.end();
             } else {
                 const writer = dest.getWriter();
@@ -64,10 +64,10 @@ export class Node18UniversalStreamWrapper
             }
         });
 
-        this.on("error", (error) => {
+        this.on("error", async (error) => {
             if (dest instanceof Node18UniversalStreamWrapper) {
                 dest._error(error);
-            } else if (dest instanceof Writable) {
+            } else if (dest instanceof (await import("stream")).Writable) {
                 dest.destroy(error);
             } else {
                 const writer = dest.getWriter();
@@ -79,10 +79,10 @@ export class Node18UniversalStreamWrapper
     }
 
     public unpipe(dest: Node18UniversalStreamWrapper | Writable | WritableStream<Uint8Array>): void {
-        this.off("data", (chunk) => {
+        this.off("data", async (chunk) => {
             if (dest instanceof Node18UniversalStreamWrapper) {
                 dest._write(chunk);
-            } else if (dest instanceof Writable) {
+            } else if (dest instanceof (await import("stream")).Writable) {
                 dest.write(chunk);
             } else {
                 const writer = dest.getWriter();
@@ -90,10 +90,10 @@ export class Node18UniversalStreamWrapper
             }
         });
 
-        this.off("end", () => {
+        this.off("end", async () => {
             if (dest instanceof Node18UniversalStreamWrapper) {
                 dest._end();
-            } else if (dest instanceof Writable) {
+            } else if (dest instanceof (await import("stream")).Writable) {
                 dest.end();
             } else {
                 const writer = dest.getWriter();
@@ -101,10 +101,10 @@ export class Node18UniversalStreamWrapper
             }
         });
 
-        this.off("error", (error) => {
+        this.off("error", async (error) => {
             if (dest instanceof Node18UniversalStreamWrapper) {
                 dest._error(error);
-            } else if (dest instanceof Writable) {
+            } else if (dest instanceof (await import("stream")).Writable) {
                 dest.destroy(error);
             } else {
                 const writer = dest.getWriter();
@@ -171,7 +171,7 @@ export class Node18UniversalStreamWrapper
             if (value) chunks.push(value);
         }
 
-        const decoder = new TextDecoder(this.encoding || "utf-8");
+        const decoder = new (await import("util")).TextDecoder(this.encoding || "utf-8");
         return decoder.decode(await new Blob(chunks).arrayBuffer());
     }
 
