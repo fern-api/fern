@@ -23,12 +23,13 @@ public class SampleTest
     [Test]
     public void Test_Get_Endpoint1()
     {
-        var json = """
-                                   {
-                                     "title": "Inception",
-                                     "rating": 8.8
-                                   }
-                                   """;
+        Console.Write("testing");
+        const string json = """
+                            {
+                              "title": "Inception",
+                              "rating": 8.8
+                            }
+                            """;
 
         GlobalTestSetup.Server
             .Given(
@@ -54,13 +55,13 @@ public class SampleTest
     [Test]
     public void Test_Get_Endpoint2()
     {
-        var expectedResponse = """
-                       {
-                         "id": "12345",
-                         "title": "Inception",
-                         "rating": 4.8
-                       }
-                       """;
+        const string expectedResponse = """
+                                        {
+                                          "id": "12345",
+                                          "title": "Inception",
+                                          "rating": 4.8
+                                        }
+                                        """;
         GlobalTestSetup.Server
             .Given(
                 WireMock.RequestBuilders.Request.Create()
@@ -73,7 +74,7 @@ public class SampleTest
                     .WithBody(expectedResponse)
             );
 
-        var response = _client.Imdb.GetMovieAsync("idid").Result;
+        var response = _client.Imdb.GetMovieAsync("12345").Result;
         // Assert.That(responseString, Is.EqualTo("expected content 1"));
     }
 }
