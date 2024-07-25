@@ -27,7 +27,7 @@ Add a movie to the database
 <dd>
 
 ```python
-from seed.client import SeedApi
+from seed import SeedApi
 
 client = SeedApi(
     token="YOUR_TOKEN",
@@ -93,7 +93,7 @@ client.imdb.create_movie(
 <dd>
 
 ```python
-from seed.client import SeedApi
+from seed import SeedApi
 
 client = SeedApi(
     token="YOUR_TOKEN",

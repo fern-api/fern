@@ -2,7 +2,7 @@
 
 import typing
 
-from seed.client import AsyncSeedAuthEnvironmentVariables, SeedAuthEnvironmentVariables
+from seed import AsyncSeedAuthEnvironmentVariables, SeedAuthEnvironmentVariables
 
 from .utilities import validate_response
 

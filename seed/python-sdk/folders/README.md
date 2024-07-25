@@ -16,7 +16,7 @@ pip install fern_folders
 Instantiate and use the client with the following:
 
 ```python
-from seed.client import SeedApi
+from seed import SeedApi
 
 client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
@@ -31,7 +31,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed.client import AsyncSeedApi
+from seed import AsyncSeedApi
 
 client = AsyncSeedApi(
     base_url="https://yourhost.com/path/to/api",
@@ -88,7 +88,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 ```python
 
-from seed.client import SeedApi
+from seed import SeedApi
 
 client = SeedApi(..., { timeout=20.0 }, )
 
@@ -105,7 +105,7 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 ```python
 import httpx
-from seed.client import SeedApi
+from seed import SeedApi
 
 client = SeedApi(
     ...,

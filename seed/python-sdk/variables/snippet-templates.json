@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedVariables"
+                    "from seed import SeedVariables"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedVariables(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -52,7 +52,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedVariables"
+                        "from seed import AsyncSeedVariables"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedVariables(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",

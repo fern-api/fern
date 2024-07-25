@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedOauthClientCredentialsDefault"
+                    "from seed import SeedOauthClientCredentialsDefault"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedOauthClientCredentialsDefault(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)",
@@ -68,7 +68,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedOauthClientCredentialsDefault"
+                        "from seed import AsyncSeedOauthClientCredentialsDefault"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedOauthClientCredentialsDefault(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)",

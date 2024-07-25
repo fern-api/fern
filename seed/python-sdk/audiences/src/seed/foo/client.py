@@ -44,7 +44,7 @@ class FooClient:
 
         Examples
         --------
-        from seed.client import SeedAudiences
+        from seed import SeedAudiences
 
         client = SeedAudiences(
             base_url="https://yourhost.com/path/to/api",
@@ -103,7 +103,7 @@ class AsyncFooClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedAudiences
+        from seed import AsyncSeedAudiences
 
         client = AsyncSeedAudiences(
             base_url="https://yourhost.com/path/to/api",

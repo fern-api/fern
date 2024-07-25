@@ -3,7 +3,7 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedApi, SeedApi
+from seed import AsyncSeedApi, SeedApi
 
 
 @pytest.fixture

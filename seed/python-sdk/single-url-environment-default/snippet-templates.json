@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedSingleUrlEnvironmentDefault"
+                    "from seed import SeedSingleUrlEnvironmentDefault"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedSingleUrlEnvironmentDefault($FERN_INPUT, )",
@@ -52,7 +52,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedSingleUrlEnvironmentDefault"
+                        "from seed import AsyncSeedSingleUrlEnvironmentDefault"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedSingleUrlEnvironmentDefault($FERN_INPUT, )",

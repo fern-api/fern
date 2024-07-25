@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedApi"
+                    "from seed import SeedApi"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -35,7 +35,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedApi"
+                        "from seed import AsyncSeedApi"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -69,7 +69,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedApi"
+                    "from seed import SeedApi"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -91,7 +91,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedApi"
+                        "from seed import AsyncSeedApi"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -125,7 +125,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedApi"
+                    "from seed import SeedApi"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -147,7 +147,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedApi"
+                        "from seed import AsyncSeedApi"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -181,7 +181,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedApi"
+                    "from seed import SeedApi"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -203,7 +203,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedApi"
+                        "from seed import AsyncSeedApi"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -237,7 +237,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedApi"
+                    "from seed import SeedApi"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -259,7 +259,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedApi"
+                        "from seed import AsyncSeedApi"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -293,7 +293,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedApi"
+                    "from seed import SeedApi"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -332,7 +332,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedApi"
+                        "from seed import AsyncSeedApi"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",

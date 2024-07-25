@@ -33,7 +33,7 @@ class UnionClient:
 
         Examples
         --------
-        from seed.client import SeedUndiscriminatedUnions
+        from seed import SeedUndiscriminatedUnions
 
         client = SeedUndiscriminatedUnions(
             base_url="https://yourhost.com/path/to/api",
@@ -66,7 +66,7 @@ class UnionClient:
 
         Examples
         --------
-        from seed.client import SeedUndiscriminatedUnions
+        from seed import SeedUndiscriminatedUnions
 
         client = SeedUndiscriminatedUnions(
             base_url="https://yourhost.com/path/to/api",
@@ -104,7 +104,7 @@ class AsyncUnionClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedUndiscriminatedUnions
+        from seed import AsyncSeedUndiscriminatedUnions
 
         client = AsyncSeedUndiscriminatedUnions(
             base_url="https://yourhost.com/path/to/api",
@@ -145,7 +145,7 @@ class AsyncUnionClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedUndiscriminatedUnions
+        from seed import AsyncSeedUndiscriminatedUnions
 
         client = AsyncSeedUndiscriminatedUnions(
             base_url="https://yourhost.com/path/to/api",

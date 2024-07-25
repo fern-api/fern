@@ -26,7 +26,7 @@ class DummyClient:
 
         Examples
         --------
-        from seed.client import SeedNoEnvironment
+        from seed import SeedNoEnvironment
 
         client = SeedNoEnvironment(
             token="YOUR_TOKEN",
@@ -63,7 +63,7 @@ class AsyncDummyClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedNoEnvironment
+        from seed import AsyncSeedNoEnvironment
 
         client = AsyncSeedNoEnvironment(
             token="YOUR_TOKEN",

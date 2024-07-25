@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedIdempotencyHeaders"
+                    "from seed import SeedIdempotencyHeaders"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedIdempotencyHeaders(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -86,7 +86,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedIdempotencyHeaders"
+                        "from seed import AsyncSeedIdempotencyHeaders"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedIdempotencyHeaders(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -171,7 +171,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedIdempotencyHeaders"
+                    "from seed import SeedIdempotencyHeaders"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedIdempotencyHeaders(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -227,7 +227,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedIdempotencyHeaders"
+                        "from seed import AsyncSeedIdempotencyHeaders"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedIdempotencyHeaders(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",

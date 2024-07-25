@@ -43,7 +43,7 @@ class QueryParamClient:
 
         Examples
         --------
-        from seed.client import SeedEnum
+        from seed import SeedEnum
 
         client = SeedEnum(
             base_url="https://yourhost.com/path/to/api",
@@ -101,7 +101,7 @@ class QueryParamClient:
 
         Examples
         --------
-        from seed.client import SeedEnum
+        from seed import SeedEnum
 
         client = SeedEnum(
             base_url="https://yourhost.com/path/to/api",
@@ -168,7 +168,7 @@ class AsyncQueryParamClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedEnum
+        from seed import AsyncSeedEnum
 
         client = AsyncSeedEnum(
             base_url="https://yourhost.com/path/to/api",
@@ -234,7 +234,7 @@ class AsyncQueryParamClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedEnum
+        from seed import AsyncSeedEnum
 
         client = AsyncSeedEnum(
             base_url="https://yourhost.com/path/to/api",

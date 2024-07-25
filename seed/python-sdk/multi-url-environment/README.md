@@ -16,7 +16,7 @@ pip install fern_multi-url-environment
 Instantiate and use the client with the following:
 
 ```python
-from seed.client import SeedMultiUrlEnvironment
+from seed import SeedMultiUrlEnvironment
 
 client = SeedMultiUrlEnvironment(
     token="YOUR_TOKEN",
@@ -33,7 +33,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed.client import AsyncSeedMultiUrlEnvironment
+from seed import AsyncSeedMultiUrlEnvironment
 
 client = AsyncSeedMultiUrlEnvironment(
     token="YOUR_TOKEN",
@@ -92,7 +92,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 ```python
 
-from seed.client import SeedMultiUrlEnvironment
+from seed import SeedMultiUrlEnvironment
 
 client = SeedMultiUrlEnvironment(..., { timeout=20.0 }, )
 
@@ -109,7 +109,7 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 ```python
 import httpx
-from seed.client import SeedMultiUrlEnvironment
+from seed import SeedMultiUrlEnvironment
 
 client = SeedMultiUrlEnvironment(
     ...,

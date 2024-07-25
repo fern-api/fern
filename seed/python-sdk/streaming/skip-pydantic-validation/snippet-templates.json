@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedStreaming"
+                    "from seed import SeedStreaming"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedStreaming(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -52,7 +52,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedStreaming"
+                        "from seed import AsyncSeedStreaming"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedStreaming(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -103,7 +103,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedStreaming"
+                    "from seed import SeedStreaming"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedStreaming(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -142,7 +142,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedStreaming"
+                        "from seed import AsyncSeedStreaming"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedStreaming(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",

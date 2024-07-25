@@ -27,7 +27,7 @@ GET request with custom api key
 <dd>
 
 ```python
-from seed.client import SeedBearerTokenEnvironmentVariable
+from seed import SeedBearerTokenEnvironmentVariable
 
 client = SeedBearerTokenEnvironmentVariable(
     api_key="YOUR_API_KEY",

@@ -12,7 +12,7 @@
 <dd>
 
 ```python
-from seed.client import SeedValidation
+from seed import SeedValidation
 
 client = SeedValidation(
     base_url="https://yourhost.com/path/to/api",
@@ -95,7 +95,7 @@ client.create(
 <dd>
 
 ```python
-from seed.client import SeedValidation
+from seed import SeedValidation
 
 client = SeedValidation(
     base_url="https://yourhost.com/path/to/api",

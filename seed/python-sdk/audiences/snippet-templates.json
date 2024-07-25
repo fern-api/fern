@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedAudiences"
+                    "from seed import SeedAudiences"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedAudiences(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -35,7 +35,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedAudiences"
+                        "from seed import AsyncSeedAudiences"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedAudiences(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -69,7 +69,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedAudiences"
+                    "from seed import SeedAudiences"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedAudiences(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -140,7 +140,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedAudiences"
+                        "from seed import AsyncSeedAudiences"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedAudiences(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",

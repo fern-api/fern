@@ -30,7 +30,7 @@ class SeedBasicAuth:
 
     Examples
     --------
-    from seed.client import SeedBasicAuth
+    from seed import SeedBasicAuth
 
     client = SeedBasicAuth(
         username="YOUR_USERNAME",
@@ -86,7 +86,7 @@ class AsyncSeedBasicAuth:
 
     Examples
     --------
-    from seed.client import AsyncSeedBasicAuth
+    from seed import AsyncSeedBasicAuth
 
     client = AsyncSeedBasicAuth(
         username="YOUR_USERNAME",

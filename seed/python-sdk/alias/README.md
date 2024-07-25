@@ -16,7 +16,7 @@ pip install fern_alias
 Instantiate and use the client with the following:
 
 ```python
-from seed.client import SeedAlias
+from seed import SeedAlias
 
 client = SeedAlias(
     base_url="https://yourhost.com/path/to/api",
@@ -33,7 +33,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed.client import AsyncSeedAlias
+from seed import AsyncSeedAlias
 
 client = AsyncSeedAlias(
     base_url="https://yourhost.com/path/to/api",
@@ -92,7 +92,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 ```python
 
-from seed.client import SeedAlias
+from seed import SeedAlias
 
 client = SeedAlias(..., { timeout=20.0 }, )
 
@@ -109,7 +109,7 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 ```python
 import httpx
-from seed.client import SeedAlias
+from seed import SeedAlias
 
 client = SeedAlias(
     ...,

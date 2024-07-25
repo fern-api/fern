@@ -34,8 +34,8 @@
                 "identifier_override": "endpoint_.echo"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.echo(\n    request=\"Hello world!\\\\n\\\\nwith\\\\n\\\\tnewlines\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.echo(\n        request=\"Hello world!\\\\n\\\\nwith\\\\n\\\\tnewlines\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.echo(\n    request=\"Hello world!\\\\n\\\\nwith\\\\n\\\\tnewlines\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.echo(\n        request=\"Hello world!\\\\n\\\\nwith\\\\n\\\\tnewlines\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -47,8 +47,8 @@
                 "identifier_override": "endpoint_file/notification/service.getException"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.file.notification.service.get_exception(\n    notification_id=\"notification-hsy129x\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.file.notification.service.get_exception(\n        notification_id=\"notification-hsy129x\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.file.notification.service.get_exception(\n    notification_id=\"notification-hsy129x\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.file.notification.service.get_exception(\n        notification_id=\"notification-hsy129x\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -60,8 +60,8 @@
                 "identifier_override": "endpoint_file/service.getFile"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.file.service.get_file(\n    filename=\"file.txt\",\n    x_file_api_version=\"0.0.2\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.file.service.get_file(\n        filename=\"file.txt\",\n        x_file_api_version=\"0.0.2\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.file.service.get_file(\n    filename=\"file.txt\",\n    x_file_api_version=\"0.0.2\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.file.service.get_file(\n        filename=\"file.txt\",\n        x_file_api_version=\"0.0.2\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -73,8 +73,8 @@
                 "identifier_override": "endpoint_health/service.check"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.health.service.check(\n    id=\"id-2sdx82h\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.health.service.check(\n        id=\"id-2sdx82h\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.health.service.check(\n    id=\"id-2sdx82h\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.health.service.check(\n        id=\"id-2sdx82h\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -86,8 +86,8 @@
                 "identifier_override": "endpoint_health/service.check"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.health.service.check(\n    id=\"id-3tey93i\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.health.service.check(\n        id=\"id-3tey93i\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.health.service.check(\n    id=\"id-3tey93i\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.health.service.check(\n        id=\"id-3tey93i\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -99,8 +99,8 @@
                 "identifier_override": "endpoint_health/service.ping"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.health.service.ping()\n",
-                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.health.service.ping()\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.health.service.ping()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.health.service.ping()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -112,8 +112,8 @@
                 "identifier_override": "endpoint_service.getMovie"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.service.get_movie(\n    movie_id=\"movie-c06a4ad7\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.service.get_movie(\n        movie_id=\"movie-c06a4ad7\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.service.get_movie(\n    movie_id=\"movie-c06a4ad7\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.service.get_movie(\n        movie_id=\"movie-c06a4ad7\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -125,8 +125,8 @@
                 "identifier_override": "endpoint_service.createMovie"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.service.create_movie(\n    id=\"movie-c06a4ad7\",\n    prequel=\"movie-cv9b914f\",\n    title=\"The Boy and the Heron\",\n    from_=\"Hayao Miyazaki\",\n    rating=8.0,\n    tag=\"tag-wf9as23d\",\n    metadata={\n        \"actors\": [\"Christian Bale\", \"Florence Pugh\", \"Willem Dafoe\"],\n        \"releaseDate\": \"2023-12-08\",\n        \"ratings\": {\"rottenTomatoes\": 97, \"imdb\": 7.6},\n    },\n)\n",
-                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.service.create_movie(\n        id=\"movie-c06a4ad7\",\n        prequel=\"movie-cv9b914f\",\n        title=\"The Boy and the Heron\",\n        from_=\"Hayao Miyazaki\",\n        rating=8.0,\n        tag=\"tag-wf9as23d\",\n        metadata={\n            \"actors\": [\"Christian Bale\", \"Florence Pugh\", \"Willem Dafoe\"],\n            \"releaseDate\": \"2023-12-08\",\n            \"ratings\": {\"rottenTomatoes\": 97, \"imdb\": 7.6},\n        },\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.service.create_movie(\n    id=\"movie-c06a4ad7\",\n    prequel=\"movie-cv9b914f\",\n    title=\"The Boy and the Heron\",\n    from_=\"Hayao Miyazaki\",\n    rating=8.0,\n    tag=\"tag-wf9as23d\",\n    metadata={\n        \"actors\": [\"Christian Bale\", \"Florence Pugh\", \"Willem Dafoe\"],\n        \"releaseDate\": \"2023-12-08\",\n        \"ratings\": {\"rottenTomatoes\": 97, \"imdb\": 7.6},\n    },\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.service.create_movie(\n        id=\"movie-c06a4ad7\",\n        prequel=\"movie-cv9b914f\",\n        title=\"The Boy and the Heron\",\n        from_=\"Hayao Miyazaki\",\n        rating=8.0,\n        tag=\"tag-wf9as23d\",\n        metadata={\n            \"actors\": [\"Christian Bale\", \"Florence Pugh\", \"Willem Dafoe\"],\n            \"releaseDate\": \"2023-12-08\",\n            \"ratings\": {\"rottenTomatoes\": 97, \"imdb\": 7.6},\n        },\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -138,8 +138,8 @@
                 "identifier_override": "endpoint_service.getMetadata"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.service.get_metadata(\n    x_api_version=\"0.0.1\",\n    shallow=False,\n    tag=\"development\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.service.get_metadata(\n        x_api_version=\"0.0.1\",\n        shallow=False,\n        tag=\"development\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.service.get_metadata(\n    x_api_version=\"0.0.1\",\n    shallow=False,\n    tag=\"development\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.service.get_metadata(\n        x_api_version=\"0.0.1\",\n        shallow=False,\n        tag=\"development\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -151,8 +151,8 @@
                 "identifier_override": "endpoint_service.getResponse"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.service.get_response()\n",
-                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.service.get_response()\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.service.get_response()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.service.get_response()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

@@ -30,7 +30,7 @@ class Ec2Client:
 
         Examples
         --------
-        from seed.client import SeedMultiUrlEnvironment
+        from seed import SeedMultiUrlEnvironment
 
         client = SeedMultiUrlEnvironment(
             token="YOUR_TOKEN",
@@ -77,7 +77,7 @@ class AsyncEc2Client:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedMultiUrlEnvironment
+        from seed import AsyncSeedMultiUrlEnvironment
 
         client = AsyncSeedMultiUrlEnvironment(
             token="YOUR_TOKEN",

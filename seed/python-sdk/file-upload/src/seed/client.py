@@ -28,7 +28,7 @@ class SeedFileUpload:
 
     Examples
     --------
-    from seed.client import SeedFileUpload
+    from seed import SeedFileUpload
 
     client = SeedFileUpload(
         base_url="https://yourhost.com/path/to/api",
@@ -76,7 +76,7 @@ class AsyncSeedFileUpload:
 
     Examples
     --------
-    from seed.client import AsyncSeedFileUpload
+    from seed import AsyncSeedFileUpload
 
     client = AsyncSeedFileUpload(
         base_url="https://yourhost.com/path/to/api",

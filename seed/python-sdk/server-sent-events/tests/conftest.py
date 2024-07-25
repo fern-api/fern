@@ -3,7 +3,7 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedServerSentEvents, SeedServerSentEvents
+from seed import AsyncSeedServerSentEvents, SeedServerSentEvents
 
 
 @pytest.fixture

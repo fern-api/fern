@@ -28,7 +28,7 @@ This endpoint is used to retrieve a user.
 <dd>
 
 ```python
-from seed.client import SeedMultiLineDocs
+from seed import SeedMultiLineDocs
 
 client = SeedMultiLineDocs(
     base_url="https://yourhost.com/path/to/api",
@@ -102,7 +102,7 @@ This endpoint is used to create a new user.
 <dd>
 
 ```python
-from seed.client import SeedMultiLineDocs
+from seed import SeedMultiLineDocs
 
 client = SeedMultiLineDocs(
     base_url="https://yourhost.com/path/to/api",

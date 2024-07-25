@@ -26,7 +26,7 @@ class DummyClient:
 
         Examples
         --------
-        from seed.client import SeedSingleUrlEnvironmentDefault
+        from seed import SeedSingleUrlEnvironmentDefault
 
         client = SeedSingleUrlEnvironmentDefault(
             token="YOUR_TOKEN",
@@ -62,7 +62,7 @@ class AsyncDummyClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedSingleUrlEnvironmentDefault
+        from seed import AsyncSeedSingleUrlEnvironmentDefault
 
         client = AsyncSeedSingleUrlEnvironmentDefault(
             token="YOUR_TOKEN",

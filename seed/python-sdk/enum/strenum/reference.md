@@ -13,7 +13,7 @@
 <dd>
 
 ```python
-from seed.client import SeedEnum
+from seed import SeedEnum
 
 client = SeedEnum(
     base_url="https://yourhost.com/path/to/api",
@@ -95,7 +95,7 @@ client.inlined_request.send(
 <dd>
 
 ```python
-from seed.client import SeedEnum
+from seed import SeedEnum
 
 client = SeedEnum(
     base_url="https://yourhost.com/path/to/api",
@@ -179,7 +179,7 @@ client.path_param.send(
 <dd>
 
 ```python
-from seed.client import SeedEnum
+from seed import SeedEnum
 
 client = SeedEnum(
     base_url="https://yourhost.com/path/to/api",
@@ -260,7 +260,7 @@ client.query_param.send(
 <dd>
 
 ```python
-from seed.client import SeedEnum
+from seed import SeedEnum
 
 client = SeedEnum(
     base_url="https://yourhost.com/path/to/api",

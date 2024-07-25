@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedLiteral"
+                    "from seed import SeedLiteral"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -52,7 +52,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedLiteral"
+                        "from seed import AsyncSeedLiteral"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -103,7 +103,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedLiteral"
+                    "from seed import SeedLiteral"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -158,7 +158,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedLiteral"
+                        "from seed import AsyncSeedLiteral"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -225,7 +225,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedLiteral"
+                    "from seed import SeedLiteral"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -247,7 +247,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedLiteral"
+                        "from seed import AsyncSeedLiteral"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -281,7 +281,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedLiteral"
+                    "from seed import SeedLiteral"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -320,7 +320,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedLiteral"
+                        "from seed import AsyncSeedLiteral"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -371,7 +371,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedLiteral"
+                    "from seed import SeedLiteral"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -410,7 +410,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedLiteral"
+                        "from seed import AsyncSeedLiteral"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",

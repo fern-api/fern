@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedCodeSamples"
+                    "from seed import SeedCodeSamples"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedCodeSamples(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -52,7 +52,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedCodeSamples"
+                        "from seed import AsyncSeedCodeSamples"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedCodeSamples(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",

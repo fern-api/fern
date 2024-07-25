@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedFileUpload"
+                    "from seed import SeedFileUpload"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -238,7 +238,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedFileUpload"
+                        "from seed import AsyncSeedFileUpload"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -475,7 +475,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedFileUpload"
+                    "from seed import SeedFileUpload"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -514,7 +514,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedFileUpload"
+                        "from seed import AsyncSeedFileUpload"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -565,7 +565,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedFileUpload"
+                    "from seed import SeedFileUpload"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -684,7 +684,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedFileUpload"
+                        "from seed import AsyncSeedFileUpload"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
