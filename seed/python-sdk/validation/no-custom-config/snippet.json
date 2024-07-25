@@ -1,6 +1,6 @@
 {
     "types": {
-        "type_:Type": "from seed.types import Type\n\nType(\n    decimal=1.1,\n    even=2,\n    name=\"rules\",\n    shape=\"SQUARE\",\n)\n"
+        "type_:Type": "from seed import Type\n\nType(\n    decimal=1.1,\n    even=2,\n    name=\"rules\",\n    shape=\"SQUARE\",\n)\n"
     },
     "endpoints": [
         {

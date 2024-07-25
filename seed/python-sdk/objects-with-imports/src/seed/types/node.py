@@ -12,8 +12,8 @@ class Node(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.commons.metadata.types import Metadata
-    from seed.types import Node
+    from seed import Node
+    from seed.commons import Metadata
 
     Node(
         id="node-8dvgfja2",

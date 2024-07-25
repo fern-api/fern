@@ -196,7 +196,7 @@
                             "delimiter": ",\n\t\t",
                             "innerTemplate": {
                                 "imports": [
-                                    "from seed.service.types import MyObject"
+                                    "from seed import MyObject"
                                 ],
                                 "isOptional": true,
                                 "templateString": "MyObject(\n\t\t\t$FERN_INPUT\n\t\t)",
@@ -421,7 +421,7 @@
                                 "delimiter": ",\n\t\t",
                                 "innerTemplate": {
                                     "imports": [
-                                        "from seed.service.types import MyObject"
+                                        "from seed import MyObject"
                                     ],
                                     "isOptional": true,
                                     "templateString": "MyObject(\n\t\t\t$FERN_INPUT\n\t\t)",

@@ -3,7 +3,7 @@
 from .type import Type
 
 """
-from seed.types import Type
+from seed import Type
 
 Type(
     id="kljasc85",

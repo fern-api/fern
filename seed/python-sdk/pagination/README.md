@@ -16,8 +16,7 @@ pip install fern_pagination
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedPagination
-from seed.users.types import WithCursor
+from seed import SeedPagination, WithCursor
 
 client = SeedPagination(
     token="YOUR_TOKEN",
@@ -42,8 +41,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedPagination
-from seed.users.types import WithCursor
+from seed import AsyncSeedPagination, WithCursor
 
 client = AsyncSeedPagination(
     token="YOUR_TOKEN",

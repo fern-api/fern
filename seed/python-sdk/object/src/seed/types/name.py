@@ -11,7 +11,7 @@ class Name(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.types import Name
+    from seed import Name
 
     Name(
         id="name-sdfg8ajk",

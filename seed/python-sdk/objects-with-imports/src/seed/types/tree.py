@@ -12,8 +12,8 @@ class Tree(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.commons.metadata.types import Metadata
-    from seed.types import Node, Tree
+    from seed import Node, Tree
+    from seed.commons import Metadata
 
     Tree(
         nodes=[

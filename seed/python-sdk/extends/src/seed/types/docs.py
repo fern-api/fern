@@ -11,7 +11,7 @@ class Docs(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.types import Docs
+    from seed import Docs
 
     Docs(
         docs="Types extend this type to include a docs property.",

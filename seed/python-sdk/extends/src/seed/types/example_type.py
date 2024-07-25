@@ -12,7 +12,7 @@ class ExampleType(Docs):
     """
     Examples
     --------
-    from seed.types import ExampleType
+    from seed import ExampleType
 
     ExampleType(
         docs="This is an example type.",

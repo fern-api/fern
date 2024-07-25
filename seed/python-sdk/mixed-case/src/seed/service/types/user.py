@@ -11,7 +11,7 @@ class User(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.service.types import User
+    from seed import User
 
     User(
         user_name="username",

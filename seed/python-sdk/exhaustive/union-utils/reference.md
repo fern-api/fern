@@ -71,7 +71,7 @@ client.endpoints.container.get_and_return_list_of_primitives(
 
 ```python
 from seed import SeedExhaustive
-from seed.types.object.types import ObjectWithRequiredField
+from seed.types import ObjectWithRequiredField
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -190,7 +190,7 @@ client.endpoints.container.get_and_return_set_of_primitives(
 
 ```python
 from seed import SeedExhaustive
-from seed.types.object.types import ObjectWithRequiredField
+from seed.types import ObjectWithRequiredField
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -309,7 +309,7 @@ client.endpoints.container.get_and_return_map_prim_to_prim(
 
 ```python
 from seed import SeedExhaustive
-from seed.types.object.types import ObjectWithRequiredField
+from seed.types import ObjectWithRequiredField
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -371,7 +371,7 @@ client.endpoints.container.get_and_return_map_of_prim_to_object(
 
 ```python
 from seed import SeedExhaustive
-from seed.types.object.types import ObjectWithRequiredField
+from seed.types import ObjectWithRequiredField
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -723,7 +723,7 @@ client.endpoints.http_methods.test_patch(
 <dl>
 <dd>
 
-**string:** `typing.Optional[str]` — This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
+**string:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -955,7 +955,7 @@ client.endpoints.object.get_and_return_with_optional_field(
 <dl>
 <dd>
 
-**string:** `typing.Optional[str]` — This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
+**string:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -1202,7 +1202,7 @@ import datetime
 import uuid
 
 from seed import SeedExhaustive
-from seed.types.object.types import ObjectWithOptionalField
+from seed.types import ObjectWithOptionalField
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -1292,7 +1292,7 @@ import datetime
 import uuid
 
 from seed import SeedExhaustive
-from seed.types.object.types import ObjectWithOptionalField
+from seed.types import ObjectWithOptionalField
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -1391,10 +1391,7 @@ import datetime
 import uuid
 
 from seed import SeedExhaustive
-from seed.types.object.types import (
-    NestedObjectWithRequiredField,
-    ObjectWithOptionalField,
-)
+from seed.types import NestedObjectWithRequiredField, ObjectWithOptionalField
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -2396,7 +2393,7 @@ client.endpoints.primitive.get_and_return_base_64(
 
 ```python
 from seed import SeedExhaustive
-from seed.types.union.types import Animal_Dog
+from seed.types import Animal_Dog
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -2475,7 +2472,7 @@ import datetime
 import uuid
 
 from seed import SeedExhaustive
-from seed.types.object.types import ObjectWithOptionalField
+from seed.types import ObjectWithOptionalField
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",

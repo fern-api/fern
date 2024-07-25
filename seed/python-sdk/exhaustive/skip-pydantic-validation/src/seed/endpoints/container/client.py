@@ -76,7 +76,7 @@ class ContainerClient:
         Examples
         --------
         from seed import SeedExhaustive
-        from seed.types.object.types import ObjectWithRequiredField
+        from seed.types import ObjectWithRequiredField
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -160,7 +160,7 @@ class ContainerClient:
         Examples
         --------
         from seed import SeedExhaustive
-        from seed.types.object.types import ObjectWithRequiredField
+        from seed.types import ObjectWithRequiredField
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -244,7 +244,7 @@ class ContainerClient:
         Examples
         --------
         from seed import SeedExhaustive
-        from seed.types.object.types import ObjectWithRequiredField
+        from seed.types import ObjectWithRequiredField
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -290,7 +290,7 @@ class ContainerClient:
         Examples
         --------
         from seed import SeedExhaustive
-        from seed.types.object.types import ObjectWithRequiredField
+        from seed.types import ObjectWithRequiredField
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -387,7 +387,7 @@ class AsyncContainerClient:
         import asyncio
 
         from seed import AsyncSeedExhaustive
-        from seed.types.object.types import ObjectWithRequiredField
+        from seed.types import ObjectWithRequiredField
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -487,7 +487,7 @@ class AsyncContainerClient:
         import asyncio
 
         from seed import AsyncSeedExhaustive
-        from seed.types.object.types import ObjectWithRequiredField
+        from seed.types import ObjectWithRequiredField
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -587,7 +587,7 @@ class AsyncContainerClient:
         import asyncio
 
         from seed import AsyncSeedExhaustive
-        from seed.types.object.types import ObjectWithRequiredField
+        from seed.types import ObjectWithRequiredField
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -641,7 +641,7 @@ class AsyncContainerClient:
         import asyncio
 
         from seed import AsyncSeedExhaustive
-        from seed.types.object.types import ObjectWithRequiredField
+        from seed.types import ObjectWithRequiredField
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",

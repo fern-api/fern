@@ -19,8 +19,7 @@ Instantiate and use the client with the following:
 import datetime
 import uuid
 
-from seed import SeedQueryParameters
-from seed.user.types import NestedUser, User
+from seed import NestedUser, SeedQueryParameters, User
 
 client = SeedQueryParameters(
     base_url="https://yourhost.com/path/to/api",
@@ -80,8 +79,7 @@ import asyncio
 import datetime
 import uuid
 
-from seed import AsyncSeedQueryParameters
-from seed.user.types import NestedUser, User
+from seed import AsyncSeedQueryParameters, NestedUser, User
 
 client = AsyncSeedQueryParameters(
     base_url="https://yourhost.com/path/to/api",
