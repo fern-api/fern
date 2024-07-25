@@ -110,7 +110,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
                 });
                 context.project.addSourceFiles(environments.generate());
             },
-            _other: () => undefined,
+            _other: () => undefined
         });
 
         const testGenerator = new TestFileGenerator(context);

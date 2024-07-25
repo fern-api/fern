@@ -50,7 +50,7 @@ export class RawClient {
         const arguments_: csharp.ClassInstantiation.Arguments = [
             {
                 name: "BaseURL",
-                assignment: baseUrl,
+                assignment: baseUrl
             },
             {
                 name: "Method",
