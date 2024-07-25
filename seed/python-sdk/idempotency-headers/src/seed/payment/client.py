@@ -48,7 +48,7 @@ class PaymentClient:
 
         Examples
         --------
-        from seed.client import SeedIdempotencyHeaders
+        from seed import SeedIdempotencyHeaders
 
         client = SeedIdempotencyHeaders(
             token="YOUR_TOKEN",
@@ -93,7 +93,7 @@ class PaymentClient:
 
         Examples
         --------
-        from seed.client import SeedIdempotencyHeaders
+        from seed import SeedIdempotencyHeaders
 
         client = SeedIdempotencyHeaders(
             token="YOUR_TOKEN",
@@ -150,7 +150,7 @@ class AsyncPaymentClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedIdempotencyHeaders
+        from seed import AsyncSeedIdempotencyHeaders
 
         client = AsyncSeedIdempotencyHeaders(
             token="YOUR_TOKEN",
@@ -203,7 +203,7 @@ class AsyncPaymentClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedIdempotencyHeaders
+        from seed import AsyncSeedIdempotencyHeaders
 
         client = AsyncSeedIdempotencyHeaders(
             token="YOUR_TOKEN",

@@ -368,6 +368,9 @@ export function buildEnumTypeDeclaration(schema: EnumSchema): ConvertedTypeDecla
     if (schema.description != null) {
         enumSchema.docs = schema.description;
     }
+    if (schema.default != null) {
+        enumSchema.default = schema.default.value;
+    }
     const uniqueEnumName = new Set<string>();
     const uniqueEnumSchema: RawSchemas.EnumSchema = {
         ...enumSchema,

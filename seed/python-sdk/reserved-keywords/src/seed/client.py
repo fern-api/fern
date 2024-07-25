@@ -28,7 +28,7 @@ class SeedNurseryApi:
 
     Examples
     --------
-    from seed.client import SeedNurseryApi
+    from seed import SeedNurseryApi
 
     client = SeedNurseryApi(
         base_url="https://yourhost.com/path/to/api",
@@ -76,7 +76,7 @@ class AsyncSeedNurseryApi:
 
     Examples
     --------
-    from seed.client import AsyncSeedNurseryApi
+    from seed import AsyncSeedNurseryApi
 
     client = AsyncSeedNurseryApi(
         base_url="https://yourhost.com/path/to/api",

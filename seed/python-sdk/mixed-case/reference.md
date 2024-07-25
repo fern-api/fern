@@ -13,7 +13,7 @@
 <dd>
 
 ```python
-from seed.client import SeedMixedCase
+from seed import SeedMixedCase
 
 client = SeedMixedCase(
     base_url="https://yourhost.com/path/to/api",
@@ -71,7 +71,7 @@ client.service.get_resource(
 ```python
 import datetime
 
-from seed.client import SeedMixedCase
+from seed import SeedMixedCase
 
 client = SeedMixedCase(
     base_url="https://yourhost.com/path/to/api",

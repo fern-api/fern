@@ -84,7 +84,7 @@ class ObjectClient:
         import datetime
         import uuid
 
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -158,7 +158,7 @@ class ObjectClient:
 
         Examples
         --------
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -200,7 +200,7 @@ class ObjectClient:
 
         Examples
         --------
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -251,7 +251,7 @@ class ObjectClient:
         import datetime
         import uuid
 
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
         from seed.types.object.types import ObjectWithOptionalField
 
         client = SeedExhaustive(
@@ -327,7 +327,7 @@ class ObjectClient:
         import datetime
         import uuid
 
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
         from seed.types.object.types import ObjectWithOptionalField
 
         client = SeedExhaustive(
@@ -398,7 +398,7 @@ class ObjectClient:
         import datetime
         import uuid
 
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
         from seed.types.object.types import (
             NestedObjectWithRequiredField,
             ObjectWithOptionalField,
@@ -518,7 +518,7 @@ class AsyncObjectClient:
         import datetime
         import uuid
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -600,7 +600,7 @@ class AsyncObjectClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -650,7 +650,7 @@ class AsyncObjectClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -708,7 +708,7 @@ class AsyncObjectClient:
         import datetime
         import uuid
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
         from seed.types.object.types import ObjectWithOptionalField
 
         client = AsyncSeedExhaustive(
@@ -791,7 +791,7 @@ class AsyncObjectClient:
         import datetime
         import uuid
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
         from seed.types.object.types import ObjectWithOptionalField
 
         client = AsyncSeedExhaustive(
@@ -869,7 +869,7 @@ class AsyncObjectClient:
         import datetime
         import uuid
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
         from seed.types.object.types import (
             NestedObjectWithRequiredField,
             ObjectWithOptionalField,

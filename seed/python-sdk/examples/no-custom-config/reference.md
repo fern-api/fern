@@ -12,7 +12,7 @@
 <dd>
 
 ```python
-from seed.client import SeedExamples
+from seed import SeedExamples
 from seed.environment import SeedExamplesEnvironment
 
 client = SeedExamples(
@@ -71,7 +71,7 @@ client.echo(
 <dd>
 
 ```python
-from seed.client import SeedExamples
+from seed import SeedExamples
 from seed.environment import SeedExamplesEnvironment
 
 client = SeedExamples(
@@ -144,7 +144,7 @@ This endpoint returns a file by its name.
 <dd>
 
 ```python
-from seed.client import SeedExamples
+from seed import SeedExamples
 from seed.environment import SeedExamplesEnvironment
 
 client = SeedExamples(
@@ -226,7 +226,7 @@ This endpoint checks the health of a resource.
 <dd>
 
 ```python
-from seed.client import SeedExamples
+from seed import SeedExamples
 from seed.environment import SeedExamplesEnvironment
 
 client = SeedExamples(
@@ -298,7 +298,7 @@ This endpoint checks the health of the service.
 <dd>
 
 ```python
-from seed.client import SeedExamples
+from seed import SeedExamples
 from seed.environment import SeedExamplesEnvironment
 
 client = SeedExamples(
@@ -347,7 +347,7 @@ client.health.service.ping()
 <dd>
 
 ```python
-from seed.client import SeedExamples
+from seed import SeedExamples
 from seed.environment import SeedExamplesEnvironment
 
 client = SeedExamples(
@@ -405,7 +405,7 @@ client.service.get_movie(
 <dd>
 
 ```python
-from seed.client import SeedExamples
+from seed import SeedExamples
 from seed.environment import SeedExamplesEnvironment
 
 client = SeedExamples(
@@ -529,7 +529,7 @@ client.service.create_movie(
 <dd>
 
 ```python
-from seed.client import SeedExamples
+from seed import SeedExamples
 from seed.environment import SeedExamplesEnvironment
 
 client = SeedExamples(
@@ -605,7 +605,7 @@ client.service.get_metadata(
 <dd>
 
 ```python
-from seed.client import SeedExamples
+from seed import SeedExamples
 from seed.environment import SeedExamplesEnvironment
 
 client = SeedExamples(

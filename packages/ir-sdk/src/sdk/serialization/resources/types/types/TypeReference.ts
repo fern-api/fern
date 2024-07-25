@@ -12,7 +12,7 @@ export const TypeReference: core.serialization.Schema<serializers.TypeReference.
             container: core.serialization.object({
                 container: core.serialization.lazy(async () => (await import("../../..")).ContainerType),
             }),
-            named: core.serialization.lazyObject(async () => (await import("../../..")).DeclaredTypeName),
+            named: core.serialization.lazyObject(async () => (await import("../../..")).NamedType),
             primitive: core.serialization.object({
                 primitive: core.serialization.lazyObject(async () => (await import("../../..")).PrimitiveType),
             }),
@@ -44,7 +44,7 @@ export declare namespace TypeReference {
         container: serializers.ContainerType.Raw;
     }
 
-    interface Named extends serializers.DeclaredTypeName.Raw {
+    interface Named extends serializers.NamedType.Raw {
         _type: "named";
     }
 

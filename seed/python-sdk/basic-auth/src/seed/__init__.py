@@ -2,6 +2,16 @@
 
 from .errors import BadRequest, UnauthorizedRequest, UnauthorizedRequestErrorBody
 from . import basic_auth, errors
+from .client import AsyncSeedBasicAuth, SeedBasicAuth
 from .version import __version__
 
-__all__ = ["BadRequest", "UnauthorizedRequest", "UnauthorizedRequestErrorBody", "__version__", "basic_auth", "errors"]
+__all__ = [
+    "AsyncSeedBasicAuth",
+    "BadRequest",
+    "SeedBasicAuth",
+    "UnauthorizedRequest",
+    "UnauthorizedRequestErrorBody",
+    "__version__",
+    "basic_auth",
+    "errors",
+]

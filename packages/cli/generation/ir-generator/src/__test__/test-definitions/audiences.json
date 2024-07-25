@@ -365,7 +365,9 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_folder-b/common:Foo"
+                                    "typeId": "type_folder-b/common:Foo",
+                                    "default": null,
+                                    "inline": null
                                 }
                             }
                         },
@@ -623,7 +625,9 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_folder-c/common:Foo"
+                                    "typeId": "type_folder-c/common:Foo",
+                                    "default": null,
+                                    "inline": null
                                 }
                             }
                         },
@@ -949,7 +953,9 @@
                                     }
                                 }
                             },
-                            "typeId": "type_commons:Imported"
+                            "typeId": "type_commons:Imported",
+                            "default": null,
+                            "inline": null
                         },
                         "availability": null,
                         "docs": null
@@ -1478,7 +1484,9 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_folder-a/service:Response"
+                                    "typeId": "type_folder-a/service:Response",
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -1858,7 +1866,9 @@
                                                                                     }
                                                                                 }
                                                                             },
-                                                                            "typeId": "type_folder-b/common:Foo"
+                                                                            "typeId": "type_folder-b/common:Foo",
+                                                                            "default": null,
+                                                                            "inline": null
                                                                         }
                                                                     }
                                                                 },
@@ -1978,7 +1988,7 @@
                                         }
                                     }
                                 },
-                                "id": "5885102356954f33273e7c5c09fa3ac3c20535c8",
+                                "id": "d6f5a1bbfbcd914fd12e306b0695a5a4c6b01565",
                                 "docs": null
                             }
                         }
@@ -2168,7 +2178,9 @@
                                         }
                                     }
                                 },
-                                "typeId": "type_foo:OptionalString"
+                                "typeId": "type_foo:OptionalString",
+                                "default": null,
+                                "inline": null
                             },
                             "allowMultiple": false,
                             "availability": null,
@@ -2419,7 +2431,9 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_foo:ImportingType"
+                                    "typeId": "type_foo:ImportingType",
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -2950,7 +2964,7 @@
                                         }
                                     }
                                 },
-                                "id": "c5add766a880dd133f815bb3e8ba7eaea078ef68",
+                                "id": "862b080e4f18a8df48db67db50d4c9c7333e0544",
                                 "docs": null
                             }
                         }

@@ -41,7 +41,7 @@ class ImdbClient:
 
         Examples
         --------
-        from seed.client import SeedApi
+        from seed import SeedApi
 
         client = SeedApi(
             token="YOUR_TOKEN",
@@ -82,7 +82,7 @@ class ImdbClient:
 
         Examples
         --------
-        from seed.client import SeedApi
+        from seed import SeedApi
 
         client = SeedApi(
             token="YOUR_TOKEN",
@@ -135,7 +135,7 @@ class AsyncImdbClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedApi
+        from seed import AsyncSeedApi
 
         client = AsyncSeedApi(
             token="YOUR_TOKEN",
@@ -184,7 +184,7 @@ class AsyncImdbClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedApi
+        from seed import AsyncSeedApi
 
         client = AsyncSeedApi(
             token="YOUR_TOKEN",

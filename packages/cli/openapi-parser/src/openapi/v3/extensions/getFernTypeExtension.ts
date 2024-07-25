@@ -122,6 +122,18 @@ export function getSchemaFromFernType({
                                 example: undefined
                             })
                         });
+                    case "UINT":
+                        return SchemaWithExample.primitive({
+                            nameOverride,
+                            generatedName,
+                            description,
+                            availability,
+                            groupName,
+                            schema: PrimitiveSchemaValueWithExample.uint({
+                                default: undefined,
+                                example: undefined
+                            })
+                        });
                     case "INTEGER":
                         return SchemaWithExample.primitive({
                             nameOverride,
@@ -136,6 +148,18 @@ export function getSchemaFromFernType({
                                 exclusiveMinimum: undefined,
                                 exclusiveMaximum: undefined,
                                 multipleOf: undefined,
+                                example: undefined
+                            })
+                        });
+                    case "UINT_64":
+                        return SchemaWithExample.primitive({
+                            nameOverride,
+                            generatedName,
+                            description,
+                            availability,
+                            groupName,
+                            schema: PrimitiveSchemaValueWithExample.uint64({
+                                default: undefined,
                                 example: undefined
                             })
                         });

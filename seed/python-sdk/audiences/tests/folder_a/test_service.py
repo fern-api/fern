@@ -2,7 +2,7 @@
 
 import typing
 
-from seed.client import AsyncSeedAudiences, SeedAudiences
+from seed import AsyncSeedAudiences, SeedAudiences
 
 from ..utilities import validate_response
 

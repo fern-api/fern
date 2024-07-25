@@ -2,7 +2,19 @@
 
 from .types import SendResponse
 from . import headers, inlined, path, query, reference
+from .client import AsyncSeedLiteral, SeedLiteral
 from .reference import SendRequest
 from .version import __version__
 
-__all__ = ["SendRequest", "SendResponse", "__version__", "headers", "inlined", "path", "query", "reference"]
+__all__ = [
+    "AsyncSeedLiteral",
+    "SeedLiteral",
+    "SendRequest",
+    "SendResponse",
+    "__version__",
+    "headers",
+    "inlined",
+    "path",
+    "query",
+    "reference",
+]

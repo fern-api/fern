@@ -5,11 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [3.0.0-rc1] - 2024-07-16
+## [3.1.0-rc0] - 2024-07-24
+
+- Improvement: The root client users interact with is now exported from the main `__init__.py`, this allows users to access the client via `from my_sdk import my_sdk_client` as opposed to `from my_sdk.client import my_sdk_client`.
+  - Note this comes with an edge-case break. In the unlikely event you have a type that conflicts in naming with the exported root client, that type model is post-fixed with "Model". e.g. a type `Merge` in an SDK exporting a client `Merge` becomes `MergeModel`.
+
+## [3.0.0-rc2] - 2024-07-24
+
+- Fix: `update_forward_refs` no longer raises errors, preserving original behavior, pre-3.x.
+
+## [3.0.0-rc1] - 2024-07-23
 
 - Fix: Sometimes mypy will error on the typing of `expected_types` within our test suite, despite them being labeled as `typing.Any`. This updates the types for tuples to `typing.Tuple[tying.Any, typing.Any]` to appease mypy.
 
-## [3.0.0-rc0] - 2024-07-16
+## [3.0.0-rc0] - 2024-07-23
 
 - Break: The generated SDK now supports Pydantic V2 outright, it no longer uses `pydantic.v1` models. This change introduces additional breaks:
   - Wrapped aliases have been removed

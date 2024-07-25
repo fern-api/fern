@@ -121,7 +121,7 @@ public final class WorkspaceRunDetails {
 
     @java.lang.Override
     public _FinalStage exception(ExceptionInfo exception) {
-      this.exception = Optional.of(exception);
+      this.exception = Optional.ofNullable(exception);
       return this;
     }
 
@@ -137,7 +137,7 @@ public final class WorkspaceRunDetails {
 
     @java.lang.Override
     public _FinalStage exceptionV2(ExceptionV2 exceptionV2) {
-      this.exceptionV2 = Optional.of(exceptionV2);
+      this.exceptionV2 = Optional.ofNullable(exceptionV2);
       return this;
     }
 

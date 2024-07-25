@@ -670,8 +670,6 @@ exports[`open api parser buzzshot docs 1`] = `
           "properties": {
             "count": "optional<integer>",
             "next": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -681,8 +679,6 @@ exports[`open api parser buzzshot docs 1`] = `
               },
             },
             "previous": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -699,8 +695,6 @@ exports[`open api parser buzzshot docs 1`] = `
           "properties": {
             "count": "optional<integer>",
             "next": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -710,8 +704,6 @@ exports[`open api parser buzzshot docs 1`] = `
               },
             },
             "previous": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -728,8 +720,6 @@ exports[`open api parser buzzshot docs 1`] = `
           "properties": {
             "count": "optional<integer>",
             "next": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -739,8 +729,6 @@ exports[`open api parser buzzshot docs 1`] = `
               },
             },
             "previous": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -757,8 +745,6 @@ exports[`open api parser buzzshot docs 1`] = `
           "properties": {
             "count": "optional<integer>",
             "next": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -768,8 +754,6 @@ exports[`open api parser buzzshot docs 1`] = `
               },
             },
             "previous": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -786,8 +770,6 @@ exports[`open api parser buzzshot docs 1`] = `
           "properties": {
             "count": "optional<integer>",
             "next": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -797,8 +779,6 @@ exports[`open api parser buzzshot docs 1`] = `
               },
             },
             "previous": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -815,8 +795,6 @@ exports[`open api parser buzzshot docs 1`] = `
           "properties": {
             "count": "optional<integer>",
             "next": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -826,8 +804,6 @@ exports[`open api parser buzzshot docs 1`] = `
               },
             },
             "previous": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -862,8 +838,6 @@ exports[`open api parser buzzshot docs 1`] = `
           "group": "optional<string>",
           "id": "optional<integer>",
           "name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -904,8 +878,6 @@ exports[`open api parser buzzshot docs 1`] = `
           "added_at": "optional<datetime>",
           "photo": "string",
           "processed_image": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "binary",
@@ -934,8 +906,6 @@ exports[`open api parser buzzshot docs 1`] = `
           "id": "optional<integer>",
           "is_event": "optional<boolean>",
           "name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -968,8 +938,6 @@ exports[`open api parser buzzshot docs 1`] = `
           "extra_fields": "list<GroupGamesItemExtraFieldsItem>",
           "id": "optional<integer>",
           "name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -1010,8 +978,6 @@ exports[`open api parser buzzshot docs 1`] = `
           "game": "optional<string>",
           "photo": "string",
           "processed_image": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "binary",
@@ -1038,8 +1004,6 @@ exports[`open api parser buzzshot docs 1`] = `
           },
           "extra_fields": "list<GroupPlayersItemExtraFieldsItem>",
           "first_name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -1049,8 +1013,6 @@ exports[`open api parser buzzshot docs 1`] = `
             },
           },
           "last_name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -1099,8 +1061,6 @@ exports[`open api parser buzzshot docs 1`] = `
           "group": "optional<string>",
           "photo": "string",
           "processed_image": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "binary",
@@ -1127,8 +1087,6 @@ exports[`open api parser buzzshot docs 1`] = `
           },
           "extra_fields": "list<PlayerExtraFieldsItem>",
           "first_name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -1139,8 +1097,6 @@ exports[`open api parser buzzshot docs 1`] = `
           },
           "id": "optional<integer>",
           "last_name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -1870,8 +1826,6 @@ exports[`open api parser buzzshot simple 1`] = `
           "properties": {
             "count": "optional<integer>",
             "next": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -1881,8 +1835,6 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             },
             "previous": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -1899,8 +1851,6 @@ exports[`open api parser buzzshot simple 1`] = `
           "properties": {
             "count": "optional<integer>",
             "next": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -1910,8 +1860,6 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             },
             "previous": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -1928,8 +1876,6 @@ exports[`open api parser buzzshot simple 1`] = `
           "properties": {
             "count": "optional<integer>",
             "next": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -1939,8 +1885,6 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             },
             "previous": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -1957,8 +1901,6 @@ exports[`open api parser buzzshot simple 1`] = `
           "properties": {
             "count": "optional<integer>",
             "next": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -1968,8 +1910,6 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             },
             "previous": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -1986,8 +1926,6 @@ exports[`open api parser buzzshot simple 1`] = `
           "properties": {
             "count": "optional<integer>",
             "next": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -1997,8 +1935,6 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             },
             "previous": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -2015,8 +1951,6 @@ exports[`open api parser buzzshot simple 1`] = `
           "properties": {
             "count": "optional<integer>",
             "next": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -2026,8 +1960,6 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             },
             "previous": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -2062,8 +1994,6 @@ exports[`open api parser buzzshot simple 1`] = `
           "group": "optional<string>",
           "id": "optional<integer>",
           "name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -2104,8 +2034,6 @@ exports[`open api parser buzzshot simple 1`] = `
           "added_at": "optional<datetime>",
           "photo": "string",
           "processed_image": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "binary",
@@ -2134,8 +2062,6 @@ exports[`open api parser buzzshot simple 1`] = `
           "id": "optional<integer>",
           "is_event": "optional<boolean>",
           "name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -2168,8 +2094,6 @@ exports[`open api parser buzzshot simple 1`] = `
           "extra_fields": "list<GroupGamesItemExtraFieldsItem>",
           "id": "optional<integer>",
           "name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -2210,8 +2134,6 @@ exports[`open api parser buzzshot simple 1`] = `
           "game": "optional<string>",
           "photo": "string",
           "processed_image": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "binary",
@@ -2238,8 +2160,6 @@ exports[`open api parser buzzshot simple 1`] = `
           },
           "extra_fields": "list<GroupPlayersItemExtraFieldsItem>",
           "first_name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -2249,8 +2169,6 @@ exports[`open api parser buzzshot simple 1`] = `
             },
           },
           "last_name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -2299,8 +2217,6 @@ exports[`open api parser buzzshot simple 1`] = `
           "group": "optional<string>",
           "photo": "string",
           "processed_image": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "binary",
@@ -2327,8 +2243,6 @@ exports[`open api parser buzzshot simple 1`] = `
           },
           "extra_fields": "list<PlayerExtraFieldsItem>",
           "first_name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -2339,8 +2253,6 @@ exports[`open api parser buzzshot simple 1`] = `
           },
           "id": "optional<integer>",
           "last_name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,

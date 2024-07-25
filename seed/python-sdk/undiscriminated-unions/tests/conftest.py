@@ -3,7 +3,7 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedUndiscriminatedUnions, SeedUndiscriminatedUnions
+from seed import AsyncSeedUndiscriminatedUnions, SeedUndiscriminatedUnions
 
 
 @pytest.fixture

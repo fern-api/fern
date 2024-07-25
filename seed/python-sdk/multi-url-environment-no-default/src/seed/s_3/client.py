@@ -31,7 +31,7 @@ class S3Client:
 
         Examples
         --------
-        from seed.client import SeedMultiUrlEnvironmentNoDefault
+        from seed import SeedMultiUrlEnvironmentNoDefault
         from seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
 
         client = SeedMultiUrlEnvironmentNoDefault(
@@ -80,7 +80,7 @@ class AsyncS3Client:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedMultiUrlEnvironmentNoDefault
+        from seed import AsyncSeedMultiUrlEnvironmentNoDefault
         from seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
 
         client = AsyncSeedMultiUrlEnvironmentNoDefault(

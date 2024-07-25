@@ -2,7 +2,7 @@
 
 import typing
 
-from seed.client import AsyncSeedBearerTokenEnvironmentVariable, SeedBearerTokenEnvironmentVariable
+from seed import AsyncSeedBearerTokenEnvironmentVariable, SeedBearerTokenEnvironmentVariable
 
 from .utilities import validate_response
 

@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Text.Json;
 using SeedAuthEnvironmentVariables;
 using SeedAuthEnvironmentVariables.Core;
 
@@ -27,7 +26,7 @@ public class ServiceClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<string>(responseBody)!;
+            return JsonUtils.Deserialize<string>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -52,7 +51,7 @@ public class ServiceClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<string>(responseBody)!;
+            return JsonUtils.Deserialize<string>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

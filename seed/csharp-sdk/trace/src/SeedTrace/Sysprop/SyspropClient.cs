@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Text.Json;
 using SeedTrace;
 using SeedTrace.Core;
 
@@ -39,7 +38,7 @@ public class SyspropClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Dictionary<Language, int>>(responseBody)!;
+            return JsonUtils.Deserialize<Dictionary<Language, int>>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

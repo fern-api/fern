@@ -80,7 +80,7 @@ public final class DoubleOptional {
     }
 
     public Builder optionalAlias(OptionalAlias optionalAlias) {
-      this.optionalAlias = Optional.of(optionalAlias);
+      this.optionalAlias = Optional.ofNullable(optionalAlias);
       return this;
     }
 

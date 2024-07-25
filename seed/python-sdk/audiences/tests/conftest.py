@@ -3,7 +3,7 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedAudiences, SeedAudiences
+from seed import AsyncSeedAudiences, SeedAudiences
 
 
 @pytest.fixture

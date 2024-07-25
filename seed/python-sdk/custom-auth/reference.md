@@ -27,7 +27,7 @@ GET request with custom auth scheme
 <dd>
 
 ```python
-from seed.client import SeedCustomAuth
+from seed import SeedCustomAuth
 
 client = SeedCustomAuth(
     custom_auth_scheme="YOUR_CUSTOM_AUTH_SCHEME",
@@ -88,7 +88,7 @@ POST request with custom auth scheme
 <dd>
 
 ```python
-from seed.client import SeedCustomAuth
+from seed import SeedCustomAuth
 
 client = SeedCustomAuth(
     custom_auth_scheme="YOUR_CUSTOM_AUTH_SCHEME",

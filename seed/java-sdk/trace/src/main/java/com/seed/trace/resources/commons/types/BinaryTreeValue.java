@@ -97,7 +97,7 @@ public final class BinaryTreeValue {
         }
 
         public Builder root(String root) {
-            this.root = Optional.of(root);
+            this.root = Optional.ofNullable(root);
             return this;
         }
 

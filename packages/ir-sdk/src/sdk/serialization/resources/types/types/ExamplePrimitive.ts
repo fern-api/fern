@@ -12,6 +12,12 @@ export const ExamplePrimitive: core.serialization.Schema<serializers.ExamplePrim
             integer: core.serialization.object({
                 integer: core.serialization.number(),
             }),
+            uint: core.serialization.object({
+                uint: core.serialization.number(),
+            }),
+            uint64: core.serialization.object({
+                uint64: core.serialization.number(),
+            }),
             double: core.serialization.object({
                 double: core.serialization.number(),
             }),
@@ -39,6 +45,10 @@ export const ExamplePrimitive: core.serialization.Schema<serializers.ExamplePrim
                 switch (value.type) {
                     case "integer":
                         return FernIr.ExamplePrimitive.integer(value.integer);
+                    case "uint":
+                        return FernIr.ExamplePrimitive.uint(value.uint);
+                    case "uint64":
+                        return FernIr.ExamplePrimitive.uint64(value.uint64);
                     case "double":
                         return FernIr.ExamplePrimitive.double(value.double);
                     case "string":
@@ -63,6 +73,8 @@ export const ExamplePrimitive: core.serialization.Schema<serializers.ExamplePrim
 export declare namespace ExamplePrimitive {
     type Raw =
         | ExamplePrimitive.Integer
+        | ExamplePrimitive.Uint
+        | ExamplePrimitive.Uint64
         | ExamplePrimitive.Double
         | ExamplePrimitive.String
         | ExamplePrimitive.Boolean
@@ -74,6 +86,16 @@ export declare namespace ExamplePrimitive {
     interface Integer {
         type: "integer";
         integer: number;
+    }
+
+    interface Uint {
+        type: "uint";
+        uint: number;
+    }
+
+    interface Uint64 {
+        type: "uint64";
+        uint64: number;
     }
 
     interface Double {

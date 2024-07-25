@@ -30,7 +30,7 @@ class PropertyBasedErrorClient:
 
         Examples
         --------
-        from seed.client import SeedErrorProperty
+        from seed import SeedErrorProperty
 
         client = SeedErrorProperty(
             base_url="https://yourhost.com/path/to/api",
@@ -75,7 +75,7 @@ class AsyncPropertyBasedErrorClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedErrorProperty
+        from seed import AsyncSeedErrorProperty
 
         client = AsyncSeedErrorProperty(
             base_url="https://yourhost.com/path/to/api",

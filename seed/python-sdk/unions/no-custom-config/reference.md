@@ -13,7 +13,7 @@
 <dd>
 
 ```python
-from seed.client import SeedUnions
+from seed import SeedUnions
 
 client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
@@ -69,8 +69,7 @@ client.union.get(
 <dd>
 
 ```python
-from seed import Shape_Circle
-from seed.client import SeedUnions
+from seed import SeedUnions, Shape_Circle
 
 client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",

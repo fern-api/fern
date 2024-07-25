@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Text.Json;
 using SeedOauthClientCredentials.Auth;
 using SeedOauthClientCredentials.Core;
 
@@ -29,7 +28,7 @@ public class AuthClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<TokenResponse>(responseBody)!;
+            return JsonUtils.Deserialize<TokenResponse>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

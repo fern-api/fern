@@ -1,6 +1,7 @@
 import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/yaml-schema";
+import { processPackageMarkers } from "../processPackageMarkers";
 import { FernWorkspace } from "../workspaces/FernWorkspace";
 import { OSSWorkspace } from "../workspaces/OSSWorkspace";
 import { ParsedFernFile } from "./FernFile";
@@ -50,7 +51,7 @@ export interface FernDefinition {
     rootApiFile: ParsedFernFile<RootApiFileSchema>;
     namedDefinitionFiles: Record<RelativeFilePath, OnDiskNamedDefinitionFile>;
     packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>>;
-    importedDefinitions: Record<RelativeFilePath, FernDefinition>;
+    importedDefinitions: Record<RelativeFilePath, processPackageMarkers.ImportedDefinition>;
 }
 
 export interface OnDiskNamedDefinitionFile extends ParsedFernFile<DefinitionFileSchema> {

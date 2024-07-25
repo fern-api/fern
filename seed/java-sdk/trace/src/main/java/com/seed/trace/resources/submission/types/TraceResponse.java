@@ -201,7 +201,7 @@ public final class TraceResponse {
 
         @java.lang.Override
         public _FinalStage stdout(String stdout) {
-            this.stdout = Optional.of(stdout);
+            this.stdout = Optional.ofNullable(stdout);
             return this;
         }
 
@@ -214,7 +214,7 @@ public final class TraceResponse {
 
         @java.lang.Override
         public _FinalStage expressionLocation(ExpressionLocation expressionLocation) {
-            this.expressionLocation = Optional.of(expressionLocation);
+            this.expressionLocation = Optional.ofNullable(expressionLocation);
             return this;
         }
 
@@ -227,7 +227,7 @@ public final class TraceResponse {
 
         @java.lang.Override
         public _FinalStage returnValue(DebugVariableValue returnValue) {
-            this.returnValue = Optional.of(returnValue);
+            this.returnValue = Optional.ofNullable(returnValue);
             return this;
         }
 

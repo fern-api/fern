@@ -34,7 +34,7 @@ class UnionClient:
 
         Examples
         --------
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
         from seed.types.union.types import Animal_Dog
 
         client = SeedExhaustive(
@@ -83,7 +83,7 @@ class AsyncUnionClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
         from seed.types.union.types import Animal_Dog
 
         client = AsyncSeedExhaustive(

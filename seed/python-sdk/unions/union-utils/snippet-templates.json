@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedUnions"
+                    "from seed import SeedUnions"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -52,7 +52,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedUnions"
+                        "from seed import AsyncSeedUnions"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -103,7 +103,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedUnions"
+                    "from seed import SeedUnions"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -126,7 +126,7 @@
                             "members": {
                                 "circle": {
                                     "imports": [
-                                        "from seed import Shape_Circle"
+                                        "from seed.union.types import Shape_Circle"
                                     ],
                                     "isOptional": true,
                                     "templateString": "request=Shape_Circle($FERN_INPUT, )",
@@ -152,7 +152,7 @@
                                 },
                                 "square": {
                                     "imports": [
-                                        "from seed import Shape_Square"
+                                        "from seed.union.types import Shape_Square"
                                     ],
                                     "isOptional": true,
                                     "templateString": "request=Shape_Square($FERN_INPUT, )",
@@ -193,7 +193,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedUnions"
+                        "from seed import AsyncSeedUnions"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -216,7 +216,7 @@
                                 "members": {
                                     "circle": {
                                         "imports": [
-                                            "from seed import Shape_Circle"
+                                            "from seed.union.types import Shape_Circle"
                                         ],
                                         "isOptional": true,
                                         "templateString": "request=Shape_Circle($FERN_INPUT, )",
@@ -242,7 +242,7 @@
                                     },
                                     "square": {
                                         "imports": [
-                                            "from seed import Shape_Square"
+                                            "from seed.union.types import Shape_Square"
                                         ],
                                         "isOptional": true,
                                         "templateString": "request=Shape_Square($FERN_INPUT, )",

@@ -13,7 +13,7 @@
 <dd>
 
 ```python
-from seed.client import SeedUnknownAsAny
+from seed import SeedUnknownAsAny
 
 client = SeedUnknownAsAny(
     base_url="https://yourhost.com/path/to/api",

@@ -89,7 +89,8 @@ export class ChangelogNodeConverter {
                 icon: undefined,
                 hidden: undefined,
                 date: item.date.toISOString(),
-                pageId: item.pageId
+                pageId: item.pageId,
+                noindex: undefined
             };
         });
 
@@ -105,7 +106,8 @@ export class ChangelogNodeConverter {
             hidden: opts.hidden,
             children: changelogYears,
             overviewPageId:
-                overviewPagePath != null ? FernNavigation.PageId(this.toRelativeFilepath(overviewPagePath)) : undefined
+                overviewPagePath != null ? FernNavigation.PageId(this.toRelativeFilepath(overviewPagePath)) : undefined,
+            noindex: undefined
         };
     }
 

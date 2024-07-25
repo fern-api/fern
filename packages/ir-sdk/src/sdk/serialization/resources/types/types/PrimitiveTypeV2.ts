@@ -9,6 +9,8 @@ import * as core from "../../../../core";
 export const PrimitiveTypeV2: core.serialization.Schema<serializers.PrimitiveTypeV2.Raw, FernIr.PrimitiveTypeV2> =
     core.serialization
         .union("type", {
+            uint: core.serialization.object({}),
+            uint64: core.serialization.object({}),
             integer: core.serialization.lazyObject(async () => (await import("../../..")).IntegerType),
             double: core.serialization.lazyObject(async () => (await import("../../..")).DoubleType),
             string: core.serialization.lazyObject(async () => (await import("../../..")).StringType),
@@ -19,6 +21,10 @@ export const PrimitiveTypeV2: core.serialization.Schema<serializers.PrimitiveTyp
         .transform<FernIr.PrimitiveTypeV2>({
             transform: (value) => {
                 switch (value.type) {
+                    case "uint":
+                        return FernIr.PrimitiveTypeV2.uint();
+                    case "uint64":
+                        return FernIr.PrimitiveTypeV2.uint64();
                     case "integer":
                         return FernIr.PrimitiveTypeV2.integer(value);
                     case "double":
@@ -40,12 +46,22 @@ export const PrimitiveTypeV2: core.serialization.Schema<serializers.PrimitiveTyp
 
 export declare namespace PrimitiveTypeV2 {
     type Raw =
+        | PrimitiveTypeV2.Uint
+        | PrimitiveTypeV2.Uint64
         | PrimitiveTypeV2.Integer
         | PrimitiveTypeV2.Double
         | PrimitiveTypeV2.String
         | PrimitiveTypeV2.Boolean
         | PrimitiveTypeV2.Long
         | PrimitiveTypeV2.BigInteger;
+
+    interface Uint {
+        type: "uint";
+    }
+
+    interface Uint64 {
+        type: "uint64";
+    }
 
     interface Integer extends serializers.IntegerType.Raw {
         type: "integer";

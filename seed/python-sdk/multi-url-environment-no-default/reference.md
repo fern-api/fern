@@ -13,7 +13,7 @@
 <dd>
 
 ```python
-from seed.client import SeedMultiUrlEnvironmentNoDefault
+from seed import SeedMultiUrlEnvironmentNoDefault
 from seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
 
 client = SeedMultiUrlEnvironmentNoDefault(
@@ -72,7 +72,7 @@ client.ec_2.boot_instance(
 <dd>
 
 ```python
-from seed.client import SeedMultiUrlEnvironmentNoDefault
+from seed import SeedMultiUrlEnvironmentNoDefault
 from seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
 
 client = SeedMultiUrlEnvironmentNoDefault(

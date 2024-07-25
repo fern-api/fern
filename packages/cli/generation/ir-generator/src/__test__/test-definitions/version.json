@@ -431,7 +431,9 @@
                                     }
                                 }
                             },
-                            "typeId": "type_user:UserId"
+                            "typeId": "type_user:UserId",
+                            "default": null,
+                            "inline": null
                         },
                         "availability": null,
                         "docs": null
@@ -671,7 +673,9 @@
                                         }
                                     }
                                 },
-                                "typeId": "type_user:UserId"
+                                "typeId": "type_user:UserId",
+                                "default": null,
+                                "inline": null
                             },
                             "location": "ENDPOINT",
                             "variable": null,
@@ -763,7 +767,9 @@
                                         }
                                     }
                                 },
-                                "typeId": "type_user:UserId"
+                                "typeId": "type_user:UserId",
+                                "default": null,
+                                "inline": null
                             },
                             "location": "ENDPOINT",
                             "variable": null,
@@ -843,7 +849,9 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_user:User"
+                                    "typeId": "type_user:User",
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -1333,7 +1341,7 @@
                                         }
                                     }
                                 },
-                                "id": "d6e58036dec3ee131ffbdda3f429178d976e60c1",
+                                "id": "82304bc4687da8b77e0cec22d014d53bdfa193d5",
                                 "docs": null
                             }
                         }

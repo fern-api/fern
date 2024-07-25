@@ -514,7 +514,9 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_dummy:StreamResponse"
+                                    "typeId": "type_dummy:StreamResponse",
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "terminator": null,
                                 "docs": null
@@ -1227,7 +1229,7 @@
                                         ]
                                     }
                                 },
-                                "id": "ee4d27282b952bad634e34386b8aa562925ce0ed",
+                                "id": "3b8c28dc1c9dda569935f9c94d5d441c89c32717",
                                 "docs": null
                             }
                         }
@@ -1504,7 +1506,9 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_dummy:StreamResponse"
+                                    "typeId": "type_dummy:StreamResponse",
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }

@@ -98,7 +98,7 @@ public final class NestedObjectWithOptionalField {
         }
 
         public Builder string(String string) {
-            this.string = Optional.of(string);
+            this.string = Optional.ofNullable(string);
             return this;
         }
 
@@ -109,7 +109,7 @@ public final class NestedObjectWithOptionalField {
         }
 
         public Builder nestedObject(ObjectWithOptionalField nestedObject) {
-            this.nestedObject = Optional.of(nestedObject);
+            this.nestedObject = Optional.ofNullable(nestedObject);
             return this;
         }
 

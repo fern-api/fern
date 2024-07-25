@@ -30,7 +30,7 @@ class Ec2Client:
 
         Examples
         --------
-        from seed.client import SeedMultiUrlEnvironmentNoDefault
+        from seed import SeedMultiUrlEnvironmentNoDefault
         from seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
 
         client = SeedMultiUrlEnvironmentNoDefault(
@@ -79,7 +79,7 @@ class AsyncEc2Client:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedMultiUrlEnvironmentNoDefault
+        from seed import AsyncSeedMultiUrlEnvironmentNoDefault
         from seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
 
         client = AsyncSeedMultiUrlEnvironmentNoDefault(

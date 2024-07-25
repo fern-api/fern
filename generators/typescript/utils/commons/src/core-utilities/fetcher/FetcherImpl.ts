@@ -10,6 +10,20 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         repoInfoForTesting: {
             path: RelativeFilePath.of("generators/typescript/utils/core-utilities/fetcher/src/fetcher")
         },
+        unitTests: {
+            fromDirectory: RelativeFilePath.of("__test__"),
+            findAndReplace: {
+                "../createRequestUrl": "../../../src/core/fetcher/createRequestUrl",
+                "../Fetcher": "../../../src/core/fetcher/Fetcher",
+                "../../runtime": "../../../src/core/runtime",
+                "../getFetchFn": "../../../src/core/fetcher/getFetchFn",
+                "../getRequestBody": "../../../src/core/fetcher/getRequestBody",
+                "../getResponseBody": "../../../src/core/fetcher/getResponseBody",
+                "../makeRequest": "../../../src/core/fetcher/makeRequest",
+                "../requestWithRetries": "../../../src/core/fetcher/requestWithRetries",
+                "../signals": "../../../src/core/fetcher/signals"
+            }
+        },
         originalPathOnDocker: AbsoluteFilePath.of("/assets/fetcher/fetcher"),
         pathInCoreUtilities: [{ nameOnDisk: "fetcher", exportDeclaration: { exportAll: true } }],
         addDependencies: (dependencyManager: DependencyManager): void => {
@@ -25,7 +39,6 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             });
         }
     };
-
     public readonly Fetcher: Fetcher["Fetcher"] = {
         Args: {
             properties: {

@@ -7,6 +7,9 @@ from fern.generator_exec.resources import GeneratorConfig
 
 from fern_python.codegen import AST
 from fern_python.codegen.filepath import Filepath
+from fern_python.generators.sdk.declaration_referencers.root_client_declaration_referencer import (
+    RootClientDeclarationReferencer,
+)
 
 from ...context import PydanticGeneratorContextImpl
 from ..core_utilities.core_utilities import CoreUtilities
@@ -24,6 +27,7 @@ class SdkGeneratorContext(ABC):
         generator_config: GeneratorConfig,
         custom_config: SDKCustomConfig,
         project_module_path: AST.ModulePath,
+        exported_root_client: RootClientDeclarationReferencer,
     ):
         self.ir = ir
         self.generator_config = generator_config
@@ -39,6 +43,7 @@ class SdkGeneratorContext(ABC):
             allow_skipping_validation=custom_config.pydantic_config.skip_validation,
             allow_leveraging_defaults=custom_config.pydantic_config.use_provided_defaults,
             use_typeddict_requests=custom_config.pydantic_config.use_typeddict_requests,
+            reserved_names={exported_root_client.get_class_name(name=None)},
         )
 
         # This should be replaced with `hasPaginatedEndpoints` in the IR, but that's on IR44, not 39, which is what Python's on

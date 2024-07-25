@@ -11,6 +11,7 @@ export async function visitRootApiFileYamlAst(
     await visitObject(contents, {
         version: noop,
         name: noop,
+        "default-url": noop,
         "display-name": noop,
         imports: noop,
         auth: noop,

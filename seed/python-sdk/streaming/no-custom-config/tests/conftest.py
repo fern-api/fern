@@ -3,7 +3,7 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedStreaming, SeedStreaming
+from seed import AsyncSeedStreaming, SeedStreaming
 
 
 @pytest.fixture

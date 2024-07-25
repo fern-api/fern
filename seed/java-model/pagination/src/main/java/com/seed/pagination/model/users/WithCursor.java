@@ -69,7 +69,7 @@ public final class WithCursor {
         }
 
         public Builder cursor(String cursor) {
-            this.cursor = Optional.of(cursor);
+            this.cursor = Optional.ofNullable(cursor);
             return this;
         }
 

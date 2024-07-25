@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Text.Json;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
 
@@ -31,7 +30,7 @@ public class ContainerClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<IEnumerable<string>>(responseBody)!;
+            return JsonUtils.Deserialize<IEnumerable<string>>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -51,7 +50,7 @@ public class ContainerClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<IEnumerable<ObjectWithRequiredField>>(responseBody)!;
+            return JsonUtils.Deserialize<IEnumerable<ObjectWithRequiredField>>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -69,7 +68,7 @@ public class ContainerClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<HashSet<string>>(responseBody)!;
+            return JsonUtils.Deserialize<HashSet<string>>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -89,7 +88,7 @@ public class ContainerClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<HashSet<ObjectWithRequiredField>>(responseBody)!;
+            return JsonUtils.Deserialize<HashSet<ObjectWithRequiredField>>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -109,7 +108,7 @@ public class ContainerClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Dictionary<string, string>>(responseBody)!;
+            return JsonUtils.Deserialize<Dictionary<string, string>>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -129,7 +128,7 @@ public class ContainerClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Dictionary<string, ObjectWithRequiredField>>(
+            return JsonUtils.Deserialize<Dictionary<string, ObjectWithRequiredField>>(
                 responseBody
             )!;
         }
@@ -151,7 +150,7 @@ public class ContainerClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ObjectWithRequiredField?>(responseBody)!;
+            return JsonUtils.Deserialize<ObjectWithRequiredField?>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

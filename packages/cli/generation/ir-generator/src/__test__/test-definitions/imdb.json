@@ -308,7 +308,9 @@
                                     }
                                 }
                             },
-                            "typeId": "type_imdb:MovieId"
+                            "typeId": "type_imdb:MovieId",
+                            "default": null,
+                            "inline": null
                         },
                         "availability": null,
                         "docs": null
@@ -706,7 +708,9 @@
                         }
                     }
                 },
-                "typeId": "type_imdb:MovieId"
+                "typeId": "type_imdb:MovieId",
+                "default": null,
+                "inline": null
             },
             "examples": [],
             "docs": null
@@ -872,7 +876,9 @@
                                     }
                                 }
                             },
-                            "typeId": "type_imdb:CreateMovieRequest"
+                            "typeId": "type_imdb:CreateMovieRequest",
+                            "default": null,
+                            "inline": null
                         },
                         "contentType": null,
                         "docs": null
@@ -946,7 +952,9 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_imdb:CreateMovieRequest"
+                                    "typeId": "type_imdb:CreateMovieRequest",
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "contentType": null,
                                 "docs": null
@@ -1042,7 +1050,9 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_imdb:MovieId"
+                                    "typeId": "type_imdb:MovieId",
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -1434,7 +1444,7 @@
                                         }
                                     }
                                 },
-                                "id": "c0cde9279200355f2240130fd4ac5c540573f01c",
+                                "id": "9c48a68c861fcde768d5bd494182ee29b48dc650",
                                 "docs": null
                             }
                         }
@@ -1572,7 +1582,9 @@
                                         }
                                     }
                                 },
-                                "typeId": "type_imdb:MovieId"
+                                "typeId": "type_imdb:MovieId",
+                                "default": null,
+                                "inline": null
                             },
                             "location": "ENDPOINT",
                             "variable": null,
@@ -1664,7 +1676,9 @@
                                         }
                                     }
                                 },
-                                "typeId": "type_imdb:MovieId"
+                                "typeId": "type_imdb:MovieId",
+                                "default": null,
+                                "inline": null
                             },
                             "location": "ENDPOINT",
                             "variable": null,
@@ -1744,7 +1758,9 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_imdb:Movie"
+                                    "typeId": "type_imdb:Movie",
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -2403,7 +2419,7 @@
                                         }
                                     }
                                 },
-                                "id": "10387f77dc210f8ea6d8435eb715997c6295461f",
+                                "id": "797f312a44dfc70f3f993752150383635706680d",
                                 "docs": null
                             }
                         },
@@ -2595,7 +2611,7 @@
                                     },
                                     "body": null
                                 },
-                                "id": "b22532d94638ba9730a97919d3859f25a43c9787",
+                                "id": "915c547f98b62efcd86f1cb60419f2ab5c70b220",
                                 "docs": null
                             }
                         }

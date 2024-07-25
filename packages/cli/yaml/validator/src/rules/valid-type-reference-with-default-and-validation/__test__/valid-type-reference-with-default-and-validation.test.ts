@@ -28,6 +28,12 @@ describe("valid-default-and-validation-type-reference", () => {
 
         expect(violations).toEqual([
             {
+                message: "Default value 'BOOLEAN' is not a valid enum value",
+                nodePath: ["types", "Primitive"],
+                relativeFilepath: "__package__.yml",
+                severity: "error"
+            },
+            {
                 message: 'Validation rules \'{"min":26.2,"max":26.2}\' are not compatible with the boolean type',
                 nodePath: ["types", "Object", "properties", "enabled", "type"],
                 relativeFilepath: "__package__.yml",
@@ -72,6 +78,12 @@ describe("valid-default-and-validation-type-reference", () => {
             {
                 message: "Default value 'hello' is not a valid bigint",
                 nodePath: ["types", "Object", "properties", "bigIntegerWithInvalidDefault", "type"],
+                relativeFilepath: "__package__.yml",
+                severity: "error"
+            },
+            {
+                message: "Default value 'INVALID' is not a valid enum value",
+                nodePath: ["types", "Object", "properties", "enumWithInvalidDefault", "type"],
                 relativeFilepath: "__package__.yml",
                 severity: "error"
             }

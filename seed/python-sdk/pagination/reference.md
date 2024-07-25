@@ -13,7 +13,7 @@
 <dd>
 
 ```python
-from seed.client import SeedPagination
+from seed import SeedPagination
 
 client = SeedPagination(
     token="YOUR_TOKEN",
@@ -105,8 +105,8 @@ the next page of results.
 <dd>
 
 ```python
-from seed import WithCursor
-from seed.client import SeedPagination
+from seed import SeedPagination
+from seed.users.types import WithCursor
 
 client = SeedPagination(
     token="YOUR_TOKEN",
@@ -174,7 +174,7 @@ in order to fetch the next page of results.
 <dd>
 
 ```python
-from seed.client import SeedPagination
+from seed import SeedPagination
 
 client = SeedPagination(
     token="YOUR_TOKEN",
@@ -266,8 +266,8 @@ the next page of results.
 <dd>
 
 ```python
-from seed import WithPage
-from seed.client import SeedPagination
+from seed import SeedPagination
+from seed.users.types import WithPage
 
 client = SeedPagination(
     token="YOUR_TOKEN",
@@ -335,7 +335,7 @@ in order to fetch the next page of results.
 <dd>
 
 ```python
-from seed.client import SeedPagination
+from seed import SeedPagination
 
 client = SeedPagination(
     token="YOUR_TOKEN",
@@ -421,7 +421,7 @@ paginated endpoint.
 ```python
 import uuid
 
-from seed.client import SeedPagination
+from seed import SeedPagination
 
 client = SeedPagination(
     token="YOUR_TOKEN",
@@ -485,7 +485,7 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from seed.client import SeedPagination
+from seed import SeedPagination
 
 client = SeedPagination(
     token="YOUR_TOKEN",
@@ -550,7 +550,7 @@ the next page of results.
 <dd>
 
 ```python
-from seed.client import SeedPagination
+from seed import SeedPagination
 
 client = SeedPagination(
     token="YOUR_TOKEN",

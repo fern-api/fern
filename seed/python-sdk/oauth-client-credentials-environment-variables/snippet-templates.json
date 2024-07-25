@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedOauthClientCredentialsEnvironmentVariables"
+                    "from seed import SeedOauthClientCredentialsEnvironmentVariables"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedOauthClientCredentialsEnvironmentVariables(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)",
@@ -84,7 +84,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedOauthClientCredentialsEnvironmentVariables"
+                        "from seed import AsyncSeedOauthClientCredentialsEnvironmentVariables"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedOauthClientCredentialsEnvironmentVariables(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)",
@@ -167,7 +167,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedOauthClientCredentialsEnvironmentVariables"
+                    "from seed import SeedOauthClientCredentialsEnvironmentVariables"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedOauthClientCredentialsEnvironmentVariables(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)",
@@ -254,7 +254,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedOauthClientCredentialsEnvironmentVariables"
+                        "from seed import AsyncSeedOauthClientCredentialsEnvironmentVariables"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedOauthClientCredentialsEnvironmentVariables(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)",

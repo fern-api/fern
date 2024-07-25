@@ -382,7 +382,9 @@
                                     }
                                 }
                             },
-                            "typeId": "type_user:User"
+                            "typeId": "type_user:User",
+                            "default": null,
+                            "inline": null
                         },
                         "availability": null,
                         "docs": null
@@ -754,7 +756,9 @@
                                         }
                                     }
                                 },
-                                "typeId": "type_user:User"
+                                "typeId": "type_user:User",
+                                "default": null,
+                                "inline": null
                             },
                             "allowMultiple": false,
                             "availability": null,
@@ -851,7 +855,9 @@
                                                 }
                                             }
                                         },
-                                        "typeId": "type_user:User"
+                                        "typeId": "type_user:User",
+                                        "default": null,
+                                        "inline": null
                                     }
                                 }
                             },
@@ -1085,7 +1091,9 @@
                                         }
                                     }
                                 },
-                                "typeId": "type_user:NestedUser"
+                                "typeId": "type_user:NestedUser",
+                                "default": null,
+                                "inline": null
                             },
                             "allowMultiple": false,
                             "availability": null,
@@ -1182,7 +1190,9 @@
                                                 }
                                             }
                                         },
-                                        "typeId": "type_user:User"
+                                        "typeId": "type_user:User",
+                                        "default": null,
+                                        "inline": null
                                     }
                                 }
                             },
@@ -1277,7 +1287,9 @@
                                         }
                                     }
                                 },
-                                "typeId": "type_user:User"
+                                "typeId": "type_user:User",
+                                "default": null,
+                                "inline": null
                             },
                             "allowMultiple": true,
                             "availability": null,
@@ -1456,7 +1468,9 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_user:User"
+                                    "typeId": "type_user:User",
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -2379,7 +2393,9 @@
                                                                 }
                                                             }
                                                         },
-                                                        "typeId": "type_user:User"
+                                                        "typeId": "type_user:User",
+                                                        "default": null,
+                                                        "inline": null
                                                     }
                                                 }
                                             },
@@ -3588,7 +3604,9 @@
                                                                 }
                                                             }
                                                         },
-                                                        "typeId": "type_user:User"
+                                                        "typeId": "type_user:User",
+                                                        "default": null,
+                                                        "inline": null
                                                     }
                                                 }
                                             },
@@ -4283,7 +4301,7 @@
                                         }
                                     }
                                 },
-                                "id": "4088bfb97e077bb7208c0d7c473d6c7879c6e09e",
+                                "id": "9f38eff9dea914492621301f98e565b99573b6d7",
                                 "docs": null
                             }
                         }

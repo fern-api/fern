@@ -125,10 +125,10 @@ export function convertHttpOperation({
 
 function isEndpointAuthed(operation: OpenAPIV3.OperationObject, document: OpenAPIV3.Document): boolean {
     if (operation.security != null) {
-        return Object.keys(operation.security).length >= 0;
+        return Object.keys(operation.security).length > 0;
     }
     if (document.security != null) {
-        return Object.keys(document.security).length >= 0;
+        return Object.keys(document.security).length > 0;
     }
     return false;
 }

@@ -2,7 +2,7 @@ import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { Audiences } from "../commons";
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
-import { DocsInstance, VersionAvailability, ExperimentalConfig } from "./schemas";
+import { DocsInstance, ExperimentalConfig, VersionAvailability } from "./schemas";
 
 export interface ParsedDocsConfiguration {
     instances: DocsInstance[];
@@ -191,6 +191,7 @@ export declare namespace DocsNavigationItem {
         absolutePath: AbsoluteFilePath;
         slug: string | undefined;
         hidden: boolean | undefined;
+        noindex: boolean | undefined;
     }
 
     export interface Section {

@@ -13,6 +13,8 @@ export const PrimitiveSchemaValue: core.serialization.Schema<
     .union("type", {
         int: core.serialization.lazyObject(async () => (await import("../../..")).IntSchema),
         int64: core.serialization.lazyObject(async () => (await import("../../..")).LongSchema),
+        uint: core.serialization.object({}),
+        uint64: core.serialization.object({}),
         float: core.serialization.object({}),
         double: core.serialization.lazyObject(async () => (await import("../../..")).DoubleSchema),
         string: core.serialization.lazyObject(async () => (await import("../../..")).StringSchema),
@@ -28,6 +30,10 @@ export const PrimitiveSchemaValue: core.serialization.Schema<
                     return FernOpenapiIr.PrimitiveSchemaValue.int(value);
                 case "int64":
                     return FernOpenapiIr.PrimitiveSchemaValue.int64(value);
+                case "uint":
+                    return FernOpenapiIr.PrimitiveSchemaValue.uint();
+                case "uint64":
+                    return FernOpenapiIr.PrimitiveSchemaValue.uint64();
                 case "float":
                     return FernOpenapiIr.PrimitiveSchemaValue.float();
                 case "double":
@@ -53,6 +59,8 @@ export declare namespace PrimitiveSchemaValue {
     type Raw =
         | PrimitiveSchemaValue.Int
         | PrimitiveSchemaValue.Int64
+        | PrimitiveSchemaValue.Uint
+        | PrimitiveSchemaValue.Uint64
         | PrimitiveSchemaValue.Float
         | PrimitiveSchemaValue.Double
         | PrimitiveSchemaValue.String
@@ -67,6 +75,14 @@ export declare namespace PrimitiveSchemaValue {
 
     interface Int64 extends serializers.LongSchema.Raw {
         type: "int64";
+    }
+
+    interface Uint {
+        type: "uint";
+    }
+
+    interface Uint64 {
+        type: "uint64";
     }
 
     interface Float {

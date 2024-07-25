@@ -13,7 +13,7 @@
 <dd>
 
 ```python
-from seed.client import SeedIdempotencyHeaders
+from seed import SeedIdempotencyHeaders
 
 client = SeedIdempotencyHeaders(
     token="YOUR_TOKEN",
@@ -95,7 +95,7 @@ client.payment.create(
 <dd>
 
 ```python
-from seed.client import SeedIdempotencyHeaders
+from seed import SeedIdempotencyHeaders
 
 client = SeedIdempotencyHeaders(
     token="YOUR_TOKEN",

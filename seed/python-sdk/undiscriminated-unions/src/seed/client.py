@@ -28,7 +28,7 @@ class SeedUndiscriminatedUnions:
 
     Examples
     --------
-    from seed.client import SeedUndiscriminatedUnions
+    from seed import SeedUndiscriminatedUnions
 
     client = SeedUndiscriminatedUnions(
         base_url="https://yourhost.com/path/to/api",
@@ -76,7 +76,7 @@ class AsyncSeedUndiscriminatedUnions:
 
     Examples
     --------
-    from seed.client import AsyncSeedUndiscriminatedUnions
+    from seed import AsyncSeedUndiscriminatedUnions
 
     client = AsyncSeedUndiscriminatedUnions(
         base_url="https://yourhost.com/path/to/api",

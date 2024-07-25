@@ -86,7 +86,7 @@ public final class Foo {
         }
 
         public Builder foo(com.seed.audiences.resources.folderc.common.types.Foo foo) {
-            this.foo = Optional.of(foo);
+            this.foo = Optional.ofNullable(foo);
             return this;
         }
 

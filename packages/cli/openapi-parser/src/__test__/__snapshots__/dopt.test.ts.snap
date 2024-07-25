@@ -37,6 +37,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "nameOverride": null,
                 "schema": {
                   "availability": null,
+                  "default": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyCode",
                   "groupName": null,
@@ -808,6 +809,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "nameOverride": null,
               "schema": {
                 "availability": null,
+                "default": null,
                 "description": null,
                 "generatedName": "FindBlocksResponseType",
                 "groupName": null,
@@ -1172,6 +1174,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "nameOverride": null,
                 "schema": {
                   "availability": null,
+                  "default": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyCode",
                   "groupName": null,
@@ -1605,6 +1608,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "nameOverride": null,
                 "schema": {
                   "availability": null,
+                  "default": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyCode",
                   "groupName": null,
@@ -2721,6 +2725,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "nameOverride": null,
                         "schema": {
                           "availability": null,
+                          "default": null,
                           "description": null,
                           "generatedName": "GetFlowResponseBlocksItemType",
                           "groupName": null,
@@ -3091,6 +3096,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "nameOverride": null,
                 "schema": {
                   "availability": null,
+                  "default": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyCode",
                   "groupName": null,
@@ -3433,6 +3439,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "name": "intent",
           "schema": {
             "availability": null,
+            "default": null,
             "description": null,
             "generatedName": "FlowIntentRequestIntent",
             "groupName": null,
@@ -3609,6 +3616,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": null,
             "generatedName": "BadRequestErrorResponseBodyCode",
             "groupName": null,
@@ -3971,6 +3979,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": null,
             "generatedName": "FlowIntentRequestParamsIntent",
             "groupName": null,

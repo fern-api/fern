@@ -13,7 +13,7 @@
 <dd>
 
 ```python
-from seed.client import SeedMultiUrlEnvironment
+from seed import SeedMultiUrlEnvironment
 
 client = SeedMultiUrlEnvironment(
     token="YOUR_TOKEN",
@@ -70,7 +70,7 @@ client.ec_2.boot_instance(
 <dd>
 
 ```python
-from seed.client import SeedMultiUrlEnvironment
+from seed import SeedMultiUrlEnvironment
 
 client = SeedMultiUrlEnvironment(
     token="YOUR_TOKEN",

@@ -112,6 +112,8 @@ export function buildPrimitiveTypeReference(primitiveSchema: PrimitiveSchema): R
     const typeReference = primitiveSchema.schema._visit({
         int: () => "integer",
         int64: () => "long",
+        uint: () => "uint",
+        uint64: () => "uint64",
         float: () => "double",
         double: () => "double",
         string: () => "string",
@@ -455,12 +457,19 @@ export function buildOptionalTypeReference({
     if (schema.description == null && itemDocs == null && itemDefault == null && itemValidation == null) {
         return type;
     }
-    return {
-        type,
-        docs: schema.description ?? itemDocs,
-        default: itemDefault,
-        validation: itemValidation
+    const result: RawSchemas.TypeReferenceWithDocsSchema = {
+        type
     };
+    if (schema.description != null || itemDocs != null) {
+        result.docs = schema.description ?? itemDocs;
+    }
+    if (itemDefault != null) {
+        result.default = itemDefault;
+    }
+    if (itemValidation != null) {
+        result.validation = itemValidation;
+    }
+    return result;
 }
 
 export function buildUnknownTypeReference(): RawSchemas.TypeReferenceWithDocsSchema {
@@ -508,13 +517,19 @@ export function buildEnumTypeReference({
         schema: enumTypeDeclaration.schema
     });
     const prefixedType = getPrefixedType({ type: name, fileContainingReference, declarationFile, context });
-    if (schema.description == null) {
+    if (schema.description == null && schema.default == null) {
         return prefixedType;
     }
-    return {
-        type: prefixedType,
-        docs: schema.description
+    const result: RawSchemas.TypeReferenceWithDocsSchema = {
+        type: prefixedType
     };
+    if (schema.description != null) {
+        result.docs = schema.description;
+    }
+    if (schema.default != null) {
+        result.default = schema.default.value;
+    }
+    return result;
 }
 
 export function buildObjectTypeReference({

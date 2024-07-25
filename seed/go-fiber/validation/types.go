@@ -12,6 +12,7 @@ type CreateRequest struct {
 	Decimal float64 `json:"decimal" url:"-"`
 	Even    int     `json:"even" url:"-"`
 	Name    string  `json:"name" url:"-"`
+	Shape   Shape   `json:"shape" url:"-"`
 }
 
 type GetRequest struct {
@@ -26,6 +27,31 @@ type LargeInteger = int
 
 type Sentence = string
 
+type Shape string
+
+const (
+	ShapeSquare   Shape = "SQUARE"
+	ShapeCircle   Shape = "CIRCLE"
+	ShapeTriangle Shape = "TRIANGLE"
+)
+
+func NewShapeFromString(s string) (Shape, error) {
+	switch s {
+	case "SQUARE":
+		return ShapeSquare, nil
+	case "CIRCLE":
+		return ShapeCircle, nil
+	case "TRIANGLE":
+		return ShapeTriangle, nil
+	}
+	var t Shape
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (s Shape) Ptr() *Shape {
+	return &s
+}
+
 type SmallInteger = int
 
 // Defines properties with default values and validation rules.
@@ -33,6 +59,7 @@ type Type struct {
 	Decimal float64 `json:"decimal" url:"decimal"`
 	Even    int     `json:"even" url:"even"`
 	Name    string  `json:"name" url:"name"`
+	Shape   Shape   `json:"shape" url:"shape"`
 
 	extraProperties map[string]interface{}
 }

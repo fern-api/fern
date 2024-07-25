@@ -12,7 +12,7 @@ class Json(Docs):
     """
     Examples
     --------
-    from seed import Json
+    from seed.types import Json
 
     Json(
         docs="Types extend this type to include a docs and json property.",

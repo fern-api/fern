@@ -34,7 +34,7 @@ class BasicAuthClient:
 
         Examples
         --------
-        from seed.client import SeedBasicAuthEnvironmentVariables
+        from seed import SeedBasicAuthEnvironmentVariables
 
         client = SeedBasicAuthEnvironmentVariables(
             username="YOUR_USERNAME",
@@ -77,7 +77,7 @@ class BasicAuthClient:
 
         Examples
         --------
-        from seed.client import SeedBasicAuthEnvironmentVariables
+        from seed import SeedBasicAuthEnvironmentVariables
 
         client = SeedBasicAuthEnvironmentVariables(
             username="YOUR_USERNAME",
@@ -127,7 +127,7 @@ class AsyncBasicAuthClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedBasicAuthEnvironmentVariables
+        from seed import AsyncSeedBasicAuthEnvironmentVariables
 
         client = AsyncSeedBasicAuthEnvironmentVariables(
             username="YOUR_USERNAME",
@@ -178,7 +178,7 @@ class AsyncBasicAuthClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedBasicAuthEnvironmentVariables
+        from seed import AsyncSeedBasicAuthEnvironmentVariables
 
         client = AsyncSeedBasicAuthEnvironmentVariables(
             username="YOUR_USERNAME",

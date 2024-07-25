@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedUndiscriminatedUnions"
+                    "from seed import SeedUndiscriminatedUnions"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -35,7 +35,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedUndiscriminatedUnions"
+                        "from seed import AsyncSeedUndiscriminatedUnions"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -69,7 +69,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedUndiscriminatedUnions"
+                    "from seed import SeedUndiscriminatedUnions"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -91,7 +91,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedUndiscriminatedUnions"
+                        "from seed import AsyncSeedUndiscriminatedUnions"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",

@@ -824,6 +824,22 @@ export class ExampleGenerator {
                     shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.integer(exInt))
                 };
             }
+            case "UINT": {
+                const exUint = example != null && typeof example === "number" ? example : Examples.UINT;
+                return {
+                    jsonExample: exUint,
+                    // TODO: Update ExamplePrimitive to support uint and uint64.
+                    shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.integer(exUint))
+                };
+            }
+            case "UINT_64": {
+                const exUint = example != null && typeof example === "number" ? example : Examples.UINT64;
+                return {
+                    jsonExample: exUint,
+                    // TODO: Update ExamplePrimitive to support uint and uint64.
+                    shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.integer(exUint))
+                };
+            }
             case "DOUBLE": {
                 const exDouble = example != null && typeof example === "number" ? example : Examples.DOUBLE;
                 return {

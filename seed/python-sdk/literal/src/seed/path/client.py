@@ -27,7 +27,7 @@ class PathClient:
 
         Examples
         --------
-        from seed.client import SeedLiteral
+        from seed import SeedLiteral
 
         client = SeedLiteral(
             base_url="https://yourhost.com/path/to/api",
@@ -65,7 +65,7 @@ class AsyncPathClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedLiteral
+        from seed import AsyncSeedLiteral
 
         client = AsyncSeedLiteral(
             base_url="https://yourhost.com/path/to/api",

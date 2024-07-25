@@ -12,6 +12,7 @@ export function convertEnum({
     fernEnum,
     enumVarNames,
     enumValues,
+    _default,
     description,
     availability,
     wrapAsNullable,
@@ -23,6 +24,7 @@ export function convertEnum({
     fernEnum: FernEnumConfig | undefined;
     enumVarNames: string[] | undefined;
     enumValues: string[];
+    _default: string | undefined;
     description: string | undefined;
     availability: Availability | undefined;
     wrapAsNullable: boolean;
@@ -60,11 +62,13 @@ export function convertEnum({
             }
         };
     });
+    const _defaultEnumValue = _default != null ? values.find((value) => value.value === _default) : undefined;
     return wrapEnum({
         wrapAsNullable,
         nameOverride,
         generatedName,
         values,
+        _default: _defaultEnumValue,
         description,
         availability,
         groupName
@@ -76,6 +80,7 @@ export function wrapEnum({
     nameOverride,
     generatedName,
     values,
+    _default,
     description,
     availability,
     groupName
@@ -84,6 +89,7 @@ export function wrapEnum({
     nameOverride: string | undefined;
     generatedName: string;
     values: EnumValue[];
+    _default: EnumValue | undefined;
     description: string | undefined;
     availability: Availability | undefined;
     groupName: SdkGroupName | undefined;
@@ -97,6 +103,7 @@ export function wrapEnum({
                 generatedName,
                 values,
                 description,
+                default: _default,
                 availability: undefined,
                 example: undefined,
                 groupName
@@ -112,6 +119,7 @@ export function wrapEnum({
         values,
         description,
         availability,
+        default: _default,
         example: undefined,
         groupName
     });

@@ -36,7 +36,7 @@ class AuthClient:
 
         Examples
         --------
-        from seed.client import SeedOauthClientCredentialsDefault
+        from seed import SeedOauthClientCredentialsDefault
 
         client = SeedOauthClientCredentialsDefault(
             base_url="https://yourhost.com/path/to/api",
@@ -89,7 +89,7 @@ class AsyncAuthClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedOauthClientCredentialsDefault
+        from seed import AsyncSeedOauthClientCredentialsDefault
 
         client = AsyncSeedOauthClientCredentialsDefault(
             base_url="https://yourhost.com/path/to/api",

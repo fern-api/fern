@@ -29,7 +29,7 @@ class SeedCustomAuth:
 
     Examples
     --------
-    from seed.client import SeedCustomAuth
+    from seed import SeedCustomAuth
 
     client = SeedCustomAuth(
         custom_auth_scheme="YOUR_CUSTOM_AUTH_SCHEME",
@@ -81,7 +81,7 @@ class AsyncSeedCustomAuth:
 
     Examples
     --------
-    from seed.client import AsyncSeedCustomAuth
+    from seed import AsyncSeedCustomAuth
 
     client = AsyncSeedCustomAuth(
         custom_auth_scheme="YOUR_CUSTOM_AUTH_SCHEME",

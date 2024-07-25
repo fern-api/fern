@@ -35,7 +35,7 @@ class HttpMethodsClient:
 
         Examples
         --------
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -73,7 +73,7 @@ class HttpMethodsClient:
 
         Examples
         --------
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -113,7 +113,7 @@ class HttpMethodsClient:
 
         Examples
         --------
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -202,7 +202,7 @@ class HttpMethodsClient:
         import datetime
         import uuid
 
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -275,7 +275,7 @@ class HttpMethodsClient:
 
         Examples
         --------
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -318,7 +318,7 @@ class AsyncHttpMethodsClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -364,7 +364,7 @@ class AsyncHttpMethodsClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -412,7 +412,7 @@ class AsyncHttpMethodsClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -508,7 +508,7 @@ class AsyncHttpMethodsClient:
         import datetime
         import uuid
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -589,7 +589,7 @@ class AsyncHttpMethodsClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",

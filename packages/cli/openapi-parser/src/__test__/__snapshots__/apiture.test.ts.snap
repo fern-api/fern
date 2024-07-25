@@ -429,6 +429,7 @@ This error response may have one of the following \`type\` values:
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "AccountsListAccountsRequestLocation",
               "groupName": null,
@@ -9037,6 +9038,7 @@ This error response may have one of the following \`type\` values:
     },
     "accountAllowsFilter": {
       "availability": null,
+      "default": null,
       "description": "Values for the \`?allows=\` filter in [\`listAccounts\`](#op-listAccounts).
 
 <strong><code>accountAllowsFilter</code></strong> strings may have one of the following
@@ -9843,6 +9845,7 @@ This error response may have one of the following \`type\` values:
     },
     "accountLocation": {
       "availability": null,
+      "default": null,
       "description": "Indicates where an account is held:
   * \`internal\` accounts at the current financial institution;
   * \`external\` accounts at another financial institution;
@@ -10222,6 +10225,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
     },
     "achAccountRisk": {
       "availability": null,
+      "default": null,
       "description": "Describes the risk level of a payment batch's settlement account.
 
 <strong><code>achAccountRisk</code></strong> strings may have one of the following
@@ -10312,6 +10316,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
     },
     "achSecCode": {
       "availability": null,
+      "default": null,
       "description": "The ACH transfer type.
 
 <strong><code>achSecCode</code></strong> strings may have one of the following
@@ -11166,6 +11171,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
     },
     "challengeFactorType": {
       "availability": null,
+      "default": null,
       "description": "The name of challenge factor.
 
 <strong><code>challengeFactorType</code></strong> strings may have one of the following
@@ -11476,6 +11482,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
     },
     "cutoffTimeType": {
       "availability": null,
+      "default": null,
       "description": "Indicates the type of a cutoff time.
 
 <strong><code>cutoffTimeType</code></strong> strings may have one of the following
@@ -11798,6 +11805,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
     },
     "externalAccountVerificationMethod": {
       "availability": null,
+      "default": null,
       "description": "The method used to verify the customer has access to the external account.
 
 <strong><code>externalAccountVerificationMethod</code></strong> strings may have one of the following
@@ -12101,6 +12109,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
     },
     "institutionLocatorType": {
       "availability": null,
+      "default": null,
       "description": "Indicates the type of the institution \`locator\`.
 
 <strong><code>institutionLocatorType</code></strong> strings may have one of the following
@@ -12975,6 +12984,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
     },
     "productType": {
       "availability": null,
+      "default": null,
       "description": "The type (or category) of bank account.
 
 <strong><code>productType</code></strong> strings may have one of the following
@@ -13540,6 +13550,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
     },
     "transactionCategoryType": {
       "availability": null,
+      "default": null,
       "description": "Classifies a transaction category as applying to either debit or credit transactions.
 
 <strong><code>transactionCategoryType</code></strong> strings may have one of the following
@@ -14204,6 +14215,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
     },
     "transactionSubType": {
       "availability": null,
+      "default": null,
       "description": "If the type is \`debit\` or \`credit\`, the subtype conveys further transaction type details.
 
 <strong><code>transactionSubType</code></strong> strings may have one of the following
@@ -14260,6 +14272,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
     },
     "transactionType": {
       "availability": null,
+      "default": null,
       "description": "Distinguishes between balance, debit, or credit transactions.
 
 <strong><code>transactionType</code></strong> strings may have one of the following
@@ -14680,6 +14693,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
     },
     "transferDateRestrictionType": {
       "availability": null,
+      "default": null,
       "description": "Indicates why a transfer date is restricted.
 
 <strong><code>transferDateRestrictionType</code></strong> strings may have one of the following
@@ -15012,6 +15026,7 @@ The response may include dates prior to requested the start date, as that is use
     },
     "transferFrequency": {
       "availability": null,
+      "default": null,
       "description": "For recurring transfers, the interval at which the money movement recurs.
 
 <strong><code>transferFrequency</code></strong> strings may have one of the following
@@ -15536,6 +15551,7 @@ The response may include dates prior to requested the start date, as that is use
     },
     "transferRecurrenceType": {
       "availability": null,
+      "default": null,
       "description": "Describes whether the transfer amount in the transfer varies or is fixed when the transfer recurs. This is ignored if the transfer frequency is \`once\`.
 
 <strong><code>transferRecurrenceType</code></strong> strings may have one of the following
@@ -15771,6 +15787,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
     },
     "transferScheduleDirection": {
       "availability": null,
+      "default": null,
       "description": "Provides the direction in which a transfer flows.
 
 <strong><code>transferScheduleDirection</code></strong> strings may have one of the following
@@ -15952,6 +15969,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
     },
     "transferState": {
       "availability": null,
+      "default": null,
       "description": "The state of a transfer resource.
 
 <strong><code>transferState</code></strong> strings may have one of the following
@@ -16093,6 +16111,19 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
     },
     "transferTypeForDateRestrictions": {
       "availability": null,
+      "default": {
+        "availability": null,
+        "casing": {
+          "camel": null,
+          "pascal": null,
+          "screamingSnake": null,
+          "snake": null,
+        },
+        "description": null,
+        "generatedName": "internal",
+        "nameOverride": null,
+        "value": "internal",
+      },
       "description": "Indicates the type of transfer. This determines what business rules and adjustments to make to the date restrictions.
 
 <strong><code>transferTypeForDateRestrictions</code></strong> strings may have one of the following

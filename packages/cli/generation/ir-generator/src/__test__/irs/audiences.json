@@ -557,7 +557,9 @@
                                     }
                                 }
                             },
-                            "typeId": "type_imdb:CreateMovieRequest"
+                            "typeId": "type_imdb:CreateMovieRequest",
+                            "default": null,
+                            "inline": null
                         },
                         "contentType": null,
                         "docs": null
@@ -631,7 +633,9 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_imdb:CreateMovieRequest"
+                                    "typeId": "type_imdb:CreateMovieRequest",
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "contentType": null,
                                 "docs": null
@@ -727,7 +731,9 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_imdb:MovieId"
+                                    "typeId": "type_imdb:MovieId",
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -1119,7 +1125,7 @@
                                         }
                                     }
                                 },
-                                "id": "c0cde9279200355f2240130fd4ac5c540573f01c",
+                                "id": "9c48a68c861fcde768d5bd494182ee29b48dc650",
                                 "docs": null
                             }
                         }
@@ -1265,7 +1271,9 @@
                                 }
                             }
                         },
-                        "typeId": "type_webhooks:User"
+                        "typeId": "type_webhooks:User",
+                        "default": null,
+                        "inline": null
                     },
                     "docs": null
                 },

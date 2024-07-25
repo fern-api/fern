@@ -33,7 +33,7 @@ class SeedSingleUrlEnvironmentNoDefault:
 
     Examples
     --------
-    from seed.client import SeedSingleUrlEnvironmentNoDefault
+    from seed import SeedSingleUrlEnvironmentNoDefault
     from seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment
 
     client = SeedSingleUrlEnvironmentNoDefault(
@@ -90,7 +90,7 @@ class AsyncSeedSingleUrlEnvironmentNoDefault:
 
     Examples
     --------
-    from seed.client import AsyncSeedSingleUrlEnvironmentNoDefault
+    from seed import AsyncSeedSingleUrlEnvironmentNoDefault
     from seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment
 
     client = AsyncSeedSingleUrlEnvironmentNoDefault(

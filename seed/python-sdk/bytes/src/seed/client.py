@@ -28,7 +28,7 @@ class SeedBytes:
 
     Examples
     --------
-    from seed.client import SeedBytes
+    from seed import SeedBytes
 
     client = SeedBytes(
         base_url="https://yourhost.com/path/to/api",
@@ -76,7 +76,7 @@ class AsyncSeedBytes:
 
     Examples
     --------
-    from seed.client import AsyncSeedBytes
+    from seed import AsyncSeedBytes
 
     client = AsyncSeedBytes(
         base_url="https://yourhost.com/path/to/api",

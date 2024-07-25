@@ -19,8 +19,8 @@ Instantiate and use the client with the following:
 import datetime
 import uuid
 
-from seed import NestedUser, User
-from seed.client import SeedQueryParameters
+from seed import SeedQueryParameters
+from seed.user.types import NestedUser, User
 
 client = SeedQueryParameters(
     base_url="https://yourhost.com/path/to/api",
@@ -80,8 +80,8 @@ import asyncio
 import datetime
 import uuid
 
-from seed import NestedUser, User
-from seed.client import AsyncSeedQueryParameters
+from seed import AsyncSeedQueryParameters
+from seed.user.types import NestedUser, User
 
 client = AsyncSeedQueryParameters(
     base_url="https://yourhost.com/path/to/api",
@@ -181,7 +181,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 ```python
 
-from seed.client import SeedQueryParameters
+from seed import SeedQueryParameters
 
 client = SeedQueryParameters(..., { timeout=20.0 }, )
 
@@ -198,7 +198,7 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 ```python
 import httpx
-from seed.client import SeedQueryParameters
+from seed import SeedQueryParameters
 
 client = SeedQueryParameters(
     ...,

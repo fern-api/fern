@@ -27,7 +27,7 @@ class SeedExtends:
 
     Examples
     --------
-    from seed.client import SeedExtends
+    from seed import SeedExtends
 
     client = SeedExtends(
         base_url="https://yourhost.com/path/to/api",
@@ -74,7 +74,7 @@ class AsyncSeedExtends:
 
     Examples
     --------
-    from seed.client import AsyncSeedExtends
+    from seed import AsyncSeedExtends
 
     client = AsyncSeedExtends(
         base_url="https://yourhost.com/path/to/api",

@@ -106,7 +106,7 @@ public final class GetGeneratedTestCaseFileRequest {
 
     @java.lang.Override
     public _FinalStage template(TestCaseTemplate template) {
-      this.template = Optional.of(template);
+      this.template = Optional.ofNullable(template);
       return this;
     }
 

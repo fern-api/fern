@@ -172,12 +172,7 @@ export class EndpointGenerator {
 
                     // Deserialize the response as json
                     writer.write("return ");
-                    writer.writeNode(
-                        csharp.classReference({
-                            name: "JsonSerializer",
-                            namespace: "System.Text.Json"
-                        })
-                    );
+                    writer.writeNode(this.context.getJsonUtilsClassReference());
                     writer.write(".Deserialize<");
                     writer.writeNode(astType);
                     // todo: Maybe remove ! below and handle potential null. Requires introspecting type to know if its

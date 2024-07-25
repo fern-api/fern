@@ -32,6 +32,13 @@ types:
       minLength: 4
       maxLength: 256
 
+  Primitive:
+    default: STRING
+    enum:
+      - INTEGER
+      - DOUBLE
+      - STRING
+
   Type:
     docs: |
       Defines properties with default values and validation rules.
@@ -62,6 +69,9 @@ types:
           maxLength: 10
           pattern: "^[a-z]+$"
           format: custom
+      primitive:
+        type: Primitive
+        default: DOUBLE
     examples:
       - name: First
         value:
@@ -106,6 +116,9 @@ service:
                 maxLength: 10
                 pattern: "^[a-z]+$"
                 format: custom
+            primitive:
+              type: Primitive
+              default: INTEGER
       response: Type
 
     get:

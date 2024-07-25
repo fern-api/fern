@@ -340,7 +340,9 @@
                         }
                     }
                 },
-                "typeId": "type_errors:UnauthorizedRequestErrorBody"
+                "typeId": "type_errors:UnauthorizedRequestErrorBody",
+                "default": null,
+                "inline": null
             },
             "examples": [],
             "docs": null

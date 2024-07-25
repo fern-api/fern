@@ -117,7 +117,7 @@ public final class SendLiteralsInlinedRequest {
 
     @java.lang.Override
     public _FinalStage temperature(Double temperature) {
-      this.temperature = Optional.of(temperature);
+      this.temperature = Optional.ofNullable(temperature);
       return this;
     }
 

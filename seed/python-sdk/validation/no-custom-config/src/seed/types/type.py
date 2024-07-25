@@ -5,6 +5,7 @@ import typing
 import pydantic
 
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .shape import Shape
 
 
 class Type(UniversalBaseModel):
@@ -13,18 +14,20 @@ class Type(UniversalBaseModel):
 
     Examples
     --------
-    from seed import Type
+    from seed.types import Type
 
     Type(
         decimal=1.1,
         even=2,
         name="rules",
+        shape="SQUARE",
     )
     """
 
     decimal: float
     even: int
     name: str
+    shape: Shape
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

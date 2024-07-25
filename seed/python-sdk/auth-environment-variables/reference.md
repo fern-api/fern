@@ -27,7 +27,7 @@ GET request with custom api key
 <dd>
 
 ```python
-from seed.client import SeedAuthEnvironmentVariables
+from seed import SeedAuthEnvironmentVariables
 
 client = SeedAuthEnvironmentVariables(
     x_another_header="YOUR_X_ANOTHER_HEADER",
@@ -89,7 +89,7 @@ GET request with custom api key
 <dd>
 
 ```python
-from seed.client import SeedAuthEnvironmentVariables
+from seed import SeedAuthEnvironmentVariables
 
 client = SeedAuthEnvironmentVariables(
     x_another_header="YOUR_X_ANOTHER_HEADER",

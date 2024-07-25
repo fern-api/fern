@@ -17,6 +17,10 @@ class ModuleExport(pydantic.BaseModel):
     from_: str = pydantic.Field(alias="from")
     imports: List[str]
 
+    class Config:
+        populate_by_name = True
+        allow_population_by_field_name = True
+
 
 @dataclass
 class ModuleInfo:
