@@ -25,7 +25,12 @@ public class V2Client
     public async Task TestAsync()
     {
         await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = "" }
+            new RawClient.JsonApiRequest
+            {
+                BaseURL = _client.Options.BaseURL,
+                Method = HttpMethod.Get,
+                Path = ""
+            }
         );
     }
 }

@@ -20,7 +20,12 @@ public class CustomAuthClient
     public async Task<bool> GetWithCustomAuthAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = "custom-auth" }
+            new RawClient.JsonApiRequest
+            {
+                BaseURL = _client.Options.BaseURL,
+                Method = HttpMethod.Get,
+                Path = "custom-auth"
+            }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -38,6 +43,7 @@ public class CustomAuthClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.BaseURL,
                 Method = HttpMethod.Post,
                 Path = "custom-auth",
                 Body = request

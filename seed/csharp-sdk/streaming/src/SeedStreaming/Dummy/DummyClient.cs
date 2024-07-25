@@ -20,6 +20,7 @@ public class DummyClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.BaseURL,
                 Method = HttpMethod.Post,
                 Path = "generate-stream",
                 Body = request
@@ -32,6 +33,7 @@ public class DummyClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.BaseURL,
                 Method = HttpMethod.Post,
                 Path = "generate",
                 Body = request

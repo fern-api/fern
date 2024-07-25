@@ -20,6 +20,7 @@ public class S3Client
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.Environment.S3,
                 Method = HttpMethod.Post,
                 Path = "/s3/presigned-url",
                 Body = request

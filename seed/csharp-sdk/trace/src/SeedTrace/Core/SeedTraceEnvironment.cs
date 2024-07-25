@@ -1,6 +1,6 @@
 namespace SeedTrace.Core;
 
-public class Environments
+public class SeedTraceEnvironment
 {
     public static string PROD = "https://api.trace.come";
 }

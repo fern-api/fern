@@ -20,6 +20,7 @@ public class EnumClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.BaseURL,
                 Method = HttpMethod.Post,
                 Path = "/enum",
                 Body = request

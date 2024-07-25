@@ -20,6 +20,7 @@ public class ReferenceClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.BaseURL,
                 Method = HttpMethod.Post,
                 Path = "reference",
                 Body = request

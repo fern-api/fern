@@ -23,6 +23,7 @@ public partial class SeedValidationClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.BaseURL,
                 Method = HttpMethod.Post,
                 Path = "/create",
                 Body = request
@@ -47,6 +48,7 @@ public partial class SeedValidationClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.BaseURL,
                 Method = HttpMethod.Get,
                 Path = "",
                 Query = _query

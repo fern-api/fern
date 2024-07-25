@@ -26,6 +26,7 @@ public partial class SeedPackageYmlClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.BaseURL,
                 Method = HttpMethod.Post,
                 Path = $"/{id}/",
                 Body = request

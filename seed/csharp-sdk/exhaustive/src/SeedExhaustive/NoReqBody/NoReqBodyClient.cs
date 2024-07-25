@@ -18,7 +18,12 @@ public class NoReqBodyClient
     public async Task<ObjectWithOptionalField> GetWithNoRequestBodyAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = "/no-req-body" }
+            new RawClient.JsonApiRequest
+            {
+                BaseURL = _client.Options.BaseURL,
+                Method = HttpMethod.Get,
+                Path = "/no-req-body"
+            }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -31,7 +36,12 @@ public class NoReqBodyClient
     public async Task<string> PostWithNoRequestBodyAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest { Method = HttpMethod.Post, Path = "/no-req-body" }
+            new RawClient.JsonApiRequest
+            {
+                BaseURL = _client.Options.BaseURL,
+                Method = HttpMethod.Post,
+                Path = "/no-req-body"
+            }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

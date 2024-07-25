@@ -24,6 +24,7 @@ public class ReqWithHeadersClient
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.BaseURL,
                 Method = HttpMethod.Post,
                 Path = "/test-headers/custom-header",
                 Body = request.Body,

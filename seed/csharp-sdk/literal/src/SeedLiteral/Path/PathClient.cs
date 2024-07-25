@@ -18,7 +18,12 @@ public class PathClient
     public async Task<SendResponse> SendAsync(string id)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest { Method = HttpMethod.Post, Path = $"path/{id}" }
+            new RawClient.JsonApiRequest
+            {
+                BaseURL = _client.Options.BaseURL,
+                Method = HttpMethod.Post,
+                Path = $"path/{id}"
+            }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

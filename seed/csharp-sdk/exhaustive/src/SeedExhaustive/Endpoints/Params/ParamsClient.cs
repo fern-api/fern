@@ -21,7 +21,12 @@ public class ParamsClient
     public async Task<string> GetWithPathAsync(string param)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = $"/params/path/{param}" }
+            new RawClient.JsonApiRequest
+            {
+                BaseURL = _client.Options.BaseURL,
+                Method = HttpMethod.Get,
+                Path = $"/params/path/{param}"
+            }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -44,6 +49,7 @@ public class ParamsClient
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.BaseURL,
                 Method = HttpMethod.Get,
                 Path = "/params",
                 Query = _query
@@ -64,6 +70,7 @@ public class ParamsClient
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.BaseURL,
                 Method = HttpMethod.Get,
                 Path = "/params",
                 Query = _query
@@ -80,6 +87,7 @@ public class ParamsClient
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.BaseURL,
                 Method = HttpMethod.Get,
                 Path = $"/params/path-query/{param}",
                 Query = _query
@@ -95,6 +103,7 @@ public class ParamsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.BaseURL,
                 Method = HttpMethod.Put,
                 Path = $"/params/path/{param}",
                 Body = request

@@ -48,6 +48,7 @@ public class UserClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.BaseURL,
                 Method = HttpMethod.Get,
                 Path = "/user",
                 Query = _query

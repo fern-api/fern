@@ -23,6 +23,7 @@ public class ProblemClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.BaseURL,
                 Method = HttpMethod.Get,
                 Path = "/problems-v2/lightweight-problem-info"
             }
@@ -43,6 +44,7 @@ public class ProblemClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.BaseURL,
                 Method = HttpMethod.Get,
                 Path = "/problems-v2/problem-info"
             }
@@ -63,6 +65,7 @@ public class ProblemClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.BaseURL,
                 Method = HttpMethod.Get,
                 Path = $"/problems-v2/problem-info/{problemId}"
             }
@@ -83,6 +86,7 @@ public class ProblemClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.BaseURL,
                 Method = HttpMethod.Get,
                 Path = $"/problems-v2/problem-info/{problemId}/version/{problemVersion}"
             }

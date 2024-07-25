@@ -17,7 +17,12 @@ public class ServiceClient
     public async Task EndpointAsync()
     {
         await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = "/service" }
+            new RawClient.JsonApiRequest
+            {
+                BaseURL = _client.Options.BaseURL,
+                Method = HttpMethod.Get,
+                Path = "/service"
+            }
         );
     }
 
@@ -26,6 +31,7 @@ public class ServiceClient
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.BaseURL,
                 Method = HttpMethod.Post,
                 Path = "/service",
                 Body = request

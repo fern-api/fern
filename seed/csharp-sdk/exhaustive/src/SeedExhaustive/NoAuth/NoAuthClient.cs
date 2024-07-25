@@ -22,6 +22,7 @@ public class NoAuthClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.BaseURL,
                 Method = HttpMethod.Post,
                 Path = "/no-auth",
                 Body = request

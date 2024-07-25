@@ -18,7 +18,12 @@ public class HttpMethodsClient
     public async Task<string> TestGetAsync(string id)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = $"/http-methods/{id}" }
+            new RawClient.JsonApiRequest
+            {
+                BaseURL = _client.Options.BaseURL,
+                Method = HttpMethod.Get,
+                Path = $"/http-methods/{id}"
+            }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -33,6 +38,7 @@ public class HttpMethodsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.BaseURL,
                 Method = HttpMethod.Post,
                 Path = "/http-methods",
                 Body = request
@@ -54,6 +60,7 @@ public class HttpMethodsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.BaseURL,
                 Method = HttpMethod.Put,
                 Path = $"/http-methods/{id}",
                 Body = request
@@ -75,6 +82,7 @@ public class HttpMethodsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.BaseURL,
                 Method = HttpMethodExtensions.Patch,
                 Path = $"/http-methods/{id}",
                 Body = request
@@ -93,6 +101,7 @@ public class HttpMethodsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.BaseURL,
                 Method = HttpMethod.Delete,
                 Path = $"/http-methods/{id}"
             }

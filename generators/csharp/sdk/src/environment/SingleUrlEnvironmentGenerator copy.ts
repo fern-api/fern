@@ -4,17 +4,21 @@ import { SingleBaseUrlEnvironments } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
-export declare namespace EnvironmentGenerator {
+export declare namespace SingleUrlEnvironmentGenerator {
     interface Args {
         context: SdkGeneratorContext;
         singleUrlEnvironments: SingleBaseUrlEnvironments;
     }
 }
 
-export class EnvironmentGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+export class SingleUrlEnvironmentGenerator extends FileGenerator<
+    CSharpFile,
+    SdkCustomConfigSchema,
+    SdkGeneratorContext
+> {
     private singleUrlEnvironments: SingleBaseUrlEnvironments;
 
-    constructor({ context, singleUrlEnvironments }: EnvironmentGenerator.Args) {
+    constructor({ context, singleUrlEnvironments }: SingleUrlEnvironmentGenerator.Args) {
         super(context);
         this.singleUrlEnvironments = singleUrlEnvironments;
     }

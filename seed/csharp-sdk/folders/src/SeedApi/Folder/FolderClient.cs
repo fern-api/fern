@@ -21,7 +21,12 @@ public class FolderClient
     public async Task FooAsync()
     {
         await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest { Method = HttpMethod.Post, Path = "" }
+            new RawClient.JsonApiRequest
+            {
+                BaseURL = _client.Options.BaseURL,
+                Method = HttpMethod.Post,
+                Path = ""
+            }
         );
     }
 }

@@ -17,7 +17,12 @@ public class ServiceClient
     public async Task DownloadFileAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest { Method = HttpMethod.Post, Path = "" }
+            new RawClient.JsonApiRequest
+            {
+                BaseURL = _client.Options.BaseURL,
+                Method = HttpMethod.Post,
+                Path = ""
+            }
         );
     }
 }

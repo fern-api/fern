@@ -23,6 +23,7 @@ public class ProblemClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.BaseURL,
                 Method = HttpMethod.Post,
                 Path = "/problem-crud/create",
                 Body = request
@@ -47,6 +48,7 @@ public class ProblemClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.BaseURL,
                 Method = HttpMethod.Post,
                 Path = $"/problem-crud/update/{problemId}",
                 Body = request
@@ -68,6 +70,7 @@ public class ProblemClient
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.BaseURL,
                 Method = HttpMethod.Delete,
                 Path = $"/problem-crud/delete/{problemId}"
             }
@@ -84,6 +87,7 @@ public class ProblemClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.BaseURL,
                 Method = HttpMethod.Post,
                 Path = "/problem-crud/default-starter-files",
                 Body = request

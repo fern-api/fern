@@ -24,6 +24,7 @@ public class ServiceClient
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseURL = _client.Options.BaseURL,
                 Method = HttpMethod.Post,
                 Path = $"/test/{pathParam}/{serviceParam}/{endpointParam}/{resourceParam}"
             }
