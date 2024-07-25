@@ -10,7 +10,7 @@ import Foundation
 public struct Failure: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case status
+        case status = "status"
     }
 
     public let status: string :: literal TODO

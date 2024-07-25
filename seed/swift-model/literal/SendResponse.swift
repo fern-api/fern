@@ -10,9 +10,9 @@ import Foundation
 public struct SendResponse: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case message
-        case status
-        case success
+        case message = "message"
+        case status = "status"
+        case success = "success"
     }
 
     public let message: String

@@ -10,8 +10,8 @@ import Foundation
 public struct MyResponse: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case id
-        case name
+        case id = "id"
+        case name = "name"
     }
 
     public let id: String

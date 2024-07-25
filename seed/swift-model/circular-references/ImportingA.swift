@@ -10,7 +10,7 @@ import Foundation
 public struct ImportingA: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case a
+        case a = "a"
     }
 
     public let a: A?

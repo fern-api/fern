@@ -10,8 +10,8 @@ import Foundation
 public struct EchoRequest: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case name
-        case size
+        case name = "name"
+        case size = "size"
     }
 
     public let name: String

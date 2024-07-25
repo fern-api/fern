@@ -10,7 +10,7 @@ import Foundation
 public struct Square: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case length
+        case length = "length"
     }
 
     public let length: Double

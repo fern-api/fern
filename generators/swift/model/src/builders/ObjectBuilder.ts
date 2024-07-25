@@ -66,7 +66,7 @@ export default class ObjectBuilder extends CodeBuilder<SwiftFile> {
     return properties.map(property => {
       return {
         name: property.name.name.camelCase.safeName,
-        key: `"${property.name.name.originalName}"`,
+        value: `"${property.name.wireValue}"`,
       };
     });
   }

@@ -10,7 +10,7 @@ import Foundation
 public struct NestedType: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case name
+        case name = "name"
     }
 
     public let name: String

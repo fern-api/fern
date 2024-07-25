@@ -10,8 +10,8 @@ import Foundation
 public struct Record: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case foo
-        case _3D
+        case foo = "foo"
+        case _3D = "3d"
     }
 
     public let foo: primitive :: map TODO
