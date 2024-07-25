@@ -53,7 +53,7 @@ public class RawClient(
             if (jsonRequest.Body != null)
             {
                 httpRequest.Content = new StringContent(
-                    JsonUtils.Serialize(jsonRequest.Body, serializerOptions),
+                    JsonUtils.Serialize(jsonRequest.Body),
                     Encoding.UTF8,
                     "application/json"
                 );
