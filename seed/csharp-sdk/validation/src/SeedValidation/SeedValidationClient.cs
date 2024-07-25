@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using SeedValidation;
 using SeedValidation.Core;
@@ -14,6 +15,7 @@ public partial class SeedValidationClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
     }

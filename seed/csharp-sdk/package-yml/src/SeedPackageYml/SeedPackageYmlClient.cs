@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using SeedPackageYml;
 using SeedPackageYml.Core;
@@ -14,6 +15,7 @@ public partial class SeedPackageYmlClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Service = new ServiceClient(_client);

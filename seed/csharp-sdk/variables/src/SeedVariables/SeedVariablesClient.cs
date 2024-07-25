@@ -1,3 +1,4 @@
+using System;
 using SeedVariables;
 using SeedVariables.Core;
 
@@ -13,6 +14,7 @@ public partial class SeedVariablesClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Service = new ServiceClient(_client);

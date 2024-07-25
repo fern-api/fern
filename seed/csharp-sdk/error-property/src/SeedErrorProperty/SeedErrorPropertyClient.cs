@@ -1,3 +1,4 @@
+using System;
 using SeedErrorProperty;
 using SeedErrorProperty.Core;
 
@@ -13,6 +14,7 @@ public partial class SeedErrorPropertyClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Errors = new ErrorsClient(_client);

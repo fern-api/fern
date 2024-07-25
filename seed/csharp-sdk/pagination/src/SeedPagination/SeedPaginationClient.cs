@@ -1,3 +1,4 @@
+using System;
 using SeedPagination;
 using SeedPagination.Core;
 
@@ -13,6 +14,7 @@ public partial class SeedPaginationClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Users = new UsersClient(_client);

@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using SeedApi.A;
 using SeedApi.Core;
@@ -15,6 +16,7 @@ public partial class SeedApiClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         A = new AClient(_client);

@@ -1,3 +1,4 @@
+using System;
 using SeedMultiUrlEnvironment;
 using SeedMultiUrlEnvironment.Core;
 
@@ -17,6 +18,7 @@ public partial class SeedMultiUrlEnvironmentClient
                 { "Authorization", $"Bearer {token}" },
                 { "X-Fern-Language", "C#" },
             },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Ec2 = new Ec2Client(_client);

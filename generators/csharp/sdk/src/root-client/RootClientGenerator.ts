@@ -181,6 +181,18 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             valueType: csharp.Types.string(),
             entries: headerEntries
         });
+
+        const headerSupplierDictionary = csharp.dictionary({
+            keyType: csharp.Types.string(),
+            valueType: csharp.Types.reference(
+                csharp.classReference({
+                    name: "Func",
+                    namespace: "System",
+                    generics: [csharp.Types.string()]
+                })
+            ),
+            entries: []
+        });
         return {
             access: "public",
             parameters,
@@ -204,6 +216,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                         arguments_: [
                             csharp.codeblock((writer) => {
                                 writer.writeNode(headerDictionary);
+                            }),
+                            csharp.codeblock((writer) => {
+                                writer.writeNode(headerSupplierDictionary);
                             }),
                             csharp.codeblock("clientOptions ?? new ClientOptions()")
                         ]

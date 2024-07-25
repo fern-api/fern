@@ -1,3 +1,4 @@
+using System;
 using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Endpoints;
@@ -15,6 +16,7 @@ public partial class SeedExhaustiveClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Endpoints = new EndpointsClient(_client);
