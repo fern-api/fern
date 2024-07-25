@@ -36,7 +36,7 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<
                     access: "public",
                     name: environment.name.screamingSnakeCase.safeName,
                     static_: true,
-                    type: csharp.Type.string(),
+                    type: csharp.Type.reference(this.context.getEnvironmentsClassReference()),
                     initializer: csharp.codeblock((writer) => {
                         writer.writeNode(
                             new csharp.ClassInstantiation({
