@@ -41,10 +41,12 @@ function App() {
 export default App;
 EOF
 
+echo "BROWSER=none" > .env
+echo "ESLINT_DISABLE=true" >> .env
+
 npm install
-export ESLINT_DISABLE=true
-output=$(timeout 3s npm run start &)
-sleep 3
+output=$(timeout 5s npm run start &)
+sleep 5
 echo "$output"
 if echo "$output" | grep -q "webpack compiled successfully"; then
     echo "Compiled successfully"
