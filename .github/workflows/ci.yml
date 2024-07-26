@@ -195,3 +195,18 @@ jobs:
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
+
+  cloudflare-startup-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install
+        run: yarn install
+
+      - name: Run cloudflare startup test
+        run: ./scripts/cloudflare-startup-test.sh
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code
