@@ -22,7 +22,7 @@ jobs:
           node-version: '14'
 
       - name: Install dependencies
-        run: npm install
+        run: yarn install
 
       - name: Check versions
         run: |
