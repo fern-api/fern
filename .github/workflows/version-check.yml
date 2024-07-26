@@ -1,4 +1,4 @@
-name: Version Check
+name: generators
 
 on:
   push:
