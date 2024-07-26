@@ -1,4 +1,7 @@
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedApi.Core;
+using SeedApi.Test.Utils;
 
 namespace SeedApi.Test.Wire;
 
@@ -23,7 +26,6 @@ public class SampleTest
     [Test]
     public void Test_Get_Endpoint1()
     {
-        Console.Write("testing");
         const string json = """
                             {
                               "title": "Inception",
@@ -31,9 +33,11 @@ public class SampleTest
                             }
                             """;
 
+        const string mockResponse = "\"MovieId123\"";
         GlobalTestSetup.Server
             .Given(
                 WireMock.RequestBuilders.Request.Create()
+                    .WithHeader("X-Fern-Language", "C#")
                     .WithPath("/movies/create-movie")
                     .UsingPost()
                     .WithBody(json)
@@ -41,7 +45,7 @@ public class SampleTest
             .RespondWith(
                 WireMock.ResponseBuilders.Response.Create()
                     .WithStatusCode(200)
-                    .WithBody("\"MovieId123\"")
+                    .WithBody(mockResponse)
             );
 
         var response = _client.Imdb.CreateMovieAsync(new CreateMovieRequest
@@ -49,32 +53,35 @@ public class SampleTest
             Rating = 8.8, Title = "Inception"
         }).Result;
 
-        // Assert.That(responseString, Is.EqualTo("expected content 1"));
+        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
     }
 
     [Test]
     public void Test_Get_Endpoint2()
     {
-        const string expectedResponse = """
+        const string mockResponse = """
                                         {
-                                          "id": "12345",
+                                          "id": "idid",
                                           "title": "Inception",
                                           "rating": 4.8
                                         }
                                         """;
+        
         GlobalTestSetup.Server
             .Given(
                 WireMock.RequestBuilders.Request.Create()
-                    .WithPath("/movie/idid")
+                    .WithHeader("X-Fern-Language", "C#")
+                    .WithPath("/movies/idid")
                     .UsingGet()
             )
             .RespondWith(
                 WireMock.ResponseBuilders.Response.Create()
                     .WithStatusCode(200)
-                    .WithBody(expectedResponse)
+                    .WithBody(mockResponse)
             );
 
-        var response = _client.Imdb.GetMovieAsync("12345").Result;
-        // Assert.That(responseString, Is.EqualTo("expected content 1"));
+        var response = _client.Imdb.GetMovieAsync("idid").Result;
+        
+        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
     }
 }

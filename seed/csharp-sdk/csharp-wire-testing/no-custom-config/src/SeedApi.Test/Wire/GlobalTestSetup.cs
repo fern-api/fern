@@ -19,8 +19,7 @@ namespace SeedApi.Test.Wire;
             // Start the WireMock server
             Server = WireMockServer.Start(new WireMockServerSettings
             {
-                Logger = new CustomLogger(),
-                // Logger = new WireMockConsoleLogger(),
+                Logger = new WireMockConsoleLogger(),
             });
             
             // Initialize the Client
