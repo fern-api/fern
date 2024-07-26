@@ -1,6 +1,7 @@
+cd ..
 mkdir cloudflare-test
 cd cloudflare-test
-cp -r ../seed/ts-sdk/imdb/no-custom-config ./imdb
+cp -r ../fern/seed/ts-sdk/imdb/no-custom-config ./imdb
 cd imdb
 npm install
 npm run build
@@ -34,18 +35,21 @@ export interface Env {
 
 import { SeedApiClient } from "../dist";
 
+new SeedApiClient({ environment: "production" })
+console.log("SeedApiClient import was successful");
+
 export default {
     async fetch(
         request: Request,
         env: Env,
         ctx: ExecutionContext
     ): Promise<Response> {
-        console.log(new SeedApiClient());
-        console.log("SeedApiClient import was successful");
         return new Response("Hello World!");
     },
 };' > src/index.ts
-timeout 5s output=$(wrangler dev)
+output=$(timeout 1s wrangler dev &)
+sleep 1
+echo "$output"
 if echo "$output" | grep -q "SeedApiClient import was successful"; then
     echo "Compiled successfully"
 else
@@ -53,4 +57,5 @@ else
     exit 1
 fi
 cd ../..
-rm -rf cloudflare-test
+pwd
+# rm -rf cloudflare-test
