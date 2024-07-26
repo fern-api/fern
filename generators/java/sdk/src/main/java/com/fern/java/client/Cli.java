@@ -101,6 +101,9 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 JavaSdkCustomConfig.builder()
                         .wrappedAliases(customConfig.wrappedAliases())
                         .clientClassName(customConfig.clientClassName())
+                        .baseApiExceptionClassName(customConfig.baseApiExceptionClassName())
+                        .baseExceptionClassName(customConfig.baseExceptionClassName())
+                        .customDependencies(customConfig.customDependencies())
                         .build(),
                 clientPoetClassNameFactory,
                 new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes());
