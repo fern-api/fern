@@ -180,6 +180,7 @@ scripts:
       - cp -r /yarn-cache-template ./cache
       - yarn install --cache-folder ./cache
       - yarn build
+      - yarn test
 allowedFailures:
   - response-property
   - bytes

@@ -1,4 +1,4 @@
-import { NodePre18StreamWrapper } from "../../../src/core/fetcher/stream-wrappers/NodePre18StreamWrapper";
+import { NodePre18StreamWrapper } from "../../../../src/core/fetcher/stream-wrappers/NodePre18StreamWrapper";
 
 describe("NodePre18StreamWrapper", () => {
     it("should set encoding to utf-8", async () => {
