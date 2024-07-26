@@ -68,7 +68,7 @@ class ImportsManager:
 
         # write all the imports that must be un-type checked (e.g. for circular references)
         if len(self._if_type_checking_imports.items()) > 0:
-            writer.write_line("if ")
+            writer.write("if ")
             writer.write_node(AST.TypeHint.type_checking())
             writer.write_line(":")
             with writer.indent():

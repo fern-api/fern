@@ -45,7 +45,7 @@ class UndiscriminatedUnionGenerator(AbstractTypeGenerator):
         )
 
         if self._maybe_requests_source_file is not None:
-            self._source_file.add_declaration(
+            self._maybe_requests_source_file.add_declaration(
                 AST.TypeAliasDeclaration(
                     type_hint=AST.TypeHint.union(
                         *(
