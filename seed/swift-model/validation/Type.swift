@@ -13,10 +13,12 @@ public struct Type: Codable {
         case decimal = "decimal"
         case even = "even"
         case name = "name"
+        case shape = "shape"
     }
 
     public let decimal: Double
     public let even: Int
     public let name: String
+    public let shape: Shape
 
 }
