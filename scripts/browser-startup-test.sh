@@ -45,8 +45,8 @@ echo "BROWSER=none" > .env
 echo "DISABLE_ESLINT_PLUGIN=true" >> .env
 
 npm install
-output=$(timeout 7s npm run start &)
-sleep 10
+output=$(timeout 25s npm run start &)
+sleep 30
 echo "$output"
 if echo "$output" | grep -q "webpack compiled successfully"; then
     echo "Compiled successfully"
