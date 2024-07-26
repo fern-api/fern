@@ -63,16 +63,23 @@ jobs:
               const changelogVersionMatch = changelog.match(/^## \[?([^\]]+)]?/m);
               if (changelogVersionMatch) {
                 const changelogVersion = changelogVersionMatch[1].trim();
-                if (semverRegex.test(changelogVersion) && version !== changelogVersion) {
-                  console.log(`Mismatch in ${dir}: VERSION (${version}) does not match CHANGELOG (${changelogVersion})`);
+                if (semverRegex.test(changelogVersion)) {
+                  if (version === changelogVersion) {
+                    console.log(`✅ Match in ${dir}: VERSION (${version}) matches CHANGELOG (${changelogVersion})`);
+                  } else {
+                    console.log(`🚫 Mismatch in ${dir}: VERSION (${version}) does not match CHANGELOG (${changelogVersion})`);
+                    mismatchFound = true;
+                  }
+                } else {
+                  console.log(`🚫 No valid version found in CHANGELOG for ${dir}`);
                   mismatchFound = true;
                 }
               } else {
-                console.log(`No valid version found in CHANGELOG for ${dir}`);
+                console.log(`🚫 No version found in CHANGELOG for ${dir}`);
                 mismatchFound = true;
               }
             } else {
-              console.log(`Missing VERSION or CHANGELOG.md in ${dir}`);
+              console.log(`🚫 Missing VERSION or CHANGELOG.md in ${dir}`);
               mismatchFound = true;
             }
           });
