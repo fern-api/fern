@@ -24,7 +24,7 @@ public class SampleTest
     }
 
     [Test]
-    public void Test_Get_Endpoint1()
+    public void Test_Post_Endpoint()
     {
         const string json = """
                             {
@@ -57,7 +57,7 @@ public class SampleTest
     }
 
     [Test]
-    public void Test_Get_Endpoint2()
+    public void Test_Get_Endpoint()
     {
         const string mockResponse = """
                                         {
