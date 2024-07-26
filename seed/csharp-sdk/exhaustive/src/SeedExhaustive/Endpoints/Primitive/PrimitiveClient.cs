@@ -147,7 +147,7 @@ public class PrimitiveClient
         throw new Exception(responseBody);
     }
 
-    public async Task<Guid> GetAndReturnUuidAsync(Guid request)
+    public async Task<string> GetAndReturnUuidAsync(string request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -161,7 +161,7 @@ public class PrimitiveClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<Guid>(responseBody)!;
+            return JsonUtils.Deserialize<string>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

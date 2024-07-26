@@ -15,7 +15,7 @@ public class AdminClient
         _client = client;
     }
 
-    public async Task UpdateTestSubmissionStatusAsync(Guid submissionId, object request)
+    public async Task UpdateTestSubmissionStatusAsync(string submissionId, object request)
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -28,7 +28,10 @@ public class AdminClient
         );
     }
 
-    public async Task SendTestSubmissionUpdateAsync(Guid submissionId, TestSubmissionUpdate request)
+    public async Task SendTestSubmissionUpdateAsync(
+        string submissionId,
+        TestSubmissionUpdate request
+    )
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -41,7 +44,7 @@ public class AdminClient
         );
     }
 
-    public async Task UpdateWorkspaceSubmissionStatusAsync(Guid submissionId, object request)
+    public async Task UpdateWorkspaceSubmissionStatusAsync(string submissionId, object request)
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -55,7 +58,7 @@ public class AdminClient
     }
 
     public async Task SendWorkspaceSubmissionUpdateAsync(
-        Guid submissionId,
+        string submissionId,
         WorkspaceSubmissionUpdate request
     )
     {
@@ -71,7 +74,7 @@ public class AdminClient
     }
 
     public async Task StoreTracedTestCaseAsync(
-        Guid submissionId,
+        string submissionId,
         string testCaseId,
         StoreTracedTestCaseRequest request
     )
@@ -88,7 +91,7 @@ public class AdminClient
     }
 
     public async Task StoreTracedTestCaseV2Async(
-        Guid submissionId,
+        string submissionId,
         string testCaseId,
         IEnumerable<TraceResponseV2> request
     )
@@ -106,7 +109,7 @@ public class AdminClient
     }
 
     public async Task StoreTracedWorkspaceAsync(
-        Guid submissionId,
+        string submissionId,
         StoreTracedWorkspaceRequest request
     )
     {
@@ -122,7 +125,7 @@ public class AdminClient
     }
 
     public async Task StoreTracedWorkspaceV2Async(
-        Guid submissionId,
+        string submissionId,
         IEnumerable<TraceResponseV2> request
     )
     {

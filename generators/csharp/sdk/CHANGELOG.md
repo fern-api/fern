@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0 - 2024-07-25]
+
+- Break: Convert all usages `Guid` to be `string` since the `Guid` class changes the underlying casing.
+
 ## [0.2.2 - 2024-07-25]
 
 - Improvement: Add header suppliers to `RawClient` constructor parameters.
@@ -15,8 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.2.0 - 2024-07-25]
 
-- Break: The `Environments.cs` class is now renamed to be `{OrgName}Environment`. For example, if your
-  org name was Imdb then the environment class would be `ImdbEnvironment`.
+- Break: The `Environments.cs` class is now renamed to be `{OrgName}Environment`. For example, if your org name was Imdb then the environment class would be `ImdbEnvironment`.
 
 - Feature: If the SDK has endpoints that each hit different URLs then the following class is generated.
 

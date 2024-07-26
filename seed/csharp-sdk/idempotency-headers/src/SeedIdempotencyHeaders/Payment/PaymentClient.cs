@@ -15,7 +15,7 @@ public class PaymentClient
         _client = client;
     }
 
-    public async Task<Guid> CreateAsync(CreatePaymentRequest request)
+    public async Task<string> CreateAsync(CreatePaymentRequest request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -29,7 +29,7 @@ public class PaymentClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<Guid>(responseBody)!;
+            return JsonUtils.Deserialize<string>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
