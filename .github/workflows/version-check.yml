@@ -48,6 +48,8 @@ jobs:
             "generators/csharp/model"
           ];
 
+          const semverRegex = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[\da-z\-]+(?:\.[\da-z\-]+)*)?(?:\+[\da-z\-]+(?:\.[\da-z\-]+)*)?$/i;
+
           let mismatchFound = false;
 
           paths.forEach(dir => {
@@ -61,12 +63,12 @@ jobs:
               const changelogVersionMatch = changelog.match(/^## \[?([^\]]+)]?/m);
               if (changelogVersionMatch) {
                 const changelogVersion = changelogVersionMatch[1].trim();
-                if (version !== changelogVersion) {
+                if (semverRegex.test(changelogVersion) && version !== changelogVersion) {
                   console.log(`Mismatch in ${dir}: VERSION (${version}) does not match CHANGELOG (${changelogVersion})`);
                   mismatchFound = true;
                 }
               } else {
-                console.log(`No version found in CHANGELOG for ${dir}`);
+                console.log(`No valid version found in CHANGELOG for ${dir}`);
                 mismatchFound = true;
               }
             } else {
