@@ -37,7 +37,7 @@ class NoAuthClient:
 
         Examples
         --------
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -88,7 +88,7 @@ class AsyncNoAuthClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",

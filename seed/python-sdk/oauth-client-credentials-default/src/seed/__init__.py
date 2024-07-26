@@ -2,6 +2,13 @@
 
 from . import auth
 from .auth import TokenResponse
+from .client import AsyncSeedOauthClientCredentialsDefault, SeedOauthClientCredentialsDefault
 from .version import __version__
 
-__all__ = ["TokenResponse", "__version__", "auth"]
+__all__ = [
+    "AsyncSeedOauthClientCredentialsDefault",
+    "SeedOauthClientCredentialsDefault",
+    "TokenResponse",
+    "__version__",
+    "auth",
+]

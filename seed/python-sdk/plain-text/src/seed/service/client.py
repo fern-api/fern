@@ -25,7 +25,7 @@ class ServiceClient:
 
         Examples
         --------
-        from seed.client import SeedPlainText
+        from seed import SeedPlainText
 
         client = SeedPlainText(
             base_url="https://yourhost.com/path/to/api",
@@ -61,7 +61,7 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedPlainText
+        from seed import AsyncSeedPlainText
 
         client = AsyncSeedPlainText(
             base_url="https://yourhost.com/path/to/api",

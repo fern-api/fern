@@ -8,7 +8,7 @@ public record GetUsersRequest
 {
     public required int Limit { get; init; }
 
-    public required Guid Id { get; init; }
+    public required string Id { get; init; }
 
     public required DateOnly Date { get; init; }
 

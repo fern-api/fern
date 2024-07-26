@@ -233,7 +233,9 @@
                                         }
                                     }
                                 },
-                                "typeId": "type_types:Foo"
+                                "typeId": "type_types:Foo",
+                                "default": null,
+                                "inline": null
                             }
                         },
                         "docs": null
@@ -349,7 +351,9 @@
                                         }
                                     }
                                 },
-                                "typeId": "type_types:Bar"
+                                "typeId": "type_types:Bar",
+                                "default": null,
+                                "inline": null
                             }
                         },
                         "docs": null
@@ -569,7 +573,9 @@
                                         }
                                     }
                                 },
-                                "typeId": "type_types:Foo"
+                                "typeId": "type_types:Foo",
+                                "default": null,
+                                "inline": null
                             }
                         },
                         "docs": "This is a Foo field."
@@ -685,7 +691,9 @@
                                         }
                                     }
                                 },
-                                "typeId": "type_types:Bar"
+                                "typeId": "type_types:Bar",
+                                "default": null,
+                                "inline": null
                             }
                         },
                         "docs": null
@@ -3834,7 +3842,9 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_union:Shape"
+                                    "typeId": "type_union:Shape",
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -4227,7 +4237,7 @@
                                         }
                                     }
                                 },
-                                "id": "058c85f79e538bd95d51968d125f274f98b7df39",
+                                "id": "0a148524296cc0bea7d3f415f8710d40313b9bd0",
                                 "docs": null
                             }
                         }
@@ -4340,7 +4350,9 @@
                                     }
                                 }
                             },
-                            "typeId": "type_union:Shape"
+                            "typeId": "type_union:Shape",
+                            "default": null,
+                            "inline": null
                         },
                         "contentType": null,
                         "docs": null
@@ -4414,7 +4426,9 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_union:Shape"
+                                    "typeId": "type_union:Shape",
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "contentType": null,
                                 "docs": null
@@ -4820,7 +4834,7 @@
                                         }
                                     }
                                 },
-                                "id": "40aac8b97ccec3421b1c706e07a5fa10142c18fc",
+                                "id": "852bda123c11ae99407efb8496902dddad236854",
                                 "docs": null
                             }
                         }

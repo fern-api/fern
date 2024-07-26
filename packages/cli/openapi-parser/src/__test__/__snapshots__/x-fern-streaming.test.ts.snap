@@ -2831,6 +2831,7 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
     },
     "FinishReason": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "FinishReason",
       "groupName": null,

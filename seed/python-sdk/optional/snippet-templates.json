@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedObjectsWithImports"
+                    "from seed import SeedObjectsWithImports"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedObjectsWithImports(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -77,7 +77,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedObjectsWithImports"
+                        "from seed import AsyncSeedObjectsWithImports"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedObjectsWithImports(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",

@@ -28,7 +28,7 @@ class SeedUnions:
 
     Examples
     --------
-    from seed.client import SeedUnions
+    from seed import SeedUnions
 
     client = SeedUnions(
         base_url="https://yourhost.com/path/to/api",
@@ -76,7 +76,7 @@ class AsyncSeedUnions:
 
     Examples
     --------
-    from seed.client import AsyncSeedUnions
+    from seed import AsyncSeedUnions
 
     client = AsyncSeedUnions(
         base_url="https://yourhost.com/path/to/api",

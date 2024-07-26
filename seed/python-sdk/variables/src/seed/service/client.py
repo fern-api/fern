@@ -28,7 +28,7 @@ class ServiceClient:
 
         Examples
         --------
-        from seed.client import SeedVariables
+        from seed import SeedVariables
 
         client = SeedVariables(
             base_url="https://yourhost.com/path/to/api",
@@ -70,7 +70,7 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedVariables
+        from seed import AsyncSeedVariables
 
         client = AsyncSeedVariables(
             base_url="https://yourhost.com/path/to/api",

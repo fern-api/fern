@@ -12,7 +12,7 @@
 <dd>
 
 ```python
-from seed.client import SeedPackageYml
+from seed import SeedPackageYml
 
 client = SeedPackageYml(
     base_url="https://yourhost.com/path/to/api",
@@ -87,7 +87,7 @@ client.echo(
 <dd>
 
 ```python
-from seed.client import SeedPackageYml
+from seed import SeedPackageYml
 
 client = SeedPackageYml(
     base_url="https://yourhost.com/path/to/api",

@@ -38,7 +38,7 @@ class ServiceClient:
 
         Examples
         --------
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
 
         client = SeedExhaustive(
@@ -95,7 +95,7 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
 
         client = AsyncSeedExhaustive(

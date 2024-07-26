@@ -2,7 +2,7 @@
 
 import typing
 
-from seed.client import AsyncSeedCustomAuth, SeedCustomAuth
+from seed import AsyncSeedCustomAuth, SeedCustomAuth
 
 from .utilities import validate_response
 

@@ -231,6 +231,7 @@ async function getAreRootApiFilesEquivalent(
         version: noop,
         name: noop,
         imports: noop,
+        "default-url": noop,
         "display-name": noop,
         auth: (auth) => {
             const isAuthEquals = isEqual(auth, workspaceOfDependency.definition.rootApiFile.contents.auth);

@@ -13,7 +13,7 @@
 <dd>
 
 ```python
-from seed.client import SeedOauthClientCredentialsDefault
+from seed import SeedOauthClientCredentialsDefault
 
 client = SeedOauthClientCredentialsDefault(
     base_url="https://yourhost.com/path/to/api",

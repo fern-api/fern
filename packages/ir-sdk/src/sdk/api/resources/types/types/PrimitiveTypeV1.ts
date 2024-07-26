@@ -4,6 +4,8 @@
 
 export type PrimitiveTypeV1 =
     | "INTEGER"
+    | "UINT"
+    | "UINT_64"
     | "DOUBLE"
     | "STRING"
     | "BOOLEAN"
@@ -18,6 +20,8 @@ export type PrimitiveTypeV1 =
 
 export const PrimitiveTypeV1 = {
     Integer: "INTEGER",
+    Uint: "UINT",
+    Uint64: "UINT_64",
     Double: "DOUBLE",
     String: "STRING",
     Boolean: "BOOLEAN",
@@ -31,6 +35,10 @@ export const PrimitiveTypeV1 = {
         switch (value) {
             case PrimitiveTypeV1.Integer:
                 return visitor.integer();
+            case PrimitiveTypeV1.Uint:
+                return visitor.uint();
+            case PrimitiveTypeV1.Uint64:
+                return visitor.uint64();
             case PrimitiveTypeV1.Double:
                 return visitor.double();
             case PrimitiveTypeV1.String:
@@ -58,6 +66,8 @@ export const PrimitiveTypeV1 = {
 export declare namespace PrimitiveTypeV1 {
     interface Visitor<R> {
         integer: () => R;
+        uint: () => R;
+        uint64: () => R;
         double: () => R;
         string: () => R;
         boolean: () => R;

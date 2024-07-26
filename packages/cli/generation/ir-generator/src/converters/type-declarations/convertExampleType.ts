@@ -390,6 +390,18 @@ function convertPrimitiveExample({
                 })
             );
         },
+        uint: () => {
+            if (typeof example !== "number") {
+                throw new Error("Example is not a number");
+            }
+            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint(example));
+        },
+        uint64: () => {
+            if (typeof example !== "number") {
+                throw new Error("Example is not a number");
+            }
+            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint64(example));
+        },
         integer: () => {
             if (typeof example !== "number") {
                 throw new Error("Example is not a number");

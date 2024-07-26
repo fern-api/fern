@@ -329,23 +329,17 @@ exports[`open api parser axle docs 1`] = `
               "body": {
                 "properties": {
                   "metadata": {
-                    "default": undefined,
                     "docs": "Optional object to store ephermeral information about the session, such as \`reservationTime\`. Will be returned in webhook events.",
                     "type": "optional<map<string, unknown>>",
-                    "validation": undefined,
                   },
                   "redirectUri": {
-                    "default": undefined,
                     "docs": "The URI we should direct the user to after authenticating successfully.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "user": "optional<root.User>",
                   "webhookUri": {
-                    "default": undefined,
                     "docs": "The URI we should send updates about this session or the resulting account to.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -688,10 +682,8 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": undefined,
         "properties": {
           "message": {
-            "default": undefined,
             "docs": "Provides a reason for why the operation failed, if available.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "success": "optional<Success>",
         },
@@ -728,10 +720,14 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "address": "optional<Address>",
           "name": "string",
           "property": "optional<string>",
-          "type": "ThirdPartyType",
+          "type": {
+            "default": "interest",
+            "type": "ThirdPartyType",
+          },
         },
       },
       "ThirdPartyType": {
+        "default": "interest",
         "enum": [
           "lienholder",
           "lessor",
@@ -742,32 +738,24 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": "User to attach to Ignition session. If user is set, unique \`id\` must be provided.",
         "properties": {
           "email": {
-            "default": undefined,
             "docs": "User's email address.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "firstName": {
-            "default": undefined,
             "docs": "User's first name.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "id": {
             "docs": "Your application's unique user id.",
             "type": "string",
           },
           "lastName": {
-            "default": undefined,
             "docs": "User's last name.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "phone": {
-            "default": undefined,
             "docs": "User's phone number in E.164 format.",
             "type": "optional<string>",
-            "validation": undefined,
           },
         },
       },
@@ -1081,23 +1069,17 @@ exports[`open api parser axle simple 1`] = `
               "body": {
                 "properties": {
                   "metadata": {
-                    "default": undefined,
                     "docs": "Optional object to store ephermeral information about the session, such as \`reservationTime\`. Will be returned in webhook events.",
                     "type": "optional<map<string, unknown>>",
-                    "validation": undefined,
                   },
                   "redirectUri": {
-                    "default": undefined,
                     "docs": "The URI we should direct the user to after authenticating successfully.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "user": "optional<root.User>",
                   "webhookUri": {
-                    "default": undefined,
                     "docs": "The URI we should send updates about this session or the resulting account to.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -1400,10 +1382,8 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": undefined,
         "properties": {
           "message": {
-            "default": undefined,
             "docs": "Provides a reason for why the operation failed, if available.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "success": "optional<Success>",
         },
@@ -1440,10 +1420,14 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "address": "optional<Address>",
           "name": "string",
           "property": "optional<string>",
-          "type": "ThirdPartyType",
+          "type": {
+            "default": "interest",
+            "type": "ThirdPartyType",
+          },
         },
       },
       "ThirdPartyType": {
+        "default": "interest",
         "enum": [
           "lienholder",
           "lessor",
@@ -1454,32 +1438,24 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": "User to attach to Ignition session. If user is set, unique \`id\` must be provided.",
         "properties": {
           "email": {
-            "default": undefined,
             "docs": "User's email address.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "firstName": {
-            "default": undefined,
             "docs": "User's first name.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "id": {
             "docs": "Your application's unique user id.",
             "type": "string",
           },
           "lastName": {
-            "default": undefined,
             "docs": "User's last name.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "phone": {
-            "default": undefined,
             "docs": "User's phone number in E.164 format.",
             "type": "optional<string>",
-            "validation": undefined,
           },
         },
       },

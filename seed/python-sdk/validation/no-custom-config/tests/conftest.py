@@ -3,7 +3,7 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedValidation, SeedValidation
+from seed import AsyncSeedValidation, SeedValidation
 
 
 @pytest.fixture

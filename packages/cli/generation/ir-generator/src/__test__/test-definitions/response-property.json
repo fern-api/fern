@@ -167,7 +167,9 @@
                                 "packagePath": [],
                                 "file": null
                             },
-                            "typeId": "type_:StringResponse"
+                            "typeId": "type_:StringResponse",
+                            "default": null,
+                            "inline": null
                         }
                     }
                 },
@@ -201,7 +203,9 @@
                                 "packagePath": [],
                                 "file": null
                             },
-                            "typeId": "type_:StringResponse"
+                            "typeId": "type_:StringResponse",
+                            "default": null,
+                            "inline": null
                         }
                     }
                 }
@@ -561,7 +565,9 @@
                                     }
                                 }
                             },
-                            "typeId": "type_service:WithDocs"
+                            "typeId": "type_service:WithDocs",
+                            "default": null,
+                            "inline": null
                         }
                     }
                 },
@@ -633,7 +639,9 @@
                                     }
                                 }
                             },
-                            "typeId": "type_service:WithDocs"
+                            "typeId": "type_service:WithDocs",
+                            "default": null,
+                            "inline": null
                         }
                     }
                 }
@@ -1049,7 +1057,9 @@
                                     }
                                 }
                             },
-                            "typeId": "type_service:Movie"
+                            "typeId": "type_service:Movie",
+                            "default": null,
+                            "inline": null
                         },
                         "availability": null,
                         "docs": null
@@ -1289,7 +1299,9 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_service:Response"
+                                    "typeId": "type_service:Response",
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "responseProperty": {
                                     "name": {
@@ -1378,7 +1390,9 @@
                                                 }
                                             }
                                         },
-                                        "typeId": "type_service:Movie"
+                                        "typeId": "type_service:Movie",
+                                        "default": null,
+                                        "inline": null
                                     },
                                     "availability": null,
                                     "docs": null
@@ -1701,7 +1715,7 @@
                                         }
                                     }
                                 },
-                                "id": "cb19bc6cec276bee1feff4978764514fa6bc638d",
+                                "id": "4cfe27c281a07c83268e5b98428c8f25abd02847",
                                 "docs": null
                             }
                         }
@@ -1874,7 +1888,9 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_service:Response"
+                                    "typeId": "type_service:Response",
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "responseProperty": {
                                     "name": {
@@ -2097,7 +2113,9 @@
                                         "packagePath": [],
                                         "file": null
                                     },
-                                    "typeId": "type_:StringResponse"
+                                    "typeId": "type_:StringResponse",
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "responseProperty": {
                                     "name": {
@@ -2358,7 +2376,9 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_service:Response"
+                                    "typeId": "type_service:Response",
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "responseProperty": {
                                     "name": {
@@ -2689,7 +2709,9 @@
                                                     }
                                                 }
                                             },
-                                            "typeId": "type_service:Response"
+                                            "typeId": "type_service:Response",
+                                            "default": null,
+                                            "inline": null
                                         }
                                     }
                                 },
@@ -2780,7 +2802,9 @@
                                                 }
                                             }
                                         },
-                                        "typeId": "type_service:Movie"
+                                        "typeId": "type_service:Movie",
+                                        "default": null,
+                                        "inline": null
                                     },
                                     "availability": null,
                                     "docs": null
@@ -3103,7 +3127,7 @@
                                         }
                                     }
                                 },
-                                "id": "cb19bc6cec276bee1feff4978764514fa6bc638d",
+                                "id": "4cfe27c281a07c83268e5b98428c8f25abd02847",
                                 "docs": null
                             }
                         }
@@ -3276,7 +3300,9 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_service:OptionalWithDocs"
+                                    "typeId": "type_service:OptionalWithDocs",
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "responseProperty": {
                                     "name": {
@@ -3499,7 +3525,9 @@
                                         "packagePath": [],
                                         "file": null
                                     },
-                                    "typeId": "type_:OptionalStringResponse"
+                                    "typeId": "type_:OptionalStringResponse",
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "responseProperty": {
                                     "name": {

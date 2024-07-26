@@ -1,3 +1,4 @@
+using System;
 using SeedUnknownAsAny;
 using SeedUnknownAsAny.Core;
 
@@ -13,6 +14,7 @@ public partial class SeedUnknownAsAnyClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Unknown = new UnknownClient(_client);

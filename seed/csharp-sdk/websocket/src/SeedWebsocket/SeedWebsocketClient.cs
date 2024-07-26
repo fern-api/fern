@@ -1,3 +1,4 @@
+using System;
 using SeedWebsocket;
 using SeedWebsocket.Core;
 
@@ -13,6 +14,7 @@ public partial class SeedWebsocketClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Realtime = new RealtimeClient(_client);

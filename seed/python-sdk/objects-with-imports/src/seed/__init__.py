@@ -2,7 +2,18 @@
 
 from .types import Node, Tree
 from . import commons, file
+from .client import AsyncSeedObjectsWithImports, SeedObjectsWithImports
 from .file import File, FileInfo
 from .version import __version__
 
-__all__ = ["File", "FileInfo", "Node", "Tree", "__version__", "commons", "file"]
+__all__ = [
+    "AsyncSeedObjectsWithImports",
+    "File",
+    "FileInfo",
+    "Node",
+    "SeedObjectsWithImports",
+    "Tree",
+    "__version__",
+    "commons",
+    "file",
+]

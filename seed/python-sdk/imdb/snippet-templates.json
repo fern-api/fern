@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedApi"
+                    "from seed import SeedApi"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedApi(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -85,7 +85,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedApi"
+                        "from seed import AsyncSeedApi"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedApi(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -169,7 +169,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedApi"
+                    "from seed import SeedApi"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedApi(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -225,7 +225,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedApi"
+                        "from seed import AsyncSeedApi"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedApi(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",

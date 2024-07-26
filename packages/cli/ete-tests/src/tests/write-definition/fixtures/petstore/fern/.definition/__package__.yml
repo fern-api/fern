@@ -1,7 +1,7 @@
 types:
   Pet:
     properties:
-      id: integer
+      id: long
       name: string
       tag: optional<string>
   Pets: list<Pet>

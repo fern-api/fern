@@ -16,7 +16,7 @@ pip install fern_examples
 Instantiate and use the client with the following:
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(
@@ -35,7 +35,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed.client import AsyncSeedExhaustive
+from seed import AsyncSeedExhaustive
 from seed.environment import SeedExhaustiveEnvironment
 
 client = AsyncSeedExhaustive(
@@ -96,7 +96,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 ```python
 
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(..., { timeout=20.0 }, )
 
@@ -113,7 +113,7 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 ```python
 import httpx
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     ...,

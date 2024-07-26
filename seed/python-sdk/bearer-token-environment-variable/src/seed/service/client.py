@@ -28,7 +28,7 @@ class ServiceClient:
 
         Examples
         --------
-        from seed.client import SeedBearerTokenEnvironmentVariable
+        from seed import SeedBearerTokenEnvironmentVariable
 
         client = SeedBearerTokenEnvironmentVariable(
             api_key="YOUR_API_KEY",
@@ -67,7 +67,7 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedBearerTokenEnvironmentVariable
+        from seed import AsyncSeedBearerTokenEnvironmentVariable
 
         client = AsyncSeedBearerTokenEnvironmentVariable(
             api_key="YOUR_API_KEY",

@@ -80,6 +80,7 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
             // these files doesn't live on disk, so there's no absolute filepath
             absoluteFilepath: AbsoluteFilePath.of("/DUMMY_PATH"),
             rootApiFile: {
+                defaultUrl: definition.rootApiFile["default-url"],
                 contents: definition.rootApiFile,
                 rawContents: yaml.dump(definition.rootApiFile)
             },

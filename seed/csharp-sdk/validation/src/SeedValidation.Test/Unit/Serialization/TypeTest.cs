@@ -19,7 +19,8 @@ public class TypeTest
         {
   ""decimal"": 1.1,
   ""even"": 2,
-  ""name"": ""rules""
+  ""name"": ""rules"",
+  ""shape"": ""SQUARE""
 }
 ";
 

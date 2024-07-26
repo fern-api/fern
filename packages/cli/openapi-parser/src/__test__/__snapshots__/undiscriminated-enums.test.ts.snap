@@ -136,6 +136,7 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
     },
     "FarewellEnum": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "FarewellEnum",
       "groupName": null,
@@ -217,6 +218,7 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
     },
     "GreetingEnum": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "GreetingEnum",
       "groupName": null,

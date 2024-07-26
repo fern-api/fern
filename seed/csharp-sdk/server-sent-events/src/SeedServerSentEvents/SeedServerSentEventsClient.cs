@@ -1,3 +1,4 @@
+using System;
 using SeedServerSentEvents;
 using SeedServerSentEvents.Core;
 
@@ -13,6 +14,7 @@ public partial class SeedServerSentEventsClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Completions = new CompletionsClient(_client);

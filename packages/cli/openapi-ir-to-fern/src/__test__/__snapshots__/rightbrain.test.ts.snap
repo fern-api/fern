@@ -388,26 +388,20 @@ exports[`rightbrain rightbrain docs 1`] = `
               "body": {
                 "properties": {
                   "add": {
-                    "default": undefined,
                     "docs": "A list of chat roles to grant to the member.
 
 Roles in this list are applied to the member AFTER any removals specified in \`remove\`.
 
 This may be combined with \`remove_all\` to replace the member's entire role list.",
                     "type": "optional<list<ChatIamMemberRoleUpdateAddItem>>",
-                    "validation": undefined,
                   },
                   "remove": {
-                    "default": undefined,
                     "docs": "A list of chat roles to revoke from the member.",
                     "type": "optional<list<ChatIamMemberRoleUpdateRemoveItem>>",
-                    "validation": undefined,
                   },
                   "remove_all": {
-                    "default": undefined,
                     "docs": "Removes all existing roles from the member. This may be combined with \`add\` to replace all existing roles that the member holds.",
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -515,28 +509,25 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "chat_guardrails": {
-                    "default": undefined,
                     "docs": "Conversational Guardrails can be defined to run against Chat \`input\` (i.e. the users query) or on Chat \`output\` (i.e. the LLM output)",
                     "type": "optional<root.ConversationalGuardrails>",
-                    "validation": undefined,
                   },
                   "chat_system_commands": "optional<list<string>>",
                   "knn": {
                     "default": 5,
-                    "docs": undefined,
                     "type": "optional<integer>",
-                    "validation": undefined,
                   },
-                  "llm": "optional<Llm>",
+                  "llm": {
+                    "default": "gpt-3.5-turbo",
+                    "type": "optional<Llm>",
+                  },
                   "query_expansion": {
                     "default": false,
                     "docs": "Enable query expansion. Uses an LLM to generate multiple rephrasing of the original query for better broad spectrum vector retrieval",
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "temperature": {
                     "default": 0.5,
-                    "docs": undefined,
                     "type": "optional<double>",
                     "validation": {
                       "exclusiveMax": undefined,
@@ -649,6 +640,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           ],
         },
         "Llm": {
+          "default": "gpt-3.5-turbo",
           "enum": [
             {
               "name": "Gpt4O",
@@ -1253,26 +1245,20 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "add": {
-                    "default": undefined,
                     "docs": "A list of collection roles to grant to the member.
 
 Roles in this list are applied to the member AFTER any removals specified in \`remove\`.
 
 This may be combined with \`remove_all\` to replace the member's entire role list.",
                     "type": "optional<list<CollectionIamMemberRoleUpdateAddItem>>",
-                    "validation": undefined,
                   },
                   "remove": {
-                    "default": undefined,
                     "docs": "A list of collection roles to revoke from the member.",
                     "type": "optional<list<CollectionIamMemberRoleUpdateRemoveItem>>",
-                    "validation": undefined,
                   },
                   "remove_all": {
-                    "default": undefined,
                     "docs": "Removes all existing roles from the member. This may be combined with \`add\` to replace all existing roles that the member holds.",
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -1741,9 +1727,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                 "properties": {
                   "category": {
                     "default": "blog",
-                    "docs": undefined,
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "title": "string",
                 },
@@ -5479,26 +5463,20 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "add": {
-                    "default": undefined,
                     "docs": "A list of document roles to grant to the member.
 
 Roles in this list are applied to the member AFTER any removals specified in \`remove\`.
 
 This may be combined with \`remove_all\` to replace the member's entire role list.",
                     "type": "optional<list<DocumentIamMemberRoleUpdateAddItem>>",
-                    "validation": undefined,
                   },
                   "remove": {
-                    "default": undefined,
                     "docs": "A list of document roles to revoke from the member.",
                     "type": "optional<list<DocumentIamMemberRoleUpdateRemoveItem>>",
-                    "validation": undefined,
                   },
                   "remove_all": {
-                    "default": undefined,
                     "docs": "Removes all existing roles from the member. This may be combined with \`add\` to replace all existing roles that the member holds.",
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -5656,8 +5634,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "name": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": undefined,
@@ -6443,8 +6419,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "contact_email": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "email",
@@ -6700,26 +6674,20 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "add": {
-                    "default": undefined,
                     "docs": "A list of organization roles to grant to the member.
 
 Roles in this list are applied to the member AFTER any removals specified in \`remove\`.
 
 This may be combined with \`remove_all\` to replace the member's entire role list.",
                     "type": "optional<list<OrganizationIamMemberRoleUpdateAddItem>>",
-                    "validation": undefined,
                   },
                   "remove": {
-                    "default": undefined,
                     "docs": "A list of organization roles to revoke from the member.",
                     "type": "optional<list<OrganizationIamMemberRoleUpdateRemoveItem>>",
-                    "validation": undefined,
                   },
                   "remove_all": {
-                    "default": undefined,
                     "docs": "Removes all existing roles from the member. This may be combined with \`add\` to replace all existing roles that the member holds.",
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -7132,26 +7100,20 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "add": {
-                    "default": undefined,
                     "docs": "A list of project roles to grant to the member.
 
 Roles in this list are applied to the member AFTER any removals specified in \`remove\`.
 
 This may be combined with \`remove_all\` to replace the member's entire role list.",
                     "type": "optional<list<ProjectIamMemberRoleUpdateAddItem>>",
-                    "validation": undefined,
                   },
                   "remove": {
-                    "default": undefined,
                     "docs": "A list of project roles to revoke from the member.",
                     "type": "optional<list<ProjectIamMemberRoleUpdateRemoveItem>>",
-                    "validation": undefined,
                   },
                   "remove_all": {
-                    "default": undefined,
                     "docs": "Removes all existing roles from the member. This may be combined with \`add\` to replace all existing roles that the member holds.",
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -7321,20 +7283,19 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                   "chat_system_commands": "optional<list<string>>",
                   "knn": {
                     "default": 4,
-                    "docs": undefined,
                     "type": "optional<integer>",
-                    "validation": undefined,
                   },
-                  "llm": "optional<Llm>",
+                  "llm": {
+                    "default": "gpt-3.5-turbo",
+                    "type": "optional<Llm>",
+                  },
                   "query_expansion": {
                     "default": false,
                     "docs": "Enable query expansion. Uses an LLM to generate multiple rephrasing of the original query for better broad spectrum vector retrieval",
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "temperature": {
                     "default": 0.5,
-                    "docs": undefined,
                     "type": "optional<double>",
                     "validation": {
                       "exclusiveMax": undefined,
@@ -7408,6 +7369,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
       },
       "types": {
         "Llm": {
+          "default": "gpt-3.5-turbo",
           "enum": [
             {
               "name": "Gpt4O",
@@ -7669,7 +7631,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                 "properties": {
                   "max_crawl_depth": {
                     "default": 3,
-                    "docs": undefined,
                     "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
@@ -7825,22 +7786,16 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "config": {
-                    "default": undefined,
                     "docs": "Configuration parameters for the Task Forwarder such as a \`destination\` URL.",
                     "type": "optional<root.TaskForwarderConfig>",
-                    "validation": undefined,
                   },
                   "config_sensitive": {
-                    "default": undefined,
                     "docs": "Sensitive parameters for the Task Forwarder such as a \`signing_key\`.",
                     "type": "optional<root.TaskForwarderSensitiveConfig>",
-                    "validation": undefined,
                   },
                   "description": {
-                    "default": undefined,
                     "docs": "Additional details about the Task Forwarder's purpose or configuration.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "name": {
                     "docs": "A descriptive name for the Task Forwarder.",
@@ -8057,28 +8012,20 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "config": {
-                    "default": undefined,
                     "docs": "Configuration parameters for the Task Forwarder such as a \`destination\` URL.",
                     "type": "optional<root.TaskForwarderConfig>",
-                    "validation": undefined,
                   },
                   "config_sensitive": {
-                    "default": undefined,
                     "docs": "Sensitive parameters for the Task Forwarder such as a \`signing_key\`.",
                     "type": "optional<root.TaskForwarderSensitiveConfig>",
-                    "validation": undefined,
                   },
                   "description": {
-                    "default": undefined,
                     "docs": "Additional details about the Task Forwarder's purpose or configuration.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "name": {
-                    "default": undefined,
                     "docs": "A descriptive name for the Task Forwarder.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -8190,10 +8137,8 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "description": {
-                    "default": undefined,
                     "docs": "A longer description of the Task for internal reference.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "enabled": {
                     "docs": "When \`true\` the Task is active and callable. \`false\` denotes the Task is not yet operational.",
@@ -8203,13 +8148,10 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     "default": false,
                     "docs": "When \`true\` it requires an image to be sent in the Task Run request.",
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "llm_config": {
-                    "default": undefined,
                     "docs": "Specific configuration parameters for the LLM model.",
                     "type": "optional<root.TaskLLMConfig>",
-                    "validation": undefined,
                   },
                   "llm_model": {
                     "docs": "The LLM model to use for the Task.",
@@ -8233,7 +8175,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                   },
                   "system_prompt": "unknown",
                   "task_forwarder_id": {
-                    "default": undefined,
                     "docs": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
                     "type": "optional<string>",
                     "validation": {
@@ -8334,46 +8275,32 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "description": {
-                    "default": undefined,
                     "docs": "A longer description of the Task for internal reference.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "enabled": {
-                    "default": undefined,
                     "docs": "When \`true\` the Task is active and callable. \`false\` denotes the Task is not yet operational.",
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "image_required": {
-                    "default": undefined,
                     "docs": "When \`true\` it requires an image to be sent in the Task Run request.",
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "llm_config": {
-                    "default": undefined,
                     "docs": "Specific configuration parameters for the LLM model.",
                     "type": "optional<root.TaskLLMConfig>",
-                    "validation": undefined,
                   },
                   "llm_model": {
-                    "default": undefined,
                     "docs": "The LLM model to use for the Task.",
                     "type": "optional<TaskUpdateLlmModel>",
-                    "validation": undefined,
                   },
                   "name": {
-                    "default": undefined,
                     "docs": "A name or reference for the Task.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "output_format": {
-                    "default": undefined,
                     "docs": "This gives control over the structure of how the Task responds. Supports shorthand notation or an object with \`type\` can be specified for each attribute. In most instances, the LLM will be able to generate the desired output into the relevant property, but an optional \`description\` can be passed to provide it with additional context.",
                     "type": "optional<map<string, optional<TaskUpdateOutputFormatValue>>>",
-                    "validation": undefined,
                   },
                   "rag": {
                     "audiences": [
@@ -8385,7 +8312,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                   },
                   "system_prompt": "optional<unknown>",
                   "task_forwarder_id": {
-                    "default": undefined,
                     "docs": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
                     "type": "optional<string>",
                     "validation": {
@@ -9037,26 +8963,20 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "add": {
-                    "default": undefined,
                     "docs": "A list of task roles to grant to the member.
 
 Roles in this list are applied to the member AFTER any removals specified in \`remove\`.
 
 This may be combined with \`remove_all\` to replace the member's entire role list.",
                     "type": "optional<list<TaskIamMemberRoleUpdateAddItem>>",
-                    "validation": undefined,
                   },
                   "remove": {
-                    "default": undefined,
                     "docs": "A list of task roles to revoke from the member.",
                     "type": "optional<list<TaskIamMemberRoleUpdateRemoveItem>>",
-                    "validation": undefined,
                   },
                   "remove_all": {
-                    "default": undefined,
                     "docs": "Removes all existing roles from the member. This may be combined with \`add\` to replace all existing roles that the member holds.",
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -11841,9 +11761,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "description": "optional<string>",
           "documents_have_been_modified": {
             "default": false,
-            "docs": undefined,
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "id": {
             "type": "string",
@@ -11863,28 +11781,25 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "chat_guardrails": {
-            "default": undefined,
             "docs": "Conversational Guardrails can be defined to run against Chat \`input\` (i.e. the users query) or on Chat \`output\` (i.e. the LLM output)",
             "type": "optional<ConversationalGuardrails>",
-            "validation": undefined,
           },
           "chat_system_commands": "optional<list<string>>",
           "knn": {
             "default": 5,
-            "docs": undefined,
             "type": "optional<integer>",
-            "validation": undefined,
           },
-          "llm": "optional<Llm>",
+          "llm": {
+            "default": "gpt-3.5-turbo",
+            "type": "optional<Llm>",
+          },
           "query_expansion": {
             "default": false,
             "docs": "Enable query expansion. Uses an LLM to generate multiple rephrasing of the original query for better broad spectrum vector retrieval",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "temperature": {
             "default": 0.5,
-            "docs": undefined,
             "type": "optional<double>",
             "validation": {
               "exclusiveMax": undefined,
@@ -11901,8 +11816,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "properties": {
           "chunks": "integer",
           "connection_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -12328,7 +12241,10 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "domain": "optional<string>",
           "favourable_words": "optional<string>",
           "keywords": "optional<string>",
-          "language": "optional<Language>",
+          "language": {
+            "default": "english_british",
+            "type": "optional<Language>",
+          },
           "num_sections": "optional<integer>",
           "purpose": "optional<string>",
           "title": "string",
@@ -12357,16 +12273,12 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "input": {
-            "default": undefined,
             "docs": "List of valid Input Conversational Guardrails to enable",
             "type": "optional<list<InputConversationalGuardrailDefinition>>",
-            "validation": undefined,
           },
           "output": {
-            "default": undefined,
             "docs": "List of valid Output Conversational Guardrails to enable",
             "type": "optional<list<OutputConversationalGuardrailDefinition>>",
-            "validation": undefined,
           },
         },
       },
@@ -12443,8 +12355,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "properties": {
           "config": "optional<map<string, unknown>>",
           "created_by": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -12454,8 +12364,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
           "datasource_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -12475,8 +12383,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           },
           "private": "optional<boolean>",
           "project_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -12487,9 +12393,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           },
           "token": {
             "default": "",
-            "docs": undefined,
             "type": "optional<string>",
-            "validation": undefined,
           },
         },
       },
@@ -12547,7 +12451,10 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           },
           "modified": "datetime",
           "run_output": "optional<map<string, unknown>>",
-          "status": "optional<Status>",
+          "status": {
+            "default": "pending",
+            "type": "optional<Status>",
+          },
           "task_id": "optional<string>",
         },
       },
@@ -12968,34 +12875,27 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "avatar_url": {
-            "default": undefined,
             "docs": "If avatar of the member, if it is supported by their subject type.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "member": {
             "docs": "The member identifier string, the format of which is '<subject_type>:<subject_id>'",
             "type": "string",
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the member.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "roles": {
-            "default": undefined,
             "docs": "A list of roles that the member holds on an entity.
 
 Some entities, such as Organizations, may contain members that exist without any roles.",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "total_subjects": {
             "default": 1,
             "docs": "The total number of subjects that the member represents, which may be a value other than \`1\` if the member is not a User.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
         },
       },
@@ -13132,8 +13032,6 @@ Some entities, such as Organizations, may contain members that exist without any
         "properties": {
           "avatar_url": "optional<string>",
           "email": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "email",
@@ -13144,8 +13042,6 @@ Some entities, such as Organizations, may contain members that exist without any
           },
           "name": "optional<string>",
           "org_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -13155,8 +13051,6 @@ Some entities, such as Organizations, may contain members that exist without any
             },
           },
           "project_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -13174,8 +13068,6 @@ Some entities, such as Organizations, may contain members that exist without any
           "bio": "optional<string>",
           "ctx": "optional<map<string, unknown>>",
           "email": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "email",
@@ -13185,8 +13077,6 @@ Some entities, such as Organizations, may contain members that exist without any
             },
           },
           "flow_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -13235,6 +13125,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
       },
       "Language": {
+        "default": "english_british",
         "enum": [
           "english_british",
           "english_american",
@@ -13337,6 +13228,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
       },
       "Llm": {
+        "default": "gpt-3.5-turbo",
         "enum": [
           {
             "name": "Gpt4O",
@@ -13465,9 +13357,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "redirect_uris": "list<string>",
           "scope": {
             "default": "",
-            "docs": undefined,
             "type": "optional<string>",
-            "validation": undefined,
           },
         },
       },
@@ -13490,9 +13380,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "size": "optional<string>",
           "synced": {
             "default": false,
-            "docs": undefined,
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "tags": "optional<list<ObjectTags>>",
           "type": "optional<ObjectType>",
@@ -13800,10 +13688,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "default": undefined,
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
-            "validation": undefined,
           },
           "results": {
             "docs": "The list of items returned for the current page.",
@@ -13815,10 +13701,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "default": undefined,
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
-            "validation": undefined,
           },
           "results": {
             "docs": "The list of items returned for the current page.",
@@ -13830,10 +13714,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "default": undefined,
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
-            "validation": undefined,
           },
           "results": {
             "docs": "The list of items returned for the current page.",
@@ -13845,10 +13727,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "default": undefined,
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
-            "validation": undefined,
           },
           "results": {
             "docs": "The list of items returned for the current page.",
@@ -13860,10 +13740,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "default": undefined,
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
-            "validation": undefined,
           },
           "results": {
             "docs": "The list of items returned for the current page.",
@@ -13875,10 +13753,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "default": undefined,
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
-            "validation": undefined,
           },
           "results": {
             "docs": "The list of items returned for the current page.",
@@ -13890,10 +13766,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "default": undefined,
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
-            "validation": undefined,
           },
           "results": {
             "docs": "The list of items returned for the current page.",
@@ -13905,10 +13779,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "default": undefined,
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
-            "validation": undefined,
           },
           "results": {
             "docs": "The list of items returned for the current page.",
@@ -13920,10 +13792,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "default": undefined,
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
-            "validation": undefined,
           },
           "results": {
             "docs": "The list of items returned for the current page.",
@@ -13935,10 +13805,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "default": undefined,
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
-            "validation": undefined,
           },
           "results": {
             "docs": "The list of items returned for the current page.",
@@ -13950,10 +13818,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "default": undefined,
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
-            "validation": undefined,
           },
           "results": {
             "docs": "The list of items returned for the current page.",
@@ -13965,10 +13831,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "default": undefined,
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
-            "validation": undefined,
           },
           "results": {
             "docs": "The list of items returned for the current page.",
@@ -13980,22 +13844,16 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "has_next": {
-            "default": undefined,
             "docs": "Indicates whether there are more results available in the next page.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "next_cursor": {
-            "default": undefined,
             "docs": "A token used to retrieve the next page of results. If \`null\`, there are no more results.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "page_limit": {
-            "default": undefined,
             "docs": "The maximum number of items returned per page.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
         },
       },
@@ -14044,8 +13902,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
           "tasks_oauth_client_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -14063,20 +13919,19 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "chat_system_commands": "optional<list<string>>",
           "knn": {
             "default": 4,
-            "docs": undefined,
             "type": "optional<integer>",
-            "validation": undefined,
           },
-          "llm": "optional<Llm>",
+          "llm": {
+            "default": "gpt-3.5-turbo",
+            "type": "optional<Llm>",
+          },
           "query_expansion": {
             "default": false,
             "docs": "Enable query expansion. Uses an LLM to generate multiple rephrasing of the original query for better broad spectrum vector retrieval",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "temperature": {
             "default": 0.5,
-            "docs": undefined,
             "type": "optional<double>",
             "validation": {
               "exclusiveMax": undefined,
@@ -14181,8 +14036,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
           "tasks_oauth_client_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -14363,10 +14216,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "datetime",
           },
           "description": {
-            "default": undefined,
             "docs": "A longer description of the Task for internal reference.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "enabled": {
             "docs": "When \`true\` the Task is active and callable. \`false\` denotes the Task is not yet operational.",
@@ -14410,26 +14261,20 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "config": {
-            "default": undefined,
             "docs": "Configuration parameters for the Task Forwarder such as a \`destination\` URL.",
             "type": "optional<TaskForwarderConfig>",
-            "validation": undefined,
           },
           "config_sensitive": {
-            "default": undefined,
             "docs": "Sensitive parameters for the Task Forwarder such as a \`signing_key\`.",
             "type": "optional<TaskForwarderSensitiveConfig>",
-            "validation": undefined,
           },
           "created": {
             "docs": "When the Task Forwarder was created.",
             "type": "datetime",
           },
           "description": {
-            "default": undefined,
             "docs": "Additional details about the Task Forwarder's purpose or configuration.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "id": {
             "docs": "The unique identifier of the Task Forwarder.",
@@ -14577,7 +14422,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "default": false,
             "docs": "When \`true\` the Revision is the currently active version and will be activated when the Task Run is executed.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "created": {
             "docs": "When the Task was created.",
@@ -14597,13 +14441,10 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "default": false,
             "docs": "When \`true\` it requires an image to be sent in the Task Run request.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "llm_config": {
-            "default": undefined,
             "docs": "Specific configuration parameters for the LLM model.",
             "type": "optional<TaskLLMConfig>",
-            "validation": undefined,
           },
           "llm_model": {
             "docs": "The LLM model to use for the Task.",
@@ -14622,14 +14463,11 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
               "paid",
             ],
             "availability": "pre-release",
-            "default": undefined,
             "docs": "**Note: This is a Paid Tier feature.** Provide additional domain specific input to the LLM so that it is able to reference user specific information when executing the Task. Examples of this could be a product catalogue, terms and conditions or a user manual.",
             "type": "optional<TaskRAG>",
-            "validation": undefined,
           },
           "system_prompt": "unknown",
           "task_forwarder_id": {
-            "default": undefined,
             "docs": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
             "type": "optional<string>",
             "validation": {
@@ -15262,26 +15100,20 @@ exports[`rightbrain rightbrain simple 1`] = `
               "body": {
                 "properties": {
                   "add": {
-                    "default": undefined,
                     "docs": "A list of chat roles to grant to the member.
 
 Roles in this list are applied to the member AFTER any removals specified in \`remove\`.
 
 This may be combined with \`remove_all\` to replace the member's entire role list.",
                     "type": "optional<list<ChatIamMemberRoleUpdateAddItem>>",
-                    "validation": undefined,
                   },
                   "remove": {
-                    "default": undefined,
                     "docs": "A list of chat roles to revoke from the member.",
                     "type": "optional<list<ChatIamMemberRoleUpdateRemoveItem>>",
-                    "validation": undefined,
                   },
                   "remove_all": {
-                    "default": undefined,
                     "docs": "Removes all existing roles from the member. This may be combined with \`add\` to replace all existing roles that the member holds.",
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -15389,28 +15221,25 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "chat_guardrails": {
-                    "default": undefined,
                     "docs": "Conversational Guardrails can be defined to run against Chat \`input\` (i.e. the users query) or on Chat \`output\` (i.e. the LLM output)",
                     "type": "optional<root.ConversationalGuardrails>",
-                    "validation": undefined,
                   },
                   "chat_system_commands": "optional<list<string>>",
                   "knn": {
                     "default": 5,
-                    "docs": undefined,
                     "type": "optional<integer>",
-                    "validation": undefined,
                   },
-                  "llm": "optional<Llm>",
+                  "llm": {
+                    "default": "gpt-3.5-turbo",
+                    "type": "optional<Llm>",
+                  },
                   "query_expansion": {
                     "default": false,
                     "docs": "Enable query expansion. Uses an LLM to generate multiple rephrasing of the original query for better broad spectrum vector retrieval",
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "temperature": {
                     "default": 0.5,
-                    "docs": undefined,
                     "type": "optional<double>",
                     "validation": {
                       "exclusiveMax": undefined,
@@ -15523,6 +15352,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           ],
         },
         "Llm": {
+          "default": "gpt-3.5-turbo",
           "enum": [
             {
               "name": "Gpt4O",
@@ -16127,26 +15957,20 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "add": {
-                    "default": undefined,
                     "docs": "A list of collection roles to grant to the member.
 
 Roles in this list are applied to the member AFTER any removals specified in \`remove\`.
 
 This may be combined with \`remove_all\` to replace the member's entire role list.",
                     "type": "optional<list<CollectionIamMemberRoleUpdateAddItem>>",
-                    "validation": undefined,
                   },
                   "remove": {
-                    "default": undefined,
                     "docs": "A list of collection roles to revoke from the member.",
                     "type": "optional<list<CollectionIamMemberRoleUpdateRemoveItem>>",
-                    "validation": undefined,
                   },
                   "remove_all": {
-                    "default": undefined,
                     "docs": "Removes all existing roles from the member. This may be combined with \`add\` to replace all existing roles that the member holds.",
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -16615,9 +16439,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                 "properties": {
                   "category": {
                     "default": "blog",
-                    "docs": undefined,
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "title": "string",
                 },
@@ -20353,26 +20175,20 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "add": {
-                    "default": undefined,
                     "docs": "A list of document roles to grant to the member.
 
 Roles in this list are applied to the member AFTER any removals specified in \`remove\`.
 
 This may be combined with \`remove_all\` to replace the member's entire role list.",
                     "type": "optional<list<DocumentIamMemberRoleUpdateAddItem>>",
-                    "validation": undefined,
                   },
                   "remove": {
-                    "default": undefined,
                     "docs": "A list of document roles to revoke from the member.",
                     "type": "optional<list<DocumentIamMemberRoleUpdateRemoveItem>>",
-                    "validation": undefined,
                   },
                   "remove_all": {
-                    "default": undefined,
                     "docs": "Removes all existing roles from the member. This may be combined with \`add\` to replace all existing roles that the member holds.",
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -20530,8 +20346,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "name": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": undefined,
@@ -21317,8 +21131,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "contact_email": {
-                    "default": undefined,
-                    "docs": undefined,
                     "type": "optional<string>",
                     "validation": {
                       "format": "email",
@@ -21574,26 +21386,20 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "add": {
-                    "default": undefined,
                     "docs": "A list of organization roles to grant to the member.
 
 Roles in this list are applied to the member AFTER any removals specified in \`remove\`.
 
 This may be combined with \`remove_all\` to replace the member's entire role list.",
                     "type": "optional<list<OrganizationIamMemberRoleUpdateAddItem>>",
-                    "validation": undefined,
                   },
                   "remove": {
-                    "default": undefined,
                     "docs": "A list of organization roles to revoke from the member.",
                     "type": "optional<list<OrganizationIamMemberRoleUpdateRemoveItem>>",
-                    "validation": undefined,
                   },
                   "remove_all": {
-                    "default": undefined,
                     "docs": "Removes all existing roles from the member. This may be combined with \`add\` to replace all existing roles that the member holds.",
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -22006,26 +21812,20 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "add": {
-                    "default": undefined,
                     "docs": "A list of project roles to grant to the member.
 
 Roles in this list are applied to the member AFTER any removals specified in \`remove\`.
 
 This may be combined with \`remove_all\` to replace the member's entire role list.",
                     "type": "optional<list<ProjectIamMemberRoleUpdateAddItem>>",
-                    "validation": undefined,
                   },
                   "remove": {
-                    "default": undefined,
                     "docs": "A list of project roles to revoke from the member.",
                     "type": "optional<list<ProjectIamMemberRoleUpdateRemoveItem>>",
-                    "validation": undefined,
                   },
                   "remove_all": {
-                    "default": undefined,
                     "docs": "Removes all existing roles from the member. This may be combined with \`add\` to replace all existing roles that the member holds.",
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -22195,20 +21995,19 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                   "chat_system_commands": "optional<list<string>>",
                   "knn": {
                     "default": 4,
-                    "docs": undefined,
                     "type": "optional<integer>",
-                    "validation": undefined,
                   },
-                  "llm": "optional<Llm>",
+                  "llm": {
+                    "default": "gpt-3.5-turbo",
+                    "type": "optional<Llm>",
+                  },
                   "query_expansion": {
                     "default": false,
                     "docs": "Enable query expansion. Uses an LLM to generate multiple rephrasing of the original query for better broad spectrum vector retrieval",
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "temperature": {
                     "default": 0.5,
-                    "docs": undefined,
                     "type": "optional<double>",
                     "validation": {
                       "exclusiveMax": undefined,
@@ -22282,6 +22081,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
       },
       "types": {
         "Llm": {
+          "default": "gpt-3.5-turbo",
           "enum": [
             {
               "name": "Gpt4O",
@@ -22543,7 +22343,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                 "properties": {
                   "max_crawl_depth": {
                     "default": 3,
-                    "docs": undefined,
                     "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
@@ -22699,22 +22498,16 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "config": {
-                    "default": undefined,
                     "docs": "Configuration parameters for the Task Forwarder such as a \`destination\` URL.",
                     "type": "optional<root.TaskForwarderConfig>",
-                    "validation": undefined,
                   },
                   "config_sensitive": {
-                    "default": undefined,
                     "docs": "Sensitive parameters for the Task Forwarder such as a \`signing_key\`.",
                     "type": "optional<root.TaskForwarderSensitiveConfig>",
-                    "validation": undefined,
                   },
                   "description": {
-                    "default": undefined,
                     "docs": "Additional details about the Task Forwarder's purpose or configuration.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "name": {
                     "docs": "A descriptive name for the Task Forwarder.",
@@ -22931,28 +22724,20 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "config": {
-                    "default": undefined,
                     "docs": "Configuration parameters for the Task Forwarder such as a \`destination\` URL.",
                     "type": "optional<root.TaskForwarderConfig>",
-                    "validation": undefined,
                   },
                   "config_sensitive": {
-                    "default": undefined,
                     "docs": "Sensitive parameters for the Task Forwarder such as a \`signing_key\`.",
                     "type": "optional<root.TaskForwarderSensitiveConfig>",
-                    "validation": undefined,
                   },
                   "description": {
-                    "default": undefined,
                     "docs": "Additional details about the Task Forwarder's purpose or configuration.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "name": {
-                    "default": undefined,
                     "docs": "A descriptive name for the Task Forwarder.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -23064,10 +22849,8 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "description": {
-                    "default": undefined,
                     "docs": "A longer description of the Task for internal reference.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "enabled": {
                     "docs": "When \`true\` the Task is active and callable. \`false\` denotes the Task is not yet operational.",
@@ -23077,13 +22860,10 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     "default": false,
                     "docs": "When \`true\` it requires an image to be sent in the Task Run request.",
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "llm_config": {
-                    "default": undefined,
                     "docs": "Specific configuration parameters for the LLM model.",
                     "type": "optional<root.TaskLLMConfig>",
-                    "validation": undefined,
                   },
                   "llm_model": {
                     "docs": "The LLM model to use for the Task.",
@@ -23107,7 +22887,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                   },
                   "system_prompt": "unknown",
                   "task_forwarder_id": {
-                    "default": undefined,
                     "docs": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
                     "type": "optional<string>",
                     "validation": {
@@ -23208,46 +22987,32 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "description": {
-                    "default": undefined,
                     "docs": "A longer description of the Task for internal reference.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "enabled": {
-                    "default": undefined,
                     "docs": "When \`true\` the Task is active and callable. \`false\` denotes the Task is not yet operational.",
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "image_required": {
-                    "default": undefined,
                     "docs": "When \`true\` it requires an image to be sent in the Task Run request.",
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                   "llm_config": {
-                    "default": undefined,
                     "docs": "Specific configuration parameters for the LLM model.",
                     "type": "optional<root.TaskLLMConfig>",
-                    "validation": undefined,
                   },
                   "llm_model": {
-                    "default": undefined,
                     "docs": "The LLM model to use for the Task.",
                     "type": "optional<TaskUpdateLlmModel>",
-                    "validation": undefined,
                   },
                   "name": {
-                    "default": undefined,
                     "docs": "A name or reference for the Task.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "output_format": {
-                    "default": undefined,
                     "docs": "This gives control over the structure of how the Task responds. Supports shorthand notation or an object with \`type\` can be specified for each attribute. In most instances, the LLM will be able to generate the desired output into the relevant property, but an optional \`description\` can be passed to provide it with additional context.",
                     "type": "optional<map<string, optional<TaskUpdateOutputFormatValue>>>",
-                    "validation": undefined,
                   },
                   "rag": {
                     "audiences": [
@@ -23259,7 +23024,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                   },
                   "system_prompt": "optional<unknown>",
                   "task_forwarder_id": {
-                    "default": undefined,
                     "docs": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
                     "type": "optional<string>",
                     "validation": {
@@ -23911,26 +23675,20 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "add": {
-                    "default": undefined,
                     "docs": "A list of task roles to grant to the member.
 
 Roles in this list are applied to the member AFTER any removals specified in \`remove\`.
 
 This may be combined with \`remove_all\` to replace the member's entire role list.",
                     "type": "optional<list<TaskIamMemberRoleUpdateAddItem>>",
-                    "validation": undefined,
                   },
                   "remove": {
-                    "default": undefined,
                     "docs": "A list of task roles to revoke from the member.",
                     "type": "optional<list<TaskIamMemberRoleUpdateRemoveItem>>",
-                    "validation": undefined,
                   },
                   "remove_all": {
-                    "default": undefined,
                     "docs": "Removes all existing roles from the member. This may be combined with \`add\` to replace all existing roles that the member holds.",
                     "type": "optional<boolean>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -24389,9 +24147,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "description": "optional<string>",
           "documents_have_been_modified": {
             "default": false,
-            "docs": undefined,
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "id": {
             "type": "string",
@@ -24411,28 +24167,25 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "chat_guardrails": {
-            "default": undefined,
             "docs": "Conversational Guardrails can be defined to run against Chat \`input\` (i.e. the users query) or on Chat \`output\` (i.e. the LLM output)",
             "type": "optional<ConversationalGuardrails>",
-            "validation": undefined,
           },
           "chat_system_commands": "optional<list<string>>",
           "knn": {
             "default": 5,
-            "docs": undefined,
             "type": "optional<integer>",
-            "validation": undefined,
           },
-          "llm": "optional<Llm>",
+          "llm": {
+            "default": "gpt-3.5-turbo",
+            "type": "optional<Llm>",
+          },
           "query_expansion": {
             "default": false,
             "docs": "Enable query expansion. Uses an LLM to generate multiple rephrasing of the original query for better broad spectrum vector retrieval",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "temperature": {
             "default": 0.5,
-            "docs": undefined,
             "type": "optional<double>",
             "validation": {
               "exclusiveMax": undefined,
@@ -24449,8 +24202,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "properties": {
           "chunks": "integer",
           "connection_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -24659,7 +24410,10 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "domain": "optional<string>",
           "favourable_words": "optional<string>",
           "keywords": "optional<string>",
-          "language": "optional<Language>",
+          "language": {
+            "default": "english_british",
+            "type": "optional<Language>",
+          },
           "num_sections": "optional<integer>",
           "purpose": "optional<string>",
           "title": "string",
@@ -24688,16 +24442,12 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "input": {
-            "default": undefined,
             "docs": "List of valid Input Conversational Guardrails to enable",
             "type": "optional<list<InputConversationalGuardrailDefinition>>",
-            "validation": undefined,
           },
           "output": {
-            "default": undefined,
             "docs": "List of valid Output Conversational Guardrails to enable",
             "type": "optional<list<OutputConversationalGuardrailDefinition>>",
-            "validation": undefined,
           },
         },
       },
@@ -24729,8 +24479,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "properties": {
           "config": "optional<map<string, unknown>>",
           "created_by": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -24740,8 +24488,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
           "datasource_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -24761,8 +24507,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           },
           "private": "optional<boolean>",
           "project_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -24773,9 +24517,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           },
           "token": {
             "default": "",
-            "docs": undefined,
             "type": "optional<string>",
-            "validation": undefined,
           },
         },
       },
@@ -24833,7 +24575,10 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           },
           "modified": "datetime",
           "run_output": "optional<map<string, unknown>>",
-          "status": "optional<Status>",
+          "status": {
+            "default": "pending",
+            "type": "optional<Status>",
+          },
           "task_id": "optional<string>",
         },
       },
@@ -24889,34 +24634,27 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "avatar_url": {
-            "default": undefined,
             "docs": "If avatar of the member, if it is supported by their subject type.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "member": {
             "docs": "The member identifier string, the format of which is '<subject_type>:<subject_id>'",
             "type": "string",
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the member.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "roles": {
-            "default": undefined,
             "docs": "A list of roles that the member holds on an entity.
 
 Some entities, such as Organizations, may contain members that exist without any roles.",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "total_subjects": {
             "default": 1,
             "docs": "The total number of subjects that the member represents, which may be a value other than \`1\` if the member is not a User.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
         },
       },
@@ -25044,8 +24782,6 @@ Some entities, such as Organizations, may contain members that exist without any
         "properties": {
           "avatar_url": "optional<string>",
           "email": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "email",
@@ -25056,8 +24792,6 @@ Some entities, such as Organizations, may contain members that exist without any
           },
           "name": "optional<string>",
           "org_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -25067,8 +24801,6 @@ Some entities, such as Organizations, may contain members that exist without any
             },
           },
           "project_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -25086,8 +24818,6 @@ Some entities, such as Organizations, may contain members that exist without any
           "bio": "optional<string>",
           "ctx": "optional<map<string, unknown>>",
           "email": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "email",
@@ -25097,8 +24827,6 @@ Some entities, such as Organizations, may contain members that exist without any
             },
           },
           "flow_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -25147,6 +24875,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
       },
       "Language": {
+        "default": "english_british",
         "enum": [
           "english_british",
           "english_american",
@@ -25159,6 +24888,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         ],
       },
       "Llm": {
+        "default": "gpt-3.5-turbo",
         "enum": [
           {
             "name": "Gpt4O",
@@ -25287,9 +25017,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "redirect_uris": "list<string>",
           "scope": {
             "default": "",
-            "docs": undefined,
             "type": "optional<string>",
-            "validation": undefined,
           },
         },
       },
@@ -25312,9 +25040,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "size": "optional<string>",
           "synced": {
             "default": false,
-            "docs": undefined,
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "tags": "optional<list<ObjectTags>>",
           "type": "optional<ObjectType>",
@@ -25463,10 +25189,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "default": undefined,
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
-            "validation": undefined,
           },
           "results": {
             "docs": "The list of items returned for the current page.",
@@ -25478,10 +25202,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "default": undefined,
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
-            "validation": undefined,
           },
           "results": {
             "docs": "The list of items returned for the current page.",
@@ -25493,10 +25215,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "default": undefined,
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
-            "validation": undefined,
           },
           "results": {
             "docs": "The list of items returned for the current page.",
@@ -25508,10 +25228,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "default": undefined,
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
-            "validation": undefined,
           },
           "results": {
             "docs": "The list of items returned for the current page.",
@@ -25523,10 +25241,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "default": undefined,
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
-            "validation": undefined,
           },
           "results": {
             "docs": "The list of items returned for the current page.",
@@ -25538,10 +25254,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "default": undefined,
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
-            "validation": undefined,
           },
           "results": {
             "docs": "The list of items returned for the current page.",
@@ -25553,10 +25267,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "default": undefined,
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
-            "validation": undefined,
           },
           "results": {
             "docs": "The list of items returned for the current page.",
@@ -25568,10 +25280,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "default": undefined,
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
-            "validation": undefined,
           },
           "results": {
             "docs": "The list of items returned for the current page.",
@@ -25583,10 +25293,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "default": undefined,
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
-            "validation": undefined,
           },
           "results": {
             "docs": "The list of items returned for the current page.",
@@ -25598,10 +25306,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "default": undefined,
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
-            "validation": undefined,
           },
           "results": {
             "docs": "The list of items returned for the current page.",
@@ -25613,10 +25319,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "default": undefined,
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
-            "validation": undefined,
           },
           "results": {
             "docs": "The list of items returned for the current page.",
@@ -25628,10 +25332,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "default": undefined,
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
-            "validation": undefined,
           },
           "results": {
             "docs": "The list of items returned for the current page.",
@@ -25643,22 +25345,16 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "has_next": {
-            "default": undefined,
             "docs": "Indicates whether there are more results available in the next page.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "next_cursor": {
-            "default": undefined,
             "docs": "A token used to retrieve the next page of results. If \`null\`, there are no more results.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "page_limit": {
-            "default": undefined,
             "docs": "The maximum number of items returned per page.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
         },
       },
@@ -25707,8 +25403,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
           "tasks_oauth_client_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -25726,20 +25420,19 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "chat_system_commands": "optional<list<string>>",
           "knn": {
             "default": 4,
-            "docs": undefined,
             "type": "optional<integer>",
-            "validation": undefined,
           },
-          "llm": "optional<Llm>",
+          "llm": {
+            "default": "gpt-3.5-turbo",
+            "type": "optional<Llm>",
+          },
           "query_expansion": {
             "default": false,
             "docs": "Enable query expansion. Uses an LLM to generate multiple rephrasing of the original query for better broad spectrum vector retrieval",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "temperature": {
             "default": 0.5,
-            "docs": undefined,
             "type": "optional<double>",
             "validation": {
               "exclusiveMax": undefined,
@@ -25776,8 +25469,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
           "tasks_oauth_client_id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -25832,10 +25523,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "datetime",
           },
           "description": {
-            "default": undefined,
             "docs": "A longer description of the Task for internal reference.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "enabled": {
             "docs": "When \`true\` the Task is active and callable. \`false\` denotes the Task is not yet operational.",
@@ -25879,26 +25568,20 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "config": {
-            "default": undefined,
             "docs": "Configuration parameters for the Task Forwarder such as a \`destination\` URL.",
             "type": "optional<TaskForwarderConfig>",
-            "validation": undefined,
           },
           "config_sensitive": {
-            "default": undefined,
             "docs": "Sensitive parameters for the Task Forwarder such as a \`signing_key\`.",
             "type": "optional<TaskForwarderSensitiveConfig>",
-            "validation": undefined,
           },
           "created": {
             "docs": "When the Task Forwarder was created.",
             "type": "datetime",
           },
           "description": {
-            "default": undefined,
             "docs": "Additional details about the Task Forwarder's purpose or configuration.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "id": {
             "docs": "The unique identifier of the Task Forwarder.",
@@ -25987,7 +25670,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "default": false,
             "docs": "When \`true\` the Revision is the currently active version and will be activated when the Task Run is executed.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "created": {
             "docs": "When the Task was created.",
@@ -26007,13 +25689,10 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "default": false,
             "docs": "When \`true\` it requires an image to be sent in the Task Run request.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "llm_config": {
-            "default": undefined,
             "docs": "Specific configuration parameters for the LLM model.",
             "type": "optional<TaskLLMConfig>",
-            "validation": undefined,
           },
           "llm_model": {
             "docs": "The LLM model to use for the Task.",
@@ -26032,14 +25711,11 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
               "paid",
             ],
             "availability": "pre-release",
-            "default": undefined,
             "docs": "**Note: This is a Paid Tier feature.** Provide additional domain specific input to the LLM so that it is able to reference user specific information when executing the Task. Examples of this could be a product catalogue, terms and conditions or a user manual.",
             "type": "optional<TaskRAG>",
-            "validation": undefined,
           },
           "system_prompt": "unknown",
           "task_forwarder_id": {
-            "default": undefined,
             "docs": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
             "type": "optional<string>",
             "validation": {

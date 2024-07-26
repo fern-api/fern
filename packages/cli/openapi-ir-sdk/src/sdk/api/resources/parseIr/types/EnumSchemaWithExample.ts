@@ -9,6 +9,7 @@ export interface EnumSchemaWithExample
         FernOpenapiIr.WithName,
         FernOpenapiIr.WithSdkGroupName,
         FernOpenapiIr.WithAvailability {
+    default: FernOpenapiIr.EnumValue | undefined;
     values: FernOpenapiIr.EnumValue[];
     example: string | undefined;
 }

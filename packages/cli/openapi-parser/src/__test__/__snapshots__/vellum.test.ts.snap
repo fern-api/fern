@@ -3931,6 +3931,7 @@ Upload a document to be indexed and used for search.
   "schemas": {
     "BlockTypeEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`CHAT_MESSAGE\` - CHAT_MESSAGE
 * \`CHAT_HISTORY\` - CHAT_HISTORY
 * \`JINJA\` - JINJA
@@ -4104,6 +4105,7 @@ Upload a document to be indexed and used for search.
     },
     "ChatMessageRole": {
       "availability": null,
+      "default": null,
       "description": "* \`SYSTEM\` - System
 * \`ASSISTANT\` - Assistant
 * \`USER\` - User
@@ -4252,6 +4254,7 @@ Upload a document to be indexed and used for search.
     },
     "ContentType": {
       "availability": null,
+      "default": null,
       "description": "* \`STRING\` - STRING
 * \`JSON\` - JSON",
       "generatedName": "ContentType",
@@ -4669,6 +4672,7 @@ Upload a document to be indexed and used for search.
     },
     "DeploymentReadStatusEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`ACTIVE\` - Active
 * \`INACTIVE\` - Inactive
 * \`ARCHIVED\` - Archived",
@@ -5296,6 +5300,7 @@ Upload a document to be indexed and used for search.
     },
     "DocumentIndexStatus": {
       "availability": null,
+      "default": null,
       "description": "* \`ACTIVE\` - Active
 * \`ARCHIVED\` - Archived",
       "generatedName": "DocumentIndexStatus",
@@ -5545,6 +5550,7 @@ Upload a document to be indexed and used for search.
     },
     "EnvironmentEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`DEVELOPMENT\` - Development
 * \`STAGING\` - Staging
 * \`PRODUCTION\` - Production",
@@ -5884,6 +5890,7 @@ Upload a document to be indexed and used for search.
     },
     "FinishReasonEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`LENGTH\` - LENGTH
 * \`STOP\` - STOP
 * \`UNKNOWN\` - UNKNOWN",
@@ -6794,6 +6801,7 @@ Upload a document to be indexed and used for search.
     },
     "IndexingStateEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`AWAITING_PROCESSING\` - Awaiting Processing
 * \`QUEUED\` - Queued
 * \`INDEXING\` - Indexing
@@ -6873,6 +6881,7 @@ Upload a document to be indexed and used for search.
     },
     "LogprobsEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`ALL\` - ALL
 * \`NONE\` - NONE",
       "generatedName": "LogprobsEnum",
@@ -6910,6 +6919,7 @@ Upload a document to be indexed and used for search.
     },
     "ModelTypeEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`GENERATE\` - Generate
 * \`CLASSIFY\` - Classify",
       "generatedName": "ModelTypeEnum",
@@ -7803,6 +7813,7 @@ Upload a document to be indexed and used for search.
     },
     "ModelVersionReadStatusEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`CREATING\` - Creating
 * \`READY\` - Ready
 * \`CREATION_FAILED\` - Creation Failed
@@ -8403,6 +8414,7 @@ Upload a document to be indexed and used for search.
     },
     "ProcessingStateEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`QUEUED\` - Queued
 * \`PROCESSING\` - Processing
 * \`PROCESSED\` - Processed
@@ -9597,6 +9609,7 @@ Upload a document to be indexed and used for search.
     },
     "ProviderEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`ANTHROPIC\` - Anthropic
 * \`COHERE\` - Cohere
 * \`GOOGLE\` - Google
@@ -11338,6 +11351,7 @@ Upload a document to be indexed and used for search.
     },
     "ScenarioInputTypeEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`TEXT\` - Text
 * \`CHAT_HISTORY\` - Chat History",
       "generatedName": "ScenarioInputTypeEnum",
@@ -13891,6 +13905,7 @@ Upload a document to be indexed and used for search.
     },
     "WorkflowExecutionEventErrorCode": {
       "availability": null,
+      "default": null,
       "description": "* \`WORKFLOW_INITIALIZATION\` - WORKFLOW_INITIALIZATION
 * \`NODE_EXECUTION\` - NODE_EXECUTION",
       "generatedName": "WorkflowExecutionEventErrorCode",
@@ -14380,6 +14395,7 @@ Upload a document to be indexed and used for search.
     },
     "WorkflowNodeResultEventState": {
       "availability": null,
+      "default": null,
       "description": "* \`INITIATED\` - INITIATED
 * \`STREAMING\` - STREAMING
 * \`FULFILLED\` - FULFILLED

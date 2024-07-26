@@ -8,7 +8,7 @@ namespace SeedTrace;
 public record RecordingResponseNotification
 {
     [JsonPropertyName("submissionId")]
-    public required Guid SubmissionId { get; init; }
+    public required string SubmissionId { get; init; }
 
     [JsonPropertyName("testCaseId")]
     public string? TestCaseId { get; init; }

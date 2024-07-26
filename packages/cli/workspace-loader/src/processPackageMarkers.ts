@@ -16,12 +16,17 @@ export declare namespace processPackageMarkers {
     export interface SuccessfulResult {
         didSucceed: true;
         packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>>;
-        importedDefinitions: Record<RelativeFilePath, FernDefinition>;
+        importedDefinitions: Record<RelativeFilePath, ImportedDefinition>;
     }
 
     export interface FailedResult {
         didSucceed: false;
         failures: Record<RelativeFilePath, WorkspaceLoader.DependencyFailure>;
+    }
+
+    export interface ImportedDefinition {
+        url: string | undefined;
+        definition: FernDefinition;
     }
 }
 
@@ -37,7 +42,7 @@ export async function processPackageMarkers({
     cliVersion: string;
 }): Promise<processPackageMarkers.Return> {
     const packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>> = {};
-    const importedDefinitions: Record<RelativeFilePath, FernDefinition> = {};
+    const importedDefinitions: Record<RelativeFilePath, processPackageMarkers.ImportedDefinition> = {};
     const failures: Record<RelativeFilePath, WorkspaceLoader.DependencyFailure> = {};
 
     await Promise.all(
@@ -63,14 +68,23 @@ export async function processPackageMarkers({
                         };
                     } else {
                         const loadDependencyResult = await loadDependency({
-                            dependencyName: packageMarker.contents.export,
+                            dependencyName:
+                                typeof packageMarker.contents.export === "string"
+                                    ? packageMarker.contents.export
+                                    : packageMarker.contents.export.dependency,
                             dependenciesConfiguration,
                             context,
                             rootApiFile: structuralValidationResult.rootApiFile.contents,
                             cliVersion
                         });
                         if (loadDependencyResult.didSucceed) {
-                            importedDefinitions[dirname(pathOfPackageMarker)] = loadDependencyResult.definition;
+                            importedDefinitions[dirname(pathOfPackageMarker)] = {
+                                definition: loadDependencyResult.definition,
+                                url:
+                                    typeof packageMarker.contents.export === "object"
+                                        ? packageMarker.contents.export.url
+                                        : undefined
+                            };
                         } else {
                             failures[pathOfPackageMarker] = loadDependencyResult.failure;
                         }

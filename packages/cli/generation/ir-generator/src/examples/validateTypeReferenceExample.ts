@@ -224,6 +224,8 @@ function validatePrimitiveExample({
 }): ExampleViolation[] {
     if (primitiveType.v2 != null) {
         return PrimitiveTypeV2._visit<ExampleViolation[]>(primitiveType.v2, {
+            uint: () => validateUint(example),
+            uint64: () => validateUint64(example),
             integer: (v2) =>
                 validateIntegerWithRules({
                     example,
@@ -248,6 +250,8 @@ function validatePrimitiveExample({
         });
     }
     return PrimitiveTypeV1._visit<ExampleViolation[]>(primitiveType.v1, {
+        uint: () => validateUint(example),
+        uint64: () => validateUint64(example),
         string: () => validateString(example),
         integer: () => validateInteger(example),
         double: () => validateDouble(example),
@@ -394,6 +398,14 @@ function validateStringWithRules({
 
 const validateString = createValidator((example) => typeof example === "string", "a string");
 const validateInteger = createValidator((example) => Number.isInteger(example), "an integer");
+const validateUint = createValidator(
+    (example) => Number.isInteger(example) && typeof example === "number" && example >= 0,
+    "a uint"
+);
+const validateUint64 = createValidator(
+    (example) => Number.isInteger(example) && typeof example === "number" && example >= 0,
+    "a uint64"
+);
 const validateDouble = createValidator((example) => typeof example === "number", "a double");
 const validateLong = createValidator((example) => Number.isInteger(example), "an integer");
 const validateBoolean = createValidator((example) => typeof example === "boolean", "a boolean");

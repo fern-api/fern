@@ -13,7 +13,7 @@
 <dd>
 
 ```python
-from seed.client import SeedNoEnvironment
+from seed import SeedNoEnvironment
 
 client = SeedNoEnvironment(
     token="YOUR_TOKEN",

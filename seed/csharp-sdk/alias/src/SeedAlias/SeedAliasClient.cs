@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using SeedAlias.Core;
 
@@ -13,6 +14,7 @@ public partial class SeedAliasClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
     }
@@ -20,7 +22,12 @@ public partial class SeedAliasClient
     public async Task GetAsync(string typeId)
     {
         await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = $"/{typeId}" }
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = $"/{typeId}"
+            }
         );
     }
 }

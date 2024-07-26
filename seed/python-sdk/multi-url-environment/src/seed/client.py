@@ -37,7 +37,7 @@ class SeedMultiUrlEnvironment:
 
     Examples
     --------
-    from seed.client import SeedMultiUrlEnvironment
+    from seed import SeedMultiUrlEnvironment
 
     client = SeedMultiUrlEnvironment(
         token="YOUR_TOKEN",
@@ -95,7 +95,7 @@ class AsyncSeedMultiUrlEnvironment:
 
     Examples
     --------
-    from seed.client import AsyncSeedMultiUrlEnvironment
+    from seed import AsyncSeedMultiUrlEnvironment
 
     client = AsyncSeedMultiUrlEnvironment(
         token="YOUR_TOKEN",

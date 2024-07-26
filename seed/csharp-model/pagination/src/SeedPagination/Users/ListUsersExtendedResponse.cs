@@ -17,5 +17,5 @@ public record ListUsersExtendedResponse
     public required UserListContainer Data { get; init; }
 
     [JsonPropertyName("next")]
-    public Guid? Next { get; init; }
+    public string? Next { get; init; }
 }

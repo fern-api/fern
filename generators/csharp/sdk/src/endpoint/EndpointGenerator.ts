@@ -75,6 +75,7 @@ export class EndpointGenerator {
                 }
                 writer.writeNodeStatement(
                     this.rawClient.makeRequest({
+                        baseUrl: this.getBaseURLForEndpoint({ endpoint }),
                         requestType: request?.getRequestType(),
                         clientReference: rawClientReference,
                         endpoint,
@@ -90,6 +91,18 @@ export class EndpointGenerator {
                 }
             })
         });
+    }
+
+    private getBaseURLForEndpoint({ endpoint }: { endpoint: HttpEndpoint }): csharp.CodeBlock {
+        if (endpoint.baseUrl != null && this.context.ir.environments?.environments.type === "multipleBaseUrls") {
+            const baseUrl = this.context.ir.environments?.environments.baseUrls.find(
+                (baseUrlWithId) => baseUrlWithId.id === endpoint.baseUrl
+            );
+            if (baseUrl != null) {
+                return csharp.codeblock(`_client.Options.Environment.${baseUrl.name.pascalCase.safeName}`);
+            }
+        }
+        return csharp.codeblock("_client.Options.BaseUrl");
     }
 
     private getEndpointRequest({

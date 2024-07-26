@@ -28,7 +28,7 @@ class SeedMultiLineDocs:
 
     Examples
     --------
-    from seed.client import SeedMultiLineDocs
+    from seed import SeedMultiLineDocs
 
     client = SeedMultiLineDocs(
         base_url="https://yourhost.com/path/to/api",
@@ -76,7 +76,7 @@ class AsyncSeedMultiLineDocs:
 
     Examples
     --------
-    from seed.client import AsyncSeedMultiLineDocs
+    from seed import AsyncSeedMultiLineDocs
 
     client = AsyncSeedMultiLineDocs(
         base_url="https://yourhost.com/path/to/api",

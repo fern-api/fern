@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using SeedValidation;
 using SeedValidation.Core;
@@ -14,6 +15,7 @@ public partial class SeedValidationClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
     }
@@ -23,6 +25,7 @@ public partial class SeedValidationClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/create",
                 Body = request
@@ -47,6 +50,7 @@ public partial class SeedValidationClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "",
                 Query = _query

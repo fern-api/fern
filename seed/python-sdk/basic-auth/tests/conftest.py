@@ -3,7 +3,7 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedBasicAuth, SeedBasicAuth
+from seed import AsyncSeedBasicAuth, SeedBasicAuth
 
 
 @pytest.fixture

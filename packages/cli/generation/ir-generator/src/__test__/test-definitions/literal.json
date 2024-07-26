@@ -771,7 +771,9 @@
                                         "packagePath": [],
                                         "file": null
                                     },
-                                    "typeId": "type_:SendResponse"
+                                    "typeId": "type_:SendResponse",
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -1896,7 +1898,9 @@
                                         "packagePath": [],
                                         "file": null
                                     },
-                                    "typeId": "type_:SendResponse"
+                                    "typeId": "type_:SendResponse",
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -2983,7 +2987,9 @@
                                         "packagePath": [],
                                         "file": null
                                     },
-                                    "typeId": "type_:SendResponse"
+                                    "typeId": "type_:SendResponse",
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -3879,7 +3885,9 @@
                                         "packagePath": [],
                                         "file": null
                                     },
-                                    "typeId": "type_:SendResponse"
+                                    "typeId": "type_:SendResponse",
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }
@@ -4785,7 +4793,9 @@
                                     }
                                 }
                             },
-                            "typeId": "type_reference:SendRequest"
+                            "typeId": "type_reference:SendRequest",
+                            "default": null,
+                            "inline": null
                         },
                         "contentType": null,
                         "docs": null
@@ -4859,7 +4869,9 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_reference:SendRequest"
+                                    "typeId": "type_reference:SendRequest",
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "contentType": null,
                                 "docs": null
@@ -4917,7 +4929,9 @@
                                         "packagePath": [],
                                         "file": null
                                     },
-                                    "typeId": "type_:SendResponse"
+                                    "typeId": "type_:SendResponse",
+                                    "default": null,
+                                    "inline": null
                                 },
                                 "docs": null
                             }

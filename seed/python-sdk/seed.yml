@@ -165,6 +165,10 @@ allowedFailures:
   - extra-properties
   - trace
   - circular-references-advanced
+  # Remove the 'validation' fixture as soon as a CLI is released with
+  # default enum value support (i.e. via 'fern check').
+  - validation:no-custom-config
+  - validation:with-defaults
   # === Allowed failures due to unit testing ===
   - pagination
   # ===========================================

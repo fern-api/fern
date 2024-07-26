@@ -11,12 +11,13 @@ export async function visitAllDefinitionFiles(
     visitor: (
         filepath: RelativeFilePath,
         definitionFile: DefinitionFileSchema,
-        metadata: { isPackageMarker: boolean }
+        metadata: { isPackageMarker: boolean; defaultUrl: string | undefined }
     ) => void | Promise<void>
 ): Promise<void> {
     for (const [relativeFilepath, file] of entries(getAllDefinitionFiles(workspace.definition))) {
         await visitor(relativeFilepath, file.contents, {
-            isPackageMarker: path.basename(relativeFilepath) === FERN_PACKAGE_MARKER_FILENAME
+            isPackageMarker: path.basename(relativeFilepath) === FERN_PACKAGE_MARKER_FILENAME,
+            defaultUrl: file.defaultUrl
         });
     }
 }

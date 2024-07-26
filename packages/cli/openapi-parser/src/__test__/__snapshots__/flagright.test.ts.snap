@@ -6868,6 +6868,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     },
     "AcquisitionChannel": {
       "availability": null,
+      "default": null,
       "description": "Model for User acquisition channel",
       "generatedName": "AcquisitionChannel",
       "groupName": null,
@@ -8743,6 +8744,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Brand of Card",
               "generatedName": "CardDetailsCardBrand",
               "groupName": null,
@@ -8860,6 +8862,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Funding of Card",
               "generatedName": "CardDetailsCardFunding",
               "groupName": null,
@@ -8985,6 +8988,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "CardDetailsCardType",
               "groupName": null,
@@ -9658,6 +9662,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": "Status of a case. E.g. Open, Closed etc.",
             "generatedName": "CaseManagementEventCaseStatus",
             "groupName": null,
@@ -9727,6 +9732,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": "Case status reason. E.g. Closed & False Positive, Closed & Investigation Completed etc.",
             "generatedName": "CaseManagementEventCaseStatusReason",
             "groupName": null,
@@ -10041,6 +10047,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "CheckDetailsDeliveryStatus",
               "groupName": null,
@@ -10428,6 +10435,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Segmentation of the business user",
               "generatedName": "CompanyGeneralDetailsUserSegment",
               "groupName": null,
@@ -11289,6 +11297,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     },
     "CountryCode": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "CountryCode",
       "groupName": null,
@@ -14549,6 +14558,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     },
     "CurrencyCode": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "CurrencyCode",
       "groupName": null,
@@ -19686,6 +19696,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     },
     "KYCStatus": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "KycStatus",
       "groupName": null,
@@ -20701,6 +20712,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     },
     "ListSubtype": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "ListSubtype",
       "groupName": null,
@@ -20854,6 +20866,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     },
     "ListType": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "ListType",
       "groupName": null,
@@ -21014,6 +21027,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": "Type of transaction",
             "generatedName": "MpesaDetailsTransactionType",
             "groupName": null,
@@ -21194,6 +21208,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     },
     "PaymentMethod": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "PaymentMethod",
       "groupName": null,
@@ -21475,6 +21490,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     },
     "RiskLevel": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "RiskLevel",
       "groupName": null,
@@ -21646,6 +21662,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     },
     "RuleAction": {
       "availability": null,
+      "default": null,
       "description": "Model for rule action if a rule is hit. This is returned in the API response and can be configured on Console by operational accounts like a Compliance Analyst",
       "generatedName": "RuleAction",
       "groupName": null,
@@ -21769,6 +21786,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     },
     "RuleHitDirection": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "RuleHitDirection",
       "groupName": null,
@@ -21909,6 +21927,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     },
     "RuleLabels": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "RuleLabels",
       "groupName": null,
@@ -22075,6 +22094,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     },
     "RuleNature": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "RuleNature",
       "groupName": null,
@@ -22528,6 +22548,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     },
     "SanctionsDetailsEntityType": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "SanctionsDetailsEntityType",
       "groupName": null,
@@ -24060,6 +24081,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     },
     "TransactionState": {
       "availability": null,
+      "default": null,
       "description": "Model for transaction states. E.g. Processing, Refunded, Successful etc.",
       "generatedName": "TransactionState",
       "groupName": null,
@@ -24174,6 +24196,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     },
     "TransactionType": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "TransactionType",
       "groupName": null,
@@ -25220,6 +25243,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Gender of the individual - Male, Female or Non-Binary",
               "generatedName": "UserDetailsGender",
               "groupName": null,
@@ -25567,6 +25591,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "UserOptionalUserSegment",
               "groupName": null,
@@ -25674,6 +25699,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     },
     "UserRegistrationStatus": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "UserRegistrationStatus",
       "groupName": null,
@@ -25710,6 +25736,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     },
     "UserState": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "UserState",
       "groupName": null,
@@ -26330,6 +26357,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     },
     "WebhookEventType": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "WebhookEventType",
       "groupName": null,

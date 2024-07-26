@@ -28,7 +28,7 @@ class SeedMixedCase:
 
     Examples
     --------
-    from seed.client import SeedMixedCase
+    from seed import SeedMixedCase
 
     client = SeedMixedCase(
         base_url="https://yourhost.com/path/to/api",
@@ -76,7 +76,7 @@ class AsyncSeedMixedCase:
 
     Examples
     --------
-    from seed.client import AsyncSeedMixedCase
+    from seed import AsyncSeedMixedCase
 
     client = AsyncSeedMixedCase(
         base_url="https://yourhost.com/path/to/api",

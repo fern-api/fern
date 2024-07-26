@@ -38,12 +38,7 @@ exports[`open api parser webhooks parse open api 1`] = `
             "nameOverride": null,
             "schema": {
               "default": null,
-              "exclusiveMaximum": null,
-              "exclusiveMinimum": null,
-              "maximum": null,
-              "minimum": null,
-              "multipleOf": null,
-              "type": "int",
+              "type": "int64",
             },
             "type": "primitive",
           },

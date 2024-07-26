@@ -29,7 +29,7 @@ public record Type
     public required DateOnly Seven { get; init; }
 
     [JsonPropertyName("eight")]
-    public required Guid Eight { get; init; }
+    public required string Eight { get; init; }
 
     [JsonPropertyName("nine")]
     public required string Nine { get; init; }
@@ -57,7 +57,7 @@ public record Type
         new List<Dictionary<string, int>>();
 
     [JsonPropertyName("seventeen")]
-    public IEnumerable<Guid> Seventeen { get; init; } = new List<Guid>();
+    public IEnumerable<string> Seventeen { get; init; } = new List<string>();
 
     [JsonPropertyName("eighteen")]
     public required string Eighteen { get; init; }

@@ -126,6 +126,16 @@ export function visitRawTypeReference<R>({
                 v1: PrimitiveTypeV1.BigInteger,
                 v2: undefined
             });
+        case RawPrimitiveType.uint:
+            return visitor.primitive({
+                v1: PrimitiveTypeV1.Uint,
+                v2: undefined
+            });
+        case RawPrimitiveType.uint64:
+            return visitor.primitive({
+                v1: PrimitiveTypeV1.Uint64,
+                v2: undefined
+            });
         case RawPrimitiveType.unknown:
             return visitor.unknown();
     }

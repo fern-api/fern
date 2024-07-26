@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using SeedPackageYml;
 using SeedPackageYml.Core;
@@ -14,6 +15,7 @@ public partial class SeedPackageYmlClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Service = new ServiceClient(_client);
@@ -26,6 +28,7 @@ public partial class SeedPackageYmlClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"/{id}/",
                 Body = request

@@ -2,7 +2,7 @@
 
 import typing
 
-from seed.client import AsyncSeedPackageYml, SeedPackageYml
+from seed import AsyncSeedPackageYml, SeedPackageYml
 
 from .utilities import validate_response
 

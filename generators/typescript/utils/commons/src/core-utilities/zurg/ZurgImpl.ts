@@ -13,6 +13,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
             ignoreGlob: "**/__test__"
         },
         unitTests: {
+            fromDirectory: RelativeFilePath.of("__test__"),
             findAndReplace: {
                 "../../builders": "../../../../src/core/schemas/builders",
                 "../builders": "../../../src/core/schemas/builders",

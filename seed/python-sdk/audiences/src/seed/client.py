@@ -29,7 +29,7 @@ class SeedAudiences:
 
     Examples
     --------
-    from seed.client import SeedAudiences
+    from seed import SeedAudiences
 
     client = SeedAudiences(
         base_url="https://yourhost.com/path/to/api",
@@ -78,7 +78,7 @@ class AsyncSeedAudiences:
 
     Examples
     --------
-    from seed.client import AsyncSeedAudiences
+    from seed import AsyncSeedAudiences
 
     client = AsyncSeedAudiences(
         base_url="https://yourhost.com/path/to/api",

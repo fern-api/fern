@@ -430,6 +430,8 @@ types:
     union:
       int: IntSchema
       int64: LongSchema
+      uint: {}
+      uint64: {}
       float: {}
       double: DoubleSchema
       string: StringSchema
@@ -446,6 +448,25 @@ types:
       exclusiveMinimum: optional<boolean>
       exclusiveMaximum: optional<boolean>
       multipleOf: optional<integer>
+
+  # TODO: Refactor the following once the uint types are available.
+  #
+  # UintSchema:
+  #   properties:
+  #     default: optional<uint>
+  #     minimum: optional<uint>
+  #     maximum: optional<uint>
+  #     exclusiveMinimum: optional<boolean>
+  #     exclusiveMaximum: optional<boolean>
+  #     multipleOf: optional<uint>
+  # Uint64Schema:
+  #   properties:
+  #     default: optional<uint64>
+  #     minimum: optional<uint64>
+  #     maximum: optional<uint64>
+  #     exclusiveMinimum: optional<boolean>
+  #     exclusiveMaximum: optional<boolean>
+  #     multipleOf: optional<uint64>
 
   DoubleSchema:
     properties:
@@ -578,6 +599,7 @@ types:
       - commons.WithSdkGroupName
       - commons.WithAvailability
     properties:
+      default: optional<EnumValue>
       values: list<EnumValue>
 
   EnumValue:

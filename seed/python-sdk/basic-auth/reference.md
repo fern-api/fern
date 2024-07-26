@@ -27,7 +27,7 @@ GET request with basic auth scheme
 <dd>
 
 ```python
-from seed.client import SeedBasicAuth
+from seed import SeedBasicAuth
 
 client = SeedBasicAuth(
     username="YOUR_USERNAME",
@@ -89,7 +89,7 @@ POST request with basic auth scheme
 <dd>
 
 ```python
-from seed.client import SeedBasicAuth
+from seed import SeedBasicAuth
 
 client = SeedBasicAuth(
     username="YOUR_USERNAME",

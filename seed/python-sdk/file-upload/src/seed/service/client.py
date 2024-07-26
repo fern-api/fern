@@ -65,7 +65,7 @@ class ServiceClient:
 
         Examples
         --------
-        from seed.client import SeedFileUpload
+        from seed import SeedFileUpload
 
         client = SeedFileUpload(
             base_url="https://yourhost.com/path/to/api",
@@ -109,7 +109,7 @@ class ServiceClient:
 
         Examples
         --------
-        from seed.client import SeedFileUpload
+        from seed import SeedFileUpload
 
         client = SeedFileUpload(
             base_url="https://yourhost.com/path/to/api",
@@ -163,7 +163,7 @@ class ServiceClient:
 
         Examples
         --------
-        from seed.client import SeedFileUpload
+        from seed import SeedFileUpload
 
         client = SeedFileUpload(
             base_url="https://yourhost.com/path/to/api",
@@ -254,7 +254,7 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedFileUpload
+        from seed import AsyncSeedFileUpload
 
         client = AsyncSeedFileUpload(
             base_url="https://yourhost.com/path/to/api",
@@ -306,7 +306,7 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedFileUpload
+        from seed import AsyncSeedFileUpload
 
         client = AsyncSeedFileUpload(
             base_url="https://yourhost.com/path/to/api",
@@ -368,7 +368,7 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedFileUpload
+        from seed import AsyncSeedFileUpload
 
         client = AsyncSeedFileUpload(
             base_url="https://yourhost.com/path/to/api",

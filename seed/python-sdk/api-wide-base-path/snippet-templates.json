@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedApiWideBasePath"
+                    "from seed import SeedApiWideBasePath"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedApiWideBasePath(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -68,7 +68,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedApiWideBasePath"
+                        "from seed import AsyncSeedApiWideBasePath"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedApiWideBasePath(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",

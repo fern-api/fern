@@ -643,7 +643,9 @@
                                                     }
                                                 }
                                             },
-                                            "typeId": "type_service:MyObject"
+                                            "typeId": "type_service:MyObject",
+                                            "default": null,
+                                            "inline": null
                                         }
                                     }
                                 },

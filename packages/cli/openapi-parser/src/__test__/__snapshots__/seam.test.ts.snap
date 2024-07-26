@@ -755,6 +755,19 @@ exports[`seam seam parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": {
+                    "availability": null,
+                    "casing": {
+                      "camel": null,
+                      "pascal": null,
+                      "screamingSnake": null,
+                      "snake": null,
+                    },
+                    "description": null,
+                    "generatedName": "OneHour",
+                    "nameOverride": null,
+                    "value": "1hour",
+                  },
                   "description": null,
                   "generatedName": "AccessCodesCreateRequestMaxTimeRounding",
                   "groupName": null,
@@ -1221,6 +1234,19 @@ exports[`seam seam parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": {
+                    "availability": null,
+                    "casing": {
+                      "camel": null,
+                      "pascal": null,
+                      "screamingSnake": null,
+                      "snake": null,
+                    },
+                    "description": null,
+                    "generatedName": "throw",
+                    "nameOverride": null,
+                    "value": "throw",
+                  },
                   "description": null,
                   "generatedName": "AccessCodesCreateMultipleRequestBehaviorWhenCodeCannotBeShared",
                   "groupName": null,
@@ -1658,6 +1684,19 @@ exports[`seam seam parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": {
+                    "availability": null,
+                    "casing": {
+                      "camel": null,
+                      "pascal": null,
+                      "screamingSnake": null,
+                      "snake": null,
+                    },
+                    "description": null,
+                    "generatedName": "OneHour",
+                    "nameOverride": null,
+                    "value": "1hour",
+                  },
                   "description": null,
                   "generatedName": "AccessCodesCreateMultipleRequestMaxTimeRounding",
                   "groupName": null,
@@ -4171,6 +4210,19 @@ exports[`seam seam parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": {
+                    "availability": null,
+                    "casing": {
+                      "camel": null,
+                      "pascal": null,
+                      "screamingSnake": null,
+                      "snake": null,
+                    },
+                    "description": null,
+                    "generatedName": "OneHour",
+                    "nameOverride": null,
+                    "value": "1hour",
+                  },
                   "description": null,
                   "generatedName": "AccessCodesUpdateRequestMaxTimeRounding",
                   "groupName": null,
@@ -4305,6 +4357,7 @@ exports[`seam seam parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": null,
                   "description": null,
                   "generatedName": "AccessCodesUpdateRequestType",
                   "groupName": null,
@@ -7474,6 +7527,7 @@ exports[`seam seam parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": null,
                   "description": null,
                   "generatedName": "ConnectWebviewsCreateRequestDeviceSelectionMode",
                   "groupName": null,
@@ -7610,6 +7664,7 @@ exports[`seam seam parse open api 1`] = `
                   "type": "array",
                   "value": {
                     "availability": null,
+                    "default": null,
                     "description": null,
                     "generatedName": "ConnectWebviewsCreateRequestAcceptedProvidersItem",
                     "groupName": null,
@@ -8157,6 +8212,7 @@ exports[`seam seam parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": null,
                   "description": null,
                   "generatedName": "ConnectWebviewsCreateRequestProviderCategory",
                   "groupName": null,
@@ -12926,6 +12982,7 @@ exports[`seam seam parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": null,
                   "description": null,
                   "generatedName": "DevicesListRequestDeviceType",
                   "groupName": null,
@@ -13388,6 +13445,7 @@ exports[`seam seam parse open api 1`] = `
                   "type": "array",
                   "value": {
                     "availability": null,
+                    "default": null,
                     "description": null,
                     "generatedName": "DevicesListRequestDeviceTypesItem",
                     "groupName": null,
@@ -13844,6 +13902,7 @@ exports[`seam seam parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": null,
                   "description": null,
                   "generatedName": "DevicesListRequestManufacturer",
                   "groupName": null,
@@ -14547,6 +14606,7 @@ exports[`seam seam parse open api 1`] = `
                   "type": "array",
                   "value": {
                     "availability": null,
+                    "default": null,
                     "description": null,
                     "generatedName": "DevicesListRequestIncludeIfItem",
                     "groupName": null,
@@ -14672,6 +14732,7 @@ exports[`seam seam parse open api 1`] = `
                   "type": "array",
                   "value": {
                     "availability": null,
+                    "default": null,
                     "description": null,
                     "generatedName": "DevicesListRequestExcludeIfItem",
                     "groupName": null,
@@ -14988,6 +15049,7 @@ exports[`seam seam parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": null,
                   "description": null,
                   "generatedName": "DevicesListDeviceProvidersRequestProviderCategory",
                   "groupName": null,
@@ -16376,6 +16438,7 @@ exports[`seam seam parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": null,
                   "description": null,
                   "generatedName": "EventsListRequestEventType",
                   "groupName": null,
@@ -17163,6 +17226,7 @@ exports[`seam seam parse open api 1`] = `
                   "type": "array",
                   "value": {
                     "availability": null,
+                    "default": null,
                     "description": null,
                     "generatedName": "EventsListRequestEventTypesItem",
                     "groupName": null,
@@ -21542,6 +21606,7 @@ exports[`seam seam parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": null,
                   "description": null,
                   "generatedName": "LocksListRequestDeviceType",
                   "groupName": null,
@@ -22004,6 +22069,7 @@ exports[`seam seam parse open api 1`] = `
                   "type": "array",
                   "value": {
                     "availability": null,
+                    "default": null,
                     "description": null,
                     "generatedName": "LocksListRequestDeviceTypesItem",
                     "groupName": null,
@@ -22460,6 +22526,7 @@ exports[`seam seam parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": null,
                   "description": null,
                   "generatedName": "LocksListRequestManufacturer",
                   "groupName": null,
@@ -23163,6 +23230,7 @@ exports[`seam seam parse open api 1`] = `
                   "type": "array",
                   "value": {
                     "availability": null,
+                    "default": null,
                     "description": null,
                     "generatedName": "LocksListRequestIncludeIfItem",
                     "groupName": null,
@@ -23288,6 +23356,7 @@ exports[`seam seam parse open api 1`] = `
                   "type": "array",
                   "value": {
                     "availability": null,
+                    "default": null,
                     "description": null,
                     "generatedName": "LocksListRequestExcludeIfItem",
                     "groupName": null,
@@ -27916,6 +27985,7 @@ exports[`seam seam parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": null,
                   "description": null,
                   "generatedName": "ThermostatsListRequestDeviceType",
                   "groupName": null,
@@ -28378,6 +28448,7 @@ exports[`seam seam parse open api 1`] = `
                   "type": "array",
                   "value": {
                     "availability": null,
+                    "default": null,
                     "description": null,
                     "generatedName": "ThermostatsListRequestDeviceTypesItem",
                     "groupName": null,
@@ -28834,6 +28905,7 @@ exports[`seam seam parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": null,
                   "description": null,
                   "generatedName": "ThermostatsListRequestManufacturer",
                   "groupName": null,
@@ -29537,6 +29609,7 @@ exports[`seam seam parse open api 1`] = `
                   "type": "array",
                   "value": {
                     "availability": null,
+                    "default": null,
                     "description": null,
                     "generatedName": "ThermostatsListRequestIncludeIfItem",
                     "groupName": null,
@@ -29662,6 +29735,7 @@ exports[`seam seam parse open api 1`] = `
                   "type": "array",
                   "value": {
                     "availability": null,
+                    "default": null,
                     "description": null,
                     "generatedName": "ThermostatsListRequestExcludeIfItem",
                     "groupName": null,
@@ -30266,6 +30340,7 @@ exports[`seam seam parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": null,
                   "description": null,
                   "generatedName": "ThermostatsSetFanModeRequestFanMode",
                   "groupName": null,
@@ -30318,6 +30393,7 @@ exports[`seam seam parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": null,
                   "description": null,
                   "generatedName": "ThermostatsSetFanModeRequestFanModeSetting",
                   "groupName": null,
@@ -30660,6 +30736,7 @@ exports[`seam seam parse open api 1`] = `
                       "type": "optional",
                       "value": {
                         "availability": null,
+                        "default": null,
                         "description": null,
                         "generatedName": "ThermostatsUpdateRequestDefaultClimateSettingHvacModeSetting",
                         "groupName": null,
@@ -35904,6 +35981,7 @@ exports[`seam seam parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": null,
                   "description": null,
                   "generatedName": "WorkspacesCreateRequestWebviewLogoShape",
                   "groupName": null,
@@ -41102,6 +41180,7 @@ exports[`seam seam parse open api 1`] = `
               "nameOverride": null,
               "schema": {
                 "availability": null,
+                "default": null,
                 "description": null,
                 "generatedName": "CredentialsCreateRequestAccessMethod",
                 "groupName": null,
@@ -41322,6 +41401,7 @@ exports[`seam seam parse open api 1`] = `
                         "type": "optional",
                         "value": {
                           "availability": null,
+                          "default": null,
                           "description": null,
                           "generatedName": "CredentialsCreateRequestVisionlineMetadataCardFormat",
                           "groupName": null,
@@ -41374,6 +41454,19 @@ exports[`seam seam parse open api 1`] = `
                         "type": "optional",
                         "value": {
                           "availability": null,
+                          "default": {
+                            "availability": null,
+                            "casing": {
+                              "camel": null,
+                              "pascal": null,
+                              "screamingSnake": null,
+                              "snake": null,
+                            },
+                            "description": null,
+                            "generatedName": "guest",
+                            "nameOverride": null,
+                            "value": "guest",
+                          },
                           "description": null,
                           "generatedName": "CredentialsCreateRequestVisionlineMetadataCardFunctionType",
                           "groupName": null,
@@ -50607,6 +50700,7 @@ exports[`seam seam parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": null,
                   "description": null,
                   "generatedName": "UnmanagedListRequestDeviceType",
                   "groupName": null,
@@ -51069,6 +51163,7 @@ exports[`seam seam parse open api 1`] = `
                   "type": "array",
                   "value": {
                     "availability": null,
+                    "default": null,
                     "description": null,
                     "generatedName": "UnmanagedListRequestDeviceTypesItem",
                     "groupName": null,
@@ -51525,6 +51620,7 @@ exports[`seam seam parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": null,
                   "description": null,
                   "generatedName": "UnmanagedListRequestManufacturer",
                   "groupName": null,
@@ -52228,6 +52324,7 @@ exports[`seam seam parse open api 1`] = `
                   "type": "array",
                   "value": {
                     "availability": null,
+                    "default": null,
                     "description": null,
                     "generatedName": "UnmanagedListRequestIncludeIfItem",
                     "groupName": null,
@@ -52353,6 +52450,7 @@ exports[`seam seam parse open api 1`] = `
                   "type": "array",
                   "value": {
                     "availability": null,
+                    "default": null,
                     "description": null,
                     "generatedName": "UnmanagedListRequestExcludeIfItem",
                     "groupName": null,
@@ -55059,6 +55157,19 @@ exports[`seam seam parse open api 1`] = `
                         "type": "optional",
                         "value": {
                           "availability": null,
+                          "default": {
+                            "availability": null,
+                            "casing": {
+                              "camel": null,
+                              "pascal": null,
+                              "screamingSnake": null,
+                              "snake": null,
+                            },
+                            "description": null,
+                            "generatedName": "android",
+                            "nameOverride": null,
+                            "value": "android",
+                          },
                           "description": null,
                           "generatedName": "SimulateCreateSandboxPhoneRequestPhoneMetadataOperatingSystem",
                           "groupName": null,
@@ -55911,6 +56022,7 @@ exports[`seam seam parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": null,
                   "description": null,
                   "generatedName": "ClimateSettingSchedulesCreateRequestHvacModeSetting",
                   "groupName": null,
@@ -57508,6 +57620,7 @@ exports[`seam seam parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": null,
                   "description": null,
                   "generatedName": "ClimateSettingSchedulesUpdateRequestHvacModeSetting",
                   "groupName": null,
@@ -59049,6 +59162,7 @@ exports[`seam seam parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": "Nature of the access code. Values are "ongoing" for access codes that are active continuously until deactivated manually or "time_bound" for access codes that have a specific duration.",
             "generatedName": "AccessCodeType",
             "groupName": null,
@@ -59384,6 +59498,7 @@ exports[`seam seam parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": "
     Current status of the access code within the operational lifecycle. Values are "setting," a transitional phase that indicates that the code is being configured or activated; "set", which indicates that the code is active and operational; "unset," which indicates a deactivated or unused state, either before activation or after deliberate deactivation; "removing," which indicates a transitional period in which the code is being deleted or made inactive; and "unknown," which indicates an indeterminate state, due to reasons such as system errors or incomplete data, that highlights a potential need for system review or troubleshooting.
   ",
@@ -59726,6 +59841,7 @@ exports[`seam seam parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": "
     ---
     deprecated: use external_type
@@ -59852,6 +59968,7 @@ exports[`seam seam parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": null,
             "generatedName": "AcsAccessGroupExternalType",
             "groupName": null,
@@ -60186,6 +60303,7 @@ exports[`seam seam parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": null,
             "generatedName": "AcsCredentialAccessMethod",
             "groupName": null,
@@ -60250,6 +60368,7 @@ exports[`seam seam parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "AcsCredentialExternalType",
               "groupName": null,
@@ -60721,6 +60840,7 @@ exports[`seam seam parse open api 1`] = `
                   "nameOverride": null,
                   "schema": {
                     "availability": null,
+                    "default": null,
                     "description": null,
                     "generatedName": "AcsCredentialVisionlineMetadataCardFunctionType",
                     "groupName": null,
@@ -61540,6 +61660,7 @@ exports[`seam seam parse open api 1`] = `
                   "nameOverride": null,
                   "schema": {
                     "availability": null,
+                    "default": null,
                     "description": null,
                     "generatedName": "AcsEntranceVisionlineMetadataDoorCategory",
                     "groupName": null,
@@ -61678,6 +61799,7 @@ exports[`seam seam parse open api 1`] = `
                             "nameOverride": null,
                             "schema": {
                               "availability": null,
+                              "default": null,
                               "description": null,
                               "generatedName": "AcsEntranceVisionlineMetadataProfilesItemVisionlineDoorProfileType",
                               "groupName": null,
@@ -61790,6 +61912,7 @@ exports[`seam seam parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "AcsSystemExternalType",
               "groupName": null,
@@ -61952,6 +62075,7 @@ exports[`seam seam parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "
       ---
       deprecated: use external_type
@@ -62712,6 +62836,7 @@ exports[`seam seam parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "AcsUserExternalType",
               "groupName": null,
@@ -70693,6 +70818,7 @@ exports[`seam seam parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "ClimateSettingScheduleHvacModeSetting",
               "groupName": null,
@@ -71060,6 +71186,7 @@ exports[`seam seam parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": null,
             "generatedName": "ConnectWebviewDeviceSelectionMode",
             "groupName": null,
@@ -71249,6 +71376,7 @@ exports[`seam seam parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": null,
             "generatedName": "ConnectWebviewStatus",
             "groupName": null,
@@ -72025,6 +72153,7 @@ exports[`seam seam parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": "Type of the device.",
             "generatedName": "DeviceDeviceType",
             "groupName": null,
@@ -72535,6 +72664,7 @@ exports[`seam seam parse open api 1`] = `
             "type": "array",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "DeviceCapabilitiesSupportedItem",
               "groupName": null,
@@ -73169,6 +73299,7 @@ exports[`seam seam parse open api 1`] = `
                         "nameOverride": null,
                         "schema": {
                           "availability": null,
+                          "default": null,
                           "description": null,
                           "generatedName": "DevicePropertiesBatteryStatus",
                           "groupName": null,
@@ -75202,6 +75333,7 @@ exports[`seam seam parse open api 1`] = `
                         "nameOverride": null,
                         "schema": {
                           "availability": null,
+                          "default": null,
                           "description": null,
                           "generatedName": "DevicePropertiesNoiseawareMetadataDeviceModel",
                           "groupName": null,
@@ -76220,6 +76352,7 @@ exports[`seam seam parse open api 1`] = `
                           "type": "optional",
                           "value": {
                             "availability": null,
+                            "default": null,
                             "description": null,
                             "generatedName": "DevicePropertiesSeamBridgeMetadataUnlockMethod",
                             "groupName": null,
@@ -77850,6 +77983,7 @@ exports[`seam seam parse open api 1`] = `
                                 "nameOverride": null,
                                 "schema": {
                                   "availability": null,
+                                  "default": null,
                                   "description": null,
                                   "generatedName": "DevicePropertiesCodeConstraintsItemZeroConstraintType",
                                   "groupName": null,
@@ -77998,6 +78132,7 @@ exports[`seam seam parse open api 1`] = `
                                 "nameOverride": null,
                                 "schema": {
                                   "availability": null,
+                                  "default": null,
                                   "description": null,
                                   "generatedName": "DevicePropertiesCodeConstraintsItemMaxLengthConstraintType",
                                   "groupName": null,
@@ -78977,6 +79112,7 @@ exports[`seam seam parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": null,
             "generatedName": "DeviceProviderDeviceProviderName",
             "groupName": null,
@@ -79531,6 +79667,7 @@ exports[`seam seam parse open api 1`] = `
             "type": "array",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "DeviceProviderProviderCategoriesItem",
               "groupName": null,
@@ -80422,6 +80559,7 @@ exports[`seam seam parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": null,
             "generatedName": "PhoneDeviceType",
             "groupName": null,
@@ -80529,6 +80667,7 @@ exports[`seam seam parse open api 1`] = `
             "type": "array",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "PhoneCapabilitiesSupportedItem",
               "groupName": null,
@@ -81384,6 +81523,7 @@ exports[`seam seam parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": null,
             "generatedName": "ServiceHealthStatus",
             "groupName": null,
@@ -81478,6 +81618,7 @@ exports[`seam seam parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": "Nature of the access code. Values are "ongoing" for access codes that are active continuously until deactivated manually or "time_bound" for access codes that have a specific duration.",
             "generatedName": "UnmanagedAccessCodeType",
             "groupName": null,
@@ -81842,6 +81983,7 @@ exports[`seam seam parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": "Type of the device.",
             "generatedName": "UnmanagedDeviceDeviceType",
             "groupName": null,
@@ -82320,6 +82462,7 @@ exports[`seam seam parse open api 1`] = `
             "type": "array",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "UnmanagedDeviceCapabilitiesSupportedItem",
               "groupName": null,
@@ -82981,6 +83124,7 @@ exports[`seam seam parse open api 1`] = `
                         "nameOverride": null,
                         "schema": {
                           "availability": null,
+                          "default": null,
                           "description": null,
                           "generatedName": "UnmanagedDevicePropertiesBatteryStatus",
                           "groupName": null,

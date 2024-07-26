@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.36.1] - 2024-07-16
+
+- Fix: Now, there are generated unit tests for the `auth` and `fetcher` core directory which makes sure that
+  Fern's fetcher and authorization helpers work as expected!
+
 ## [0.36.0] - 2024-07-16
 
 - Fix: Now, there are generated unit tests for the `schemas` core directory which makes sure that

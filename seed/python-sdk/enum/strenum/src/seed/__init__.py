@@ -2,6 +2,17 @@
 
 from .types import Color, ColorOrOperand, Operand
 from . import inlined_request, path_param, query_param
+from .client import AsyncSeedEnum, SeedEnum
 from .version import __version__
 
-__all__ = ["Color", "ColorOrOperand", "Operand", "__version__", "inlined_request", "path_param", "query_param"]
+__all__ = [
+    "AsyncSeedEnum",
+    "Color",
+    "ColorOrOperand",
+    "Operand",
+    "SeedEnum",
+    "__version__",
+    "inlined_request",
+    "path_param",
+    "query_param",
+]

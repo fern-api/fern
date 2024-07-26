@@ -9,6 +9,8 @@ import * as core from "../../../../core";
 export const PrimitiveTypeV1: core.serialization.Schema<serializers.PrimitiveTypeV1.Raw, FernIr.PrimitiveTypeV1> =
     core.serialization.enum_([
         "INTEGER",
+        "UINT",
+        "UINT_64",
         "DOUBLE",
         "STRING",
         "BOOLEAN",
@@ -23,6 +25,8 @@ export const PrimitiveTypeV1: core.serialization.Schema<serializers.PrimitiveTyp
 export declare namespace PrimitiveTypeV1 {
     type Raw =
         | "INTEGER"
+        | "UINT"
+        | "UINT_64"
         | "DOUBLE"
         | "STRING"
         | "BOOLEAN"

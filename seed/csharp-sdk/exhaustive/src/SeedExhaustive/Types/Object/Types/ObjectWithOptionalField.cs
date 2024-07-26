@@ -28,7 +28,7 @@ public record ObjectWithOptionalField
     public DateOnly? Date { get; init; }
 
     [JsonPropertyName("uuid")]
-    public Guid? Uuid { get; init; }
+    public string? Uuid { get; init; }
 
     [JsonPropertyName("base64")]
     public string? Base64 { get; init; }

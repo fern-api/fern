@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedMixedCase"
+                    "from seed import SeedMixedCase"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedMixedCase(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -52,7 +52,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedMixedCase"
+                        "from seed import AsyncSeedMixedCase"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedMixedCase(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -103,7 +103,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedMixedCase"
+                    "from seed import SeedMixedCase"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedMixedCase(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -158,7 +158,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedMixedCase"
+                        "from seed import AsyncSeedMixedCase"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedMixedCase(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",

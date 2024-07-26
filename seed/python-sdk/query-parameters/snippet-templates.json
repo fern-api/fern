@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedQueryParameters"
+                    "from seed import SeedQueryParameters"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedQueryParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -531,7 +531,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedQueryParameters"
+                        "from seed import AsyncSeedQueryParameters"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedQueryParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",

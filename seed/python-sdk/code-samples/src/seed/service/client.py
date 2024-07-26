@@ -32,7 +32,7 @@ class ServiceClient:
 
         Examples
         --------
-        from seed.client import SeedCodeSamples
+        from seed import SeedCodeSamples
 
         client = SeedCodeSamples(
             base_url="https://yourhost.com/path/to/api",
@@ -74,7 +74,7 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedCodeSamples
+        from seed import AsyncSeedCodeSamples
 
         client = AsyncSeedCodeSamples(
             base_url="https://yourhost.com/path/to/api",

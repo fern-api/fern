@@ -3,7 +3,7 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedBasicAuthEnvironmentVariables, SeedBasicAuthEnvironmentVariables
+from seed import AsyncSeedBasicAuthEnvironmentVariables, SeedBasicAuthEnvironmentVariables
 
 
 @pytest.fixture
