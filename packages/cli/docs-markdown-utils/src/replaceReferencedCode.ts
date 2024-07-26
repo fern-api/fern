@@ -8,6 +8,7 @@ async function defaultFileLoader(filepath: AbsoluteFilePath): Promise<string> {
     return file.toString();
 }
 
+// TODO: add a newline before and after the code block if inline to improve markdown parsing. i.e. <CodeGroup> <Code src="" /> </CodeGroup>
 export async function replaceReferencedCode({
     markdown,
     absolutePathToFernFolder,
@@ -26,7 +27,7 @@ export async function replaceReferencedCode({
         return markdown;
     }
 
-    // TODO: add support for other props
+    // TODO: add support for other props, such as title, language, line height, etc
     const regex = /([ \t]*)<Code\s+src={?['"]([^'"]+)['"](?! \+)}?\s*\/>/g;
 
     let newMarkdown = markdown;
