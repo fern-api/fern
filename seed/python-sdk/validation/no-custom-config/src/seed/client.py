@@ -36,7 +36,7 @@ class SeedValidation:
 
     Examples
     --------
-    from seed.client import SeedValidation
+    from seed import SeedValidation
 
     client = SeedValidation(
         base_url="https://yourhost.com/path/to/api",
@@ -91,7 +91,7 @@ class SeedValidation:
 
         Examples
         --------
-        from seed.client import SeedValidation
+        from seed import SeedValidation
 
         client = SeedValidation(
             base_url="https://yourhost.com/path/to/api",
@@ -139,7 +139,7 @@ class SeedValidation:
 
         Examples
         --------
-        from seed.client import SeedValidation
+        from seed import SeedValidation
 
         client = SeedValidation(
             base_url="https://yourhost.com/path/to/api",
@@ -182,7 +182,7 @@ class AsyncSeedValidation:
 
     Examples
     --------
-    from seed.client import AsyncSeedValidation
+    from seed import AsyncSeedValidation
 
     client = AsyncSeedValidation(
         base_url="https://yourhost.com/path/to/api",
@@ -239,7 +239,7 @@ class AsyncSeedValidation:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedValidation
+        from seed import AsyncSeedValidation
 
         client = AsyncSeedValidation(
             base_url="https://yourhost.com/path/to/api",
@@ -295,7 +295,7 @@ class AsyncSeedValidation:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedValidation
+        from seed import AsyncSeedValidation
 
         client = AsyncSeedValidation(
             base_url="https://yourhost.com/path/to/api",

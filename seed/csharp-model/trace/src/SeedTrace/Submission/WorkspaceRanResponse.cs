@@ -8,7 +8,7 @@ namespace SeedTrace;
 public record WorkspaceRanResponse
 {
     [JsonPropertyName("submissionId")]
-    public required Guid SubmissionId { get; init; }
+    public required string SubmissionId { get; init; }
 
     [JsonPropertyName("runDetails")]
     public required WorkspaceRunDetails RunDetails { get; init; }

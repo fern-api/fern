@@ -3,7 +3,7 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedBearerTokenEnvironmentVariable, SeedBearerTokenEnvironmentVariable
+from seed import AsyncSeedBearerTokenEnvironmentVariable, SeedBearerTokenEnvironmentVariable
 
 
 @pytest.fixture

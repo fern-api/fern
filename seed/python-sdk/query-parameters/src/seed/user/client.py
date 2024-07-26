@@ -81,8 +81,7 @@ class UserClient:
         import datetime
         import uuid
 
-        from seed import NestedUser, User
-        from seed.client import SeedQueryParameters
+        from seed import NestedUser, SeedQueryParameters, User
 
         client = SeedQueryParameters(
             base_url="https://yourhost.com/path/to/api",
@@ -229,8 +228,7 @@ class AsyncUserClient:
         import datetime
         import uuid
 
-        from seed import NestedUser, User
-        from seed.client import AsyncSeedQueryParameters
+        from seed import AsyncSeedQueryParameters, NestedUser, User
 
         client = AsyncSeedQueryParameters(
             base_url="https://yourhost.com/path/to/api",

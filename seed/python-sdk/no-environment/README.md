@@ -16,7 +16,7 @@ pip install fern_no-environment
 Instantiate and use the client with the following:
 
 ```python
-from seed.client import SeedNoEnvironment
+from seed import SeedNoEnvironment
 
 client = SeedNoEnvironment(
     token="YOUR_TOKEN",
@@ -32,7 +32,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed.client import AsyncSeedNoEnvironment
+from seed import AsyncSeedNoEnvironment
 
 client = AsyncSeedNoEnvironment(
     token="YOUR_TOKEN",
@@ -90,7 +90,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 ```python
 
-from seed.client import SeedNoEnvironment
+from seed import SeedNoEnvironment
 
 client = SeedNoEnvironment(..., { timeout=20.0 }, )
 
@@ -107,7 +107,7 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 ```python
 import httpx
-from seed.client import SeedNoEnvironment
+from seed import SeedNoEnvironment
 
 client = SeedNoEnvironment(
     ...,

@@ -33,7 +33,7 @@ class UnknownClient:
 
         Examples
         --------
-        from seed.client import SeedUnknownAsAny
+        from seed import SeedUnknownAsAny
 
         client = SeedUnknownAsAny(
             base_url="https://yourhost.com/path/to/api",
@@ -77,7 +77,7 @@ class AsyncUnknownClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedUnknownAsAny
+        from seed import AsyncSeedUnknownAsAny
 
         client = AsyncSeedUnknownAsAny(
             base_url="https://yourhost.com/path/to/api",

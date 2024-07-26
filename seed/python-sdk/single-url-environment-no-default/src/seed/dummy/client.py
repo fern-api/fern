@@ -26,7 +26,7 @@ class DummyClient:
 
         Examples
         --------
-        from seed.client import SeedSingleUrlEnvironmentNoDefault
+        from seed import SeedSingleUrlEnvironmentNoDefault
         from seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment
 
         client = SeedSingleUrlEnvironmentNoDefault(
@@ -64,7 +64,7 @@ class AsyncDummyClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedSingleUrlEnvironmentNoDefault
+        from seed import AsyncSeedSingleUrlEnvironmentNoDefault
         from seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment
 
         client = AsyncSeedSingleUrlEnvironmentNoDefault(

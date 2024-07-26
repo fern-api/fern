@@ -29,7 +29,7 @@ class SeedPagination:
 
     Examples
     --------
-    from seed.client import SeedPagination
+    from seed import SeedPagination
 
     client = SeedPagination(
         token="YOUR_TOKEN",
@@ -81,7 +81,7 @@ class AsyncSeedPagination:
 
     Examples
     --------
-    from seed.client import AsyncSeedPagination
+    from seed import AsyncSeedPagination
 
     client = AsyncSeedPagination(
         token="YOUR_TOKEN",

@@ -13,7 +13,7 @@
 <dd>
 
 ```python
-from seed.client import SeedVersion
+from seed import SeedVersion
 
 client = SeedVersion(
     base_url="https://yourhost.com/path/to/api",

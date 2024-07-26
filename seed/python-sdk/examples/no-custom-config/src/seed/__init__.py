@@ -36,12 +36,14 @@ from .types import (
     Type,
 )
 from . import commons, file, health, service, types
+from .client import AsyncSeedExamples, SeedExamples
 from .environment import SeedExamplesEnvironment
 from .version import __version__
 
 __all__ = [
     "Actor",
     "Actress",
+    "AsyncSeedExamples",
     "BasicType",
     "CastMember",
     "ComplexType",
@@ -67,6 +69,7 @@ __all__ = [
     "Request",
     "Response",
     "ResponseType",
+    "SeedExamples",
     "SeedExamplesEnvironment",
     "StuntDouble",
     "Test",

@@ -12,7 +12,7 @@
 <dd>
 
 ```python
-from seed.client import SeedApi
+from seed import SeedApi
 
 client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
@@ -59,7 +59,7 @@ client.foo()
 <dd>
 
 ```python
-from seed.client import SeedApi
+from seed import SeedApi
 
 client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
@@ -106,7 +106,7 @@ client.a.b.foo()
 <dd>
 
 ```python
-from seed.client import SeedApi
+from seed import SeedApi
 
 client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
@@ -153,7 +153,7 @@ client.a.c.foo()
 <dd>
 
 ```python
-from seed.client import SeedApi
+from seed import SeedApi
 
 client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
@@ -200,7 +200,7 @@ client.folder.foo()
 <dd>
 
 ```python
-from seed.client import SeedApi
+from seed import SeedApi
 
 client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
@@ -246,7 +246,7 @@ client.folder.service.endpoint()
 <dd>
 
 ```python
-from seed.client import SeedApi
+from seed import SeedApi
 
 client = SeedApi(
     base_url="https://yourhost.com/path/to/api",

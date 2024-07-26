@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedNurseryApi"
+                    "from seed import SeedNurseryApi"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedNurseryApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -52,7 +52,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedNurseryApi"
+                        "from seed import AsyncSeedNurseryApi"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedNurseryApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",

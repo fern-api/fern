@@ -2,7 +2,7 @@
 
 import typing
 
-from seed.client import AsyncSeedUnknownAsAny, SeedUnknownAsAny
+from seed import AsyncSeedUnknownAsAny, SeedUnknownAsAny
 
 from .utilities import validate_response
 

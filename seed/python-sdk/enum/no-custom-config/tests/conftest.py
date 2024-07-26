@@ -3,7 +3,7 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedEnum, SeedEnum
+from seed import AsyncSeedEnum, SeedEnum
 
 
 @pytest.fixture

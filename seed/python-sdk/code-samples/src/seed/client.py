@@ -28,7 +28,7 @@ class SeedCodeSamples:
 
     Examples
     --------
-    from seed.client import SeedCodeSamples
+    from seed import SeedCodeSamples
 
     client = SeedCodeSamples(
         base_url="https://yourhost.com/path/to/api",
@@ -76,7 +76,7 @@ class AsyncSeedCodeSamples:
 
     Examples
     --------
-    from seed.client import AsyncSeedCodeSamples
+    from seed import AsyncSeedCodeSamples
 
     client = AsyncSeedCodeSamples(
         base_url="https://yourhost.com/path/to/api",

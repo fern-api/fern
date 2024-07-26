@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedMultiLineDocs"
+                    "from seed import SeedMultiLineDocs"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedMultiLineDocs(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -52,7 +52,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedMultiLineDocs"
+                        "from seed import AsyncSeedMultiLineDocs"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedMultiLineDocs(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -103,7 +103,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedMultiLineDocs"
+                    "from seed import SeedMultiLineDocs"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedMultiLineDocs(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -158,7 +158,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedMultiLineDocs"
+                        "from seed import AsyncSeedMultiLineDocs"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedMultiLineDocs(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",

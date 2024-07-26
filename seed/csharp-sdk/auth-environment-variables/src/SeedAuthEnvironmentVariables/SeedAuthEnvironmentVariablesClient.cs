@@ -1,3 +1,4 @@
+using System;
 using SeedAuthEnvironmentVariables;
 using SeedAuthEnvironmentVariables.Core;
 
@@ -25,6 +26,7 @@ public partial class SeedAuthEnvironmentVariablesClient
                 { "X-FERN-API-KEY", apiKey },
                 { "X-Fern-Language", "C#" },
             },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Service = new ServiceClient(_client);

@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using SeedApi.A;
 using SeedApi.Core;
@@ -15,6 +16,7 @@ public partial class SeedApiClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         A = new AClient(_client);
@@ -28,7 +30,12 @@ public partial class SeedApiClient
     public async Task FooAsync()
     {
         await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest { Method = HttpMethod.Post, Path = "" }
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Post,
+                Path = ""
+            }
         );
     }
 }

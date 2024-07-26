@@ -13,7 +13,7 @@
 <dd>
 
 ```python
-from seed.client import SeedApiWideBasePath
+from seed import SeedApiWideBasePath
 
 client = SeedApiWideBasePath(
     base_url="https://yourhost.com/path/to/api",

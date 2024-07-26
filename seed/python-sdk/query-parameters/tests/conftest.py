@@ -3,7 +3,7 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedQueryParameters, SeedQueryParameters
+from seed import AsyncSeedQueryParameters, SeedQueryParameters
 
 
 @pytest.fixture

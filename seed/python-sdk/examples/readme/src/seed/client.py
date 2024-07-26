@@ -42,7 +42,7 @@ class SeedExamples:
 
     Examples
     --------
-    from seed.client import SeedExamples
+    from seed import SeedExamples
     from seed.environment import SeedExamplesEnvironment
 
     client = SeedExamples(
@@ -91,7 +91,7 @@ class SeedExamples:
 
         Examples
         --------
-        from seed.client import SeedExamples
+        from seed import SeedExamples
         from seed.environment import SeedExamplesEnvironment
 
         client = SeedExamples(
@@ -138,7 +138,7 @@ class AsyncSeedExamples:
 
     Examples
     --------
-    from seed.client import AsyncSeedExamples
+    from seed import AsyncSeedExamples
     from seed.environment import SeedExamplesEnvironment
 
     client = AsyncSeedExamples(
@@ -189,7 +189,7 @@ class AsyncSeedExamples:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedExamples
+        from seed import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
 
         client = AsyncSeedExamples(

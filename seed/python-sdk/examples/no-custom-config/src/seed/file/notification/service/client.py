@@ -32,7 +32,7 @@ class ServiceClient:
 
         Examples
         --------
-        from seed.client import SeedExamples
+        from seed import SeedExamples
         from seed.environment import SeedExamplesEnvironment
 
         client = SeedExamples(
@@ -78,7 +78,7 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedExamples
+        from seed import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
 
         client = AsyncSeedExamples(

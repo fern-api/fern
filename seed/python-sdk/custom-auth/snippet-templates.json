@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedCustomAuth"
+                    "from seed import SeedCustomAuth"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedCustomAuth(\n    custom_auth_scheme=\"YOUR_CUSTOM_AUTH_SCHEME\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -35,7 +35,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedCustomAuth"
+                        "from seed import AsyncSeedCustomAuth"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedCustomAuth(\n    custom_auth_scheme=\"YOUR_CUSTOM_AUTH_SCHEME\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -69,7 +69,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedCustomAuth"
+                    "from seed import SeedCustomAuth"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedCustomAuth(\n    custom_auth_scheme=\"YOUR_CUSTOM_AUTH_SCHEME\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -108,7 +108,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedCustomAuth"
+                        "from seed import AsyncSeedCustomAuth"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedCustomAuth(\n    custom_auth_scheme=\"YOUR_CUSTOM_AUTH_SCHEME\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",

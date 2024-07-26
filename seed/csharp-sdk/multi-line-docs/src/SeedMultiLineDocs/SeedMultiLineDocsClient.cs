@@ -1,3 +1,4 @@
+using System;
 using SeedMultiLineDocs;
 using SeedMultiLineDocs.Core;
 
@@ -13,6 +14,7 @@ public partial class SeedMultiLineDocsClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         User = new UserClient(_client);

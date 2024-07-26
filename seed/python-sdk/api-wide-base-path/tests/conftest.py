@@ -3,7 +3,7 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedApiWideBasePath, SeedApiWideBasePath
+from seed import AsyncSeedApiWideBasePath, SeedApiWideBasePath
 
 
 @pytest.fixture

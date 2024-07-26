@@ -13,7 +13,7 @@
 <dd>
 
 ```python
-from seed.client import SeedObjectsWithImports
+from seed import SeedObjectsWithImports
 
 client = SeedObjectsWithImports(
     base_url="https://yourhost.com/path/to/api",

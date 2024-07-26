@@ -28,7 +28,7 @@ class SeedStreaming:
 
     Examples
     --------
-    from seed.client import SeedStreaming
+    from seed import SeedStreaming
 
     client = SeedStreaming(
         base_url="https://yourhost.com/path/to/api",
@@ -76,7 +76,7 @@ class AsyncSeedStreaming:
 
     Examples
     --------
-    from seed.client import AsyncSeedStreaming
+    from seed import AsyncSeedStreaming
 
     client = AsyncSeedStreaming(
         base_url="https://yourhost.com/path/to/api",

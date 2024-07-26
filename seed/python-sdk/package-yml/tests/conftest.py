@@ -3,7 +3,7 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedPackageYml, SeedPackageYml
+from seed import AsyncSeedPackageYml, SeedPackageYml
 
 
 @pytest.fixture

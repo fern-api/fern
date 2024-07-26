@@ -13,7 +13,7 @@
 <dd>
 
 ```python
-from seed.client import SeedPlainText
+from seed import SeedPlainText
 
 client = SeedPlainText(
     base_url="https://yourhost.com/path/to/api",

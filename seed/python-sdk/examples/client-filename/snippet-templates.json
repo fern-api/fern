@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
+                    "from seed import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, $FERN_INPUT, )",
@@ -69,7 +69,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
+                        "from seed import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, $FERN_INPUT, )",
@@ -137,7 +137,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
+                    "from seed import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, $FERN_INPUT, )",
@@ -176,7 +176,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
+                        "from seed import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, $FERN_INPUT, )",
@@ -227,7 +227,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
+                    "from seed import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, $FERN_INPUT, )",
@@ -283,7 +283,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
+                        "from seed import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, $FERN_INPUT, )",
@@ -351,7 +351,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
+                    "from seed import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, $FERN_INPUT, )",
@@ -407,7 +407,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
+                        "from seed import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, $FERN_INPUT, )",
@@ -475,7 +475,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
+                    "from seed import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, $FERN_INPUT, )",
@@ -514,7 +514,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
+                        "from seed import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, $FERN_INPUT, )",
@@ -565,7 +565,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
+                    "from seed import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, $FERN_INPUT, )",
@@ -621,7 +621,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
+                        "from seed import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, $FERN_INPUT, )",
@@ -689,7 +689,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
+                    "from seed import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, $FERN_INPUT, )",
@@ -882,7 +882,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
+                        "from seed import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, $FERN_INPUT, )",
@@ -1087,7 +1087,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
+                    "from seed import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, $FERN_INPUT, )",
@@ -1175,7 +1175,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
+                        "from seed import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, $FERN_INPUT, )",
@@ -1275,7 +1275,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
+                    "from seed import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, $FERN_INPUT, )",
@@ -1314,7 +1314,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
+                        "from seed import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, $FERN_INPUT, )",
