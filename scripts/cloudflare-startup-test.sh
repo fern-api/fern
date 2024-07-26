@@ -56,6 +56,5 @@ else
     echo "Failed to compile"
     exit 1
 fi
-cd ../..
-pwd
-# rm -rf cloudflare-test
+cd ../../..
+rm -rf cloudflare-test
