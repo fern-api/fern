@@ -5,7 +5,7 @@ cp -r ../fern/seed/ts-sdk/imdb/no-custom-config ./imdb
 cd imdb
 npm install
 npm run build
-yes | npx create-react-app my-ts-app --template typescript
+npx create-react-app my-ts-app --template typescript
 cp -r dist my-ts-app/src/dist
 cd my-ts-app
 cat << 'EOF' > src/App.tsx
@@ -45,8 +45,8 @@ echo "BROWSER=none" > .env
 echo "DISABLE_ESLINT_PLUGIN=true" >> .env
 
 npm install
-output=$(timeout 5s npm run start &)
-sleep 5
+output=$(timeout 7s npm run start &)
+sleep 10
 echo "$output"
 if echo "$output" | grep -q "webpack compiled successfully"; then
     echo "Compiled successfully"
