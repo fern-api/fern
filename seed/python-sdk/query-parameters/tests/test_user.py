@@ -4,7 +4,8 @@ import datetime
 import typing
 import uuid
 
-from seed import AsyncSeedQueryParameters, NestedUser, SeedQueryParameters, User
+from seed import AsyncSeedQueryParameters, SeedQueryParameters
+from seed.user.types import NestedUser, User
 
 from .utilities import validate_response
 

@@ -105,7 +105,8 @@ the next page of results.
 <dd>
 
 ```python
-from seed import SeedPagination, WithCursor
+from seed import SeedPagination
+from seed.users.types import WithCursor
 
 client = SeedPagination(
     token="YOUR_TOKEN",
@@ -265,7 +266,8 @@ the next page of results.
 <dd>
 
 ```python
-from seed import SeedPagination, WithPage
+from seed import SeedPagination
+from seed.users.types import WithPage
 
 client = SeedPagination(
     token="YOUR_TOKEN",

@@ -173,18 +173,32 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
             )
 
             if shape.properties_type == "singleProperty":
-                single_property_property_fields: List[CommonField] = [
-                    CommonField(
+                single_property_property_fields: List[PydanticField] = [
+                    PydanticField(
                         name=shape.name.name.snake_case.safe_name,
                         pascal_case_field_name=shape.name.name.pascal_case.safe_name,
                         json_field_name=shape.name.wire_value,
                         type_hint=self._context.get_type_hint_for_type_reference(type_reference=shape.type),
-                        type_reference=shape.type,
                     ),
-                    CommonField(
+                    PydanticField(
                         name=get_discriminant_parameter_name(self._union.discriminant),
                         pascal_case_field_name=self._union.discriminant.name.pascal_case.safe_name,
                         type_hint=AST.TypeHint.literal(discriminant_value),
+                        json_field_name=self._union.discriminant.wire_value,
+                        default_value=discriminant_value,
+                    ),
+                ]
+
+                single_property_property_fern_aware_fields: List[FernAwarePydanticField] = [
+                    FernAwarePydanticField(
+                        name=shape.name.name.snake_case.safe_name,
+                        pascal_case_field_name=shape.name.name.pascal_case.safe_name,
+                        json_field_name=shape.name.wire_value,
+                        type_reference=shape.type,
+                    ),
+                    FernAwarePydanticField(
+                        name=get_discriminant_parameter_name(self._union.discriminant),
+                        pascal_case_field_name=self._union.discriminant.name.pascal_case.safe_name,
                         json_field_name=self._union.discriminant.wire_value,
                         default_value=discriminant_value,
                         type_reference=ir_types.TypeReference.factory.container(
@@ -210,10 +224,8 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                     universal_root_validator=self._context.core_utilities.universal_root_validator,
                     update_forward_ref_function_reference=self._context.core_utilities.get_update_forward_refs(),
                 ) as internal_pydantic_model_for_single_union_type:
-                    for common_field in single_property_property_fields:
-                        field_dict = common_field.__dict__
-                        del field_dict["type_reference"]
-                        base_union_pydantic_model.add_field(**vars(field_dict))
+                    for field in single_property_property_fields:
+                        internal_pydantic_model_for_single_union_type.add_field(field)
                     all_referenced_types.append(shape.type)
                     internal_single_union_type = internal_pydantic_model_for_single_union_type.to_reference()
                     single_union_type_references.append(internal_single_union_type)
@@ -230,13 +242,11 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                         source_file=self._maybe_requests_source_file,
                         docstring=None,
                         should_export=False,
-                    ) as base_union_typed_dict:
-                        for common_field in single_property_property_fields:
-                            field_dict = common_field.__dict__
-                            del field_dict["type_hint"]
-                            base_union_typed_dict.add_field(**vars(field_dict))
+                    ) as member_typed_dict:
+                        for field in single_property_property_fern_aware_fields:
+                            member_typed_dict.add_field(**vars(field))
 
-                        single_union_type_dict_references.append(base_union_typed_dict.to_reference())
+                        single_union_type_dict_references.append(member_typed_dict.to_reference())
 
             elif shape.properties_type == "samePropertiesAsObject":
                 same_properties_as_object_property_fields: List[FernAwarePydanticField] = [

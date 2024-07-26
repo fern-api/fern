@@ -12,7 +12,7 @@ class NestedType(Json):
     """
     Examples
     --------
-    from seed import NestedType
+    from seed.types import NestedType
 
     NestedType(
         docs="This is an example nested type.",

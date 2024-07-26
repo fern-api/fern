@@ -36,7 +36,7 @@ class Test_Or(UniversalBaseModel):
 
 
 """
-from seed import Test_And
+from seed.types.types import Test_And
 
 Test_And(value=True)
 """

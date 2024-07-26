@@ -269,7 +269,7 @@
                         "type": "template",
                         "value": {
                             "imports": [
-                                "from seed import WithCursor"
+                                "from seed.users.types import WithCursor"
                             ],
                             "isOptional": true,
                             "templateString": "pagination=WithCursor(\n\t\t$FERN_INPUT\n\t)",
@@ -339,7 +339,7 @@
                             "type": "template",
                             "value": {
                                 "imports": [
-                                    "from seed import WithCursor"
+                                    "from seed.users.types import WithCursor"
                                 ],
                                 "isOptional": true,
                                 "templateString": "pagination=WithCursor(\n\t\t$FERN_INPUT\n\t)",
@@ -643,7 +643,7 @@
                         "type": "template",
                         "value": {
                             "imports": [
-                                "from seed import WithPage"
+                                "from seed.users.types import WithPage"
                             ],
                             "isOptional": true,
                             "templateString": "pagination=WithPage(\n\t\t$FERN_INPUT\n\t)",
@@ -713,7 +713,7 @@
                             "type": "template",
                             "value": {
                                 "imports": [
-                                    "from seed import WithPage"
+                                    "from seed.users.types import WithPage"
                                 ],
                                 "isOptional": true,
                                 "templateString": "pagination=WithPage(\n\t\t$FERN_INPUT\n\t)",

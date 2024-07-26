@@ -13,13 +13,10 @@ class Base(UniversalBaseModel):
     """
     Examples
     --------
-    from seed import Metadata_Html
+    from seed.types.types import Metadata_Html
 
     Metadata_Html(value="<head>...</head>")
     """
-
-    extra: typing.Dict[str, str]
-    tags: typing.Set[str]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -58,7 +55,7 @@ class Metadata_Markdown(Base):
 
 
 """
-from seed import Metadata_Html
+from seed.types.types import Metadata_Html
 
 Metadata_Html(value="<head>...</head>")
 """

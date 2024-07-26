@@ -13,7 +13,7 @@ class Movie(UniversalBaseModel):
     """
     Examples
     --------
-    from seed import Movie
+    from seed.types.types import Movie
 
     Movie(
         id="movie-c06a4ad7",

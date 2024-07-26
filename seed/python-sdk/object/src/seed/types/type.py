@@ -19,7 +19,7 @@ class Type(UniversalBaseModel):
     import datetime
     import uuid
 
-    from seed import Name, Type
+    from seed.types import Name, Type
 
     Type(
         one=1,
