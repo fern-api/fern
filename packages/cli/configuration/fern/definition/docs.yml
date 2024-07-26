@@ -269,7 +269,7 @@ types:
           - `{number}px`
 
       searchbar-placement:
-        type: optional<SidebarOrHeaderPlacement>
+        type: optional<SearchbarPlacement>
         docs: |
           Sets the placement of the searchbar
 
@@ -278,7 +278,7 @@ types:
           Note: this setting is ignored when `disable-header` is set to true.
 
       tabs-placement:
-        type: optional<SidebarOrHeaderPlacement>
+        type: optional<TabsPlacement>
         docs: |
           Set the placement of the tabs
 
@@ -313,7 +313,17 @@ types:
           If `disable-header` is set to true, the header will not be rendered. Instead, the logo will be rendered as part of the sidebar,
           and a 1px border will separate the sidebar from the content.
 
-  SidebarOrHeaderPlacement:
+  SearchbarPlacement:
+    enum:
+      - header
+      - value: header-tabs
+        name: header_tabs
+        docs: |
+          The searchbar will be placed in the header, but on the tabs row. If the tabs row is hidden, the searchbar will be placed in the header instead.
+          This is a good option if you want to keep the searchbar visible, but save space in the header for more navbar links.
+      - sidebar
+
+  TabsPlacement:
     enum:
       - header
       - sidebar
