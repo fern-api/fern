@@ -44,7 +44,7 @@ jobs:
             "generators/typescript/sdk",
             "generators/typescript/express",
             "generators/csharp/sdk",
-            "generators/csharp/model"
+            // "generators/csharp/model" EXCLUDED because not released
           ];
 
           const semverRegex = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[\da-z\-]+(?:\.[\da-z\-]+)*)?(?:\+[\da-z\-]+(?:\.[\da-z\-]+)*)?$/i;
