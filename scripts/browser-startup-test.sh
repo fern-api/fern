@@ -48,7 +48,7 @@ npm install
 output=$(timeout 25s npm run start &)
 sleep 30
 echo "$output"
-if echo "$output" | grep -q "webpack compiled successfully"; then
+if echo "$output" | grep -q "Compiled successfully!"; then
     echo "Compiled successfully"
 else
     echo "Failed to compile"
