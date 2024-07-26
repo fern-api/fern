@@ -8,8 +8,8 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
 from ...core.serialization import convert_and_respect_annotation_metadata
-from ...requests.types.object.object_with_required_field import ObjectWithRequiredFieldParams
-from ...types.types.object.object_with_required_field import ObjectWithRequiredField
+from ...types.object.requests.object_with_required_field import ObjectWithRequiredFieldParams
+from ...types.object.types.object_with_required_field import ObjectWithRequiredField
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)

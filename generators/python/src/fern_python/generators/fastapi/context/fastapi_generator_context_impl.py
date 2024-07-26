@@ -53,8 +53,7 @@ class FastApiGeneratorContextImpl(FastApiGeneratorContext):
         self, service_name: ir_types.DeclaredServiceName, request: ir_types.InlinedRequestBody
     ) -> AST.ClassReference:
         return self._inlined_request_declaration_referencer.get_class_reference(
-            name=ServiceNameAndInlinedRequestBody(service_name=service_name, request=request),
-            as_request=False
+            name=ServiceNameAndInlinedRequestBody(service_name=service_name, request=request), as_request=False
         )
 
     def get_filepath_for_error(self, error_name: ir_types.DeclaredErrorName) -> Filepath:

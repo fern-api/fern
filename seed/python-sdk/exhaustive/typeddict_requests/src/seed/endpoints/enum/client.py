@@ -7,7 +7,7 @@ from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
-from ...types.types.enum.weather_report import WeatherReport
+from ...types.enum.types.weather_report import WeatherReport
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)

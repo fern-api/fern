@@ -8,7 +8,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..general_errors.errors.bad_request_body import BadRequestBody
-from ..types.general_errors.bad_object_request_info import BadObjectRequestInfo
+from ..general_errors.types.bad_object_request_info import BadObjectRequestInfo
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)

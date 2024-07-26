@@ -398,7 +398,7 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                         must_import_after_current_declaration=lambda other_type_name: self._context.does_type_reference_other_type(
                             other_type_name.type_id, type_id
                         ),
-                        as_request=False
+                        as_request=False,
                     ),
                 )
 
@@ -436,7 +436,10 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
             # as a workaround, we explicitly pass references to update_forward_refs
             # so they are in scope
             internal_pydantic_model_for_single_union_type.update_forward_refs(
-                {self._context.get_class_reference_for_type_id(type_id, as_request=False) for type_id in forward_refed_types}
+                {
+                    self._context.get_class_reference_for_type_id(type_id, as_request=False)
+                    for type_id in forward_refed_types
+                }
             )
 
     def _get_discriminant_value_for_single_union_type(
@@ -628,8 +631,7 @@ class DiscriminatedUnionSnippetGenerator:
             )
 
         union_class_reference = self.snippet_writer.get_class_reference_for_declared_type_name(
-            name=name,
-            as_request=False
+            name=name, as_request=False
         )
 
         def write_union(writer: AST.NodeWriter) -> None:
@@ -647,10 +649,7 @@ class DiscriminatedUnionSnippetGenerator:
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
                 module=AST.Module.snippet(
-                    module_path=self.snippet_writer.get_module_path_for_declared_type_name(
-                        name=name,
-                        as_request=False
-                    ),
+                    module_path=self.snippet_writer.get_module_path_for_declared_type_name(name=name, as_request=False),
                 ),
                 named_import=get_single_union_type_class_name(
                     name=name, wire_discriminant_value=wire_discriminant_value

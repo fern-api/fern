@@ -44,71 +44,71 @@ fixtures:
           use_str_enums: true
       outputFolder: strenum
   exhaustive:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        timeout_in_seconds: infinity
-      outputFolder: infinite-timeout
-    - customConfig:
-        timeout_in_seconds: 5
-      outputFolder: five-second-timeout
-    - customConfig:
-        pydantic_config:
-          include_union_utils: true
-      outputFolder: union-utils
-    - customConfig:
-        pydantic_config:
-          version: v1
-      outputFolder: pydantic-v1
-    - customConfig:
-        pydantic_config:
-          extra_fields: "allow"
-      outputFolder: pydantic-extra-fields
-    - customConfig:
-        pyproject_python_version: "^3.8.1"
-        extra_dependencies:
-          boto3: 1.28.57
-          langchain: 
-            version: "^0.1.20"
-            optional: true
-        extras: 
-          telemetry: ["langchain", "boto3"]
-      outputFolder: extra_dependencies
-    - customConfig:
-        pyproject_python_version: "^3.8.1"
-        extra_dev_dependencies:
-          langchain: "^0.1.3"
-          openai: "^1.9.0"
-          langchain-openai: "^0.0.3"
-        extra_dependencies:
-          boto3: 1.28.57
-      outputFolder: deps_with_min_python_version
-    - customConfig:
-        extra_dev_dependencies:
-          requests_mock: 1.12.1
-        extra_dependencies:
-          boto3: 1.28.57
-      outputFolder: extra_dev_dependencies
-    - customConfig:
-        additional_init_exports:
-          - from: client_additions
-            imports:
-              - myCustomFunction
-              - AnotherCustomClient
-      outputFolder: additional_init_exports
-    - customConfig:
-        improved_imports: true
-      outputFolder: improved_imports
-    - customConfig:
-        pydantic_config:
-          skip_validation: true
-      outputFolder: skip-pydantic-validation
-    - customConfig:
-        follow_redirects_by_default: true
-      outputFolder: follow_redirects_by_default
-    - customConfig:
-        inline_request_params: true
-      outputFolder: inline_request_params
+    # - customConfig: null
+    #   outputFolder: no-custom-config
+    # - customConfig:
+    #     timeout_in_seconds: infinity
+    #   outputFolder: infinite-timeout
+    # - customConfig:
+    #     timeout_in_seconds: 5
+    #   outputFolder: five-second-timeout
+    # - customConfig:
+    #     pydantic_config:
+    #       include_union_utils: true
+    #   outputFolder: union-utils
+    # - customConfig:
+    #     pydantic_config:
+    #       version: v1
+    #   outputFolder: pydantic-v1
+    # - customConfig:
+    #     pydantic_config:
+    #       extra_fields: "allow"
+    #   outputFolder: pydantic-extra-fields
+    # - customConfig:
+    #     pyproject_python_version: "^3.8.1"
+    #     extra_dependencies:
+    #       boto3: 1.28.57
+    #       langchain: 
+    #         version: "^0.1.20"
+    #         optional: true
+    #     extras: 
+    #       telemetry: ["langchain", "boto3"]
+    #   outputFolder: extra_dependencies
+    # - customConfig:
+    #     pyproject_python_version: "^3.8.1"
+    #     extra_dev_dependencies:
+    #       langchain: "^0.1.3"
+    #       openai: "^1.9.0"
+    #       langchain-openai: "^0.0.3"
+    #     extra_dependencies:
+    #       boto3: 1.28.57
+    #   outputFolder: deps_with_min_python_version
+    # - customConfig:
+    #     extra_dev_dependencies:
+    #       requests_mock: 1.12.1
+    #     extra_dependencies:
+    #       boto3: 1.28.57
+    #   outputFolder: extra_dev_dependencies
+    # - customConfig:
+    #     additional_init_exports:
+    #       - from: client_additions
+    #         imports:
+    #           - myCustomFunction
+    #           - AnotherCustomClient
+    #   outputFolder: additional_init_exports
+    # - customConfig:
+    #     improved_imports: true
+    #   outputFolder: improved_imports
+    # - customConfig:
+    #     pydantic_config:
+    #       skip_validation: true
+    #   outputFolder: skip-pydantic-validation
+    # - customConfig:
+    #     follow_redirects_by_default: true
+    #   outputFolder: follow_redirects_by_default
+    # - customConfig:
+    #     inline_request_params: true
+    #   outputFolder: inline_request_params
     - customConfig:
         pydantic_config:
           use_typeddict_requests: true

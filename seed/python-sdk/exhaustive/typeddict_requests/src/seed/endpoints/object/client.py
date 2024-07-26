@@ -11,13 +11,13 @@ from ...core.jsonable_encoder import jsonable_encoder
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
 from ...core.serialization import convert_and_respect_annotation_metadata
-from ...requests.types.object.nested_object_with_required_field import NestedObjectWithRequiredFieldParams
-from ...requests.types.object.object_with_optional_field import ObjectWithOptionalFieldParams
-from ...types.types.object.nested_object_with_optional_field import NestedObjectWithOptionalField
-from ...types.types.object.nested_object_with_required_field import NestedObjectWithRequiredField
-from ...types.types.object.object_with_map_of_map import ObjectWithMapOfMap
-from ...types.types.object.object_with_optional_field import ObjectWithOptionalField
-from ...types.types.object.object_with_required_field import ObjectWithRequiredField
+from ...types.object.requests.nested_object_with_required_field import NestedObjectWithRequiredFieldParams
+from ...types.object.requests.object_with_optional_field import ObjectWithOptionalFieldParams
+from ...types.object.types.nested_object_with_optional_field import NestedObjectWithOptionalField
+from ...types.object.types.nested_object_with_required_field import NestedObjectWithRequiredField
+from ...types.object.types.object_with_map_of_map import ObjectWithMapOfMap
+from ...types.object.types.object_with_optional_field import ObjectWithOptionalField
+from ...types.object.types.object_with_required_field import ObjectWithRequiredField
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)

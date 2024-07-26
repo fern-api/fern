@@ -12,8 +12,6 @@ from ...core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 
 
 class Base(UncheckedBaseModel):
-    id: str
-
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
@@ -23,8 +21,8 @@ class Base(UncheckedBaseModel):
 
 
 class Shape_Circle(Base):
-    radius: float
     type: typing.Literal["circle"] = "circle"
+    radius: float
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -35,8 +33,8 @@ class Shape_Circle(Base):
 
 
 class Shape_Square(Base):
-    length: float
     type: typing.Literal["square"] = "square"
+    length: float
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

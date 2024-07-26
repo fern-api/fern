@@ -9,9 +9,9 @@ from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..general_errors.errors.bad_request_body import BadRequestBody
-from ..requests.types.object.object_with_optional_field import ObjectWithOptionalFieldParams
-from ..types.general_errors.bad_object_request_info import BadObjectRequestInfo
-from ..types.types.object.object_with_optional_field import ObjectWithOptionalField
+from ..general_errors.types.bad_object_request_info import BadObjectRequestInfo
+from ..types.object.requests.object_with_optional_field import ObjectWithOptionalFieldParams
+from ..types.object.types.object_with_optional_field import ObjectWithOptionalField
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)

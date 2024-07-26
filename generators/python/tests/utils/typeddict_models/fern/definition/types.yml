@@ -1,0 +1,61 @@
+types:
+  Color:
+    enum:
+      - red
+      - blue
+
+  UndiscriminatedShape:
+    discriminated: false
+    union:
+      - Circle
+      - Square
+
+  Shape:
+    base-properties:
+      id: string
+    union:
+      circle: Circle
+      square: Square
+
+  Circle: 
+    properties:
+      radius: double
+
+  Square: 
+    properties:
+      length: double
+
+  ObjectWithOptionalField: #generic object that supports any type, makes it easier to use when testing
+    properties:
+      literal: literal<"lit_one">
+      string: optional<string>
+      integer: optional<integer>
+      long: optional<long>
+      double: optional<double>
+      bool: optional<boolean>
+      datetime: optional<datetime>
+      date: optional<date>
+      uuid: optional<uuid>
+      base64: optional<base64>
+      list: optional<list<string>>
+      set: optional<set<string>>
+      map: optional<map<integer, string>>
+      enum: optional<Color>
+      union: optional<Shape>
+      second_union: optional<Shape>
+      undiscriminated_union: optional<UndiscriminatedShape>
+      any: unknown
+  
+  ObjectWithDefaults:
+    docs: |
+      Defines properties with default values and validation rules.
+    properties:
+      decimal:
+        type: optional<double>
+        default: 1.1
+      string:
+        type: optional<string>
+        default: "here's a sentence!"
+      required_string:
+        type: string
+        default: "I neeeeeeeeeed this!"

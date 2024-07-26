@@ -10,7 +10,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
-from ...types.types.object.object_with_optional_field import ObjectWithOptionalField
+from ...types.object.types.object_with_optional_field import ObjectWithOptionalField
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)

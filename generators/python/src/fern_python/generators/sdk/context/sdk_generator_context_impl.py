@@ -134,7 +134,9 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
 
     def get_reference_to_async_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> AST.ClassReference:
         subpackage = self.ir.subpackages[subpackage_id]
-        return self._subpackage_async_client_declaration_referencer.get_class_reference(name=subpackage, as_request=False)
+        return self._subpackage_async_client_declaration_referencer.get_class_reference(
+            name=subpackage, as_request=False
+        )
 
     def get_literal_value(self, reference: ir_types.TypeReference) -> Optional[typing.Union[str, bool]]:
         type = reference.get_as_union()

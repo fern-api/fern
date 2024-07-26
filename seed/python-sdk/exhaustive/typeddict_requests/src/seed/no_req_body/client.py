@@ -7,7 +7,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..types.types.object.object_with_optional_field import ObjectWithOptionalField
+from ..types.object.types.object_with_optional_field import ObjectWithOptionalField
 
 
 class NoReqBodyClient:

@@ -64,11 +64,9 @@ def convert_and_respect_annotation_metadata(
             and isinstance(object_, typing.Set)
         )
         or (
-            (
-                typing_extensions.get_origin(clean_type) == typing.Sequence
-                or typing_extensions.get_origin(clean_type) == collections.abc.Sequence
-                or clean_type == typing.Sequence
-            )
+            (typing_extensions.get_origin(clean_type) == typing.Sequence
+             or typing_extensions.get_origin(clean_type) == collections.abc.Sequence
+             or clean_type == typing.Sequence)
             and isinstance(object_, typing.Sequence)
         )
     ):

@@ -280,7 +280,10 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                         # as a workaround, we explicitly pass references to update_forward_refs
                         # so they are in scope
                         internal_pydantic_model_for_single_union_type.update_forward_refs(
-                            {self._context.get_class_reference_for_type_id(type_id, as_request=False) for type_id in forward_refed_types}
+                            {
+                                self._context.get_class_reference_for_type_id(type_id, as_request=False)
+                                for type_id in forward_refed_types
+                            }
                         )
 
                         # to avoid issues with circular dependencies, make sure all imports
