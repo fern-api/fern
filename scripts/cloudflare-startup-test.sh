@@ -47,8 +47,7 @@ export default {
         return new Response("Hello World!");
     },
 };' > src/index.ts
-output=$(timeout 1s wrangler dev &)
-sleep 1
+output=$(timeout 5s wrangler dev &)
 echo "$output"
 if echo "$output" | grep -q "SeedApiClient import was successful"; then
     echo "Compiled successfully"

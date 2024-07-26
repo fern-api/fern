@@ -46,7 +46,6 @@ echo "DISABLE_ESLINT_PLUGIN=true" >> .env
 
 npm install
 output=$(timeout 25s npm run start &)
-sleep 30
 echo "$output"
 if echo "$output" | grep -q "Compiled successfully!"; then
     echo "Compiled successfully"
@@ -55,5 +54,4 @@ else
     exit 1
 fi
 cd ../../..
-pwd
 rm -rf browser-test

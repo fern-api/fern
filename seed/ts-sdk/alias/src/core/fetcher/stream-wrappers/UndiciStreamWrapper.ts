@@ -40,6 +40,7 @@ export class UndiciStreamWrapper
     public pipe(
         dest: UndiciStreamWrapper | WritableStream<Uint8Array>
     ): UndiciStreamWrapper | WritableStream<Uint8Array> {
+        this._startReading();
         this.on("data", (chunk) => {
             if (dest instanceof UndiciStreamWrapper) {
                 dest._write(chunk);
@@ -182,6 +183,30 @@ export class UndiciStreamWrapper
             for (const callback of this.events[event] || []) {
                 callback(data);
             }
+        }
+    }
+
+    private async _startReading(): Promise<void> {
+        try {
+            this._emit("readable");
+            while (true) {
+                if (this.paused) {
+                    await new Promise((resolve) => {
+                        this.resumeCallback = resolve;
+                    });
+                }
+                const { done, value } = await this.reader.read();
+                if (done) {
+                    this._emit("end");
+                    this._emit("close");
+                    break;
+                }
+                if (value) {
+                    this._emit("data", value);
+                }
+            }
+        } catch (error) {
+            this._emit("error", error);
         }
     }
 }
