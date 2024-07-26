@@ -42,7 +42,7 @@ export default App;
 EOF
 
 echo "BROWSER=none" > .env
-echo "ESLINT_DISABLE=true" >> .env
+echo "DISABLE_ESLINT_PLUGIN=true" >> .env
 
 npm install
 output=$(timeout 5s npm run start &)
