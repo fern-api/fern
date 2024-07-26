@@ -17,4 +17,9 @@ public struct User: Codable {
     public let name: String
     public let tags: [String]
 
+    public init(name: String, tags: [String]) {
+        self.name = name
+        self.tags = tags
+    }
+
 }

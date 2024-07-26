@@ -15,4 +15,8 @@ public struct Foo: Codable {
 
     public let name: String
 
+    public init(name: String) {
+        self.name = name
+    }
+
 }

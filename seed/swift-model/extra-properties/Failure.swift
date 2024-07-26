@@ -15,4 +15,8 @@ public struct Failure: Codable {
 
     public let status: string :: literal TODO
 
+    public init(status: string :: literal TODO) {
+        self.status = status
+    }
+
 }

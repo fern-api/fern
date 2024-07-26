@@ -17,4 +17,10 @@ public struct ObjectFieldValue: Codable {
     public let name: FieldName
     public let value: FieldValue
 
+    /// This type allows us to test a circular reference with a union type (see FieldValue).
+    public init(name: FieldName, value: FieldValue) {
+        self.name = name
+        self.value = value
+    }
+
 }

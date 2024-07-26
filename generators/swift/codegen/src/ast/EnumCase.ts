@@ -25,7 +25,8 @@ export class EnumCase extends AstNode {
     public write(writer: Writer): void {
 
         if (this.comment) {
-            writer.write(`/// ${this.comment}`);
+            writer.newLine();
+            writer.writeNode(Swift.makeComment({ comment: this.comment }));
         }
 
         const statement = this.value ? `case ${this.name} = ${this.value}` : `case ${this.name}`;

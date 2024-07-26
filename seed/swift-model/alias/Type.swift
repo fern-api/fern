@@ -17,4 +17,10 @@ public struct Type: Codable {
     public let id: TypeId
     public let name: String
 
+    /// A simple type with just a name.
+    public init(id: TypeId, name: String) {
+        self.id = id
+        self.name = name
+    }
+
 }

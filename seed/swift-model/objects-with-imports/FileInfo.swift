@@ -6,8 +6,10 @@
 //
 
 public enum FileInfo: String {
+
     /// A regular file (e.g. foo.txt).
     case regular = "REGULAR"
+
     /// A directory (e.g. foo/).
     case directory = "DIRECTORY"
 }

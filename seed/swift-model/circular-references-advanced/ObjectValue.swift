@@ -13,4 +13,7 @@ public struct ObjectValue: Codable {
     }
 
 
+    public init() {
+    }
+
 }

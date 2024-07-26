@@ -13,4 +13,7 @@ public struct A: Codable {
     }
 
 
+    public init() {
+    }
+
 }

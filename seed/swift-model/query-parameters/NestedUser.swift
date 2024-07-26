@@ -17,4 +17,9 @@ public struct NestedUser: Codable {
     public let name: String
     public let user: User
 
+    public init(name: String, user: User) {
+        self.name = name
+        self.user = user
+    }
+
 }

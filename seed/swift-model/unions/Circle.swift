@@ -15,4 +15,8 @@ public struct Circle: Codable {
 
     public let radius: Double
 
+    public init(radius: Double) {
+        self.radius = radius
+    }
+
 }

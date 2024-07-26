@@ -15,4 +15,8 @@ public struct MyObject: Codable {
 
     public let unknown: Any
 
+    public init(unknown: Any) {
+        self.unknown = unknown
+    }
+
 }

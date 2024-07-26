@@ -34,9 +34,7 @@ export class Primative extends SwiftClass {
     public readonly key?: PrimativeKey;
 
     constructor(args: Primative.Args) {
-        super({ 
-            name: Primative.getNameForKey(args.key)
-        });
+        super({ name: Primative.getNameForKey(args.key) });
         this.key = args.key;
     }
 

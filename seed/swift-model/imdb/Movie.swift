@@ -17,6 +17,14 @@ public struct Movie: Codable {
 
     public let id: MovieId
     public let title: String
+
+    /// The rating scale is one to five stars
     public let rating: Double
+
+    public init(id: MovieId, title: String, rating: Double) {
+        self.id = id
+        self.title = title
+        self.rating = rating
+    }
 
 }

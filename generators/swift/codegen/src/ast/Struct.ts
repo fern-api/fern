@@ -1,5 +1,6 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
 import Swift, { AccessLevel, Enum, Field, SwiftClass } from "..";
+import { Optional } from "./Optional";
 
 /*
 
@@ -22,6 +23,8 @@ Breakdown:
 
 export declare namespace Struct {
     interface Args {
+        /* Comment that appear above the class */
+        comment?: string;
         /* The access level of the type */
         accessLevel?: AccessLevel;
         /* The name of the struct */
@@ -32,26 +35,32 @@ export declare namespace Struct {
         subclasses?: (Enum | SwiftClass)[];
         /* The field variables in the class */
         fields?: Field[];
+        /* Build initializer */
+        addInitializer?: boolean;
     }
 }
 
 export class Struct extends AstNode {
+    public readonly comment?: string;
     public readonly accessLevel?: AccessLevel;
     public readonly name: string;
     public readonly fields?: Field[];
     public readonly inheritance?: SwiftClass[];
     public readonly subclasses?: (Enum | SwiftClass)[];
+    public readonly addInitializer: boolean;
 
     constructor(args: Struct.Args) {
         super(Swift.indentSize);
+        this.comment = args.comment;
         this.accessLevel = args.accessLevel;
         this.name = args.name;
         this.inheritance = args.inheritance;
         this.subclasses = args.subclasses;
         this.fields = args.fields;
+        this.addInitializer = args.addInitializer ?? false;
     }
 
-    private buildTitle(): string | undefined {
+    private buildStructTitle(): string | undefined {
 
         if (!this.inheritance) {
             return this.name;
@@ -62,10 +71,21 @@ export class Struct extends AstNode {
 
     }
 
+    private buildInitalizerTitle(): string | undefined {
+
+        const args = this.fields?.map(obj => {
+            const arg = `${obj.name}: ${obj.class.name}`;
+            return obj.class instanceof Optional ? `${arg} = nil` : arg;
+        }).join(", ");
+
+        return `init(${args ?? ""})`;
+
+    }
+
     public write(writer: Writer): void {
 
         // example: public struct Name {
-        writer.openBlock([this.accessLevel, "struct", this.buildTitle()], "{", () => {
+        writer.openBlock([this.accessLevel, "struct", this.buildStructTitle()], "{", () => {
 
             if (this.subclasses) {
                 writer.newLine();
@@ -77,12 +97,29 @@ export class Struct extends AstNode {
 
             if (this.fields) {
                 this.fields.forEach(field => {
+                    if (field.comment) { writer.newLine(); }
                     writer.writeNode(field);
                 });
             }
 
             if (this.subclasses && this.fields) {
                 writer.newLine();
+            }
+
+            if (this.addInitializer) {
+
+                if (this.comment) {
+                    writer.writeNode(Swift.makeComment({ comment: this.comment }));
+                }
+
+                writer.openBlock([this.accessLevel, this.buildInitalizerTitle()], "{", () => {
+                    this.fields?.forEach(field => {
+                        writer.write(`self.${field.name} = ${field.name}`);
+                    });
+                }, "}");
+
+                writer.newLine();
+                
             }
 
         }, "}");

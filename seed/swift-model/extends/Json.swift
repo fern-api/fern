@@ -15,4 +15,8 @@ public struct Json: Codable {
 
     public let raw: String
 
+    public init(raw: String) {
+        self.raw = raw
+    }
+
 }

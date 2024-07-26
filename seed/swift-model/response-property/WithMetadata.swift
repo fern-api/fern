@@ -13,6 +13,10 @@ public struct WithMetadata: Codable {
         case metadata = "metadata"
     }
 
-    public let metadata: primitive :: map TODO
+    public let metadata: [String: String]
+
+    public init(metadata: [String: String]) {
+        self.metadata = metadata
+    }
 
 }

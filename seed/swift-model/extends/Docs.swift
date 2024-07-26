@@ -15,4 +15,8 @@ public struct Docs: Codable {
 
     public let docs: String
 
+    public init(docs: String) {
+        self.docs = docs
+    }
+
 }

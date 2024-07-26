@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-extraneous-class */
 // Swift Imports
 import { AccessLevel } from "./ast/AccessLevel";
+import { Comment } from "./ast/Comment";
 import { Enum } from "./ast/Enum";
 import { EnumCase } from "./ast/EnumCase";
 import { Field } from "./ast/Field";
@@ -14,10 +15,12 @@ import { Primative } from "./ast/Primative";
 import { Struct } from "./ast/Struct";
 import { SwiftArray } from "./ast/SwiftArray";
 import { SwiftClass } from "./ast/SwiftClass";
+import { SwiftDictionary } from "./ast/SwiftDictionary";
 import { TypeAlias } from "./ast/TypeAlias";
 
 // Swift Exports
 export { AccessLevel } from "./ast/AccessLevel";
+export { Comment } from "./ast/Comment";
 export { Enum } from "./ast/Enum";
 export { EnumCase } from "./ast/EnumCase";
 export { Field } from "./ast/Field";
@@ -33,6 +36,7 @@ export type { PrimativeKey } from "./ast/Primative";
 export { Struct } from "./ast/Struct";
 export { SwiftArray } from "./ast/SwiftArray";
 export { SwiftClass } from "./ast/SwiftClass";
+export { SwiftDictionary as SwiftMap } from "./ast/SwiftDictionary";
 export { VariableType } from "./ast/VariableType";
 export { SwiftFile } from "./project/SwiftFile";
 
@@ -50,6 +54,10 @@ export default class Swift {
 
   public static makeFileHeader(args: FileHeader.Args): FileHeader {
     return new FileHeader(args);
+  }
+
+  public static makeComment(args: Comment.Args): Comment {
+    return new Comment(args);
   }
 
   public static makeTypeAlias(args: TypeAlias.Args): TypeAlias {
@@ -94,6 +102,10 @@ export default class Swift {
 
   public static makeArray(args: SwiftArray.Args): SwiftArray {
     return new SwiftArray(args);
+  }
+
+  public static makeDictionary(args: SwiftDictionary.Args): SwiftDictionary {
+    return new SwiftDictionary(args);
   }
 
   public static makeOptional(args: Optional.Args): Optional {
@@ -240,7 +252,7 @@ export default class Swift {
        * 
        * }
        */
-      makeCodableStruct(props: { safeName: string, codingArgs: EnumCase.Args[], fields: Field[] }): File {
+      makeCodableStruct(props: {  safeName: string, codingArgs: EnumCase.Args[], fields: Field[], comment?: string }): File {
         
         return Swift.makeFile({
           fileHeader: Swift.factories.fileHeaders.makeHeaderWithFernStub(props.safeName),
@@ -248,6 +260,7 @@ export default class Swift {
             Swift.factories.imports.makeFoundation()
           ],
           node: Swift.makeStruct({
+            comment: props.comment,
             accessLevel: AccessLevel.Public,
             name: props.safeName,
             inheritance: [
@@ -257,6 +270,7 @@ export default class Swift {
               Swift.factories.enums.makeCodingKeys(props.codingArgs),
             ],
             fields: props.fields,
+            addInitializer: true,
           })
         });
       }

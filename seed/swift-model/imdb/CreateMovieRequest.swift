@@ -17,4 +17,9 @@ public struct CreateMovieRequest: Codable {
     public let title: String
     public let rating: Double
 
+    public init(title: String, rating: Double) {
+        self.title = title
+        self.rating = rating
+    }
+
 }

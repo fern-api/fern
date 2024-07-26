@@ -14,7 +14,12 @@ public struct Record: Codable {
         case _3D = "3d"
     }
 
-    public let foo: primitive :: map TODO
+    public let foo: [String: String]
     public let _3D: Int
+
+    public init(foo: [String: String], _3D: Int) {
+        self.foo = foo
+        self._3D = _3D
+    }
 
 }

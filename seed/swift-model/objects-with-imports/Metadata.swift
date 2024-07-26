@@ -15,6 +15,11 @@ public struct Metadata: Codable {
     }
 
     public let id: String
-    public let data: primitive :: map TODO?
+    public let data: [String: String]?
+
+    public init(id: String, data: [String: String]? = nil) {
+        self.id = id
+        self.data = data
+    }
 
 }

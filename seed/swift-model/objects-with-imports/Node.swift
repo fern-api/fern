@@ -19,4 +19,10 @@ public struct Node: Codable {
     public let label: String?
     public let metadata: Metadata?
 
+    public init(id: String, label: String? = nil, metadata: Metadata? = nil) {
+        self.id = id
+        self.label = label
+        self.metadata = metadata
+    }
+
 }

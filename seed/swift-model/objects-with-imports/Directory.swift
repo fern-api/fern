@@ -19,4 +19,10 @@ public struct Directory: Codable {
     public let files: [File]?
     public let directories: [Directory]?
 
+    public init(name: String, files: [File]? = nil, directories: [Directory]? = nil) {
+        self.name = name
+        self.files = files
+        self.directories = directories
+    }
+
 }

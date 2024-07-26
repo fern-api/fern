@@ -15,4 +15,8 @@ public struct Square: Codable {
 
     public let length: Double
 
+    public init(length: Double) {
+        self.length = length
+    }
+
 }

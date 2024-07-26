@@ -19,4 +19,10 @@ public struct SendResponse: Codable {
     public let status: Int
     public let success: boolean :: literal TODO
 
+    public init(message: String, status: Int, success: boolean :: literal TODO) {
+        self.message = message
+        self.status = status
+        self.success = success
+    }
+
 }

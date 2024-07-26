@@ -19,4 +19,10 @@ public struct File: Codable {
     public let contents: String
     public let info: FileInfo
 
+    public init(name: String, contents: String, info: FileInfo) {
+        self.name = name
+        self.contents = contents
+        self.info = info
+    }
+
 }

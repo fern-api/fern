@@ -17,4 +17,9 @@ public struct EchoRequest: Codable {
     public let name: String
     public let size: Int
 
+    public init(name: String, size: Int) {
+        self.name = name
+        self.size = size
+    }
+
 }

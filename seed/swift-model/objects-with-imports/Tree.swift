@@ -15,4 +15,8 @@ public struct Tree: Codable {
 
     public let nodes: [Node]?
 
+    public init(nodes: [Node]? = nil) {
+        self.nodes = nodes
+    }
+
 }

@@ -15,4 +15,8 @@ public struct StringResponse: Codable {
 
     public let data: String
 
+    public init(data: String) {
+        self.data = data
+    }
+
 }

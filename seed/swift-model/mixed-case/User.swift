@@ -17,6 +17,12 @@ public struct User: Codable {
 
     public let userName: String
     public let metadataTags: [String]
-    public let extraProperties: primitive :: map TODO
+    public let extraProperties: [String: String]
+
+    public init(userName: String, metadataTags: [String], extraProperties: [String: String]) {
+        self.userName = userName
+        self.metadataTags = metadataTags
+        self.extraProperties = extraProperties
+    }
 
 }

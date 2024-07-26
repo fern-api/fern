@@ -17,4 +17,9 @@ public struct StreamedCompletion: Codable {
     public let delta: String
     public let tokens: Int?
 
+    public init(delta: String, tokens: Int? = nil) {
+        self.delta = delta
+        self.tokens = tokens
+    }
+
 }

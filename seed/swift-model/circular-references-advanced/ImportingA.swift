@@ -15,4 +15,8 @@ public struct ImportingA: Codable {
 
     public let a: A?
 
+    public init(a: A? = nil) {
+        self.a = a
+    }
+
 }

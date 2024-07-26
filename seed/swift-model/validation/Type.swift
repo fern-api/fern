@@ -21,4 +21,12 @@ public struct Type: Codable {
     public let name: String
     public let shape: Shape
 
+    /// Defines properties with default values and validation rules.
+    public init(decimal: Double, even: Int, name: String, shape: Shape) {
+        self.decimal = decimal
+        self.even = even
+        self.name = name
+        self.shape = shape
+    }
+
 }

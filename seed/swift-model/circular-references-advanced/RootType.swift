@@ -15,4 +15,8 @@ public struct RootType: Codable {
 
     public let s: String
 
+    public init(s: String) {
+        self.s = s
+    }
+
 }

@@ -19,6 +19,33 @@ export default class ObjectBuilder extends CodeBuilder<SwiftFile> {
     this.objectDeclaration = objectDeclaration;
   }
 
+  private getClassForContainer(value: ContainerType): SwiftClass {
+    return value._visit<SwiftClass>({
+      list: (value: TypeReference) => {
+        return this.getClassForTypeReference(value).toArray();
+      },
+      map: (value: MapType) => {
+        return Swift.makeDictionary({
+          class: Swift.makeClass({ name: "Map" }),
+          keyClass: this.getClassForTypeReference(value.keyType), 
+          valueClass: this.getClassForTypeReference(value.valueType) 
+        });
+      },
+      optional: (value: TypeReference) => {
+        return this.getClassForTypeReference(value).toOptional();
+      },
+      set: (value: TypeReference) => {
+        return Swift.makeClass({ name: `${value.type} :: set TODO` });
+      },
+      literal: (value: Literal) => {
+        return Swift.makeClass({ name: `${value.type} :: literal TODO` });
+      },
+      _other: (value: { type: string; }) => {
+        return Swift.makeClass({ name: `${value.type} :: _other TODO` });
+      }
+    });
+  }
+
   private getClassForTypeReference(typeReference: TypeReference): SwiftClass {
     return typeReference._visit<SwiftClass>({
       container: (value: ContainerType) => {
@@ -35,29 +62,6 @@ export default class ObjectBuilder extends CodeBuilder<SwiftFile> {
       },
       _other: (value: { type: string; }) => {
         return Swift.factories.types.makeAny();
-      }
-    });
-  }
-
-  private getClassForContainer(value: ContainerType): SwiftClass {
-    return value._visit<SwiftClass>({
-      list: (value: TypeReference) => {
-        return this.getClassForTypeReference(value).toArray();
-      },
-      map: (value: MapType) => {
-        return Swift.makeClass({ name: `${value.valueType.type} :: map TODO` });
-      },
-      optional: (value: TypeReference) => {
-        return this.getClassForTypeReference(value).toOptional();
-      },
-      set: (value: TypeReference) => {
-        return Swift.makeClass({ name: `${value.type} :: set TODO` });
-      },
-      literal: (value: Literal) => {
-        return Swift.makeClass({ name: `${value.type} :: literal TODO` });
-      },
-      _other: (value: { type: string; }) => {
-        return Swift.makeClass({ name: `${value.type} :: _other TODO` });
       }
     });
   }
@@ -85,6 +89,7 @@ export default class ObjectBuilder extends CodeBuilder<SwiftFile> {
       
       // example: let name: String
       return Swift.makeField({
+        comment: property.docs,
         accessLevel: AccessLevel.Public,
         variableType: VariableType.Let,
         name: property.name.name.camelCase.safeName,
@@ -100,12 +105,13 @@ export default class ObjectBuilder extends CodeBuilder<SwiftFile> {
   public build(): SwiftFile {
 
     // Destructure values
-    const { name } = this.typeDeclaration;
+    const { name, docs } = this.typeDeclaration;
     const { properties } = this.objectDeclaration;
     const safeName = name.name.pascalCase.safeName;
 
     // Build file
     const output = Swift.factories.structs.makeCodableStruct({
+      comment: docs,
       safeName: safeName, 
       codingArgs: this.buildCodingArgs(properties),
       fields: this.buildFields(properties)

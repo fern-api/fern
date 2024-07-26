@@ -15,4 +15,8 @@ public struct Response: Codable {
 
     public let data: Movie
 
+    public init(data: Movie) {
+        self.data = data
+    }
+
 }

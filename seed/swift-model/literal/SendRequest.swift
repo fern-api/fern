@@ -19,4 +19,10 @@ public struct SendRequest: Codable {
     public let query: String
     public let stream: boolean :: literal TODO
 
+    public init(prompt: string :: literal TODO, query: String, stream: boolean :: literal TODO) {
+        self.prompt = prompt
+        self.query = query
+        self.stream = stream
+    }
+
 }

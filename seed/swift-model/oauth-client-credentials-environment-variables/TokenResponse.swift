@@ -19,4 +19,11 @@ public struct TokenResponse: Codable {
     public let expiresIn: Int
     public let refreshToken: String?
 
+    /// An OAuth token response.
+    public init(accessToken: String, expiresIn: Int, refreshToken: String? = nil) {
+        self.accessToken = accessToken
+        self.expiresIn = expiresIn
+        self.refreshToken = refreshToken
+    }
+
 }
