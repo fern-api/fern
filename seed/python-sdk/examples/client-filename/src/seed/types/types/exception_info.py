@@ -11,7 +11,7 @@ class ExceptionInfo(UniversalBaseModel):
     """
     Examples
     --------
-    from seed import ExceptionInfo
+    from seed.types.types import ExceptionInfo
 
     ExceptionInfo(
         exception_type="Unavailable",

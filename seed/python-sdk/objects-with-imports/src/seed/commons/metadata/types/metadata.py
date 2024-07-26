@@ -11,7 +11,7 @@ class Metadata(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.commons import Metadata
+    from seed.commons.metadata.types import Metadata
 
     Metadata(
         id="metadata-js8dg24b",

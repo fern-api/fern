@@ -11,7 +11,7 @@ class Request(UniversalBaseModel):
     """
     Examples
     --------
-    from seed import Request
+    from seed.types.types import Request
 
     Request(
         request={},

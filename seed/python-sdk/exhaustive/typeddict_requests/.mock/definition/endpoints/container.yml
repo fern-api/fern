@@ -1,0 +1,48 @@
+imports:
+  objects: ../types/object.yml
+
+service:
+  auth: true
+  base-path: /container
+  endpoints:
+    getAndReturnListOfPrimitives:
+      path: /list-of-primitives
+      method: POST
+      request: list<string>
+      response: list<string>
+
+    getAndReturnListOfObjects:
+      path: /list-of-objects
+      method: POST
+      request: list<objects.ObjectWithRequiredField>
+      response: list<objects.ObjectWithRequiredField>
+
+    getAndReturnSetOfPrimitives:
+      path: /set-of-primitives
+      method: POST
+      request: set<string>
+      response: set<string>
+
+    getAndReturnSetOfObjects:
+      path: /set-of-objects
+      method: POST
+      request: set<objects.ObjectWithRequiredField>
+      response: set<objects.ObjectWithRequiredField>
+
+    getAndReturnMapPrimToPrim:
+      path: /map-prim-to-prim
+      method: POST
+      request: map<string, string>
+      response: map<string, string>
+
+    getAndReturnMapOfPrimToObject:
+      path: /map-prim-to-object
+      method: POST
+      request: map<string, objects.ObjectWithRequiredField>
+      response: map<string, objects.ObjectWithRequiredField>
+
+    getAndReturnOptional:
+      path: /opt-objects
+      method: POST
+      request: optional<objects.ObjectWithRequiredField>
+      response: optional<objects.ObjectWithRequiredField>

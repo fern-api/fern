@@ -14,8 +14,8 @@ class Directory(UniversalBaseModel):
     """
     Examples
     --------
-    from seed import File
-    from seed.file import Directory
+    from seed.file.directory.types import Directory
+    from seed.file.types import File
 
     Directory(
         name="root",

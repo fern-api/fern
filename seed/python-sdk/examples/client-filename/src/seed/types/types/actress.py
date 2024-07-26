@@ -11,7 +11,7 @@ class Actress(UniversalBaseModel):
     """
     Examples
     --------
-    from seed import Actress
+    from seed.types.types import Actress
 
     Actress(
         name="Jennifer Lawrence",

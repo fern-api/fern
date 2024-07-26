@@ -14,7 +14,7 @@ class Type(UniversalBaseModel):
 
     Examples
     --------
-    from seed import Type
+    from seed.types import Type
 
     Type(
         id="type-df89sdg1",

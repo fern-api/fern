@@ -68,7 +68,8 @@ class UnionClient:
 
         Examples
         --------
-        from seed import SeedUnions, Shape_Circle
+        from seed import SeedUnions
+        from seed.union.types import Shape_Circle
 
         client = SeedUnions(
             base_url="https://yourhost.com/path/to/api",
@@ -156,7 +157,8 @@ class AsyncUnionClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedUnions, Shape_Circle
+        from seed import AsyncSeedUnions
+        from seed.union.types import Shape_Circle
 
         client = AsyncSeedUnions(
             base_url="https://yourhost.com/path/to/api",

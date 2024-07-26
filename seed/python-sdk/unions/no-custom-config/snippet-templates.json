@@ -126,7 +126,7 @@
                             "members": {
                                 "circle": {
                                     "imports": [
-                                        "from seed import Shape_Circle"
+                                        "from seed.union.types import Shape_Circle"
                                     ],
                                     "isOptional": true,
                                     "templateString": "request=Shape_Circle($FERN_INPUT, )",
@@ -152,7 +152,7 @@
                                 },
                                 "square": {
                                     "imports": [
-                                        "from seed import Shape_Square"
+                                        "from seed.union.types import Shape_Square"
                                     ],
                                     "isOptional": true,
                                     "templateString": "request=Shape_Square($FERN_INPUT, )",
@@ -216,7 +216,7 @@
                                 "members": {
                                     "circle": {
                                         "imports": [
-                                            "from seed import Shape_Circle"
+                                            "from seed.union.types import Shape_Circle"
                                         ],
                                         "isOptional": true,
                                         "templateString": "request=Shape_Circle($FERN_INPUT, )",
@@ -242,7 +242,7 @@
                                     },
                                     "square": {
                                         "imports": [
-                                            "from seed import Shape_Square"
+                                            "from seed.union.types import Shape_Square"
                                         ],
                                         "isOptional": true,
                                         "templateString": "request=Shape_Square($FERN_INPUT, )",
