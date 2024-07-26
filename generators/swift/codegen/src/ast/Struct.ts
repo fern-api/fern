@@ -1,6 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Swift, { AccessLevel, Type } from "..";
-import { Field } from "./Field";
+import Swift, { AccessLevel, Enum, Field, SwiftClass } from "..";
 
 /*
 
@@ -28,7 +27,9 @@ export declare namespace Struct {
         /* The name of the struct */
         name: string;
         /* The inheritance hierarchy of this type */
-        inheritance?: Type[];
+        inheritance?: SwiftClass[];
+        /* Subclasses */
+        subclasses?: (Enum | SwiftClass)[];
         /* The field variables in the class */
         fields?: Field[];
     }
@@ -38,38 +39,54 @@ export class Struct extends AstNode {
     public readonly accessLevel?: AccessLevel;
     public readonly name: string;
     public readonly fields?: Field[];
-    public readonly inheritance?: Type[];
+    public readonly inheritance?: SwiftClass[];
+    public readonly subclasses?: (Enum | SwiftClass)[];
 
-    constructor({ accessLevel, name, inheritance, fields }: Struct.Args) {
+    constructor(args: Struct.Args) {
         super(Swift.indentSize);
-        this.accessLevel = accessLevel;
-        this.name = name;
-        this.inheritance = inheritance;
-        this.fields = fields;
+        this.accessLevel = args.accessLevel;
+        this.name = args.name;
+        this.inheritance = args.inheritance;
+        this.subclasses = args.subclasses;
+        this.fields = args.fields;
     }
 
     private buildTitle(): string | undefined {
+
         if (!this.inheritance) {
             return this.name;
         }
 
-        const names = this.inheritance.map((obj) => obj.name).join(", ");
+        const names = this.inheritance.map(obj => obj.name).join(", ");
         return `${this.name}: ${names}`;
+
     }
 
     public write(writer: Writer): void {
+
         // example: public struct Name {
-        writer.openBlock(
-            [this.accessLevel, "struct", this.buildTitle()],
-            "{",
-            () => {
-                if (this.fields) {
-                    this.fields.forEach((field) => {
-                        writer.writeNode(field);
-                    });
-                }
-            },
-            "}"
-        );
+        writer.openBlock([this.accessLevel, "struct", this.buildTitle()], "{", () => {
+
+            if (this.subclasses) {
+                writer.newLine();
+                this.subclasses.forEach(subclass => {
+                    writer.writeNode(subclass);
+                    writer.newLine();
+                });
+            }
+
+            if (this.fields) {
+                this.fields.forEach(field => {
+                    writer.writeNode(field);
+                });
+            }
+
+            if (this.subclasses && this.fields) {
+                writer.newLine();
+            }
+
+        }, "}");
+
     }
+
 }

@@ -1,32 +1,30 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Swift from "..";
-import { AccessLevel } from "./AccessLevel";
-import { Type } from "./Type";
+import Swift, { AccessLevel, SwiftClass } from "..";
 
 export declare namespace TypeAlias {
-    interface Args {
-        accessLevel?: AccessLevel;
-        name: string;
-        type: Type;
-    }
+  interface Args {
+    accessLevel?: AccessLevel
+    name: string
+    class: SwiftClass
+  }
 }
 
 export class TypeAlias extends AstNode {
-    public readonly accessLevel?: AccessLevel;
-    public readonly name: string;
-    public readonly type: Type;
 
-    constructor(args: TypeAlias.Args) {
-        super(Swift.indentSize);
-        this.accessLevel = args.accessLevel;
-        this.name = args.name;
-        this.type = args.type;
-    }
+  public readonly accessLevel?: AccessLevel;
+  public readonly name: string;
+  public readonly class: SwiftClass;
 
-    public write(writer: Writer): void {
-        const title = [this.accessLevel, "typealias", this.name, "=", this.type.name]
-            .filter((value) => value !== undefined)
-            .join(" ");
-        writer.write(title);
-    }
+  constructor(args: TypeAlias.Args) {
+    super(Swift.indentSize);
+    this.accessLevel = args.accessLevel;
+    this.name = args.name;
+    this.class = args.class;
+  }
+
+  public write(writer: Writer): void {
+    const title = [this.accessLevel, "typealias", this.name, "=", this.class.name].filter(value => value !== undefined).join(" ");
+    writer.write(title);
+  }
+
 }

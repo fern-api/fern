@@ -1,0 +1,13 @@
+irVersion: v50
+docker: fernapi/fern-swift-model:latest
+dockerCommand: yarn workspace @fern-api/fern-swift-model dockerTagLatest
+language: swift
+generatorType: model
+defaultOutputMode: github
+fixtures: []
+scripts: []
+local:
+  workingDirectory: generators/swift
+  buildCommand:
+    - yarn workspace @fern-api/fern-swift-model dist:cli
+  runCommand: node model/dist/bundle.cjs

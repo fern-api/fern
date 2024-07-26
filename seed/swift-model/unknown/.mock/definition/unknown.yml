@@ -1,0 +1,15 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    post:
+      path: ""
+      method: POST
+      request: unknown
+      response: list<unknown>
+
+types:
+  MyAlias: unknown
+  MyObject:
+    properties:
+      unknown: unknown
