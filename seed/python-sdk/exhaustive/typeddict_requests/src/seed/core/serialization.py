@@ -58,11 +58,19 @@ def convert_and_respect_annotation_metadata(
 
     if (
         (
-            (typing_extensions.get_origin(clean_type) == typing.List or clean_type == typing.List)
+            (
+                typing_extensions.get_origin(clean_type) == typing.List
+                or typing_extensions.get_origin(clean_type) == list
+                or clean_type == typing.List
+            )
             and isinstance(object_, typing.List)
         )
         or (
-            (typing_extensions.get_origin(clean_type) == typing.Set or clean_type == typing.Set)
+            (
+                typing_extensions.get_origin(clean_type) == typing.Set
+                or typing_extensions.get_origin(clean_type) == set
+                or clean_type == typing.Set
+            )
             and isinstance(object_, typing.Set)
         )
         or (
@@ -106,7 +114,6 @@ def _convert_typeddict(object_: typing.Mapping[str, object], expected_type: typi
         if type_ is None:
             converted_object[key] = value
         else:
-            print("calling recursively", key, value, type_)
             converted_object[_alias_key(key, type_)] = convert_and_respect_annotation_metadata(
                 object_=value, annotation=type_
             )

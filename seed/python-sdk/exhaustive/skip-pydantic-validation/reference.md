@@ -71,7 +71,7 @@ client.endpoints.container.get_and_return_list_of_primitives(
 
 ```python
 from seed import SeedExhaustive
-from seed.types.object.types import ObjectWithRequiredField
+from seed.types.object import ObjectWithRequiredField
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -190,7 +190,7 @@ client.endpoints.container.get_and_return_set_of_primitives(
 
 ```python
 from seed import SeedExhaustive
-from seed.types.object.types import ObjectWithRequiredField
+from seed.types.object import ObjectWithRequiredField
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -309,7 +309,7 @@ client.endpoints.container.get_and_return_map_prim_to_prim(
 
 ```python
 from seed import SeedExhaustive
-from seed.types.object.types import ObjectWithRequiredField
+from seed.types.object import ObjectWithRequiredField
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -371,7 +371,7 @@ client.endpoints.container.get_and_return_map_of_prim_to_object(
 
 ```python
 from seed import SeedExhaustive
-from seed.types.object.types import ObjectWithRequiredField
+from seed.types.object import ObjectWithRequiredField
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -1202,7 +1202,7 @@ import datetime
 import uuid
 
 from seed import SeedExhaustive
-from seed.types.object.types import ObjectWithOptionalField
+from seed.types.object import ObjectWithOptionalField
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -1292,7 +1292,7 @@ import datetime
 import uuid
 
 from seed import SeedExhaustive
-from seed.types.object.types import ObjectWithOptionalField
+from seed.types.object import ObjectWithOptionalField
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -1391,7 +1391,7 @@ import datetime
 import uuid
 
 from seed import SeedExhaustive
-from seed.types.object.types import (
+from seed.types.object import (
     NestedObjectWithRequiredField,
     ObjectWithOptionalField,
 )
@@ -2396,7 +2396,7 @@ client.endpoints.primitive.get_and_return_base_64(
 
 ```python
 from seed import SeedExhaustive
-from seed.types.union.types import Animal_Dog
+from seed.types.union import Animal_Dog
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -2475,7 +2475,7 @@ import datetime
 import uuid
 
 from seed import SeedExhaustive
-from seed.types.object.types import ObjectWithOptionalField
+from seed.types.object import ObjectWithOptionalField
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",

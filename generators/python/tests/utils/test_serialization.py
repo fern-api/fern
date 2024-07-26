@@ -1,31 +1,62 @@
-# All with aliases
-# Empty object
-# Nested object
-# List of objects
-# Union of objects
+from typing import List, Any
+from .typeddict_models.types.core.serialization import convert_and_respect_annotation_metadata
+from .typeddict_models.types import Shape, ObjectWithOptionalField
 
-from core_utilities.sdk.serialization import convert_and_respect_annotation_metadata
-from .test_models.union_params import AnimalParams
+
+UNION_TEST: Shape = {"radius_measurement": 1.0, "shape_type": "circle", "id": "1"}
+UNION_TEST_CONVERTED = {
+    "shapeType": "circle",
+    "radiusMeasurement": 1.0,
+    "id": "1"
+}
 
 def test_convert_and_respect_annotation_metadata() -> None:
-    pass
+    data: ObjectWithOptionalField = {"string": "string", "long_": 12345, "bool_": True, "literal": "lit_one", "any": "any"}
+    converted = convert_and_respect_annotation_metadata(
+        object_=data,
+        annotation=ObjectWithOptionalField
+    )
+    assert converted == {"string": "string", "long": 12345, "bool": True, "literal": "lit_one", "any": "any"}
 
 def test_convert_and_respect_annotation_metadata_in_list() -> None:
-    pass
+    data: List[ObjectWithOptionalField] = [{"string": "string", "long_": 12345, "bool_": True, "literal": "lit_one", "any": "any"}, {"string": "another string", "long_": 67890, "list_": [], "literal": "lit_one", "any": "any"}]
+    converted = convert_and_respect_annotation_metadata(
+        object_=data,
+        annotation=List[ObjectWithOptionalField]
+    )
+
+    assert converted == [
+        {"string": "string", "long": 12345, "bool": True, "literal": "lit_one", "any": "any"},
+        {"string": "another string", "long": 67890, "list": [], "literal": "lit_one", "any": "any"}
+    ]
 
 def test_convert_and_respect_annotation_metadata_in_nested_object() -> None:
-    pass
+    data: ObjectWithOptionalField = {"string": "string", "long_": 12345, "union": UNION_TEST, "literal": "lit_one", "any": "any"}
+    converted = convert_and_respect_annotation_metadata(
+        object_=data,
+        annotation=ObjectWithOptionalField
+    )
+
+    assert converted == {
+        "string": "string",
+        "long": 12345,
+        "union": UNION_TEST_CONVERTED,
+        "literal": "lit_one",
+        "any": "any"
+    }
 
 def test_convert_and_respect_annotation_metadata_in_union() -> None:
-    data = {"name": "string", "likes_to_woof": True, "animal": "dog"}
-    convert_and_respect_annotation_metadata(
-        object_=data,
-        annotation=AnimalParams
+    converted = convert_and_respect_annotation_metadata(
+        object_=UNION_TEST,
+        annotation=Shape
     )
 
+    assert converted == UNION_TEST_CONVERTED
+
 def test_convert_and_respect_annotation_metadata_with_empty_object() -> None:
-    data = {}
-    convert_and_respect_annotation_metadata(
+    data: Any = {}
+    converted = convert_and_respect_annotation_metadata(
         object_=data,
-        annotation=AnimalParams
+        annotation=Shape
     )
+    assert converted == data

@@ -13,17 +13,18 @@ types:
   Shape:
     base-properties:
       id: string
+    discriminant: shapeType
     union:
       circle: Circle
       square: Square
 
   Circle: 
     properties:
-      radius: double
+      radiusMeasurement: double
 
   Square: 
     properties:
-      length: double
+      lengthMeasurement: double
 
   ObjectWithOptionalField: #generic object that supports any type, makes it easier to use when testing
     properties:

@@ -3,7 +3,7 @@
 import typing
 
 from seed import AsyncSeedExhaustive, SeedExhaustive
-from seed.types.union.types import Animal_Dog
+from seed.types.union import Animal_Dog
 
 from ..utilities import validate_response
 

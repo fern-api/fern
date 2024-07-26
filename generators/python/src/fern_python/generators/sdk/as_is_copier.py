@@ -24,6 +24,10 @@ def copy_to_project(*, project: Project) -> None:
     # that need to be referenced within the project, and more complex cases.
     AS_IS_FILES = [
         AsIsFile(
+            from_="tests/utils/__init__.py",
+            to="tests/utils/__init__",
+        ),
+        AsIsFile(
             from_="tests/utils/test_query_encoding.py",
             to="tests/utils/test_query_encoding",
             replacements={
@@ -38,7 +42,33 @@ def copy_to_project(*, project: Project) -> None:
                 "core_utilities.sdk.http_client": f"{project._relative_path_to_project}.core.http_client",
             },
         ),
+        AsIsFile(
+            from_="tests/utils/test_serialization.py",
+            to="tests/utils/test_serialization",
+            replacements={
+                ".typeddict_models.types.core.serialization": f"{project._relative_path_to_project}.core.serialization",
+                ".typeddict_models.types": f".assets.models",
+            },
+        ),
     ]
+
+    AS_IS_DIRECTORIES = [
+        AsIsFile(
+            from_="tests/utils/typeddict_models/types/resources/types",
+            to="tests/utils/assets/models",
+            replacements={
+                "...core.serialization": f"{project._relative_path_to_project}.core.serialization",
+            },
+        ),
+    ]
+
+    for f in AS_IS_DIRECTORIES:
+        _copy_directory_to_project(
+            project=project,
+            relative_path_on_disk=f.from_,
+            path_in_project=f.to,
+            replacements=f.replacements,
+        )
 
     for f in AS_IS_FILES:
         _copy_file_to_project(
@@ -51,6 +81,31 @@ def copy_to_project(*, project: Project) -> None:
             replacements=f.replacements,
         )
 
+def _copy_directory_to_project(
+    *,
+    project: Project,
+    relative_path_on_disk: str,
+    path_in_project: str,
+    replacements: Optional[Dict[str, str]] = None,
+) -> None:
+    source = (
+        os.path.join(os.path.dirname(__file__), "../../../../../") if "PYTEST_CURRENT_TEST" in os.environ else "/assets"
+    )
+
+    for _, _, files in os.walk(os.path.join(source, relative_path_on_disk)):
+        for f in files:
+            # In the event there are any odd hidden files while traversing
+            if f.endswith(".py"):
+                _copy_file_to_project(
+                    project=project,
+                    relative_filepath_on_disk=os.path.join(source, relative_path_on_disk, f),
+                    filepath_in_project=Filepath(
+                        directories=(),
+                        # Remove the .py extension from the filename
+                        file=Filepath.FilepathPart(module_name=os.path.join(path_in_project, f[:-3])),
+                    ),
+                    replacements=replacements
+                )
 
 def _copy_file_to_project(
     *,

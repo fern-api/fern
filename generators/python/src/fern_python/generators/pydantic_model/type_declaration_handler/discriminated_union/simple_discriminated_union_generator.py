@@ -122,13 +122,13 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
 
             property_fields: List[FernAwarePydanticField] = []
             for property in self._union.base_properties:
-                FernAwarePydanticField(
+                property_fields.append(FernAwarePydanticField(
                     name=property.name.name.snake_case.safe_name,
                     pascal_case_field_name=property.name.name.pascal_case.safe_name,
                     type_reference=property.value_type,
                     json_field_name=property.name.wire_value,
                     description=property.docs,
-                )
+                ))
                 all_referenced_types.append(property.value_type)
 
             with FernAwarePydanticModel(
