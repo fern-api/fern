@@ -9,10 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fix: This release comes with numerous improvements to streaming responses:
 
-  1. Introduces new stream polyfills that implement ability to stream to available type of streams, per environment.
+  1. Introduces new stream wrapper polyfills that implement the ability to stream to more streams, per environment.
   2. For Node 18+, stream responses can now be piped to WritableStream. They can also be streamed to stream.Writable, as possible before.
   3. For < Node 18, stream responses can be piped to stream.Writeable, as before.
-  4. For browser environments, stream responses can be piped to WritableStream.
+  4. For Browser environments, stream responses can be piped to WritableStream.
   5. For Cloudflare Workers, stream responses can be piped to WritableStream
 
 - Fix: Now, there are generated unit tests for the `fetcher/stream-wrappers` core directory which makes sure that
