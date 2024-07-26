@@ -1,6 +1,6 @@
-import { replaceReferencedMarkdown } from "../replaceReferencedMarkdown";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
+import { replaceReferencedMarkdown } from "../replaceReferencedMarkdown";
 
 const absolutePathToFernFolder = AbsoluteFilePath.of("/path/to/fern");
 const absolutePathToMdx = AbsoluteFilePath.of("/path/to/fern/pages/test.mdx");
@@ -23,7 +23,7 @@ describe("replaceReferencedMarkdown", () => {
                     return "test content";
                 }
                 if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/test2.md")) {
-                    return "test2 content";
+                    return "test2 content\nwith multiple lines";
                 }
                 throw new Error(`Unexpected filepath: ${filepath}`);
             }
@@ -32,6 +32,7 @@ describe("replaceReferencedMarkdown", () => {
         expect(result).toBe(`
             test content
             test2 content
+            with multiple lines
         `);
     });
 
