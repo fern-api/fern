@@ -43,33 +43,33 @@ export class Node18UniversalStreamWrapper
         this.on("data", async (chunk) => {
             if (dest instanceof Node18UniversalStreamWrapper) {
                 dest._write(chunk);
-            } else if (dest instanceof (await import("stream")).Writable) {
-                dest.write(chunk);
-            } else {
+            } else if (dest instanceof WritableStream) {
                 const writer = dest.getWriter();
                 writer.write(chunk).then(() => writer.releaseLock());
+            } else {
+                dest.write(chunk);
             }
         });
 
         this.on("end", async () => {
             if (dest instanceof Node18UniversalStreamWrapper) {
                 dest._end();
-            } else if (dest instanceof (await import("stream")).Writable) {
-                dest.end();
-            } else {
+            } else if (dest instanceof WritableStream) {
                 const writer = dest.getWriter();
                 writer.close();
+            } else {
+                dest.end();
             }
         });
 
         this.on("error", async (error) => {
             if (dest instanceof Node18UniversalStreamWrapper) {
                 dest._error(error);
-            } else if (dest instanceof (await import("stream")).Writable) {
-                dest.destroy(error);
-            } else {
+            } else if (dest instanceof WritableStream) {
                 const writer = dest.getWriter();
                 writer.abort(error);
+            } else {
+                dest.destroy(error);
             }
         });
 
@@ -80,33 +80,33 @@ export class Node18UniversalStreamWrapper
         this.off("data", async (chunk) => {
             if (dest instanceof Node18UniversalStreamWrapper) {
                 dest._write(chunk);
-            } else if (dest instanceof (await import("stream")).Writable) {
-                dest.write(chunk);
-            } else {
+            } else if (dest instanceof WritableStream) {
                 const writer = dest.getWriter();
                 writer.write(chunk).then(() => writer.releaseLock());
+            } else {
+                dest.write(chunk);
             }
         });
 
         this.off("end", async () => {
             if (dest instanceof Node18UniversalStreamWrapper) {
                 dest._end();
-            } else if (dest instanceof (await import("stream")).Writable) {
-                dest.end();
-            } else {
+            } else if (dest instanceof WritableStream) {
                 const writer = dest.getWriter();
                 writer.close();
+            } else {
+                dest.end();
             }
         });
 
         this.off("error", async (error) => {
             if (dest instanceof Node18UniversalStreamWrapper) {
                 dest._error(error);
-            } else if (dest instanceof (await import("stream")).Writable) {
-                dest.destroy(error);
-            } else {
+            } else if (dest instanceof WritableStream) {
                 const writer = dest.getWriter();
                 writer.abort(error);
+            } else {
+                dest.destroy(error);
             }
         });
     }
@@ -169,7 +169,7 @@ export class Node18UniversalStreamWrapper
             if (value) chunks.push(value);
         }
 
-        const decoder = new (await import("util")).TextDecoder(this.encoding || "utf-8");
+        const decoder = new TextDecoder(this.encoding || "utf-8");
         return decoder.decode(await new Blob(chunks).arrayBuffer());
     }
 

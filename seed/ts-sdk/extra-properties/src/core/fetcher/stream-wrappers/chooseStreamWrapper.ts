@@ -1,5 +1,5 @@
 // this should be transpiled away during compilation
-import type { Readable } from "form-data";
+import type { Readable } from "stream";
 import { RUNTIME } from "../../runtime";
 
 export type EventCallback = (data?: any) => void;

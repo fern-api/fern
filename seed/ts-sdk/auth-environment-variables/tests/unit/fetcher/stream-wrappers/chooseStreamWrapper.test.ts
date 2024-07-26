@@ -5,12 +5,9 @@ import { NodePre18StreamWrapper } from "../../../src/core/fetcher/stream-wrapper
 import { UndiciStreamWrapper } from "../../../src/core/fetcher/stream-wrappers/UndiciStreamWrapper";
 
 describe("chooseStreamWrapper", () => {
-    let mockReadableStream: jest.Mock<ReadableStream>;
-
     beforeEach(() => {
         RUNTIME.type = "unknown";
         RUNTIME.parsedVersion = 0;
-        mockReadableStream = jest.fn();
     });
 
     it('should return a Node18UniversalStreamWrapper when RUNTIME.type is "node" and RUNTIME.parsedVersion is not null and RUNTIME.parsedVersion is greater than or equal to 18', async () => {
