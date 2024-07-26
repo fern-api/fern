@@ -40,7 +40,6 @@ export class Node18UniversalStreamWrapper
     public pipe(
         dest: Node18UniversalStreamWrapper | Writable | WritableStream<Uint8Array>
     ): Node18UniversalStreamWrapper | Writable | WritableStream<Uint8Array> {
-        this._startReading();
         this.on("data", async (chunk) => {
             if (dest instanceof Node18UniversalStreamWrapper) {
                 dest._write(chunk);
@@ -73,6 +72,8 @@ export class Node18UniversalStreamWrapper
                 dest.destroy(error);
             }
         });
+
+        this._startReading();
 
         return dest;
     }

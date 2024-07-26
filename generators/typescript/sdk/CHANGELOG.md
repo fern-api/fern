@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.36.3] - 2024-07-26
+
+- Fix: Support starting the stream on `StreamWrapper.pipe(...)` for shorter syntax when dealing with `node:stream` primitives.
+
 ## [0.36.2] - 2024-07-26
 
 - Fix: This release comes with numerous improvements to streaming responses:

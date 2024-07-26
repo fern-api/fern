@@ -40,7 +40,6 @@ export class UndiciStreamWrapper
     public pipe(
         dest: UndiciStreamWrapper | WritableStream<Uint8Array>
     ): UndiciStreamWrapper | WritableStream<Uint8Array> {
-        this._startReading();
         this.on("data", (chunk) => {
             if (dest instanceof UndiciStreamWrapper) {
                 dest._write(chunk);
@@ -67,6 +66,8 @@ export class UndiciStreamWrapper
                 writer.abort(error);
             }
         });
+
+        this._startReading();
 
         return dest;
     }
