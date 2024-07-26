@@ -43,7 +43,6 @@ class FernAwarePydanticModel:
         snippet: Optional[str] = None,
         include_model_config: Optional[bool] = True,
         force_update_forward_refs: bool = False,
-        as_request: bool = False,
     ):
         self._class_name = class_name
         self._type_name = type_name
@@ -52,11 +51,10 @@ class FernAwarePydanticModel:
         self._source_file = source_file
         self._extends = extends
         self._force_update_forward_refs = force_update_forward_refs
-        self._as_request = as_request
 
         models_to_extend = [item for item in base_models] if base_models is not None else []
         extends_crs = (
-            [context.get_class_reference_for_type_id(extended.type_id) for extended in extends]
+            [context.get_class_reference_for_type_id(extended.type_id, as_request=False) for extended in extends]
             if extends is not None
             else []
         )
@@ -148,7 +146,6 @@ class FernAwarePydanticModel:
             # we have to import it after the current declaration to avoid
             # circular import errors
             must_import_after_current_declaration=self._must_import_after_current_declaration,
-            in_endpoint=self._as_request,
         )
 
     def get_class_reference_for_type_id(self, type_id: ir_types.TypeId) -> AST.ClassReference:
@@ -158,6 +155,7 @@ class FernAwarePydanticModel:
             # we have to import it after the current declaration to avoid
             # circular import errors
             must_import_after_current_declaration=self._must_import_after_current_declaration,
+            as_request=False,
         )
 
     def _must_import_after_current_declaration(self, type_name: ir_types.DeclaredTypeName) -> bool:

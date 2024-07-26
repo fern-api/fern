@@ -92,7 +92,7 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
         return self._environments_enum_declaration_referencer.get_filepath(name=None)
 
     def get_reference_to_environments_class(self) -> AST.ClassReference:
-        return self._environments_enum_declaration_referencer.get_class_reference(name=None)
+        return self._environments_enum_declaration_referencer.get_class_reference(name=None, as_request=False)
 
     def get_filepath_for_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> Filepath:
         subpackage = self.ir.subpackages[subpackage_id]
@@ -103,11 +103,11 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
         return self._subpackage_client_declaration_referencer.get_class_name(name=subpackage)
 
     def get_reference_to_error(self, error_name: ir_types.DeclaredErrorName) -> AST.ClassReference:
-        return self._error_declaration_referencer.get_class_reference(name=error_name)
+        return self._error_declaration_referencer.get_class_reference(name=error_name, as_request=False)
 
     def get_reference_to_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> AST.ClassReference:
         subpackage = self.ir.subpackages[subpackage_id]
-        return self._subpackage_client_declaration_referencer.get_class_reference(name=subpackage)
+        return self._subpackage_client_declaration_referencer.get_class_reference(name=subpackage, as_request=False)
 
     def get_filepath_for_generated_oauth_token_provider(self) -> Filepath:
         return self._oauth_generated_client_declaration_referencer.get_filepath(name=None)
@@ -134,7 +134,7 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
 
     def get_reference_to_async_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> AST.ClassReference:
         subpackage = self.ir.subpackages[subpackage_id]
-        return self._subpackage_async_client_declaration_referencer.get_class_reference(name=subpackage)
+        return self._subpackage_async_client_declaration_referencer.get_class_reference(name=subpackage, as_request=False)
 
     def get_literal_value(self, reference: ir_types.TypeReference) -> Optional[typing.Union[str, bool]]:
         type = reference.get_as_union()

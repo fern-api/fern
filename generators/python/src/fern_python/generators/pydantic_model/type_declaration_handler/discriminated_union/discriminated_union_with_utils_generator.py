@@ -144,7 +144,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
         factory_declaration = AST.ClassDeclaration(name="_Factory")
         factory = self._source_file.add_class_declaration(factory_declaration)
 
-        model_name = self._context.get_class_name_for_type_id(self._name.type_id)
+        model_name = self._context.get_class_name_for_type_id(self._name.type_id, as_request=False)
         internal_union_class_declaration = AST.ClassDeclaration(name="_" + model_name)
 
         with FernAwarePydanticModel(
@@ -182,7 +182,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     source_file=self._source_file,
                     base_models=single_union_type.shape.visit(
                         same_properties_as_object=lambda type_name: [
-                            self._context.get_class_reference_for_type_id(type_name.type_id)
+                            self._context.get_class_reference_for_type_id(type_name.type_id, as_request=False)
                         ],
                         single_property=lambda _: [],
                         no_properties=lambda: [],
@@ -280,7 +280,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                         # as a workaround, we explicitly pass references to update_forward_refs
                         # so they are in scope
                         internal_pydantic_model_for_single_union_type.update_forward_refs(
-                            {self._context.get_class_reference_for_type_id(type_id) for type_id in forward_refed_types}
+                            {self._context.get_class_reference_for_type_id(type_id, as_request=False) for type_id in forward_refed_types}
                         )
 
                         # to avoid issues with circular dependencies, make sure all imports
@@ -301,7 +301,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                     expression=AST.Expression(
                                         AST.FunctionInvocation(
                                             function_definition=self._context.get_class_reference_for_type_id(
-                                                type_name.type_id
+                                                type_name.type_id, as_request=False
                                             ),
                                             args=[
                                                 AST.Expression(

@@ -40,7 +40,7 @@ class SnippetWriter:
     def get_class_reference_for_declared_type_name(
         self,
         name: ir_types.DeclaredTypeName,
-        as_request: bool = False,
+        as_request: bool,
     ) -> AST.ClassReference:
         return AST.ClassReference(
             qualified_name_excluding_import=(),
@@ -55,7 +55,7 @@ class SnippetWriter:
     def get_module_path_for_declared_type_name(
         self,
         name: ir_types.DeclaredTypeName,
-        as_request: bool = False,
+        as_request: bool,
     ) -> AST.ModulePath:
         modules = self._context.type_declaration_referencer.get_filepath(name=name, as_request=as_request).directories
         module_path = tuple([directory.module_name for directory in modules])

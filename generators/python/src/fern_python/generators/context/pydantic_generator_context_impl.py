@@ -81,9 +81,9 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
     def get_class_reference_for_type_id(
         self,
         type_id: ir_types.TypeId,
+        as_request: bool,
         must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]] = None,
         as_if_type_checking_import: bool = False,
-        as_request: bool = False,
     ) -> AST.ClassReference:
         declaration = self.ir.types[type_id]
         return self._type_declaration_referencer.get_class_reference(
@@ -113,14 +113,14 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
     ) -> ir_types.TypeDeclaration:
         return self.ir.types[type_id]
 
-    def get_class_name_for_type_id(self, type_id: ir_types.TypeId, as_request: bool = False) -> str:
+    def get_class_name_for_type_id(self, type_id: ir_types.TypeId, as_request: bool) -> str:
         declaration = self.get_declaration_for_type_id(type_id)
         name = self._type_declaration_referencer.get_class_name(name=declaration.name, as_request=as_request)
         if name in self._reserved_names:
             return f"{name}Model"
         return name
 
-    def get_filepath_for_type_id(self, type_id: ir_types.TypeId, as_request: bool = False) -> Filepath:
+    def get_filepath_for_type_id(self, type_id: ir_types.TypeId, as_request: bool) -> Filepath:
         declaration = self.get_declaration_for_type_id(type_id)
         return self._type_declaration_referencer.get_filepath(name=declaration.name, as_request=as_request)
 

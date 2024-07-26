@@ -50,9 +50,9 @@ class PydanticGeneratorContext(ABC):
     def get_class_reference_for_type_id(
         self,
         type_id: ir_types.TypeId,
+        as_request: bool,
         must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]] = None,
         as_if_type_checking_import: bool = False,
-        as_request: bool = False,
     ) -> AST.ClassReference:
         ...
 
@@ -73,7 +73,7 @@ class PydanticGeneratorContext(ABC):
         ...
 
     @abstractmethod
-    def get_class_name_for_type_id(self, type_id: ir_types.TypeId, as_request: bool = False) -> str:
+    def get_class_name_for_type_id(self, type_id: ir_types.TypeId, as_request: bool) -> str:
         ...
 
     @abstractmethod
@@ -99,7 +99,7 @@ class PydanticGeneratorContext(ABC):
         ...
 
     @abstractmethod
-    def get_filepath_for_type_id(self, type_id: ir_types.TypeId, as_request: bool = False) -> Filepath:
+    def get_filepath_for_type_id(self, type_id: ir_types.TypeId, as_request: bool) -> Filepath:
         ...
 
     @abstractmethod

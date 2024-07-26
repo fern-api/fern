@@ -180,7 +180,7 @@ class TypeReferenceToTypeHintConverter:
         self,
         type_name: ir_types.DeclaredTypeName,
         must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]],
-        as_request: bool = False,
+        as_request: bool,
         as_if_type_checking_import: bool = False,
     ) -> AST.TypeHint:
         return AST.TypeHint(
