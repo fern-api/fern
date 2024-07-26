@@ -81,6 +81,7 @@ def copy_to_project(*, project: Project) -> None:
             replacements=f.replacements,
         )
 
+
 def _copy_directory_to_project(
     *,
     project: Project,
@@ -104,8 +105,9 @@ def _copy_directory_to_project(
                         # Remove the .py extension from the filename
                         file=Filepath.FilepathPart(module_name=os.path.join(path_in_project, f[:-3])),
                     ),
-                    replacements=replacements
+                    replacements=replacements,
                 )
+
 
 def _copy_file_to_project(
     *,

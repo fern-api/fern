@@ -58,11 +58,19 @@ def convert_and_respect_annotation_metadata(
 
     if (
         (
-            (typing_extensions.get_origin(clean_type) == typing.List or clean_type == typing.List)
+            (
+                typing_extensions.get_origin(clean_type) == typing.List
+                or typing_extensions.get_origin(clean_type) == list
+                or clean_type == typing.List
+            )
             and isinstance(object_, typing.List)
         )
         or (
-            (typing_extensions.get_origin(clean_type) == typing.Set or clean_type == typing.Set)
+            (
+                typing_extensions.get_origin(clean_type) == typing.Set
+                or typing_extensions.get_origin(clean_type) == set
+                or clean_type == typing.Set
+            )
             and isinstance(object_, typing.Set)
         )
         or (
