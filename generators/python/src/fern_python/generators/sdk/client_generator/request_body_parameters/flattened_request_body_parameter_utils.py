@@ -37,8 +37,10 @@ def get_json_body_for_inlined_request(
                         and context.custom_config.pydantic_config.use_typeddict_requests
                         and FernTypedDict.can_tr_be_typeddict(property.raw_type, context.get_types())
                     ):
+                        # We don't need any optional wrappings for the coercion here.
+                        unwrapped_tr = context.unwrap_optional_type_reference(property.raw_type)
                         type_hint = context.pydantic_generator_context.get_type_hint_for_type_reference(
-                            property.raw_type, in_endpoint=True, for_typeddict=True
+                            unwrapped_tr, in_endpoint=True, for_typeddict=True
                         )
                         reference = context.core_utilities.convert_and_respect_annotation_metadata(
                             object_=AST.Expression(property_name), annotation=type_hint

@@ -149,3 +149,7 @@ class SdkGeneratorContext(ABC):
     @abstractmethod
     def get_types(self) -> Dict[ir_types.TypeId, ir_types.TypeDeclaration]:
         ...
+
+    @abstractmethod
+    def unwrap_optional_type_reference(self, type_reference: ir_types.TypeReference) -> ir_types.TypeReference:
+        ...

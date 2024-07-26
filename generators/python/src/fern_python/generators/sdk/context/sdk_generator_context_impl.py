@@ -198,3 +198,11 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
 
     def get_types(self) -> typing.Dict[ir_types.TypeId, ir_types.TypeDeclaration]:
         return self.ir.types
+
+    def unwrap_optional_type_reference(self, type_reference: ir_types.TypeReference) -> ir_types.TypeReference:
+        type_union = type_reference.get_as_union()
+        if type_union.type == "container":
+            container_union = type_union.container.get_as_union()
+            if container_union.type == "optional":
+                return self.unwrap_optional_type_reference(container_union.optional)
+        return type_reference

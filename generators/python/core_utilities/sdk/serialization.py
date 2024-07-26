@@ -1,3 +1,4 @@
+import collections
 import typing
 
 import typing_extensions
@@ -22,10 +23,7 @@ class FieldMetadata:
 
 
 def convert_and_respect_annotation_metadata(
-    *,
-    object_: typing.Any,
-    annotation: typing.Any,
-    inner_type: typing.Optional[typing.Any] = None,
+    *, object_: typing.Any, annotation: typing.Any, inner_type: typing.Optional[typing.Any] = None
 ) -> typing.Any:
     """
     Respect the metadata annotations on a field, such as aliasing. This function effectively
@@ -66,7 +64,9 @@ def convert_and_respect_annotation_metadata(
             and isinstance(object_, typing.Set)
         )
         or (
-            (typing_extensions.get_origin(clean_type) == typing.Sequence or clean_type == typing.Sequence)
+            (typing_extensions.get_origin(clean_type) == typing.Sequence
+             or typing_extensions.get_origin(clean_type) == collections.abc.Sequence
+             or clean_type == typing.Sequence)
             and isinstance(object_, typing.Sequence)
         )
     ):
@@ -94,10 +94,7 @@ def convert_and_respect_annotation_metadata(
     return object_
 
 
-def _convert_typeddict(
-    object_: typing.Mapping[str, object],
-    expected_type: typing.Any,
-) -> typing.Mapping[str, object]:
+def _convert_typeddict(object_: typing.Mapping[str, object], expected_type: typing.Any) -> typing.Mapping[str, object]:
     converted_object: dict[str, object] = {}
     annotations = typing_extensions.get_type_hints(expected_type, include_extras=True)
     for key, value in object_.items():
@@ -105,6 +102,7 @@ def _convert_typeddict(
         if type_ is None:
             converted_object[key] = value
         else:
+            print("calling recursively", key, value, type_)
             converted_object[_alias_key(key, type_)] = convert_and_respect_annotation_metadata(
                 object_=value, annotation=type_
             )
@@ -117,10 +115,11 @@ def _get_annotation(type_: typing.Any) -> typing.Optional[typing.Any]:
         return None
 
     if maybe_annotated_type == typing_extensions.NotRequired:
-        maybe_annotated_type = typing_extensions.get_args(type_)[0]
+        type_ = typing_extensions.get_args(type_)[0]
+        maybe_annotated_type = typing_extensions.get_origin(type_)
 
-    if typing_extensions.get_origin(maybe_annotated_type) == typing_extensions.Annotated:
-        return maybe_annotated_type
+    if maybe_annotated_type == typing_extensions.Annotated:
+        return type_
 
     return None
 
@@ -133,8 +132,8 @@ def _remove_annotations(type_: typing.Any) -> typing.Any:
     if maybe_annotated_type == typing_extensions.NotRequired:
         return _remove_annotations(typing_extensions.get_args(type_)[0])
 
-    if typing_extensions.get_origin(maybe_annotated_type) == typing_extensions.Annotated:
-        return _remove_annotations(typing_extensions.get_args(maybe_annotated_type)[0])
+    if maybe_annotated_type == typing_extensions.Annotated:
+        return _remove_annotations(typing_extensions.get_args(type_)[0])
 
     return type_
 
@@ -145,6 +144,7 @@ def _alias_key(key: str, type_: typing.Any) -> str:
     if maybe_annotated_type is not None:
         # The actual annotations are 1 onward, the first is the annotated type
         annotations = typing_extensions.get_args(maybe_annotated_type)[1:]
+
         for annotation in annotations:
             if isinstance(annotation, FieldMetadata) and annotation.alias is not None:
                 return annotation.alias

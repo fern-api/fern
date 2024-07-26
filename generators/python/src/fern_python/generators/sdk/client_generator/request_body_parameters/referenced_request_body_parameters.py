@@ -170,8 +170,10 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
                 self._context.custom_config.pydantic_config.use_typeddict_requests
                 and FernTypedDict.can_tr_be_typeddict(request_param_tr, self._context.get_types())
             ):
+                # We don't need any optional wrappings for the coercion here.
+                unwrapped_tr = self._context.unwrap_optional_type_reference(request_param_tr)
                 type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                    request_param_tr, in_endpoint=True, for_typeddict=True
+                    unwrapped_tr, in_endpoint=True, for_typeddict=True
                 )
                 return self._context.core_utilities.convert_and_respect_annotation_metadata(
                     object_=request_param, annotation=type_hint
