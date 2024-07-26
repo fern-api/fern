@@ -1,9 +1,8 @@
 namespace SeedApi.Test.Utils;
 
 using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
-
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
@@ -15,7 +14,10 @@ public static class JsonDiffChecker
         JToken token2 = JToken.Parse(jsonString2);
         List<string> differences = GetJsonDifferences(token1, token2);
 
-        Assert.IsEmpty(differences, $"The JSON strings are not equal: {string.Join(", ", differences)}");
+        Assert.IsEmpty(
+            differences,
+            $"The JSON strings are not equal: {string.Join(", ", differences)}"
+        );
     }
 
     private static List<string> GetJsonDifferences(JToken token1, JToken token2, string path = "")
@@ -32,7 +34,9 @@ public static class JsonDiffChecker
         {
             foreach (var property in obj1.Properties())
             {
-                string newPath = string.IsNullOrEmpty(path) ? property.Name : $"{path}.{property.Name}";
+                string newPath = string.IsNullOrEmpty(path)
+                    ? property.Name
+                    : $"{path}.{property.Name}";
                 if (!obj2.TryGetValue(property.Name, out JToken token2Value))
                 {
                     differences.Add($"{newPath} is missing in the second JSON");
@@ -45,7 +49,9 @@ public static class JsonDiffChecker
 
             foreach (var property in obj2.Properties())
             {
-                string newPath = string.IsNullOrEmpty(path) ? property.Name : $"{path}.{property.Name}";
+                string newPath = string.IsNullOrEmpty(path)
+                    ? property.Name
+                    : $"{path}.{property.Name}";
                 if (!obj1.TryGetValue(property.Name, out JToken token1Value))
                 {
                     differences.Add($"{newPath} is missing in the first JSON");

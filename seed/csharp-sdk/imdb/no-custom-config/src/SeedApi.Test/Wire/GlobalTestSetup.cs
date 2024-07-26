@@ -6,30 +6,28 @@ using WireMock.Settings;
 
 namespace SeedApi.Test.Wire;
 
-    [SetUpFixture]
-    public class GlobalTestSetup
+[SetUpFixture]
+public class GlobalTestSetup
+{
+    public static WireMockServer Server { get; private set; } = null!;
+    public static SeedApiClient Client { get; private set; } = null!;
+
+    [OneTimeSetUp]
+    public void GlobalSetup()
     {
-        public static WireMockServer Server { get; private set; } = null!;
-        public static SeedApiClient Client { get; private set; } = null!;
+        // Start the WireMock server
+        Server = WireMockServer.Start(
+            new WireMockServerSettings { Logger = new WireMockConsoleLogger(), }
+        );
 
-
-        [OneTimeSetUp]
-        public void GlobalSetup()
-        {
-            // Start the WireMock server
-            Server = WireMockServer.Start(new WireMockServerSettings
-            {
-                Logger = new WireMockConsoleLogger(),
-            });
-            
-            // Initialize the Client
-            Console.Write(Server.Urls[0]);
-            Client = new SeedApiClient("API_KEY", new ClientOptions {BaseUrl = Server.Urls[0]});
-        }
-
-        [OneTimeTearDown]
-        public void GlobalTeardown()
-        {
-            Server.Stop();
-        }
+        // Initialize the Client
+        Console.Write(Server.Urls[0]);
+        Client = new SeedApiClient("API_KEY", new ClientOptions { BaseUrl = Server.Urls[0] });
     }
+
+    [OneTimeTearDown]
+    public void GlobalTeardown()
+    {
+        Server.Stop();
+    }
+}
