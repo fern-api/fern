@@ -117,6 +117,7 @@ class ObjectSnippetGenerator:
             AST.ClassInstantiation(
                 class_=self.snippet_writer.get_class_reference_for_declared_type_name(
                     name=self.name,
+                    as_request=self.as_request,
                 ),
                 args=self.snippet_writer.get_snippet_for_object_properties(
                     example=self.example,

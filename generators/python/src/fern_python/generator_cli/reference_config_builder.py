@@ -73,7 +73,7 @@ class ReferenceSectionBuilder:
         return self._expression_to_snippet_str(AST.Expression(type_hint))
 
     def _convert_type_reference_to_location(
-        self, type_reference: ir_types.TypeReference, as_request: bool = False
+        self, type_reference: ir_types.TypeReference, as_request: bool
     ) -> Optional[generatorcli.reference.RelativeLocation]:
         type_id = self._visit_type_reference(type_reference)
         if type_id is not None:

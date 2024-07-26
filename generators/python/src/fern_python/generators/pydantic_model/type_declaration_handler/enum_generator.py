@@ -26,7 +26,7 @@ class EnumGenerator(AbstractTypeGenerator):
             context=context, custom_config=custom_config, source_file=source_file, docs=docs, snippet=snippet
         )
         self._use_str_enums = custom_config.use_str_enums
-        self._class_name = context.get_class_name_for_type_id(name.type_id)
+        self._class_name = context.get_class_name_for_type_id(name.type_id, as_request=False)
         self._name = name
         self._enum = enum
 
@@ -106,6 +106,7 @@ class EnumSnippetGenerator:
     def generate_snippet(self) -> AST.Expression:
         class_reference = self.snippet_writer.get_class_reference_for_declared_type_name(
             name=self.name,
+            as_request=False,
         )
 
         def write_enum(writer: AST.NodeWriter) -> None:

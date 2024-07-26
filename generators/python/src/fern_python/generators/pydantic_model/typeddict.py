@@ -51,7 +51,7 @@ class FernTypedDict:
 
         extends_crs = list((extended_references or []))
         extends_crs.extend(
-            [context.get_class_reference_for_type_id(extended.type_id) for extended in extended_types]
+            [context.get_class_reference_for_type_id(extended.type_id, as_request=True) for extended in extended_types]
             if extended_types is not None
             else []
         )
