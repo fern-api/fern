@@ -14,11 +14,11 @@ export const LayoutConfig: core.serialization.ObjectSchema<serializers.LayoutCon
         headerHeight: core.serialization.property("header-height", core.serialization.string().optional()),
         searchbarPlacement: core.serialization.property(
             "searchbar-placement",
-            core.serialization.lazy(async () => (await import("../../..")).SidebarOrHeaderPlacement).optional()
+            core.serialization.lazy(async () => (await import("../../..")).SearchbarPlacement).optional()
         ),
         tabsPlacement: core.serialization.property(
             "tabs-placement",
-            core.serialization.lazy(async () => (await import("../../..")).SidebarOrHeaderPlacement).optional()
+            core.serialization.lazy(async () => (await import("../../..")).TabsPlacement).optional()
         ),
         contentAlignment: core.serialization.property(
             "content-alignment",
@@ -37,8 +37,8 @@ export declare namespace LayoutConfig {
         "content-width"?: string | null;
         "sidebar-width"?: string | null;
         "header-height"?: string | null;
-        "searchbar-placement"?: serializers.SidebarOrHeaderPlacement.Raw | null;
-        "tabs-placement"?: serializers.SidebarOrHeaderPlacement.Raw | null;
+        "searchbar-placement"?: serializers.SearchbarPlacement.Raw | null;
+        "tabs-placement"?: serializers.TabsPlacement.Raw | null;
         "content-alignment"?: serializers.ContentAlignment.Raw | null;
         "header-position"?: serializers.HeaderPosition.Raw | null;
         "disable-header"?: boolean | null;
