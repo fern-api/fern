@@ -1,11 +1,11 @@
 import { APIResponse } from "./APIResponse";
-import { chooseStreamWrapper } from "./chooseStreamWrapper";
 import { createRequestUrl } from "./createRequestUrl";
 import { getFetchFn } from "./getFetchFn";
 import { getRequestBody } from "./getRequestBody";
 import { getResponseBody } from "./getResponseBody";
 import { makeRequest } from "./makeRequest";
 import { requestWithRetries } from "./requestWithRetries";
+import { chooseStreamWrapper } from "./stream-wrappers/chooseStreamWrapper";
 
 export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
 
