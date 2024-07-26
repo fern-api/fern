@@ -58,7 +58,8 @@ class SnippetWriter:
         as_request: bool,
     ) -> AST.ModulePath:
         modules = self._context.type_declaration_referencer.get_filepath(name=name, as_request=as_request).directories
-        module_path = tuple([directory.module_name for directory in modules])
+        # Since this is the full file path, we want to not include the actual file name and stop at the last module
+        module_path = tuple([directory.module_name for directory in modules[:-1]])
 
         return self._context.get_module_path_in_project(
             module_path,
