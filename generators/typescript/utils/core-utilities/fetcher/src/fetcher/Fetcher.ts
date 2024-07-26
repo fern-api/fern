@@ -5,6 +5,7 @@ import { getRequestBody } from "./getRequestBody";
 import { getResponseBody } from "./getResponseBody";
 import { makeRequest } from "./makeRequest";
 import { requestWithRetries } from "./requestWithRetries";
+import { chooseStreamWrapper } from "./stream-wrappers/chooseStreamWrapper";
 
 export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
 
@@ -90,7 +91,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
 
         if (response.status >= 200 && response.status < 400) {
             if (args.duplex && args.responseType === "streaming") {
-                responseBody = (await import("stream")).Readable.from(responseBody as any);
+                responseBody = chooseStreamWrapper(responseBody);
             }
 
             return {
