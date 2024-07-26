@@ -1,5 +1,4 @@
 using NUnit.Framework;
-
 #nullable enable
 
 namespace SeedApi.Test;
