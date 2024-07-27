@@ -207,7 +207,11 @@ class SourceFileImpl(SourceFile):
             # At times we may be trying to write `if TYPE_CHECKING` imports when no other import brings in typing
             # and so the resolution of the import is off. This is a fine short circuit since it's a built-in module.
             if reference.import_if_type_checking:
-                ast_metadata.references.add(AST.TypeHint.type_checking_reference())
+                tc_ref = AST.TypeHint.type_checking_reference()
+                self._reference_resolver.register_reference(tc_ref)
+                if tc_ref.import_ is not None:
+                    for dependency in tc_ref.import_.module.get_dependencies():
+                        self._dependency_manager.add_dependency(dependency)
 
         for reference in ast_metadata.references:
 
