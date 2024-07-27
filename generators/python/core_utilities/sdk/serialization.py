@@ -105,7 +105,7 @@ def convert_and_respect_annotation_metadata(
 
 
 def _convert_typeddict(object_: typing.Mapping[str, object], expected_type: typing.Any) -> typing.Mapping[str, object]:
-    converted_object: dict[str, object] = {}
+    converted_object: typing.Dict[str, object] = {}
     annotations = typing_extensions.get_type_hints(expected_type, include_extras=True)
     for key, value in object_.items():
         type_ = annotations.get(key)

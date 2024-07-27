@@ -47,7 +47,7 @@ class AliasGenerator(AbstractTypeGenerator):
         )
 
         if self._maybe_requests_source_file is not None:
-            self._source_file.add_declaration(
+            self._maybe_requests_source_file.add_declaration(
                 declaration=AST.TypeAliasDeclaration(
                     name=self._context.get_class_name_for_type_id(self._name.type_id, as_request=True),
                     type_hint=type_hint,
