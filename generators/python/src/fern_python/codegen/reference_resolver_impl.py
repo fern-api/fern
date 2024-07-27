@@ -29,11 +29,6 @@ class ReferenceResolverImpl(ReferenceResolver):
         self._declarations: Set[AST.QualifiedName] = set()
 
     def register_reference(self, reference: AST.Reference) -> None:
-        # At times we may be trying to write `if TYPE_CHECKING` imports when no other import brings in typing
-        # and so the resolution of the import is off. This is a fine short circuit since it's a built-in module.        
-        if reference.import_if_type_checking:
-            self.register_reference(AST.TypeHint.type_checking_reference())
-
         default_name = self._construct_qualified_name_for_reference(reference)
         self._default_name_to_original_references[default_name].add(reference)
 

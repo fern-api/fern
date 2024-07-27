@@ -202,8 +202,15 @@ class SourceFileImpl(SourceFile):
                 statement_id=statement.id,
                 references=references_in_statement,
             )
+        
+        for reference in ast_metadata.references:
+            # At times we may be trying to write `if TYPE_CHECKING` imports when no other import brings in typing
+            # and so the resolution of the import is off. This is a fine short circuit since it's a built-in module.        
+            if reference.import_if_type_checking:
+                ast_metadata.references.append(AST.TypeHint.type_checking_reference())
 
         for reference in ast_metadata.references:
+            
             # register refrence for resolving later
             self._reference_resolver.register_reference(reference)
 
