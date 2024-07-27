@@ -2,6 +2,9 @@ import dataclasses
 from collections import defaultdict
 from typing import DefaultDict, Dict, Optional, Set
 
+from fern_python.codegen.ast.references.module import Module
+from fern_python.codegen.ast.references.reference import ReferenceImport
+
 from ordered_set import OrderedSet
 
 from . import AST
@@ -78,6 +81,13 @@ class ReferenceResolverImpl(ReferenceResolver):
     def resolve_reference(self, reference: AST.Reference) -> str:
         if self._original_import_to_resolved_import is None:
             raise RuntimeError("References have not yet been resolved.")
+        
+        # At times we may be trying to write `if TYPE_CHECKING` imports when no other import brings in typing
+        # and so the resolution of the import is off. This is a fine short circuit since it's a built-in module.
+        if reference.import_ is not None and reference.import_ not in self._original_import_to_resolved_import:
+            if reference.import_ == ReferenceImport(module=Module.built_in(("typing",)),):
+                return "typing"
+        
         resolved_import = (
             self._original_import_to_resolved_import[reference.import_] if reference.import_ is not None else None
         )
