@@ -1,4 +1,4 @@
-import { UndiciStreamWrapper } from "../../../src/core/fetcher/stream-wrappers/UndiciStreamWrapper";
+import { UndiciStreamWrapper } from "../../../../src/core/fetcher/stream-wrappers/UndiciStreamWrapper";
 
 describe("UndiciStreamWrapper", () => {
     it("should set encoding to utf-8", async () => {
