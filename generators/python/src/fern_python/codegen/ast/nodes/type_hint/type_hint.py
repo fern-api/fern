@@ -150,7 +150,7 @@ class TypeHint(AstNode):
     @staticmethod
     def type_checking() -> TypeHint:
         return TypeHint(type=get_reference_to_typing_import("TYPE_CHECKING"))
-    
+
     @staticmethod
     def type_checking_reference() -> Reference:
         return get_reference_to_typing_import("TYPE_CHECKING")

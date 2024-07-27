@@ -2,11 +2,8 @@ import dataclasses
 from collections import defaultdict
 from typing import DefaultDict, Dict, Optional, Set
 
-from fern_python.codegen.ast.nodes.type_hint.type_hint import get_reference_to_typing_import
-from fern_python.codegen.ast.references.module import Module
-from fern_python.codegen.ast.references.reference import ReferenceImport
-
 from ordered_set import OrderedSet
+
 
 from . import AST
 from .reference_resolver import ReferenceResolver
@@ -82,7 +79,7 @@ class ReferenceResolverImpl(ReferenceResolver):
     def resolve_reference(self, reference: AST.Reference) -> str:
         if self._original_import_to_resolved_import is None:
             raise RuntimeError("References have not yet been resolved.")
-                
+
         resolved_import = (
             self._original_import_to_resolved_import[reference.import_] if reference.import_ is not None else None
         )
