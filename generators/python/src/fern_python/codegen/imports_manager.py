@@ -3,6 +3,8 @@ from typing import DefaultDict, Set
 
 from ordered_set import OrderedSet
 
+from fern_python.codegen.ast.nodes.type_hint.type_hint import TYPING_REFERENCE_IMPORT
+
 from . import AST
 from .reference_resolver_impl import ReferenceResolverImpl
 from .top_level_statement import StatementId
@@ -68,6 +70,7 @@ class ImportsManager:
 
         # write all the imports that must be un-type checked (e.g. for circular references)
         if len(self._if_type_checking_imports.items()) > 0:
+            self._write_import(import_=TYPING_REFERENCE_IMPORT, writer=writer, reference_resolver=reference_resolver)
             writer.write("if ")
             writer.write_node(AST.TypeHint.type_checking())
             writer.write_line(":")

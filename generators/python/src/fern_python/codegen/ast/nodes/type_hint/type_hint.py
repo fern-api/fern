@@ -11,6 +11,10 @@ from ...references import ClassReference, Module, Reference, ReferenceImport
 from ..expressions import Expression
 from .type_parameter import TypeParameter
 
+TYPING_REFERENCE_IMPORT = ReferenceImport(
+    module=Module.built_in(("typing",)),
+)
+
 
 class TypeHint(AstNode):
     def __init__(
@@ -258,9 +262,7 @@ def get_reference_to_typing_extensions_import(name: str, require_postponed_annot
 
 def get_reference_to_typing_import(name: str) -> ClassReference:
     return ClassReference(
-        import_=ReferenceImport(
-            module=Module.built_in(("typing",)),
-        ),
+        import_=TYPING_REFERENCE_IMPORT,
         qualified_name_excluding_import=(name,),
     )
 

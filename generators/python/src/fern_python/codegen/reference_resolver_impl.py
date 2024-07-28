@@ -4,7 +4,6 @@ from typing import DefaultDict, Dict, Optional, Set
 
 from ordered_set import OrderedSet
 
-
 from . import AST
 from .reference_resolver import ReferenceResolver
 

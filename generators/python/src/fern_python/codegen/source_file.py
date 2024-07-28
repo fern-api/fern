@@ -209,11 +209,6 @@ class SourceFileImpl(SourceFile):
             if reference.import_if_type_checking:
                 tc_ref = AST.TypeHint.type_checking_reference()
                 self._reference_resolver.register_reference(tc_ref)
-                if tc_ref.import_ is not None:
-                    for dependency in tc_ref.import_.module.get_dependencies():
-                        self._dependency_manager.add_dependency(dependency)
-
-        for reference in ast_metadata.references:
 
             # register refrence for resolving later
             self._reference_resolver.register_reference(reference)
