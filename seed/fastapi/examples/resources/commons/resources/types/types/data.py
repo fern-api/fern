@@ -30,7 +30,7 @@ class Data(UniversalRootModel):
     """
     Examples
     --------
-    from seed.examples.resources.commons import Data_String
+    from seed.examples.resources.commons.resources.types import Data_String
 
     Data_String(value="data")
     """

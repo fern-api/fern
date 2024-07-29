@@ -13,7 +13,7 @@ class Node(UniversalBaseModel):
     Examples
     --------
     from seed import Node
-    from seed.commons import Metadata
+    from seed.commons.metadata import Metadata
 
     Node(
         id="node-8dvgfja2",

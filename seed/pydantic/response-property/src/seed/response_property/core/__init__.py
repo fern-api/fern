@@ -11,8 +11,10 @@ from .pydantic_utilities import (
     universal_root_validator,
     update_forward_refs,
 )
+from .serialization import FieldMetadata
 
 __all__ = [
+    "FieldMetadata",
     "IS_PYDANTIC_V2",
     "UniversalBaseModel",
     "UniversalRootModel",

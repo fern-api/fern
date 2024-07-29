@@ -30,7 +30,7 @@ class Metadata(UniversalRootModel):
     """
     Examples
     --------
-    from seed.examples import Metadata_Html
+    from seed.examples.resources.types import Metadata_Html
 
     Metadata_Html(value="<head>...</head>")
     """

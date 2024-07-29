@@ -32,7 +32,7 @@ class EventInfo(UniversalRootModel):
     """
     Examples
     --------
-    from seed.examples.resources.commons import EventInfo_Metadata
+    from seed.examples.resources.commons.resources.types import EventInfo_Metadata
 
     EventInfo_Metadata(
         id="metadata-alskjfg8",
