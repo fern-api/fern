@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Optional
 
-
 from fern_python.codegen import AST
 from fern_python.snippet import SnippetWriter
 
