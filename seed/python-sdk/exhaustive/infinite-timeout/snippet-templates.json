@@ -198,7 +198,7 @@
                             "delimiter": ",\n\t\t",
                             "innerTemplate": {
                                 "imports": [
-                                    "from seed.types.object.types import ObjectWithRequiredField"
+                                    "from seed.types.object import ObjectWithRequiredField"
                                 ],
                                 "isOptional": true,
                                 "templateString": "ObjectWithRequiredField(\n\t\t\t$FERN_INPUT\n\t\t)",
@@ -279,7 +279,7 @@
                                 "delimiter": ",\n\t\t",
                                 "innerTemplate": {
                                     "imports": [
-                                        "from seed.types.object.types import ObjectWithRequiredField"
+                                        "from seed.types.object import ObjectWithRequiredField"
                                     ],
                                     "isOptional": true,
                                     "templateString": "ObjectWithRequiredField(\n\t\t\t$FERN_INPUT\n\t\t)",
@@ -739,7 +739,7 @@
                             },
                             "valueTemplate": {
                                 "imports": [
-                                    "from seed.types.object.types import ObjectWithRequiredField"
+                                    "from seed.types.object import ObjectWithRequiredField"
                                 ],
                                 "isOptional": true,
                                 "templateString": "ObjectWithRequiredField(\n\t\t\t$FERN_INPUT\n\t\t)",
@@ -834,7 +834,7 @@
                                 },
                                 "valueTemplate": {
                                     "imports": [
-                                        "from seed.types.object.types import ObjectWithRequiredField"
+                                        "from seed.types.object import ObjectWithRequiredField"
                                     ],
                                     "isOptional": true,
                                     "templateString": "ObjectWithRequiredField(\n\t\t\t$FERN_INPUT\n\t\t)",
@@ -923,7 +923,7 @@
                         "type": "template",
                         "value": {
                             "imports": [
-                                "from seed.types.object.types import ObjectWithRequiredField"
+                                "from seed.types.object import ObjectWithRequiredField"
                             ],
                             "isOptional": true,
                             "templateString": "request=ObjectWithRequiredField(\n\t\t$FERN_INPUT\n\t)",
@@ -993,7 +993,7 @@
                             "type": "template",
                             "value": {
                                 "imports": [
-                                    "from seed.types.object.types import ObjectWithRequiredField"
+                                    "from seed.types.object import ObjectWithRequiredField"
                                 ],
                                 "isOptional": true,
                                 "templateString": "request=ObjectWithRequiredField(\n\t\t$FERN_INPUT\n\t)",
@@ -3225,7 +3225,7 @@
                         "type": "template",
                         "value": {
                             "imports": [
-                                "from seed.types.object.types import ObjectWithOptionalField"
+                                "from seed.types.object import ObjectWithOptionalField"
                             ],
                             "isOptional": true,
                             "templateString": "nested_object=ObjectWithOptionalField(\n\t\t$FERN_INPUT\n\t)",
@@ -3523,7 +3523,7 @@
                             "type": "template",
                             "value": {
                                 "imports": [
-                                    "from seed.types.object.types import ObjectWithOptionalField"
+                                    "from seed.types.object import ObjectWithOptionalField"
                                 ],
                                 "isOptional": true,
                                 "templateString": "nested_object=ObjectWithOptionalField(\n\t\t$FERN_INPUT\n\t)",
@@ -3849,7 +3849,7 @@
                         "type": "template",
                         "value": {
                             "imports": [
-                                "from seed.types.object.types import ObjectWithOptionalField"
+                                "from seed.types.object import ObjectWithOptionalField"
                             ],
                             "isOptional": true,
                             "templateString": "nested_object=ObjectWithOptionalField(\n\t\t$FERN_INPUT\n\t)",
@@ -4163,7 +4163,7 @@
                             "type": "template",
                             "value": {
                                 "imports": [
-                                    "from seed.types.object.types import ObjectWithOptionalField"
+                                    "from seed.types.object import ObjectWithOptionalField"
                                 ],
                                 "isOptional": true,
                                 "templateString": "nested_object=ObjectWithOptionalField(\n\t\t$FERN_INPUT\n\t)",
@@ -4462,7 +4462,7 @@
                             "delimiter": ",\n\t\t",
                             "innerTemplate": {
                                 "imports": [
-                                    "from seed.types.object.types import NestedObjectWithRequiredField"
+                                    "from seed.types.object import NestedObjectWithRequiredField"
                                 ],
                                 "isOptional": true,
                                 "templateString": "NestedObjectWithRequiredField(\n\t\t\t$FERN_INPUT\n\t\t)",
@@ -4487,7 +4487,7 @@
                                         "type": "template",
                                         "value": {
                                             "imports": [
-                                                "from seed.types.object.types import ObjectWithOptionalField"
+                                                "from seed.types.object import ObjectWithOptionalField"
                                             ],
                                             "isOptional": true,
                                             "templateString": "nested_object=ObjectWithOptionalField(\n\t\t\t\t$FERN_INPUT\n\t\t\t)",
@@ -4785,7 +4785,7 @@
                                 "delimiter": ",\n\t\t",
                                 "innerTemplate": {
                                     "imports": [
-                                        "from seed.types.object.types import NestedObjectWithRequiredField"
+                                        "from seed.types.object import NestedObjectWithRequiredField"
                                     ],
                                     "isOptional": true,
                                     "templateString": "NestedObjectWithRequiredField(\n\t\t\t$FERN_INPUT\n\t\t)",
@@ -4810,7 +4810,7 @@
                                             "type": "template",
                                             "value": {
                                                 "imports": [
-                                                    "from seed.types.object.types import ObjectWithOptionalField"
+                                                    "from seed.types.object import ObjectWithOptionalField"
                                                 ],
                                                 "isOptional": true,
                                                 "templateString": "nested_object=ObjectWithOptionalField(\n\t\t\t\t$FERN_INPUT\n\t\t\t)",
@@ -6985,7 +6985,7 @@
                             "members": {
                                 "dog": {
                                     "imports": [
-                                        "from seed.types.union.types import Animal_Dog"
+                                        "from seed.types.union import Animal_Dog"
                                     ],
                                     "isOptional": true,
                                     "templateString": "request=Animal_Dog($FERN_INPUT, )",
@@ -7027,7 +7027,7 @@
                                 },
                                 "cat": {
                                     "imports": [
-                                        "from seed.types.union.types import Animal_Cat"
+                                        "from seed.types.union import Animal_Cat"
                                     ],
                                     "isOptional": true,
                                     "templateString": "request=Animal_Cat($FERN_INPUT, )",
@@ -7124,7 +7124,7 @@
                                 "members": {
                                     "dog": {
                                         "imports": [
-                                            "from seed.types.union.types import Animal_Dog"
+                                            "from seed.types.union import Animal_Dog"
                                         ],
                                         "isOptional": true,
                                         "templateString": "request=Animal_Dog($FERN_INPUT, )",
@@ -7166,7 +7166,7 @@
                                     },
                                     "cat": {
                                         "imports": [
-                                            "from seed.types.union.types import Animal_Cat"
+                                            "from seed.types.union import Animal_Cat"
                                         ],
                                         "isOptional": true,
                                         "templateString": "request=Animal_Cat($FERN_INPUT, )",
@@ -7301,7 +7301,7 @@
                         "type": "template",
                         "value": {
                             "imports": [
-                                "from seed.types.object.types import ObjectWithOptionalField"
+                                "from seed.types.object import ObjectWithOptionalField"
                             ],
                             "isOptional": true,
                             "templateString": "nested_object=ObjectWithOptionalField(\n\t\t$FERN_INPUT\n\t)",
@@ -7615,7 +7615,7 @@
                             "type": "template",
                             "value": {
                                 "imports": [
-                                    "from seed.types.object.types import ObjectWithOptionalField"
+                                    "from seed.types.object import ObjectWithOptionalField"
                                 ],
                                 "isOptional": true,
                                 "templateString": "nested_object=ObjectWithOptionalField(\n\t\t$FERN_INPUT\n\t)",

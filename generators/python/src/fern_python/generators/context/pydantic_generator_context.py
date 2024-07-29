@@ -21,6 +21,7 @@ class PydanticGeneratorContext(ABC):
         generator_config: GeneratorConfig,
         allow_skipping_validation: bool,
         use_typeddict_requests: bool,
+        use_str_enums: bool,
     ):
         self.ir = ir
         self.generator_config = generator_config
@@ -30,6 +31,7 @@ class PydanticGeneratorContext(ABC):
         )
         self.use_typeddict_requests = use_typeddict_requests
         self.type_declaration_referencer = type_declaration_referencer
+        self.use_str_enums = use_str_enums
 
     @abstractmethod
     def get_module_path_in_project(self, module_path: AST.ModulePath) -> AST.ModulePath:

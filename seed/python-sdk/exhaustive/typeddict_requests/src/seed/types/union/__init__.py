@@ -2,13 +2,15 @@
 
 from .types import Animal, Animal_Cat, Animal_Dog, Cat, Dog
 from .errors import ErrorWithUnionBody
-from .requests import AnimalParams, CatParams, DogParams
+from .requests import AnimalParams, Animal_CatParams, Animal_DogParams, CatParams, DogParams
 
 __all__ = [
     "Animal",
     "AnimalParams",
     "Animal_Cat",
+    "Animal_CatParams",
     "Animal_Dog",
+    "Animal_DogParams",
     "Cat",
     "CatParams",
     "Dog",

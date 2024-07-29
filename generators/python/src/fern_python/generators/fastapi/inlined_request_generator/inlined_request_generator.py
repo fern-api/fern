@@ -1,8 +1,11 @@
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import SourceFile
+from ...pydantic_model.type_declaration_handler.pydantic_models.pydantic_model_object_generator import (
+    PydanticModelObjectGenerator,
+)
 
-from ...pydantic_model import ObjectGenerator, ObjectProperty, PydanticModelCustomConfig
+from ...pydantic_model import ObjectProperty, PydanticModelCustomConfig
 from ..context import FastApiGeneratorContext
 
 
@@ -24,7 +27,7 @@ class InlinedRequestGenerator:
         self,
         source_file: SourceFile,
     ) -> None:
-        object_generator = ObjectGenerator(
+        object_generator = PydanticModelObjectGenerator(
             name=None,
             class_name=self._context.get_class_name_for_inlined_request(
                 service_name=self._service.name, request=self._request
@@ -42,6 +45,5 @@ class InlinedRequestGenerator:
             custom_config=self._pydantic_model_custom_config,
             source_file=source_file,
             docs=None,
-            maybe_requests_source_file=None,
         )
         object_generator.generate()

@@ -13,7 +13,7 @@ from fern_python.pydantic_codegen import PydanticField, PydanticModel
 from ....context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig
 from ...fern_aware_pydantic_model import FernAwarePydanticModel
-from ..abstract_type_generator import AbstractTypeGenerator
+from ..abc.abstract_type_generator import AbstractTypeGenerator
 from ..get_visit_method import VisitableItem, VisitorArgument, get_visit_method
 
 VISITOR_RETURN_TYPE = AST.GenericTypeVar(name="T_Result")

@@ -4,18 +4,36 @@ from .circle import Circle
 from .color import Color
 from .object_with_defaults import ObjectWithDefaults
 from .object_with_optional_field import ObjectWithOptionalField
-from .shape import Shape, Shape_CircleParams, Shape_SquareParams
+from .requests import (
+    CircleParams,
+    ObjectWithDefaultsParams,
+    ObjectWithOptionalFieldParams,
+    ShapeParams,
+    Shape_CircleParams,
+    Shape_SquareParams,
+    SquareParams,
+    UndiscriminatedShapeParams,
+)
+from .shape import Shape, Shape_Circle, Shape_Square
 from .square import Square
 from .undiscriminated_shape import UndiscriminatedShape
 
 __all__ = [
     "Circle",
+    "CircleParams",
     "Color",
     "ObjectWithDefaults",
+    "ObjectWithDefaultsParams",
     "ObjectWithOptionalField",
+    "ObjectWithOptionalFieldParams",
     "Shape",
+    "ShapeParams",
+    "Shape_Circle",
     "Shape_CircleParams",
+    "Shape_Square",
     "Shape_SquareParams",
     "Square",
+    "SquareParams",
     "UndiscriminatedShape",
+    "UndiscriminatedShapeParams",
 ]

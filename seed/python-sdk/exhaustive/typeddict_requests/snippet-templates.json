@@ -197,18 +197,16 @@
                             "containerTemplateString": "request=[\n\t\t$FERN_INPUT\n\t]",
                             "delimiter": ",\n\t\t",
                             "innerTemplate": {
-                                "imports": [
-                                    "from seed.types.object import ObjectWithRequiredField"
-                                ],
+                                "imports": [],
                                 "isOptional": true,
-                                "templateString": "ObjectWithRequiredField(\n\t\t\t$FERN_INPUT\n\t\t)",
+                                "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
                                 "templateInputs": [
                                     {
                                         "type": "template",
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "string=$FERN_INPUT",
+                                            "templateString": "\"string\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "RELATIVE",
@@ -278,18 +276,16 @@
                                 "containerTemplateString": "request=[\n\t\t$FERN_INPUT\n\t]",
                                 "delimiter": ",\n\t\t",
                                 "innerTemplate": {
-                                    "imports": [
-                                        "from seed.types.object import ObjectWithRequiredField"
-                                    ],
+                                    "imports": [],
                                     "isOptional": true,
-                                    "templateString": "ObjectWithRequiredField(\n\t\t\t$FERN_INPUT\n\t\t)",
+                                    "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
                                     "templateInputs": [
                                         {
                                             "type": "template",
                                             "value": {
                                                 "imports": [],
                                                 "isOptional": true,
-                                                "templateString": "string=$FERN_INPUT",
+                                                "templateString": "\"string\": $FERN_INPUT",
                                                 "templateInputs": [
                                                     {
                                                         "location": "RELATIVE",
@@ -738,18 +734,16 @@
                                 "type": "generic"
                             },
                             "valueTemplate": {
-                                "imports": [
-                                    "from seed.types.object import ObjectWithRequiredField"
-                                ],
+                                "imports": [],
                                 "isOptional": true,
-                                "templateString": "ObjectWithRequiredField(\n\t\t\t$FERN_INPUT\n\t\t)",
+                                "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
                                 "templateInputs": [
                                     {
                                         "type": "template",
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "string=$FERN_INPUT",
+                                            "templateString": "\"string\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "RELATIVE",
@@ -833,18 +827,16 @@
                                     "type": "generic"
                                 },
                                 "valueTemplate": {
-                                    "imports": [
-                                        "from seed.types.object import ObjectWithRequiredField"
-                                    ],
+                                    "imports": [],
                                     "isOptional": true,
-                                    "templateString": "ObjectWithRequiredField(\n\t\t\t$FERN_INPUT\n\t\t)",
+                                    "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
                                     "templateInputs": [
                                         {
                                             "type": "template",
                                             "value": {
                                                 "imports": [],
                                                 "isOptional": true,
-                                                "templateString": "string=$FERN_INPUT",
+                                                "templateString": "\"string\": $FERN_INPUT",
                                                 "templateInputs": [
                                                     {
                                                         "location": "RELATIVE",
@@ -922,18 +914,16 @@
                     {
                         "type": "template",
                         "value": {
-                            "imports": [
-                                "from seed.types.object import ObjectWithRequiredField"
-                            ],
+                            "imports": [],
                             "isOptional": true,
-                            "templateString": "request=ObjectWithRequiredField(\n\t\t$FERN_INPUT\n\t)",
+                            "templateString": "request={\n\t\t$FERN_INPUT\n\t}",
                             "templateInputs": [
                                 {
                                     "type": "template",
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "string=$FERN_INPUT",
+                                        "templateString": "\"string\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -992,18 +982,16 @@
                         {
                             "type": "template",
                             "value": {
-                                "imports": [
-                                    "from seed.types.object import ObjectWithRequiredField"
-                                ],
+                                "imports": [],
                                 "isOptional": true,
-                                "templateString": "request=ObjectWithRequiredField(\n\t\t$FERN_INPUT\n\t)",
+                                "templateString": "request={\n\t\t$FERN_INPUT\n\t}",
                                 "templateInputs": [
                                     {
                                         "type": "template",
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "string=$FERN_INPUT",
+                                            "templateString": "\"string\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -1076,7 +1064,7 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "templateString": "request=$FERN_INPUT",
+                            "templateString": "requestrequest=$FERN_INPUT",
                             "values": {
                                 "SUNNY": "\"SUNNY\"",
                                 "CLOUDY": "\"CLOUDY\"",
@@ -1135,7 +1123,7 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "templateString": "request=$FERN_INPUT",
+                                "templateString": "requestrequest=$FERN_INPUT",
                                 "values": {
                                     "SUNNY": "\"SUNNY\"",
                                     "CLOUDY": "\"CLOUDY\"",
@@ -3224,18 +3212,16 @@
                     {
                         "type": "template",
                         "value": {
-                            "imports": [
-                                "from seed.types.object import ObjectWithOptionalField"
-                            ],
+                            "imports": [],
                             "isOptional": true,
-                            "templateString": "nested_object=ObjectWithOptionalField(\n\t\t$FERN_INPUT\n\t)",
+                            "templateString": "nested_object={\n\t\t$FERN_INPUT\n\t}",
                             "templateInputs": [
                                 {
                                     "type": "template",
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "string=$FERN_INPUT",
+                                        "templateString": "\"string\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -3251,7 +3237,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "integer=$FERN_INPUT",
+                                        "templateString": "\"integer\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -3267,7 +3253,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "long_=$FERN_INPUT",
+                                        "templateString": "\"long_\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -3283,7 +3269,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "double=$FERN_INPUT",
+                                        "templateString": "\"double\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -3299,7 +3285,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "bool_=$FERN_INPUT",
+                                        "templateString": "\"bool_\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -3315,7 +3301,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "datetime=$FERN_INPUT",
+                                        "templateString": "\"datetime\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -3331,7 +3317,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "date=$FERN_INPUT",
+                                        "templateString": "\"date\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -3347,7 +3333,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "uuid_=$FERN_INPUT",
+                                        "templateString": "\"uuid_\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -3363,7 +3349,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "base_64=$FERN_INPUT",
+                                        "templateString": "\"base_64\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -3379,7 +3365,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "list_=[\n\t\t\t$FERN_INPUT\n\t\t]",
+                                        "containerTemplateString": "\"list_\": [\n\t\t\t$FERN_INPUT\n\t\t]",
                                         "delimiter": ",\n\t\t\t",
                                         "innerTemplate": {
                                             "imports": [],
@@ -3406,7 +3392,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "map_={\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "containerTemplateString": "\"map_\": {\n\t\t\t$FERN_INPUT\n\t\t}",
                                         "delimiter": ",\n\t\t\t",
                                         "keyTemplate": {
                                             "imports": [],
@@ -3447,7 +3433,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "bigint=$FERN_INPUT",
+                                        "templateString": "\"bigint\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -3522,18 +3508,16 @@
                         {
                             "type": "template",
                             "value": {
-                                "imports": [
-                                    "from seed.types.object import ObjectWithOptionalField"
-                                ],
+                                "imports": [],
                                 "isOptional": true,
-                                "templateString": "nested_object=ObjectWithOptionalField(\n\t\t$FERN_INPUT\n\t)",
+                                "templateString": "nested_object={\n\t\t$FERN_INPUT\n\t}",
                                 "templateInputs": [
                                     {
                                         "type": "template",
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "string=$FERN_INPUT",
+                                            "templateString": "\"string\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -3549,7 +3533,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "integer=$FERN_INPUT",
+                                            "templateString": "\"integer\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -3565,7 +3549,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "long_=$FERN_INPUT",
+                                            "templateString": "\"long_\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -3581,7 +3565,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "double=$FERN_INPUT",
+                                            "templateString": "\"double\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -3597,7 +3581,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "bool_=$FERN_INPUT",
+                                            "templateString": "\"bool_\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -3613,7 +3597,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "datetime=$FERN_INPUT",
+                                            "templateString": "\"datetime\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -3629,7 +3613,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "date=$FERN_INPUT",
+                                            "templateString": "\"date\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -3645,7 +3629,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "uuid_=$FERN_INPUT",
+                                            "templateString": "\"uuid_\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -3661,7 +3645,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "base_64=$FERN_INPUT",
+                                            "templateString": "\"base_64\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -3677,7 +3661,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "containerTemplateString": "list_=[\n\t\t\t$FERN_INPUT\n\t\t]",
+                                            "containerTemplateString": "\"list_\": [\n\t\t\t$FERN_INPUT\n\t\t]",
                                             "delimiter": ",\n\t\t\t",
                                             "innerTemplate": {
                                                 "imports": [],
@@ -3704,7 +3688,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "containerTemplateString": "map_={\n\t\t\t$FERN_INPUT\n\t\t}",
+                                            "containerTemplateString": "\"map_\": {\n\t\t\t$FERN_INPUT\n\t\t}",
                                             "delimiter": ",\n\t\t\t",
                                             "keyTemplate": {
                                                 "imports": [],
@@ -3745,7 +3729,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "bigint=$FERN_INPUT",
+                                            "templateString": "\"bigint\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -3848,18 +3832,16 @@
                     {
                         "type": "template",
                         "value": {
-                            "imports": [
-                                "from seed.types.object import ObjectWithOptionalField"
-                            ],
+                            "imports": [],
                             "isOptional": true,
-                            "templateString": "nested_object=ObjectWithOptionalField(\n\t\t$FERN_INPUT\n\t)",
+                            "templateString": "nested_object={\n\t\t$FERN_INPUT\n\t}",
                             "templateInputs": [
                                 {
                                     "type": "template",
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "string=$FERN_INPUT",
+                                        "templateString": "\"string\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -3875,7 +3857,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "integer=$FERN_INPUT",
+                                        "templateString": "\"integer\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -3891,7 +3873,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "long_=$FERN_INPUT",
+                                        "templateString": "\"long_\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -3907,7 +3889,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "double=$FERN_INPUT",
+                                        "templateString": "\"double\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -3923,7 +3905,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "bool_=$FERN_INPUT",
+                                        "templateString": "\"bool_\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -3939,7 +3921,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "datetime=$FERN_INPUT",
+                                        "templateString": "\"datetime\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -3955,7 +3937,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "date=$FERN_INPUT",
+                                        "templateString": "\"date\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -3971,7 +3953,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "uuid_=$FERN_INPUT",
+                                        "templateString": "\"uuid_\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -3987,7 +3969,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "base_64=$FERN_INPUT",
+                                        "templateString": "\"base_64\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -4003,7 +3985,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "list_=[\n\t\t\t$FERN_INPUT\n\t\t]",
+                                        "containerTemplateString": "\"list_\": [\n\t\t\t$FERN_INPUT\n\t\t]",
                                         "delimiter": ",\n\t\t\t",
                                         "innerTemplate": {
                                             "imports": [],
@@ -4030,7 +4012,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "map_={\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "containerTemplateString": "\"map_\": {\n\t\t\t$FERN_INPUT\n\t\t}",
                                         "delimiter": ",\n\t\t\t",
                                         "keyTemplate": {
                                             "imports": [],
@@ -4071,7 +4053,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "bigint=$FERN_INPUT",
+                                        "templateString": "\"bigint\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -4162,18 +4144,16 @@
                         {
                             "type": "template",
                             "value": {
-                                "imports": [
-                                    "from seed.types.object import ObjectWithOptionalField"
-                                ],
+                                "imports": [],
                                 "isOptional": true,
-                                "templateString": "nested_object=ObjectWithOptionalField(\n\t\t$FERN_INPUT\n\t)",
+                                "templateString": "nested_object={\n\t\t$FERN_INPUT\n\t}",
                                 "templateInputs": [
                                     {
                                         "type": "template",
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "string=$FERN_INPUT",
+                                            "templateString": "\"string\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -4189,7 +4169,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "integer=$FERN_INPUT",
+                                            "templateString": "\"integer\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -4205,7 +4185,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "long_=$FERN_INPUT",
+                                            "templateString": "\"long_\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -4221,7 +4201,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "double=$FERN_INPUT",
+                                            "templateString": "\"double\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -4237,7 +4217,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "bool_=$FERN_INPUT",
+                                            "templateString": "\"bool_\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -4253,7 +4233,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "datetime=$FERN_INPUT",
+                                            "templateString": "\"datetime\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -4269,7 +4249,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "date=$FERN_INPUT",
+                                            "templateString": "\"date\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -4285,7 +4265,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "uuid_=$FERN_INPUT",
+                                            "templateString": "\"uuid_\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -4301,7 +4281,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "base_64=$FERN_INPUT",
+                                            "templateString": "\"base_64\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -4317,7 +4297,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "containerTemplateString": "list_=[\n\t\t\t$FERN_INPUT\n\t\t]",
+                                            "containerTemplateString": "\"list_\": [\n\t\t\t$FERN_INPUT\n\t\t]",
                                             "delimiter": ",\n\t\t\t",
                                             "innerTemplate": {
                                                 "imports": [],
@@ -4344,7 +4324,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "containerTemplateString": "map_={\n\t\t\t$FERN_INPUT\n\t\t}",
+                                            "containerTemplateString": "\"map_\": {\n\t\t\t$FERN_INPUT\n\t\t}",
                                             "delimiter": ",\n\t\t\t",
                                             "keyTemplate": {
                                                 "imports": [],
@@ -4385,7 +4365,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "bigint=$FERN_INPUT",
+                                            "templateString": "\"bigint\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -4461,18 +4441,16 @@
                             "containerTemplateString": "request=[\n\t\t$FERN_INPUT\n\t]",
                             "delimiter": ",\n\t\t",
                             "innerTemplate": {
-                                "imports": [
-                                    "from seed.types.object import NestedObjectWithRequiredField"
-                                ],
+                                "imports": [],
                                 "isOptional": true,
-                                "templateString": "NestedObjectWithRequiredField(\n\t\t\t$FERN_INPUT\n\t\t)",
+                                "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
                                 "templateInputs": [
                                     {
                                         "type": "template",
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "string=$FERN_INPUT",
+                                            "templateString": "\"string\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "RELATIVE",
@@ -4486,18 +4464,16 @@
                                     {
                                         "type": "template",
                                         "value": {
-                                            "imports": [
-                                                "from seed.types.object import ObjectWithOptionalField"
-                                            ],
+                                            "imports": [],
                                             "isOptional": true,
-                                            "templateString": "nested_object=ObjectWithOptionalField(\n\t\t\t\t$FERN_INPUT\n\t\t\t)",
+                                            "templateString": "\"nested_object\": {\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
                                             "templateInputs": [
                                                 {
                                                     "type": "template",
                                                     "value": {
                                                         "imports": [],
                                                         "isOptional": true,
-                                                        "templateString": "string=$FERN_INPUT",
+                                                        "templateString": "\"string\": $FERN_INPUT",
                                                         "templateInputs": [
                                                             {
                                                                 "location": "RELATIVE",
@@ -4513,7 +4489,7 @@
                                                     "value": {
                                                         "imports": [],
                                                         "isOptional": true,
-                                                        "templateString": "integer=$FERN_INPUT",
+                                                        "templateString": "\"integer\": $FERN_INPUT",
                                                         "templateInputs": [
                                                             {
                                                                 "location": "RELATIVE",
@@ -4529,7 +4505,7 @@
                                                     "value": {
                                                         "imports": [],
                                                         "isOptional": true,
-                                                        "templateString": "long_=$FERN_INPUT",
+                                                        "templateString": "\"long_\": $FERN_INPUT",
                                                         "templateInputs": [
                                                             {
                                                                 "location": "RELATIVE",
@@ -4545,7 +4521,7 @@
                                                     "value": {
                                                         "imports": [],
                                                         "isOptional": true,
-                                                        "templateString": "double=$FERN_INPUT",
+                                                        "templateString": "\"double\": $FERN_INPUT",
                                                         "templateInputs": [
                                                             {
                                                                 "location": "RELATIVE",
@@ -4561,7 +4537,7 @@
                                                     "value": {
                                                         "imports": [],
                                                         "isOptional": true,
-                                                        "templateString": "bool_=$FERN_INPUT",
+                                                        "templateString": "\"bool_\": $FERN_INPUT",
                                                         "templateInputs": [
                                                             {
                                                                 "location": "RELATIVE",
@@ -4577,7 +4553,7 @@
                                                     "value": {
                                                         "imports": [],
                                                         "isOptional": true,
-                                                        "templateString": "datetime=$FERN_INPUT",
+                                                        "templateString": "\"datetime\": $FERN_INPUT",
                                                         "templateInputs": [
                                                             {
                                                                 "location": "RELATIVE",
@@ -4593,7 +4569,7 @@
                                                     "value": {
                                                         "imports": [],
                                                         "isOptional": true,
-                                                        "templateString": "date=$FERN_INPUT",
+                                                        "templateString": "\"date\": $FERN_INPUT",
                                                         "templateInputs": [
                                                             {
                                                                 "location": "RELATIVE",
@@ -4609,7 +4585,7 @@
                                                     "value": {
                                                         "imports": [],
                                                         "isOptional": true,
-                                                        "templateString": "uuid_=$FERN_INPUT",
+                                                        "templateString": "\"uuid_\": $FERN_INPUT",
                                                         "templateInputs": [
                                                             {
                                                                 "location": "RELATIVE",
@@ -4625,7 +4601,7 @@
                                                     "value": {
                                                         "imports": [],
                                                         "isOptional": true,
-                                                        "templateString": "base_64=$FERN_INPUT",
+                                                        "templateString": "\"base_64\": $FERN_INPUT",
                                                         "templateInputs": [
                                                             {
                                                                 "location": "RELATIVE",
@@ -4641,7 +4617,7 @@
                                                     "value": {
                                                         "imports": [],
                                                         "isOptional": true,
-                                                        "containerTemplateString": "list_=[\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t]",
+                                                        "containerTemplateString": "\"list_\": [\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t]",
                                                         "delimiter": ",\n\t\t\t\t\t",
                                                         "innerTemplate": {
                                                             "imports": [],
@@ -4668,7 +4644,7 @@
                                                     "value": {
                                                         "imports": [],
                                                         "isOptional": true,
-                                                        "containerTemplateString": "map_={\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t}",
+                                                        "containerTemplateString": "\"map_\": {\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t}",
                                                         "delimiter": ",\n\t\t\t\t\t",
                                                         "keyTemplate": {
                                                             "imports": [],
@@ -4709,7 +4685,7 @@
                                                     "value": {
                                                         "imports": [],
                                                         "isOptional": true,
-                                                        "templateString": "bigint=$FERN_INPUT",
+                                                        "templateString": "\"bigint\": $FERN_INPUT",
                                                         "templateInputs": [
                                                             {
                                                                 "location": "RELATIVE",
@@ -4784,18 +4760,16 @@
                                 "containerTemplateString": "request=[\n\t\t$FERN_INPUT\n\t]",
                                 "delimiter": ",\n\t\t",
                                 "innerTemplate": {
-                                    "imports": [
-                                        "from seed.types.object import NestedObjectWithRequiredField"
-                                    ],
+                                    "imports": [],
                                     "isOptional": true,
-                                    "templateString": "NestedObjectWithRequiredField(\n\t\t\t$FERN_INPUT\n\t\t)",
+                                    "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
                                     "templateInputs": [
                                         {
                                             "type": "template",
                                             "value": {
                                                 "imports": [],
                                                 "isOptional": true,
-                                                "templateString": "string=$FERN_INPUT",
+                                                "templateString": "\"string\": $FERN_INPUT",
                                                 "templateInputs": [
                                                     {
                                                         "location": "RELATIVE",
@@ -4809,18 +4783,16 @@
                                         {
                                             "type": "template",
                                             "value": {
-                                                "imports": [
-                                                    "from seed.types.object import ObjectWithOptionalField"
-                                                ],
+                                                "imports": [],
                                                 "isOptional": true,
-                                                "templateString": "nested_object=ObjectWithOptionalField(\n\t\t\t\t$FERN_INPUT\n\t\t\t)",
+                                                "templateString": "\"nested_object\": {\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
                                                 "templateInputs": [
                                                     {
                                                         "type": "template",
                                                         "value": {
                                                             "imports": [],
                                                             "isOptional": true,
-                                                            "templateString": "string=$FERN_INPUT",
+                                                            "templateString": "\"string\": $FERN_INPUT",
                                                             "templateInputs": [
                                                                 {
                                                                     "location": "RELATIVE",
@@ -4836,7 +4808,7 @@
                                                         "value": {
                                                             "imports": [],
                                                             "isOptional": true,
-                                                            "templateString": "integer=$FERN_INPUT",
+                                                            "templateString": "\"integer\": $FERN_INPUT",
                                                             "templateInputs": [
                                                                 {
                                                                     "location": "RELATIVE",
@@ -4852,7 +4824,7 @@
                                                         "value": {
                                                             "imports": [],
                                                             "isOptional": true,
-                                                            "templateString": "long_=$FERN_INPUT",
+                                                            "templateString": "\"long_\": $FERN_INPUT",
                                                             "templateInputs": [
                                                                 {
                                                                     "location": "RELATIVE",
@@ -4868,7 +4840,7 @@
                                                         "value": {
                                                             "imports": [],
                                                             "isOptional": true,
-                                                            "templateString": "double=$FERN_INPUT",
+                                                            "templateString": "\"double\": $FERN_INPUT",
                                                             "templateInputs": [
                                                                 {
                                                                     "location": "RELATIVE",
@@ -4884,7 +4856,7 @@
                                                         "value": {
                                                             "imports": [],
                                                             "isOptional": true,
-                                                            "templateString": "bool_=$FERN_INPUT",
+                                                            "templateString": "\"bool_\": $FERN_INPUT",
                                                             "templateInputs": [
                                                                 {
                                                                     "location": "RELATIVE",
@@ -4900,7 +4872,7 @@
                                                         "value": {
                                                             "imports": [],
                                                             "isOptional": true,
-                                                            "templateString": "datetime=$FERN_INPUT",
+                                                            "templateString": "\"datetime\": $FERN_INPUT",
                                                             "templateInputs": [
                                                                 {
                                                                     "location": "RELATIVE",
@@ -4916,7 +4888,7 @@
                                                         "value": {
                                                             "imports": [],
                                                             "isOptional": true,
-                                                            "templateString": "date=$FERN_INPUT",
+                                                            "templateString": "\"date\": $FERN_INPUT",
                                                             "templateInputs": [
                                                                 {
                                                                     "location": "RELATIVE",
@@ -4932,7 +4904,7 @@
                                                         "value": {
                                                             "imports": [],
                                                             "isOptional": true,
-                                                            "templateString": "uuid_=$FERN_INPUT",
+                                                            "templateString": "\"uuid_\": $FERN_INPUT",
                                                             "templateInputs": [
                                                                 {
                                                                     "location": "RELATIVE",
@@ -4948,7 +4920,7 @@
                                                         "value": {
                                                             "imports": [],
                                                             "isOptional": true,
-                                                            "templateString": "base_64=$FERN_INPUT",
+                                                            "templateString": "\"base_64\": $FERN_INPUT",
                                                             "templateInputs": [
                                                                 {
                                                                     "location": "RELATIVE",
@@ -4964,7 +4936,7 @@
                                                         "value": {
                                                             "imports": [],
                                                             "isOptional": true,
-                                                            "containerTemplateString": "list_=[\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t]",
+                                                            "containerTemplateString": "\"list_\": [\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t]",
                                                             "delimiter": ",\n\t\t\t\t\t",
                                                             "innerTemplate": {
                                                                 "imports": [],
@@ -4991,7 +4963,7 @@
                                                         "value": {
                                                             "imports": [],
                                                             "isOptional": true,
-                                                            "containerTemplateString": "map_={\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t}",
+                                                            "containerTemplateString": "\"map_\": {\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t}",
                                                             "delimiter": ",\n\t\t\t\t\t",
                                                             "keyTemplate": {
                                                                 "imports": [],
@@ -5032,7 +5004,7 @@
                                                         "value": {
                                                             "imports": [],
                                                             "isOptional": true,
-                                                            "templateString": "bigint=$FERN_INPUT",
+                                                            "templateString": "\"bigint\": $FERN_INPUT",
                                                             "templateInputs": [
                                                                 {
                                                                     "location": "RELATIVE",
@@ -6985,17 +6957,17 @@
                             "members": {
                                 "dog": {
                                     "imports": [
-                                        "from seed.types.union import Animal_Dog"
+                                        ""
                                     ],
                                     "isOptional": true,
-                                    "templateString": "request=Animal_Dog($FERN_INPUT, )",
+                                    "templateString": "request: {$FERN_INPUT}",
                                     "templateInputs": [
                                         {
                                             "type": "template",
                                             "value": {
                                                 "imports": [],
                                                 "isOptional": true,
-                                                "templateString": "name=$FERN_INPUT",
+                                                "templateString": "\"name\": $FERN_INPUT",
                                                 "templateInputs": [
                                                     {
                                                         "location": "BODY",
@@ -7011,7 +6983,7 @@
                                             "value": {
                                                 "imports": [],
                                                 "isOptional": true,
-                                                "templateString": "likes_to_woof=$FERN_INPUT",
+                                                "templateString": "\"likes_to_woof\": $FERN_INPUT",
                                                 "templateInputs": [
                                                     {
                                                         "location": "BODY",
@@ -7027,17 +6999,17 @@
                                 },
                                 "cat": {
                                     "imports": [
-                                        "from seed.types.union import Animal_Cat"
+                                        ""
                                     ],
                                     "isOptional": true,
-                                    "templateString": "request=Animal_Cat($FERN_INPUT, )",
+                                    "templateString": "request: {$FERN_INPUT}",
                                     "templateInputs": [
                                         {
                                             "type": "template",
                                             "value": {
                                                 "imports": [],
                                                 "isOptional": true,
-                                                "templateString": "name=$FERN_INPUT",
+                                                "templateString": "\"name\": $FERN_INPUT",
                                                 "templateInputs": [
                                                     {
                                                         "location": "BODY",
@@ -7053,7 +7025,7 @@
                                             "value": {
                                                 "imports": [],
                                                 "isOptional": true,
-                                                "templateString": "likes_to_meow=$FERN_INPUT",
+                                                "templateString": "\"likes_to_meow\": $FERN_INPUT",
                                                 "templateInputs": [
                                                     {
                                                         "location": "BODY",
@@ -7124,17 +7096,17 @@
                                 "members": {
                                     "dog": {
                                         "imports": [
-                                            "from seed.types.union import Animal_Dog"
+                                            ""
                                         ],
                                         "isOptional": true,
-                                        "templateString": "request=Animal_Dog($FERN_INPUT, )",
+                                        "templateString": "request: {$FERN_INPUT}",
                                         "templateInputs": [
                                             {
                                                 "type": "template",
                                                 "value": {
                                                     "imports": [],
                                                     "isOptional": true,
-                                                    "templateString": "name=$FERN_INPUT",
+                                                    "templateString": "\"name\": $FERN_INPUT",
                                                     "templateInputs": [
                                                         {
                                                             "location": "BODY",
@@ -7150,7 +7122,7 @@
                                                 "value": {
                                                     "imports": [],
                                                     "isOptional": true,
-                                                    "templateString": "likes_to_woof=$FERN_INPUT",
+                                                    "templateString": "\"likes_to_woof\": $FERN_INPUT",
                                                     "templateInputs": [
                                                         {
                                                             "location": "BODY",
@@ -7166,17 +7138,17 @@
                                     },
                                     "cat": {
                                         "imports": [
-                                            "from seed.types.union import Animal_Cat"
+                                            ""
                                         ],
                                         "isOptional": true,
-                                        "templateString": "request=Animal_Cat($FERN_INPUT, )",
+                                        "templateString": "request: {$FERN_INPUT}",
                                         "templateInputs": [
                                             {
                                                 "type": "template",
                                                 "value": {
                                                     "imports": [],
                                                     "isOptional": true,
-                                                    "templateString": "name=$FERN_INPUT",
+                                                    "templateString": "\"name\": $FERN_INPUT",
                                                     "templateInputs": [
                                                         {
                                                             "location": "BODY",
@@ -7192,7 +7164,7 @@
                                                 "value": {
                                                     "imports": [],
                                                     "isOptional": true,
-                                                    "templateString": "likes_to_meow=$FERN_INPUT",
+                                                    "templateString": "\"likes_to_meow\": $FERN_INPUT",
                                                     "templateInputs": [
                                                         {
                                                             "location": "BODY",
@@ -7300,18 +7272,16 @@
                     {
                         "type": "template",
                         "value": {
-                            "imports": [
-                                "from seed.types.object import ObjectWithOptionalField"
-                            ],
+                            "imports": [],
                             "isOptional": true,
-                            "templateString": "nested_object=ObjectWithOptionalField(\n\t\t$FERN_INPUT\n\t)",
+                            "templateString": "nested_object={\n\t\t$FERN_INPUT\n\t}",
                             "templateInputs": [
                                 {
                                     "type": "template",
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "string=$FERN_INPUT",
+                                        "templateString": "\"string\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -7327,7 +7297,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "integer=$FERN_INPUT",
+                                        "templateString": "\"integer\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -7343,7 +7313,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "long_=$FERN_INPUT",
+                                        "templateString": "\"long_\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -7359,7 +7329,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "double=$FERN_INPUT",
+                                        "templateString": "\"double\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -7375,7 +7345,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "bool_=$FERN_INPUT",
+                                        "templateString": "\"bool_\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -7391,7 +7361,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "datetime=$FERN_INPUT",
+                                        "templateString": "\"datetime\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -7407,7 +7377,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "date=$FERN_INPUT",
+                                        "templateString": "\"date\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -7423,7 +7393,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "uuid_=$FERN_INPUT",
+                                        "templateString": "\"uuid_\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -7439,7 +7409,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "base_64=$FERN_INPUT",
+                                        "templateString": "\"base_64\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -7455,7 +7425,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "list_=[\n\t\t\t$FERN_INPUT\n\t\t]",
+                                        "containerTemplateString": "\"list_\": [\n\t\t\t$FERN_INPUT\n\t\t]",
                                         "delimiter": ",\n\t\t\t",
                                         "innerTemplate": {
                                             "imports": [],
@@ -7482,7 +7452,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "map_={\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "containerTemplateString": "\"map_\": {\n\t\t\t$FERN_INPUT\n\t\t}",
                                         "delimiter": ",\n\t\t\t",
                                         "keyTemplate": {
                                             "imports": [],
@@ -7523,7 +7493,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "bigint=$FERN_INPUT",
+                                        "templateString": "\"bigint\": $FERN_INPUT",
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
@@ -7614,18 +7584,16 @@
                         {
                             "type": "template",
                             "value": {
-                                "imports": [
-                                    "from seed.types.object import ObjectWithOptionalField"
-                                ],
+                                "imports": [],
                                 "isOptional": true,
-                                "templateString": "nested_object=ObjectWithOptionalField(\n\t\t$FERN_INPUT\n\t)",
+                                "templateString": "nested_object={\n\t\t$FERN_INPUT\n\t}",
                                 "templateInputs": [
                                     {
                                         "type": "template",
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "string=$FERN_INPUT",
+                                            "templateString": "\"string\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -7641,7 +7609,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "integer=$FERN_INPUT",
+                                            "templateString": "\"integer\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -7657,7 +7625,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "long_=$FERN_INPUT",
+                                            "templateString": "\"long_\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -7673,7 +7641,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "double=$FERN_INPUT",
+                                            "templateString": "\"double\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -7689,7 +7657,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "bool_=$FERN_INPUT",
+                                            "templateString": "\"bool_\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -7705,7 +7673,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "datetime=$FERN_INPUT",
+                                            "templateString": "\"datetime\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -7721,7 +7689,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "date=$FERN_INPUT",
+                                            "templateString": "\"date\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -7737,7 +7705,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "uuid_=$FERN_INPUT",
+                                            "templateString": "\"uuid_\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -7753,7 +7721,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "base_64=$FERN_INPUT",
+                                            "templateString": "\"base_64\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
@@ -7769,7 +7737,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "containerTemplateString": "list_=[\n\t\t\t$FERN_INPUT\n\t\t]",
+                                            "containerTemplateString": "\"list_\": [\n\t\t\t$FERN_INPUT\n\t\t]",
                                             "delimiter": ",\n\t\t\t",
                                             "innerTemplate": {
                                                 "imports": [],
@@ -7796,7 +7764,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "containerTemplateString": "map_={\n\t\t\t$FERN_INPUT\n\t\t}",
+                                            "containerTemplateString": "\"map_\": {\n\t\t\t$FERN_INPUT\n\t\t}",
                                             "delimiter": ",\n\t\t\t",
                                             "keyTemplate": {
                                                 "imports": [],
@@ -7837,7 +7805,7 @@
                                         "value": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "bigint=$FERN_INPUT",
+                                            "templateString": "\"bigint\": $FERN_INPUT",
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",

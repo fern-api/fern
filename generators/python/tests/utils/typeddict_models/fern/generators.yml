@@ -1,6 +1,6 @@
-default-group: dummy_types
+default-group: dummy_td_types
 groups:
-  dummy_types:
+  dummy_td_types:
     generators:
       - name: ferntest/fern-pydantic-model
         ir-version: v46

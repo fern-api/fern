@@ -57,25 +57,33 @@ def convert_and_respect_annotation_metadata(
         return _convert_typeddict(object_, clean_type)
 
     if (
-        (
-            (typing_extensions.get_origin(clean_type) == typing.List 
-             or typing_extensions.get_origin(clean_type) == list
-             or clean_type == typing.List)
-            and isinstance(object_, typing.List)
-        )
-        or (
-            (typing_extensions.get_origin(clean_type) == typing.Set
-             or typing_extensions.get_origin(clean_type) == set
-             or clean_type == typing.Set)
-            and isinstance(object_, typing.Set)
-        )
-        or (
+        # If you're iterating on a string, do not bother to coerce it to a sequence.
+        (not isinstance(object_, str))
+        and (
             (
-                typing_extensions.get_origin(clean_type) == typing.Sequence
-                or typing_extensions.get_origin(clean_type) == collections.abc.Sequence
-                or clean_type == typing.Sequence
+                (
+                    typing_extensions.get_origin(clean_type) == typing.List
+                    or typing_extensions.get_origin(clean_type) == list
+                    or clean_type == typing.List
+                )
+                and isinstance(object_, typing.List)
             )
-            and isinstance(object_, typing.Sequence)
+            or (
+                (
+                    typing_extensions.get_origin(clean_type) == typing.Set
+                    or typing_extensions.get_origin(clean_type) == set
+                    or clean_type == typing.Set
+                )
+                and isinstance(object_, typing.Set)
+            )
+            or (
+                (
+                    typing_extensions.get_origin(clean_type) == typing.Sequence
+                    or typing_extensions.get_origin(clean_type) == collections.abc.Sequence
+                    or clean_type == typing.Sequence
+                )
+                and isinstance(object_, typing.Sequence)
+            )
         )
     ):
         inner_type = typing_extensions.get_args(clean_type)[0]
@@ -103,7 +111,7 @@ def convert_and_respect_annotation_metadata(
 
 
 def _convert_typeddict(object_: typing.Mapping[str, object], expected_type: typing.Any) -> typing.Mapping[str, object]:
-    converted_object: dict[str, object] = {}
+    converted_object: typing.Dict[str, object] = {}
     annotations = typing_extensions.get_type_hints(expected_type, include_extras=True)
     for key, value in object_.items():
         type_ = annotations.get(key)

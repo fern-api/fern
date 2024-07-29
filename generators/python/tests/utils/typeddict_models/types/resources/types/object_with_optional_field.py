@@ -4,30 +4,38 @@ import datetime as dt
 import typing
 import uuid
 
-import typing_extensions
+import pydantic
 
-from ...core.serialization import FieldMetadata
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
+from ...core.unchecked_base_model import UncheckedBaseModel
 from .color import Color
 from .shape import Shape
 from .undiscriminated_shape import UndiscriminatedShape
 
 
-class ObjectWithOptionalField(typing_extensions.TypedDict):
-    literal: typing.Literal["lit_one"]
-    string: typing_extensions.NotRequired[str]
-    integer: typing_extensions.NotRequired[int]
-    long_: typing_extensions.NotRequired[typing_extensions.Annotated[int, FieldMetadata(alias="long")]]
-    double: typing_extensions.NotRequired[float]
-    bool_: typing_extensions.NotRequired[typing_extensions.Annotated[bool, FieldMetadata(alias="bool")]]
-    datetime: typing_extensions.NotRequired[dt.datetime]
-    date: typing_extensions.NotRequired[dt.date]
-    uuid_: typing_extensions.NotRequired[typing_extensions.Annotated[uuid.UUID, FieldMetadata(alias="uuid")]]
-    base_64: typing_extensions.NotRequired[typing_extensions.Annotated[str, FieldMetadata(alias="base64")]]
-    list_: typing_extensions.NotRequired[typing_extensions.Annotated[typing.Sequence[str], FieldMetadata(alias="list")]]
-    set_: typing_extensions.NotRequired[typing_extensions.Annotated[typing.Set[str], FieldMetadata(alias="set")]]
-    map_: typing_extensions.NotRequired[typing_extensions.Annotated[typing.Dict[int, str], FieldMetadata(alias="map")]]
-    enum: typing_extensions.NotRequired[Color]
-    union: typing_extensions.NotRequired[Shape]
-    second_union: typing_extensions.NotRequired[Shape]
-    undiscriminated_union: typing_extensions.NotRequired[UndiscriminatedShape]
+class ObjectWithOptionalField(UncheckedBaseModel):
+    literal: typing.Literal["lit_one"] = "lit_one"
+    string: typing.Optional[str] = None
+    integer: typing.Optional[int] = None
+    long_: typing.Optional[int] = pydantic.Field(alias="long", default=None)
+    double: typing.Optional[float] = None
+    bool_: typing.Optional[bool] = pydantic.Field(alias="bool", default=None)
+    datetime: typing.Optional[dt.datetime] = None
+    date: typing.Optional[dt.date] = None
+    uuid_: typing.Optional[uuid.UUID] = pydantic.Field(alias="uuid", default=None)
+    base_64: typing.Optional[str] = pydantic.Field(alias="base64", default=None)
+    list_: typing.Optional[typing.List[str]] = pydantic.Field(alias="list", default=None)
+    set_: typing.Optional[typing.Set[str]] = pydantic.Field(alias="set", default=None)
+    map_: typing.Optional[typing.Dict[int, str]] = pydantic.Field(alias="map", default=None)
+    enum: typing.Optional[Color] = None
+    union: typing.Optional[Shape] = None
+    second_union: typing.Optional[Shape] = None
+    undiscriminated_union: typing.Optional[UndiscriminatedShape] = None
     any: typing.Any
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
