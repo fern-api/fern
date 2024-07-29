@@ -85,6 +85,11 @@ class SnippetTemplateFactory:
         self._generator_exec_wrapper = generator_exec_wrapper
         self._use_typeddict_requests = self._context.custom_config.use_typeddict_requests
 
+    def _get_name_value_separator(self, name: Optional[str], is_function_parameter: bool) -> str:
+        if name is None:
+            return ""
+        return f'"{name}": ' if self._use_typeddict_requests and not is_function_parameter else f"{name}="
+
     # Stolen from SnippetRegistry
     def _expression_to_snippet_str(
         self,
@@ -185,9 +190,7 @@ class SnippetTemplateFactory:
         name_breadcrumbs: Optional[List[str]],
         is_function_parameter: bool,
     ) -> Template:
-        template_string = f"{name}={TEMPLATE_SENTINEL}" if name is not None else f"{TEMPLATE_SENTINEL}"
-        if not is_function_parameter and self._use_typeddict_requests:
-            template_string = f"{name}: {TEMPLATE_SENTINEL}" if name is not None else f"{TEMPLATE_SENTINEL}"
+        template_string = f"{self._get_name_value_separator(name=name, is_function_parameter=is_function_parameter)}{TEMPLATE_SENTINEL}"
 
         return Template.factory.generic(
             GenericTemplate(
@@ -212,6 +215,7 @@ class SnippetTemplateFactory:
         location: PayloadLocation,
         wire_or_original_name: Optional[str],
         name_breadcrumbs: Optional[List[str]],
+        is_function_parameter: bool,
         indentation_level: int = 0,
     ) -> Union[Template, None]:
         child_indentation_level = indentation_level + 1
@@ -227,9 +231,7 @@ class SnippetTemplateFactory:
                     IterableTemplate(
                         imports=[],
                         is_optional=True,
-                        container_template_string=f"{name}=[\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}]"
-                        if name is not None
-                        else f"[\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}]",
+                        container_template_string=f"{self._get_name_value_separator(name=name, is_function_parameter=is_function_parameter)}[\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}]",
                         delimiter=f",\n{self.TAB_CHAR * child_indentation_level}",
                         inner_template=inner_template,
                         template_input=PayloadInput(
@@ -250,9 +252,7 @@ class SnippetTemplateFactory:
                 IterableTemplate(
                     imports=[],
                     is_optional=True,
-                    container_template_string=f"{name}={{\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}}}"
-                    if name is not None
-                    else f"{{\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}}}",
+                    container_template_string=f"{self._get_name_value_separator(name=name, is_function_parameter=is_function_parameter)}{{\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}}}",
                     delimiter=f",\n{self.TAB_CHAR * child_indentation_level}",
                     inner_template=inner_template,
                     template_input=PayloadInput(
@@ -273,9 +273,7 @@ class SnippetTemplateFactory:
                     DictTemplate(
                         imports=[],
                         is_optional=True,
-                        container_template_string=f"{name}={{\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}}}"
-                        if name is not None
-                        else f"{{\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}}}",
+                        container_template_string=f"{self._get_name_value_separator(name=name, is_function_parameter=is_function_parameter)}{{\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}}}",
                         delimiter=f",\n{self.TAB_CHAR * child_indentation_level}",
                         key_value_separator=": ",
                         key_template=key_template,
@@ -292,7 +290,7 @@ class SnippetTemplateFactory:
         if container_union.type == "optional":
             value = container_union.optional
             return self.get_type_reference_template(
-                type_=value, name=name, location=location, wire_or_original_name=wire_or_original_name, name_breadcrumbs=name_breadcrumbs, indentation_level=indentation_level, is_function_parameter=False
+                type_=value, name=name, location=location, wire_or_original_name=wire_or_original_name, name_breadcrumbs=name_breadcrumbs, indentation_level=indentation_level, is_function_parameter=is_function_parameter
             )
 
         return None
@@ -316,6 +314,7 @@ class SnippetTemplateFactory:
         location: PayloadLocation,
         wire_or_original_name: Optional[str],
         name_breadcrumbs: Optional[List[str]],
+        is_function_parameter: bool,
     ) -> Template:
         # TODO: we should also be making it so you can easily grab the right import depending on the enum you use
         value_map = {
@@ -327,7 +326,7 @@ class SnippetTemplateFactory:
                 imports=[],
                 is_optional=True,
                 values=value_map,
-                template_string=f"{name}={TEMPLATE_SENTINEL}" if name is not None else f"{TEMPLATE_SENTINEL}",
+                template_string=f"{name}{self._get_name_value_separator(name=name, is_function_parameter=is_function_parameter)}{TEMPLATE_SENTINEL}",
                 template_input=PayloadInput(
                     location=location,
                     path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs),
@@ -454,6 +453,7 @@ class SnippetTemplateFactory:
         location: PayloadLocation,
         wire_or_original_name: Optional[str],
         name_breadcrumbs: Optional[List[str]],
+        is_function_parameter: bool,
         indentation_level: int = 0,
     ) -> Template:
         member_templates: Dict[str, Template] = {}
@@ -475,7 +475,7 @@ class SnippetTemplateFactory:
                 imports=[],
                 is_optional=True,
                 discriminant_field=union_declaration.discriminant.wire_value,
-                template_string=f"{name}={TEMPLATE_SENTINEL}" if name is not None else f"{TEMPLATE_SENTINEL}",
+                template_string=f"{self._get_name_value_separator(name=name, is_function_parameter=is_function_parameter)}{TEMPLATE_SENTINEL}",
                 members=member_templates,
                 template_input=PayloadInput(location="RELATIVE"),
             )
@@ -488,6 +488,7 @@ class SnippetTemplateFactory:
         location: PayloadLocation,
         wire_or_original_name: Optional[str],
         name_breadcrumbs: Optional[List[str]],
+        is_function_parameter: bool,
         indentation_level: int = 0,
     ) -> Template:
         object_reference = self._snippet_writer.get_class_reference_for_declared_type_name(
@@ -519,10 +520,10 @@ class SnippetTemplateFactory:
         object_class_name = type_name.name.pascal_case.safe_name
         if self._use_typeddict_requests:
             template_sentinel_str = f"{{\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}}}"
-            template_string = f'"{name}": {template_sentinel_str}' if name is not None else template_sentinel_str
+            template_string = f'{self._get_name_value_separator(name=name, is_function_parameter=is_function_parameter)}{template_sentinel_str}'
         else:
             template_sentinel_str = f"{object_class_name}(\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level})"
-            template_string = f"{name}={template_sentinel_str}" if name is not None else template_sentinel_str
+            template_string = f"{self._get_name_value_separator(name=name, is_function_parameter=is_function_parameter)}{template_sentinel_str}"
 
         return Template.factory.generic(
             GenericTemplate(
@@ -544,6 +545,7 @@ class SnippetTemplateFactory:
         location: PayloadLocation,
         wire_or_original_name: Optional[str],
         name_breadcrumbs: Optional[List[str]],
+        is_function_parameter: bool,
         indentation_level: int = 0,
     ) -> Union[Template, None]:
         type_declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(
@@ -559,7 +561,7 @@ class SnippetTemplateFactory:
                     wire_or_original_name=wire_or_original_name,
                     name_breadcrumbs=name_breadcrumbs,
                     indentation_level=indentation_level,
-                    is_function_parameter=False,
+                    is_function_parameter=is_function_parameter,
                 ),
                 enum=lambda etd: self._get_enum_template(
                     type_name=type_name,
@@ -568,6 +570,7 @@ class SnippetTemplateFactory:
                     location=location,
                     wire_or_original_name=wire_or_original_name,
                     name_breadcrumbs=name_breadcrumbs,
+                    is_function_parameter=is_function_parameter
                 ),
                 object=lambda _: self._get_object_template(
                     type_name=type_name,
@@ -576,6 +579,7 @@ class SnippetTemplateFactory:
                     wire_or_original_name=wire_or_original_name,
                     name_breadcrumbs=name_breadcrumbs,
                     indentation_level=indentation_level,
+                    is_function_parameter=is_function_parameter
                 ),
                 union=lambda utd: self._get_discriminated_union_template(
                     type_name=type_name,
@@ -585,6 +589,7 @@ class SnippetTemplateFactory:
                     wire_or_original_name=wire_or_original_name,
                     name_breadcrumbs=name_breadcrumbs,
                     indentation_level=indentation_level,
+                    is_function_parameter=is_function_parameter
                 ),
                 undiscriminated_union=lambda _: None,
             )
@@ -626,6 +631,7 @@ class SnippetTemplateFactory:
                 wire_or_original_name=wire_or_original_name,
                 name_breadcrumbs=name_breadcrumbs,
                 indentation_level=indentation_level,
+                is_function_parameter=is_function_parameter,
             ),
             named=lambda type_name: self._get_named_template(
                 type_name=type_name,
@@ -634,6 +640,7 @@ class SnippetTemplateFactory:
                 wire_or_original_name=wire_or_original_name,
                 name_breadcrumbs=name_breadcrumbs,
                 indentation_level=indentation_level,
+                is_function_parameter=is_function_parameter,
             ),
         )
 
