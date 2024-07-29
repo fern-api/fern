@@ -1,4 +1,4 @@
-import Swift, { AccessLevel, ClassLevel, FunctionModifier } from "../..";
+import Swift, { AccessLevel, FunctionModifier } from "../..";
 import { SwiftFile } from "../../project/SwiftFile";
 import { VariableType } from "../VariableType";
 
@@ -7,50 +7,47 @@ describe("Swift Language", () => {
         const output = Swift.makeFileHeader({
             header: "This is the header to a file"
         });
-        // eslint-disable-next-line @typescript-eslint/no-base-to-string
-        expect(output.toString()).toMatchSnapshot();
+        expect(output.render()).toMatchSnapshot();
     });
 
     it("makes import", () => {
         const output = Swift.makeImport({
             packageName: "ExamplePackage"
         });
-        // eslint-disable-next-line @typescript-eslint/no-base-to-string
-        expect(output.toString()).toMatchSnapshot();
+        expect(output.render()).toMatchSnapshot();
+    });
+
+    it("uses a factory", () => {
+        const output = Swift.factories.enums.makeCodingKeys([]);
+        expect(output.render()).toMatchSnapshot();
     });
 
     it("makes enum case", () => {
         const output = Swift.makeEnumCase({
             name: "fallbackContent",
-            key: "fallback_content"
+            value: "fallback_content",
         });
-        // eslint-disable-next-line @typescript-eslint/no-base-to-string
-        expect(output.toString()).toMatchSnapshot();
+        expect(output.render()).toMatchSnapshot();
     });
 
     it("makes enum", () => {
         const output = Swift.makeEnum({
             name: "CodingKeys",
             inheritance: [
-                Swift.makeType({
-                    name: "String"
-                }),
-                Swift.makeType({
-                    name: "CodingKey"
-                })
+                Swift.factories.primatives.makeString(),
+                Swift.makeClass({ name: "CodingKey" })
             ],
             enumCases: [
                 Swift.makeEnumCase({
-                    name: "name"
+                    name: "name",
                 }),
                 Swift.makeEnumCase({
                     name: "fallbackContent",
-                    key: "fallback_content"
-                })
+                    value: "fallback_content",
+                }),
             ]
         });
-        // eslint-disable-next-line @typescript-eslint/no-base-to-string
-        expect(output.toString()).toMatchSnapshot();
+        expect(output.render()).toMatchSnapshot();
     });
 
     it("makes function", () => {
@@ -62,34 +59,26 @@ describe("Swift Language", () => {
             params: [
                 Swift.makeParam({
                     title: "name",
-                    type: Swift.makeType({
-                        name: "String"
-                    })
+                    class: Swift.factories.primatives.makeString()
                 }),
                 Swift.makeParam({
                     title: "age",
-                    type: Swift.makeType({
-                        name: "Int"
-                    }),
-                    defaultValue: Swift.makeType({
-                        name: "Int"
-                    })
+                    class: Swift.factories.primatives.makeString(),
+                    defaultValue: "TODO"
                 })
             ]
         });
-        // eslint-disable-next-line @typescript-eslint/no-base-to-string
-        expect(output.toString()).toMatchSnapshot();
+        expect(output.render()).toMatchSnapshot();
     });
 
     it("makes primatives", () => {
         const output = Swift.makeField({
             name: "count",
-            valueType: Swift.makePrimative({
+            class: Swift.makePrimative({
                 key: "integer"
             })
         });
-        // eslint-disable-next-line @typescript-eslint/no-base-to-string
-        expect(output.toString()).toMatchSnapshot();
+        expect(output.render()).toMatchSnapshot();
     });
 
     it("makes struct", () => {
@@ -97,28 +86,26 @@ describe("Swift Language", () => {
             accessLevel: AccessLevel.Public,
             name: "TopGun",
             inheritance: [
-                Swift.makeType({
+                Swift.makeClass({
                     name: "Movie"
-                })
+                }),
             ],
             fields: [
                 Swift.makeField({
                     name: "description",
                     variableType: VariableType.Let,
-                    valueType: Swift.makePrimative({
+                    class: Swift.makePrimative({
                         key: "string"
                     })
                 })
             ]
         });
-        // eslint-disable-next-line @typescript-eslint/no-base-to-string
-        expect(output.toString()).toMatchSnapshot();
+        expect(output.render()).toMatchSnapshot();
     });
 
-    it("makes type", () => {
-        const output = Swift.makeType({
+    it("makes class", () => {
+        const output = Swift.makeClass({
             accessLevel: AccessLevel.Open,
-            classLevel: ClassLevel.Struct,
             name: "ExampleObject",
             functions: [
                 Swift.makeFunc({
@@ -126,16 +113,15 @@ describe("Swift Language", () => {
                 })
             ],
             inheritance: [
-                Swift.makeType({
+                Swift.makeClass({
                     name: "Codable"
                 }),
-                Swift.makeType({
+                Swift.makeClass({
                     name: "NSObject"
-                })
+                }),
             ]
         });
-        // eslint-disable-next-line @typescript-eslint/no-base-to-string
-        expect(output.toString()).toMatchSnapshot();
+        expect(output.render()).toMatchSnapshot();
     });
 
     it("makes file", async () => {
@@ -143,14 +129,15 @@ describe("Swift Language", () => {
             fileHeader: Swift.makeFileHeader({
                 header: "// Sample.swift"
             }),
-            imports: [Swift.makeImport({ packageName: "Foundation" }), Swift.makeImport({ packageName: "UIKit" })],
-            node: Swift.makeType({
+            imports: [
+                Swift.makeImport({ packageName: "Foundation" }),
+                Swift.makeImport({ packageName: "UIKit" })
+            ],
+            node: Swift.makeClass({
                 accessLevel: AccessLevel.Open,
-                classLevel: ClassLevel.Class,
                 name: "Room",
                 subclasses: [
-                    Swift.makeType({
-                        classLevel: ClassLevel.Class,
+                    Swift.makeClass({
                         name: "Person",
                         functions: [
                             Swift.makeFunc({
@@ -166,8 +153,8 @@ describe("Swift Language", () => {
                             }),
                             Swift.makeEnumCase({
                                 name: "small",
-                                key: "sml"
-                            })
+                                value: "sml"
+                            }),
                         ]
                     })
                 ],
@@ -181,22 +168,20 @@ describe("Swift Language", () => {
                         name: "closeDoor",
                         async: true,
                         throws: true,
-                        returnType: Swift.makeType({
-                            name: "Int"
-                        })
+                        returnClass: Swift.factories.primatives.makeInt()
                     })
                 ]
             })
         });
-        // eslint-disable-next-line @typescript-eslint/no-base-to-string
-        expect(output.toString()).toMatchSnapshot();
+        expect(output.render()).toMatchSnapshot();
 
         const file = new SwiftFile({
-            name: "Example",
-            file: output,
-            directory: "src/ast/__test__"
+            name: "Example", 
+            file: output, 
+            directory: "src/ast/__test__",
         });
 
         await file.generate();
+
     });
 });

@@ -10,7 +10,9 @@ export declare namespace SwiftFile {
 }
 
 export class SwiftFile extends GeneratedFile {
+
     constructor({ name, file, directory }: SwiftFile.Args) {
         super(name, "swift", directory, file);
     }
+
 }

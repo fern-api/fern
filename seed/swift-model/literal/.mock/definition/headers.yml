@@ -1,0 +1,36 @@
+imports:
+  root: __package__.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    send:
+      path: /headers
+      method: POST
+      request:
+        name: SendLiteralsInHeadersRequest
+        headers: 
+          X-Endpoint-Version:
+            name: endpointVersion
+            type: literal<"02-12-2024">
+          X-Async:
+            name: async
+            type: literal<true>
+        body: 
+          properties: 
+            query: 
+              type: string
+      response: root.SendResponse
+      examples: 
+        - headers: 
+            X-Endpoint-Version: "02-12-2024"
+            X-Async: true
+          request:
+            query: "What is the weather today"
+          response: 
+            body: 
+              message: "The weather is sunny"
+              status: 200
+              success: true
+      

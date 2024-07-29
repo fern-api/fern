@@ -1,5 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Swift, { AccessLevel, FunctionModifier, Param, Type } from "..";
+import Swift, { AccessLevel, FunctionModifier, Param, SwiftClass } from "..";
 
 /*
 
@@ -35,7 +35,7 @@ export declare namespace Func {
         /* Indicates if the function throws an error */
         throws?: boolean;
         /* The return type of the function */
-        returnType?: Type;
+        returnClass?: SwiftClass;
     }
 }
 
@@ -46,28 +46,30 @@ export class Func extends AstNode {
     public readonly params?: Param[];
     public readonly async: boolean;
     public readonly throws: boolean;
-    public readonly returnType?: Type;
+    public readonly returnClass?: SwiftClass;
 
-    constructor({ accessLevel, modifier, name, params, async, throws, returnType }: Func.Args) {
+    constructor(args: Func.Args) {
         super(Swift.indentSize);
-        this.accessLevel = accessLevel;
-        (this.modifier = modifier), (this.name = name), (this.params = params);
-        this.async = async ?? false;
-        this.throws = throws ?? false;
-        this.returnType = returnType;
+        this.accessLevel = args.accessLevel;
+        this.modifier = args.modifier,
+        this.name = args.name,
+        this.params = args.params;
+        this.async = args.async ?? false;
+        this.throws = args.throws ?? false;
+        this.returnClass = args.returnClass;
     }
-
+ 
     public write(writer: Writer): void {
+
         let parameters = "";
 
         if (this.params) {
-            // eslint-disable-next-line @typescript-eslint/no-base-to-string
-            parameters = this.params.map((param) => param.toString()).join(", ");
+            parameters = this.params.map((param) => param.render()).join(", ");
         }
 
         const func = `${this.name}(${parameters})`;
 
-        const result = this.returnType ? `-> ${this.returnType.name}` : undefined;
+        const result = this.returnClass ? `-> ${this.returnClass.name}` : undefined;
 
         // Attach trailing modifiers
         const trailingModifiers = [];
@@ -78,13 +80,10 @@ export class Func extends AstNode {
             trailingModifiers.push("throws");
         }
 
-        writer.openBlock(
-            [this.accessLevel, this.modifier, "func", func, ...trailingModifiers, result],
-            "{",
-            () => {
-                writer.write('print("Hey!")');
-            },
-            "}"
-        );
+        writer.openBlock([this.accessLevel, this.modifier, "func", func, ...trailingModifiers, result], "{", () => {
+            writer.write("print(\"Hey!\")");
+        }, "}");
+
     }
+    
 }

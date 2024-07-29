@@ -1,0 +1,22 @@
+imports:
+  root: __package__.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    send:
+      path: /path/{id}
+      method: POST
+      path-parameters:
+        id: literal<"123">
+      response: root.SendResponse
+      examples: 
+        - path-parameters:
+            id: "123"
+          response:  
+            body: 
+              message: "The weather is sunny"
+              status: 200
+              success: true
+      

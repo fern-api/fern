@@ -12,25 +12,28 @@ export class Class extends AstNode {
     public readonly name: string;
     public readonly functions: Func[];
 
-    constructor({ name, functions }: Class.Args) {
+    constructor({ 
+        name,
+        functions,
+    }: Class.Args) {
         super(LANGUAGE.indentSize);
         this.name = name;
         this.functions = functions;
     }
 
     public write(writer: Writer): void {
-        writer.openBlock(
-            ["class", this.name],
-            "{",
-            () => {
-                writer.newLine();
 
-                this.functions.forEach((func) => {
-                    writer.writeNode(func);
-                    writer.newLine();
-                });
-            },
-            "}"
-        );
+        writer.openBlock(["class", this.name], "{", () => {
+
+            writer.newLine();
+
+            this.functions.forEach((func) => {
+                writer.writeNode(func);
+                writer.newLine();
+            });
+
+        }, "}");
+
+
     }
 }

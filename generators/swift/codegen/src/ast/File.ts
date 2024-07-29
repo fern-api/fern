@@ -14,7 +14,11 @@ export class File extends AstNode {
     public readonly imports?: Import[];
     public readonly node: AstNode;
 
-    constructor({ fileHeader, imports, node }: File.Args) {
+    constructor({ 
+        fileHeader,
+        imports,
+        node,
+    }: File.Args) {
         super(Swift.indentSize);
         this.fileHeader = fileHeader;
         this.imports = imports;
@@ -27,10 +31,10 @@ export class File extends AstNode {
             writer.writeNode(this.fileHeader);
             writer.newLine();
         }
-
+        
         // e.g. import Foundation
         if (this.imports) {
-            this.imports.forEach((imp) => {
+            this.imports.forEach(imp => {
                 writer.writeNode(imp);
             });
             writer.newLine();

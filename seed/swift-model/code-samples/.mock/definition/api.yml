@@ -1,0 +1,3 @@
+name: code-samples
+error-discrimination:
+  strategy: status-code

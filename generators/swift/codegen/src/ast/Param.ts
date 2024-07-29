@@ -1,5 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Swift, { Type } from "..";
+import Swift, { SwiftClass } from "..";
 
 /*
 
@@ -21,22 +21,23 @@ export declare namespace Param {
         /* param name */
         title: string;
         /* Type of the value */
-        type: Type;
+        class: SwiftClass;
         /* Original value. Optional because it may not exist */
-        defaultValue?: Type;
+        defaultValue?: string;
     }
 }
 
 export class Param extends AstNode {
-    public readonly title: string;
-    public readonly type: Type;
-    public readonly defaultValue?: Type;
 
-    constructor({ title, type, defaultValue }: Param.Args) {
+    public readonly title: string;
+    public readonly type: SwiftClass;
+    public readonly defaultValue?: string; // TODO
+
+    constructor(args: Param.Args) {
         super(Swift.indentSize);
-        this.title = title;
-        this.type = type;
-        this.defaultValue = defaultValue;
+        this.title = args.title;
+        this.type = args.class;
+        this.defaultValue = args.defaultValue;
     }
 
     public write(writer: Writer): void {
@@ -51,5 +52,7 @@ export class Param extends AstNode {
         }
 
         writer.write(title);
+        
     }
+    
 }
