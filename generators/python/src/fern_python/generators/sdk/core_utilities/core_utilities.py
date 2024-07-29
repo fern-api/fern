@@ -176,7 +176,7 @@ class CoreUtilities:
         )
 
     def get_reference_to_api_error(self, as_snippet: bool = False) -> AST.ClassReference:
-        module_path = self._project_module_path + self._module_path if as_snippet is not None else self._module_path
+        module_path = self._project_module_path + self._module_path if as_snippet else self._module_path
         module = (
             AST.Module.snippet(module_path=(module_path + ("api_error",)))
             if as_snippet
