@@ -109,9 +109,6 @@ fixtures:
     - customConfig:
         inline_request_params: true
       outputFolder: inline_request_params
-    - customConfig:
-        use_typeddict_requests: true
-      outputFolder: typeddict_requests
   unions:
     - customConfig: null
       outputFolder: no-custom-config

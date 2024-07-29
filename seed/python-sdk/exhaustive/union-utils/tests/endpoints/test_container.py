@@ -3,7 +3,7 @@
 import typing
 
 from seed import AsyncSeedExhaustive, SeedExhaustive
-from seed.types.object import ObjectWithRequiredField
+from seed.types import ObjectWithRequiredField
 
 from ..utilities import validate_response
 
