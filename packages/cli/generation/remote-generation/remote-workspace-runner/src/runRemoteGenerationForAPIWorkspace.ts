@@ -2,12 +2,7 @@ import { FernToken } from "@fern-api/auth";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import {
-    APIWorkspace,
-    FernWorkspace,
-    getOSSWorkspaceSettingsFromGeneratorInvocation,
-    OSSWorkspace
-} from "@fern-api/workspace-loader";
+import { APIWorkspace, getOSSWorkspaceSettingsFromGeneratorInvocation } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { downloadSnippetsForTask } from "./downloadSnippetsForTask";
 import { runRemoteGenerationForGenerator } from "./runRemoteGenerationForGenerator";
@@ -52,15 +47,15 @@ export async function runRemoteGenerationForAPIWorkspace({
     interactiveTasks.push(
         ...generatorGroup.generators.map((generatorInvocation) =>
             context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
-                let fernWorkspace: FernWorkspace;
-                if (workspace instanceof OSSWorkspace) {
-                    fernWorkspace = await workspace.toFernWorkspace(
-                        { context },
+                context.logger.info(
+                    `about to parse spec ${JSON.stringify(generatorInvocation)} ${JSON.stringify(
                         getOSSWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
-                    );
-                } else {
-                    fernWorkspace = workspace;
-                }
+                    )}`
+                );
+                const fernWorkspace = await workspace.toFernWorkspace(
+                    { context },
+                    getOSSWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
+                );
 
                 const remoteTaskHandlerResponse = await runRemoteGenerationForGenerator({
                     projectConfig,
