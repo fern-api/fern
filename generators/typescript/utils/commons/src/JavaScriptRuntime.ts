@@ -7,6 +7,7 @@ export const JavaScriptRuntime = {
 
 export type JavaScriptRuntime = Values<typeof JavaScriptRuntime>;
 
+// TODO: create more forks based on version
 export function visitJavaScriptRuntime<R>(runtime: JavaScriptRuntime, visitor: JavaScriptRuntimeVisitor<R>): R {
     switch (runtime) {
         case JavaScriptRuntime.BROWSER:
