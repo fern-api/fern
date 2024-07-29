@@ -1,6 +1,8 @@
 import { csharp } from "@fern-api/csharp-codegen";
-import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
+import { ExampleGenerator } from "@fern-api/fern-csharp-model";
+import { ExampleEndpointCall, HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { WrappedRequestGenerator } from "../wrapped-request/WrappedRequestGenerator";
 import { RawClient } from "./RawClient";
 import { EndpointRequest } from "./request/EndpointRequest";
 import { createEndpointRequest } from "./request/EndpointRequestFactory";
@@ -23,10 +25,14 @@ const RESPONSE_BODY_VARIABLE_NAME = "responseBody";
 export class EndpointGenerator {
     private context: SdkGeneratorContext;
     private rawClient: RawClient;
+    private exampleGenerator: ExampleGenerator;
+    private serviceId: string;
 
-    public constructor(context: SdkGeneratorContext, rawClient: RawClient) {
+    public constructor(context: SdkGeneratorContext, rawClient: RawClient, serviceId: string) {
         this.context = context;
         this.rawClient = rawClient;
+        this.exampleGenerator = new ExampleGenerator(context);
+        this.serviceId = serviceId;
     }
 
     public generate({
@@ -93,6 +99,26 @@ export class EndpointGenerator {
         });
     }
 
+    public generateEndpointSnippet(
+        example: ExampleEndpointCall,
+        endpoint: HttpEndpoint,
+        on: csharp.CodeBlock
+    ): csharp.MethodInvocation | undefined {
+        const args = this.getNonEndpointArguments(example);
+        const endpointRequestSnippet = this.getEndpointRequestSnippet(example, endpoint);
+        if (endpointRequestSnippet != null) {
+            args.push(endpointRequestSnippet);
+        }
+        const methodInvocationArgs: csharp.MethodInvocation.Args = {
+            method: this.context.getEndpointMethodName(endpoint),
+            arguments_: args,
+            on,
+            async: true,
+            generics: []
+        };
+        return new csharp.MethodInvocation(methodInvocationArgs);
+    }
+
     private getBaseURLForEndpoint({ endpoint }: { endpoint: HttpEndpoint }): csharp.CodeBlock {
         if (endpoint.baseUrl != null && this.context.ir.environments?.environments.type === "multipleBaseUrls") {
             const baseUrl = this.context.ir.environments?.environments.baseUrls.find(
@@ -103,6 +129,27 @@ export class EndpointGenerator {
             }
         }
         return csharp.codeblock("_client.Options.BaseUrl");
+    }
+
+    private getEndpointRequestSnippet(
+        exampleEndpointCall: ExampleEndpointCall,
+        endpoint: HttpEndpoint
+    ): csharp.CodeBlock | undefined {
+        if (exampleEndpointCall.request == null) {
+            return undefined;
+        }
+        if (endpoint.sdkRequest == null) {
+            throw new Error("Unexpected null sdkRequest");
+        }
+        if (endpoint.sdkRequest.shape.type !== "wrapper") {
+            return undefined;
+        }
+        return new WrappedRequestGenerator({
+            wrapper: endpoint.sdkRequest.shape,
+            context: this.context,
+            serviceId: this.serviceId,
+            endpoint
+        }).doGenerateSnippet(exampleEndpointCall);
     }
 
     private getEndpointRequest({
@@ -121,6 +168,17 @@ export class EndpointGenerator {
             serviceId,
             sdkRequest: endpoint.sdkRequest
         });
+    }
+
+    private getNonEndpointArguments(example: ExampleEndpointCall): csharp.CodeBlock[] {
+        const pathParameters = [
+            ...example.rootPathParameters,
+            ...example.servicePathParameters,
+            ...example.endpointPathParameters
+        ];
+        return pathParameters.map((pathParameter) =>
+            this.exampleGenerator.getSnippetForTypeReference(pathParameter.value)
+        );
     }
 
     private getNonEndpointParameters({ endpoint, serviceId }: { endpoint: HttpEndpoint; serviceId: ServiceId }): {

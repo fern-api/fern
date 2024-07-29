@@ -10,19 +10,20 @@ public static class JsonDiffChecker
 {
     public static void AssertJsonEquals(string jsonString1, string jsonString2)
     {
-        JToken token1 = JToken.Parse(jsonString1);
-        JToken token2 = JToken.Parse(jsonString2);
-        List<string> differences = GetJsonDifferences(token1, token2);
+        var token1 = JToken.Parse(jsonString1);
+        var token2 = JToken.Parse(jsonString2);
+        var differences = GetJsonDifferences(token1, token2);
 
-        Assert.IsEmpty(
+        Assert.That(
             differences,
+            Is.Empty,
             $"The JSON strings are not equal: {string.Join(", ", differences)}"
         );
     }
 
     private static List<string> GetJsonDifferences(JToken token1, JToken token2, string path = "")
     {
-        List<string> differences = new List<string>();
+        var differences = new List<string>();
 
         if (token1.Type != token2.Type)
         {
@@ -34,7 +35,7 @@ public static class JsonDiffChecker
         {
             foreach (var property in obj1.Properties())
             {
-                string newPath = string.IsNullOrEmpty(path)
+                var newPath = string.IsNullOrEmpty(path)
                     ? property.Name
                     : $"{path}.{property.Name}";
                 if (!obj2.TryGetValue(property.Name, out JToken token2Value))
@@ -49,10 +50,10 @@ public static class JsonDiffChecker
 
             foreach (var property in obj2.Properties())
             {
-                string newPath = string.IsNullOrEmpty(path)
+                var newPath = string.IsNullOrEmpty(path)
                     ? property.Name
                     : $"{path}.{property.Name}";
-                if (!obj1.TryGetValue(property.Name, out JToken token1Value))
+                if (!obj1.TryGetValue(property.Name, out _))
                 {
                     differences.Add($"{newPath} is missing in the first JSON");
                 }
@@ -60,9 +61,9 @@ public static class JsonDiffChecker
         }
         else if (token1 is JArray array1 && token2 is JArray array2)
         {
-            for (int i = 0; i < Math.Max(array1.Count, array2.Count); i++)
+            for (var i = 0; i < Math.Max(array1.Count, array2.Count); i++)
             {
-                string newPath = $"{path}[{i}]";
+                var newPath = $"{path}[{i}]";
                 if (i >= array1.Count)
                 {
                     differences.Add($"{newPath} is missing in the first JSON");
