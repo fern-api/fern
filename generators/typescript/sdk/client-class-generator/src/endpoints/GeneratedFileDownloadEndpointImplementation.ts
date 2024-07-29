@@ -191,7 +191,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
                                 referenceToFetcher: this.generatedSdkClientClass.getReferenceToFetcher(context),
                                 cast: visitJavaScriptRuntime(context.targetRuntime, {
                                     browser: () => ts.factory.createTypeReferenceNode("Blob"),
-                                    node: () => context.externalDependencies.stream.Readable._getReferenceToType()
+                                    node: () => ts.factory.createTypeReferenceNode("WritableStream")
                                 })
                             })
                         )
