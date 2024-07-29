@@ -177,6 +177,13 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): A
                     integer: () => {
                         return convertInteger(primitive.v2);
                     },
+                    float: () => {
+                        // TODO: Add support for float types in FDR. We render them as double for now
+                        // (they have the same JSON representation).
+                        return {
+                            type: "double"
+                        };
+                    },
                     double: () => {
                         return convertDouble(primitive.v2);
                     },

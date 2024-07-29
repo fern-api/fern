@@ -7271,7 +7271,7 @@ exports[`open api parser hookdeck docs 1`] = `
           "docs": undefined,
           "union": [
             "string",
-            "double",
+            "float",
           ],
         },
         "GetTransformationExecutionsRequestDir": {
@@ -7355,7 +7355,7 @@ exports[`open api parser hookdeck docs 1`] = `
           "docs": undefined,
           "union": [
             "string",
-            "double",
+            "float",
           ],
         },
         "UpsertTransformationRequestEnvValue": {
@@ -7363,7 +7363,7 @@ exports[`open api parser hookdeck docs 1`] = `
           "docs": undefined,
           "union": [
             "string",
-            "double",
+            "float",
           ],
         },
       },
@@ -8170,7 +8170,7 @@ exports[`open api parser hookdeck docs 1`] = `
           },
           "status": {
             "docs": "Status code",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -8289,14 +8289,14 @@ exports[`open api parser hookdeck docs 1`] = `
             "docs": "Indicates if the bulk retry is currently in progress",
             "type": "boolean",
           },
-          "number": "optional<double>",
+          "number": "optional<float>",
           "processed_batch": {
             "docs": "Number of batches currently processed",
             "type": "optional<integer>",
           },
           "progress": {
             "docs": "Progression of the batch operations, values 0 - 1",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "query": {
             "docs": "Query object to filter records",
@@ -8333,7 +8333,7 @@ exports[`open api parser hookdeck docs 1`] = `
           },
           "progress": {
             "docs": "Progression of the batch operations, values 0 - 1",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
         },
       },
@@ -8444,7 +8444,7 @@ exports[`open api parser hookdeck docs 1`] = `
         "docs": "JSON using our filter syntax to filter on request headers",
         "union": [
           "optional<string>",
-          "double",
+          "float",
           "boolean",
           "ConnectionFilterPropertyThree",
         ],
@@ -8557,7 +8557,7 @@ exports[`open api parser hookdeck docs 1`] = `
         "docs": "Keys used as the aggregation keys a 'delivery' type issue",
         "properties": {
           "error_code": "list<AttemptErrorCodes>",
-          "response_status": "list<double>",
+          "response_status": "list<float>",
           "webhook_id": "list<string>",
         },
       },
@@ -9551,7 +9551,7 @@ exports[`open api parser hookdeck docs 1`] = `
         "properties": {
           "api_key": "optional<string>",
           "api_secret": "optional<string>",
-          "rate_limit": "optional<double>",
+          "rate_limit": "optional<float>",
           "rate_limit_period": "optional<ShopifyIntegrationConfigsRateLimitPeriod>",
           "shop": "optional<string>",
           "webhook_secret_key": "string",
@@ -17321,7 +17321,7 @@ exports[`open api parser hookdeck simple 1`] = `
           "docs": undefined,
           "union": [
             "string",
-            "double",
+            "float",
           ],
         },
         "GetTransformationExecutionsRequestDir": {
@@ -17405,7 +17405,7 @@ exports[`open api parser hookdeck simple 1`] = `
           "docs": undefined,
           "union": [
             "string",
-            "double",
+            "float",
           ],
         },
         "UpsertTransformationRequestEnvValue": {
@@ -17413,7 +17413,7 @@ exports[`open api parser hookdeck simple 1`] = `
           "docs": undefined,
           "union": [
             "string",
-            "double",
+            "float",
           ],
         },
       },
@@ -17465,7 +17465,7 @@ exports[`open api parser hookdeck simple 1`] = `
           },
           "status": {
             "docs": "Status code",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -17584,14 +17584,14 @@ exports[`open api parser hookdeck simple 1`] = `
             "docs": "Indicates if the bulk retry is currently in progress",
             "type": "boolean",
           },
-          "number": "optional<double>",
+          "number": "optional<float>",
           "processed_batch": {
             "docs": "Number of batches currently processed",
             "type": "optional<integer>",
           },
           "progress": {
             "docs": "Progression of the batch operations, values 0 - 1",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "query": {
             "docs": "Query object to filter records",
@@ -17628,7 +17628,7 @@ exports[`open api parser hookdeck simple 1`] = `
           },
           "progress": {
             "docs": "Progression of the batch operations, values 0 - 1",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
         },
       },
@@ -17739,7 +17739,7 @@ exports[`open api parser hookdeck simple 1`] = `
         "docs": "JSON using our filter syntax to filter on request headers",
         "union": [
           "optional<string>",
-          "double",
+          "float",
           "boolean",
           "ConnectionFilterPropertyThree",
         ],
@@ -17852,7 +17852,7 @@ exports[`open api parser hookdeck simple 1`] = `
         "docs": "Keys used as the aggregation keys a 'delivery' type issue",
         "properties": {
           "error_code": "list<AttemptErrorCodes>",
-          "response_status": "list<double>",
+          "response_status": "list<float>",
           "webhook_id": "list<string>",
         },
       },
@@ -18846,7 +18846,7 @@ exports[`open api parser hookdeck simple 1`] = `
         "properties": {
           "api_key": "optional<string>",
           "api_secret": "optional<string>",
-          "rate_limit": "optional<double>",
+          "rate_limit": "optional<float>",
           "rate_limit_period": "optional<ShopifyIntegrationConfigsRateLimitPeriod>",
           "shop": "optional<string>",
           "webhook_secret_key": "string",

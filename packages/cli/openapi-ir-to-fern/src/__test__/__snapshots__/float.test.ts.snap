@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`float float docs 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "Get": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "request": {},
+              "response": {
+                "body": {
+                  "id": 1.1,
+                  "value": 1.1,
+                },
+              },
+            },
+          ],
+          "method": "GET",
+          "pagination": undefined,
+          "path": "/get",
+          "request": {
+            "body": {
+              "properties": {
+                "id": "optional<float>",
+              },
+            },
+            "headers": undefined,
+            "name": "Request",
+            "query-parameters": undefined,
+          },
+          "response": {
+            "docs": "A simple API response.",
+            "type": "Response",
+          },
+        },
+      },
+    },
+    "types": {
+      "Response": {
+        "docs": "A generic response type used throughout the API.
+",
+        "properties": {
+          "id": "optional<float>",
+          "value": "optional<float>",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test spec for \`float\` types specified as number formats.",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
+
+exports[`float float simple 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "Get": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "request": {},
+              "response": {
+                "body": {
+                  "id": 1.1,
+                  "value": 1.1,
+                },
+              },
+            },
+          ],
+          "method": "GET",
+          "pagination": undefined,
+          "path": "/get",
+          "request": {
+            "body": {
+              "properties": {
+                "id": "optional<float>",
+              },
+            },
+            "headers": undefined,
+            "name": "Request",
+            "query-parameters": undefined,
+          },
+          "response": {
+            "docs": "A simple API response.",
+            "type": "Response",
+          },
+        },
+      },
+    },
+    "types": {
+      "Response": {
+        "docs": "A generic response type used throughout the API.
+",
+        "properties": {
+          "id": "optional<float>",
+          "value": "optional<float>",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test spec for \`float\` types specified as number formats.",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;

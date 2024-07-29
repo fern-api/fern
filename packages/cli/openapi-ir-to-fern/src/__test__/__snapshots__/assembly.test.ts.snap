@@ -2023,7 +2023,7 @@ The parameter should map to a JSON encoded list of strings.
           },
           "rank": {
             "docs": "The total relevancy to the overall audio file of this key phrase - a greater number means more relevant",
-            "type": "double",
+            "type": "float",
           },
           "text": {
             "docs": "The text itself of the key phrase",
@@ -2245,7 +2245,7 @@ The default value is 'en_us'.
             "docs": "Reject audio files that contain less than this fraction of speech.
 Valid values are in the range [0, 1] inclusive.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "summarization": {
             "docs": "Enable [Summarization](https://www.assemblyai.com/docs/Models/summarization), can be true or false",
@@ -2486,7 +2486,7 @@ Valid values are in the range [0, 1] inclusive.
 Higher values result in answers that are more creative, lower values are more conservative.
 Can be any value between 0.0 and 1.0 inclusive.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "transcript_ids": {
             "docs": "A list of completed transcripts with text. Up to 100 files max, or 100 hours max. Whichever is lower.",
@@ -3019,7 +3019,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
           "audio_duration": {
             "docs": "The duration of this transcript object's media file, in seconds",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "audio_end_at": {
             "docs": "The point in time, in milliseconds, in the file at which the transcription was terminated, if provided in the transcription request",
@@ -3196,7 +3196,7 @@ See [Sentiment analysis](https://www.assemblyai.com/docs/Models/sentiment_analys
             "docs": "Defaults to null. Reject audio files that contain less than this fraction of speech.
 Valid values are in the range [0, 1] inclusive.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "speed_boost": {
             "availability": "deprecated",
@@ -5104,7 +5104,7 @@ The parameter should map to a JSON encoded list of strings.
           },
           "rank": {
             "docs": "The total relevancy to the overall audio file of this key phrase - a greater number means more relevant",
-            "type": "double",
+            "type": "float",
           },
           "text": {
             "docs": "The text itself of the key phrase",
@@ -5326,7 +5326,7 @@ The default value is 'en_us'.
             "docs": "Reject audio files that contain less than this fraction of speech.
 Valid values are in the range [0, 1] inclusive.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "summarization": {
             "docs": "Enable [Summarization](https://www.assemblyai.com/docs/Models/summarization), can be true or false",
@@ -5567,7 +5567,7 @@ Valid values are in the range [0, 1] inclusive.
 Higher values result in answers that are more creative, lower values are more conservative.
 Can be any value between 0.0 and 1.0 inclusive.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "transcript_ids": {
             "docs": "A list of completed transcripts with text. Up to 100 files max, or 100 hours max. Whichever is lower.",
@@ -6100,7 +6100,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
           "audio_duration": {
             "docs": "The duration of this transcript object's media file, in seconds",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "audio_end_at": {
             "docs": "The point in time, in milliseconds, in the file at which the transcription was terminated, if provided in the transcription request",
@@ -6277,7 +6277,7 @@ See [Sentiment analysis](https://www.assemblyai.com/docs/Models/sentiment_analys
             "docs": "Defaults to null. Reject audio files that contain less than this fraction of speech.
 Valid values are in the range [0, 1] inclusive.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "speed_boost": {
             "availability": "deprecated",
