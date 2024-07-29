@@ -5,7 +5,6 @@ export const SdkCustomConfigSchema = z.strictObject({
     "explicit-namespaces": z.boolean().optional(),
     "client-class-name": z.string().optional(),
     "extra-dependencies": z.record(z.string()).optional(),
-    "extra-": z.record(z.string()).optional()
 });
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;
