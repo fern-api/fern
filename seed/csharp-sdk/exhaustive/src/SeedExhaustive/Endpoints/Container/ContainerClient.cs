@@ -22,6 +22,7 @@ public class ContainerClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/container/list-of-primitives",
                 Body = request
@@ -42,6 +43,7 @@ public class ContainerClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/container/list-of-objects",
                 Body = request
@@ -60,6 +62,7 @@ public class ContainerClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/container/set-of-primitives",
                 Body = request
@@ -80,6 +83,7 @@ public class ContainerClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/container/set-of-objects",
                 Body = request
@@ -100,6 +104,7 @@ public class ContainerClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/container/map-prim-to-prim",
                 Body = request
@@ -120,6 +125,7 @@ public class ContainerClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/container/map-prim-to-object",
                 Body = request
@@ -142,6 +148,7 @@ public class ContainerClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/container/opt-objects",
                 Body = request

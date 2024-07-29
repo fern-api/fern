@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.java.DownloadFilesCustomConfig;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
+import java.util.List;
 import java.util.Optional;
 import org.immutables.value.Value;
 
@@ -30,6 +31,15 @@ public interface JavaSdkDownloadFilesCustomConfig extends DownloadFilesCustomCon
 
     @JsonProperty("client-class-name")
     Optional<String> clientClassName();
+
+    @JsonProperty("base-api-exception-class-name")
+    Optional<String> baseApiExceptionClassName();
+
+    @JsonProperty("base-exception-class-name")
+    Optional<String> baseExceptionClassName();
+
+    @JsonProperty("custom-dependencies")
+    Optional<List<String>> customDependencies();
 
     static ImmutableJavaSdkDownloadFilesCustomConfig.Builder builder() {
         return ImmutableJavaSdkDownloadFilesCustomConfig.builder();

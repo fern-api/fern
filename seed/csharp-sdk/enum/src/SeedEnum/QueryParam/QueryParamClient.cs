@@ -34,6 +34,7 @@ public class QueryParamClient
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "query",
                 Query = _query
@@ -59,6 +60,7 @@ public class QueryParamClient
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "query-list",
                 Query = _query

@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using SeedExamples;
 using SeedExamples.Commons;
@@ -17,6 +18,7 @@ public partial class SeedExamplesClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Commons = new CommonsClient(_client);
@@ -41,6 +43,7 @@ public partial class SeedExamplesClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "",
                 Body = request

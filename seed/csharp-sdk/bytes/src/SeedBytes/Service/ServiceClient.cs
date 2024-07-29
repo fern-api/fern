@@ -19,6 +19,7 @@ public class ServiceClient
         await _client.MakeRequestAsync(
             new RawClient.StreamApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "upload-content",
                 Body = request

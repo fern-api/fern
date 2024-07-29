@@ -1,0 +1,89 @@
+name: generators
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-versions:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Check versions
+        run: |
+          node -e '
+          const fs = require("fs");
+          const path = require("path");
+
+          const paths = [
+            "generators/openapi",
+            "generators/python/sdk",
+            "generators/python/fastapi",
+            "generators/python/pydantic",
+            "generators/postman",
+            "generators/ruby/model",
+            "generators/ruby/sdk",
+            "generators/java/sdk",
+            "generators/java/model",
+            "generators/java/spring",
+            "generators/typescript/sdk",
+            "generators/typescript/express",
+            "generators/csharp/sdk",
+            // "generators/csharp/model" EXCLUDED because not released
+          ];
+
+          const semverRegex = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[\da-z\-]+(?:\.[\da-z\-]+)*)?(?:\+[\da-z\-]+(?:\.[\da-z\-]+)*)?$/i;
+
+          let mismatchFound = false;
+
+          paths.forEach(dir => {
+            const versionPath = path.join(dir, "VERSION");
+            const changelogPath = path.join(dir, "CHANGELOG.md");
+
+            if (fs.existsSync(versionPath) && fs.existsSync(changelogPath)) {
+              const version = fs.readFileSync(versionPath, "utf-8").trim();
+              const changelog = fs.readFileSync(changelogPath, "utf-8");
+
+              const changelogVersionMatch = changelog.match(/^## \[?([0-9]+\.[0-9]+\.[0-9]+(?:-[^\]]+)?)\]?(?:\s-\s[0-9]{4}-[0-9]{2}-[0-9]{2})?/m);
+              if (changelogVersionMatch) {
+                const changelogVersion = changelogVersionMatch[1].trim();
+                if (semverRegex.test(changelogVersion)) {
+                  if (version === changelogVersion) {
+                    console.log(`✅ Match in ${dir}: VERSION (${version}) matches CHANGELOG (${changelogVersion})`);
+                  } else {
+                    console.log(`🚫 Mismatch in ${dir}: VERSION (${version}) does not match CHANGELOG (${changelogVersion})`);
+                    mismatchFound = true;
+                  }
+                } else {
+                  console.log(`🚫 No valid version found in CHANGELOG for ${dir}`);
+                  mismatchFound = true;
+                }
+              } else {
+                console.log(`🚫 No version found in CHANGELOG for ${dir}`);
+                mismatchFound = true;
+              }
+            } else {
+              console.log(`🚫 Missing VERSION or CHANGELOG.md in ${dir}`);
+              mismatchFound = true;
+            }
+          });
+
+          if (mismatchFound) {
+            process.exit(1);
+          }
+          '

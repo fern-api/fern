@@ -1,3 +1,4 @@
+using System;
 using SeedEnum;
 using SeedEnum.Core;
 
@@ -13,6 +14,7 @@ public partial class SeedEnumClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         InlinedRequest = new InlinedRequestClient(_client);

@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.36.4] - 2024-07-26
+
+- Fix: Now, import paths are correctly added to stream wrapper tests.
+
+## [0.36.3] - 2024-07-26
+
+- Fix: Support starting the stream on `StreamWrapper.pipe(...)` for shorter syntax when dealing with `node:stream` primitives.
+
+## [0.36.2] - 2024-07-26
+
+- Fix: This release comes with numerous improvements to streaming responses:
+
+  1. Introduces new stream wrapper polyfills that implement the ability to stream to more streams, per environment.
+  2. For `Node 18+`, stream responses can now be piped to `WritableStream`. They can also be streamed to `stream.Writable`, as possible before.
+  3. For `< Node 18`, stream responses can be piped to `stream.Writeable`, as before.
+  4. For `Browser` environments, stream responses can be piped to `WritableStream`.
+  5. For `Cloudflare Workers`, stream responses can be piped to `WritableStream`.
+
+- Fix: Now, there are generated unit tests for the `fetcher/stream-wrappers` core directory which makes sure that
+  Fern's stream wrapping from responses work as expected!
+
 ## [0.36.1] - 2024-07-16
 
 - Fix: Now, there are generated unit tests for the `auth` and `fetcher` core directory which makes sure that

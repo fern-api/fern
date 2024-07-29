@@ -10,5 +10,5 @@ public record CustomTestCasesUnsupported
     public required string ProblemId { get; init; }
 
     [JsonPropertyName("submissionId")]
-    public required Guid SubmissionId { get; init; }
+    public required string SubmissionId { get; init; }
 }

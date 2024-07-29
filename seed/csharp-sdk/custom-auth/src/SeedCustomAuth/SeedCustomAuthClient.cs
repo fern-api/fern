@@ -1,3 +1,4 @@
+using System;
 using SeedCustomAuth;
 using SeedCustomAuth.Core;
 
@@ -20,6 +21,7 @@ public partial class SeedCustomAuthClient
                 { "X-API-KEY", customAuthScheme },
                 { "X-Fern-Language", "C#" },
             },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         CustomAuth = new CustomAuthClient(_client);

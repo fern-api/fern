@@ -1,6 +1,11 @@
 import { docsYml, WithoutQuestionMarks } from "@fern-api/configuration";
 import { assertNever, isNonNullish, visitDiscriminatedUnion } from "@fern-api/core-utils";
-import { parseImagePaths, replaceImagePathsAndUrls, replaceReferencedMarkdown } from "@fern-api/docs-markdown-utils";
+import {
+    parseImagePaths,
+    replaceImagePathsAndUrls,
+    replaceReferencedCode,
+    replaceReferencedMarkdown
+} from "@fern-api/docs-markdown-utils";
 import { APIV1Write, DocsV1Write, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, listFiles, relative, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
@@ -79,6 +84,12 @@ export class DocsDefinitionResolver {
         // this should happen before we parse image paths, as the referenced markdown files may contain images.
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = await replaceReferencedMarkdown({
+                markdown,
+                absolutePathToFernFolder: this.docsWorkspace.absoluteFilepath,
+                absolutePathToMdx: this.resolveFilepath(relativePath),
+                context: this.taskContext
+            });
+            this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = await replaceReferencedCode({
                 markdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilepath,
                 absolutePathToMdx: this.resolveFilepath(relativePath),
