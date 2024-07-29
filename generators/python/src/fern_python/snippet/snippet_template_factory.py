@@ -26,11 +26,11 @@ from fern_python.codegen import AST
 from fern_python.codegen.imports_manager import ImportsManager
 from fern_python.codegen.project import Project
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
-from fern_python.generators.pydantic_model.type_declaration_handler.discriminated_union.simple_discriminated_union_generator import (
-    DiscriminatedUnionSnippetGenerator,
-)
 from fern_python.generators.pydantic_model.type_declaration_handler.enum_generator import (
     EnumSnippetGenerator,
+)
+from fern_python.generators.pydantic_model.type_declaration_handler.pydantic_models.simple_discriminated_union_generator import (
+    PydanticModelDiscriminatedUnionSnippetGenerator,
 )
 from fern_python.generators.sdk.client_generator.endpoint_function_generator import (
     get_endpoint_name,
@@ -360,14 +360,12 @@ class SnippetTemplateFactory:
                 if template_input is not None:
                     template_inputs.append(template_input)
 
-            snippet_template = DiscriminatedUnionSnippetGenerator(
+            snippet_template = PydanticModelDiscriminatedUnionSnippetGenerator(
                 snippet_writer=self._snippet_writer,
                 name=type_name,
                 example=None,
                 example_expression=AST.Expression(TEMPLATE_SENTINEL),
                 single_union_type=sut,
-                use_typeddict_request=self._context.custom_config.pydantic_config.use_typeddict_requests,
-                as_request=True,
             ).generate_snippet_template()
             if snippet_template is not None:
                 imports, snippet_template_str = self._expression_to_snippet_str_and_imports(snippet_template)
@@ -384,14 +382,12 @@ class SnippetTemplateFactory:
             return None
 
         elif sut_shape.properties_type == "singleProperty":
-            snippet_template = DiscriminatedUnionSnippetGenerator(
+            snippet_template = PydanticModelDiscriminatedUnionSnippetGenerator(
                 snippet_writer=self._snippet_writer,
                 name=type_name,
                 example=None,
                 example_expression=AST.Expression(TEMPLATE_SENTINEL),
                 single_union_type=sut,
-                use_typeddict_request=self._context.custom_config.pydantic_config.use_typeddict_requests,
-                as_request=True,
             ).generate_snippet_template()
             child_breadcrumbs = name_breadcrumbs or []
             if wire_or_original_name is not None:
@@ -421,14 +417,12 @@ class SnippetTemplateFactory:
             return None
 
         elif sut_shape.properties_type == "noProperties":
-            snippet_template = DiscriminatedUnionSnippetGenerator(
+            snippet_template = PydanticModelDiscriminatedUnionSnippetGenerator(
                 snippet_writer=self._snippet_writer,
                 name=type_name,
                 example=None,
                 example_expression=AST.Expression(TEMPLATE_SENTINEL),
                 single_union_type=sut,
-                use_typeddict_request=self._context.custom_config.pydantic_config.use_typeddict_requests,
-                as_request=True,
             ).generate_snippet_template()
 
             if snippet_template is not None:

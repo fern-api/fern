@@ -16,6 +16,7 @@ class FastApiGeneratorContext(ABC):
         ir: ir_types.IntermediateRepresentation,
         generator_config: GeneratorConfig,
         project_module_path: AST.ModulePath,
+        use_str_enums: bool,
     ):
         self.ir = ir
         self.generator_config = generator_config
@@ -27,6 +28,7 @@ class FastApiGeneratorContext(ABC):
             allow_skipping_validation=False,
             allow_leveraging_defaults=False,
             use_typeddict_requests=False,
+            use_str_enums=use_str_enums,
         )
         self.core_utilities = CoreUtilities()
 

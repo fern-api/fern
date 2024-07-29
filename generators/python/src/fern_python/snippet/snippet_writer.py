@@ -24,8 +24,6 @@ class SnippetWriter:
         self,
         name: ir_types.DeclaredTypeName,
         example_type_shape: ir_types.ExampleTypeShape,
-        use_typeddict_request: bool,
-        as_request: bool,
     ) -> Optional[AST.Expression]:
         if self._type_declaration_snippet_generator is None:
             return None
@@ -33,8 +31,6 @@ class SnippetWriter:
         return self._type_declaration_snippet_generator.generate_snippet(
             name=name,
             example=example_type_shape,
-            use_typeddict_request=use_typeddict_request,
-            as_request=as_request,
         )
 
     def get_class_reference_for_declared_type_name(
@@ -86,8 +82,6 @@ class SnippetWriter:
             named=lambda named: self.get_snippet_for_example_type_shape(
                 name=named.type_name,
                 example_type_shape=named.shape,
-                use_typeddict_request=use_typeddict_request,
-                as_request=as_request,
             ),
         )
 
@@ -115,8 +109,6 @@ class SnippetWriter:
                 named=lambda named: self.get_snippet_for_example_type_shape(
                     name=named.type_name,
                     example_type_shape=named.shape,
-                    use_typeddict_request=use_typeddict_request,
-                    as_request=as_request,
                 ),
             )
             if value is not None:

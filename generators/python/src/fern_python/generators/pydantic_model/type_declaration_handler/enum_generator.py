@@ -3,14 +3,18 @@ from typing import Optional, Union
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST, SourceFile
+from fern_python.generators.pydantic_model.type_declaration_handler.abc.abstract_type_snippet_generator import (
+    AbstractTypeSnippetGenerator,
+)
 from fern_python.snippet import SnippetWriter
 
 from ...context import PydanticGeneratorContext
 from ..custom_config import PydanticModelCustomConfig
-from .abstract_type_generator import AbstractTypeGenerator
+from .abc.abstract_type_generator import AbstractTypeGenerator
 from .get_visit_method import VisitableItem, get_visit_method
 
 
+# Note enums are the same for both pydantic models and typeddicts os the generator is not multi-plexed
 class EnumGenerator(AbstractTypeGenerator):
     def __init__(
         self,
@@ -90,7 +94,7 @@ class EnumGenerator(AbstractTypeGenerator):
         return enum_value.name.name.snake_case.safe_name
 
 
-class EnumSnippetGenerator:
+class EnumSnippetGenerator(AbstractTypeSnippetGenerator):
     def __init__(
         self,
         snippet_writer: SnippetWriter,
@@ -98,8 +102,8 @@ class EnumSnippetGenerator:
         example: Union[ir_types.ExampleEnumType, ir_types.NameAndWireValue],
         use_str_enums: bool,
     ):
+        super().__init__(snippet_writer=snippet_writer)
         self._use_str_enums = use_str_enums
-        self.snippet_writer = snippet_writer
         self.name = name
         self.example = example.value if isinstance(example, ir_types.ExampleEnumType) else example
 

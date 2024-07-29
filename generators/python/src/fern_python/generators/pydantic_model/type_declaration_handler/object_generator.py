@@ -1,16 +1,16 @@
+from abc import ABC
 from dataclasses import dataclass
 from typing import List, Optional
 
 import fern.ir.resources as ir_types
 
-from fern_python.codegen import AST, SourceFile
-from fern_python.generators.pydantic_model.typeddict import FernTypedDict
+from fern_python.codegen import SourceFile
 from fern_python.snippet import SnippetWriter
 
 from ...context import PydanticGeneratorContext
 from ..custom_config import PydanticModelCustomConfig
-from ..fern_aware_pydantic_model import FernAwarePydanticModel
-from .abstract_type_generator import AbstractTypeGenerator
+from .abc.abstract_type_generator import AbstractTypeGenerator
+from .abc.abstract_type_snippet_generator import AbstractTypeSnippetGenerator
 
 
 @dataclass
@@ -20,7 +20,7 @@ class ObjectProperty:
     docs: Optional[str]
 
 
-class ObjectGenerator(AbstractTypeGenerator):
+class AbstractObjectGenerator(AbstractTypeGenerator, ABC):
     def __init__(
         self,
         name: Optional[ir_types.DeclaredTypeName],
@@ -28,7 +28,6 @@ class ObjectGenerator(AbstractTypeGenerator):
         properties: List[ObjectProperty],
         context: PydanticGeneratorContext,
         source_file: SourceFile,
-        maybe_requests_source_file: Optional[SourceFile],
         custom_config: PydanticModelCustomConfig,
         docs: Optional[str],
         class_name: Optional[str] = None,
@@ -38,92 +37,32 @@ class ObjectGenerator(AbstractTypeGenerator):
             context=context,
             custom_config=custom_config,
             source_file=source_file,
-            maybe_requests_source_file=maybe_requests_source_file,
             docs=docs,
             snippet=snippet,
         )
         self._name = name
         self._extends = extends
         self._properties = properties
-        self._class_name = class_name
 
-    def generate(self) -> None:
-        if self._class_name is None and self._name is None:
+        if class_name is None and name is None:
             raise ValueError("Either class_name or name must be provided")
-        elif self._class_name is not None:
-            class_name = self._class_name
-        elif self._name is not None:
-            class_name = self._context.get_class_name_for_type_id(self._name.type_id, as_request=False)
-
-        with FernAwarePydanticModel(
-            class_name=class_name,
-            type_name=self._name,
-            extends=self._extends,
-            context=self._context,
-            custom_config=self._custom_config,
-            source_file=self._source_file,
-            docstring=self._docs,
-            snippet=self._snippet,
-        ) as pydantic_model:
-            for property in self._properties:
-                pydantic_model.add_field(
-                    name=property.name.name.snake_case.safe_name,
-                    pascal_case_field_name=property.name.name.pascal_case.safe_name,
-                    type_reference=property.value_type,
-                    json_field_name=property.name.wire_value,
-                    description=property.docs,
-                )
-
-        if self._maybe_requests_source_file is not None:
-            if self._name is not None:
-                with FernTypedDict(
-                    context=self._context,
-                    source_file=self._maybe_requests_source_file,
-                    type_name=self._name,
-                    should_export=True,
-                    extended_types=self._extends,
-                    docstring=self._docs,
-                ) as typed_dict:
-                    for property in self._properties:
-                        typed_dict.add_field(
-                            name=property.name.name.snake_case.safe_name,
-                            type_reference=property.value_type,
-                            json_field_name=property.name.wire_value,
-                            description=property.docs,
-                        )
+        else:
+            if class_name is None:
+                assert name is not None  # for mypy, even though the above condition should prevent this
+                self._class_name = self._context.get_class_name_for_type_id(name.type_id, as_request=False)
             else:
-                raise ValueError("name must be provided to generate a typed dict")
+                self._class_name = class_name
 
 
-class ObjectSnippetGenerator:
+class AbstractObjectSnippetGenerator(AbstractTypeSnippetGenerator, ABC):
     def __init__(
         self,
         snippet_writer: SnippetWriter,
         name: ir_types.DeclaredTypeName,
         example: ir_types.ExampleObjectType,
-        use_typeddict_request: bool,
-        as_request: bool,
     ):
-        self.name = name
-        self.example = example
-        self.snippet_writer = snippet_writer
-        self.as_request = as_request
-        self.use_typeddict_request = use_typeddict_request
-
-    def generate_snippet(self) -> AST.Expression:
-        if self.as_request and self.use_typeddict_request:
-            return FernTypedDict.type_to_snippet(example=self.example, snippet_writer=self.snippet_writer)
-        return AST.Expression(
-            AST.ClassInstantiation(
-                class_=self.snippet_writer.get_class_reference_for_declared_type_name(
-                    name=self.name,
-                    as_request=self.as_request,
-                ),
-                args=self.snippet_writer.get_snippet_for_object_properties(
-                    example=self.example,
-                    request_parameter_names={},
-                    use_typeddict_request=self.use_typeddict_request,
-                    as_request=self.as_request,
-                ),
-            ),
+        super().__init__(
+            snippet_writer=snippet_writer,
         )
+        self.example = example
+        self.name = name

@@ -41,6 +41,7 @@ class SdkGeneratorContext(ABC):
             generator_config=generator_config,
             project_module_path=project_module_path,
             allow_skipping_validation=custom_config.pydantic_config.skip_validation,
+            use_str_enums=custom_config.pydantic_config.use_str_enums,
             allow_leveraging_defaults=custom_config.pydantic_config.use_provided_defaults,
             use_typeddict_requests=custom_config.pydantic_config.use_typeddict_requests,
             reserved_names={exported_root_client.get_class_name(name=None)},

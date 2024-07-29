@@ -262,3 +262,9 @@ class FernTypedDict:
             union=lambda _: True,
             undiscriminated_union=lambda _: True,
         )
+
+    @classmethod
+    def can_type_id_be_typeddict(
+        cls, type_id: ir_types.TypeId, types: Dict[ir_types.TypeId, ir_types.TypeDeclaration]
+    ) -> bool:
+        return cls.can_be_typeddict(types[type_id].shape, types)
