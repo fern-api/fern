@@ -5,9 +5,44 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [3.1.0-rc1] - 2024-07-29
+## [3.2.0-rc1] - 2024-07-29
 
 - Fix: The generated README now imports `ApiError` as if it were from outside the module.
+
+## [3.2.0-rc0] - 2024-07-25
+
+- Improvement: The Python SDK can now be generated such that inputs to requests are TypedDicts, instead of Pydantic models. This allows for consumers of the SDK
+  to continue to have type hinting and autocomplete, but not need to import new object types when creating requests.
+
+  With the following config:
+
+  ```yaml
+  generators:
+    - name: fernapi/fern-python-sdk
+      config:
+        pydantic_config:
+          use_typeddict_requests: true
+  ```
+
+  The usage will change from:
+
+  ```python
+  client\
+      .imdb\
+      .create_movie(
+        request=CreateMovieRequest(title="title", rating=4.3),
+      )
+  ```
+
+  to:
+
+  ```python
+    client\
+      .imdb\
+      .create_movie(
+        request={"title": "title", "rating": 4.3},
+      )
+  ```
 
 ## [3.1.0-rc0] - 2024-07-24
 

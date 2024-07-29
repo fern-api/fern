@@ -16,7 +16,7 @@ class Moment(UniversalBaseModel):
     import datetime
     import uuid
 
-    from seed.examples import Moment
+    from seed.examples.resources import Moment
 
     Moment(
         id=uuid.UUID(

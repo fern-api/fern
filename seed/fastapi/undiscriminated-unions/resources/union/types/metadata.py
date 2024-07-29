@@ -5,7 +5,7 @@ import typing
 from .key import Key
 
 """
-from seed.undiscriminated_unions import KeyType
+from seed.undiscriminated_unions.resources.union import KeyType
 
 {KeyType.NAME: "exampleName", KeyType.VALUE: "exampleValue"}
 """

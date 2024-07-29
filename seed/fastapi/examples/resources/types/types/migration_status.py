@@ -10,7 +10,7 @@ class MigrationStatus(str, enum.Enum):
     """
     Examples
     --------
-    from seed.examples import MigrationStatus
+    from seed.examples.resources.types import MigrationStatus
 
     MigrationStatus.RUNNING
     """

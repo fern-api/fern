@@ -12,6 +12,7 @@ from fern_python.external_dependencies.pydantic import (
 from fern_python.external_dependencies.typing_extensions import (
     TYPING_EXTENSIONS_DEPENDENCY,
 )
+from fern_python.generators.pydantic_model.field_metadata import FieldMetadata
 from fern_python.source_file_factory import SourceFileFactory
 
 
@@ -25,12 +26,14 @@ class CoreUtilities:
         has_paginated_endpoints: bool,
         version: PydanticVersionCompatibility,
         project_module_path: AST.ModulePath,
+        use_typeddict_requests: bool,
     ) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
         # Promotes usage of `from ... import core`
         self._module_path_unnamed = tuple(part.module_name for part in self.filepath[:-1])  # type: ignore
         self._allow_skipping_validation = allow_skipping_validation
+        self._use_typeddict_requests = use_typeddict_requests
         self._has_paginated_endpoints = has_paginated_endpoints
         self._version = version
         self._project_module_path = project_module_path
@@ -128,6 +131,16 @@ class CoreUtilities:
                 file=Filepath.FilepathPart(module_name="query_encoder"),
             ),
             exports={"encode_query"},
+        )
+
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="serialization.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="serialization"),
+            ),
+            exports={"FieldMetadata", "convert_and_respect_annotation_metadata"},
         )
 
         if self._has_paginated_endpoints:
@@ -249,6 +262,25 @@ class CoreUtilities:
                 ),
             )
 
+    def convert_and_respect_annotation_metadata(
+        self, object_: AST.Expression, annotation: AST.TypeHint
+    ) -> AST.Expression:
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    qualified_name_excluding_import=(),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path, "serialization"),
+                        named_import="convert_and_respect_annotation_metadata",
+                    ),
+                ),
+                kwargs=[
+                    ("object_", object_),
+                    ("annotation", AST.Expression(annotation)),
+                ],
+            )
+        )
+
     def remove_none_from_dict(self, headers: AST.Expression) -> AST.Expression:
         return AST.Expression(
             AST.FunctionInvocation(
@@ -347,6 +379,16 @@ class CoreUtilities:
                 kwargs=func_args,
             )
         )
+
+    def get_field_metadata(self) -> FieldMetadata:
+        field_metadata_reference = AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "serialization"), named_import="FieldMetadata"
+            ),
+        )
+
+        return FieldMetadata(reference=field_metadata_reference)
 
     def get_union_metadata(self) -> AST.Reference:
         return AST.Reference(

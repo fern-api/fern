@@ -14,7 +14,7 @@ class EventInfo_Metadata(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.examples.resources.commons import EventInfo_Metadata
+    from seed.examples.resources.commons.resources import EventInfo_Metadata
 
     EventInfo_Metadata(
         id="metadata-alskjfg8",
@@ -23,10 +23,10 @@ class EventInfo_Metadata(UniversalBaseModel):
     )
     """
 
+    type: typing.Literal["metadata"] = "metadata"
     id: str
     data: typing.Optional[typing.Dict[str, str]] = None
     json_string: typing.Optional[str] = pydantic.Field(alias="jsonString", default=None)
-    type: typing.Literal["metadata"] = "metadata"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -42,7 +42,7 @@ class EventInfo_Tag(UniversalBaseModel):
 
 
 """
-from seed.examples.resources.commons import EventInfo_Metadata
+from seed.examples.resources.commons.resources import EventInfo_Metadata
 
 EventInfo_Metadata(
     id="metadata-alskjfg8",

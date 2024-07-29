@@ -77,6 +77,9 @@ public final class ObjectWithOptionalField {
     this.bigint = bigint;
   }
 
+  /**
+   * @return This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
+   */
   @JsonProperty("string")
   public Optional<String> getString() {
     return string;

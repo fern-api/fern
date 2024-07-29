@@ -36,14 +36,13 @@ class SnippetWriter:
     def get_class_reference_for_declared_type_name(
         self,
         name: ir_types.DeclaredTypeName,
+        as_request: bool,
     ) -> AST.ClassReference:
         return AST.ClassReference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
                 module=AST.Module.snippet(
-                    module_path=self.get_module_path_for_declared_type_name(
-                        name=name,
-                    ),
+                    module_path=self.get_module_path_for_declared_type_name(name=name, as_request=as_request),
                 ),
                 named_import=name.name.pascal_case.safe_name,
             ),
@@ -52,12 +51,12 @@ class SnippetWriter:
     def get_module_path_for_declared_type_name(
         self,
         name: ir_types.DeclaredTypeName,
+        as_request: bool,
     ) -> AST.ModulePath:
-        module_path = tuple([directory.snake_case.safe_name for directory in name.fern_filepath.package_path])
-        if len(module_path) > 0 and not self._improved_imports:
-            # If the type is defined in a subpackage, it needs to be imported with the 'resources'
-            # intermediary key. Otherwise the types can be imported from the root package.
-            module_path = ("resources",) + module_path
+        modules = self._context.type_declaration_referencer.get_filepath(name=name, as_request=as_request).directories
+        # Since this is the full file path, we want to not include the actual file name and stop at the last module
+        module_path = tuple([directory.module_name for directory in modules[:-1]])
+
         return self._context.get_module_path_in_project(
             module_path,
         )
@@ -65,6 +64,8 @@ class SnippetWriter:
     def get_snippet_for_example_type_reference(
         self,
         example_type_reference: ir_types.ExampleTypeReference,
+        use_typeddict_request: bool,
+        as_request: bool,
     ) -> Optional[AST.Expression]:
         return example_type_reference.shape.visit(
             primitive=lambda primitive: self._get_snippet_for_primitive(
@@ -72,6 +73,8 @@ class SnippetWriter:
             ),
             container=lambda container: self._get_snippet_for_container(
                 container=container,
+                use_typeddict_request=use_typeddict_request,
+                as_request=as_request,
             ),
             unknown=lambda unknown: self._get_snippet_for_unknown(
                 unknown=unknown,
@@ -83,7 +86,11 @@ class SnippetWriter:
         )
 
     def get_snippet_for_object_properties(
-        self, example: ir_types.ExampleObjectType, request_parameter_names: Dict[ir_types.Name, str]
+        self,
+        example: ir_types.ExampleObjectType,
+        request_parameter_names: Dict[ir_types.Name, str],
+        use_typeddict_request: bool,
+        as_request: bool,
     ) -> List[AST.Expression]:
         args: List[AST.Expression] = []
         for property in example.properties:
@@ -93,6 +100,8 @@ class SnippetWriter:
                 ),
                 container=lambda container: self._get_snippet_for_container(
                     container=container,
+                    use_typeddict_request=use_typeddict_request,
+                    as_request=as_request,
                 ),
                 unknown=lambda unknown: self._get_snippet_for_unknown(
                     unknown=unknown,
@@ -197,17 +206,33 @@ class SnippetWriter:
     def _get_snippet_for_container(
         self,
         container: ir_types.ExampleContainer,
+        use_typeddict_request: bool,
+        as_request: bool,
     ) -> Optional[AST.Expression]:
         return container.visit(
-            list_=lambda list: self._get_snippet_for_list_or_set(example_type_references=list, is_list=True),
-            set_=lambda set: self._get_snippet_for_list_or_set(example_type_references=set, is_list=False),
+            list_=lambda list: self._get_snippet_for_list_or_set(
+                example_type_references=list,
+                is_list=True,
+                use_typeddict_request=use_typeddict_request,
+                as_request=as_request,
+            ),
+            set_=lambda set: self._get_snippet_for_list_or_set(
+                example_type_references=set,
+                is_list=False,
+                use_typeddict_request=use_typeddict_request,
+                as_request=as_request,
+            ),
             optional=lambda optional: self.get_snippet_for_example_type_reference(
                 example_type_reference=optional,
+                use_typeddict_request=use_typeddict_request,
+                as_request=as_request,
             )
             if optional is not None
             else None,
             map_=lambda map: self._get_snippet_for_map(
                 pairs=map,
+                use_typeddict_request=use_typeddict_request,
+                as_request=as_request,
             ),
             literal=lambda _: None,
         )
@@ -219,7 +244,11 @@ class SnippetWriter:
         return AST.Expression(json.dumps(unknown))
 
     def _get_snippet_for_list_or_set(
-        self, example_type_references: List[ir_types.ExampleTypeReference], is_list: bool
+        self,
+        example_type_references: List[ir_types.ExampleTypeReference],
+        is_list: bool,
+        use_typeddict_request: bool,
+        as_request: bool,
     ) -> Optional[AST.Expression]:
         values: List[AST.Expression] = []
         # We use lists for sets if the inner type is non-primitive because Pydantic models aren't hashable
@@ -233,6 +262,8 @@ class SnippetWriter:
             )
             expression = self.get_snippet_for_example_type_reference(
                 example_type_reference=example_type_reference,
+                use_typeddict_request=use_typeddict_request,
+                as_request=as_request,
             )
             if expression is not None:
                 values.append(expression)
@@ -243,15 +274,21 @@ class SnippetWriter:
     def _get_snippet_for_map(
         self,
         pairs: List[ir_types.ExampleKeyValuePair],
-    ) -> Optional[AST.Expression]:
+        use_typeddict_request: bool,
+        as_request: bool,
+    ) -> AST.Expression:
         keys: List[AST.Expression] = []
         values: List[AST.Expression] = []
         for pair in pairs:
             key = self.get_snippet_for_example_type_reference(
                 example_type_reference=pair.key,
+                use_typeddict_request=use_typeddict_request,
+                as_request=as_request,
             )
             value = self.get_snippet_for_example_type_reference(
                 example_type_reference=pair.value,
+                use_typeddict_request=use_typeddict_request,
+                as_request=as_request,
             )
             if key is not None and value is not None:
                 keys.append(key)
