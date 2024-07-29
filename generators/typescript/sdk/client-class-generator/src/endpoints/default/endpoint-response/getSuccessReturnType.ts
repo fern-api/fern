@@ -68,7 +68,7 @@ function getFileType({
 }): ts.TypeNode {
     const fileType = visitJavaScriptRuntime(targetRuntime, {
         browser: () => ts.factory.createTypeReferenceNode("Blob"),
-        node: () => ts.factory.createTypeReferenceNode("WritableStream")
+        node: () => context.externalDependencies.stream.Readable._getReferenceToType()
     });
     if (includeContentHeadersOnResponse) {
         return ts.factory.createTypeLiteralNode([
@@ -76,7 +76,7 @@ function getFileType({
                 undefined,
                 READABLE_RESPONSE_KEY,
                 undefined,
-                ts.factory.createTypeReferenceNode("WritableStream")
+                context.externalDependencies.stream.Readable._getReferenceToType()
             ),
             ts.factory.createPropertySignature(
                 undefined,
