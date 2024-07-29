@@ -65,9 +65,9 @@ class VariableType_CharType(UniversalBaseModel):
 
 
 class VariableType_ListType(UniversalBaseModel):
+    type: typing.Literal["listType"] = "listType"
     value_type: VariableType = pydantic.Field(alias="valueType")
     is_fixed_length: typing.Optional[bool] = pydantic.Field(alias="isFixedLength", default=None)
-    type: typing.Literal["listType"] = "listType"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -78,9 +78,9 @@ class VariableType_ListType(UniversalBaseModel):
 
 
 class VariableType_MapType(UniversalBaseModel):
+    type: typing.Literal["mapType"] = "mapType"
     key_type: VariableType = pydantic.Field(alias="keyType")
     value_type: VariableType = pydantic.Field(alias="valueType")
-    type: typing.Literal["mapType"] = "mapType"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

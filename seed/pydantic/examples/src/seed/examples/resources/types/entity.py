@@ -12,7 +12,7 @@ class Entity(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.examples import Entity
+    from seed.examples.resources import Entity
 
     Entity(
         type="unknown",
