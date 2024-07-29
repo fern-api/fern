@@ -12,7 +12,8 @@ class Response(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.examples import Identifier, Response
+    from seed.examples import Identifier
+    from seed.examples.resources import Response
 
     Response(
         response="Initializing...",

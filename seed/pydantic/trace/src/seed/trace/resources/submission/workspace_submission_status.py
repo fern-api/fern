@@ -35,10 +35,10 @@ class WorkspaceSubmissionStatus_Running(UniversalBaseModel):
 
 
 class WorkspaceSubmissionStatus_Ran(UniversalBaseModel):
+    type: typing.Literal["ran"] = "ran"
     exception_v_2: typing.Optional[ExceptionV2] = pydantic.Field(alias="exceptionV2", default=None)
     exception: typing.Optional[ExceptionInfo] = None
     stdout: str
-    type: typing.Literal["ran"] = "ran"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -49,10 +49,10 @@ class WorkspaceSubmissionStatus_Ran(UniversalBaseModel):
 
 
 class WorkspaceSubmissionStatus_Traced(UniversalBaseModel):
+    type: typing.Literal["traced"] = "traced"
     exception_v_2: typing.Optional[ExceptionV2] = pydantic.Field(alias="exceptionV2", default=None)
     exception: typing.Optional[ExceptionInfo] = None
     stdout: str
-    type: typing.Literal["traced"] = "traced"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

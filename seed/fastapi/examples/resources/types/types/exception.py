@@ -31,7 +31,7 @@ class Exception(UniversalRootModel):
     """
     Examples
     --------
-    from seed.examples import Exception_Generic
+    from seed.examples.resources.types import Exception_Generic
 
     Exception_Generic(
         exception_type="Unavailable",

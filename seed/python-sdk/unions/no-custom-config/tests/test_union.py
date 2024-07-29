@@ -2,7 +2,8 @@
 
 import typing
 
-from seed import AsyncSeedUnions, SeedUnions, Shape_Circle
+from seed import AsyncSeedUnions, SeedUnions
+from seed.union import Shape_Circle
 
 from .utilities import validate_response
 

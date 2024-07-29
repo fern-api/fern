@@ -13,7 +13,7 @@ class Base(UniversalBaseModel):
     """
     Examples
     --------
-    from seed import Metadata_Html
+    from seed.types import Metadata_Html
 
     Metadata_Html(value="<head>...</head>")
     """
@@ -58,7 +58,7 @@ class Metadata_Markdown(Base):
 
 
 """
-from seed import Metadata_Html
+from seed.types import Metadata_Html
 
 Metadata_Html(value="<head>...</head>")
 """
