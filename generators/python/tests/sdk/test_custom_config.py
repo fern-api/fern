@@ -11,7 +11,7 @@ pydantic_config_level_payload = {
     },
 }
 
-def test_parse_obj_override():
+def test_parse_obj_override() -> None:
     top_level_custom_config = SDKCustomConfig.parse_obj(top_level_payload)
     pydantic_config_custom_config = SDKCustomConfig.parse_obj(pydantic_config_level_payload)
     

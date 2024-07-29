@@ -1,16 +1,16 @@
 from typing import Optional
 
-from .pydantic_models.object_generator import PydanticModelObjectSnippetGenerator
-from .pydantic_models.simple_discriminated_union_generator import PydanticModelDiscriminatedUnionSnippetGenerator
-from .pydantic_models.undiscriminated_union_generator import PydanticModelUndiscriminatedUnionSnippetGenerator
-from .typeddicts.object_generator import TypeddictObjectSnippetGenerator
-from .typeddicts.simple_discriminated_union_generator import TypeddictDiscriminatedUnionSnippetGenerator
-from .typeddicts.undiscriminated_union_generator import TypeddictUndiscriminatedUnionSnippetGenerator
+from .pydantic_models.pydantic_model_object_generator import PydanticModelObjectSnippetGenerator
+from .pydantic_models.pydantic_model_simple_discriminated_union_generator import PydanticModelDiscriminatedUnionSnippetGenerator
+from .pydantic_models.pydantic_model_undiscriminated_union_generator import PydanticModelUndiscriminatedUnionSnippetGenerator
+from .typeddicts.typeddict_object_generator import TypeddictObjectSnippetGenerator
+from .typeddicts.typeddict_simple_discriminated_union_generator import TypeddictDiscriminatedUnionSnippetGenerator
+from .typeddicts.typeddict_undiscriminated_union_generator import TypeddictUndiscriminatedUnionSnippetGenerator
 
 from .enum_generator import EnumSnippetGenerator
 
-from .pydantic_models.alias_generator import PydanticModelAliasSnippetGenerator
-from .typeddicts.alias_generator import TypedDictAliasSnippetGenerator
+from .pydantic_models.pydantic_model_alias_generator import PydanticModelAliasSnippetGenerator
+from .typeddicts.typeddict_alias_generator import TypedDictAliasSnippetGenerator
 
 import fern.ir.resources as ir_types
 
@@ -30,7 +30,7 @@ class TypeDeclarationSnippetGeneratorBuilder:
     ):
         self._context = context
         self._snippet_writer = snippet_writer
-    
+
     def get_generator(
         self,
     ) -> TypeDeclarationSnippetGenerator:
@@ -50,12 +50,12 @@ class TypeDeclarationSnippetGeneratorBuilder:
                 snippet_writer=self._snippet_writer,
                 example=example,
             ).generate_snippet()
-        
+
         return PydanticModelAliasSnippetGenerator(
             snippet_writer=self._snippet_writer,
             example=example,
         ).generate_snippet()
-    
+
     def _get_object_snippet_generator(self, name: ir_types.DeclaredTypeName, example: ir_types.ExampleObjectType) -> AST.Expression:
         if self._context.use_typeddict_requests:
             return TypeddictObjectSnippetGenerator(
@@ -63,13 +63,13 @@ class TypeDeclarationSnippetGeneratorBuilder:
                 snippet_writer=self._snippet_writer,
                 example=example,
             ).generate_snippet()
-        
+
         return PydanticModelObjectSnippetGenerator(
             name=name,
             snippet_writer=self._snippet_writer,
             example=example,
         ).generate_snippet()
-    
+
     def _get_discriminated_union_snippet_generator(self, name: ir_types.DeclaredTypeName, example: ir_types.ExampleUnionType) -> AST.Expression:
         if self._context.use_typeddict_requests:
             return TypeddictDiscriminatedUnionSnippetGenerator(
@@ -77,7 +77,7 @@ class TypeDeclarationSnippetGeneratorBuilder:
                 snippet_writer=self._snippet_writer,
                 example=example,
             ).generate_snippet()
-        
+
         return PydanticModelDiscriminatedUnionSnippetGenerator(
             name=name,
             snippet_writer=self._snippet_writer,
@@ -91,7 +91,7 @@ class TypeDeclarationSnippetGeneratorBuilder:
                 snippet_writer=self._snippet_writer,
                 example=example,
             ).generate_snippet()
-        
+
         return PydanticModelUndiscriminatedUnionSnippetGenerator(
             name=name,
             snippet_writer=self._snippet_writer,

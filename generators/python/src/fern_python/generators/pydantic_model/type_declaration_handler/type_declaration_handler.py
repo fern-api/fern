@@ -13,20 +13,20 @@ from .abc.abstract_type_generator import AbstractTypeGenerator
 from .discriminated_union import DiscriminatedUnionWithUtilsGenerator
 from .enum_generator import EnumGenerator
 from .object_generator import ObjectProperty
-from .pydantic_models.alias_generator import PydanticModelAliasGenerator
-from .pydantic_models.object_generator import PydanticModelObjectGenerator
-from .pydantic_models.simple_discriminated_union_generator import (
+from .pydantic_models.pydantic_model_alias_generator import PydanticModelAliasGenerator
+from .pydantic_models.pydantic_model_object_generator import PydanticModelObjectGenerator
+from .pydantic_models.pydantic_model_simple_discriminated_union_generator import (
     PydanticModelSimpleDiscriminatedUnionGenerator,
 )
-from .pydantic_models.undiscriminated_union_generator import (
+from .pydantic_models.pydantic_model_undiscriminated_union_generator import (
     PydanticModelUndiscriminatedUnionGenerator,
 )
-from .typeddicts.alias_generator import TypedDictAliasGenerator
-from .typeddicts.object_generator import TypeddictObjectGenerator
-from .typeddicts.simple_discriminated_union_generator import (
+from .typeddicts.typeddict_alias_generator import TypedDictAliasGenerator
+from .typeddicts.typeddict_object_generator import TypeddictObjectGenerator
+from .typeddicts.typeddict_simple_discriminated_union_generator import (
     TypeddictSimpleDiscriminatedUnionGenerator,
 )
-from .typeddicts.undiscriminated_union_generator import (
+from .typeddicts.typeddict_undiscriminated_union_generator import (
     TypeddictUndiscriminatedUnionGenerator,
 )
 
