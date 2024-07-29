@@ -73,7 +73,7 @@ class SDKCustomConfig(pydantic.BaseModel):
         extra = pydantic.Extra.forbid
 
     @classmethod
-    def parse_obj(cls, obj: Any) -> 'SDKCustomConfig':
+    def parse_obj(cls, obj: Any) -> "SDKCustomConfig":
         obj = super().parse_obj(obj)
 
         use_typeddict_requests = obj.use_typeddict_requests or obj.pydantic_config.use_typeddict_requests

@@ -14,7 +14,9 @@ from .discriminated_union import DiscriminatedUnionWithUtilsGenerator
 from .enum_generator import EnumGenerator
 from .object_generator import ObjectProperty
 from .pydantic_models.pydantic_model_alias_generator import PydanticModelAliasGenerator
-from .pydantic_models.pydantic_model_object_generator import PydanticModelObjectGenerator
+from .pydantic_models.pydantic_model_object_generator import (
+    PydanticModelObjectGenerator,
+)
 from .pydantic_models.pydantic_model_simple_discriminated_union_generator import (
     PydanticModelSimpleDiscriminatedUnionGenerator,
 )

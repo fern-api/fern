@@ -1,11 +1,11 @@
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import SourceFile
+
+from ...pydantic_model import ObjectProperty, PydanticModelCustomConfig
 from ...pydantic_model.type_declaration_handler.pydantic_models.pydantic_model_object_generator import (
     PydanticModelObjectGenerator,
 )
-
-from ...pydantic_model import ObjectProperty, PydanticModelCustomConfig
 from ..context import FastApiGeneratorContext
 
 

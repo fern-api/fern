@@ -1,7 +1,5 @@
 from typing import List, Optional
 
-from ..object_generator import AbstractObjectGenerator, AbstractObjectSnippetGenerator, ObjectProperty
-
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST, SourceFile
@@ -10,6 +8,11 @@ from fern_python.snippet import SnippetWriter
 
 from ....context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig
+from ..object_generator import (
+    AbstractObjectGenerator,
+    AbstractObjectSnippetGenerator,
+    ObjectProperty,
+)
 
 
 class TypeddictObjectGenerator(AbstractObjectGenerator):

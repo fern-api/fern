@@ -1,6 +1,6 @@
 import json
 import os
-from typing import Any, Literal, Optional, Sequence, Tuple, Union, cast
+from typing import Literal, Optional, Sequence, Tuple, Union, cast
 from uuid import uuid4
 
 import fern.ir.resources as ir_types

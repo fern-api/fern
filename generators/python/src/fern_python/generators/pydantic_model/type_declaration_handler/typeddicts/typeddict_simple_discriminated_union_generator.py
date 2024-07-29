@@ -1,12 +1,8 @@
-from dataclasses import dataclass
-from typing import List, Optional, Set, Union
-
-from ..discriminated_union.simple_discriminated_union_generator import AbstractDiscriminatedUnionSnippetGenerator, AbstractSimpleDiscriminatedUnionGenerator, get_single_union_type_class_name
+from typing import List, Optional, Union
 
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST, LocalClassReference, SourceFile
-from fern_python.codegen.ast.references.class_reference import ClassReference
 from fern_python.generators.pydantic_model.typeddict import (
     FernTypedDict,
     SimpleObjectProperty,
@@ -17,6 +13,11 @@ from fern_python.snippet import SnippetWriter
 
 from ....context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig
+from ..discriminated_union.simple_discriminated_union_generator import (
+    AbstractDiscriminatedUnionSnippetGenerator,
+    AbstractSimpleDiscriminatedUnionGenerator,
+    get_single_union_type_class_name,
+)
 
 
 class TypeddictSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminatedUnionGenerator):
@@ -64,7 +65,9 @@ class TypeddictSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminatedUnio
     def _generate_member_name(self, single_union_type: ir_types.SingleUnionType) -> str:
         return get_single_union_type_class_name(self._name, single_union_type.discriminant_value) + "Params"
 
-    def _generate_no_property_member(self, class_name: str, discriminant_field: FernAwarePydanticField) -> LocalClassReference:
+    def _generate_no_property_member(
+        self, class_name: str, discriminant_field: FernAwarePydanticField
+    ) -> LocalClassReference:
         with FernTypedDict(
             class_name=class_name,
             extended_references=[self._class_reference_for_base] if self._class_reference_for_base is not None else [],
@@ -75,8 +78,14 @@ class TypeddictSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminatedUnio
         ) as member_typed_dict:
             member_typed_dict.add_field(**vars(discriminant_field))
             return member_typed_dict.to_reference()
-        
-    def _generate_single_property_member(self, class_name: str, single_union_type: ir_types.SingleUnionType, properties: List[PydanticField], fern_aware_properties: List[FernAwarePydanticField]) -> LocalClassReference:
+
+    def _generate_single_property_member(
+        self,
+        class_name: str,
+        single_union_type: ir_types.SingleUnionType,
+        properties: List[PydanticField],
+        fern_aware_properties: List[FernAwarePydanticField],
+    ) -> LocalClassReference:
         with FernTypedDict(
             class_name=class_name,
             extended_references=[self._class_reference_for_base] if self._class_reference_for_base is not None else [],
@@ -89,8 +98,10 @@ class TypeddictSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminatedUnio
                 member_typed_dict.add_field(**vars(field))
 
             return member_typed_dict.to_reference()
-    
-    def _generate_same_properties_as_object_member(self, class_name: str, properties: List[FernAwarePydanticField]) -> LocalClassReference:
+
+    def _generate_same_properties_as_object_member(
+        self, class_name: str, properties: List[FernAwarePydanticField]
+    ) -> LocalClassReference:
         with FernTypedDict(
             class_name=class_name,
             extended_references=[self._class_reference_for_base] if self._class_reference_for_base is not None else [],
@@ -145,12 +156,13 @@ class TypeddictDiscriminatedUnionSnippetGenerator(AbstractDiscriminatedUnionSnip
                 snippet_writer=self.snippet_writer,
             )
         else:
+
             def write_dict(writer: AST.NodeWriter) -> None:
                 writer.write("{")
                 writer.write_node(example)  # type: ignore # mypy still thinks this could be an ExampleObjectTypeWithTypeId
                 writer.write("}")
-            return AST.Expression(AST.CodeWriter(write_dict))
 
+            return AST.Expression(AST.CodeWriter(write_dict))
 
     def _get_snippet_for_union_with_single_property(
         self,
@@ -174,10 +186,12 @@ class TypeddictDiscriminatedUnionSnippetGenerator(AbstractDiscriminatedUnionSnip
                 snippet_writer=self.snippet_writer,
             )
         else:
+
             def write_dict(writer: AST.NodeWriter) -> None:
                 writer.write("{")
                 writer.write_node(example)  # type: ignore # mypy still thinks this could be an ExampleTypeReference
                 writer.write("}")
+
             return AST.Expression(AST.CodeWriter(write_dict))
 
     def _get_snippet_for_union_with_no_properties(

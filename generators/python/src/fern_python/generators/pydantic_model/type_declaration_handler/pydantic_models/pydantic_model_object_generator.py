@@ -1,7 +1,4 @@
-from dataclasses import dataclass
 from typing import List, Optional
-
-from ..object_generator import AbstractObjectSnippetGenerator, ObjectProperty, AbstractObjectGenerator
 
 import fern.ir.resources as ir_types
 
@@ -11,6 +8,11 @@ from fern_python.snippet import SnippetWriter
 from ....context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig
 from ...fern_aware_pydantic_model import FernAwarePydanticModel
+from ..object_generator import (
+    AbstractObjectGenerator,
+    AbstractObjectSnippetGenerator,
+    ObjectProperty,
+)
 
 
 class PydanticModelObjectGenerator(AbstractObjectGenerator):
@@ -58,6 +60,7 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
                     json_field_name=property.name.wire_value,
                     description=property.docs,
                 )
+
 
 class PydanticModelObjectSnippetGenerator(AbstractObjectSnippetGenerator):
     def __init__(

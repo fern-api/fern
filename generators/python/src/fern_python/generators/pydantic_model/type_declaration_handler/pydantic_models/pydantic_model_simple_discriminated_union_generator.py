@@ -1,16 +1,13 @@
-from dataclasses import dataclass
 from typing import List, Optional, Set, Union
-
-from fern_python.generators.pydantic_model.type_declaration_handler.discriminated_union.simple_discriminated_union_generator import get_single_union_type_class_name
-
-from ..discriminated_union.simple_discriminated_union_generator import AbstractDiscriminatedUnionSnippetGenerator, AbstractSimpleDiscriminatedUnionGenerator
 
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST, LocalClassReference, SourceFile
-from fern_python.codegen.ast.references.class_reference import ClassReference
 from fern_python.generators.pydantic_model.fern_aware_pydantic_model import (
     FernAwarePydanticModel,
+)
+from fern_python.generators.pydantic_model.type_declaration_handler.discriminated_union.simple_discriminated_union_generator import (
+    get_single_union_type_class_name,
 )
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
 from fern_python.pydantic_codegen.pydantic_field import FernAwarePydanticField
@@ -18,6 +15,10 @@ from fern_python.snippet import SnippetWriter
 
 from ....context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig
+from ..discriminated_union.simple_discriminated_union_generator import (
+    AbstractDiscriminatedUnionSnippetGenerator,
+    AbstractSimpleDiscriminatedUnionGenerator,
+)
 
 
 class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminatedUnionGenerator):
@@ -83,7 +84,9 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
     def _generate_member_name(self, single_union_type: ir_types.SingleUnionType) -> str:
         return get_single_union_type_class_name(self._name, single_union_type.discriminant_value)
 
-    def _generate_no_property_member(self, class_name: str, discriminant_field: FernAwarePydanticField) -> LocalClassReference:
+    def _generate_no_property_member(
+        self, class_name: str, discriminant_field: FernAwarePydanticField
+    ) -> LocalClassReference:
         with FernAwarePydanticModel(
             type_name=None,
             class_name=class_name,
@@ -98,8 +101,13 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
 
             return internal_pydantic_model_for_single_union_type.to_reference()
 
-        
-    def _generate_single_property_member(self, class_name: str, single_union_type: ir_types.SingleUnionType, properties: List[PydanticField], fern_aware_properties: List[FernAwarePydanticField]) -> LocalClassReference:
+    def _generate_single_property_member(
+        self,
+        class_name: str,
+        single_union_type: ir_types.SingleUnionType,
+        properties: List[PydanticField],
+        fern_aware_properties: List[FernAwarePydanticField],
+    ) -> LocalClassReference:
         with PydanticModel(
             version=self._custom_config.version,
             name=class_name,
@@ -124,8 +132,10 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
             )
 
             return internal_pydantic_model_for_single_union_type.to_reference()
-    
-    def _generate_same_properties_as_object_member(self, class_name: str, properties: List[FernAwarePydanticField]) -> LocalClassReference:
+
+    def _generate_same_properties_as_object_member(
+        self, class_name: str, properties: List[FernAwarePydanticField]
+    ) -> LocalClassReference:
         with FernAwarePydanticModel(
             type_name=None,
             class_name=class_name,
@@ -193,6 +203,7 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
                     for type_id in forward_refed_types
                 }
             )
+
 
 class PydanticModelDiscriminatedUnionSnippetGenerator(AbstractDiscriminatedUnionSnippetGenerator):
     def __init__(

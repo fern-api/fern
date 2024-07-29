@@ -2,13 +2,15 @@ from typing import Optional
 
 import fern.ir.resources as ir_types
 
-from ..undiscriminated_union_generator import AbstractUndiscriminatedUnionGenerator, AbstractUndiscriminatedUnionSnippetGenerator
-
 from fern_python.codegen import AST, SourceFile
 from fern_python.snippet.snippet_writer import SnippetWriter
 
 from ....context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig
+from ..undiscriminated_union_generator import (
+    AbstractUndiscriminatedUnionGenerator,
+    AbstractUndiscriminatedUnionSnippetGenerator,
+)
 
 
 class PydanticModelUndiscriminatedUnionGenerator(AbstractUndiscriminatedUnionGenerator):
@@ -58,4 +60,5 @@ class PydanticModelUndiscriminatedUnionSnippetGenerator(AbstractUndiscriminatedU
             use_typeddict_request=False,
             as_request=False,
         )
+
     # generate_snippet delegates to the parent class AbstractUndiscriminatedUnionSnippetGenerator

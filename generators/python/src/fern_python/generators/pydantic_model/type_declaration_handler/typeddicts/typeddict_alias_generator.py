@@ -1,7 +1,5 @@
 from typing import Optional
 
-from ..alias_generator import AbstractAliasSnippetGenerator, AbstractAliasGenerator
-
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST, SourceFile
@@ -9,6 +7,7 @@ from fern_python.snippet import SnippetWriter
 
 from ....context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig
+from ..alias_generator import AbstractAliasGenerator, AbstractAliasSnippetGenerator
 
 
 class TypedDictAliasGenerator(AbstractAliasGenerator):
@@ -57,4 +56,5 @@ class TypedDictAliasSnippetGenerator(AbstractAliasSnippetGenerator):
             use_typeddict_request=True,
             as_request=True,
         )
+
     # generate_snippet delegates to the parent class AbstractAliasSnippetGenerator

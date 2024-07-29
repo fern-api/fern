@@ -66,7 +66,7 @@ def copy_to_project(*, project: Project) -> None:
             to="tests/utils/assets/models",
             replacements={
                 "....core.serialization": f"{project._relative_path_to_project}.core.serialization",
-                "..color": ".color"
+                "..color": ".color",
             },
         ),
     ]
