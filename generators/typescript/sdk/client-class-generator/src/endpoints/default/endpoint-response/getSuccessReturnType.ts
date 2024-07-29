@@ -68,6 +68,7 @@ function getFileType({
 }): ts.TypeNode {
     const fileType = visitJavaScriptRuntime(targetRuntime, {
         browser: () => ts.factory.createTypeReferenceNode("Blob"),
+        // TODO: Revisit this at EOL of node 16/17 -- we cannot use union here, since either or does not implement the pipe/pipeTo
         node: () => context.externalDependencies.stream.Readable._getReferenceToType()
     });
     if (includeContentHeadersOnResponse) {
@@ -76,6 +77,7 @@ function getFileType({
                 undefined,
                 READABLE_RESPONSE_KEY,
                 undefined,
+                // TODO: Revisit this at EOL of node 16/17 -- we cannot use union here, since either or does not implement the pipe/pipeTo
                 context.externalDependencies.stream.Readable._getReferenceToType()
             ),
             ts.factory.createPropertySignature(
