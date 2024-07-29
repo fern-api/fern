@@ -61,6 +61,7 @@ class AbstractSimpleDiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
         self._class_reference_for_base: Optional[ClassReference] = None
 
     def generate(self) -> None:
+        self._get_base_class_details()
         self._generate_base_class()
 
         single_union_type_references: List[LocalClassReference] = []
@@ -294,6 +295,10 @@ class AbstractSimpleDiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
                 AbstractSimpleDiscriminatedUnionGenerator.BASE_CLASS_NAME_WITH_UNDERSCORE
                 if is_base_class_name_present
                 else AbstractSimpleDiscriminatedUnionGenerator.BASE_CLASS_NAME
+            )
+
+            self._class_reference_for_base = ClassReference(
+                qualified_name_excluding_import=(self._base_class_name,),
             )
 
             for property in self._union.base_properties:

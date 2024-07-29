@@ -53,7 +53,7 @@ class PydanticModelGenerator(AbstractGenerator):
         custom_config = PydanticModelCustomConfig.parse_obj(generator_config.custom_config or {})
         context = PydanticGeneratorContextImpl(
             ir=ir,
-            type_declaration_referencer=TypeDeclarationReferencer(),
+            type_declaration_referencer=TypeDeclarationReferencer(use_typeddict_requests=custom_config.use_typeddict_requests, types=ir.types),
             generator_config=generator_config,
             project_module_path=self.get_relative_path_to_project_for_publish(
                 generator_config=generator_config,

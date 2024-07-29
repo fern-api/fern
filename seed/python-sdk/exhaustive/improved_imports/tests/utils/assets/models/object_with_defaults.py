@@ -5,7 +5,7 @@
 import typing_extensions
 
 
-class ObjectWithDefaults(typing_extensions.TypedDict):
+class ObjectWithDefaultsParams(typing_extensions.TypedDict):
     """
     Defines properties with default values and validation rules.
     """

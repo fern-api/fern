@@ -71,7 +71,7 @@ class TypeddictSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminatedUnio
             context=self._context,
             source_file=self._source_file,
             docstring=None,
-            should_export=False,
+            should_export=True,
         ) as member_typed_dict:
             member_typed_dict.add_field(**vars(discriminant_field))
             return member_typed_dict.to_reference()
@@ -83,7 +83,7 @@ class TypeddictSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminatedUnio
             context=self._context,
             source_file=self._source_file,
             docstring=None,
-            should_export=False,
+            should_export=True,
         ) as member_typed_dict:
             for field in fern_aware_properties:
                 member_typed_dict.add_field(**vars(field))
@@ -97,7 +97,7 @@ class TypeddictSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminatedUnio
             context=self._context,
             source_file=self._source_file,
             docstring=None,
-            should_export=False,
+            should_export=True,
         ) as member_typed_dict:
             for field in properties:
                 member_typed_dict.add_field(**vars(field))

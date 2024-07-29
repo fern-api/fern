@@ -21,13 +21,27 @@ from .object import (
     ObjectWithRequiredFieldParams,
     OptionalAlias,
 )
-from .union import Animal, AnimalParams, Animal_Cat, Animal_Dog, Cat, CatParams, Dog, DogParams, ErrorWithUnionBody
+from .union import (
+    Animal,
+    AnimalParams,
+    Animal_Cat,
+    Animal_CatParams,
+    Animal_Dog,
+    Animal_DogParams,
+    Cat,
+    CatParams,
+    Dog,
+    DogParams,
+    ErrorWithUnionBody,
+)
 
 __all__ = [
     "Animal",
     "AnimalParams",
     "Animal_Cat",
+    "Animal_CatParams",
     "Animal_Dog",
+    "Animal_DogParams",
     "Cat",
     "CatParams",
     "Dog",

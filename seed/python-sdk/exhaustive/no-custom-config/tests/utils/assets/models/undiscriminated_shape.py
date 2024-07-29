@@ -4,7 +4,7 @@
 
 import typing
 
-from .circle import Circle
-from .square import Square
+from .circle import CircleParams
+from .square import SquareParams
 
-UndiscriminatedShape = typing.Union[Circle, Square]
+UndiscriminatedShapeParams = typing.Union[CircleParams, SquareParams]

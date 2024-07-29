@@ -110,8 +110,7 @@ fixtures:
         inline_request_params: true
       outputFolder: inline_request_params
     - customConfig:
-        pydantic_config:
-          use_typeddict_requests: true
+        use_typeddict_requests: true
       outputFolder: typeddict_requests
   unions:
     - customConfig: null

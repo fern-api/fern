@@ -50,14 +50,23 @@ def copy_to_project(*, project: Project) -> None:
                 ".typeddict_models.types": f".assets.models",
             },
         ),
+        AsIsFile(
+            from_="tests/utils/typeddict_models/types/resources/types/color.py",
+            to="tests/utils/assets/models/color",
+            replacements={
+                ".typeddict_models.types.core.serialization": f"{project._relative_path_to_project}.core.serialization",
+                ".typeddict_models.types": f".assets.models",
+            },
+        ),
     ]
 
     AS_IS_DIRECTORIES = [
         AsIsFile(
-            from_="tests/utils/typeddict_models/types/resources/types",
+            from_="tests/utils/typeddict_models/types/resources/types/requests",
             to="tests/utils/assets/models",
             replacements={
-                "...core.serialization": f"{project._relative_path_to_project}.core.serialization",
+                "....core.serialization": f"{project._relative_path_to_project}.core.serialization",
+                "..color": ".color"
             },
         ),
     ]

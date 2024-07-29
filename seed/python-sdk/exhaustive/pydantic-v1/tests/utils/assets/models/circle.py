@@ -6,5 +6,5 @@ import typing_extensions
 from seed.core.serialization import FieldMetadata
 
 
-class Circle(typing_extensions.TypedDict):
+class CircleParams(typing_extensions.TypedDict):
     radius_measurement: typing_extensions.Annotated[float, FieldMetadata(alias="radiusMeasurement")]

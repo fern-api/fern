@@ -10,11 +10,11 @@ import typing_extensions
 from seed.core.serialization import FieldMetadata
 
 from .color import Color
-from .shape import Shape
-from .undiscriminated_shape import UndiscriminatedShape
+from .shape import ShapeParams
+from .undiscriminated_shape import UndiscriminatedShapeParams
 
 
-class ObjectWithOptionalField(typing_extensions.TypedDict):
+class ObjectWithOptionalFieldParams(typing_extensions.TypedDict):
     literal: typing.Literal["lit_one"]
     string: typing_extensions.NotRequired[str]
     integer: typing_extensions.NotRequired[int]
@@ -29,7 +29,7 @@ class ObjectWithOptionalField(typing_extensions.TypedDict):
     set_: typing_extensions.NotRequired[typing_extensions.Annotated[typing.Set[str], FieldMetadata(alias="set")]]
     map_: typing_extensions.NotRequired[typing_extensions.Annotated[typing.Dict[int, str], FieldMetadata(alias="map")]]
     enum: typing_extensions.NotRequired[Color]
-    union: typing_extensions.NotRequired[Shape]
-    second_union: typing_extensions.NotRequired[Shape]
-    undiscriminated_union: typing_extensions.NotRequired[UndiscriminatedShape]
+    union: typing_extensions.NotRequired[ShapeParams]
+    second_union: typing_extensions.NotRequired[ShapeParams]
+    undiscriminated_union: typing_extensions.NotRequired[UndiscriminatedShapeParams]
     any: typing.Any

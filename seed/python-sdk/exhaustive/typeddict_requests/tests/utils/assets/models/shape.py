@@ -24,4 +24,4 @@ class Shape_SquareParams(Base):
     length_measurement: typing_extensions.Annotated[float, FieldMetadata(alias="lengthMeasurement")]
 
 
-Shape = typing.Union[Shape_CircleParams, Shape_SquareParams]
+ShapeParams = typing.Union[Shape_CircleParams, Shape_SquareParams]
