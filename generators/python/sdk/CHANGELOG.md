@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.0-rc1] - 2024-07-29
+
+- Fix: The generated README now imports `ApiError` as if it were from outside the module.
+
 ## [3.1.0-rc0] - 2024-07-24
 
 - Improvement: The root client users interact with is now exported from the main `__init__.py`, this allows users to access the client via `from my_sdk import my_sdk_client` as opposed to `from my_sdk.client import my_sdk_client`.
