@@ -252,7 +252,7 @@ class ObjectClient:
         import uuid
 
         from seed import SeedExhaustive
-        from seed.types.object.types import ObjectWithOptionalField
+        from seed.types.object import ObjectWithOptionalField
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -328,7 +328,7 @@ class ObjectClient:
         import uuid
 
         from seed import SeedExhaustive
-        from seed.types.object.types import ObjectWithOptionalField
+        from seed.types.object import ObjectWithOptionalField
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -399,7 +399,7 @@ class ObjectClient:
         import uuid
 
         from seed import SeedExhaustive
-        from seed.types.object.types import (
+        from seed.types.object import (
             NestedObjectWithRequiredField,
             ObjectWithOptionalField,
         )
@@ -709,7 +709,7 @@ class AsyncObjectClient:
         import uuid
 
         from seed import AsyncSeedExhaustive
-        from seed.types.object.types import ObjectWithOptionalField
+        from seed.types.object import ObjectWithOptionalField
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -792,7 +792,7 @@ class AsyncObjectClient:
         import uuid
 
         from seed import AsyncSeedExhaustive
-        from seed.types.object.types import ObjectWithOptionalField
+        from seed.types.object import ObjectWithOptionalField
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -870,7 +870,7 @@ class AsyncObjectClient:
         import uuid
 
         from seed import AsyncSeedExhaustive
-        from seed.types.object.types import (
+        from seed.types.object import (
             NestedObjectWithRequiredField,
             ObjectWithOptionalField,
         )

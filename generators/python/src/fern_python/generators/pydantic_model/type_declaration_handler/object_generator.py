@@ -29,6 +29,7 @@ class AbstractObjectGenerator(AbstractTypeGenerator, ABC):
         context: PydanticGeneratorContext,
         source_file: SourceFile,
         custom_config: PydanticModelCustomConfig,
+        as_request: bool,
         docs: Optional[str],
         class_name: Optional[str] = None,
         snippet: Optional[str] = None,
@@ -49,7 +50,7 @@ class AbstractObjectGenerator(AbstractTypeGenerator, ABC):
         else:
             if class_name is None:
                 assert name is not None  # for mypy, even though the above condition should prevent this
-                self._class_name = self._context.get_class_name_for_type_id(name.type_id, as_request=False)
+                self._class_name = self._context.get_class_name_for_type_id(name.type_id, as_request=as_request)
             else:
                 self._class_name = class_name
 
