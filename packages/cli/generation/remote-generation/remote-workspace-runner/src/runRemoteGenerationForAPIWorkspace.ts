@@ -47,11 +47,6 @@ export async function runRemoteGenerationForAPIWorkspace({
     interactiveTasks.push(
         ...generatorGroup.generators.map((generatorInvocation) =>
             context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
-                context.logger.info(
-                    `about to parse spec ${JSON.stringify(generatorInvocation)} ${JSON.stringify(
-                        getOSSWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
-                    )}`
-                );
                 const fernWorkspace = await workspace.toFernWorkspace(
                     { context },
                     getOSSWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)

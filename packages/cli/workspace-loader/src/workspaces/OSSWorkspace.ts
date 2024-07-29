@@ -63,7 +63,6 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
         },
         settings?: OSSWorkspace.Settings
     ): Promise<FernDefinition> {
-        context.logger.info(`Parsing OpenAPI specs... ${JSON.stringify(settings)}`);
         const openApiIr = await parse({
             specs: this.specs,
             taskContext: context,
