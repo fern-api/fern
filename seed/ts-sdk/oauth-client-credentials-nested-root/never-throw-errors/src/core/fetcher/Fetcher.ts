@@ -5,7 +5,6 @@ import { getRequestBody } from "./getRequestBody";
 import { getResponseBody } from "./getResponseBody";
 import { makeRequest } from "./makeRequest";
 import { requestWithRetries } from "./requestWithRetries";
-import { chooseStreamWrapper } from "./stream-wrappers/chooseStreamWrapper";
 
 export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
 
@@ -22,7 +21,7 @@ export declare namespace Fetcher {
         withCredentials?: boolean;
         abortSignal?: AbortSignal;
         requestType?: "json" | "file" | "bytes";
-        responseType?: "json" | "blob" | "streaming" | "text";
+        responseType?: "json" | "blob" | "sse" | "streaming" | "text";
         duplex?: "half";
     }
 
@@ -90,10 +89,6 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
         let responseBody = await getResponseBody(response, args.responseType);
 
         if (response.status >= 200 && response.status < 400) {
-            if (args.duplex && args.responseType === "streaming") {
-                responseBody = chooseStreamWrapper(responseBody);
-            }
-
             return {
                 ok: true,
                 body: responseBody as R,
