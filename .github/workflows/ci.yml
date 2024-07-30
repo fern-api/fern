@@ -186,8 +186,8 @@ jobs:
         id: filter
         with:
           filters: |
-            generators:
-              - 'typescript/sdk/**'
+            typescript:
+              - 'generators/typescript/sdk/**'
 
   node-version-tests:
     runs-on: ubuntu-latest
