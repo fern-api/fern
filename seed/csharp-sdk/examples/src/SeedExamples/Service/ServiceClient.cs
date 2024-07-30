@@ -59,12 +59,10 @@ public class ServiceClient
             .Tag.Where(_value => _value != null)
             .Select(_value => _value)
             .ToList();
-
         if (request.Shallow != null)
         {
             _query["shallow"] = request.Shallow.ToString();
         }
-
         var _headers = new Dictionary<string, string>()
         {
             { "X-API-Version", request.XApiVersion },

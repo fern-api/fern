@@ -74,11 +74,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 }
                 for (const query of optionalQueryParameters) {
                     const queryParameterReference = `${this.getParameterName()}.${query.name.name.pascalCase.safeName}`;
-                    writer.writeLine();
                     writer.controlFlow("if", `${queryParameterReference} != null`);
                     this.writeQueryParameter(writer, query);
                     writer.endControlFlow();
-                    writer.writeLine();
                 }
             }),
             queryParameterBagReference: QUERY_PARAMETER_BAG_NAME

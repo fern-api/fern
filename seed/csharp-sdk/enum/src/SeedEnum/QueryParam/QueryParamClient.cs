@@ -21,17 +21,14 @@ public class QueryParamClient
         var _query = new Dictionary<string, object>() { };
         _query["operand"] = JsonSerializer.Serialize(request.Operand);
         _query["operandOrColor"] = request.OperandOrColor.ToString();
-
         if (request.MaybeOperand != null)
         {
             _query["maybeOperand"] = JsonSerializer.Serialize(request.MaybeOperand.Value);
         }
-
         if (request.MaybeOperandOrColor != null)
         {
             _query["maybeOperandOrColor"] = request.MaybeOperandOrColor.ToString();
         }
-
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {

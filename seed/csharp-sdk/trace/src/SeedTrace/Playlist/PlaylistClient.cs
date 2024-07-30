@@ -22,14 +22,12 @@ public class PlaylistClient
     {
         var _query = new Dictionary<string, object>() { };
         _query["datetime"] = request.Datetime.ToString(Constants.DateTimeFormat);
-
         if (request.OptionalDatetime != null)
         {
             _query["optionalDatetime"] = request.OptionalDatetime.Value.ToString(
                 Constants.DateTimeFormat
             );
         }
-
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
@@ -64,12 +62,10 @@ public class PlaylistClient
             .Select(_value => _value)
             .ToList();
         _query["multipleField"] = request.MultipleField.Select(_value => _value).ToList();
-
         if (request.Limit != null)
         {
             _query["limit"] = request.Limit.ToString();
         }
-
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {

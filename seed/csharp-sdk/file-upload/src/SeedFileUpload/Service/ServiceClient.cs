@@ -48,17 +48,14 @@ public class ServiceClient
             .OptionalListOfStrings.Where(_value => _value != null)
             .Select(_value => _value)
             .ToList();
-
         if (request.MaybeString != null)
         {
             _query["maybeString"] = request.MaybeString;
         }
-
         if (request.MaybeInteger != null)
         {
             _query["maybeInteger"] = request.MaybeInteger.ToString();
         }
-
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {

@@ -29,24 +29,20 @@ public class UserClient
         _query["nestedUser"] = request.NestedUser.ToString();
         _query["excludeUser"] = request.ExcludeUser.Select(_value => _value.ToString()).ToList();
         _query["filter"] = request.Filter.Select(_value => _value).ToList();
-
         if (request.OptionalDeadline != null)
         {
             _query["optionalDeadline"] = request.OptionalDeadline.Value.ToString(
                 Constants.DateTimeFormat
             );
         }
-
         if (request.OptionalString != null)
         {
             _query["optionalString"] = request.OptionalString;
         }
-
         if (request.OptionalUser != null)
         {
             _query["optionalUser"] = request.OptionalUser.ToString();
         }
-
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {

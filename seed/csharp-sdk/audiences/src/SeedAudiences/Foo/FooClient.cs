@@ -18,12 +18,10 @@ public class FooClient
     public async Task<ImportingType> FindAsync(FindRequest request)
     {
         var _query = new Dictionary<string, object>() { };
-
         if (request.OptionalString != null)
         {
             _query["optionalString"] = request.OptionalString;
         }
-
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
