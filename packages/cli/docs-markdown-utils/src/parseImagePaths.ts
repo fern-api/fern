@@ -39,6 +39,7 @@ export function parseImagePaths(
         const resolvedPath = resolvePath(data.image, metadata);
         if (resolvedPath != null) {
             filepaths.add(resolvedPath);
+            data.image = resolvedPath;
         }
     }
 
@@ -125,7 +126,7 @@ export function parseImagePaths(
             }
         }
 
-        if (replaced === original) {
+        if (replaced === original && filepaths.size === 0) {
             return;
         }
 

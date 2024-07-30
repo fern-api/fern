@@ -101,6 +101,17 @@ describe("parseImagePaths", () => {
         `);
     });
 
+    it("should parse images from frontmatter text", () => {
+        const page = `\-\-\-\nimage: "path/to/image.png"\n\-\-\-`;
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/image.png"]);
+        expect(result.markdown.trim()).toEqual(
+            `\-\-\-
+image: /Volume/git/fern/my/docs/folder/path/to/image.png
+\-\-\-`
+        );
+    });
+
     it("should parse image with alt on multiple lines", () => {
         const page = "This is a test page with an image ![image with \n new line in alt](path/to/image.png)";
         const result = parseImagePaths(page, PATHS);
