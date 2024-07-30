@@ -162,7 +162,7 @@ export class EndpointGenerator {
                 return this.context.csharpTypeMapper.convert({ reference: reference.responseBodyType });
             },
             streaming: () => undefined,
-            text: () => undefined,
+            text: () => csharp.Type.string(),
             _other: () => undefined
         });
     }
@@ -200,7 +200,23 @@ export class EndpointGenerator {
                 });
             },
             streaming: () => undefined,
-            text: () => undefined,
+            text: () => {
+                return csharp.codeblock((writer) => {
+                    writer.writeTextStatement(
+                        `var ${RESPONSE_BODY_VARIABLE_NAME} = await ${RESPONSE_VARIABLE_NAME}.Raw.Content.ReadAsStringAsync()`
+                    );
+                    writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400) {`);
+                    writer.writeNewLineIfLastLineNot();
+
+                    writer.writeTextStatement(`return ${RESPONSE_BODY_VARIABLE_NAME}`);
+
+                    writer.indent();
+                    writer.writeLine("}");
+                    writer.dedent();
+
+                    writer.writeLine(`throw new Exception(${RESPONSE_BODY_VARIABLE_NAME});`);
+                });
+            },
             _other: () => undefined
         });
     }

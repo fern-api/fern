@@ -42,7 +42,8 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             ...this.classReference,
             partial: false,
             access: "public",
-            record: true
+            record: true,
+            parentClassReference: this.getParentClassReference()
         });
 
         for (const query of this.endpoint.queryParameters) {
@@ -90,7 +91,6 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 );
             },
             inlinedRequestBody: (request) => {
-                // TODO(dsinghvi): handle extends of inlined request bodies
                 for (const property of request.properties) {
                     const annotations: csharp.Annotation[] = [];
                     const maybeUndiscriminatedUnion = this.context.getAsUndiscriminatedUnionTypeDeclaration(
@@ -129,6 +129,19 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             clazz: class_,
             directory: this.getDirectory()
         });
+    }
+
+    private getParentClassReference(): csharp.ClassReference | undefined {
+        if (this.endpoint.requestBody?.type === "inlinedRequestBody") {
+            const request = this.endpoint.requestBody;
+            if (request.extends.length > 1) {
+                throw new Error("Multiple inheritance is not supported in C.");
+            }
+            return request.extends[0] != null
+                ? this.context.csharpTypeMapper.convertToClassReference(request.extends[0])
+                : undefined;
+        }
+        return undefined;
     }
 
     public doGenerateSnippet(example: ExampleEndpointCall): csharp.CodeBlock {

@@ -1,10 +1,11 @@
 using System.Text.Json.Serialization;
+using SeedExamples;
 
 #nullable enable
 
 namespace SeedExamples;
 
-public record ExtendedMovie
+public record ExtendedMovie : Movie
 {
     [JsonPropertyName("cast")]
     public IEnumerable<string> Cast { get; set; } = new List<string>();

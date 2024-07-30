@@ -5,7 +5,7 @@ using SeedPagination;
 
 namespace SeedPagination;
 
-public record ListUsersExtendedResponse
+public record ListUsersExtendedResponse : UserPage
 {
     /// <summary>
     /// The totall number of /users

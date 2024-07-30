@@ -1,10 +1,11 @@
 using System.Text.Json.Serialization;
+using SeedExtends;
 
 #nullable enable
 
 namespace SeedExtends;
 
-public record NestedType
+public record NestedType : Json
 {
     [JsonPropertyName("name")]
     public required string Name { get; set; }
@@ -15,3 +16,6 @@ public record NestedType
     [JsonPropertyName("docs")]
     public required string Docs { get; set; }
 }
+
+// A extends B, C
+// A implements IB, IC

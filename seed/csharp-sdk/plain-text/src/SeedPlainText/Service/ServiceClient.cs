@@ -14,7 +14,7 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Task GetTextAsync()
+    public async Task<string> GetTextAsync()
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -24,5 +24,11 @@ public class ServiceClient
                 Path = "text"
             }
         );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return responseBody;
+        }
+        throw new Exception(responseBody);
     }
 }

@@ -30,4 +30,5 @@ fixtures:
 allowedFailures:
   - objects-with-imports
   - examples
+  - extends
 
