@@ -10,9 +10,9 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class Animal_Dog(UniversalBaseModel):
+    animal: typing.Literal["dog"] = "dog"
     name: str
     likes_to_woof: bool = pydantic.Field(alias="likesToWoof")
-    animal: typing.Literal["dog"] = "dog"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -25,9 +25,9 @@ class Animal_Dog(UniversalBaseModel):
 
 
 class Animal_Cat(UniversalBaseModel):
+    animal: typing.Literal["cat"] = "cat"
     name: str
     likes_to_meow: bool = pydantic.Field(alias="likesToMeow")
-    animal: typing.Literal["cat"] = "cat"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

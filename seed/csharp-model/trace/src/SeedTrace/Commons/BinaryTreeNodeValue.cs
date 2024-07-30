@@ -7,14 +7,14 @@ namespace SeedTrace;
 public record BinaryTreeNodeValue
 {
     [JsonPropertyName("nodeId")]
-    public required string NodeId { get; init; }
+    public required string NodeId { get; set; }
 
     [JsonPropertyName("val")]
-    public required double Val { get; init; }
+    public required double Val { get; set; }
 
     [JsonPropertyName("right")]
-    public string? Right { get; init; }
+    public string? Right { get; set; }
 
     [JsonPropertyName("left")]
-    public string? Left { get; init; }
+    public string? Left { get; set; }
 }

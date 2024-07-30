@@ -7,5 +7,5 @@ namespace SeedExhaustive.Types;
 public record DoubleOptional
 {
     [JsonPropertyName("optionalAlias")]
-    public string? OptionalAlias { get; init; }
+    public string? OptionalAlias { get; }
 }

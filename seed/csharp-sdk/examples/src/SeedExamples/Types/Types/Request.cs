@@ -7,5 +7,5 @@ namespace SeedExamples;
 public record Request
 {
     [JsonPropertyName("request")]
-    public required object Request_ { get; init; }
+    public required object Request_ { get; set; }
 }

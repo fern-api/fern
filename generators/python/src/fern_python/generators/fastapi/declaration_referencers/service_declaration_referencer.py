@@ -8,7 +8,7 @@ from .fastapi_declaration_referencer import FastApiDeclarationReferencer
 
 
 class ServiceDeclarationReferencer(FastApiDeclarationReferencer[ir_types.http.DeclaredServiceName]):
-    def get_filepath(self, *, name: ir_types.DeclaredServiceName) -> Filepath:
+    def get_filepath(self, *, name: ir_types.DeclaredServiceName, as_request: bool = False) -> Filepath:
         return Filepath(
             directories=self._get_directories_for_service(
                 name=name,
@@ -33,7 +33,7 @@ class ServiceDeclarationReferencer(FastApiDeclarationReferencer[ir_types.http.De
             ),
         )
 
-    def get_class_name(self, *, name: ir_types.DeclaredServiceName) -> str:
+    def get_class_name(self, *, name: ir_types.DeclaredServiceName, as_request: bool = False) -> str:
         joined_path = (
             "".join([part.pascal_case.unsafe_name for part in name.fern_filepath.all_parts])
             if len(name.fern_filepath.all_parts) > 0

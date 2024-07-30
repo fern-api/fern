@@ -54,7 +54,7 @@ class FernAwarePydanticModel:
 
         models_to_extend = [item for item in base_models] if base_models is not None else []
         extends_crs = (
-            [context.get_class_reference_for_type_id(extended.type_id) for extended in extends]
+            [context.get_class_reference_for_type_id(extended.type_id, as_request=False) for extended in extends]
             if extends is not None
             else []
         )
@@ -155,6 +155,7 @@ class FernAwarePydanticModel:
             # we have to import it after the current declaration to avoid
             # circular import errors
             must_import_after_current_declaration=self._must_import_after_current_declaration,
+            as_request=False,
         )
 
     def _must_import_after_current_declaration(self, type_name: ir_types.DeclaredTypeName) -> bool:

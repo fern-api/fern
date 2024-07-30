@@ -7,8 +7,8 @@ namespace SeedTrace;
 public record MapType
 {
     [JsonPropertyName("keyType")]
-    public required object KeyType { get; init; }
+    public required object KeyType { get; set; }
 
     [JsonPropertyName("valueType")]
-    public required object ValueType { get; init; }
+    public required object ValueType { get; set; }
 }

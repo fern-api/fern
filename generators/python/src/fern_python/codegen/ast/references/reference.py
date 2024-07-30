@@ -50,3 +50,23 @@ class Reference:
       from __future__ import annotations.
     for built-ins and non-annotation references, this field is ignored.
     """
+
+    import_if_type_checking: bool = False
+    """
+    Adding this paradigm as it's more common to do this than it is to have
+    imports at the bottom of the file.
+
+    This is what it looks like in practice:
+    ```
+    if TYPE_CHECKING:
+        from typing import List
+    ```
+    """
+
+    require_postponed_annotations: bool = False
+    """
+    Certain functionality may call for `from __future__ import annotations`
+    This flag is meant to force that behavior.
+    This was originally added to ensure the use of NotRequired for TypedDicts
+    brings in this import.
+    """

@@ -12,7 +12,7 @@ public record CreateUserRequest
     ///
     /// </summary>
     [JsonPropertyName("name")]
-    public required string Name { get; init; }
+    public required string Name { get; set; }
 
     /// <summary>
     /// The age of the user.
@@ -20,5 +20,5 @@ public record CreateUserRequest
     ///
     /// </summary>
     [JsonPropertyName("age")]
-    public int? Age { get; init; }
+    public int? Age { get; set; }
 }

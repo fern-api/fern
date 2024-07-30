@@ -7,11 +7,11 @@ namespace SeedExamples;
 public record Moment
 {
     [JsonPropertyName("id")]
-    public required string Id { get; init; }
+    public required string Id { get; set; }
 
     [JsonPropertyName("date")]
-    public required DateOnly Date { get; init; }
+    public required DateOnly Date { get; set; }
 
     [JsonPropertyName("datetime")]
-    public required DateTime Datetime { get; init; }
+    public required DateTime Datetime { get; set; }
 }

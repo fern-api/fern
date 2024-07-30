@@ -8,11 +8,11 @@ namespace SeedExamples;
 public record Directory
 {
     [JsonPropertyName("name")]
-    public required string Name { get; init; }
+    public required string Name { get; set; }
 
     [JsonPropertyName("files")]
-    public IEnumerable<File>? Files { get; init; }
+    public IEnumerable<File>? Files { get; set; }
 
     [JsonPropertyName("directories")]
-    public IEnumerable<Directory>? Directories { get; init; }
+    public IEnumerable<Directory>? Directories { get; set; }
 }

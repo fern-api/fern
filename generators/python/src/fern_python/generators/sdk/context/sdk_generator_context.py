@@ -1,6 +1,6 @@
 import typing
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import Dict, Optional
 
 import fern.ir.resources as ir_types
 from fern.generator_exec.resources import GeneratorConfig
@@ -33,11 +33,17 @@ class SdkGeneratorContext(ABC):
         self.generator_config = generator_config
         self.pydantic_generator_context = PydanticGeneratorContextImpl(
             ir=ir,
-            type_declaration_referencer=TypeDeclarationReferencer(skip_resources_module=custom_config.improved_imports),
+            type_declaration_referencer=TypeDeclarationReferencer(
+                skip_resources_module=custom_config.improved_imports,
+                use_typeddict_requests=custom_config.pydantic_config.use_typeddict_requests,
+                types=ir.types,
+            ),
             generator_config=generator_config,
             project_module_path=project_module_path,
             allow_skipping_validation=custom_config.pydantic_config.skip_validation,
+            use_str_enums=custom_config.pydantic_config.use_str_enums,
             allow_leveraging_defaults=custom_config.pydantic_config.use_provided_defaults,
+            use_typeddict_requests=custom_config.pydantic_config.use_typeddict_requests,
             reserved_names={exported_root_client.get_class_name(name=None)},
         )
 
@@ -49,6 +55,8 @@ class SdkGeneratorContext(ABC):
             allow_skipping_validation=custom_config.pydantic_config.skip_validation,
             has_paginated_endpoints=_has_paginated_endpoints,
             version=custom_config.pydantic_config.version,
+            project_module_path=project_module_path,
+            use_typeddict_requests=custom_config.pydantic_config.use_typeddict_requests,
         )
         self.custom_config = custom_config
 
@@ -138,4 +146,12 @@ class SdkGeneratorContext(ABC):
 
     @abstractmethod
     def resolved_schema_is_optional_enum(self, reference: ir_types.TypeReference) -> bool:
+        ...
+
+    @abstractmethod
+    def get_types(self) -> Dict[ir_types.TypeId, ir_types.TypeDeclaration]:
+        ...
+
+    @abstractmethod
+    def unwrap_optional_type_reference(self, type_reference: ir_types.TypeReference) -> ir_types.TypeReference:
         ...

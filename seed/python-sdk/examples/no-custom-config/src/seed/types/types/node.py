@@ -13,7 +13,7 @@ class Node(UniversalBaseModel):
     """
     Examples
     --------
-    from seed import Node, Tree
+    from seed.types import Node, Tree
 
     Node(
         name="root",

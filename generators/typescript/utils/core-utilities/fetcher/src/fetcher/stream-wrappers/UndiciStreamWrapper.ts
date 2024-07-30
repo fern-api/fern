@@ -2,17 +2,17 @@ import { StreamWrapper } from "./chooseStreamWrapper";
 
 type EventCallback = (data?: any) => void;
 
-export class UndiciStreamWrapper
-    implements StreamWrapper<UndiciStreamWrapper | WritableStream<Uint8Array>, Uint8Array>
+export class UndiciStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | Uint32Array>
+    implements StreamWrapper<UndiciStreamWrapper<ReadFormat> | WritableStream<ReadFormat>, ReadFormat>
 {
-    private readableStream: ReadableStream<Uint8Array>;
-    private reader: ReadableStreamDefaultReader<Uint8Array>;
+    private readableStream: ReadableStream<ReadFormat>;
+    private reader: ReadableStreamDefaultReader<ReadFormat>;
     private events: Record<string, EventCallback[] | undefined>;
     private paused: boolean;
     private resumeCallback: ((value?: unknown) => void) | null;
     private encoding: string | null;
 
-    constructor(readableStream: ReadableStream<Uint8Array>) {
+    constructor(readableStream: ReadableStream<ReadFormat>) {
         this.readableStream = readableStream;
         this.reader = this.readableStream.getReader();
         this.events = {
@@ -38,8 +38,8 @@ export class UndiciStreamWrapper
     }
 
     public pipe(
-        dest: UndiciStreamWrapper | WritableStream<Uint8Array>
-    ): UndiciStreamWrapper | WritableStream<Uint8Array> {
+        dest: UndiciStreamWrapper<ReadFormat> | WritableStream<ReadFormat>
+    ): UndiciStreamWrapper<ReadFormat> | WritableStream<ReadFormat> {
         this.on("data", (chunk) => {
             if (dest instanceof UndiciStreamWrapper) {
                 dest._write(chunk);
@@ -72,7 +72,13 @@ export class UndiciStreamWrapper
         return dest;
     }
 
-    public unpipe(dest: UndiciStreamWrapper | WritableStream<Uint8Array>): void {
+    public pipeTo(
+        dest: UndiciStreamWrapper<ReadFormat> | WritableStream<ReadFormat>
+    ): UndiciStreamWrapper<ReadFormat> | WritableStream<ReadFormat> {
+        return this.pipe(dest);
+    }
+
+    public unpipe(dest: UndiciStreamWrapper<ReadFormat> | WritableStream<any>): void {
         this.off("data", (chunk) => {
             if (dest instanceof UndiciStreamWrapper) {
                 dest._write(chunk);
@@ -132,7 +138,7 @@ export class UndiciStreamWrapper
         return this.paused;
     }
 
-    public async read(): Promise<Uint8Array | undefined> {
+    public async read(): Promise<ReadFormat | undefined> {
         if (this.paused) {
             await new Promise((resolve) => {
                 this.resumeCallback = resolve;
@@ -150,7 +156,7 @@ export class UndiciStreamWrapper
     }
 
     public async text(): Promise<string> {
-        const chunks: Uint8Array[] = [];
+        const chunks: BlobPart[] = [];
 
         while (true) {
             const { done, value } = await this.reader.read();
@@ -167,7 +173,7 @@ export class UndiciStreamWrapper
         return JSON.parse(text);
     }
 
-    private _write(chunk: Uint8Array): void {
+    private _write(chunk: ReadFormat): void {
         this._emit("data", chunk);
     }
 

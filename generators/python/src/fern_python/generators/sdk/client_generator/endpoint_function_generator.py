@@ -8,6 +8,7 @@ from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.external_dependencies import HttpX
 from fern_python.external_dependencies.asyncio import Asyncio
+from fern_python.generators.pydantic_model.typeddict import FernTypedDict
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
     EndpointMetadata,
     EndpointMetadataCollector,
@@ -1081,6 +1082,18 @@ class EndpointFunctionGenerator:
 
                 reference = AST.Expression(AST.CodeWriter(write_ternary))
 
+        elif self._context.custom_config.pydantic_config.use_typeddict_requests and FernTypedDict.can_tr_be_typeddict(
+            query_parameter.value_type, self._context.get_types()
+        ):
+            # We don't need any optional wrappings for the coercion here.
+            unwrapped_tr = self._context.unwrap_optional_type_reference(query_parameter.value_type)
+            type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                unwrapped_tr, in_endpoint=True, for_typeddict=True
+            )
+            reference = self._context.core_utilities.convert_and_respect_annotation_metadata(
+                object_=reference, annotation=type_hint
+            )
+
         elif not self._is_httpx_primitive_data(query_parameter.value_type, allow_optional=True):
             reference = self._context.core_utilities.jsonable_encoder(reference)
 
@@ -1365,6 +1378,8 @@ class EndpointFunctionSnippetGenerator:
         for path_parameter in all_path_parameters:
             path_parameter_value = self.snippet_writer.get_snippet_for_example_type_reference(
                 example_type_reference=path_parameter.value,
+                as_request=True,
+                use_typeddict_request=self.context.custom_config.pydantic_config.use_typeddict_requests,
             )
             if not self._is_path_literal(path_parameter.name.original_name):
                 args.append(
@@ -1392,6 +1407,8 @@ class EndpointFunctionSnippetGenerator:
                 continue
             example_header_parameter_value = self.snippet_writer.get_snippet_for_example_type_reference(
                 example_type_reference=example_header.value,
+                as_request=True,
+                use_typeddict_request=self.context.custom_config.pydantic_config.use_typeddict_requests,
             )
             if (
                 not self._is_header_literal(example_header.name.wire_value)
@@ -1407,6 +1424,8 @@ class EndpointFunctionSnippetGenerator:
         for query_parameter in self.example.query_parameters:
             query_parameter_value = self.snippet_writer.get_snippet_for_example_type_reference(
                 example_type_reference=query_parameter.value,
+                as_request=True,
+                use_typeddict_request=self.context.custom_config.pydantic_config.use_typeddict_requests,
             )
             if not self._is_query_literal(query_parameter.name.wire_value) and query_parameter_value is not None:
                 args.append(
@@ -1483,6 +1502,8 @@ class EndpointFunctionSnippetGenerator:
         for example_property in example_inlined_request_body.properties:
             property_value = self.snippet_writer.get_snippet_for_example_type_reference(
                 example_type_reference=example_property.value,
+                as_request=True,
+                use_typeddict_request=self.context.custom_config.pydantic_config.use_typeddict_requests,
             )
             if not self._is_inlined_request_literal(example_property.name.wire_value) and property_value is not None:
                 snippets.append(
@@ -1498,6 +1519,8 @@ class EndpointFunctionSnippetGenerator:
     ) -> List[AST.Expression]:
         request_value = self.snippet_writer.get_snippet_for_example_type_reference(
             example_type_reference=example_type_reference,
+            as_request=True,
+            use_typeddict_request=self.context.custom_config.pydantic_config.use_typeddict_requests,
         )
         if request_value is not None:
             return [
@@ -1513,7 +1536,12 @@ class EndpointFunctionSnippetGenerator:
         example_object: ir_types.ExampleObjectType,
         request_parameter_names: Dict[ir_types.Name, str],
     ) -> List[AST.Expression]:
-        return self.snippet_writer.get_snippet_for_object_properties(example_object, request_parameter_names)
+        return self.snippet_writer.get_snippet_for_object_properties(
+            example_object,
+            request_parameter_names,
+            as_request=True,
+            use_typeddict_request=self.context.custom_config.pydantic_config.use_typeddict_requests,
+        )
 
     def _get_snippet_for_request_reference(
         self,

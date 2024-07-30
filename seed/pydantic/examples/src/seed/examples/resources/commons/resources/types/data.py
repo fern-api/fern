@@ -18,7 +18,7 @@ class Data_Base64(UniversalBaseModel):
 
 
 """
-from seed.examples.resources.commons import Data_String
+from seed.examples.resources.commons.resources import Data_String
 
 Data_String(value="data")
 """

@@ -8,8 +8,8 @@ namespace SeedTrace.V2;
 public record DefaultProvidedFile
 {
     [JsonPropertyName("file")]
-    public required FileInfoV2 File { get; init; }
+    public required FileInfoV2 File { get; set; }
 
     [JsonPropertyName("relatedTypes")]
-    public IEnumerable<object> RelatedTypes { get; init; } = new List<object>();
+    public IEnumerable<object> RelatedTypes { get; set; } = new List<object>();
 }
