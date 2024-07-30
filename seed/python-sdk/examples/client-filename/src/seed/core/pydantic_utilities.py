@@ -83,11 +83,22 @@ def to_jsonable_with_fallback(
 
 
 class UniversalBaseModel(pydantic.BaseModel):
-    class Config:
-        populate_by_name = True
-        smart_union = True
-        allow_population_by_field_name = True
-        json_encoders = {dt.datetime: serialize_datetime}
+    # # Here we apply both Pydantic V1 and V2 configurations, certain versions of mypy do not respect `allow_population_by_field_name` when applied conditionally.
+    # class Config:
+    #     populate_by_name = True
+    #     smart_union = True # type: ignore # Pydantic error with mypy not recognizing the config if applied conditionally
+    #     allow_population_by_field_name = True  # type: ignore # Pydantic error with mypy not recognizing the config if applied conditionally
+    #     json_encoders = {dt.datetime: serialize_datetime}
+
+    if IS_PYDANTIC_V2:
+        # Allow fields begining with `model_` to be used in the model
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(protected_namespaces=(), populate_by_name=True, json_encoders={dt.datetime: serialize_datetime})  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            smart_union = True  # type: ignore # Pydantic error with mypy not recognizing the config if applied conditionally
+            allow_population_by_field_name = True  # type: ignore # Pydantic error with mypy not recognizing the config if applied conditionally
+            json_encoders = {dt.datetime: serialize_datetime}
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
