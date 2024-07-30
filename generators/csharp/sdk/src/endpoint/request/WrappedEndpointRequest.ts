@@ -94,10 +94,14 @@ export class WrappedEndpointRequest extends EndpointRequest {
             writer.writeLine(`${queryParameterReference};`);
             return;
         }
-        const maybeOptionalCheck = this.context.isOptional(query.valueType) ? ".Where(_value => _value != null)" : "";
-        writer.write(`${queryParameterReference}${maybeOptionalCheck}.Select(_value => `);
+        writer.write(`${queryParameterReference}.Select(_value => `);
         writer.writeNode(
-            this.stringify({ reference: query.valueType, name: query.name.name, parameterOverride: "_value" })
+            this.stringify({
+                reference: query.valueType,
+                name: query.name.name,
+                parameterOverride: "_value",
+                allowOptionals: false // When allow-multiple is set, the query parameter never uses optional types.
+            })
         );
         writer.writeLine(").ToList();");
     }
@@ -160,28 +164,30 @@ export class WrappedEndpointRequest extends EndpointRequest {
     private stringify({
         reference,
         name,
-        parameterOverride
+        parameterOverride,
+        allowOptionals
     }: {
         reference: TypeReference;
         name: Name;
         parameterOverride?: string;
+        allowOptionals?: boolean;
     }): csharp.CodeBlock {
         const parameter = parameterOverride ?? `${this.getParameterName()}.${name.pascalCase.safeName}`;
         if (this.isString(reference)) {
             return csharp.codeblock(`${parameter}`);
-        } else if (this.isDatetime({ typeReference: reference, allowOptionals: false })) {
+        } else if (this.isDatetime({ typeReference: reference, allowOptionals: allowOptionals ?? false })) {
             return csharp.codeblock((writer) => {
                 writer.write(`${parameter}.ToString(`);
                 writer.writeNode(this.context.getConstantsClassReference());
                 writer.write(".DateTimeFormat)");
             });
-        } else if (this.isDatetime({ typeReference: reference, allowOptionals: true })) {
+        } else if (this.isDatetime({ typeReference: reference, allowOptionals: allowOptionals ?? true })) {
             return csharp.codeblock((writer) => {
                 writer.write(`${parameter}.Value.ToString(`);
                 writer.writeNode(this.context.getConstantsClassReference());
                 writer.write(".DateTimeFormat)");
             });
-        } else if (this.isEnum({ typeReference: reference, allowOptionals: false })) {
+        } else if (this.isEnum({ typeReference: reference, allowOptionals: allowOptionals ?? false })) {
             return csharp.codeblock((writer) => {
                 writer.writeNode(
                     csharp.classReference({
@@ -191,7 +197,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 );
                 writer.write(`.Serialize(${parameter})`);
             });
-        } else if (this.isEnum({ typeReference: reference, allowOptionals: true })) {
+        } else if (this.isEnum({ typeReference: reference, allowOptionals: allowOptionals ?? true })) {
             return csharp.codeblock((writer) => {
                 writer.writeNode(
                     csharp.classReference({
