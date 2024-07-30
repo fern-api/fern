@@ -5,14 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.2 - 2024-07-29]
+
+- Improvement: The C# generator now supports configuration to match namespaces directly to the full path of a file.
+  This can lead to more imports being required to use the SDK, but can be helpful to avoid collisions.
+
+  ```yml
+  - name: fernapi/fern-csharp-sdk
+    version: 0.3.2
+    config:
+      explicit-namespaces: true
+  ```
+
 ## [0.3.1 - 2024-07-25]
 
 - Improvement: Add header suppliers to `RawClient` constructor parameters.
 
 ## [0.3.0 - 2024-07-25]
 
-- Break: Convert all usages `Guid` to be `string` since the `Guid` class changes the underlying 
-  casing. 
+- Break: Convert all usages `Guid` to be `string` since the `Guid` class changes the underlying
+  casing.
 
 ## [0.2.1 - 2024-07-25]
 
