@@ -3,6 +3,7 @@ from typing import List, Optional
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST
+from fern_python.generators.pydantic_model.typeddict import FernTypedDict
 
 from ...context.sdk_generator_context import SdkGeneratorContext
 
@@ -30,7 +31,24 @@ def get_json_body_for_inlined_request(
                 elif possible_literal_value is not None and type(possible_literal_value) is bool:
                     writer.write_line(f'"{property.raw_name}": {possible_literal_value},')
                 else:
-                    writer.write_line(f'"{property.raw_name}": {property_name},')
+                    writer.write(f'"{property.raw_name}": ')
+                    if (
+                        property.raw_type is not None
+                        and context.custom_config.pydantic_config.use_typeddict_requests
+                        and FernTypedDict.can_tr_be_typeddict(property.raw_type, context.get_types())
+                    ):
+                        # We don't need any optional wrappings for the coercion here.
+                        unwrapped_tr = context.unwrap_optional_type_reference(property.raw_type)
+                        type_hint = context.pydantic_generator_context.get_type_hint_for_type_reference(
+                            unwrapped_tr, in_endpoint=True, for_typeddict=True
+                        )
+                        reference = context.core_utilities.convert_and_respect_annotation_metadata(
+                            object_=AST.Expression(property_name), annotation=type_hint
+                        )
+                        writer.write_node(reference)
+                        writer.write_line(",")
+                    else:
+                        writer.write_line(f"{property_name},")
         writer.write_line("}")
 
     return AST.Expression(AST.CodeWriter(write))

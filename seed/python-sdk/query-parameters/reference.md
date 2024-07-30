@@ -16,7 +16,8 @@
 import datetime
 import uuid
 
-from seed import NestedUser, SeedQueryParameters, User
+from seed import SeedQueryParameters
+from seed.user import NestedUser, User
 
 client = SeedQueryParameters(
     base_url="https://yourhost.com/path/to/api",

@@ -10,10 +10,10 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class ExceptionV2_Generic(UniversalBaseModel):
+    type: typing.Literal["generic"] = "generic"
     exception_type: str = pydantic.Field(alias="exceptionType")
     exception_message: str = pydantic.Field(alias="exceptionMessage")
     exception_stacktrace: str = pydantic.Field(alias="exceptionStacktrace")
-    type: typing.Literal["generic"] = "generic"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

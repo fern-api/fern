@@ -11,8 +11,8 @@ from .exception_info import ExceptionInfo
 
 
 class ErrorInfo_CompileError(UniversalBaseModel):
-    message: str
     type: typing.Literal["compileError"] = "compileError"
+    message: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -23,8 +23,8 @@ class ErrorInfo_CompileError(UniversalBaseModel):
 
 
 class ErrorInfo_RuntimeError(UniversalBaseModel):
-    message: str
     type: typing.Literal["runtimeError"] = "runtimeError"
+    message: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -35,8 +35,8 @@ class ErrorInfo_RuntimeError(UniversalBaseModel):
 
 
 class ErrorInfo_InternalError(UniversalBaseModel):
-    exception_info: ExceptionInfo = pydantic.Field(alias="exceptionInfo")
     type: typing.Literal["internalError"] = "internalError"
+    exception_info: ExceptionInfo = pydantic.Field(alias="exceptionInfo")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

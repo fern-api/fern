@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.36.6] - 2024-07-29
+
+- Fix: Now import paths are correctly added to getResponseBody tests. CI checks also added.
+
+## [0.36.5] - 2024-07-29
+
+- Fix: Now, server sent events are treated differently as streaming responses, to ensure the correct wrapping happens.
+
 ## [0.36.4] - 2024-07-26
 
 - Fix: Now, import paths are correctly added to stream wrapper tests.

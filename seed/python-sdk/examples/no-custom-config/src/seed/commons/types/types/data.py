@@ -36,7 +36,7 @@ class Data_Base64(UniversalBaseModel):
 
 
 """
-from seed.commons import Data_String
+from seed.commons.types import Data_String
 
 Data_String(value="data")
 """

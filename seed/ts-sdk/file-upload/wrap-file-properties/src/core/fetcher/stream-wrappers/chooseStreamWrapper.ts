@@ -1,4 +1,3 @@
-// this should be transpiled away during compilation
 import type { Readable } from "stream";
 import { RUNTIME } from "../../runtime";
 
@@ -9,6 +8,7 @@ export interface StreamWrapper<WritableStream, ReadFormat> {
     on(event: string, callback: EventCallback): void;
     off(event: string, callback: EventCallback): void;
     pipe(dest: WritableStream): WritableStream;
+    pipeTo(dest: WritableStream): WritableStream;
     unpipe(dest?: WritableStream): void;
     destroy(error?: Error): void;
     pause(): void;

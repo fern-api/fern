@@ -120,6 +120,9 @@ class ClassDeclaration(AstNode):
     def add_class(self, declaration: ClassDeclaration) -> None:
         self.statements.append(declaration)
 
+    def add_snippet(self, snippet: str) -> None:
+        self.snippet = snippet
+
     def add_statement(self, statement: AstNode) -> None:
         self.statements.append(statement)
 

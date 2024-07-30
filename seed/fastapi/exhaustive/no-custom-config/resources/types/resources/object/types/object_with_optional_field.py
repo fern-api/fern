@@ -10,7 +10,11 @@ from ......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class ObjectWithOptionalField(UniversalBaseModel):
-    string: typing.Optional[str] = None
+    string: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
+    """
+
     integer: typing.Optional[int] = None
     long_: typing.Optional[int] = pydantic.Field(alias="long", default=None)
     double: typing.Optional[float] = None

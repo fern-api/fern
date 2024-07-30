@@ -14,9 +14,9 @@ from .parameter import Parameter
 
 
 class TestCaseFunction_WithActualResult(UniversalBaseModel):
+    type: typing.Literal["withActualResult"] = "withActualResult"
     get_actual_result: NonVoidFunctionDefinition = pydantic.Field(alias="getActualResult")
     assert_correctness_check: AssertCorrectnessCheck = pydantic.Field(alias="assertCorrectnessCheck")
-    type: typing.Literal["withActualResult"] = "withActualResult"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -27,9 +27,9 @@ class TestCaseFunction_WithActualResult(UniversalBaseModel):
 
 
 class TestCaseFunction_Custom(UniversalBaseModel):
+    type: typing.Literal["custom"] = "custom"
     parameters: typing.List[Parameter]
     code: FunctionImplementationForMultipleLanguages
-    type: typing.Literal["custom"] = "custom"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
