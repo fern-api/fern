@@ -7,5 +7,5 @@ namespace SeedExtraProperties;
 public record User
 {
     [JsonPropertyName("name")]
-    public required string Name { get; }
+    public required string Name { get; set; }
 }

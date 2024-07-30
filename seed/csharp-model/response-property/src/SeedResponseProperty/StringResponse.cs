@@ -7,5 +7,5 @@ namespace SeedResponseProperty;
 public record StringResponse
 {
     [JsonPropertyName("data")]
-    public required string Data { get; }
+    public required string Data { get; set; }
 }

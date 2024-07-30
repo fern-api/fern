@@ -8,8 +8,8 @@ namespace SeedMixedCase;
 public record NestedUser
 {
     [JsonPropertyName("Name")]
-    public required string Name { get; }
+    public required string Name { get; set; }
 
     [JsonPropertyName("NestedUser")]
-    public required User NestedUser_ { get; }
+    public required User NestedUser_ { get; set; }
 }

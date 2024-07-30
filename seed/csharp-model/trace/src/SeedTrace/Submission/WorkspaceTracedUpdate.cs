@@ -7,5 +7,5 @@ namespace SeedTrace;
 public record WorkspaceTracedUpdate
 {
     [JsonPropertyName("traceResponsesSize")]
-    public required int TraceResponsesSize { get; }
+    public required int TraceResponsesSize { get; set; }
 }

@@ -8,8 +8,8 @@ namespace SeedTrace.V2.V3;
 public record GetGeneratedTestCaseFileRequest
 {
     [JsonPropertyName("template")]
-    public TestCaseTemplate? Template { get; }
+    public TestCaseTemplate? Template { get; set; }
 
     [JsonPropertyName("testCase")]
-    public required TestCaseV2 TestCase { get; }
+    public required TestCaseV2 TestCase { get; set; }
 }

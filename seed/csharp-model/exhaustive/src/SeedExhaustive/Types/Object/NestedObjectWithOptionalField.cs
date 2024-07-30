@@ -8,8 +8,8 @@ namespace SeedExhaustive.Types;
 public record NestedObjectWithOptionalField
 {
     [JsonPropertyName("string")]
-    public string? String { get; }
+    public string? String { get; set; }
 
     [JsonPropertyName("NestedObject")]
-    public ObjectWithOptionalField? NestedObject { get; }
+    public ObjectWithOptionalField? NestedObject { get; set; }
 }

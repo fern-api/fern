@@ -9,24 +9,24 @@ namespace SeedTrace.V2;
 public record CreateProblemRequestV2
 {
     [JsonPropertyName("problemName")]
-    public required string ProblemName { get; }
+    public required string ProblemName { get; set; }
 
     [JsonPropertyName("problemDescription")]
-    public required ProblemDescription ProblemDescription { get; }
+    public required ProblemDescription ProblemDescription { get; set; }
 
     [JsonPropertyName("customFiles")]
-    public required object CustomFiles { get; }
+    public required object CustomFiles { get; set; }
 
     [JsonPropertyName("customTestCaseTemplates")]
-    public IEnumerable<TestCaseTemplate> CustomTestCaseTemplates { get; } =
+    public IEnumerable<TestCaseTemplate> CustomTestCaseTemplates { get; set; } =
         new List<TestCaseTemplate>();
 
     [JsonPropertyName("testcases")]
-    public IEnumerable<TestCaseV2> Testcases { get; } = new List<TestCaseV2>();
+    public IEnumerable<TestCaseV2> Testcases { get; set; } = new List<TestCaseV2>();
 
     [JsonPropertyName("supportedLanguages")]
-    public HashSet<Language> SupportedLanguages { get; } = new HashSet<Language>();
+    public HashSet<Language> SupportedLanguages { get; set; } = new HashSet<Language>();
 
     [JsonPropertyName("isPublic")]
-    public required bool IsPublic { get; }
+    public required bool IsPublic { get; set; }
 }

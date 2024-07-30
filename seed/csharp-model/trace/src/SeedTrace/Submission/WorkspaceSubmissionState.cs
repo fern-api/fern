@@ -7,5 +7,5 @@ namespace SeedTrace;
 public record WorkspaceSubmissionState
 {
     [JsonPropertyName("status")]
-    public required object Status { get; }
+    public required object Status { get; set; }
 }

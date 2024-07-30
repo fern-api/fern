@@ -8,5 +8,5 @@ namespace SeedAudiences.FolderA;
 public record Response
 {
     [JsonPropertyName("foo")]
-    public Foo? Foo { get; }
+    public Foo? Foo { get; set; }
 }

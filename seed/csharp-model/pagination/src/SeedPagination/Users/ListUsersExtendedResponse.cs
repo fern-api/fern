@@ -11,11 +11,11 @@ public record ListUsersExtendedResponse
     /// The totall number of /users
     /// </summary>
     [JsonPropertyName("total_count")]
-    public required int TotalCount { get; }
+    public required int TotalCount { get; set; }
 
     [JsonPropertyName("data")]
-    public required UserListContainer Data { get; }
+    public required UserListContainer Data { get; set; }
 
     [JsonPropertyName("next")]
-    public string? Next { get; }
+    public string? Next { get; set; }
 }

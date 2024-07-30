@@ -8,23 +8,23 @@ namespace SeedTrace;
 public record TraceResponseV2
 {
     [JsonPropertyName("submissionId")]
-    public required string SubmissionId { get; }
+    public required string SubmissionId { get; set; }
 
     [JsonPropertyName("lineNumber")]
-    public required int LineNumber { get; }
+    public required int LineNumber { get; set; }
 
     [JsonPropertyName("file")]
-    public required TracedFile File { get; }
+    public required TracedFile File { get; set; }
 
     [JsonPropertyName("returnValue")]
-    public object? ReturnValue { get; }
+    public object? ReturnValue { get; set; }
 
     [JsonPropertyName("expressionLocation")]
-    public ExpressionLocation? ExpressionLocation { get; }
+    public ExpressionLocation? ExpressionLocation { get; set; }
 
     [JsonPropertyName("stack")]
-    public required StackInformation Stack { get; }
+    public required StackInformation Stack { get; set; }
 
     [JsonPropertyName("stdout")]
-    public string? Stdout { get; }
+    public string? Stdout { get; set; }
 }

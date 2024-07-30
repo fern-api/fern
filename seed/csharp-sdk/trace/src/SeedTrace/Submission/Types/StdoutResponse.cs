@@ -7,8 +7,8 @@ namespace SeedTrace;
 public record StdoutResponse
 {
     [JsonPropertyName("submissionId")]
-    public required string SubmissionId { get; }
+    public required string SubmissionId { get; set; }
 
     [JsonPropertyName("stdout")]
-    public required string Stdout { get; }
+    public required string Stdout { get; set; }
 }

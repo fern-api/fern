@@ -8,9 +8,9 @@ namespace SeedTrace;
 public record BinaryTreeValue
 {
     [JsonPropertyName("root")]
-    public string? Root { get; }
+    public string? Root { get; set; }
 
     [JsonPropertyName("nodes")]
-    public Dictionary<string, BinaryTreeNodeValue> Nodes { get; } =
+    public Dictionary<string, BinaryTreeNodeValue> Nodes { get; set; } =
         new Dictionary<string, BinaryTreeNodeValue>();
 }

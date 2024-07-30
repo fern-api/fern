@@ -7,5 +7,5 @@ namespace SeedTrace;
 public record SubmissionIdNotFound
 {
     [JsonPropertyName("missingSubmissionId")]
-    public required string MissingSubmissionId { get; }
+    public required string MissingSubmissionId { get; set; }
 }

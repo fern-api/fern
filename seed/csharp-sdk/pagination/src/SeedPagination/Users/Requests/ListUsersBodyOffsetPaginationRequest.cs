@@ -13,5 +13,5 @@ public record ListUsersBodyOffsetPaginationRequest
     ///
     /// </summary>
     [JsonPropertyName("pagination")]
-    public WithPage? Pagination { get; }
+    public WithPage? Pagination { get; set; }
 }

@@ -7,8 +7,8 @@ namespace SeedTrace;
 public record LightweightStackframeInformation
 {
     [JsonPropertyName("numStackFrames")]
-    public required int NumStackFrames { get; }
+    public required int NumStackFrames { get; set; }
 
     [JsonPropertyName("topStackFrameMethodName")]
-    public required string TopStackFrameMethodName { get; }
+    public required string TopStackFrameMethodName { get; set; }
 }

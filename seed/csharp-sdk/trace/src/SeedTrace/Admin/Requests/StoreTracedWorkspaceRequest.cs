@@ -8,8 +8,8 @@ namespace SeedTrace;
 public record StoreTracedWorkspaceRequest
 {
     [JsonPropertyName("workspaceRunDetails")]
-    public required WorkspaceRunDetails WorkspaceRunDetails { get; }
+    public required WorkspaceRunDetails WorkspaceRunDetails { get; set; }
 
     [JsonPropertyName("traceResponses")]
-    public IEnumerable<TraceResponse> TraceResponses { get; } = new List<TraceResponse>();
+    public IEnumerable<TraceResponse> TraceResponses { get; set; } = new List<TraceResponse>();
 }

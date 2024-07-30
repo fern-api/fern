@@ -11,8 +11,8 @@ public record Entity
 {
     [JsonPropertyName("type")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<BasicType, ComplexType>>))]
-    public required OneOf<BasicType, ComplexType> Type { get; }
+    public required OneOf<BasicType, ComplexType> Type { get; set; }
 
     [JsonPropertyName("name")]
-    public required string Name { get; }
+    public required string Name { get; set; }
 }

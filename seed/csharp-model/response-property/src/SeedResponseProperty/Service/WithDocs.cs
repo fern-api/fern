@@ -7,5 +7,5 @@ namespace SeedResponseProperty;
 public record WithDocs
 {
     [JsonPropertyName("docs")]
-    public required string Docs { get; }
+    public required string Docs { get; set; }
 }

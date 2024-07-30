@@ -8,14 +8,14 @@ namespace SeedTrace;
 public record ExecutionSessionResponse
 {
     [JsonPropertyName("sessionId")]
-    public required string SessionId { get; }
+    public required string SessionId { get; set; }
 
     [JsonPropertyName("executionSessionUrl")]
-    public string? ExecutionSessionUrl { get; }
+    public string? ExecutionSessionUrl { get; set; }
 
     [JsonPropertyName("language")]
-    public required Language Language { get; }
+    public required Language Language { get; set; }
 
     [JsonPropertyName("status")]
-    public required ExecutionSessionStatus Status { get; }
+    public required ExecutionSessionStatus Status { get; set; }
 }

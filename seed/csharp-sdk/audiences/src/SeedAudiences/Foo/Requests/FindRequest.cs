@@ -2,9 +2,9 @@ namespace SeedAudiences;
 
 public record FindRequest
 {
-    public string? OptionalString { get; }
+    public string? OptionalString { get; set; }
 
-    public string? PublicProperty { get; }
+    public string? PublicProperty { get; set; }
 
-    public int? PrivateProperty { get; }
+    public int? PrivateProperty { get; set; }
 }

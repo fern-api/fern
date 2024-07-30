@@ -8,5 +8,5 @@ namespace SeedApi;
 public record ImportingA
 {
     [JsonPropertyName("a")]
-    public A? A { get; }
+    public A? A { get; set; }
 }

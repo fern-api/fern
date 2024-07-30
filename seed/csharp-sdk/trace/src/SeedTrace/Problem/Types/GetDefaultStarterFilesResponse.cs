@@ -8,6 +8,6 @@ namespace SeedTrace;
 public record GetDefaultStarterFilesResponse
 {
     [JsonPropertyName("files")]
-    public Dictionary<Language, ProblemFiles> Files { get; } =
+    public Dictionary<Language, ProblemFiles> Files { get; set; } =
         new Dictionary<Language, ProblemFiles>();
 }

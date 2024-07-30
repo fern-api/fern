@@ -13,5 +13,5 @@ public record ListUsersBodyCursorPaginationRequest
     ///
     /// </summary>
     [JsonPropertyName("pagination")]
-    public WithCursor? Pagination { get; }
+    public WithCursor? Pagination { get; set; }
 }

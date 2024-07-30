@@ -2,5 +2,5 @@ namespace SeedTrace;
 
 public record GetAttemptedMigrationsRequest
 {
-    public required string AdminKeyHeader { get; }
+    public required string AdminKeyHeader { get; set; }
 }

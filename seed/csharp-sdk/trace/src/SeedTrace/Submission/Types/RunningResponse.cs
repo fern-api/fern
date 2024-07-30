@@ -8,8 +8,8 @@ namespace SeedTrace;
 public record RunningResponse
 {
     [JsonPropertyName("submissionId")]
-    public required string SubmissionId { get; }
+    public required string SubmissionId { get; set; }
 
     [JsonPropertyName("state")]
-    public required RunningSubmissionState State { get; }
+    public required RunningSubmissionState State { get; set; }
 }

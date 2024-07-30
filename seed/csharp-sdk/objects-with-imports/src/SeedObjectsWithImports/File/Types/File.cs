@@ -8,11 +8,11 @@ namespace SeedObjectsWithImports;
 public record File
 {
     [JsonPropertyName("name")]
-    public required string Name { get; }
+    public required string Name { get; set; }
 
     [JsonPropertyName("contents")]
-    public required string Contents { get; }
+    public required string Contents { get; set; }
 
     [JsonPropertyName("info")]
-    public required FileInfo Info { get; }
+    public required FileInfo Info { get; set; }
 }

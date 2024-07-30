@@ -7,5 +7,5 @@ namespace SeedServerSentEvents;
 public record StreamCompletionRequest
 {
     [JsonPropertyName("query")]
-    public required string Query { get; }
+    public required string Query { get; set; }
 }

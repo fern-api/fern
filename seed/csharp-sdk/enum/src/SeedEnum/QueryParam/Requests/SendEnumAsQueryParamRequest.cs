@@ -7,11 +7,11 @@ namespace SeedEnum;
 
 public record SendEnumAsQueryParamRequest
 {
-    public required Operand Operand { get; }
+    public required Operand Operand { get; set; }
 
-    public Operand? MaybeOperand { get; }
+    public Operand? MaybeOperand { get; set; }
 
-    public required OneOf<Color, Operand> OperandOrColor { get; }
+    public required OneOf<Color, Operand> OperandOrColor { get; set; }
 
-    public OneOf<Color, Operand>? MaybeOperandOrColor { get; }
+    public OneOf<Color, Operand>? MaybeOperandOrColor { get; set; }
 }

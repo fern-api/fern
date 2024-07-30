@@ -7,11 +7,11 @@ namespace SeedExamples;
 public record ExceptionInfo
 {
     [JsonPropertyName("exceptionType")]
-    public required string ExceptionType { get; }
+    public required string ExceptionType { get; set; }
 
     [JsonPropertyName("exceptionMessage")]
-    public required string ExceptionMessage { get; }
+    public required string ExceptionMessage { get; set; }
 
     [JsonPropertyName("exceptionStacktrace")]
-    public required string ExceptionStacktrace { get; }
+    public required string ExceptionStacktrace { get; set; }
 }

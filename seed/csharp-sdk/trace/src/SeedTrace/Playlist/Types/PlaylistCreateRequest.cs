@@ -7,8 +7,8 @@ namespace SeedTrace;
 public record PlaylistCreateRequest
 {
     [JsonPropertyName("name")]
-    public required string Name { get; }
+    public required string Name { get; set; }
 
     [JsonPropertyName("problems")]
-    public IEnumerable<string> Problems { get; } = new List<string>();
+    public IEnumerable<string> Problems { get; set; } = new List<string>();
 }

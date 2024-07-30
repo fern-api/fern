@@ -7,8 +7,8 @@ namespace SeedCodeSamples;
 public record MyResponse
 {
     [JsonPropertyName("id")]
-    public required string Id { get; }
+    public required string Id { get; set; }
 
     [JsonPropertyName("name")]
-    public string? Name { get; }
+    public string? Name { get; set; }
 }

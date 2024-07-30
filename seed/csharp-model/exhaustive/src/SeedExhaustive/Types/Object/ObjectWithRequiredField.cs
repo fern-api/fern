@@ -7,5 +7,5 @@ namespace SeedExhaustive.Types;
 public record ObjectWithRequiredField
 {
     [JsonPropertyName("string")]
-    public required string String { get; }
+    public required string String { get; set; }
 }

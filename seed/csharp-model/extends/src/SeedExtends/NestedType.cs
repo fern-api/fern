@@ -7,11 +7,11 @@ namespace SeedExtends;
 public record NestedType
 {
     [JsonPropertyName("name")]
-    public required string Name { get; }
+    public required string Name { get; set; }
 
     [JsonPropertyName("raw")]
-    public required string Raw { get; }
+    public required string Raw { get; set; }
 
     [JsonPropertyName("docs")]
-    public required string Docs { get; }
+    public required string Docs { get; set; }
 }

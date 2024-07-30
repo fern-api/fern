@@ -7,8 +7,8 @@ namespace SeedTrace.V2.V3;
 public record FunctionImplementation
 {
     [JsonPropertyName("impl")]
-    public required string Impl { get; }
+    public required string Impl { get; set; }
 
     [JsonPropertyName("imports")]
-    public string? Imports { get; }
+    public string? Imports { get; set; }
 }

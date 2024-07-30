@@ -7,5 +7,5 @@ namespace SeedPagination;
 public record WithPage
 {
     [JsonPropertyName("page")]
-    public int? Page { get; }
+    public int? Page { get; set; }
 }

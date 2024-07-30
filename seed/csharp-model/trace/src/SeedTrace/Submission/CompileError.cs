@@ -7,5 +7,5 @@ namespace SeedTrace;
 public record CompileError
 {
     [JsonPropertyName("message")]
-    public required string Message { get; }
+    public required string Message { get; set; }
 }

@@ -8,5 +8,5 @@ namespace SeedExamples;
 public record Tree
 {
     [JsonPropertyName("nodes")]
-    public IEnumerable<Node>? Nodes { get; }
+    public IEnumerable<Node>? Nodes { get; set; }
 }

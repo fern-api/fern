@@ -7,8 +7,8 @@ namespace SeedPackageYml;
 public record EchoRequest
 {
     [JsonPropertyName("name")]
-    public required string Name { get; }
+    public required string Name { get; set; }
 
     [JsonPropertyName("size")]
-    public required int Size { get; }
+    public required int Size { get; set; }
 }

@@ -8,8 +8,8 @@ namespace SeedTrace.V2;
 public record TestCaseImplementation
 {
     [JsonPropertyName("description")]
-    public required TestCaseImplementationDescription Description { get; }
+    public required TestCaseImplementationDescription Description { get; set; }
 
     [JsonPropertyName("function")]
-    public required object Function { get; }
+    public required object Function { get; set; }
 }

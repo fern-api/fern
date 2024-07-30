@@ -6,9 +6,9 @@ namespace SeedTrace;
 
 public record CreatePlaylistRequest
 {
-    public required DateTime Datetime { get; }
+    public required DateTime Datetime { get; set; }
 
-    public DateTime? OptionalDatetime { get; }
+    public DateTime? OptionalDatetime { get; set; }
 
-    public required PlaylistCreateRequest Body { get; }
+    public required PlaylistCreateRequest Body { get; set; }
 }

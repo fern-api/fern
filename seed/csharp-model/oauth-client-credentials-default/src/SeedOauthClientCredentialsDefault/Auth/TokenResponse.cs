@@ -7,8 +7,8 @@ namespace SeedOauthClientCredentialsDefault;
 public record TokenResponse
 {
     [JsonPropertyName("access_token")]
-    public required string AccessToken { get; }
+    public required string AccessToken { get; set; }
 
     [JsonPropertyName("expires_in")]
-    public required int ExpiresIn { get; }
+    public required int ExpiresIn { get; set; }
 }

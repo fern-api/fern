@@ -7,5 +7,5 @@ namespace SeedBasicAuthEnvironmentVariables;
 public record UnauthorizedRequestErrorBody
 {
     [JsonPropertyName("message")]
-    public required string Message { get; }
+    public required string Message { get; set; }
 }

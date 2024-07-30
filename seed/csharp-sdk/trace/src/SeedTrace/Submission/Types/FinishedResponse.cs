@@ -7,5 +7,5 @@ namespace SeedTrace;
 public record FinishedResponse
 {
     [JsonPropertyName("submissionId")]
-    public required string SubmissionId { get; }
+    public required string SubmissionId { get; set; }
 }

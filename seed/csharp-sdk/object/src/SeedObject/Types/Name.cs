@@ -7,8 +7,8 @@ namespace SeedObject;
 public record Name
 {
     [JsonPropertyName("id")]
-    public required string Id { get; }
+    public required string Id { get; set; }
 
     [JsonPropertyName("value")]
-    public required string Value { get; }
+    public required string Value { get; set; }
 }

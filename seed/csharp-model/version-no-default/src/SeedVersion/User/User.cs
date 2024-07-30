@@ -7,8 +7,8 @@ namespace SeedVersion;
 public record User
 {
     [JsonPropertyName("id")]
-    public required string Id { get; }
+    public required string Id { get; set; }
 
     [JsonPropertyName("name")]
-    public required string Name { get; }
+    public required string Name { get; set; }
 }

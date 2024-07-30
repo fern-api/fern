@@ -7,8 +7,8 @@ namespace SeedTrace;
 public record FileInfo
 {
     [JsonPropertyName("filename")]
-    public required string Filename { get; }
+    public required string Filename { get; set; }
 
     [JsonPropertyName("contents")]
-    public required string Contents { get; }
+    public required string Contents { get; set; }
 }

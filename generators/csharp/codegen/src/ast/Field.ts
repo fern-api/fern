@@ -129,6 +129,9 @@ export class Field extends AstNode {
             if (this.init) {
                 writer.write("init; ");
             }
+            if (this.set) {
+                writer.write("set; ");
+            }
             writer.write("}");
         }
 

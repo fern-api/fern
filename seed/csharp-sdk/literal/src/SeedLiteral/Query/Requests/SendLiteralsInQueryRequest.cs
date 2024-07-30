@@ -2,9 +2,9 @@ namespace SeedLiteral;
 
 public record SendLiteralsInQueryRequest
 {
-    public required string Prompt { get; }
+    public required string Prompt { get; set; }
 
-    public required string Query { get; }
+    public required string Query { get; set; }
 
-    public required bool Stream { get; }
+    public required bool Stream { get; set; }
 }

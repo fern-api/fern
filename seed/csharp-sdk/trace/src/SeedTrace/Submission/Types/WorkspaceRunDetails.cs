@@ -8,11 +8,11 @@ namespace SeedTrace;
 public record WorkspaceRunDetails
 {
     [JsonPropertyName("exceptionV2")]
-    public object? ExceptionV2 { get; }
+    public object? ExceptionV2 { get; set; }
 
     [JsonPropertyName("exception")]
-    public ExceptionInfo? Exception { get; }
+    public ExceptionInfo? Exception { get; set; }
 
     [JsonPropertyName("stdout")]
-    public required string Stdout { get; }
+    public required string Stdout { get; set; }
 }

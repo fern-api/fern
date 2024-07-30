@@ -8,5 +8,5 @@ namespace SeedPagination;
 public record UserListContainer
 {
     [JsonPropertyName("users")]
-    public IEnumerable<User> Users { get; } = new List<User>();
+    public IEnumerable<User> Users { get; set; } = new List<User>();
 }

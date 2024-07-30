@@ -8,5 +8,5 @@ namespace SeedTrace;
 public record InternalError
 {
     [JsonPropertyName("exceptionInfo")]
-    public required ExceptionInfo ExceptionInfo { get; }
+    public required ExceptionInfo ExceptionInfo { get; set; }
 }

@@ -8,8 +8,8 @@ namespace SeedTrace;
 public record Migration
 {
     [JsonPropertyName("name")]
-    public required string Name { get; }
+    public required string Name { get; set; }
 
     [JsonPropertyName("status")]
-    public required MigrationStatus Status { get; }
+    public required MigrationStatus Status { get; set; }
 }

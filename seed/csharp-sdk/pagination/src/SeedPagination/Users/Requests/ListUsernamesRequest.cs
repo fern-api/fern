@@ -6,5 +6,5 @@ public record ListUsernamesRequest
     /// The cursor used for pagination in order to fetch
     /// the next page of results.
     /// </summary>
-    public string? StartingAfter { get; }
+    public string? StartingAfter { get; set; }
 }

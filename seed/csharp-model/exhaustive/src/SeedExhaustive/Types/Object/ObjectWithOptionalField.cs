@@ -10,41 +10,41 @@ public record ObjectWithOptionalField
     /// This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
     /// </summary>
     [JsonPropertyName("string")]
-    public string? String { get; }
+    public string? String { get; set; }
 
     [JsonPropertyName("integer")]
-    public int? Integer { get; }
+    public int? Integer { get; set; }
 
     [JsonPropertyName("long")]
-    public long? Long { get; }
+    public long? Long { get; set; }
 
     [JsonPropertyName("double")]
-    public double? Double { get; }
+    public double? Double { get; set; }
 
     [JsonPropertyName("bool")]
-    public bool? Bool { get; }
+    public bool? Bool { get; set; }
 
     [JsonPropertyName("datetime")]
-    public DateTime? Datetime { get; }
+    public DateTime? Datetime { get; set; }
 
     [JsonPropertyName("date")]
-    public DateOnly? Date { get; }
+    public DateOnly? Date { get; set; }
 
     [JsonPropertyName("uuid")]
-    public string? Uuid { get; }
+    public string? Uuid { get; set; }
 
     [JsonPropertyName("base64")]
-    public string? Base64 { get; }
+    public string? Base64 { get; set; }
 
     [JsonPropertyName("list")]
-    public IEnumerable<string>? List { get; }
+    public IEnumerable<string>? List { get; set; }
 
     [JsonPropertyName("set")]
-    public HashSet<string>? Set { get; }
+    public HashSet<string>? Set { get; set; }
 
     [JsonPropertyName("map")]
-    public Dictionary<int, string>? Map { get; }
+    public Dictionary<int, string>? Map { get; set; }
 
     [JsonPropertyName("bigint")]
-    public int? Bigint { get; }
+    public int? Bigint { get; set; }
 }

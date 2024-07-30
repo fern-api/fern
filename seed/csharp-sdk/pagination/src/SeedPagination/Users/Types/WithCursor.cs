@@ -7,5 +7,5 @@ namespace SeedPagination;
 public record WithCursor
 {
     [JsonPropertyName("cursor")]
-    public string? Cursor { get; }
+    public string? Cursor { get; set; }
 }

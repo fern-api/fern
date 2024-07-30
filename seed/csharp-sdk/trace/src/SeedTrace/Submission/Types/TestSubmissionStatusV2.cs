@@ -9,14 +9,15 @@ namespace SeedTrace;
 public record TestSubmissionStatusV2
 {
     [JsonPropertyName("updates")]
-    public IEnumerable<TestSubmissionUpdate> Updates { get; } = new List<TestSubmissionUpdate>();
+    public IEnumerable<TestSubmissionUpdate> Updates { get; set; } =
+        new List<TestSubmissionUpdate>();
 
     [JsonPropertyName("problemId")]
-    public required string ProblemId { get; }
+    public required string ProblemId { get; set; }
 
     [JsonPropertyName("problemVersion")]
-    public required int ProblemVersion { get; }
+    public required int ProblemVersion { get; set; }
 
     [JsonPropertyName("problemInfo")]
-    public required ProblemInfoV2 ProblemInfo { get; }
+    public required ProblemInfoV2 ProblemInfo { get; set; }
 }

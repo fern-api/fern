@@ -7,5 +7,5 @@ namespace SeedExtends;
 public record Docs
 {
     [JsonPropertyName("docs")]
-    public required string Docs_ { get; }
+    public required string Docs_ { get; set; }
 }

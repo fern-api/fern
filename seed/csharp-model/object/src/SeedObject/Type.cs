@@ -8,60 +8,60 @@ namespace SeedObject;
 public record Type
 {
     [JsonPropertyName("one")]
-    public required int One { get; }
+    public required int One { get; set; }
 
     [JsonPropertyName("two")]
-    public required double Two { get; }
+    public required double Two { get; set; }
 
     [JsonPropertyName("three")]
-    public required string Three { get; }
+    public required string Three { get; set; }
 
     [JsonPropertyName("four")]
-    public required bool Four { get; }
+    public required bool Four { get; set; }
 
     [JsonPropertyName("five")]
-    public required long Five { get; }
+    public required long Five { get; set; }
 
     [JsonPropertyName("six")]
-    public required DateTime Six { get; }
+    public required DateTime Six { get; set; }
 
     [JsonPropertyName("seven")]
-    public required DateOnly Seven { get; }
+    public required DateOnly Seven { get; set; }
 
     [JsonPropertyName("eight")]
-    public required string Eight { get; }
+    public required string Eight { get; set; }
 
     [JsonPropertyName("nine")]
-    public required string Nine { get; }
+    public required string Nine { get; set; }
 
     [JsonPropertyName("ten")]
-    public IEnumerable<int> Ten { get; } = new List<int>();
+    public IEnumerable<int> Ten { get; set; } = new List<int>();
 
     [JsonPropertyName("eleven")]
-    public HashSet<double> Eleven { get; } = new HashSet<double>();
+    public HashSet<double> Eleven { get; set; } = new HashSet<double>();
 
     [JsonPropertyName("twelve")]
-    public Dictionary<string, bool> Twelve { get; } = new Dictionary<string, bool>();
+    public Dictionary<string, bool> Twelve { get; set; } = new Dictionary<string, bool>();
 
     [JsonPropertyName("thirteen")]
-    public long? Thirteen { get; }
+    public long? Thirteen { get; set; }
 
     [JsonPropertyName("fourteen")]
-    public required object Fourteen { get; }
+    public required object Fourteen { get; set; }
 
     [JsonPropertyName("fifteen")]
-    public IEnumerable<IEnumerable<int>> Fifteen { get; } = new List<IEnumerable<int>>();
+    public IEnumerable<IEnumerable<int>> Fifteen { get; set; } = new List<IEnumerable<int>>();
 
     [JsonPropertyName("sixteen")]
-    public IEnumerable<Dictionary<string, int>> Sixteen { get; } =
+    public IEnumerable<Dictionary<string, int>> Sixteen { get; set; } =
         new List<Dictionary<string, int>>();
 
     [JsonPropertyName("seventeen")]
-    public IEnumerable<string> Seventeen { get; } = new List<string>();
+    public IEnumerable<string> Seventeen { get; set; } = new List<string>();
 
     [JsonPropertyName("eighteen")]
-    public required string Eighteen { get; }
+    public required string Eighteen { get; set; }
 
     [JsonPropertyName("nineteen")]
-    public required Name Nineteen { get; }
+    public required Name Nineteen { get; set; }
 }

@@ -11,11 +11,11 @@ public record Identifier
 {
     [JsonPropertyName("type")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<BasicType, ComplexType>>))]
-    public required OneOf<BasicType, ComplexType> Type { get; }
+    public required OneOf<BasicType, ComplexType> Type { get; set; }
 
     [JsonPropertyName("value")]
-    public required string Value { get; }
+    public required string Value { get; set; }
 
     [JsonPropertyName("label")]
-    public required string Label { get; }
+    public required string Label { get; set; }
 }

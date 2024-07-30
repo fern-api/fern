@@ -7,5 +7,5 @@ namespace SeedTrace;
 public record GetTraceResponsesPageRequest
 {
     [JsonPropertyName("offset")]
-    public int? Offset { get; }
+    public int? Offset { get; set; }
 }

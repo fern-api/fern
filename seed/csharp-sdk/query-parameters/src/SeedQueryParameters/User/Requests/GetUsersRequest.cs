@@ -6,31 +6,31 @@ namespace SeedQueryParameters;
 
 public record GetUsersRequest
 {
-    public required int Limit { get; }
+    public required int Limit { get; set; }
 
-    public required string Id { get; }
+    public required string Id { get; set; }
 
-    public required DateOnly Date { get; }
+    public required DateOnly Date { get; set; }
 
-    public required DateTime Deadline { get; }
+    public required DateTime Deadline { get; set; }
 
-    public required string Bytes { get; }
+    public required string Bytes { get; set; }
 
-    public required User User { get; }
+    public required User User { get; set; }
 
-    public IEnumerable<User> UserList { get; } = new List<User>();
+    public IEnumerable<User> UserList { get; set; } = new List<User>();
 
-    public DateTime? OptionalDeadline { get; }
+    public DateTime? OptionalDeadline { get; set; }
 
-    public Dictionary<string, string> KeyValue { get; } = new Dictionary<string, string>();
+    public Dictionary<string, string> KeyValue { get; set; } = new Dictionary<string, string>();
 
-    public string? OptionalString { get; }
+    public string? OptionalString { get; set; }
 
-    public required NestedUser NestedUser { get; }
+    public required NestedUser NestedUser { get; set; }
 
-    public User? OptionalUser { get; }
+    public User? OptionalUser { get; set; }
 
-    public required User ExcludeUser { get; }
+    public required User ExcludeUser { get; set; }
 
-    public required string Filter { get; }
+    public required string Filter { get; set; }
 }

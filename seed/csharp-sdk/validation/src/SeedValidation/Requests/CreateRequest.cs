@@ -8,14 +8,14 @@ namespace SeedValidation;
 public record CreateRequest
 {
     [JsonPropertyName("decimal")]
-    public required double Decimal { get; }
+    public required double Decimal { get; set; }
 
     [JsonPropertyName("even")]
-    public required int Even { get; }
+    public required int Even { get; set; }
 
     [JsonPropertyName("name")]
-    public required string Name { get; }
+    public required string Name { get; set; }
 
     [JsonPropertyName("shape")]
-    public required Shape Shape { get; }
+    public required Shape Shape { get; set; }
 }

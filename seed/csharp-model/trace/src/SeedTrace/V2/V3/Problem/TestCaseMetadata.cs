@@ -7,11 +7,11 @@ namespace SeedTrace.V2.V3;
 public record TestCaseMetadata
 {
     [JsonPropertyName("id")]
-    public required string Id { get; }
+    public required string Id { get; set; }
 
     [JsonPropertyName("name")]
-    public required string Name { get; }
+    public required string Name { get; set; }
 
     [JsonPropertyName("hidden")]
-    public required bool Hidden { get; }
+    public required bool Hidden { get; set; }
 }
