@@ -30703,7 +30703,7 @@ The credit amount the user still has available for the current period. The \`ava
 The present value required to pay off the loan, as provided by the institution.
 
 **Note:** If the institution does not provide this value, we return \`null\`.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "current": {
             "docs": "The current balance is calculated differently according to the type of account.
@@ -30717,7 +30717,7 @@ The amount the user has spent in the current card billing period (see \`credit_d
 - **🏡 Loan accounts**:
 
 The amount remaining to pay on the users's loan (same as \`loan_data.outstanding_balance\`).",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
         },
       },
@@ -30730,7 +30730,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
           },
           "credit_limit": {
             "docs": "The maximum amount of credit the owner can receive.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "cutting_date": {
             "docs": "The closing date of the credit period.",
@@ -30744,7 +30744,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
           },
           "interest_rate": {
             "docs": "The annualized interest rate of the credit.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "last_payment_date": {
             "availability": "deprecated",
@@ -30757,7 +30757,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
           },
           "minimum_payment": {
             "docs": "The minimum amount to be paid on the \`next_payment_date\`.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "monthly_payment": {
             "availability": "deprecated",
@@ -30773,7 +30773,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
           },
           "no_interest_payment": {
             "docs": "The minimum amount required to pay to avoid generating interest.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
         },
       },
@@ -30782,7 +30782,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
         "properties": {
           "balance": {
             "docs": "The amount in the fund.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "collected_at": {
             "docs": "The ISO-8601 timestamp when the data point was collected.",
@@ -30794,7 +30794,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
           },
           "percentage": {
             "docs": "How much this fund, as a percentage, contributes to the pension account's total.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "public_identifications": {
             "docs": "The fund's public IDs.",
@@ -30828,7 +30828,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
           },
           "contract_amount": {
             "docs": "The initial total loan amount, calculated by the institution, when the contract was signed. This amount includes the principal + interest + taxes + fees.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "contract_end_date": {
             "docs": "The date when the loan is expected to be completed.",
@@ -30924,7 +30924,7 @@ Please see \`payment_day\` instead.
           },
           "monthly_payment": {
             "docs": "The recurrent monthly payment, if applicable.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "no_interest_payment": {
             "availability": "deprecated",
@@ -30944,12 +30944,12 @@ The minimum amount required to pay to avoid generating interest.
           },
           "outstanding_balance": {
             "docs": "The amount remaining to pay in total, including interest.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "outstanding_principal": {
             "docs": "Outstanding loan amount, that is, how much remains to pay on the principal (not including interest).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "payment_day": {
             "docs": "The day of the month by which the owner needs to pay the loan (\`YYYY-MM-DD\`).",
@@ -30957,7 +30957,7 @@ The minimum amount required to pay to avoid generating interest.
           },
           "principal": {
             "docs": "Total amount of the loan (the amount the user receives).",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
         },
       },
@@ -30968,7 +30968,7 @@ The minimum amount required to pay to avoid generating interest.
           "value": {
             "docs": "The total value of the fee. Same currency of the Loan.
 ",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -30982,7 +30982,7 @@ The minimum amount required to pay to avoid generating interest.
           "type": "optional<EnumLoanDataInterestRateType>",
           "value": {
             "docs": "The interest rate (in percent or currency value).",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
         },
       },
@@ -31015,11 +31015,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "properties": {
           "anticipated": {
             "docs": "The amount that the owner of the account received earlier than contracted.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "available": {
             "docs": "The amount that the owner of the account will receive according to an established date.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "collected_at": {
             "docs": "The ISO-8601 timestamp when the data point was collected.",
@@ -31027,7 +31027,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "current": {
             "docs": "The total sum of all receivables (\`available\` + \`anticipated\`)",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
         },
       },
@@ -31036,23 +31036,23 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "properties": {
           "administration_expenses": {
             "docs": "Total costs of the company related to training, company offsites, or similar.",
-            "type": "double",
+            "type": "float",
           },
           "costs": {
             "docs": "Total costs for the company to operate.",
-            "type": "double",
+            "type": "float",
           },
           "distribution_and_sales_expenses": {
             "docs": "Total costs the company incurred in order to distribute or sell their product.",
-            "type": "double",
+            "type": "float",
           },
           "financial_expenses": {
             "docs": "Total value of any fees incurred by the company to operate (such as bank fees).",
-            "type": "double",
+            "type": "float",
           },
           "total_costs_and_deductible_expenses": {
             "docs": "Total value of all costs and dedictible expenses.",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -31061,27 +31061,27 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "properties": {
           "dividends": {
             "docs": "Total income that the company generated from dividends.",
-            "type": "double",
+            "type": "float",
           },
           "gross_income_from_ordinary_activities": {
             "docs": "Total gross income that the company generated from their main economic activity.",
-            "type": "double",
+            "type": "float",
           },
           "other_income": {
             "docs": "Total income that the company generated from activities not associated with their main economic activity.",
-            "type": "double",
+            "type": "float",
           },
           "returns_rebates_and_discounts_on_sales": {
             "docs": "Total value of cancelled orders, corrected invoices, or similar, that can be discounted from the \`total_gross_income\`.",
-            "type": "double",
+            "type": "float",
           },
           "total_gross_income": {
             "docs": "Total gross income the company generated.",
-            "type": "double",
+            "type": "float",
           },
           "total_net_income": {
             "docs": "Total net income of the company, taking into account \`returns_rebates_and_discounts_on_sales\`.",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -31099,19 +31099,19 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "properties": {
           "total_applicable_deductions": {
             "docs": "Total deductions that the taxpayer can apply to their income, according to the institution.",
-            "type": "double",
+            "type": "float",
           },
           "total_exempt_income": {
             "docs": "Total income that is not taxable, according to the institution.",
-            "type": "double",
+            "type": "float",
           },
           "total_exemptions_and_deductions": {
             "docs": "Sum total of all exempt and deductions that can be applied to the taxpayer's income.",
-            "type": "double",
+            "type": "float",
           },
           "total_ordinary_net_income": {
             "docs": "Sum total of the taxpayer's income (gross income - exemptions - deductions).",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -31153,7 +31153,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "account": "optional<Account>",
           "balance": {
             "docs": "The funds available in the account by the end of the \`value_date\`.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "collected_at": {
             "availability": "deprecated",
@@ -31564,7 +31564,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "amount": {
             "docs": "The transaction amount.",
-            "type": "double",
+            "type": "float",
           },
           "category": "optional<EnumCategorizationTransactionCategory>",
           "currency": {
@@ -31622,7 +31622,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "amount": {
             "docs": "The transaction amount.",
-            "type": "double",
+            "type": "float",
           },
           "currency": {
             "docs": "The currency of the account, in ISO-4217 format. For example: - 🇧🇷 BRL (Brazilian Real) - 🇨🇴 COP (Colombian Peso) - 🇲🇽 MXN (Mexican Peso)",
@@ -32055,7 +32055,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "pattern": "\\d+(?:\\.\\d{1,2})?",
             },
           },
-          "double",
+          "float",
         ],
       },
       "CreatePaymentLinkPse": {
@@ -32551,14 +32551,14 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "monthly_salary": {
             "docs": "The monthly salary of the individual, including any additional perks.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "most_recent_base_salary": {
             "docs": "The most recent base salary the individual earned.
 
 For Mexico, this is the *daily* rate that the individual earned, including the perks that the individual is entitled to throughout the year.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "start_date": {
             "docs": "Date when employment started, in \`YYYY-MM-DD\` format.
@@ -32600,7 +32600,7 @@ For Mexico, this is the *daily* rate that the individual earned, including the p
           "base_salary": {
             "docs": "The base salary of the individual, current as of the \`update_date\`.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "event": "optional<EnumEmploymentRecordStatusUpdateEvents>",
           "update_date": {
@@ -33704,35 +33704,35 @@ We return one of the following enum values:
         "properties": {
           "accounts_documents_and_finance_leases_receivable": {
             "docs": "Total of all payments the company expects to receive (for example, from partial invoices that have not been paid yet).",
-            "type": "double",
+            "type": "float",
           },
           "cash_and_cash_equivalents": {
             "docs": "Total cash (or cash equivalents) that the business currently holds at the end of the fiscal year.",
-            "type": "double",
+            "type": "float",
           },
           "debts": {
             "docs": "Total debts that the company currently has.",
-            "type": "double",
+            "type": "float",
           },
           "inventory": {
             "docs": "Total financial value of the company's sellable inventory.",
-            "type": "double",
+            "type": "float",
           },
           "investments_and_derivative_financial_instruments": {
             "docs": "Total value of all investments, stocks, or similar, that the company has.",
-            "type": "double",
+            "type": "float",
           },
           "property_plant_and_equipment_investment_properties": {
             "docs": "Total value of real estate, plant infrastructure, or equipment that has been purchased.",
-            "type": "double",
+            "type": "float",
           },
           "total_gross_equity": {
             "docs": "Total gross equity.",
-            "type": "double",
+            "type": "float",
           },
           "total_net_equity": {
             "docs": "The total net equity of the company (\`total_gross_equity\` - \`debts\`).",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -33741,15 +33741,15 @@ We return one of the following enum values:
         "properties": {
           "total_debts": {
             "docs": "The total debts of the tax_payer",
-            "type": "double",
+            "type": "float",
           },
           "total_gross_equity": {
             "docs": "The total gross equity of the tax payer.",
-            "type": "double",
+            "type": "float",
           },
           "total_net_equity": {
             "docs": "The total net equity value of the taxpayer.",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -33774,7 +33774,7 @@ We return one of the following enum values:
           },
           "amount": {
             "docs": "The income amount.",
-            "type": "double",
+            "type": "float",
           },
           "currency": {
             "docs": "The three-letter currency code of the income. For example:
@@ -33816,19 +33816,19 @@ We return one of the following enum values:
         "properties": {
           "capital_income": {
             "docs": "Income received from an investment (such as dividends or from renting a property).",
-            "type": "double",
+            "type": "float",
           },
           "earned_income": {
             "docs": "Income received from employment.",
-            "type": "double",
+            "type": "float",
           },
           "fee_based_income": {
             "docs": "Income received from emitted invoices (for example, income that independent contractors or freelancers receive).",
-            "type": "double",
+            "type": "float",
           },
           "non_labor_income": {
             "docs": "Income that cannot be classified into the other three fields (such as income from cryptocurrencies or regular transfers from parents).",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -33923,32 +33923,32 @@ We return one of the following enum values:
           "monthly_average": {
             "docs": "Average amount of income received per month across all the accounts for the specific user.
 ",
-            "type": "double",
+            "type": "float",
           },
           "monthly_average_high_confidence": {
             "docs": "Average amount of income received per month for the specific user with \`HIGH\` confidence.
 ",
-            "type": "double",
+            "type": "float",
           },
           "monthly_average_irregular": {
             "docs": "Average amount of irregular income (with a frequency of \`SINGLE\` or \`IRREGULAR\`) received per month for the specific user.
 ",
-            "type": "double",
+            "type": "float",
           },
           "monthly_average_low_confidence": {
             "docs": "Average amount of income received per month for the specific user with \`LOW\` confidence.
 ",
-            "type": "double",
+            "type": "float",
           },
           "monthly_average_medium_confidence": {
             "docs": "Average amount of income received per month for the specific user with \`MEDIUM\` confidence.
 ",
-            "type": "double",
+            "type": "float",
           },
           "monthly_average_regular": {
             "docs": "Average amount of regular income (with a frequency of \`MONTHLY\`, \`FORTNIGHTLY\`, or \`WEEKLY\`) received per month for the specific user.
 ",
-            "type": "double",
+            "type": "float",
           },
           "number_of_income_streams": {
             "docs": "Number of total income streams analized.
@@ -33958,32 +33958,32 @@ We return one of the following enum values:
           "total_high_confidence": {
             "docs": "Total amount of income for the specific user with \`HIGH\` confidence.
 ",
-            "type": "double",
+            "type": "float",
           },
           "total_income_amount": {
             "docs": "Total amount of all income received for the specific user.
 ",
-            "type": "double",
+            "type": "float",
           },
           "total_irregular_income_amount": {
             "docs": "Total amount of irregular income (with a frequency of \`SINGLE\` or \`IRREGULAR\`) for the specific user.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "total_low_confidence": {
             "docs": "Total amount of income for the specific user with \`LOW\` confidence.
 ",
-            "type": "double",
+            "type": "float",
           },
           "total_medium_confidence": {
             "docs": "Total amount of income for the specific user with \`MEDIUM\` confidence.
 ",
-            "type": "double",
+            "type": "float",
           },
           "total_regular_income_amount": {
             "docs": "Total amount of regular income (with a frequency of \`MONTHLY\`, \`FORTNIGHTLY\`, \`WEEKLY\`) for the specific user.
 ",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -34003,7 +34003,7 @@ For each income stream, we provide additional insights such as:
           "average_income_amount": {
             "docs": "The average income transaction amount from the source.
 ",
-            "type": "double",
+            "type": "float",
           },
           "confidence": "EnumIncomeStreamConfidence",
           "currency": {
@@ -34026,7 +34026,7 @@ For each income stream, we provide additional insights such as:
           "last_income_amount": {
             "docs": "The amount of the most recent income received from the source.
 ",
-            "type": "double",
+            "type": "float",
           },
           "last_income_date": {
             "docs": "The date when the most recent income from the stream was received, in \`YYYY-MM-DD\` format.
@@ -34050,7 +34050,7 @@ For each income stream, we provide additional insights such as:
           "monthly_average": {
             "docs": "The average amount of income received from the source over \`lookback_periods\`.
 ",
-            "type": "double",
+            "type": "float",
           },
           "number_of_incomes": {
             "docs": "Number of income transactions over the \`lookback_periods\`.
@@ -34069,14 +34069,14 @@ For each income stream, we provide additional insights such as:
 
 **Note:** For transactions with \`frequency\`=\`SINGLE\`, this value returns \`null\`.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "stability": {
             "docs": "The stability of the income based on its amount, with a range from 0 to 1, where 1 represents perfect stability.
 
 **Note:** For transactions with \`frequency\`=\`SINGLE\`, this value returns \`null\`.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "trend": {
             "docs": "The income trend during a period of time calculated between last income and first income received, where:
@@ -34085,7 +34085,7 @@ For each income stream, we provide additional insights such as:
 
 **Note:** For transactions with \`frequency\`=\`SINGLE\`, this value returns \`null\`.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
         },
       },
@@ -34529,14 +34529,14 @@ For \`invalid_period\` errors, the description is:
           "balance_gross": {
             "docs": "The current gross total value of the entire portfolio and all its underlying instruments, as given by the institution.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "balance_net": {
             "docs": "The total current value of the entire portfolio and all its underlying instruments, as given by the institution.
 
 ℹ️ **Note:** In Brazil, this is usually calculated based on the net value (that is, not including tax).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "balance_type": {
             "docs": "Indicates whether this account is either an \`ASSET\` or a \`LIABILITY\`. You can consider the balance of an \`ASSET\` as being positive, while the balance of a \`LIABILITY\` as negative.
@@ -34583,15 +34583,15 @@ Please note that other currencies other than in the list above may be returned.
         "properties": {
           "average_acquisition_price": {
             "docs": "The average price of each share acquired in the instrument.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "balance_gross": {
             "docs": "The total gross value of the instrument (including taxes).",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "balance_net": {
             "docs": "The total net value of the instrument (excluding taxes).",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "currency": {
             "docs": "The currency of the instrument. For example:
@@ -34640,11 +34640,11 @@ Please note that other currencies other than in the list above may be returned.
           },
           "price": {
             "docs": "The current price of one share in the instrument.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "profit": {
             "docs": "The current profit earned in the instrument.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "public_id": {
             "docs": "The public identifiers for the instrument.",
@@ -34652,7 +34652,7 @@ Please note that other currencies other than in the list above may be returned.
           },
           "quantity": {
             "docs": "The total amount of shares owned in the instrument.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "redemption_conditions": {
             "docs": "An array of conditions that apply to the instrument in order to retrieve the final value.
@@ -34677,7 +34677,7 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
           },
           "value": {
             "docs": "The value of \`fees.type\`. The currency of the fee is the same as the currency of the instrument.",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -34698,7 +34698,7 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
 
 ℹ️  **Note:** If the \`interest_rate.index\` is present, this value is a percentage of the index. For example, if \`interest_rate.index\` = \`CDI\` and \`interest_rate.value\` = \`90\`, then the total interest rate applied is 90% of the CDI.
 ",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -34765,7 +34765,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "pre_tax_amount": {
             "docs": "The total price for this item before tax is applied (\`quantity\` x \`unit_amount\`).",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "product_identification": {
             "docs": "The identification code of the product or the service, as defined by the legal entity in the country.
@@ -34774,15 +34774,15 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "quantity": {
             "docs": "The quantity of this invoice item.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "tax_amount": {
             "docs": "The amount of tax for this invoice item (\`pre_tax_amount\` x \`tax_percentage\`).",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "tax_percentage": {
             "docs": "The tax percentage to apply.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "tax_type": {
             "docs": "The item's tax type.",
@@ -34790,11 +34790,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "total_amount": {
             "docs": "The total price for this invoice item (\`pre_tax_amount\` + \`tax_amount\`).",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "unit_amount": {
             "docs": "The price of one singular item.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "unit_code": {
             "docs": "The unit of measure, as defined by the legal entity in the country.
@@ -34817,7 +34817,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "retained_tax_amount": {
             "docs": "The amount of retained tax.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "tax": {
             "docs": "The type of retained tax (for example, ISR, IVA or IEPS).",
@@ -34825,7 +34825,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "tax_percentage": {
             "docs": "The percentage of tax retained.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "tax_type": {
             "docs": "**Note**: This field is not applicable for SAT Mexico and will return \`null\`.
@@ -34847,7 +34847,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "pre_tax_amount": {
             "docs": "The total price for this item before tax is applied (\`quantity\` x \`unit_amount\`).",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "product_identification": {
             "docs": "The identification code of the product or the service, as defined by the legal entity in the country.
@@ -34865,11 +34865,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "tax_amount": {
             "docs": "The amount of tax for this invoice item (\`pre_tax_amount\` x \`tax_percentage\`).",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "tax_percentage": {
             "docs": "The tax percentage to apply.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "tax_type": {
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
@@ -34878,11 +34878,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "total_amount": {
             "docs": "The total price for this invoice item (\`pre_tax_amount\` + \`tax_amount\`).",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "unit_amount": {
             "docs": "The price of one a singular item.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "unit_code": {
             "docs": "The unit of measure, as defined by the legal entity in the country. 
@@ -34953,12 +34953,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "discount_amount": {
             "docs": "The total amount discounted in this invoice.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "exchange_rate": {
             "docs": "The exchange rate used in this invoice for the currency.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "expiration_date": {
             "docs": "Indicates when the invoice is set to expire.
@@ -35080,16 +35080,16 @@ For detailed information regarding DIAN's payment types, please see their [offic
           "subtotal_amount": {
             "docs": "The pretax amount of this invoice (sum of each item's \`pre_tax_amount\`).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "tax_amount": {
             "docs": "The amount of tax for this invoice (sum of each item's \`tax_amount\`).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "total_amount": {
             "docs": "The total amount of the invoice (\`subtotal_amount\` + \`tax_amount\` - \`discount_amount\`)",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "type": "optional<EnumInvoiceType>",
           "usage": {
@@ -35249,12 +35249,12 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
           "discount_amount": {
             "docs": "The total amount discounted in this invoice.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "exchange_rate": {
             "docs": "The exchange rate used in this invoice for the currency.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "folio": {
             "docs": "The internal control number that the taxpayer assigns to the invoice.
@@ -35379,16 +35379,16 @@ Possible statuses are:
           "subtotal_amount": {
             "docs": "The pretax amount of this invoice (sum of each item's \`pre_tax_amount\`).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "tax_amount": {
             "docs": "The amount of tax for this invoice (sum of each item's \`tax_amount\`).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "total_amount": {
             "docs": "The total amount of the invoice (\`subtotal_amount\` + \`tax_amount\` - \`discount_amount\`)",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "type": "optional<EnumInvoiceType>",
           "usage": {
@@ -35417,7 +35417,7 @@ Possible statuses are:
           "amount": {
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "beneficiary_account_number": {
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
@@ -35482,7 +35482,7 @@ Possible statuses are:
           "amount_paid": {
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "currency": {
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
@@ -35497,7 +35497,7 @@ Possible statuses are:
           "outstanding_balance": {
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "partiality_number": {
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
@@ -35512,7 +35512,7 @@ Possible statuses are:
           "previous_balance": {
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
         },
       },
@@ -35522,7 +35522,7 @@ Possible statuses are:
           "amount_paid": {
             "docs": "The amount paid in this installment.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "currency": {
             "docs": "The currency of the related invoice. For example:
@@ -35543,7 +35543,7 @@ Possible statuses are:
           "outstanding_balance": {
             "docs": "The amount remaining to be paid.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "partiality_number": {
             "docs": "The payment installment number.
@@ -35558,7 +35558,7 @@ Possible statuses are:
           "previous_balance": {
             "docs": "The invoice amount before the payment.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
         },
       },
@@ -35568,7 +35568,7 @@ Possible statuses are:
           "amount": {
             "docs": "The invoice amount, in the currency of the original invoice.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "beneficiary_account_number": {
             "docs": "The bank account number of the payment beneficiary.
@@ -35642,7 +35642,7 @@ Please note that other currencies other than in the list above may be returned.
           "amount": {
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "collected_at": {
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.",
@@ -35705,7 +35705,7 @@ Please note that other currencies other than in the list above may be returned.
           "amount": {
             "docs": "The total amount of the payroll payment.
 ",
-            "type": "double",
+            "type": "float",
           },
           "collected_at": {
             "docs": "The ISO-8601 timestamp when the data point was collected.",
@@ -36047,19 +36047,19 @@ For \`login_error\` errors, the description can be one of the following:
         "properties": {
           "capital_income": {
             "docs": "Income received from an investment (such as dividends or from renting a property).",
-            "type": "double",
+            "type": "float",
           },
           "earned_income": {
             "docs": "Income received from employment.",
-            "type": "double",
+            "type": "float",
           },
           "fee_based_income": {
             "docs": "Income received from emitted invoices (for example, income independent contractors or freelancers receive).",
-            "type": "double",
+            "type": "float",
           },
           "non_labor_income": {
             "docs": "Income that cannot be classified into the other three fields (such as income from cryptocurrencies or regular transfers from parents).",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -36227,19 +36227,19 @@ For \`login_error\` errors, the description can be one of the following:
         "properties": {
           "capital_income": {
             "docs": "Income received from an investment (such as dividends or from renting a property).",
-            "type": "double",
+            "type": "float",
           },
           "earned_income": {
             "docs": "Income received from employment.",
-            "type": "double",
+            "type": "float",
           },
           "fee_based_income": {
             "docs": "Income received from emitted invoices (for example, income independent contractors or freelancers receive).",
-            "type": "double",
+            "type": "float",
           },
           "non_labor_income": {
             "docs": "Income that cannot be classified into the other three fields (such as income from cryptocurrencies or regular transfers from parents).",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -37634,11 +37634,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "properties": {
           "net_pension_income": {
             "docs": "The total net pension of the taxpayer.",
-            "type": "double",
+            "type": "float",
           },
           "net_taxable_pension_income": {
             "docs": "The total taxable pension income of the taxpayer.",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -37666,7 +37666,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "fees": "list<RecevablesTransactionFees>",
           "gross_amount": {
             "docs": "The total gross amount of the transaction.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "id": {
             "docs": "Belvo's unique ID for the current receivable transaction.",
@@ -37685,7 +37685,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "net_amount": {
             "docs": "The net amount of the transaction.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "number_of_installments": "optional<ReceivablesTransactionNumberOfInstallments>",
           "status": "optional<EnumReceivableTransactionStatus>",
@@ -37765,7 +37765,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "type": "optional<EnumReceivableTransactionFeeType>",
           "value": {
             "docs": "The value of \`fees.type\`.",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -37774,7 +37774,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "properties": {
           "amount": {
             "docs": "The transaction amount.",
-            "type": "double",
+            "type": "float",
           },
           "description": {
             "docs": "The description of the transaction provided by the institution. Usually, this is the text that the end user would see in the bank statement. The description can be an empty string.",
@@ -37802,7 +37802,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "account": "optional<Account>",
           "average_transaction_amount": {
             "docs": "The average transaction amount of the recurring expense.",
-            "type": "double",
+            "type": "float",
           },
           "category": "EnumRecurringExpenseCategory",
           "days_since_last_transaction": {
@@ -37825,7 +37825,7 @@ Based on the frequency, you can infer how many days until the next charge will o
           },
           "median_transaction_amount": {
             "docs": "The median transaction amount of the recurring expense.",
-            "type": "double",
+            "type": "float",
           },
           "name": {
             "docs": "The name for the recurring expense.
@@ -37913,13 +37913,13 @@ For \`request_timeout\` errors, the description is:
           "base_amount": {
             "docs": "The base amount that was used to calculate the tax retention.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "payment_status": "optional<EnumTaxRetentionPaymentStatus>",
           "retained_amount": {
             "docs": "The amount retained.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "tax_type": {
             "docs": "Optional attribute to indicate the type of tax withheld for the period or year according to the [SAT catalog](https://developers.belvo.com/docs/sat-catalogs#retention-code).
@@ -37972,12 +37972,12 @@ For \`request_timeout\` errors, the description is:
           "balance_threshold_x": {
             "docs": "The threshold used to compute \`days_balance_below_x_period\`. Please note, this is value is country specific (both in terms of the amount and the currency).
 ",
-            "type": "double",
+            "type": "float",
           },
           "closing_balance": {
             "docs": "The balance of all the accounts at the \`collected_at\` time.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "days_balance_below_0_1m": {
             "docs": "The number of days that the total balance of the account is less than or equal to 0 in the last month.
@@ -38012,32 +38012,32 @@ For \`request_timeout\` errors, the description is:
           "max_balance_1m": {
             "docs": "The maximum balance in the period (one month).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "max_balance_1w": {
             "docs": "The maximum balance in the period (one week).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "max_balance_3m": {
             "docs": "The maximum balance in the period (three months).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "min_balance_1m": {
             "docs": "The minimum balance in the period (one month).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "min_balance_1w": {
             "docs": "The minimum balance in the period (one week).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "min_balance_3m": {
             "docs": "The minimum balance in the period (three months).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
         },
       },
@@ -38052,7 +38052,7 @@ However, internal transfers (transfers between accounts belonging to the same li
 
 ℹ️ If the ratio is greater than \`1\`, it means that the user has more income than outgoing, indicating that they spend less than they earn.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "positive_to_negative_ratio_1w": {
             "docs": "The ratio between sum_positive / sum_negative  in the last week (counted from the time of the request).
@@ -38061,44 +38061,44 @@ However, internal transfers (transfers between accounts belonging to the same li
 
 **Note**: In the case that there have been no outgoing transactions, the value will be \`null\`.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "positive_to_negative_ratio_3m": {
             "docs": "The ratio between sum_positive / sum_negative  in the last three months (counted from the time of the request).
 
 ℹ️ If the ratio is greater than \`1\`, it means that the user has more income than outgoing, indicating that they spend less than they earn.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "sum_negative_1m": {
             "docs": "Sum total of all transactions leading to a negative cashflow in the last month (counted from the time of the request).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "sum_negative_1w": {
             "docs": "Sum total of all transactions leading to a negative cashflow in the last week (counted from the time of the request).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "sum_negative_3m": {
             "docs": "Sum total of all transactions leading to a negative cashflow in the last three months (counted from the time of the request).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "sum_positive_1m": {
             "docs": "Sum total of all transactions leading to a positive cashflow in the last month (counted from the time of the request).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "sum_positive_1w": {
             "docs": "Sum total of all transactions leading to a positive cashflow in the last week (counted from the time of the request).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "sum_positive_3m": {
             "docs": "Sum total of all transactions leading to a positive cashflow in the last three months (counted from the time of the request).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
         },
       },
@@ -38120,12 +38120,12 @@ However, internal transfers (transfers between accounts belonging to the same li
           "sum_credit_limit": {
             "docs": "Sum total of all credit cards' limits.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "sum_credit_used": {
             "docs": "Sum total of all credit used.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
         },
       },
@@ -38140,17 +38140,17 @@ However, internal transfers (transfers between accounts belonging to the same li
           "sum_loans_monthly_payment": {
             "docs": "Sum total of the monthly payments for all the link's loan accounts.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "sum_loans_outstanding_principal": {
             "docs": "Sum total of the outstanding principal for all the link's loan accounts.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "sum_loans_principal": {
             "docs": "Sum total of the principal for all of the link's loan accounts.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
         },
       },
@@ -38184,62 +38184,62 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "max_incoming_amount_1m": {
             "docs": "The highest value inflow transaction in the last month.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "max_incoming_amount_1w": {
             "docs": "The highest value inflow transaction in the last week.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "max_incoming_amount_3m": {
             "docs": "The highest value inflow transaction in the last three months.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "max_outgoing_amount_1m": {
             "docs": "The highest value outflow transaction in the last month.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "max_outgoing_amount_1w": {
             "docs": "The highest value outflow transaction in the last week.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "max_outgoing_amount_3m": {
             "docs": "The highest value outflow transaction in the last three months.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "mean_incoming_amount_1m": {
             "docs": "The mean incoming value of all transactions in the last month.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "mean_incoming_amount_1w": {
             "docs": "The mean incoming value of all transactions in the last week.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "mean_incoming_amount_3m": {
             "docs": "The mean incoming value of all transactions in the last three months.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "mean_outgoing_amount_1m": {
             "docs": "The mean outgoing value of all transaction in the last month.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "mean_outgoing_amount_1w": {
             "docs": "The mean outgoing value of all transaction in the last week.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "mean_outgoing_amount_3m": {
             "docs": "The mean outgoing value of all transaction in the last three months.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "num_incoming_transactions_1m": {
             "default": 0,
@@ -38322,32 +38322,32 @@ If the account has not been open long enough to have the transaction data for a 
           "sum_incoming_amount_1m": {
             "docs": "The total sum of all inflow transactions for the last month.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "sum_incoming_amount_1w": {
             "docs": "The total sum of all inflow transactions for the last week.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "sum_incoming_amount_3m": {
             "docs": "The total sum of all inflow transactions for the last three months.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "sum_outgoing_amount_1m": {
             "docs": "The total sum of all outflow transactions for the last month.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "sum_outgoing_amount_1w": {
             "docs": "The total sum of all outflow transactions for the last week.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "sum_outgoing_amount_3m": {
             "docs": "The total sum of all outflow transactions for the last three months.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
         },
       },
@@ -38463,39 +38463,39 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "properties": {
           "fortuitous_profit_tax": {
             "docs": "The tax applied on your unexpected income (such as lottery wins or house sales).",
-            "type": "double",
+            "type": "float",
           },
           "net_income_tax": {
             "docs": "After additional deductions that you can apply, this will be the net income tax. If no further deduction are identified, this value will be the same as \`total_tax_on_taxable_net_income\`.",
-            "type": "double",
+            "type": "float",
           },
           "net_income_taxable": {
             "docs": "The net income on which tax can be applied.",
-            "type": "double",
+            "type": "float",
           },
           "total_balance_in_favor": {
             "docs": "How much the tax payer is expected to receive.",
-            "type": "double",
+            "type": "float",
           },
           "total_balance_payable": {
             "docs": "How much the tax payer is required to pay.",
-            "type": "double",
+            "type": "float",
           },
           "total_payment": {
             "docs": "The total the tax payer is required to pay, taking into account deductions and fiscal credits.",
-            "type": "double",
+            "type": "float",
           },
           "total_tax_due": {
             "docs": "After further deductions, this is the final calculated tax that the taxpayer is required to pay.",
-            "type": "double",
+            "type": "float",
           },
           "total_tax_on_taxable_net_income": {
             "docs": "The calculated total tax that can be applied on the tax payer's taxable income (total income - exemptions - deductions).",
-            "type": "double",
+            "type": "float",
           },
           "total_withholdings_for_the_taxable_year_to_be_declared": {
             "docs": "How much the tax payer has already paid througout the fiscal year.",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -38504,19 +38504,19 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "properties": {
           "balance_payable": {
             "docs": "How much the tax payer is required to pay.",
-            "type": "double",
+            "type": "float",
           },
           "balance_refundable": {
             "docs": "How much the tax payer is expected to receive. For DIAN, this will count as credit for the next fiscal year (see \`previous_year_balance\`).",
-            "type": "double",
+            "type": "float",
           },
           "fortuitous_profit_tax": {
             "docs": "The tax applied on your unexpected income (such as lottery wins or house sales).",
-            "type": "double",
+            "type": "float",
           },
           "net_income_tax": {
             "docs": "After additional deductions that you can apply, this will be the net income tax. If not further deduction are identified, this value will be the same as \`total_tax_on_taxable_net_income\`.",
-            "type": "double",
+            "type": "float",
           },
           "previous_year_balance": {
             "docs": "Only applicable for DIAN.
@@ -38524,23 +38524,23 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
 
 The amount the tax payer has as a "credit" fromt he previous year (this is equal to the \`balance_refundable\`) of the previous year.
 ",
-            "type": "double",
+            "type": "float",
           },
           "total_payment": {
             "docs": "The total the tax payer is required to pay, taking into account deductions and fiscal credits.",
-            "type": "double",
+            "type": "float",
           },
           "total_tax_due": {
             "docs": "After further deductions, this is the final calculated tax that the taxpayer is required to pay.",
-            "type": "double",
+            "type": "float",
           },
           "total_tax_on_taxable_net_income": {
             "docs": "The calculated total tax that can be applied on the tax payer's taxable income (total income - exemptions - deductions).",
-            "type": "double",
+            "type": "float",
           },
           "total_withheld_tax": {
             "docs": "The total tax already withheld in the current fiscal year.",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -38914,22 +38914,22 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "total_exempt_amount": {
             "docs": "Total amount that is exempt from taxation.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "total_invoice_amount": {
             "docs": "The total amount of the invoice that the tax retention relates to.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "total_retained_amount": {
             "docs": "Total tax retained.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "total_taxable_amount": {
             "docs": "The total amount that can be taxed. Calculated as \`total_invoice_amount\` - \`total_exempt_amount\`.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "version": {
             "docs": "The CFDI version of the tax retentions.
@@ -40274,11 +40274,11 @@ For \`too_many_sessions\` errors, the description is:
             "docs": "The transaction amount.
 ℹ️ The amount displayed is always positive as we indicate the direction of the transaction in the \`type\` parameter.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "balance": {
             "docs": "The balance at the end of the transaction.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "category": "optional<EnumTransactionCategory>",
           "collected_at": {
@@ -40388,7 +40388,7 @@ For \`too_many_sessions\` errors, the description is:
         "properties": {
           "bill_amount": {
             "docs": "The aggregate bill amount, as of \`collected_at\`.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "bill_name": {
             "docs": "The title of the monthly credit card bill the transaction belongs to. The format of the returned value is institution specific, however, some common examples are:
@@ -70023,7 +70023,7 @@ The credit amount the user still has available for the current period. The \`ava
 The present value required to pay off the loan, as provided by the institution.
 
 **Note:** If the institution does not provide this value, we return \`null\`.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "current": {
             "docs": "The current balance is calculated differently according to the type of account.
@@ -70037,7 +70037,7 @@ The amount the user has spent in the current card billing period (see \`credit_d
 - **🏡 Loan accounts**:
 
 The amount remaining to pay on the users's loan (same as \`loan_data.outstanding_balance\`).",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
         },
       },
@@ -70050,7 +70050,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
           },
           "credit_limit": {
             "docs": "The maximum amount of credit the owner can receive.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "cutting_date": {
             "docs": "The closing date of the credit period.",
@@ -70064,7 +70064,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
           },
           "interest_rate": {
             "docs": "The annualized interest rate of the credit.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "last_payment_date": {
             "availability": "deprecated",
@@ -70077,7 +70077,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
           },
           "minimum_payment": {
             "docs": "The minimum amount to be paid on the \`next_payment_date\`.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "monthly_payment": {
             "availability": "deprecated",
@@ -70093,7 +70093,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
           },
           "no_interest_payment": {
             "docs": "The minimum amount required to pay to avoid generating interest.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
         },
       },
@@ -70102,7 +70102,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
         "properties": {
           "balance": {
             "docs": "The amount in the fund.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "collected_at": {
             "docs": "The ISO-8601 timestamp when the data point was collected.",
@@ -70114,7 +70114,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
           },
           "percentage": {
             "docs": "How much this fund, as a percentage, contributes to the pension account's total.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "public_identifications": {
             "docs": "The fund's public IDs.",
@@ -70148,7 +70148,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
           },
           "contract_amount": {
             "docs": "The initial total loan amount, calculated by the institution, when the contract was signed. This amount includes the principal + interest + taxes + fees.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "contract_end_date": {
             "docs": "The date when the loan is expected to be completed.",
@@ -70244,7 +70244,7 @@ Please see \`payment_day\` instead.
           },
           "monthly_payment": {
             "docs": "The recurrent monthly payment, if applicable.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "no_interest_payment": {
             "availability": "deprecated",
@@ -70264,12 +70264,12 @@ The minimum amount required to pay to avoid generating interest.
           },
           "outstanding_balance": {
             "docs": "The amount remaining to pay in total, including interest.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "outstanding_principal": {
             "docs": "Outstanding loan amount, that is, how much remains to pay on the principal (not including interest).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "payment_day": {
             "docs": "The day of the month by which the owner needs to pay the loan (\`YYYY-MM-DD\`).",
@@ -70277,7 +70277,7 @@ The minimum amount required to pay to avoid generating interest.
           },
           "principal": {
             "docs": "Total amount of the loan (the amount the user receives).",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
         },
       },
@@ -70288,7 +70288,7 @@ The minimum amount required to pay to avoid generating interest.
           "value": {
             "docs": "The total value of the fee. Same currency of the Loan.
 ",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -70302,7 +70302,7 @@ The minimum amount required to pay to avoid generating interest.
           "type": "optional<EnumLoanDataInterestRateType>",
           "value": {
             "docs": "The interest rate (in percent or currency value).",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
         },
       },
@@ -70335,11 +70335,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "properties": {
           "anticipated": {
             "docs": "The amount that the owner of the account received earlier than contracted.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "available": {
             "docs": "The amount that the owner of the account will receive according to an established date.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "collected_at": {
             "docs": "The ISO-8601 timestamp when the data point was collected.",
@@ -70347,7 +70347,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "current": {
             "docs": "The total sum of all receivables (\`available\` + \`anticipated\`)",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
         },
       },
@@ -70356,23 +70356,23 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "properties": {
           "administration_expenses": {
             "docs": "Total costs of the company related to training, company offsites, or similar.",
-            "type": "double",
+            "type": "float",
           },
           "costs": {
             "docs": "Total costs for the company to operate.",
-            "type": "double",
+            "type": "float",
           },
           "distribution_and_sales_expenses": {
             "docs": "Total costs the company incurred in order to distribute or sell their product.",
-            "type": "double",
+            "type": "float",
           },
           "financial_expenses": {
             "docs": "Total value of any fees incurred by the company to operate (such as bank fees).",
-            "type": "double",
+            "type": "float",
           },
           "total_costs_and_deductible_expenses": {
             "docs": "Total value of all costs and dedictible expenses.",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -70381,27 +70381,27 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "properties": {
           "dividends": {
             "docs": "Total income that the company generated from dividends.",
-            "type": "double",
+            "type": "float",
           },
           "gross_income_from_ordinary_activities": {
             "docs": "Total gross income that the company generated from their main economic activity.",
-            "type": "double",
+            "type": "float",
           },
           "other_income": {
             "docs": "Total income that the company generated from activities not associated with their main economic activity.",
-            "type": "double",
+            "type": "float",
           },
           "returns_rebates_and_discounts_on_sales": {
             "docs": "Total value of cancelled orders, corrected invoices, or similar, that can be discounted from the \`total_gross_income\`.",
-            "type": "double",
+            "type": "float",
           },
           "total_gross_income": {
             "docs": "Total gross income the company generated.",
-            "type": "double",
+            "type": "float",
           },
           "total_net_income": {
             "docs": "Total net income of the company, taking into account \`returns_rebates_and_discounts_on_sales\`.",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -70419,19 +70419,19 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "properties": {
           "total_applicable_deductions": {
             "docs": "Total deductions that the taxpayer can apply to their income, according to the institution.",
-            "type": "double",
+            "type": "float",
           },
           "total_exempt_income": {
             "docs": "Total income that is not taxable, according to the institution.",
-            "type": "double",
+            "type": "float",
           },
           "total_exemptions_and_deductions": {
             "docs": "Sum total of all exempt and deductions that can be applied to the taxpayer's income.",
-            "type": "double",
+            "type": "float",
           },
           "total_ordinary_net_income": {
             "docs": "Sum total of the taxpayer's income (gross income - exemptions - deductions).",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -70473,7 +70473,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "account": "optional<Account>",
           "balance": {
             "docs": "The funds available in the account by the end of the \`value_date\`.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "collected_at": {
             "availability": "deprecated",
@@ -70884,7 +70884,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "amount": {
             "docs": "The transaction amount.",
-            "type": "double",
+            "type": "float",
           },
           "category": "optional<EnumCategorizationTransactionCategory>",
           "currency": {
@@ -70942,7 +70942,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "amount": {
             "docs": "The transaction amount.",
-            "type": "double",
+            "type": "float",
           },
           "currency": {
             "docs": "The currency of the account, in ISO-4217 format. For example: - 🇧🇷 BRL (Brazilian Real) - 🇨🇴 COP (Colombian Peso) - 🇲🇽 MXN (Mexican Peso)",
@@ -71375,7 +71375,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "pattern": "\\d+(?:\\.\\d{1,2})?",
             },
           },
-          "double",
+          "float",
         ],
       },
       "CreatePaymentLinkPse": {
@@ -71871,14 +71871,14 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "monthly_salary": {
             "docs": "The monthly salary of the individual, including any additional perks.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "most_recent_base_salary": {
             "docs": "The most recent base salary the individual earned.
 
 For Mexico, this is the *daily* rate that the individual earned, including the perks that the individual is entitled to throughout the year.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "start_date": {
             "docs": "Date when employment started, in \`YYYY-MM-DD\` format.
@@ -71920,7 +71920,7 @@ For Mexico, this is the *daily* rate that the individual earned, including the p
           "base_salary": {
             "docs": "The base salary of the individual, current as of the \`update_date\`.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "event": "optional<EnumEmploymentRecordStatusUpdateEvents>",
           "update_date": {
@@ -73024,35 +73024,35 @@ We return one of the following enum values:
         "properties": {
           "accounts_documents_and_finance_leases_receivable": {
             "docs": "Total of all payments the company expects to receive (for example, from partial invoices that have not been paid yet).",
-            "type": "double",
+            "type": "float",
           },
           "cash_and_cash_equivalents": {
             "docs": "Total cash (or cash equivalents) that the business currently holds at the end of the fiscal year.",
-            "type": "double",
+            "type": "float",
           },
           "debts": {
             "docs": "Total debts that the company currently has.",
-            "type": "double",
+            "type": "float",
           },
           "inventory": {
             "docs": "Total financial value of the company's sellable inventory.",
-            "type": "double",
+            "type": "float",
           },
           "investments_and_derivative_financial_instruments": {
             "docs": "Total value of all investments, stocks, or similar, that the company has.",
-            "type": "double",
+            "type": "float",
           },
           "property_plant_and_equipment_investment_properties": {
             "docs": "Total value of real estate, plant infrastructure, or equipment that has been purchased.",
-            "type": "double",
+            "type": "float",
           },
           "total_gross_equity": {
             "docs": "Total gross equity.",
-            "type": "double",
+            "type": "float",
           },
           "total_net_equity": {
             "docs": "The total net equity of the company (\`total_gross_equity\` - \`debts\`).",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -73061,15 +73061,15 @@ We return one of the following enum values:
         "properties": {
           "total_debts": {
             "docs": "The total debts of the tax_payer",
-            "type": "double",
+            "type": "float",
           },
           "total_gross_equity": {
             "docs": "The total gross equity of the tax payer.",
-            "type": "double",
+            "type": "float",
           },
           "total_net_equity": {
             "docs": "The total net equity value of the taxpayer.",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -73094,7 +73094,7 @@ We return one of the following enum values:
           },
           "amount": {
             "docs": "The income amount.",
-            "type": "double",
+            "type": "float",
           },
           "currency": {
             "docs": "The three-letter currency code of the income. For example:
@@ -73136,19 +73136,19 @@ We return one of the following enum values:
         "properties": {
           "capital_income": {
             "docs": "Income received from an investment (such as dividends or from renting a property).",
-            "type": "double",
+            "type": "float",
           },
           "earned_income": {
             "docs": "Income received from employment.",
-            "type": "double",
+            "type": "float",
           },
           "fee_based_income": {
             "docs": "Income received from emitted invoices (for example, income that independent contractors or freelancers receive).",
-            "type": "double",
+            "type": "float",
           },
           "non_labor_income": {
             "docs": "Income that cannot be classified into the other three fields (such as income from cryptocurrencies or regular transfers from parents).",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -73243,32 +73243,32 @@ We return one of the following enum values:
           "monthly_average": {
             "docs": "Average amount of income received per month across all the accounts for the specific user.
 ",
-            "type": "double",
+            "type": "float",
           },
           "monthly_average_high_confidence": {
             "docs": "Average amount of income received per month for the specific user with \`HIGH\` confidence.
 ",
-            "type": "double",
+            "type": "float",
           },
           "monthly_average_irregular": {
             "docs": "Average amount of irregular income (with a frequency of \`SINGLE\` or \`IRREGULAR\`) received per month for the specific user.
 ",
-            "type": "double",
+            "type": "float",
           },
           "monthly_average_low_confidence": {
             "docs": "Average amount of income received per month for the specific user with \`LOW\` confidence.
 ",
-            "type": "double",
+            "type": "float",
           },
           "monthly_average_medium_confidence": {
             "docs": "Average amount of income received per month for the specific user with \`MEDIUM\` confidence.
 ",
-            "type": "double",
+            "type": "float",
           },
           "monthly_average_regular": {
             "docs": "Average amount of regular income (with a frequency of \`MONTHLY\`, \`FORTNIGHTLY\`, or \`WEEKLY\`) received per month for the specific user.
 ",
-            "type": "double",
+            "type": "float",
           },
           "number_of_income_streams": {
             "docs": "Number of total income streams analized.
@@ -73278,32 +73278,32 @@ We return one of the following enum values:
           "total_high_confidence": {
             "docs": "Total amount of income for the specific user with \`HIGH\` confidence.
 ",
-            "type": "double",
+            "type": "float",
           },
           "total_income_amount": {
             "docs": "Total amount of all income received for the specific user.
 ",
-            "type": "double",
+            "type": "float",
           },
           "total_irregular_income_amount": {
             "docs": "Total amount of irregular income (with a frequency of \`SINGLE\` or \`IRREGULAR\`) for the specific user.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "total_low_confidence": {
             "docs": "Total amount of income for the specific user with \`LOW\` confidence.
 ",
-            "type": "double",
+            "type": "float",
           },
           "total_medium_confidence": {
             "docs": "Total amount of income for the specific user with \`MEDIUM\` confidence.
 ",
-            "type": "double",
+            "type": "float",
           },
           "total_regular_income_amount": {
             "docs": "Total amount of regular income (with a frequency of \`MONTHLY\`, \`FORTNIGHTLY\`, \`WEEKLY\`) for the specific user.
 ",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -73323,7 +73323,7 @@ For each income stream, we provide additional insights such as:
           "average_income_amount": {
             "docs": "The average income transaction amount from the source.
 ",
-            "type": "double",
+            "type": "float",
           },
           "confidence": "EnumIncomeStreamConfidence",
           "currency": {
@@ -73346,7 +73346,7 @@ For each income stream, we provide additional insights such as:
           "last_income_amount": {
             "docs": "The amount of the most recent income received from the source.
 ",
-            "type": "double",
+            "type": "float",
           },
           "last_income_date": {
             "docs": "The date when the most recent income from the stream was received, in \`YYYY-MM-DD\` format.
@@ -73370,7 +73370,7 @@ For each income stream, we provide additional insights such as:
           "monthly_average": {
             "docs": "The average amount of income received from the source over \`lookback_periods\`.
 ",
-            "type": "double",
+            "type": "float",
           },
           "number_of_incomes": {
             "docs": "Number of income transactions over the \`lookback_periods\`.
@@ -73389,14 +73389,14 @@ For each income stream, we provide additional insights such as:
 
 **Note:** For transactions with \`frequency\`=\`SINGLE\`, this value returns \`null\`.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "stability": {
             "docs": "The stability of the income based on its amount, with a range from 0 to 1, where 1 represents perfect stability.
 
 **Note:** For transactions with \`frequency\`=\`SINGLE\`, this value returns \`null\`.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "trend": {
             "docs": "The income trend during a period of time calculated between last income and first income received, where:
@@ -73405,7 +73405,7 @@ For each income stream, we provide additional insights such as:
 
 **Note:** For transactions with \`frequency\`=\`SINGLE\`, this value returns \`null\`.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
         },
       },
@@ -73849,14 +73849,14 @@ For \`invalid_period\` errors, the description is:
           "balance_gross": {
             "docs": "The current gross total value of the entire portfolio and all its underlying instruments, as given by the institution.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "balance_net": {
             "docs": "The total current value of the entire portfolio and all its underlying instruments, as given by the institution.
 
 ℹ️ **Note:** In Brazil, this is usually calculated based on the net value (that is, not including tax).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "balance_type": {
             "docs": "Indicates whether this account is either an \`ASSET\` or a \`LIABILITY\`. You can consider the balance of an \`ASSET\` as being positive, while the balance of a \`LIABILITY\` as negative.
@@ -73903,15 +73903,15 @@ Please note that other currencies other than in the list above may be returned.
         "properties": {
           "average_acquisition_price": {
             "docs": "The average price of each share acquired in the instrument.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "balance_gross": {
             "docs": "The total gross value of the instrument (including taxes).",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "balance_net": {
             "docs": "The total net value of the instrument (excluding taxes).",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "currency": {
             "docs": "The currency of the instrument. For example:
@@ -73960,11 +73960,11 @@ Please note that other currencies other than in the list above may be returned.
           },
           "price": {
             "docs": "The current price of one share in the instrument.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "profit": {
             "docs": "The current profit earned in the instrument.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "public_id": {
             "docs": "The public identifiers for the instrument.",
@@ -73972,7 +73972,7 @@ Please note that other currencies other than in the list above may be returned.
           },
           "quantity": {
             "docs": "The total amount of shares owned in the instrument.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "redemption_conditions": {
             "docs": "An array of conditions that apply to the instrument in order to retrieve the final value.
@@ -73997,7 +73997,7 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
           },
           "value": {
             "docs": "The value of \`fees.type\`. The currency of the fee is the same as the currency of the instrument.",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -74018,7 +74018,7 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
 
 ℹ️  **Note:** If the \`interest_rate.index\` is present, this value is a percentage of the index. For example, if \`interest_rate.index\` = \`CDI\` and \`interest_rate.value\` = \`90\`, then the total interest rate applied is 90% of the CDI.
 ",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -74085,7 +74085,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "pre_tax_amount": {
             "docs": "The total price for this item before tax is applied (\`quantity\` x \`unit_amount\`).",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "product_identification": {
             "docs": "The identification code of the product or the service, as defined by the legal entity in the country.
@@ -74094,15 +74094,15 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "quantity": {
             "docs": "The quantity of this invoice item.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "tax_amount": {
             "docs": "The amount of tax for this invoice item (\`pre_tax_amount\` x \`tax_percentage\`).",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "tax_percentage": {
             "docs": "The tax percentage to apply.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "tax_type": {
             "docs": "The item's tax type.",
@@ -74110,11 +74110,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "total_amount": {
             "docs": "The total price for this invoice item (\`pre_tax_amount\` + \`tax_amount\`).",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "unit_amount": {
             "docs": "The price of one singular item.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "unit_code": {
             "docs": "The unit of measure, as defined by the legal entity in the country.
@@ -74137,7 +74137,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "retained_tax_amount": {
             "docs": "The amount of retained tax.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "tax": {
             "docs": "The type of retained tax (for example, ISR, IVA or IEPS).",
@@ -74145,7 +74145,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "tax_percentage": {
             "docs": "The percentage of tax retained.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "tax_type": {
             "docs": "**Note**: This field is not applicable for SAT Mexico and will return \`null\`.
@@ -74167,7 +74167,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "pre_tax_amount": {
             "docs": "The total price for this item before tax is applied (\`quantity\` x \`unit_amount\`).",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "product_identification": {
             "docs": "The identification code of the product or the service, as defined by the legal entity in the country.
@@ -74185,11 +74185,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "tax_amount": {
             "docs": "The amount of tax for this invoice item (\`pre_tax_amount\` x \`tax_percentage\`).",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "tax_percentage": {
             "docs": "The tax percentage to apply.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "tax_type": {
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
@@ -74198,11 +74198,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "total_amount": {
             "docs": "The total price for this invoice item (\`pre_tax_amount\` + \`tax_amount\`).",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "unit_amount": {
             "docs": "The price of one a singular item.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "unit_code": {
             "docs": "The unit of measure, as defined by the legal entity in the country. 
@@ -74273,12 +74273,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "discount_amount": {
             "docs": "The total amount discounted in this invoice.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "exchange_rate": {
             "docs": "The exchange rate used in this invoice for the currency.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "expiration_date": {
             "docs": "Indicates when the invoice is set to expire.
@@ -74400,16 +74400,16 @@ For detailed information regarding DIAN's payment types, please see their [offic
           "subtotal_amount": {
             "docs": "The pretax amount of this invoice (sum of each item's \`pre_tax_amount\`).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "tax_amount": {
             "docs": "The amount of tax for this invoice (sum of each item's \`tax_amount\`).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "total_amount": {
             "docs": "The total amount of the invoice (\`subtotal_amount\` + \`tax_amount\` - \`discount_amount\`)",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "type": "optional<EnumInvoiceType>",
           "usage": {
@@ -74569,12 +74569,12 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
           "discount_amount": {
             "docs": "The total amount discounted in this invoice.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "exchange_rate": {
             "docs": "The exchange rate used in this invoice for the currency.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "folio": {
             "docs": "The internal control number that the taxpayer assigns to the invoice.
@@ -74699,16 +74699,16 @@ Possible statuses are:
           "subtotal_amount": {
             "docs": "The pretax amount of this invoice (sum of each item's \`pre_tax_amount\`).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "tax_amount": {
             "docs": "The amount of tax for this invoice (sum of each item's \`tax_amount\`).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "total_amount": {
             "docs": "The total amount of the invoice (\`subtotal_amount\` + \`tax_amount\` - \`discount_amount\`)",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "type": "optional<EnumInvoiceType>",
           "usage": {
@@ -74737,7 +74737,7 @@ Possible statuses are:
           "amount": {
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "beneficiary_account_number": {
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
@@ -74802,7 +74802,7 @@ Possible statuses are:
           "amount_paid": {
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "currency": {
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
@@ -74817,7 +74817,7 @@ Possible statuses are:
           "outstanding_balance": {
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "partiality_number": {
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
@@ -74832,7 +74832,7 @@ Possible statuses are:
           "previous_balance": {
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
         },
       },
@@ -74842,7 +74842,7 @@ Possible statuses are:
           "amount_paid": {
             "docs": "The amount paid in this installment.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "currency": {
             "docs": "The currency of the related invoice. For example:
@@ -74863,7 +74863,7 @@ Possible statuses are:
           "outstanding_balance": {
             "docs": "The amount remaining to be paid.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "partiality_number": {
             "docs": "The payment installment number.
@@ -74878,7 +74878,7 @@ Possible statuses are:
           "previous_balance": {
             "docs": "The invoice amount before the payment.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
         },
       },
@@ -74888,7 +74888,7 @@ Possible statuses are:
           "amount": {
             "docs": "The invoice amount, in the currency of the original invoice.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "beneficiary_account_number": {
             "docs": "The bank account number of the payment beneficiary.
@@ -74962,7 +74962,7 @@ Please note that other currencies other than in the list above may be returned.
           "amount": {
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "collected_at": {
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.",
@@ -75025,7 +75025,7 @@ Please note that other currencies other than in the list above may be returned.
           "amount": {
             "docs": "The total amount of the payroll payment.
 ",
-            "type": "double",
+            "type": "float",
           },
           "collected_at": {
             "docs": "The ISO-8601 timestamp when the data point was collected.",
@@ -75367,19 +75367,19 @@ For \`login_error\` errors, the description can be one of the following:
         "properties": {
           "capital_income": {
             "docs": "Income received from an investment (such as dividends or from renting a property).",
-            "type": "double",
+            "type": "float",
           },
           "earned_income": {
             "docs": "Income received from employment.",
-            "type": "double",
+            "type": "float",
           },
           "fee_based_income": {
             "docs": "Income received from emitted invoices (for example, income independent contractors or freelancers receive).",
-            "type": "double",
+            "type": "float",
           },
           "non_labor_income": {
             "docs": "Income that cannot be classified into the other three fields (such as income from cryptocurrencies or regular transfers from parents).",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -75547,19 +75547,19 @@ For \`login_error\` errors, the description can be one of the following:
         "properties": {
           "capital_income": {
             "docs": "Income received from an investment (such as dividends or from renting a property).",
-            "type": "double",
+            "type": "float",
           },
           "earned_income": {
             "docs": "Income received from employment.",
-            "type": "double",
+            "type": "float",
           },
           "fee_based_income": {
             "docs": "Income received from emitted invoices (for example, income independent contractors or freelancers receive).",
-            "type": "double",
+            "type": "float",
           },
           "non_labor_income": {
             "docs": "Income that cannot be classified into the other three fields (such as income from cryptocurrencies or regular transfers from parents).",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -76954,11 +76954,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "properties": {
           "net_pension_income": {
             "docs": "The total net pension of the taxpayer.",
-            "type": "double",
+            "type": "float",
           },
           "net_taxable_pension_income": {
             "docs": "The total taxable pension income of the taxpayer.",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -76986,7 +76986,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "fees": "list<RecevablesTransactionFees>",
           "gross_amount": {
             "docs": "The total gross amount of the transaction.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "id": {
             "docs": "Belvo's unique ID for the current receivable transaction.",
@@ -77005,7 +77005,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "net_amount": {
             "docs": "The net amount of the transaction.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "number_of_installments": "optional<ReceivablesTransactionNumberOfInstallments>",
           "status": "optional<EnumReceivableTransactionStatus>",
@@ -77085,7 +77085,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "type": "optional<EnumReceivableTransactionFeeType>",
           "value": {
             "docs": "The value of \`fees.type\`.",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -77094,7 +77094,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "properties": {
           "amount": {
             "docs": "The transaction amount.",
-            "type": "double",
+            "type": "float",
           },
           "description": {
             "docs": "The description of the transaction provided by the institution. Usually, this is the text that the end user would see in the bank statement. The description can be an empty string.",
@@ -77122,7 +77122,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "account": "optional<Account>",
           "average_transaction_amount": {
             "docs": "The average transaction amount of the recurring expense.",
-            "type": "double",
+            "type": "float",
           },
           "category": "EnumRecurringExpenseCategory",
           "days_since_last_transaction": {
@@ -77145,7 +77145,7 @@ Based on the frequency, you can infer how many days until the next charge will o
           },
           "median_transaction_amount": {
             "docs": "The median transaction amount of the recurring expense.",
-            "type": "double",
+            "type": "float",
           },
           "name": {
             "docs": "The name for the recurring expense.
@@ -77233,13 +77233,13 @@ For \`request_timeout\` errors, the description is:
           "base_amount": {
             "docs": "The base amount that was used to calculate the tax retention.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "payment_status": "optional<EnumTaxRetentionPaymentStatus>",
           "retained_amount": {
             "docs": "The amount retained.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "tax_type": {
             "docs": "Optional attribute to indicate the type of tax withheld for the period or year according to the [SAT catalog](https://developers.belvo.com/docs/sat-catalogs#retention-code).
@@ -77292,12 +77292,12 @@ For \`request_timeout\` errors, the description is:
           "balance_threshold_x": {
             "docs": "The threshold used to compute \`days_balance_below_x_period\`. Please note, this is value is country specific (both in terms of the amount and the currency).
 ",
-            "type": "double",
+            "type": "float",
           },
           "closing_balance": {
             "docs": "The balance of all the accounts at the \`collected_at\` time.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "days_balance_below_0_1m": {
             "docs": "The number of days that the total balance of the account is less than or equal to 0 in the last month.
@@ -77332,32 +77332,32 @@ For \`request_timeout\` errors, the description is:
           "max_balance_1m": {
             "docs": "The maximum balance in the period (one month).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "max_balance_1w": {
             "docs": "The maximum balance in the period (one week).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "max_balance_3m": {
             "docs": "The maximum balance in the period (three months).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "min_balance_1m": {
             "docs": "The minimum balance in the period (one month).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "min_balance_1w": {
             "docs": "The minimum balance in the period (one week).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "min_balance_3m": {
             "docs": "The minimum balance in the period (three months).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
         },
       },
@@ -77372,7 +77372,7 @@ However, internal transfers (transfers between accounts belonging to the same li
 
 ℹ️ If the ratio is greater than \`1\`, it means that the user has more income than outgoing, indicating that they spend less than they earn.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "positive_to_negative_ratio_1w": {
             "docs": "The ratio between sum_positive / sum_negative  in the last week (counted from the time of the request).
@@ -77381,44 +77381,44 @@ However, internal transfers (transfers between accounts belonging to the same li
 
 **Note**: In the case that there have been no outgoing transactions, the value will be \`null\`.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "positive_to_negative_ratio_3m": {
             "docs": "The ratio between sum_positive / sum_negative  in the last three months (counted from the time of the request).
 
 ℹ️ If the ratio is greater than \`1\`, it means that the user has more income than outgoing, indicating that they spend less than they earn.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "sum_negative_1m": {
             "docs": "Sum total of all transactions leading to a negative cashflow in the last month (counted from the time of the request).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "sum_negative_1w": {
             "docs": "Sum total of all transactions leading to a negative cashflow in the last week (counted from the time of the request).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "sum_negative_3m": {
             "docs": "Sum total of all transactions leading to a negative cashflow in the last three months (counted from the time of the request).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "sum_positive_1m": {
             "docs": "Sum total of all transactions leading to a positive cashflow in the last month (counted from the time of the request).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "sum_positive_1w": {
             "docs": "Sum total of all transactions leading to a positive cashflow in the last week (counted from the time of the request).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "sum_positive_3m": {
             "docs": "Sum total of all transactions leading to a positive cashflow in the last three months (counted from the time of the request).
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
         },
       },
@@ -77440,12 +77440,12 @@ However, internal transfers (transfers between accounts belonging to the same li
           "sum_credit_limit": {
             "docs": "Sum total of all credit cards' limits.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "sum_credit_used": {
             "docs": "Sum total of all credit used.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
         },
       },
@@ -77460,17 +77460,17 @@ However, internal transfers (transfers between accounts belonging to the same li
           "sum_loans_monthly_payment": {
             "docs": "Sum total of the monthly payments for all the link's loan accounts.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "sum_loans_outstanding_principal": {
             "docs": "Sum total of the outstanding principal for all the link's loan accounts.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "sum_loans_principal": {
             "docs": "Sum total of the principal for all of the link's loan accounts.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
         },
       },
@@ -77504,62 +77504,62 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "max_incoming_amount_1m": {
             "docs": "The highest value inflow transaction in the last month.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "max_incoming_amount_1w": {
             "docs": "The highest value inflow transaction in the last week.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "max_incoming_amount_3m": {
             "docs": "The highest value inflow transaction in the last three months.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "max_outgoing_amount_1m": {
             "docs": "The highest value outflow transaction in the last month.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "max_outgoing_amount_1w": {
             "docs": "The highest value outflow transaction in the last week.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "max_outgoing_amount_3m": {
             "docs": "The highest value outflow transaction in the last three months.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "mean_incoming_amount_1m": {
             "docs": "The mean incoming value of all transactions in the last month.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "mean_incoming_amount_1w": {
             "docs": "The mean incoming value of all transactions in the last week.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "mean_incoming_amount_3m": {
             "docs": "The mean incoming value of all transactions in the last three months.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "mean_outgoing_amount_1m": {
             "docs": "The mean outgoing value of all transaction in the last month.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "mean_outgoing_amount_1w": {
             "docs": "The mean outgoing value of all transaction in the last week.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "mean_outgoing_amount_3m": {
             "docs": "The mean outgoing value of all transaction in the last three months.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "num_incoming_transactions_1m": {
             "default": 0,
@@ -77642,32 +77642,32 @@ If the account has not been open long enough to have the transaction data for a 
           "sum_incoming_amount_1m": {
             "docs": "The total sum of all inflow transactions for the last month.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "sum_incoming_amount_1w": {
             "docs": "The total sum of all inflow transactions for the last week.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "sum_incoming_amount_3m": {
             "docs": "The total sum of all inflow transactions for the last three months.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "sum_outgoing_amount_1m": {
             "docs": "The total sum of all outflow transactions for the last month.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "sum_outgoing_amount_1w": {
             "docs": "The total sum of all outflow transactions for the last week.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "sum_outgoing_amount_3m": {
             "docs": "The total sum of all outflow transactions for the last three months.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
         },
       },
@@ -77783,39 +77783,39 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "properties": {
           "fortuitous_profit_tax": {
             "docs": "The tax applied on your unexpected income (such as lottery wins or house sales).",
-            "type": "double",
+            "type": "float",
           },
           "net_income_tax": {
             "docs": "After additional deductions that you can apply, this will be the net income tax. If no further deduction are identified, this value will be the same as \`total_tax_on_taxable_net_income\`.",
-            "type": "double",
+            "type": "float",
           },
           "net_income_taxable": {
             "docs": "The net income on which tax can be applied.",
-            "type": "double",
+            "type": "float",
           },
           "total_balance_in_favor": {
             "docs": "How much the tax payer is expected to receive.",
-            "type": "double",
+            "type": "float",
           },
           "total_balance_payable": {
             "docs": "How much the tax payer is required to pay.",
-            "type": "double",
+            "type": "float",
           },
           "total_payment": {
             "docs": "The total the tax payer is required to pay, taking into account deductions and fiscal credits.",
-            "type": "double",
+            "type": "float",
           },
           "total_tax_due": {
             "docs": "After further deductions, this is the final calculated tax that the taxpayer is required to pay.",
-            "type": "double",
+            "type": "float",
           },
           "total_tax_on_taxable_net_income": {
             "docs": "The calculated total tax that can be applied on the tax payer's taxable income (total income - exemptions - deductions).",
-            "type": "double",
+            "type": "float",
           },
           "total_withholdings_for_the_taxable_year_to_be_declared": {
             "docs": "How much the tax payer has already paid througout the fiscal year.",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -77824,19 +77824,19 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "properties": {
           "balance_payable": {
             "docs": "How much the tax payer is required to pay.",
-            "type": "double",
+            "type": "float",
           },
           "balance_refundable": {
             "docs": "How much the tax payer is expected to receive. For DIAN, this will count as credit for the next fiscal year (see \`previous_year_balance\`).",
-            "type": "double",
+            "type": "float",
           },
           "fortuitous_profit_tax": {
             "docs": "The tax applied on your unexpected income (such as lottery wins or house sales).",
-            "type": "double",
+            "type": "float",
           },
           "net_income_tax": {
             "docs": "After additional deductions that you can apply, this will be the net income tax. If not further deduction are identified, this value will be the same as \`total_tax_on_taxable_net_income\`.",
-            "type": "double",
+            "type": "float",
           },
           "previous_year_balance": {
             "docs": "Only applicable for DIAN.
@@ -77844,23 +77844,23 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
 
 The amount the tax payer has as a "credit" fromt he previous year (this is equal to the \`balance_refundable\`) of the previous year.
 ",
-            "type": "double",
+            "type": "float",
           },
           "total_payment": {
             "docs": "The total the tax payer is required to pay, taking into account deductions and fiscal credits.",
-            "type": "double",
+            "type": "float",
           },
           "total_tax_due": {
             "docs": "After further deductions, this is the final calculated tax that the taxpayer is required to pay.",
-            "type": "double",
+            "type": "float",
           },
           "total_tax_on_taxable_net_income": {
             "docs": "The calculated total tax that can be applied on the tax payer's taxable income (total income - exemptions - deductions).",
-            "type": "double",
+            "type": "float",
           },
           "total_withheld_tax": {
             "docs": "The total tax already withheld in the current fiscal year.",
-            "type": "double",
+            "type": "float",
           },
         },
       },
@@ -78234,22 +78234,22 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "total_exempt_amount": {
             "docs": "Total amount that is exempt from taxation.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "total_invoice_amount": {
             "docs": "The total amount of the invoice that the tax retention relates to.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "total_retained_amount": {
             "docs": "Total tax retained.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "total_taxable_amount": {
             "docs": "The total amount that can be taxed. Calculated as \`total_invoice_amount\` - \`total_exempt_amount\`.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "version": {
             "docs": "The CFDI version of the tax retentions.
@@ -79594,11 +79594,11 @@ For \`too_many_sessions\` errors, the description is:
             "docs": "The transaction amount.
 ℹ️ The amount displayed is always positive as we indicate the direction of the transaction in the \`type\` parameter.
 ",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "balance": {
             "docs": "The balance at the end of the transaction.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "category": "optional<EnumTransactionCategory>",
           "collected_at": {
@@ -79708,7 +79708,7 @@ For \`too_many_sessions\` errors, the description is:
         "properties": {
           "bill_amount": {
             "docs": "The aggregate bill amount, as of \`collected_at\`.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "bill_name": {
             "docs": "The title of the monthly credit card bill the transaction belongs to. The format of the returned value is institution specific, however, some common examples are:

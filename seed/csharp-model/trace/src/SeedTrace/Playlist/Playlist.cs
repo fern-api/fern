@@ -7,14 +7,14 @@ namespace SeedTrace;
 public record Playlist
 {
     [JsonPropertyName("playlist_id")]
-    public required string PlaylistId { get; init; }
+    public required string PlaylistId { get; set; }
 
     [JsonPropertyName("owner-id")]
-    public required string OwnerId { get; init; }
+    public required string OwnerId { get; set; }
 
     [JsonPropertyName("name")]
-    public required string Name { get; init; }
+    public required string Name { get; set; }
 
     [JsonPropertyName("problems")]
-    public IEnumerable<string> Problems { get; init; } = new List<string>();
+    public IEnumerable<string> Problems { get; set; } = new List<string>();
 }

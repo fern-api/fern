@@ -7,8 +7,8 @@ namespace SeedExhaustive.Types.Union;
 public record Cat
 {
     [JsonPropertyName("name")]
-    public required string Name { get; init; }
+    public required string Name { get; set; }
 
     [JsonPropertyName("likesToMeow")]
-    public required bool LikesToMeow { get; init; }
+    public required bool LikesToMeow { get; set; }
 }

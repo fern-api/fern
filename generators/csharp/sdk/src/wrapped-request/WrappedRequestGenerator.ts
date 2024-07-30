@@ -52,7 +52,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     type: this.context.csharpTypeMapper.convert({ reference: query.valueType }),
                     access: "public",
                     get: true,
-                    init: true,
+                    set: true,
                     summary: query.docs,
                     useRequired: true
                 })
@@ -66,7 +66,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     type: this.context.csharpTypeMapper.convert({ reference: header.valueType }),
                     access: "public",
                     get: true,
-                    init: true,
+                    set: true,
                     summary: header.docs,
                     useRequired: true
                 })
@@ -83,7 +83,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                         type: this.context.csharpTypeMapper.convert({ reference: reference.requestBodyType }),
                         access: "public",
                         get: true,
-                        init: true,
+                        set: true,
                         summary: reference.docs,
                         useRequired: true
                     })
@@ -112,7 +112,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                             type: this.context.csharpTypeMapper.convert({ reference: property.valueType }),
                             access: "public",
                             get: true,
-                            init: true,
+                            set: true,
                             summary: property.docs,
                             jsonPropertyName: addJsonAnnotations ? property.name.wireValue : undefined,
                             annotations,

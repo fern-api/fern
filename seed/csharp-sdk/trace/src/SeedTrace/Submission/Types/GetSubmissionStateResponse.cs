@@ -8,14 +8,14 @@ namespace SeedTrace;
 public record GetSubmissionStateResponse
 {
     [JsonPropertyName("timeSubmitted")]
-    public DateTime? TimeSubmitted { get; init; }
+    public DateTime? TimeSubmitted { get; set; }
 
     [JsonPropertyName("submission")]
-    public required string Submission { get; init; }
+    public required string Submission { get; set; }
 
     [JsonPropertyName("language")]
-    public required Language Language { get; init; }
+    public required Language Language { get; set; }
 
     [JsonPropertyName("submissionTypeState")]
-    public required object SubmissionTypeState { get; init; }
+    public required object SubmissionTypeState { get; set; }
 }

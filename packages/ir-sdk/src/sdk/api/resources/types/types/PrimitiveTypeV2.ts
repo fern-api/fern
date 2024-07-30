@@ -5,42 +5,67 @@
 import * as FernIr from "../../..";
 
 export type PrimitiveTypeV2 =
+    | FernIr.PrimitiveTypeV2.Integer
+    | FernIr.PrimitiveTypeV2.Long
     | FernIr.PrimitiveTypeV2.Uint
     | FernIr.PrimitiveTypeV2.Uint64
-    | FernIr.PrimitiveTypeV2.Integer
+    | FernIr.PrimitiveTypeV2.Float
     | FernIr.PrimitiveTypeV2.Double
-    | FernIr.PrimitiveTypeV2.String
     | FernIr.PrimitiveTypeV2.Boolean
-    | FernIr.PrimitiveTypeV2.Long
+    | FernIr.PrimitiveTypeV2.String
+    | FernIr.PrimitiveTypeV2.Date_
+    | FernIr.PrimitiveTypeV2.DateTime
+    | FernIr.PrimitiveTypeV2.Uuid
+    | FernIr.PrimitiveTypeV2.Base64
     | FernIr.PrimitiveTypeV2.BigInteger;
 
 export declare namespace PrimitiveTypeV2 {
-    interface Uint extends _Utils {
+    interface Integer extends FernIr.IntegerType, _Utils {
+        type: "integer";
+    }
+
+    interface Long extends FernIr.LongType, _Utils {
+        type: "long";
+    }
+
+    interface Uint extends FernIr.UintType, _Utils {
         type: "uint";
     }
 
-    interface Uint64 extends _Utils {
+    interface Uint64 extends FernIr.Uint64Type, _Utils {
         type: "uint64";
     }
 
-    interface Integer extends FernIr.IntegerType, _Utils {
-        type: "integer";
+    interface Float extends FernIr.FloatType, _Utils {
+        type: "float";
     }
 
     interface Double extends FernIr.DoubleType, _Utils {
         type: "double";
     }
 
-    interface String extends FernIr.StringType, _Utils {
-        type: "string";
-    }
-
     interface Boolean extends FernIr.BooleanType, _Utils {
         type: "boolean";
     }
 
-    interface Long extends FernIr.LongType, _Utils {
-        type: "long";
+    interface String extends FernIr.StringType, _Utils {
+        type: "string";
+    }
+
+    interface Date_ extends FernIr.DateType, _Utils {
+        type: "date";
+    }
+
+    interface DateTime extends FernIr.DateTimeType, _Utils {
+        type: "dateTime";
+    }
+
+    interface Uuid extends FernIr.UuidType, _Utils {
+        type: "uuid";
+    }
+
+    interface Base64 extends FernIr.Base64Type, _Utils {
+        type: "base64";
     }
 
     interface BigInteger extends FernIr.BigIntegerType, _Utils {
@@ -52,21 +77,53 @@ export declare namespace PrimitiveTypeV2 {
     }
 
     interface _Visitor<_Result> {
-        uint: () => _Result;
-        uint64: () => _Result;
         integer: (value: FernIr.IntegerType) => _Result;
-        double: (value: FernIr.DoubleType) => _Result;
-        string: (value: FernIr.StringType) => _Result;
-        boolean: (value: FernIr.BooleanType) => _Result;
         long: (value: FernIr.LongType) => _Result;
+        uint: (value: FernIr.UintType) => _Result;
+        uint64: (value: FernIr.Uint64Type) => _Result;
+        float: (value: FernIr.FloatType) => _Result;
+        double: (value: FernIr.DoubleType) => _Result;
+        boolean: (value: FernIr.BooleanType) => _Result;
+        string: (value: FernIr.StringType) => _Result;
+        date: (value: FernIr.DateType) => _Result;
+        dateTime: (value: FernIr.DateTimeType) => _Result;
+        uuid: (value: FernIr.UuidType) => _Result;
+        base64: (value: FernIr.Base64Type) => _Result;
         bigInteger: (value: FernIr.BigIntegerType) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
 
 export const PrimitiveTypeV2 = {
-    uint: (): FernIr.PrimitiveTypeV2.Uint => {
+    integer: (value: FernIr.IntegerType): FernIr.PrimitiveTypeV2.Integer => {
         return {
+            ...value,
+            type: "integer",
+            _visit: function <_Result>(
+                this: FernIr.PrimitiveTypeV2.Integer,
+                visitor: FernIr.PrimitiveTypeV2._Visitor<_Result>
+            ) {
+                return FernIr.PrimitiveTypeV2._visit(this, visitor);
+            },
+        };
+    },
+
+    long: (value: FernIr.LongType): FernIr.PrimitiveTypeV2.Long => {
+        return {
+            ...value,
+            type: "long",
+            _visit: function <_Result>(
+                this: FernIr.PrimitiveTypeV2.Long,
+                visitor: FernIr.PrimitiveTypeV2._Visitor<_Result>
+            ) {
+                return FernIr.PrimitiveTypeV2._visit(this, visitor);
+            },
+        };
+    },
+
+    uint: (value: FernIr.UintType): FernIr.PrimitiveTypeV2.Uint => {
+        return {
+            ...value,
             type: "uint",
             _visit: function <_Result>(
                 this: FernIr.PrimitiveTypeV2.Uint,
@@ -77,8 +134,9 @@ export const PrimitiveTypeV2 = {
         };
     },
 
-    uint64: (): FernIr.PrimitiveTypeV2.Uint64 => {
+    uint64: (value: FernIr.Uint64Type): FernIr.PrimitiveTypeV2.Uint64 => {
         return {
+            ...value,
             type: "uint64",
             _visit: function <_Result>(
                 this: FernIr.PrimitiveTypeV2.Uint64,
@@ -89,12 +147,12 @@ export const PrimitiveTypeV2 = {
         };
     },
 
-    integer: (value: FernIr.IntegerType): FernIr.PrimitiveTypeV2.Integer => {
+    float: (value: FernIr.FloatType): FernIr.PrimitiveTypeV2.Float => {
         return {
             ...value,
-            type: "integer",
+            type: "float",
             _visit: function <_Result>(
-                this: FernIr.PrimitiveTypeV2.Integer,
+                this: FernIr.PrimitiveTypeV2.Float,
                 visitor: FernIr.PrimitiveTypeV2._Visitor<_Result>
             ) {
                 return FernIr.PrimitiveTypeV2._visit(this, visitor);
@@ -115,19 +173,6 @@ export const PrimitiveTypeV2 = {
         };
     },
 
-    string: (value: FernIr.StringType): FernIr.PrimitiveTypeV2.String => {
-        return {
-            ...value,
-            type: "string",
-            _visit: function <_Result>(
-                this: FernIr.PrimitiveTypeV2.String,
-                visitor: FernIr.PrimitiveTypeV2._Visitor<_Result>
-            ) {
-                return FernIr.PrimitiveTypeV2._visit(this, visitor);
-            },
-        };
-    },
-
     boolean: (value: FernIr.BooleanType): FernIr.PrimitiveTypeV2.Boolean => {
         return {
             ...value,
@@ -141,12 +186,64 @@ export const PrimitiveTypeV2 = {
         };
     },
 
-    long: (value: FernIr.LongType): FernIr.PrimitiveTypeV2.Long => {
+    string: (value: FernIr.StringType): FernIr.PrimitiveTypeV2.String => {
         return {
             ...value,
-            type: "long",
+            type: "string",
             _visit: function <_Result>(
-                this: FernIr.PrimitiveTypeV2.Long,
+                this: FernIr.PrimitiveTypeV2.String,
+                visitor: FernIr.PrimitiveTypeV2._Visitor<_Result>
+            ) {
+                return FernIr.PrimitiveTypeV2._visit(this, visitor);
+            },
+        };
+    },
+
+    date: (value: FernIr.DateType): FernIr.PrimitiveTypeV2.Date_ => {
+        return {
+            ...value,
+            type: "date",
+            _visit: function <_Result>(
+                this: FernIr.PrimitiveTypeV2.Date_,
+                visitor: FernIr.PrimitiveTypeV2._Visitor<_Result>
+            ) {
+                return FernIr.PrimitiveTypeV2._visit(this, visitor);
+            },
+        };
+    },
+
+    dateTime: (value: FernIr.DateTimeType): FernIr.PrimitiveTypeV2.DateTime => {
+        return {
+            ...value,
+            type: "dateTime",
+            _visit: function <_Result>(
+                this: FernIr.PrimitiveTypeV2.DateTime,
+                visitor: FernIr.PrimitiveTypeV2._Visitor<_Result>
+            ) {
+                return FernIr.PrimitiveTypeV2._visit(this, visitor);
+            },
+        };
+    },
+
+    uuid: (value: FernIr.UuidType): FernIr.PrimitiveTypeV2.Uuid => {
+        return {
+            ...value,
+            type: "uuid",
+            _visit: function <_Result>(
+                this: FernIr.PrimitiveTypeV2.Uuid,
+                visitor: FernIr.PrimitiveTypeV2._Visitor<_Result>
+            ) {
+                return FernIr.PrimitiveTypeV2._visit(this, visitor);
+            },
+        };
+    },
+
+    base64: (value: FernIr.Base64Type): FernIr.PrimitiveTypeV2.Base64 => {
+        return {
+            ...value,
+            type: "base64",
+            _visit: function <_Result>(
+                this: FernIr.PrimitiveTypeV2.Base64,
                 visitor: FernIr.PrimitiveTypeV2._Visitor<_Result>
             ) {
                 return FernIr.PrimitiveTypeV2._visit(this, visitor);
@@ -169,20 +266,30 @@ export const PrimitiveTypeV2 = {
 
     _visit: <_Result>(value: FernIr.PrimitiveTypeV2, visitor: FernIr.PrimitiveTypeV2._Visitor<_Result>): _Result => {
         switch (value.type) {
-            case "uint":
-                return visitor.uint();
-            case "uint64":
-                return visitor.uint64();
             case "integer":
                 return visitor.integer(value);
-            case "double":
-                return visitor.double(value);
-            case "string":
-                return visitor.string(value);
-            case "boolean":
-                return visitor.boolean(value);
             case "long":
                 return visitor.long(value);
+            case "uint":
+                return visitor.uint(value);
+            case "uint64":
+                return visitor.uint64(value);
+            case "float":
+                return visitor.float(value);
+            case "double":
+                return visitor.double(value);
+            case "boolean":
+                return visitor.boolean(value);
+            case "string":
+                return visitor.string(value);
+            case "date":
+                return visitor.date(value);
+            case "dateTime":
+                return visitor.dateTime(value);
+            case "uuid":
+                return visitor.uuid(value);
+            case "base64":
+                return visitor.base64(value);
             case "bigInteger":
                 return visitor.bigInteger(value);
             default:

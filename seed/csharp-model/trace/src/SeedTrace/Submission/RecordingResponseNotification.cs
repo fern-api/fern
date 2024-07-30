@@ -8,17 +8,17 @@ namespace SeedTrace;
 public record RecordingResponseNotification
 {
     [JsonPropertyName("submissionId")]
-    public required string SubmissionId { get; init; }
+    public required string SubmissionId { get; set; }
 
     [JsonPropertyName("testCaseId")]
-    public string? TestCaseId { get; init; }
+    public string? TestCaseId { get; set; }
 
     [JsonPropertyName("lineNumber")]
-    public required int LineNumber { get; init; }
+    public required int LineNumber { get; set; }
 
     [JsonPropertyName("lightweightStackInfo")]
-    public required LightweightStackframeInformation LightweightStackInfo { get; init; }
+    public required LightweightStackframeInformation LightweightStackInfo { get; set; }
 
     [JsonPropertyName("tracedFile")]
-    public TracedFile? TracedFile { get; init; }
+    public TracedFile? TracedFile { get; set; }
 }

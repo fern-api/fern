@@ -7,8 +7,8 @@ namespace SeedTrace;
 public record ErroredResponse
 {
     [JsonPropertyName("submissionId")]
-    public required string SubmissionId { get; init; }
+    public required string SubmissionId { get; set; }
 
     [JsonPropertyName("errorInfo")]
-    public required object ErrorInfo { get; init; }
+    public required object ErrorInfo { get; set; }
 }

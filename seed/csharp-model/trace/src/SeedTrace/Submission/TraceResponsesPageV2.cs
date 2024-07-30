@@ -12,8 +12,8 @@ public record TraceResponsesPageV2
     /// The offset is the id of the next trace response to load.
     /// </summary>
     [JsonPropertyName("offset")]
-    public int? Offset { get; init; }
+    public int? Offset { get; set; }
 
     [JsonPropertyName("traceResponses")]
-    public IEnumerable<TraceResponseV2> TraceResponses { get; init; } = new List<TraceResponseV2>();
+    public IEnumerable<TraceResponseV2> TraceResponses { get; set; } = new List<TraceResponseV2>();
 }

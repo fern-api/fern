@@ -7,8 +7,8 @@ namespace SeedPagination;
 public record User
 {
     [JsonPropertyName("name")]
-    public required string Name { get; init; }
+    public required string Name { get; set; }
 
     [JsonPropertyName("id")]
-    public required int Id { get; init; }
+    public required int Id { get; set; }
 }

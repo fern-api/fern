@@ -8,6 +8,6 @@ namespace SeedTrace.V2.V3;
 public record GetFunctionSignatureResponse
 {
     [JsonPropertyName("functionByLanguage")]
-    public Dictionary<Language, string> FunctionByLanguage { get; init; } =
+    public Dictionary<Language, string> FunctionByLanguage { get; set; } =
         new Dictionary<Language, string>();
 }
