@@ -25,6 +25,7 @@ class CoreUtilities:
         allow_skipping_validation: bool,
         has_paginated_endpoints: bool,
         version: PydanticVersionCompatibility,
+        project_module_path: AST.ModulePath,
         use_typeddict_requests: bool,
     ) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
@@ -35,6 +36,7 @@ class CoreUtilities:
         self._use_typeddict_requests = use_typeddict_requests
         self._has_paginated_endpoints = has_paginated_endpoints
         self._version = version
+        self._project_module_path = project_module_path
 
     def copy_to_project(self, *, project: Project) -> None:
         self._copy_file_to_project(
@@ -186,12 +188,16 @@ class CoreUtilities:
             exports=exports,
         )
 
-    def get_reference_to_api_error(self) -> AST.ClassReference:
+    def get_reference_to_api_error(self, as_snippet: bool = False) -> AST.ClassReference:
+        module_path = self._project_module_path + self._module_path if as_snippet else self._module_path
+        module = (
+            AST.Module.snippet(module_path=(module_path + ("api_error",)))
+            if as_snippet
+            else AST.Module.local(*module_path, "api_error")
+        )
         return AST.ClassReference(
             qualified_name_excluding_import=(),
-            import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "api_error"), named_import="ApiError"
-            ),
+            import_=AST.ReferenceImport(module=module, named_import="ApiError"),
         )
 
     def get_oauth_token_provider(self) -> AST.ClassReference:
