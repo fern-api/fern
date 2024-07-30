@@ -73,6 +73,7 @@ class FastApiGenerator(AbstractGenerator):
                 generator_config=generator_config,
                 ir=ir,
             ),
+            use_str_enums=self._pydantic_model_custom_config.use_str_enums,
         )
 
         snippet_registry = SnippetRegistry()

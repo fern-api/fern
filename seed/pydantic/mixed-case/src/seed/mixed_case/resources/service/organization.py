@@ -11,7 +11,7 @@ class Organization(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.mixed_case import Organization
+    from seed.mixed_case.resources import Organization
 
     Organization(
         name="orgName",

@@ -14,11 +14,11 @@ from .workspace_submission_update import WorkspaceSubmissionUpdate
 
 
 class SubmissionStatusV2_Test(UniversalBaseModel):
+    type: typing.Literal["test"] = "test"
     updates: typing.List[TestSubmissionUpdate]
     problem_id: ProblemId = pydantic.Field(alias="problemId")
     problem_version: int = pydantic.Field(alias="problemVersion")
     problem_info: ProblemInfoV2 = pydantic.Field(alias="problemInfo")
-    type: typing.Literal["test"] = "test"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -29,8 +29,8 @@ class SubmissionStatusV2_Test(UniversalBaseModel):
 
 
 class SubmissionStatusV2_Workspace(UniversalBaseModel):
-    updates: typing.List[WorkspaceSubmissionUpdate]
     type: typing.Literal["workspace"] = "workspace"
+    updates: typing.List[WorkspaceSubmissionUpdate]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

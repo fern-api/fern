@@ -14,7 +14,7 @@ class Base(UniversalBaseModel):
     """
     Examples
     --------
-    from seed import Resource_User
+    from seed.service import Resource_User
 
     Resource_User(
         user_name="username",
@@ -39,7 +39,7 @@ class Resource_User(Base):
     """
     Examples
     --------
-    from seed import Resource_User
+    from seed.service import Resource_User
 
     Resource_User(
         user_name="username",
@@ -48,10 +48,10 @@ class Resource_User(Base):
     )
     """
 
+    resource_type: typing.Literal["user"] = "user"
     user_name: str = pydantic.Field(alias="userName")
     metadata_tags: typing.List[str]
     extra_properties: typing.Dict[str, str] = pydantic.Field(alias="EXTRA_PROPERTIES")
-    resource_type: typing.Literal["user"] = "user"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -67,7 +67,7 @@ class Resource_Organization(Base):
     """
     Examples
     --------
-    from seed import Resource_User
+    from seed.service import Resource_User
 
     Resource_User(
         user_name="username",
@@ -76,8 +76,8 @@ class Resource_Organization(Base):
     )
     """
 
-    name: str
     resource_type: typing.Literal["Organization"] = "Organization"
+    name: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -90,7 +90,7 @@ class Resource_Organization(Base):
 
 
 """
-from seed import Resource_User
+from seed.service import Resource_User
 
 Resource_User(
     user_name="username",

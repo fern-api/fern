@@ -64,7 +64,7 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "templateString": "currency=$FERN_INPUT",
+                            "templateString": "currencycurrency=$FERN_INPUT",
                             "values": {
                                 "USD": "\"USD\"",
                                 "YEN": "\"YEN\""
@@ -137,7 +137,7 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "templateString": "currency=$FERN_INPUT",
+                                "templateString": "currencycurrency=$FERN_INPUT",
                                 "values": {
                                     "USD": "\"USD\"",
                                     "YEN": "\"YEN\""

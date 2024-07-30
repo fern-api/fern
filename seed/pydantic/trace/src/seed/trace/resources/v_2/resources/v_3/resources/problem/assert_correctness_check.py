@@ -13,8 +13,8 @@ from .parameter_id import ParameterId
 
 
 class AssertCorrectnessCheck_DeepEquality(UniversalBaseModel):
-    expected_value_parameter_id: ParameterId = pydantic.Field(alias="expectedValueParameterId")
     type: typing.Literal["deepEquality"] = "deepEquality"
+    expected_value_parameter_id: ParameterId = pydantic.Field(alias="expectedValueParameterId")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -25,9 +25,9 @@ class AssertCorrectnessCheck_DeepEquality(UniversalBaseModel):
 
 
 class AssertCorrectnessCheck_Custom(UniversalBaseModel):
+    type: typing.Literal["custom"] = "custom"
     additional_parameters: typing.List[Parameter] = pydantic.Field(alias="additionalParameters")
     code: FunctionImplementationForMultipleLanguages
-    type: typing.Literal["custom"] = "custom"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

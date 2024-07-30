@@ -69,7 +69,8 @@ client.union.get(
 <dd>
 
 ```python
-from seed import SeedUnions, Shape_Circle
+from seed import SeedUnions
+from seed.union import Shape_Circle
 
 client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",

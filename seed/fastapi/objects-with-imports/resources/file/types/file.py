@@ -12,7 +12,7 @@ class File(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.objects_with_imports import File, FileInfo
+    from seed.objects_with_imports.resources.file import File, FileInfo
 
     File(
         name="file.txt",

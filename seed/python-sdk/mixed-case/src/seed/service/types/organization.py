@@ -11,7 +11,7 @@ class Organization(UniversalBaseModel):
     """
     Examples
     --------
-    from seed import Organization
+    from seed.service import Organization
 
     Organization(
         name="orgName",
