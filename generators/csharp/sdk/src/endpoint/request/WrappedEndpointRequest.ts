@@ -87,31 +87,18 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     private writeQueryParameter(writer: csharp.Writer, query: QueryParameter): void {
+        writer.write(`${QUERY_PARAMETER_BAG_NAME}["${query.name.wireValue}"] = `);
         if (!query.allowMultiple) {
-            writer.write(`${QUERY_PARAMETER_BAG_NAME}["${query.name.wireValue}"] = `);
             writer.writeNodeStatement(this.stringify({ reference: query.valueType, name: query.name.name }));
             return;
         }
         const queryParameterReference = `${this.getParameterName()}.${query.name.name.pascalCase.safeName}`;
-        const valuesListVarName = `_${query.name.name.camelCase.safeName}`;
-        const isOptional = this.context.isOptional(query.valueType);
-        writer.writeLine();
-        writer.writeLine(`var ${valuesListVarName} = new List<string>();`);
-        writer.controlFlow("foreach", `var _value in ${queryParameterReference}`);
-        if (isOptional) {
-            writer.controlFlow("if", `_value != null`);
-        }
-        writer.write(`${valuesListVarName}.Add(`);
+        const maybeOptionalCheck = this.context.isOptional(query.valueType) ? ".Where(_value => _value != null)" : "";
+        writer.write(`${queryParameterReference}${maybeOptionalCheck}.Select(_value => `);
         writer.writeNode(
             this.stringify({ reference: query.valueType, name: query.name.name, parameterOverride: "_value" })
         );
-        writer.writeLine(");");
-        if (isOptional) {
-            writer.endControlFlow();
-        }
-        writer.endControlFlow();
-        writer.writeLine(`${QUERY_PARAMETER_BAG_NAME}["${query.name.wireValue}"] = ${valuesListVarName};`);
-        writer.writeLine();
+        writer.writeLine(").ToList();");
     }
 
     public getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined {
