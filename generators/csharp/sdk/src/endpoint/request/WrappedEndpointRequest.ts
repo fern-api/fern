@@ -28,7 +28,6 @@ export declare namespace WrappedEndpointRequest {
     }
 }
 
-const VALUES_LIST_VAR_NAME = "_values";
 const QUERY_PARAMETER_BAG_NAME = "_query";
 const HEADER_BAG_NAME = "_headers";
 
