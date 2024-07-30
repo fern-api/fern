@@ -63,11 +63,15 @@ export class CsharpTypeMapper {
         switch (container.type) {
             case "list":
                 return Type.list(this.convert({ reference: container.list, unboxOptionals: true }));
-            case "map":
-                return Type.map(
-                    this.convert({ reference: container.keyType }),
-                    this.convert({ reference: container.valueType })
-                );
+            case "map": {
+                const key = this.convert({ reference: container.keyType });
+                const value = this.convert({ reference: container.valueType });
+                if (value.internalType.type === "object") {
+                    // object map values should be nullable.
+                    return Type.map(key, csharp.Type.optional(value));
+                }
+                return Type.map(key, value);
+            }
             case "set":
                 return Type.set(this.convert({ reference: container.set, unboxOptionals: true }));
             case "optional":
