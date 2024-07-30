@@ -1,0 +1,3 @@
+name: ir-v52
+docs: |
+ - Add primitive type v2 (with defaults) to booleans, longs and big ints

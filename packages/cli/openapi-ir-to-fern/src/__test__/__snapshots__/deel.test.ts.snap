@@ -11731,7 +11731,7 @@ exports[`open api parser deel docs 1`] = `
               "pattern": undefined,
             },
           },
-          "gross_annual_salary": "double",
+          "gross_annual_salary": "float",
         },
       },
       "HrisContractBase": {
@@ -23259,7 +23259,7 @@ exports[`open api parser deel simple 1`] = `
               "pattern": undefined,
             },
           },
-          "gross_annual_salary": "double",
+          "gross_annual_salary": "float",
         },
       },
       "HrisContractBase": {

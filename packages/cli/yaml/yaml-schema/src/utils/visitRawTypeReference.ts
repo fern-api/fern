@@ -91,6 +91,11 @@ export function visitRawTypeReference<R>({
                 })
             });
         }
+        case RawPrimitiveType.float:
+            return visitor.primitive({
+                v1: PrimitiveTypeV1.Float,
+                v2: undefined
+            });
         case RawPrimitiveType.long:
             return visitor.primitive({
                 v1: PrimitiveTypeV1.Long,
