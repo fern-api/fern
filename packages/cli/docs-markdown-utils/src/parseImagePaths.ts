@@ -35,6 +35,13 @@ export function parseImagePaths(
 
     const filepaths = new Set<AbsoluteFilePath>();
 
+    if (data.image) {
+        const resolvedPath = resolvePath(data.image, metadata);
+        if (resolvedPath != null) {
+            filepaths.add(resolvedPath);
+        }
+    }
+
     const tree = fromMarkdown(content, {
         extensions: [mdx()],
         mdastExtensions: [mdxFromMarkdown()]
