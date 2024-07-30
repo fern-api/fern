@@ -46,10 +46,11 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         });
 
         for (const query of this.endpoint.queryParameters) {
-            let type = this.context.csharpTypeMapper.convert({ reference: query.valueType });
-            if (query.allowMultiple) {
-                type = csharp.Type.list(type);
-            }
+            const type = query.allowMultiple
+                ? csharp.Type.list(
+                      this.context.csharpTypeMapper.convert({ reference: query.valueType, unboxOptionals: true })
+                  )
+                : this.context.csharpTypeMapper.convert({ reference: query.valueType });
             class_.addField(
                 csharp.field({
                     name: query.name.name.pascalCase.safeName,
@@ -139,10 +140,6 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         const orderedFields: { name: Name; value: ExampleTypeReference }[] = [];
         for (const exampleQueryParameter of example.queryParameters) {
             orderedFields.push({ name: exampleQueryParameter.name.name, value: exampleQueryParameter.value });
-        }
-
-        for (const header of example.endpointHeaders) {
-            orderedFields.push({ name: header.name.name, value: header.value });
         }
 
         example.request?._visit({
