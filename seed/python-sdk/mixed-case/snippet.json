@@ -1,9 +1,9 @@
 {
     "types": {
-        "type_service:Organization": "from seed import Organization\n\nOrganization(\n    name=\"orgName\",\n)\n",
-        "type_service:User": "from seed import User\n\nUser(\n    user_name=\"username\",\n    metadata_tags=[\"tag1\", \"tag2\"],\n    extra_properties={\"foo\": \"bar\", \"baz\": \"qux\"},\n)\n",
-        "type_service:NestedUser": "from seed import NestedUser, User\n\nNestedUser(\n    name=\"username\",\n    nested_user=User(\n        user_name=\"nestedUsername\",\n        metadata_tags=[\"tag1\", \"tag2\"],\n        extra_properties={\"foo\": \"bar\", \"baz\": \"qux\"},\n    ),\n)\n",
-        "type_service:Resource": "from seed import Resource_User\n\nResource_User(\n    user_name=\"username\",\n    metadata_tags=[\"tag1\", \"tag2\"],\n    extra_properties={\"foo\": \"bar\", \"baz\": \"qux\"},\n)\n"
+        "type_service:Organization": "from seed.service import Organization\n\nOrganization(\n    name=\"orgName\",\n)\n",
+        "type_service:User": "from seed.service import User\n\nUser(\n    user_name=\"username\",\n    metadata_tags=[\"tag1\", \"tag2\"],\n    extra_properties={\"foo\": \"bar\", \"baz\": \"qux\"},\n)\n",
+        "type_service:NestedUser": "from seed.service import NestedUser, User\n\nNestedUser(\n    name=\"username\",\n    nested_user=User(\n        user_name=\"nestedUsername\",\n        metadata_tags=[\"tag1\", \"tag2\"],\n        extra_properties={\"foo\": \"bar\", \"baz\": \"qux\"},\n    ),\n)\n",
+        "type_service:Resource": "from seed.service import Resource_User\n\nResource_User(\n    user_name=\"username\",\n    metadata_tags=[\"tag1\", \"tag2\"],\n    extra_properties={\"foo\": \"bar\", \"baz\": \"qux\"},\n)\n"
     },
     "endpoints": [
         {

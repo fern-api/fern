@@ -8,9 +8,9 @@ namespace SeedTrace;
 public record GradedResponse
 {
     [JsonPropertyName("submissionId")]
-    public required string SubmissionId { get; init; }
+    public required string SubmissionId { get; set; }
 
     [JsonPropertyName("testCases")]
-    public Dictionary<string, TestCaseResultWithStdout> TestCases { get; init; } =
+    public Dictionary<string, TestCaseResultWithStdout> TestCases { get; set; } =
         new Dictionary<string, TestCaseResultWithStdout>();
 }

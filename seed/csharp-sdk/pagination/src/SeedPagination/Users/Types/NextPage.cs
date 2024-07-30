@@ -7,8 +7,8 @@ namespace SeedPagination;
 public record NextPage
 {
     [JsonPropertyName("page")]
-    public required int Page { get; init; }
+    public required int Page { get; set; }
 
     [JsonPropertyName("starting_after")]
-    public required string StartingAfter { get; init; }
+    public required string StartingAfter { get; set; }
 }

@@ -3,6 +3,8 @@ from typing import DefaultDict, Set
 
 from ordered_set import OrderedSet
 
+from fern_python.codegen.ast.nodes.type_hint.type_hint import TYPING_REFERENCE_IMPORT
+
 from . import AST
 from .reference_resolver_impl import ReferenceResolverImpl
 from .top_level_statement import StatementId
@@ -17,6 +19,7 @@ class ImportsManager:
         ] = defaultdict(OrderedSet)
 
         self._bottom_imports: DefaultDict[AST.ReferenceImport, OrderedSet[None]] = defaultdict(OrderedSet)
+        self._if_type_checking_imports: DefaultDict[AST.ReferenceImport, OrderedSet[None]] = defaultdict(OrderedSet)
 
         self._postponed_annotations = False
         self._has_written_top_imports = False
@@ -27,8 +30,14 @@ class ImportsManager:
             if reference.is_forward_reference:
                 self._postponed_annotations = True
             if reference.import_ is not None:
+                if reference.require_postponed_annotations:
+                    self._postponed_annotations = True
+
                 if reference.must_import_after_current_declaration:
                     self._import_to_statements_that_must_precede_it[reference.import_].add(statement_id)
+                    self._postponed_annotations = True
+                elif reference.import_if_type_checking:
+                    self._if_type_checking_imports[reference.import_].add(None)
                     self._postponed_annotations = True
                 elif reference.import_.alternative_import is not None:
                     self._bottom_imports[reference.import_].add(None)
@@ -59,8 +68,22 @@ class ImportsManager:
         for import_ in written_imports:
             del self._import_to_statements_that_must_precede_it[import_]
 
+        # write all the imports that must be un-type checked (e.g. for circular references)
+        if len(self._if_type_checking_imports.items()) > 0:
+            self._write_import(import_=TYPING_REFERENCE_IMPORT, writer=writer, reference_resolver=reference_resolver)
+            writer.write("if ")
+            writer.write_node(AST.TypeHint.type_checking())
+            writer.write_line(":")
+            with writer.indent():
+                un_type_checked_written_imports: Set[AST.ReferenceImport] = set()
+                for import_, _ in self._if_type_checking_imports.items():
+                    self._write_import(import_=import_, writer=writer, reference_resolver=reference_resolver)
+                    un_type_checked_written_imports.add(import_)
+            for import_ in un_type_checked_written_imports:
+                del self._if_type_checking_imports[import_]
+
         bottom_written_imports: Set[AST.ReferenceImport] = set()
-        for import_, _unused in self._bottom_imports.items():
+        for import_, _ in self._bottom_imports.items():
             self._write_import(import_=import_, writer=writer, reference_resolver=reference_resolver)
             bottom_written_imports.add(import_)
         for import_ in bottom_written_imports:

@@ -12,7 +12,7 @@ class NestedUser(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.mixed_case import NestedUser, User
+    from seed.mixed_case.resources.service import NestedUser, User
 
     NestedUser(
         name="username",

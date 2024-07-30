@@ -10,10 +10,10 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class CreateProblemError_Generic(UniversalBaseModel):
+    error_type: typing.Literal["generic"] = pydantic.Field(alias="_type", default="generic")
     message: str
     type: str
     stacktrace: str
-    error_type: typing.Literal["generic"] = pydantic.Field(alias="_type", default="generic")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

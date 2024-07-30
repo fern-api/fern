@@ -12,7 +12,7 @@ class Migration(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.examples import Migration, MigrationStatus
+    from seed.examples.resources.types import Migration, MigrationStatus
 
     Migration(
         name="001_init",

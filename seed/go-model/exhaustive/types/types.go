@@ -177,6 +177,7 @@ func (o *ObjectWithMapOfMap) String() string {
 }
 
 type ObjectWithOptionalField struct {
+	// This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
 	String   *string        `json:"string,omitempty" url:"string,omitempty"`
 	Integer  *int           `json:"integer,omitempty" url:"integer,omitempty"`
 	Long     *int64         `json:"long,omitempty" url:"long,omitempty"`

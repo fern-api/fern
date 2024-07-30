@@ -9,8 +9,10 @@ class TypeParameter(AstNode):
     def __init__(
         self,
         type_parameter: Union[AstNode, GenericTypeVar, List[TypeParameter]],
+        is_string_reference: bool = False,
     ):
         self._type_parameter = type_parameter
+        self._is_string_reference = is_string_reference
 
     def get_metadata(self) -> AstNodeMetadata:
         metadata = AstNodeMetadata()

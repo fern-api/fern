@@ -18,9 +18,9 @@ class TestCaseImplementationReference_TemplateId(UniversalBaseModel):
 
 
 class TestCaseImplementationReference_Implementation(UniversalBaseModel):
+    type: typing.Literal["implementation"] = "implementation"
     description: TestCaseImplementationDescription
     function: TestCaseFunction
-    type: typing.Literal["implementation"] = "implementation"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -42,8 +42,8 @@ class VariableValue_CharValue(UniversalBaseModel):
 
 
 class VariableValue_MapValue(UniversalBaseModel):
-    key_value_pairs: typing.List[KeyValuePair] = pydantic.Field(alias="keyValuePairs")
     type: typing.Literal["mapValue"] = "mapValue"
+    key_value_pairs: typing.List[KeyValuePair] = pydantic.Field(alias="keyValuePairs")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -59,9 +59,9 @@ class VariableValue_ListValue(UniversalBaseModel):
 
 
 class VariableValue_BinaryTreeValue(UniversalBaseModel):
+    type: typing.Literal["binaryTreeValue"] = "binaryTreeValue"
     root: typing.Optional[NodeId] = None
     nodes: typing.Dict[NodeId, BinaryTreeNodeValue]
-    type: typing.Literal["binaryTreeValue"] = "binaryTreeValue"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -72,9 +72,9 @@ class VariableValue_BinaryTreeValue(UniversalBaseModel):
 
 
 class VariableValue_SinglyLinkedListValue(UniversalBaseModel):
+    type: typing.Literal["singlyLinkedListValue"] = "singlyLinkedListValue"
     head: typing.Optional[NodeId] = None
     nodes: typing.Dict[NodeId, SinglyLinkedListNodeValue]
-    type: typing.Literal["singlyLinkedListValue"] = "singlyLinkedListValue"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -85,9 +85,9 @@ class VariableValue_SinglyLinkedListValue(UniversalBaseModel):
 
 
 class VariableValue_DoublyLinkedListValue(UniversalBaseModel):
+    type: typing.Literal["doublyLinkedListValue"] = "doublyLinkedListValue"
     head: typing.Optional[NodeId] = None
     nodes: typing.Dict[NodeId, DoublyLinkedListNodeValue]
-    type: typing.Literal["doublyLinkedListValue"] = "doublyLinkedListValue"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

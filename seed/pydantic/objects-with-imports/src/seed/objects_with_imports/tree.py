@@ -13,7 +13,7 @@ class Tree(UniversalBaseModel):
     Examples
     --------
     from seed.objects_with_imports import Node, Tree
-    from seed.objects_with_imports.resources.commons import Metadata
+    from seed.objects_with_imports.resources.commons.resources import Metadata
 
     Tree(
         nodes=[

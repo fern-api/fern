@@ -11,3 +11,8 @@ def test_query_encoding() -> None:
         "hello_world[test]": "this",
         "hi": "there",
     }
+
+
+def test_encode_query_with_none() -> None:
+    encoded = encode_query(None)
+    assert encoded == None

@@ -4,13 +4,13 @@ dockerCommand: yarn workspace @fern-typescript/sdk-generator-cli dockerTagLocal:
 language: typescript
 generatorType: SDK
 defaultOutputMode: github
-local: 
+local:
   workingDirectory: generators/typescript
-  buildCommand: 
-    - yarn workspace @fern-typescript/sdk-generator-cli compile 
+  buildCommand:
+    - yarn workspace @fern-typescript/sdk-generator-cli compile
     - yarn workspace @fern-typescript/sdk-generator-cli build:node
   runCommand: node sdk/cli/dist/nodeCli.cjs
-  env: 
+  env:
     NODE_ENV: test
 fixtures:
   imdb:
@@ -42,7 +42,7 @@ fixtures:
         includeUtilsOnUnionMembers: true
         includeOtherInUnionTypes: true
         extraDependencies:
-            lodash-es: "^4.17.21"
+          lodash-es: "^4.17.21"
       outputFolder: bundle
     - customConfig:
         useBrandedStringAliases: true
@@ -52,7 +52,7 @@ fixtures:
         includeUtilsOnUnionMembers: true
         includeOtherInUnionTypes: true
         extraDependencies:
-            lodash-es: "^4.17.21"
+          lodash-es: "^4.17.21"
         packageJson:
           version: "0.0.2"
           dependencies:
@@ -180,7 +180,7 @@ scripts:
       - cp -r /yarn-cache-template ./cache
       - yarn install --cache-folder ./cache
       - yarn build
-      # - grep -q '"test"' package.json && yarn test --passWithNoTests --testPathPattern='\.test\.ts$'
+      - if grep -q '"test"' package.json && grep -q 'exhaustive' package.json; then yarn test --passWithNoTests --testPathPattern='exhaustive.*\.test\.ts$'; fi
 allowedFailures:
   - response-property
   - bytes

@@ -8,5 +8,5 @@ namespace SeedObjectsWithImports;
 public record Tree
 {
     [JsonPropertyName("nodes")]
-    public IEnumerable<Node>? Nodes { get; init; }
+    public IEnumerable<Node>? Nodes { get; set; }
 }
