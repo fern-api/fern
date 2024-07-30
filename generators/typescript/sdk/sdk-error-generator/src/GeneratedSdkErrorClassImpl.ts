@@ -4,7 +4,6 @@ import { getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedSdkErrorClass, SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, PropertyDeclarationStructure, ts } from "ts-morph";
 
-const x = "hello";
 export declare namespace GeneratedSdkErrorClassImpl {
     export interface Init {
         errorClassName: string;
