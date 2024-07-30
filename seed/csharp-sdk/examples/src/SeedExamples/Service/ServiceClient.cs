@@ -55,10 +55,7 @@ public class ServiceClient
     public async Task<object> GetMetadataAsync(GetMetadataRequest request)
     {
         var _query = new Dictionary<string, object>() { };
-        _query["tag"] = request
-            .Tag.Where(_value => _value != null)
-            .Select(_value => _value)
-            .ToList();
+        _query["tag"] = request.Tag;
         if (request.Shallow != null)
         {
             _query["shallow"] = request.Shallow.ToString();

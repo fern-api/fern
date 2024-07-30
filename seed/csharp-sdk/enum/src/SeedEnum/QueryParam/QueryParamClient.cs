@@ -46,16 +46,12 @@ public class QueryParamClient
         _query["operand"] = request
             .Operand.Select(_value => JsonSerializer.Serialize(_value))
             .ToList();
-        _query["maybeOperand"] = request
-            .MaybeOperand.Where(_value => _value != null)
-            .Select(_value => JsonSerializer.Serialize(_value.Value))
-            .ToList();
+        _query["maybeOperand"] = request.MaybeOperand.Select(_value => _value.ToString()).ToList();
         _query["operandOrColor"] = request
             .OperandOrColor.Select(_value => _value.ToString())
             .ToList();
         _query["maybeOperandOrColor"] = request
-            .MaybeOperandOrColor.Where(_value => _value != null)
-            .Select(_value => _value.ToString())
+            .MaybeOperandOrColor.Select(_value => _value.ToString())
             .ToList();
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

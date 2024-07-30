@@ -10,5 +10,5 @@ public record JustFileWithQueryParamsRequet
 
     public IEnumerable<string> ListOfStrings { get; set; } = new List<string>();
 
-    public IEnumerable<string?> OptionalListOfStrings { get; set; } = new List<string?>();
+    public IEnumerable<string> OptionalListOfStrings { get; set; } = new List<string>();
 }

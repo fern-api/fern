@@ -61,7 +61,7 @@ public class ParamsClient
     public async Task GetWithAllowMultipleQueryAsync(GetWithMultipleQuery request)
     {
         var _query = new Dictionary<string, object>() { };
-        _query["query"] = request.Query.Select(_value => _value).ToList();
+        _query["query"] = request.Query;
         _query["numer"] = request.Numer.Select(_value => _value.ToString()).ToList();
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

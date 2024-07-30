@@ -43,11 +43,8 @@ public class ServiceClient
     {
         var _query = new Dictionary<string, object>() { };
         _query["integer"] = request.Integer.ToString();
-        _query["listOfStrings"] = request.ListOfStrings.Select(_value => _value).ToList();
-        _query["optionalListOfStrings"] = request
-            .OptionalListOfStrings.Where(_value => _value != null)
-            .Select(_value => _value)
-            .ToList();
+        _query["listOfStrings"] = request.ListOfStrings;
+        _query["optionalListOfStrings"] = request.OptionalListOfStrings;
         if (request.MaybeString != null)
         {
             _query["maybeString"] = request.MaybeString;

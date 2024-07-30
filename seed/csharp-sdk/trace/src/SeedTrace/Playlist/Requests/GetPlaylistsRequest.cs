@@ -15,7 +15,7 @@ public record GetPlaylistsRequest
     /// </summary>
     public required string MultiLineDocs { get; set; }
 
-    public IEnumerable<string?> OptionalMultipleField { get; set; } = new List<string?>();
+    public IEnumerable<string> OptionalMultipleField { get; set; } = new List<string>();
 
     public IEnumerable<string> MultipleField { get; set; } = new List<string>();
 }

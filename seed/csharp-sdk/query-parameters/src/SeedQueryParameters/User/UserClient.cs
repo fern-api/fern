@@ -28,7 +28,7 @@ public class UserClient
         _query["keyValue"] = request.KeyValue.ToString();
         _query["nestedUser"] = request.NestedUser.ToString();
         _query["excludeUser"] = request.ExcludeUser.Select(_value => _value.ToString()).ToList();
-        _query["filter"] = request.Filter.Select(_value => _value).ToList();
+        _query["filter"] = request.Filter;
         if (request.OptionalDeadline != null)
         {
             _query["optionalDeadline"] = request.OptionalDeadline.Value.ToString(

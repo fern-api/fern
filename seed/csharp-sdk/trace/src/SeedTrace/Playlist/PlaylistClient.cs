@@ -57,11 +57,8 @@ public class PlaylistClient
         var _query = new Dictionary<string, object>() { };
         _query["otherField"] = request.OtherField;
         _query["multiLineDocs"] = request.MultiLineDocs;
-        _query["optionalMultipleField"] = request
-            .OptionalMultipleField.Where(_value => _value != null)
-            .Select(_value => _value)
-            .ToList();
-        _query["multipleField"] = request.MultipleField.Select(_value => _value).ToList();
+        _query["optionalMultipleField"] = request.OptionalMultipleField;
+        _query["multipleField"] = request.MultipleField;
         if (request.Limit != null)
         {
             _query["limit"] = request.Limit.ToString();
