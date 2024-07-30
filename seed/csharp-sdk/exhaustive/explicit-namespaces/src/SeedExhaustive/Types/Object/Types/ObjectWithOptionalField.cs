@@ -6,6 +6,9 @@ namespace SeedExhaustive.Types.Object;
 
 public record ObjectWithOptionalField
 {
+    /// <summary>
+    /// This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
+    /// </summary>
     [JsonPropertyName("string")]
     public string? String { get; init; }
 
