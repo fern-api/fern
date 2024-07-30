@@ -46,10 +46,14 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         });
 
         for (const query of this.endpoint.queryParameters) {
+            let type = this.context.csharpTypeMapper.convert({ reference: query.valueType });
+            if (query.allowMultiple) {
+                type = csharp.Type.list(type);
+            }
             class_.addField(
                 csharp.field({
                     name: query.name.name.pascalCase.safeName,
-                    type: this.context.csharpTypeMapper.convert({ reference: query.valueType }),
+                    type,
                     access: "public",
                     get: true,
                     set: true,
