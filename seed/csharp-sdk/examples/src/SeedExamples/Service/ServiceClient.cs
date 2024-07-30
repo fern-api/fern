@@ -55,14 +55,16 @@ public class ServiceClient
     public async Task<object> GetMetadataAsync(GetMetadataRequest request)
     {
         var _query = new Dictionary<string, object>() { };
+        _query["tag"] = request
+            .Tag.Where(_value => _value != null)
+            .Select(_value => _value)
+            .ToList();
+
         if (request.Shallow != null)
         {
             _query["shallow"] = request.Shallow.ToString();
         }
-        if (request.Tag != null)
-        {
-            _query["tag"] = request.Tag;
-        }
+
         var _headers = new Dictionary<string, string>()
         {
             { "X-API-Version", request.XApiVersion },

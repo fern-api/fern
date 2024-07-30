@@ -8,7 +8,7 @@ public record JustFileWithQueryParamsRequet
 
     public int? MaybeInteger { get; set; }
 
-    public required string ListOfStrings { get; set; }
+    public IEnumerable<string> ListOfStrings { get; set; } = new List<string>();
 
-    public string? OptionalListOfStrings { get; set; }
+    public IEnumerable<string?> OptionalListOfStrings { get; set; } = new List<string?>();
 }

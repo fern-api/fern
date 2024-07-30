@@ -17,7 +17,8 @@ public class PackageClient
 
     public async Task TestAsync(TestRequest request)
     {
-        var _query = new Dictionary<string, object>() { { "for", request.For }, };
+        var _query = new Dictionary<string, object>() { };
+        _query["for"] = request.For;
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {

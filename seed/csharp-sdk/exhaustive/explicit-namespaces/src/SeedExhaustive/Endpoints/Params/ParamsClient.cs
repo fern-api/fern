@@ -41,11 +41,9 @@ public class ParamsClient
     /// </summary>
     public async Task GetWithQueryAsync(GetWithQuery request)
     {
-        var _query = new Dictionary<string, object>()
-        {
-            { "query", request.Query },
-            { "number", request.Number.ToString() },
-        };
+        var _query = new Dictionary<string, object>() { };
+        _query["query"] = request.Query;
+        _query["number"] = request.Number.ToString();
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
@@ -62,11 +60,9 @@ public class ParamsClient
     /// </summary>
     public async Task GetWithAllowMultipleQueryAsync(GetWithMultipleQuery request)
     {
-        var _query = new Dictionary<string, object>()
-        {
-            { "query", request.Query },
-            { "numer", request.Numer.ToString() },
-        };
+        var _query = new Dictionary<string, object>() { };
+        _query["query"] = request.Query.Select(_value => _value).ToList();
+        _query["numer"] = request.Numer.Select(_value => _value.ToString()).ToList();
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
@@ -83,7 +79,8 @@ public class ParamsClient
     /// </summary>
     public async Task GetWithPathAndQueryAsync(string param, GetWithPathAndQuery request)
     {
-        var _query = new Dictionary<string, object>() { { "query", request.Query }, };
+        var _query = new Dictionary<string, object>() { };
+        _query["query"] = request.Query;
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
