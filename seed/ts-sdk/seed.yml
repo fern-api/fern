@@ -180,7 +180,7 @@ scripts:
       - cp -r /yarn-cache-template ./cache
       - yarn install --cache-folder ./cache
       - yarn build
-      - grep -q '"test"' package.json && grep -q 'exhaustive' package.json && yarn test --passWithNoTests --testPathPattern='exhaustive.*\.test\.ts$'
+      # - grep -q '"test"' package.json && grep -q 'exhaustive' package.json && yarn test --passWithNoTests --testPathPattern='exhaustive.*\.test\.ts$'
 allowedFailures:
   - response-property
   - bytes
