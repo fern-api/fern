@@ -7,5 +7,5 @@ namespace SeedUnions;
 public record Square
 {
     [JsonPropertyName("length")]
-    public required double Length { get; init; }
+    public required double Length { get; }
 }

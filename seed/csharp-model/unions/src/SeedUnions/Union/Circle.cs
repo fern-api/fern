@@ -7,5 +7,5 @@ namespace SeedUnions;
 public record Circle
 {
     [JsonPropertyName("radius")]
-    public required double Radius { get; init; }
+    public required double Radius { get; }
 }

@@ -7,5 +7,5 @@ namespace SeedNurseryApi;
 public record Package
 {
     [JsonPropertyName("name")]
-    public required string Name { get; init; }
+    public required string Name { get; }
 }

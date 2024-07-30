@@ -7,5 +7,5 @@ namespace SeedApi;
 public record A
 {
     [JsonPropertyName("s")]
-    public required string S { get; init; }
+    public required string S { get; }
 }

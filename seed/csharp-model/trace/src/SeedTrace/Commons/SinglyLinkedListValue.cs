@@ -8,9 +8,9 @@ namespace SeedTrace;
 public record SinglyLinkedListValue
 {
     [JsonPropertyName("head")]
-    public string? Head { get; init; }
+    public string? Head { get; }
 
     [JsonPropertyName("nodes")]
-    public Dictionary<string, SinglyLinkedListNodeValue> Nodes { get; init; } =
+    public Dictionary<string, SinglyLinkedListNodeValue> Nodes { get; } =
         new Dictionary<string, SinglyLinkedListNodeValue>();
 }

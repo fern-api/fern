@@ -7,11 +7,11 @@ namespace SeedTrace;
 public record SinglyLinkedListNodeValue
 {
     [JsonPropertyName("nodeId")]
-    public required string NodeId { get; init; }
+    public required string NodeId { get; }
 
     [JsonPropertyName("val")]
-    public required double Val { get; init; }
+    public required double Val { get; }
 
     [JsonPropertyName("next")]
-    public string? Next { get; init; }
+    public string? Next { get; }
 }

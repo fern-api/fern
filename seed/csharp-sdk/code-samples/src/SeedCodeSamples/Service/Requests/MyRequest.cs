@@ -7,5 +7,5 @@ namespace SeedCodeSamples;
 public record MyRequest
 {
     [JsonPropertyName("num_events")]
-    public required int NumEvents { get; init; }
+    public required int NumEvents { get; }
 }

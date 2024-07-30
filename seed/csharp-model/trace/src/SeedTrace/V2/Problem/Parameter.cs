@@ -7,11 +7,11 @@ namespace SeedTrace.V2;
 public record Parameter
 {
     [JsonPropertyName("parameterId")]
-    public required string ParameterId { get; init; }
+    public required string ParameterId { get; }
 
     [JsonPropertyName("name")]
-    public required string Name { get; init; }
+    public required string Name { get; }
 
     [JsonPropertyName("variableType")]
-    public required object VariableType { get; init; }
+    public required object VariableType { get; }
 }

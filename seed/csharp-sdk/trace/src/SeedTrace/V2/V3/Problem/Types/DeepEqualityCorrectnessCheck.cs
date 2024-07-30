@@ -7,5 +7,5 @@ namespace SeedTrace.V2.V3;
 public record DeepEqualityCorrectnessCheck
 {
     [JsonPropertyName("expectedValueParameterId")]
-    public required string ExpectedValueParameterId { get; init; }
+    public required string ExpectedValueParameterId { get; }
 }

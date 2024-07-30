@@ -2,13 +2,13 @@ namespace SeedFileUpload;
 
 public record JustFileWithQueryParamsRequet
 {
-    public string? MaybeString { get; init; }
+    public string? MaybeString { get; }
 
-    public required int Integer { get; init; }
+    public required int Integer { get; }
 
-    public int? MaybeInteger { get; init; }
+    public int? MaybeInteger { get; }
 
-    public required string ListOfStrings { get; init; }
+    public required string ListOfStrings { get; }
 
-    public string? OptionalListOfStrings { get; init; }
+    public string? OptionalListOfStrings { get; }
 }

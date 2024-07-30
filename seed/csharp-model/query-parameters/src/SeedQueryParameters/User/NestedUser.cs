@@ -8,8 +8,8 @@ namespace SeedQueryParameters;
 public record NestedUser
 {
     [JsonPropertyName("name")]
-    public required string Name { get; init; }
+    public required string Name { get; }
 
     [JsonPropertyName("user")]
-    public required User User { get; init; }
+    public required User User { get; }
 }

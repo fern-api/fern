@@ -7,17 +7,17 @@ namespace SeedOauthClientCredentials;
 public record GetTokenRequest
 {
     [JsonPropertyName("client_id")]
-    public required string ClientId { get; init; }
+    public required string ClientId { get; }
 
     [JsonPropertyName("client_secret")]
-    public required string ClientSecret { get; init; }
+    public required string ClientSecret { get; }
 
     [JsonPropertyName("audience")]
-    public required string Audience { get; init; }
+    public required string Audience { get; }
 
     [JsonPropertyName("grant_type")]
-    public required string GrantType { get; init; }
+    public required string GrantType { get; }
 
     [JsonPropertyName("scope")]
-    public string? Scope { get; init; }
+    public string? Scope { get; }
 }

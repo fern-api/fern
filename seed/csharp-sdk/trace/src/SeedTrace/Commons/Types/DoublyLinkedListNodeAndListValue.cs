@@ -8,8 +8,8 @@ namespace SeedTrace;
 public record DoublyLinkedListNodeAndListValue
 {
     [JsonPropertyName("nodeId")]
-    public required string NodeId { get; init; }
+    public required string NodeId { get; }
 
     [JsonPropertyName("fullList")]
-    public required DoublyLinkedListValue FullList { get; init; }
+    public required DoublyLinkedListValue FullList { get; }
 }

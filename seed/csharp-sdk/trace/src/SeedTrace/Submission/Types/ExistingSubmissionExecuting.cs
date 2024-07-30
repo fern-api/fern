@@ -7,5 +7,5 @@ namespace SeedTrace;
 public record ExistingSubmissionExecuting
 {
     [JsonPropertyName("submissionId")]
-    public required string SubmissionId { get; init; }
+    public required string SubmissionId { get; }
 }

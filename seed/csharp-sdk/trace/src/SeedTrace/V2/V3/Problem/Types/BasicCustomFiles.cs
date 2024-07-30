@@ -9,15 +9,14 @@ namespace SeedTrace.V2.V3;
 public record BasicCustomFiles
 {
     [JsonPropertyName("methodName")]
-    public required string MethodName { get; init; }
+    public required string MethodName { get; }
 
     [JsonPropertyName("signature")]
-    public required NonVoidFunctionSignature Signature { get; init; }
+    public required NonVoidFunctionSignature Signature { get; }
 
     [JsonPropertyName("additionalFiles")]
-    public Dictionary<Language, Files> AdditionalFiles { get; init; } =
-        new Dictionary<Language, Files>();
+    public Dictionary<Language, Files> AdditionalFiles { get; } = new Dictionary<Language, Files>();
 
     [JsonPropertyName("basicTestCaseTemplate")]
-    public required BasicTestCaseTemplate BasicTestCaseTemplate { get; init; }
+    public required BasicTestCaseTemplate BasicTestCaseTemplate { get; }
 }

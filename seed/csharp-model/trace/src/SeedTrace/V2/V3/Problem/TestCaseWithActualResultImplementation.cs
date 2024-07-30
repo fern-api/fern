@@ -8,8 +8,8 @@ namespace SeedTrace.V2.V3;
 public record TestCaseWithActualResultImplementation
 {
     [JsonPropertyName("getActualResult")]
-    public required NonVoidFunctionDefinition GetActualResult { get; init; }
+    public required NonVoidFunctionDefinition GetActualResult { get; }
 
     [JsonPropertyName("assertCorrectnessCheck")]
-    public required object AssertCorrectnessCheck { get; init; }
+    public required object AssertCorrectnessCheck { get; }
 }

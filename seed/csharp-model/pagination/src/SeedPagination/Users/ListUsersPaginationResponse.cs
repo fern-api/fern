@@ -8,14 +8,14 @@ namespace SeedPagination;
 public record ListUsersPaginationResponse
 {
     [JsonPropertyName("page")]
-    public Page? Page { get; init; }
+    public Page? Page { get; }
 
     /// <summary>
     /// The totall number of /users
     /// </summary>
     [JsonPropertyName("total_count")]
-    public required int TotalCount { get; init; }
+    public required int TotalCount { get; }
 
     [JsonPropertyName("data")]
-    public IEnumerable<User> Data { get; init; } = new List<User>();
+    public IEnumerable<User> Data { get; } = new List<User>();
 }

@@ -7,8 +7,8 @@ namespace SeedTrace;
 public record KeyValuePair
 {
     [JsonPropertyName("key")]
-    public required object Key { get; init; }
+    public required object Key { get; }
 
     [JsonPropertyName("value")]
-    public required object Value { get; init; }
+    public required object Value { get; }
 }

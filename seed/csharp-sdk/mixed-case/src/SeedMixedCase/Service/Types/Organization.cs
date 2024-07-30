@@ -7,5 +7,5 @@ namespace SeedMixedCase;
 public record Organization
 {
     [JsonPropertyName("name")]
-    public required string Name { get; init; }
+    public required string Name { get; }
 }

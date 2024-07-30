@@ -8,20 +8,20 @@ namespace SeedTrace;
 public record TraceResponse
 {
     [JsonPropertyName("submissionId")]
-    public required string SubmissionId { get; init; }
+    public required string SubmissionId { get; }
 
     [JsonPropertyName("lineNumber")]
-    public required int LineNumber { get; init; }
+    public required int LineNumber { get; }
 
     [JsonPropertyName("returnValue")]
-    public object? ReturnValue { get; init; }
+    public object? ReturnValue { get; }
 
     [JsonPropertyName("expressionLocation")]
-    public ExpressionLocation? ExpressionLocation { get; init; }
+    public ExpressionLocation? ExpressionLocation { get; }
 
     [JsonPropertyName("stack")]
-    public required StackInformation Stack { get; init; }
+    public required StackInformation Stack { get; }
 
     [JsonPropertyName("stdout")]
-    public string? Stdout { get; init; }
+    public string? Stdout { get; }
 }

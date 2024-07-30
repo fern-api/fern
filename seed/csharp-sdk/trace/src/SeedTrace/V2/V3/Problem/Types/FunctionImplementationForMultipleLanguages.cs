@@ -9,6 +9,6 @@ namespace SeedTrace.V2.V3;
 public record FunctionImplementationForMultipleLanguages
 {
     [JsonPropertyName("codeByLanguage")]
-    public Dictionary<Language, FunctionImplementation> CodeByLanguage { get; init; } =
+    public Dictionary<Language, FunctionImplementation> CodeByLanguage { get; } =
         new Dictionary<Language, FunctionImplementation>();
 }

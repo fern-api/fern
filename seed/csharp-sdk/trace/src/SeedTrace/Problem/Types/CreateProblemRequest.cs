@@ -8,26 +8,25 @@ namespace SeedTrace;
 public record CreateProblemRequest
 {
     [JsonPropertyName("problemName")]
-    public required string ProblemName { get; init; }
+    public required string ProblemName { get; }
 
     [JsonPropertyName("problemDescription")]
-    public required ProblemDescription ProblemDescription { get; init; }
+    public required ProblemDescription ProblemDescription { get; }
 
     [JsonPropertyName("files")]
-    public Dictionary<Language, ProblemFiles> Files { get; init; } =
+    public Dictionary<Language, ProblemFiles> Files { get; } =
         new Dictionary<Language, ProblemFiles>();
 
     [JsonPropertyName("inputParams")]
-    public IEnumerable<VariableTypeAndName> InputParams { get; init; } =
-        new List<VariableTypeAndName>();
+    public IEnumerable<VariableTypeAndName> InputParams { get; } = new List<VariableTypeAndName>();
 
     [JsonPropertyName("outputType")]
-    public required object OutputType { get; init; }
+    public required object OutputType { get; }
 
     [JsonPropertyName("testcases")]
-    public IEnumerable<TestCaseWithExpectedResult> Testcases { get; init; } =
+    public IEnumerable<TestCaseWithExpectedResult> Testcases { get; } =
         new List<TestCaseWithExpectedResult>();
 
     [JsonPropertyName("methodName")]
-    public required string MethodName { get; init; }
+    public required string MethodName { get; }
 }

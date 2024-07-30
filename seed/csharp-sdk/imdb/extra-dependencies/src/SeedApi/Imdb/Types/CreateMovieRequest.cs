@@ -7,8 +7,8 @@ namespace SeedApi;
 public record CreateMovieRequest
 {
     [JsonPropertyName("title")]
-    public required string Title { get; init; }
+    public required string Title { get; }
 
     [JsonPropertyName("rating")]
-    public required double Rating { get; init; }
+    public required double Rating { get; }
 }

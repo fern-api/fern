@@ -7,8 +7,8 @@ namespace SeedQueryParameters;
 public record User
 {
     [JsonPropertyName("name")]
-    public required string Name { get; init; }
+    public required string Name { get; }
 
     [JsonPropertyName("tags")]
-    public IEnumerable<string> Tags { get; init; } = new List<string>();
+    public IEnumerable<string> Tags { get; } = new List<string>();
 }

@@ -7,11 +7,11 @@ namespace SeedTrace;
 public record UpdatePlaylistRequest
 {
     [JsonPropertyName("name")]
-    public required string Name { get; init; }
+    public required string Name { get; }
 
     /// <summary>
     /// The problems that make up the playlist.
     /// </summary>
     [JsonPropertyName("problems")]
-    public IEnumerable<string> Problems { get; init; } = new List<string>();
+    public IEnumerable<string> Problems { get; } = new List<string>();
 }

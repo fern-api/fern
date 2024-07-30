@@ -8,8 +8,8 @@ namespace SeedTrace;
 public record ProblemFiles
 {
     [JsonPropertyName("solutionFile")]
-    public required FileInfo SolutionFile { get; init; }
+    public required FileInfo SolutionFile { get; }
 
     [JsonPropertyName("readOnlyFiles")]
-    public IEnumerable<FileInfo> ReadOnlyFiles { get; init; } = new List<FileInfo>();
+    public IEnumerable<FileInfo> ReadOnlyFiles { get; } = new List<FileInfo>();
 }

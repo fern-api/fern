@@ -7,5 +7,5 @@ namespace SeedTrace.V2;
 public record TestCaseExpects
 {
     [JsonPropertyName("expectedStdout")]
-    public string? ExpectedStdout { get; init; }
+    public string? ExpectedStdout { get; }
 }

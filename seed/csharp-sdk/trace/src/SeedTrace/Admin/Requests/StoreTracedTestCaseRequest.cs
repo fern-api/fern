@@ -8,8 +8,8 @@ namespace SeedTrace;
 public record StoreTracedTestCaseRequest
 {
     [JsonPropertyName("result")]
-    public required TestCaseResultWithStdout Result { get; init; }
+    public required TestCaseResultWithStdout Result { get; }
 
     [JsonPropertyName("traceResponses")]
-    public IEnumerable<TraceResponse> TraceResponses { get; init; } = new List<TraceResponse>();
+    public IEnumerable<TraceResponse> TraceResponses { get; } = new List<TraceResponse>();
 }

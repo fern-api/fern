@@ -8,8 +8,8 @@ namespace SeedTrace;
 public record TestCaseWithExpectedResult
 {
     [JsonPropertyName("testCase")]
-    public required TestCase TestCase { get; init; }
+    public required TestCase TestCase { get; }
 
     [JsonPropertyName("expectedResult")]
-    public required object ExpectedResult { get; init; }
+    public required object ExpectedResult { get; }
 }

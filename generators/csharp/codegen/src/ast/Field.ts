@@ -14,8 +14,10 @@ export declare namespace Field {
         type: Type;
         /* Whether the field has a getter method */
         get?: boolean;
-        /* Whether the field has an init method */
+        /* Whether the field has an init method. Cannot be used with a set method. */
         init?: boolean;
+        /* Whether the field has an set method. Cannot be used with an init method. */
+        set?: boolean;
         /* The access level of the method */
         access: Access;
         /* Whether the field is static */
@@ -39,6 +41,7 @@ export class Field extends AstNode {
     private type: Type;
     private get: boolean;
     private init: boolean;
+    private set: boolean;
     private annotations: Annotation[];
     private initializer: CodeBlock | undefined;
     private summary: string | undefined;
@@ -51,6 +54,7 @@ export class Field extends AstNode {
         type,
         get,
         init,
+        set,
         access,
         annotations,
         initializer,
@@ -64,6 +68,7 @@ export class Field extends AstNode {
         this.type = type;
         this.get = get ?? false;
         this.init = init ?? false;
+        this.set = set ?? false;
         this.access = access;
         this.annotations = annotations ?? [];
         this.initializer = initializer;

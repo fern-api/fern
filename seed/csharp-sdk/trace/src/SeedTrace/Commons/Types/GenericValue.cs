@@ -7,8 +7,8 @@ namespace SeedTrace;
 public record GenericValue
 {
     [JsonPropertyName("stringifiedType")]
-    public string? StringifiedType { get; init; }
+    public string? StringifiedType { get; }
 
     [JsonPropertyName("stringifiedValue")]
-    public required string StringifiedValue { get; init; }
+    public required string StringifiedValue { get; }
 }

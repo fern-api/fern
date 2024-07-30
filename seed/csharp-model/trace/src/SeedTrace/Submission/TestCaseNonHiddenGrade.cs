@@ -7,14 +7,14 @@ namespace SeedTrace;
 public record TestCaseNonHiddenGrade
 {
     [JsonPropertyName("passed")]
-    public required bool Passed { get; init; }
+    public required bool Passed { get; }
 
     [JsonPropertyName("actualResult")]
-    public object? ActualResult { get; init; }
+    public object? ActualResult { get; }
 
     [JsonPropertyName("exception")]
-    public object? Exception { get; init; }
+    public object? Exception { get; }
 
     [JsonPropertyName("stdout")]
-    public required string Stdout { get; init; }
+    public required string Stdout { get; }
 }

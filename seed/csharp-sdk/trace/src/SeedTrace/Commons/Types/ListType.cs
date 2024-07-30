@@ -7,11 +7,11 @@ namespace SeedTrace;
 public record ListType
 {
     [JsonPropertyName("valueType")]
-    public required object ValueType { get; init; }
+    public required object ValueType { get; }
 
     /// <summary>
     /// Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
     /// </summary>
     [JsonPropertyName("isFixedLength")]
-    public bool? IsFixedLength { get; init; }
+    public bool? IsFixedLength { get; }
 }

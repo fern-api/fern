@@ -11,14 +11,14 @@ public record Page
     /// The current page
     /// </summary>
     [JsonPropertyName("page")]
-    public required int Page_ { get; init; }
+    public required int Page_ { get; }
 
     [JsonPropertyName("next")]
-    public NextPage? Next { get; init; }
+    public NextPage? Next { get; }
 
     [JsonPropertyName("per_page")]
-    public required int PerPage { get; init; }
+    public required int PerPage { get; }
 
     [JsonPropertyName("total_page")]
-    public required int TotalPage { get; init; }
+    public required int TotalPage { get; }
 }

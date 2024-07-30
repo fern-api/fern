@@ -8,11 +8,11 @@ namespace SeedTrace.V2;
 public record TestCaseTemplate
 {
     [JsonPropertyName("templateId")]
-    public required string TemplateId { get; init; }
+    public required string TemplateId { get; }
 
     [JsonPropertyName("name")]
-    public required string Name { get; init; }
+    public required string Name { get; }
 
     [JsonPropertyName("implementation")]
-    public required TestCaseImplementation Implementation { get; init; }
+    public required TestCaseImplementation Implementation { get; }
 }

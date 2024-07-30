@@ -11,5 +11,5 @@ public record ResponseType
 {
     [JsonPropertyName("type")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<BasicType, ComplexType>>))]
-    public required OneOf<BasicType, ComplexType> Type { get; init; }
+    public required OneOf<BasicType, ComplexType> Type { get; }
 }

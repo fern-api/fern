@@ -7,11 +7,11 @@ namespace SeedLiteral;
 public record SendRequest
 {
     [JsonPropertyName("prompt")]
-    public required string Prompt { get; init; }
+    public required string Prompt { get; }
 
     [JsonPropertyName("query")]
-    public required string Query { get; init; }
+    public required string Query { get; }
 
     [JsonPropertyName("stream")]
-    public required bool Stream { get; init; }
+    public required bool Stream { get; }
 }

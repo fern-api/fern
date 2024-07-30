@@ -9,13 +9,13 @@ namespace SeedTrace.V2;
 public record GeneratedFiles
 {
     [JsonPropertyName("generatedTestCaseFiles")]
-    public Dictionary<Language, Files> GeneratedTestCaseFiles { get; init; } =
+    public Dictionary<Language, Files> GeneratedTestCaseFiles { get; } =
         new Dictionary<Language, Files>();
 
     [JsonPropertyName("generatedTemplateFiles")]
-    public Dictionary<Language, Files> GeneratedTemplateFiles { get; init; } =
+    public Dictionary<Language, Files> GeneratedTemplateFiles { get; } =
         new Dictionary<Language, Files>();
 
     [JsonPropertyName("other")]
-    public Dictionary<Language, Files> Other { get; init; } = new Dictionary<Language, Files>();
+    public Dictionary<Language, Files> Other { get; } = new Dictionary<Language, Files>();
 }

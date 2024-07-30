@@ -7,5 +7,5 @@ namespace SeedMultiUrlEnvironmentNoDefault;
 public record BootInstanceRequest
 {
     [JsonPropertyName("size")]
-    public required string Size { get; init; }
+    public required string Size { get; }
 }

@@ -8,8 +8,8 @@ namespace SeedPagination;
 public record UserPage
 {
     [JsonPropertyName("data")]
-    public required UserListContainer Data { get; init; }
+    public required UserListContainer Data { get; }
 
     [JsonPropertyName("next")]
-    public string? Next { get; init; }
+    public string? Next { get; }
 }

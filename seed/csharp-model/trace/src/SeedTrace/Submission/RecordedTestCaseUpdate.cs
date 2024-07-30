@@ -7,8 +7,8 @@ namespace SeedTrace;
 public record RecordedTestCaseUpdate
 {
     [JsonPropertyName("testCaseId")]
-    public required string TestCaseId { get; init; }
+    public required string TestCaseId { get; }
 
     [JsonPropertyName("traceResponsesSize")]
-    public required int TraceResponsesSize { get; init; }
+    public required int TraceResponsesSize { get; }
 }

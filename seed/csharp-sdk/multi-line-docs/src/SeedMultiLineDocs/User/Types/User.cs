@@ -7,7 +7,7 @@ namespace SeedMultiLineDocs;
 public record User
 {
     [JsonPropertyName("id")]
-    public required string Id { get; init; }
+    public required string Id { get; }
 
     /// <summary>
     /// The user's name. This name is unique to each user. A few examples are included below:
@@ -17,11 +17,11 @@ public record User
     /// - Charlie
     /// </summary>
     [JsonPropertyName("name")]
-    public required string Name { get; init; }
+    public required string Name { get; }
 
     /// <summary>
     /// The user's age.
     /// </summary>
     [JsonPropertyName("age")]
-    public int? Age { get; init; }
+    public int? Age { get; }
 }

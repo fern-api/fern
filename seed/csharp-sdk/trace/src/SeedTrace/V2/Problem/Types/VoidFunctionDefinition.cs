@@ -8,8 +8,8 @@ namespace SeedTrace.V2;
 public record VoidFunctionDefinition
 {
     [JsonPropertyName("parameters")]
-    public IEnumerable<Parameter> Parameters { get; init; } = new List<Parameter>();
+    public IEnumerable<Parameter> Parameters { get; } = new List<Parameter>();
 
     [JsonPropertyName("code")]
-    public required FunctionImplementationForMultipleLanguages Code { get; init; }
+    public required FunctionImplementationForMultipleLanguages Code { get; }
 }

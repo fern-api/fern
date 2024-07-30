@@ -8,14 +8,14 @@ namespace SeedTrace.V2;
 public record TestCaseV2
 {
     [JsonPropertyName("metadata")]
-    public required TestCaseMetadata Metadata { get; init; }
+    public required TestCaseMetadata Metadata { get; }
 
     [JsonPropertyName("implementation")]
-    public required object Implementation { get; init; }
+    public required object Implementation { get; }
 
     [JsonPropertyName("arguments")]
-    public Dictionary<string, object> Arguments { get; init; } = new Dictionary<string, object>();
+    public Dictionary<string, object> Arguments { get; } = new Dictionary<string, object>();
 
     [JsonPropertyName("expects")]
-    public TestCaseExpects? Expects { get; init; }
+    public TestCaseExpects? Expects { get; }
 }

@@ -8,23 +8,23 @@ namespace SeedTrace;
 public record ExecutionSessionState
 {
     [JsonPropertyName("lastTimeContacted")]
-    public string? LastTimeContacted { get; init; }
+    public string? LastTimeContacted { get; }
 
     /// <summary>
     /// The auto-generated session id. Formatted as a uuid.
     /// </summary>
     [JsonPropertyName("sessionId")]
-    public required string SessionId { get; init; }
+    public required string SessionId { get; }
 
     [JsonPropertyName("isWarmInstance")]
-    public required bool IsWarmInstance { get; init; }
+    public required bool IsWarmInstance { get; }
 
     [JsonPropertyName("awsTaskId")]
-    public string? AwsTaskId { get; init; }
+    public string? AwsTaskId { get; }
 
     [JsonPropertyName("language")]
-    public required Language Language { get; init; }
+    public required Language Language { get; }
 
     [JsonPropertyName("status")]
-    public required ExecutionSessionStatus Status { get; init; }
+    public required ExecutionSessionStatus Status { get; }
 }

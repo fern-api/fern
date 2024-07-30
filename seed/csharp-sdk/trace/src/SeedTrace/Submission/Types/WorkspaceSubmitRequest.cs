@@ -8,15 +8,15 @@ namespace SeedTrace;
 public record WorkspaceSubmitRequest
 {
     [JsonPropertyName("submissionId")]
-    public required string SubmissionId { get; init; }
+    public required string SubmissionId { get; }
 
     [JsonPropertyName("language")]
-    public required Language Language { get; init; }
+    public required Language Language { get; }
 
     [JsonPropertyName("submissionFiles")]
-    public IEnumerable<SubmissionFileInfo> SubmissionFiles { get; init; } =
+    public IEnumerable<SubmissionFileInfo> SubmissionFiles { get; } =
         new List<SubmissionFileInfo>();
 
     [JsonPropertyName("userId")]
-    public string? UserId { get; init; }
+    public string? UserId { get; }
 }

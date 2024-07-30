@@ -7,12 +7,11 @@ namespace SeedMixedCase;
 public record User
 {
     [JsonPropertyName("userName")]
-    public required string UserName { get; init; }
+    public required string UserName { get; }
 
     [JsonPropertyName("metadata_tags")]
-    public IEnumerable<string> MetadataTags { get; init; } = new List<string>();
+    public IEnumerable<string> MetadataTags { get; } = new List<string>();
 
     [JsonPropertyName("EXTRA_PROPERTIES")]
-    public Dictionary<string, string> ExtraProperties { get; init; } =
-        new Dictionary<string, string>();
+    public Dictionary<string, string> ExtraProperties { get; } = new Dictionary<string, string>();
 }

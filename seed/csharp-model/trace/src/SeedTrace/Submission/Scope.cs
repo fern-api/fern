@@ -7,5 +7,5 @@ namespace SeedTrace;
 public record Scope
 {
     [JsonPropertyName("variables")]
-    public Dictionary<string, object> Variables { get; init; } = new Dictionary<string, object>();
+    public Dictionary<string, object> Variables { get; } = new Dictionary<string, object>();
 }

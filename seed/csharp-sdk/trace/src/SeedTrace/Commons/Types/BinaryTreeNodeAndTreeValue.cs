@@ -8,8 +8,8 @@ namespace SeedTrace;
 public record BinaryTreeNodeAndTreeValue
 {
     [JsonPropertyName("nodeId")]
-    public required string NodeId { get; init; }
+    public required string NodeId { get; }
 
     [JsonPropertyName("fullTree")]
-    public required BinaryTreeValue FullTree { get; init; }
+    public required BinaryTreeValue FullTree { get; }
 }

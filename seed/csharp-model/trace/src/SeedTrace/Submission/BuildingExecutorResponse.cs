@@ -8,8 +8,8 @@ namespace SeedTrace;
 public record BuildingExecutorResponse
 {
     [JsonPropertyName("submissionId")]
-    public required string SubmissionId { get; init; }
+    public required string SubmissionId { get; }
 
     [JsonPropertyName("status")]
-    public required ExecutionSessionStatus Status { get; init; }
+    public required ExecutionSessionStatus Status { get; }
 }

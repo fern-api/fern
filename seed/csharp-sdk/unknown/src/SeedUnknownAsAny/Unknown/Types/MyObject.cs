@@ -7,5 +7,5 @@ namespace SeedUnknownAsAny;
 public record MyObject
 {
     [JsonPropertyName("unknown")]
-    public required object Unknown { get; init; }
+    public required object Unknown { get; }
 }

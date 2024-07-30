@@ -7,5 +7,5 @@ namespace SeedMultiUrlEnvironmentNoDefault;
 public record GetPresignedUrlRequest
 {
     [JsonPropertyName("s3Key")]
-    public required string S3Key { get; init; }
+    public required string S3Key { get; }
 }
