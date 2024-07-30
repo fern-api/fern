@@ -90,6 +90,10 @@ export class WrappedEndpointRequest extends EndpointRequest {
             return;
         }
         const queryParameterReference = `${this.getParameterName()}.${query.name.name.pascalCase.safeName}`;
+        if (this.isString(query.valueType)) {
+            writer.writeLine(`${queryParameterReference};`);
+            return;
+        }
         const maybeOptionalCheck = this.context.isOptional(query.valueType) ? ".Where(_value => _value != null)" : "";
         writer.write(`${queryParameterReference}${maybeOptionalCheck}.Select(_value => `);
         writer.writeNode(
