@@ -7,5 +7,5 @@ namespace SeedTrace;
 public record LangServerRequest
 {
     [JsonPropertyName("request")]
-    public required object Request { get; init; }
+    public required object Request { get; set; }
 }

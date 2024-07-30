@@ -47,7 +47,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
                     type: this.context.csharpTypeMapper.convert({ reference: property.valueType }),
                     access: "public",
                     get: true,
-                    init: true,
+                    set: true,
                     summary: property.docs,
                     jsonPropertyName: property.name.wireValue,
                     annotations,

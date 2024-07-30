@@ -7,8 +7,8 @@ namespace SeedExhaustive.Types;
 public record Dog
 {
     [JsonPropertyName("name")]
-    public required string Name { get; init; }
+    public required string Name { get; set; }
 
     [JsonPropertyName("likesToWoof")]
-    public required bool LikesToWoof { get; init; }
+    public required bool LikesToWoof { get; set; }
 }

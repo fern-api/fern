@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.3 - 2024-07-30]
+
+- Improvement: Types are now generated with `set` accessors rather than `init` accessors to improve
+  flexibility of object construction.
+
 ## [0.3.2 - 2024-07-29]
 
 - Improvement: The C# generator now supports configuration to match namespaces directly to the full path of a file.

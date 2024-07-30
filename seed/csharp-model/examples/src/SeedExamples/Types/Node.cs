@@ -8,11 +8,11 @@ namespace SeedExamples;
 public record Node
 {
     [JsonPropertyName("name")]
-    public required string Name { get; init; }
+    public required string Name { get; set; }
 
     [JsonPropertyName("nodes")]
-    public IEnumerable<Node>? Nodes { get; init; }
+    public IEnumerable<Node>? Nodes { get; set; }
 
     [JsonPropertyName("trees")]
-    public IEnumerable<Tree>? Trees { get; init; }
+    public IEnumerable<Tree>? Trees { get; set; }
 }
