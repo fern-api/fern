@@ -181,9 +181,8 @@ function convertWebhook(webhook: IrVersions.V53.webhooks.Webhook): IrVersions.V5
         ...webhook,
         headers: webhook.headers.map((header) => convertHttpHeader(header)),
         payload: convertWebhookPayload(webhook.payload),
-
-        // TOOD: Migrate these.
-        examples: []
+        examples:
+            webhook.examples != null ? webhook.examples.map((example) => convertWebhookExampleCall(example)) : undefined
     };
 }
 
@@ -207,6 +206,13 @@ function convertWebhookPayload(
                 })
             });
     }
+}
+
+function convertWebhookExampleCall(example: IrVersions.V53.ExampleWebhookCall): IrVersions.V52.ExampleWebhookCall {
+    return {
+        ...example,
+        payload: convertExampleTypeReference(example.payload)
+    };
 }
 
 function convertAuth(auth: IrVersions.V53.auth.ApiAuth): IrVersions.V52.auth.ApiAuth {
