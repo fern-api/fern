@@ -142,6 +142,10 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             orderedFields.push({ name: exampleQueryParameter.name.name, value: exampleQueryParameter.value });
         }
 
+        for (const header of example.endpointHeaders) {
+            orderedFields.push({ name: header.name.name, value: header.value });
+        }
+
         example.request?._visit({
             reference: (reference) => {
                 orderedFields.push({ name: this.wrapper.bodyKey, value: reference });
