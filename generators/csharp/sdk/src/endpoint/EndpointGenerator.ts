@@ -1,5 +1,6 @@
 import { csharp } from "@fern-api/csharp-codegen";
 import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
+import { BASE_URL_FIELD_NAME, ENVIRONMENT_FIELD_NAME } from "../options/RequestOptionsGenerator";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { RawClient } from "./RawClient";
 import { EndpointRequest } from "./request/EndpointRequest";
@@ -16,7 +17,6 @@ export declare namespace EndpointGenerator {
     }
 }
 
-const REQUEST_PARAMETER_NAME = "request";
 const RESPONSE_VARIABLE_NAME = "response";
 const RESPONSE_BODY_VARIABLE_NAME = "responseBody";
 
@@ -52,6 +52,12 @@ export class EndpointGenerator {
                 })
             );
         }
+        parameters.push(
+            csharp.parameter({
+                type: csharp.Type.optional(csharp.Type.reference(this.context.getRequestOptionsClassReference())),
+                name: this.context.getRequestOptionsParameterName()
+            })
+        );
         const return_ = this.getEndpointReturnType({ endpoint });
         return csharp.method({
             name: this.context.getEndpointMethodName(endpoint),
@@ -99,10 +105,15 @@ export class EndpointGenerator {
                 (baseUrlWithId) => baseUrlWithId.id === endpoint.baseUrl
             );
             if (baseUrl != null) {
-                return csharp.codeblock(`_client.Options.Environment.${baseUrl.name.pascalCase.safeName}`);
+                const requestOptionsEnvironment = `${this.context.getRequestOptionsParameterName()}?.${ENVIRONMENT_FIELD_NAME}`;
+                const environmentName = baseUrl.name.pascalCase.safeName;
+                return csharp.codeblock(
+                    `${requestOptionsEnvironment}.${environmentName} ?? _client.Options.Environment.${environmentName}`
+                );
             }
         }
-        return csharp.codeblock("_client.Options.BaseUrl");
+        const requestOptionsBaseUrl = `${this.context.getRequestOptionsParameterName()}?.${BASE_URL_FIELD_NAME}`;
+        return csharp.codeblock(`${requestOptionsBaseUrl} ?? _client.Options.BaseUrl`);
     }
 
     private getEndpointRequest({

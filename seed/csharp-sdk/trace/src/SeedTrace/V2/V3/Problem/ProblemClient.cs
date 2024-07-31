@@ -18,14 +18,17 @@ public class ProblemClient
     /// <summary>
     /// Returns lightweight versions of all problems
     /// </summary>
-    public async Task<IEnumerable<LightweightProblemInfoV2>> GetLightweightProblemsAsync()
+    public async Task<IEnumerable<LightweightProblemInfoV2>> GetLightweightProblemsAsync(
+        RequestOptions? options
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "/problems-v2/lightweight-problem-info"
+                Path = "/problems-v2/lightweight-problem-info",
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -39,14 +42,15 @@ public class ProblemClient
     /// <summary>
     /// Returns latest versions of all problems
     /// </summary>
-    public async Task<IEnumerable<ProblemInfoV2>> GetProblemsAsync()
+    public async Task<IEnumerable<ProblemInfoV2>> GetProblemsAsync(RequestOptions? options)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "/problems-v2/problem-info"
+                Path = "/problems-v2/problem-info",
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -60,14 +64,18 @@ public class ProblemClient
     /// <summary>
     /// Returns latest version of a problem
     /// </summary>
-    public async Task<ProblemInfoV2> GetLatestProblemAsync(string problemId)
+    public async Task<ProblemInfoV2> GetLatestProblemAsync(
+        string problemId,
+        RequestOptions? options
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = $"/problems-v2/problem-info/{problemId}"
+                Path = $"/problems-v2/problem-info/{problemId}",
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -81,14 +89,19 @@ public class ProblemClient
     /// <summary>
     /// Returns requested version of a problem
     /// </summary>
-    public async Task<ProblemInfoV2> GetProblemVersionAsync(string problemId, int problemVersion)
+    public async Task<ProblemInfoV2> GetProblemVersionAsync(
+        string problemId,
+        int problemVersion,
+        RequestOptions? options
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = $"/problems-v2/problem-info/{problemId}/version/{problemVersion}"
+                Path = $"/problems-v2/problem-info/{problemId}/version/{problemVersion}",
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

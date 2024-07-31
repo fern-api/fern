@@ -15,7 +15,7 @@ public class ReqWithHeadersClient
         _client = client;
     }
 
-    public async Task GetWithCustomHeaderAsync(ReqWithHeaders request)
+    public async Task GetWithCustomHeaderAsync(ReqWithHeaders request, RequestOptions? options)
     {
         var _headers = new Dictionary<string, string>()
         {
@@ -24,11 +24,12 @@ public class ReqWithHeadersClient
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/test-headers/custom-header",
                 Body = request.Body,
-                Headers = _headers
+                Headers = _headers,
+                Options = options
             }
         );
     }

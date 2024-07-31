@@ -15,15 +15,16 @@ public class InlinedRequestClient
         _client = client;
     }
 
-    public async Task SendAsync(SendEnumInlinedRequest request)
+    public async Task SendAsync(SendEnumInlinedRequest request, RequestOptions? options)
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "inlined",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
     }

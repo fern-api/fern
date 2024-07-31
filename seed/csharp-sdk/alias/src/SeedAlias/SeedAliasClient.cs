@@ -19,14 +19,15 @@ public partial class SeedAliasClient
         );
     }
 
-    public async Task GetAsync(string typeId)
+    public async Task GetAsync(string typeId, RequestOptions? options)
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = $"/{typeId}"
+                Path = $"/{typeId}",
+                Options = options
             }
         );
     }

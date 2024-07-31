@@ -22,14 +22,15 @@ public class V2Client
 
     public V3Client V3 { get; }
 
-    public async Task TestAsync()
+    public async Task TestAsync(RequestOptions? options)
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = ""
+                Path = "",
+                Options = options
             }
         );
     }

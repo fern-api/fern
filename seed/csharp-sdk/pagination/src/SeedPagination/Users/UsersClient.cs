@@ -17,7 +17,8 @@ public class UsersClient
     }
 
     public async Task<ListUsersPaginationResponse> ListWithCursorPaginationAsync(
-        ListUsersCursorPaginationRequest request
+        ListUsersCursorPaginationRequest request,
+        RequestOptions? options
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -40,10 +41,11 @@ public class UsersClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "/users",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -55,16 +57,18 @@ public class UsersClient
     }
 
     public async Task<ListUsersPaginationResponse> ListWithBodyCursorPaginationAsync(
-        ListUsersBodyCursorPaginationRequest request
+        ListUsersBodyCursorPaginationRequest request,
+        RequestOptions? options
     )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/users",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -76,7 +80,8 @@ public class UsersClient
     }
 
     public async Task<ListUsersPaginationResponse> ListWithOffsetPaginationAsync(
-        ListUsersOffsetPaginationRequest request
+        ListUsersOffsetPaginationRequest request,
+        RequestOptions? options
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -99,10 +104,11 @@ public class UsersClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "/users",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -114,16 +120,18 @@ public class UsersClient
     }
 
     public async Task<ListUsersPaginationResponse> ListWithBodyOffsetPaginationAsync(
-        ListUsersBodyOffsetPaginationRequest request
+        ListUsersBodyOffsetPaginationRequest request,
+        RequestOptions? options
     )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/users",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -135,7 +143,8 @@ public class UsersClient
     }
 
     public async Task<ListUsersPaginationResponse> ListWithOffsetStepPaginationAsync(
-        ListUsersOffsetStepPaginationRequest request
+        ListUsersOffsetStepPaginationRequest request,
+        RequestOptions? options
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -154,10 +163,11 @@ public class UsersClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "/users",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -169,7 +179,8 @@ public class UsersClient
     }
 
     public async Task<ListUsersExtendedResponse> ListWithExtendedResultsAsync(
-        ListUsersExtendedRequest request
+        ListUsersExtendedRequest request,
+        RequestOptions? options
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -180,10 +191,11 @@ public class UsersClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "/users",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -194,7 +206,10 @@ public class UsersClient
         throw new Exception(responseBody);
     }
 
-    public async Task<UsernameCursor> ListUsernamesAsync(ListUsernamesRequest request)
+    public async Task<UsernameCursor> ListUsernamesAsync(
+        ListUsernamesRequest request,
+        RequestOptions? options
+    )
     {
         var _query = new Dictionary<string, object>() { };
         if (request.StartingAfter != null)
@@ -204,10 +219,11 @@ public class UsersClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "/users",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -219,7 +235,8 @@ public class UsersClient
     }
 
     public async Task<UsernameContainer> ListWithGlobalConfigAsync(
-        ListWithGlobalConfigRequest request
+        ListWithGlobalConfigRequest request,
+        RequestOptions? options
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -230,10 +247,11 @@ public class UsersClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "/users",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

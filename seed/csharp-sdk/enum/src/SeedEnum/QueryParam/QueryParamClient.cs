@@ -16,7 +16,7 @@ public class QueryParamClient
         _client = client;
     }
 
-    public async Task SendAsync(SendEnumAsQueryParamRequest request)
+    public async Task SendAsync(SendEnumAsQueryParamRequest request, RequestOptions? options)
     {
         var _query = new Dictionary<string, object>() { };
         _query["operand"] = JsonSerializer.Serialize(request.Operand);
@@ -32,15 +32,19 @@ public class QueryParamClient
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "query",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
     }
 
-    public async Task SendListAsync(SendEnumListAsQueryParamRequest request)
+    public async Task SendListAsync(
+        SendEnumListAsQueryParamRequest request,
+        RequestOptions? options
+    )
     {
         var _query = new Dictionary<string, object>() { };
         _query["operand"] = request
@@ -56,10 +60,11 @@ public class QueryParamClient
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "query-list",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
     }

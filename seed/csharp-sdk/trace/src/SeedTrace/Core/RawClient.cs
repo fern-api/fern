@@ -64,7 +64,8 @@ public class RawClient(
             httpRequest.Content = new StreamContent(streamRequest.Body);
         }
         // Send the request
-        var response = await Options.HttpClient.SendAsync(httpRequest);
+        var httpClient = request.Options?.HttpClient ?? Options.HttpClient;
+        var response = await httpClient.SendAsync(httpRequest);
         return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
     }
 
@@ -82,7 +83,7 @@ public class RawClient(
 
         public Dictionary<string, string> Headers { get; init; } = new();
 
-        public object? RequestOptions { get; init; }
+        public RequestOptions? Options { get; init; }
     }
 
     /// <summary>

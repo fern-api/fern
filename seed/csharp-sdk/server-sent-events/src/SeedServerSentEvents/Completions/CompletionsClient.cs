@@ -15,15 +15,16 @@ public class CompletionsClient
         _client = client;
     }
 
-    public async Task StreamAsync(StreamCompletionRequest request)
+    public async Task StreamAsync(StreamCompletionRequest request, RequestOptions? options)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "stream",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
     }

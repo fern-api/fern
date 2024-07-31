@@ -20,16 +20,18 @@ public class InlinedRequestsClient
     /// POST with custom object in request body, response is an object
     /// </summary>
     public async Task<ObjectWithOptionalField> PostWithObjectBodyandResponseAsync(
-        PostWithObjectBody request
+        PostWithObjectBody request,
+        RequestOptions? options
     )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/req-bodies/object",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

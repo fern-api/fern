@@ -19,14 +19,19 @@ public class ServiceClient
     /// <summary>
     /// This endpoint returns a file by its name.
     /// </summary>
-    public async Task<File> GetFileAsync(string filename, GetFileRequest request)
+    public async Task<File> GetFileAsync(
+        string filename,
+        GetFileRequest request,
+        RequestOptions? options
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = $"/file/{filename}"
+                Path = $"/file/{filename}",
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

@@ -84,6 +84,10 @@ export class RawClient {
                 assignment: csharp.codeblock(headerBagReference)
             });
         }
+        arguments_.push({
+            name: "Options",
+            assignment: csharp.codeblock(this.context.getRequestOptionsParameterName())
+        });
         let apiRequest = csharp.instantiateClass({
             arguments_,
             classReference: csharp.classReference({

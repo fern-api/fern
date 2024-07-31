@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.0 - 2024-07-31]
+
+- Feature: Add support for `RequestOptions`. Users can now specify a variety of request-specific
+  option overrides like the following:
+
+  ```csharp
+  var user = client.GetUserAsync(
+    new GetUserRequest {
+      Username = "john.doe"
+    },
+    new RequestOptions {
+        BaseUrl = "https://localhost:3000"
+    }).Result;
+  ```
+
 ## [0.5.0 - 2024-07-30]
 
 - Feature: Add support for `uint`, `ulong`, and `float` types.

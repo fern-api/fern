@@ -18,15 +18,19 @@ public class ProblemClient
     /// <summary>
     /// Creates a problem
     /// </summary>
-    public async Task<object> CreateProblemAsync(CreateProblemRequest request)
+    public async Task<object> CreateProblemAsync(
+        CreateProblemRequest request,
+        RequestOptions? options
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/problem-crud/create",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -42,16 +46,18 @@ public class ProblemClient
     /// </summary>
     public async Task<UpdateProblemResponse> UpdateProblemAsync(
         string problemId,
-        CreateProblemRequest request
+        CreateProblemRequest request,
+        RequestOptions? options
     )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"/problem-crud/update/{problemId}",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -65,14 +71,15 @@ public class ProblemClient
     /// <summary>
     /// Soft deletes a problem
     /// </summary>
-    public async Task DeleteProblemAsync(string problemId)
+    public async Task DeleteProblemAsync(string problemId, RequestOptions? options)
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Delete,
-                Path = $"/problem-crud/delete/{problemId}"
+                Path = $"/problem-crud/delete/{problemId}",
+                Options = options
             }
         );
     }
@@ -81,16 +88,18 @@ public class ProblemClient
     /// Returns default starter files for problem
     /// </summary>
     public async Task<GetDefaultStarterFilesResponse> GetDefaultStarterFilesAsync(
-        GetDefaultStarterFilesRequest request
+        GetDefaultStarterFilesRequest request,
+        RequestOptions? options
     )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/problem-crud/default-starter-files",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

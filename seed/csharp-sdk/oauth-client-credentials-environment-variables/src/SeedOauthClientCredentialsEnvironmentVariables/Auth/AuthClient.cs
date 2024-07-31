@@ -15,15 +15,19 @@ public class AuthClient
         _client = client;
     }
 
-    public async Task<TokenResponse> GetTokenWithClientCredentialsAsync(GetTokenRequest request)
+    public async Task<TokenResponse> GetTokenWithClientCredentialsAsync(
+        GetTokenRequest request,
+        RequestOptions? options
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/token",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -34,15 +38,19 @@ public class AuthClient
         throw new Exception(responseBody);
     }
 
-    public async Task<TokenResponse> RefreshTokenAsync(RefreshTokenRequest request)
+    public async Task<TokenResponse> RefreshTokenAsync(
+        RefreshTokenRequest request,
+        RequestOptions? options
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/token",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

@@ -15,17 +15,18 @@ public class PackageClient
         _client = client;
     }
 
-    public async Task TestAsync(TestRequest request)
+    public async Task TestAsync(TestRequest request, RequestOptions? options)
     {
         var _query = new Dictionary<string, object>() { };
         _query["for"] = request.For;
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
     }

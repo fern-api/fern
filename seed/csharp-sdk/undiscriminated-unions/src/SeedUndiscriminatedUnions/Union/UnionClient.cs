@@ -33,16 +33,18 @@ public class UnionClient
             IEnumerable<int>,
             IEnumerable<IEnumerable<int>>,
             HashSet<string>
-        > request
+        > request,
+        RequestOptions? options
     )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -62,14 +64,17 @@ public class UnionClient
         throw new Exception(responseBody);
     }
 
-    public async Task<Dictionary<OneOf<KeyType, string>, string>> GetMetadataAsync()
+    public async Task<Dictionary<OneOf<KeyType, string>, string>> GetMetadataAsync(
+        RequestOptions? options
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "/metadata"
+                Path = "/metadata",
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

@@ -16,7 +16,8 @@ public class MigrationClient
     }
 
     public async Task<IEnumerable<Migration>> GetAttemptedMigrationsAsync(
-        GetAttemptedMigrationsRequest request
+        GetAttemptedMigrationsRequest request,
+        RequestOptions? options
     )
     {
         var _headers = new Dictionary<string, string>()
@@ -26,10 +27,11 @@ public class MigrationClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "/migration-info/all",
-                Headers = _headers
+                Headers = _headers,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

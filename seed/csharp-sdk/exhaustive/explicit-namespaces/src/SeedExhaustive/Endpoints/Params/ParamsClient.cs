@@ -18,14 +18,15 @@ public class ParamsClient
     /// <summary>
     /// GET with path param
     /// </summary>
-    public async Task<string> GetWithPathAsync(string param)
+    public async Task<string> GetWithPathAsync(string param, RequestOptions? options)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = $"/params/path/{param}"
+                Path = $"/params/path/{param}",
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -39,7 +40,7 @@ public class ParamsClient
     /// <summary>
     /// GET with query param
     /// </summary>
-    public async Task GetWithQueryAsync(GetWithQuery request)
+    public async Task GetWithQueryAsync(GetWithQuery request, RequestOptions? options)
     {
         var _query = new Dictionary<string, object>() { };
         _query["query"] = request.Query;
@@ -47,10 +48,11 @@ public class ParamsClient
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "/params",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
     }
@@ -58,7 +60,10 @@ public class ParamsClient
     /// <summary>
     /// GET with multiple of same query param
     /// </summary>
-    public async Task GetWithAllowMultipleQueryAsync(GetWithMultipleQuery request)
+    public async Task GetWithAllowMultipleQueryAsync(
+        GetWithMultipleQuery request,
+        RequestOptions? options
+    )
     {
         var _query = new Dictionary<string, object>() { };
         _query["query"] = request.Query;
@@ -66,10 +71,11 @@ public class ParamsClient
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "/params",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
     }
@@ -77,17 +83,22 @@ public class ParamsClient
     /// <summary>
     /// GET with path and query params
     /// </summary>
-    public async Task GetWithPathAndQueryAsync(string param, GetWithPathAndQuery request)
+    public async Task GetWithPathAndQueryAsync(
+        string param,
+        GetWithPathAndQuery request,
+        RequestOptions? options
+    )
     {
         var _query = new Dictionary<string, object>() { };
         _query["query"] = request.Query;
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"/params/path-query/{param}",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
     }
@@ -95,15 +106,20 @@ public class ParamsClient
     /// <summary>
     /// PUT to update with path param
     /// </summary>
-    public async Task<string> ModifyWithPathAsync(string param, string request)
+    public async Task<string> ModifyWithPathAsync(
+        string param,
+        string request,
+        RequestOptions? options
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Put,
                 Path = $"/params/path/{param}",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

@@ -17,14 +17,15 @@ public class BasicAuthClient
     /// <summary>
     /// GET request with basic auth scheme
     /// </summary>
-    public async Task<bool> GetWithBasicAuthAsync()
+    public async Task<bool> GetWithBasicAuthAsync(RequestOptions? options)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "basic-auth"
+                Path = "basic-auth",
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -38,15 +39,16 @@ public class BasicAuthClient
     /// <summary>
     /// POST request with basic auth scheme
     /// </summary>
-    public async Task<bool> PostWithBasicAuthAsync(object request)
+    public async Task<bool> PostWithBasicAuthAsync(object request, RequestOptions? options)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "basic-auth",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

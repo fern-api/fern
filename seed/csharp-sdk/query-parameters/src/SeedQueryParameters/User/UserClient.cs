@@ -15,7 +15,7 @@ public class UserClient
         _client = client;
     }
 
-    public async Task<User> GetUsernameAsync(GetUsersRequest request)
+    public async Task<User> GetUsernameAsync(GetUsersRequest request, RequestOptions? options)
     {
         var _query = new Dictionary<string, object>() { };
         _query["limit"] = request.Limit.ToString();
@@ -46,10 +46,11 @@ public class UserClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "/user",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

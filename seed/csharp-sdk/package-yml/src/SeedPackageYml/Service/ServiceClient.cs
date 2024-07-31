@@ -14,14 +14,15 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Task NopAsync(string id, string nestedId)
+    public async Task NopAsync(string id, string nestedId, RequestOptions? options)
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = $"/{id}//{nestedId}"
+                Path = $"/{id}//{nestedId}",
+                Options = options
             }
         );
     }

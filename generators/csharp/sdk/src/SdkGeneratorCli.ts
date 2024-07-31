@@ -3,9 +3,10 @@ import { generateModels, generateTests } from "@fern-api/fern-csharp-model";
 import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { ClientOptionsGenerator } from "./client-options/ClientOptionsGenerator";
 import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator";
 import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator copy";
+import { ClientOptionsGenerator } from "./options/ClientOptionsGenerator";
+import { RequestOptionsGenerator } from "./options/RequestOptionsGenerator";
 import { RootClientGenerator } from "./root-client/RootClientGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
@@ -85,6 +86,9 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
 
         const clientOptions = new ClientOptionsGenerator(context);
         context.project.addSourceFiles(clientOptions.generate());
+
+        const requestOptions = new RequestOptionsGenerator(context);
+        context.project.addSourceFiles(requestOptions.generate());
 
         const rootClient = new RootClientGenerator(context);
         context.project.addSourceFiles(rootClient.generate());

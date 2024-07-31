@@ -15,14 +15,15 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Task<Response> GetDirectThreadAsync()
+    public async Task<Response> GetDirectThreadAsync(RequestOptions? options)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = ""
+                Path = "",
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

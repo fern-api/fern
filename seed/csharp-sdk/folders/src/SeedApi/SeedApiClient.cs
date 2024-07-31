@@ -27,14 +27,15 @@ public partial class SeedApiClient
 
     public FolderClient Folder { get; init; }
 
-    public async Task FooAsync()
+    public async Task FooAsync(RequestOptions? options)
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = ""
+                Path = "",
+                Options = options
             }
         );
     }

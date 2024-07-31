@@ -15,15 +15,16 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Task<MyResponse> HelloAsync(MyRequest request)
+    public async Task<MyResponse> HelloAsync(MyRequest request, RequestOptions? options)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "hello",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

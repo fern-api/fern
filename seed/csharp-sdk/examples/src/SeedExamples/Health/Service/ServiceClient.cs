@@ -17,14 +17,15 @@ public class ServiceClient
     /// <summary>
     /// This endpoint checks the health of a resource.
     /// </summary>
-    public async Task CheckAsync(string id)
+    public async Task CheckAsync(string id, RequestOptions? options)
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = $"/check/{id}"
+                Path = $"/check/{id}",
+                Options = options
             }
         );
     }
@@ -32,14 +33,15 @@ public class ServiceClient
     /// <summary>
     /// This endpoint checks the health of the service.
     /// </summary>
-    public async Task<bool> PingAsync()
+    public async Task<bool> PingAsync(RequestOptions? options)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
+                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "/ping"
+                Path = "/ping",
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
