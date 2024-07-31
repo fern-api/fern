@@ -194,6 +194,11 @@ class SnippetWriter:
                     args=[AST.Expression(f'"{str(uuid)}"')],
                 ),
             ),
+            uint=lambda uint: AST.Expression(str(uint)),
+            uint_64=lambda uint_64: AST.Expression(str(uint_64)),
+            float_=lambda float_: AST.Expression(str(float_)),
+            base_64=lambda base_64: AST.Expression(str(base_64)),
+            big_integer=lambda big_integer: AST.Expression(str(big_integer)),
         )
 
     def _get_snippet_for_string_primitive(
@@ -211,26 +216,26 @@ class SnippetWriter:
     ) -> Optional[AST.Expression]:
         return container.visit(
             list_=lambda list: self._get_snippet_for_list_or_set(
-                example_type_references=list,
+                example_type_references=list.list_,
                 is_list=True,
                 use_typeddict_request=use_typeddict_request,
                 as_request=as_request,
             ),
             set_=lambda set: self._get_snippet_for_list_or_set(
-                example_type_references=set,
+                example_type_references=set.set_,
                 is_list=False,
                 use_typeddict_request=use_typeddict_request,
                 as_request=as_request,
             ),
             optional=lambda optional: self.get_snippet_for_example_type_reference(
-                example_type_reference=optional,
+                example_type_reference=optional.optional,
                 use_typeddict_request=use_typeddict_request,
                 as_request=as_request,
             )
-            if optional is not None
+            if optional.optional is not None
             else None,
             map_=lambda map: self._get_snippet_for_map(
-                pairs=map,
+                pairs=map.map_,
                 use_typeddict_request=use_typeddict_request,
                 as_request=as_request,
             ),

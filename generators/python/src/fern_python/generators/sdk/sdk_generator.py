@@ -1,5 +1,6 @@
 import json
 import os
+import uuid
 from typing import Literal, Optional, Sequence, Tuple, Union, cast
 from uuid import uuid4
 
@@ -521,7 +522,10 @@ __version__ = metadata.version("{project._project_config.package_name}")
                 # API Definition ID doesn't matter right now
                 try:
                     fdr_client.templates.register_batch(
-                        org_id=org_id, api_id=api_name, api_definition_id=uuid4(), snippets=snippets
+                        org_id=org_id,
+                        api_id=api_name,
+                        api_definition_id=uuid.UUID(ir.fdr_api_definition_id) or uuid4(),
+                        snippets=snippets,
                     )
                     generator_exec_wrapper.send_update(
                         GeneratorUpdate.factory.log(

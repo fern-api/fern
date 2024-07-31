@@ -69,14 +69,21 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         union = type_reference.get_as_union()
         if union.type == "primitive":
             maybe_v2_scheme = union.primitive.v_2
-            if maybe_v2_scheme is not None and maybe_v2_scheme.get_as_union().default is not None:
+            if maybe_v2_scheme is not None:
                 default_value = maybe_v2_scheme.visit(
-                    integer=lambda it: AST.Expression(f"{it.default}"),
-                    double=lambda dt: AST.Expression(f"{dt.default}"),
-                    string=lambda st: AST.Expression(f'"{st.default}"'),
-                    boolean=lambda bt: AST.Expression(f"{bt.default}"),
-                    long_=lambda lt: AST.Expression(f"{lt.default}"),
-                    big_integer=lambda bit: AST.Expression(f"{bit.default}"),
+                    integer=lambda it: AST.Expression(f"{it.default}") if it.default is not None else None,
+                    double=lambda dt: AST.Expression(f"{dt.default}") if dt.default is not None else None,
+                    string=lambda st: AST.Expression(f'"{st.default}"') if st.default is not None else None,
+                    boolean=lambda bt: AST.Expression(f"{bt.default}") if bt.default is not None else None,
+                    long_=lambda lt: AST.Expression(f"{lt.default}") if lt.default is not None else None,
+                    big_integer=lambda bit: AST.Expression(f"{bit.default}") if bit.default is not None else None,
+                    uint=lambda _: None,
+                    uint_64=lambda _: None,
+                    date=lambda _: None,
+                    date_time=lambda _: None,
+                    uuid_=lambda _: None,
+                    base_64=lambda _: None,
+                    float_=lambda _: None,
                 )
         return default_value
 

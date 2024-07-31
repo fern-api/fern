@@ -1,5 +1,6 @@
-from typing import Dict, List, Optional, Tuple, Union
+from typing import Dict, List, Optional, Tuple, Union, cast
 
+import fdr.api.v_1.read as FdrApiV1Read
 import fern.ir.resources as ir_types
 from fdr import (
     DictTemplate,
@@ -18,6 +19,8 @@ from fdr import (
     SnippetTemplate,
     Template,
     TemplateInput,
+    UnionTemplateMember,
+    UnionTemplateV2,
     VersionedSnippetTemplate,
 )
 from fern.generator_exec.resources import GeneratorUpdate, LogLevel, LogUpdate
@@ -570,9 +573,100 @@ class SnippetTemplateFactory:
             )
         )
 
+    def _convert_ir_type_reference_to_fdr_type_reference(
+        self, type_reference: ir_types.TypeReference
+    ) -> FdrApiV1Read.TypeReference:
+        return type_reference.visit(
+            container=lambda container: container.visit(
+                list_=lambda list_contents: FdrApiV1Read.TypeReference.factory.list_(
+                    FdrApiV1Read.ListType(itemType=self._convert_ir_type_reference_to_fdr_type_reference(list_contents))
+                ),
+                set_=lambda set_contents: FdrApiV1Read.TypeReference.factory.set_(
+                    FdrApiV1Read.SetType(itemType=self._convert_ir_type_reference_to_fdr_type_reference(set_contents))
+                ),
+                map_=lambda map_contents: FdrApiV1Read.TypeReference.factory.map_(
+                    FdrApiV1Read.MapType(
+                        keyType=self._convert_ir_type_reference_to_fdr_type_reference(map_contents.key_type),
+                        valueType=self._convert_ir_type_reference_to_fdr_type_reference(map_contents.value_type),
+                    )
+                ),
+                optional=lambda optional_value: FdrApiV1Read.TypeReference.factory.optional(
+                    FdrApiV1Read.OptionalType(
+                        itemType=self._convert_ir_type_reference_to_fdr_type_reference(optional_value)
+                    )
+                ),
+                literal=lambda literal_value: FdrApiV1Read.TypeReference.factory.literal(
+                    literal_value.visit(
+                        boolean=lambda b: FdrApiV1Read.LiteralType.factory.boolean_literal(value=b),
+                        string=lambda s: FdrApiV1Read.LiteralType.factory.string_literal(value=s),
+                    )
+                ),
+            ),
+            named=lambda named: FdrApiV1Read.TypeReference.factory.id(
+                FdrApiV1Read.TypeReferenceId(value=named.type_id.get_as_str())
+            ),
+            primitive=lambda primitive: FdrApiV1Read.TypeReference.factory.primitive(
+                primitive.v_1.visit(
+                    integer=lambda: FdrApiV1Read.PrimitiveType.factory.integer(FdrApiV1Read.IntegerType()),
+                    long_=lambda: FdrApiV1Read.PrimitiveType.factory.long_(FdrApiV1Read.LongType()),
+                    uint=lambda: FdrApiV1Read.PrimitiveType.factory.uint(),
+                    uint_64=lambda: FdrApiV1Read.PrimitiveType.factory.uint_64(),
+                    float_=lambda: FdrApiV1Read.PrimitiveType.factory.double(FdrApiV1Read.DoubleType()),
+                    double=lambda: FdrApiV1Read.PrimitiveType.factory.double(FdrApiV1Read.DoubleType()),
+                    boolean=lambda: FdrApiV1Read.PrimitiveType.factory.boolean(FdrApiV1Read.BooleanType()),
+                    string=lambda: FdrApiV1Read.PrimitiveType.factory.string(FdrApiV1Read.StringType()),
+                    date=lambda: FdrApiV1Read.PrimitiveType.factory.date(FdrApiV1Read.DateType()),
+                    date_time=lambda: FdrApiV1Read.PrimitiveType.factory.datetime(FdrApiV1Read.DatetimeType()),
+                    uuid_=lambda: FdrApiV1Read.PrimitiveType.factory.uuid_(FdrApiV1Read.UuidType()),
+                    base_64=lambda: FdrApiV1Read.PrimitiveType.factory.base_64(FdrApiV1Read.Base64Type()),
+                    big_integer=lambda: FdrApiV1Read.PrimitiveType.factory.big_integer(FdrApiV1Read.BigIntegerType()),
+                )
+            ),
+            unknown=lambda: FdrApiV1Read.TypeReference.factory.unknown(),
+        )
+
+    def _get_undiscriminated_union_template(
+        self,
+        union_declaration: ir_types.UndiscriminatedUnionTypeDeclaration,
+        name: Optional[str],
+        location: PayloadLocation,
+        wire_or_original_name: Optional[str],
+        name_breadcrumbs: Optional[List[str]],
+        is_function_parameter: bool,
+        indentation_level: int = 0,
+    ) -> Template:
+        member_templates: List[UnionTemplateMember] = []
+        for member in union_declaration.members:
+            member_template = self.get_type_reference_template(
+                type_=member.type,
+                name=None,
+                location=location,
+                wire_or_original_name=wire_or_original_name,
+                name_breadcrumbs=name_breadcrumbs,
+                indentation_level=indentation_level,
+                is_function_parameter=False,
+            )
+            if member_template is not None:
+                member_templates.append(
+                    UnionTemplateMember(
+                        type=self._convert_ir_type_reference_to_fdr_type_reference(member.type),
+                        template=member_template,
+                    )
+                )
+
+        return Template.factory.union_v_2(
+            UnionTemplateV2(
+                imports=[],
+                is_optional=True,
+                template_string=f"{self._get_name_value_separator(name=name, is_function_parameter=is_function_parameter)}{TEMPLATE_SENTINEL}",
+                members=member_templates,
+                template_input=PayloadInput(location="RELATIVE"),
+            )
+        )
+
     def _get_named_template(
         self,
-        type_name: ir_types.DeclaredTypeName,
+        type_name: ir_types.NamedType,
         name: Optional[str],
         location: PayloadLocation,
         wire_or_original_name: Optional[str],
@@ -596,7 +690,7 @@ class SnippetTemplateFactory:
                     is_function_parameter=is_function_parameter,
                 ),
                 enum=lambda etd: self._get_enum_template(
-                    type_name=type_name,
+                    type_name=cast(ir_types.DeclaredTypeName, type_name),
                     values=etd.values,
                     name=name,
                     location=location,
@@ -605,7 +699,7 @@ class SnippetTemplateFactory:
                     is_function_parameter=is_function_parameter,
                 ),
                 object=lambda _: self._get_object_template(
-                    type_name=type_name,
+                    type_name=cast(ir_types.DeclaredTypeName, type_name),
                     name=name,
                     location=location,
                     wire_or_original_name=wire_or_original_name,
@@ -614,7 +708,7 @@ class SnippetTemplateFactory:
                     is_function_parameter=is_function_parameter,
                 ),
                 union=lambda utd: self._get_discriminated_union_template(
-                    type_name=type_name,
+                    type_name=cast(ir_types.DeclaredTypeName, type_name),
                     union_declaration=utd,
                     name=name,
                     location=location,
@@ -623,7 +717,15 @@ class SnippetTemplateFactory:
                     indentation_level=indentation_level,
                     is_function_parameter=is_function_parameter,
                 ),
-                undiscriminated_union=lambda _: None,
+                undiscriminated_union=lambda uutd: self._get_undiscriminated_union_template(
+                    union_declaration=uutd,
+                    name=name,
+                    location=location,
+                    wire_or_original_name=wire_or_original_name,
+                    name_breadcrumbs=name_breadcrumbs,
+                    indentation_level=indentation_level,
+                    is_function_parameter=is_function_parameter,
+                ),
             )
         return None
 

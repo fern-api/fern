@@ -244,6 +244,11 @@ class SnippetTestFactory:
             primitive=lambda primitive: primitive.visit(
                 integer=lambda _: "integer",
                 double=lambda _: None,
+                uint=lambda _: None,
+                uint_64=lambda _: None,
+                float_=lambda _: None,
+                base_64=lambda _: None,
+                big_integer=lambda _: None,
                 string=lambda _: None,
                 boolean=lambda _: None,
                 long_=lambda _: None,
@@ -251,13 +256,14 @@ class SnippetTestFactory:
                 date=lambda _: "date",
                 uuid_=lambda _: "uuid",
             ),
+
             container=lambda container: container.visit(
                 list_=lambda item_type: (
                     "list",
                     dict(
                         [
                             (idx, self._generate_type_expectations_for_type_reference(ex))
-                            for idx, ex in enumerate(item_type)
+                            for idx, ex in enumerate(item_type.list_)
                         ]
                     ),
                 ),
@@ -266,12 +272,12 @@ class SnippetTestFactory:
                     dict(
                         [
                             (idx, self._generate_type_expectations_for_type_reference(ex))
-                            for idx, ex in enumerate(item_type)
+                            for idx, ex in enumerate(item_type.set_)
                         ]
                     ),
                 ),
-                optional=lambda item_type: self._generate_type_expectations_for_type_reference(item_type)
-                if item_type is not None
+                optional=lambda item_type: self._generate_type_expectations_for_type_reference(item_type.optional)
+                if item_type.optional is not None
                 else None,
                 map_=lambda map_type: (
                     "dict",
@@ -284,7 +290,7 @@ class SnippetTestFactory:
                                     self._generate_type_expectations_for_type_reference(ex.value),
                                 ),
                             )
-                            for idx, ex in enumerate(map_type)
+                            for idx, ex in enumerate(map_type.map_)
                         ]
                     ),
                 ),
