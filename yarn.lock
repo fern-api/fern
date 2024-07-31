@@ -5429,6 +5429,7 @@ __metadata:
   resolution: "@fern-typescript/contexts@workspace:generators/typescript/utils/contexts"
   dependencies:
     "@fern-api/logger": "workspace:*"
+    "@fern-fern/generator-exec-sdk": ^0.0.898
     "@fern-fern/ir-sdk": 50.2.0
     "@fern-typescript/commons": "workspace:*"
     "@types/jest": ^29.5.12

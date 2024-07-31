@@ -8695,6 +8695,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
+            ["@fern-fern/generator-exec-sdk", "npm:0.0.898"],\
             ["@fern-fern/ir-sdk", "npm:50.2.0"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@types/jest", "npm:29.5.12"],\
