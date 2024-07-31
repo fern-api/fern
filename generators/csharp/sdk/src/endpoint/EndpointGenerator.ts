@@ -1,7 +1,5 @@
 import { csharp } from "@fern-api/csharp-codegen";
-import { Writer } from "@fern-api/csharp-codegen/src/ast/core/Writer";
-import { ResponseError } from "@fern-fern/ir-sdk/api";
-import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, ResponseError, ServiceId } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { RawClient } from "./RawClient";
 import { EndpointRequest } from "./request/EndpointRequest";
@@ -215,7 +213,7 @@ export class EndpointGenerator {
         });
     }
 
-    private writeErrorCase(error: ResponseError, writer: Writer) {
+    private writeErrorCase(error: ResponseError, writer: csharp.Writer) {
         const fullError = this.context.ir.errors[error.error.errorId];
         if (fullError == null) {
             throw new Error("Unexpected no error found for error id: " + error.error.errorId);
