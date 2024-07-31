@@ -47,6 +47,14 @@ module SeedObjectClient
     attr_reader :eighteen
     # @return [SeedObjectClient::Name]
     attr_reader :nineteen
+    # @return [Integer]
+    attr_reader :twenty
+    # @return [Long]
+    attr_reader :twentyone
+    # @return [Float]
+    attr_reader :twentytwo
+    # @return [String]
+    attr_reader :twentythree
     # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
     # @return [Object]
@@ -74,9 +82,13 @@ module SeedObjectClient
     # @param seventeen [Array<String>]
     # @param eighteen [String]
     # @param nineteen [SeedObjectClient::Name]
+    # @param twenty [Integer]
+    # @param twentyone [Long]
+    # @param twentytwo [Float]
+    # @param twentythree [String]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [SeedObjectClient::Type]
-    def initialize(one:, two:, three:, four:, five:, six:, seven:, eight:, nine:, ten:, eleven:, twelve:, fourteen:, fifteen:, sixteen:, seventeen:, eighteen:, nineteen:,
+    def initialize(one:, two:, three:, four:, five:, six:, seven:, eight:, nine:, ten:, eleven:, twelve:, fourteen:, fifteen:, sixteen:, seventeen:, eighteen:, nineteen:, twenty:, twentyone:, twentytwo:, twentythree:,
                    thirteen: OMIT, additional_properties: nil)
       @one = one
       @two = two
@@ -97,6 +109,10 @@ module SeedObjectClient
       @seventeen = seventeen
       @eighteen = eighteen
       @nineteen = nineteen
+      @twenty = twenty
+      @twentyone = twentyone
+      @twentytwo = twentytwo
+      @twentythree = twentythree
       @additional_properties = additional_properties
       @_field_set = {
         "one": one,
@@ -117,7 +133,11 @@ module SeedObjectClient
         "sixteen": sixteen,
         "seventeen": seventeen,
         "eighteen": eighteen,
-        "nineteen": nineteen
+        "nineteen": nineteen,
+        "twenty": twenty,
+        "twentyone": twentyone,
+        "twentytwo": twentytwo,
+        "twentythree": twentythree
       }.reject do |_k, v|
         v == OMIT
       end
@@ -159,6 +179,10 @@ module SeedObjectClient
         nineteen = parsed_json["nineteen"].to_json
         nineteen = SeedObjectClient::Name.from_json(json_object: nineteen)
       end
+      twenty = parsed_json["twenty"]
+      twentyone = parsed_json["twentyone"]
+      twentytwo = parsed_json["twentytwo"]
+      twentythree = parsed_json["twentythree"]
       new(
         one: one,
         two: two,
@@ -179,6 +203,10 @@ module SeedObjectClient
         seventeen: seventeen,
         eighteen: eighteen,
         nineteen: nineteen,
+        twenty: twenty,
+        twentyone: twentyone,
+        twentytwo: twentytwo,
+        twentythree: twentythree,
         additional_properties: struct
       )
     end
@@ -216,6 +244,10 @@ module SeedObjectClient
       obj.seventeen.is_a?(Array) != false || raise("Passed value for field obj.seventeen is not the expected type, validation failed.")
       obj.eighteen.is_a?(String) != false || raise("Passed value for field obj.eighteen is not the expected type, validation failed.")
       SeedObjectClient::Name.validate_raw(obj: obj.nineteen)
+      obj.twenty.is_a?(Integer) != false || raise("Passed value for field obj.twenty is not the expected type, validation failed.")
+      obj.twentyone.is_a?(Long) != false || raise("Passed value for field obj.twentyone is not the expected type, validation failed.")
+      obj.twentytwo.is_a?(Float) != false || raise("Passed value for field obj.twentytwo is not the expected type, validation failed.")
+      obj.twentythree.is_a?(String) != false || raise("Passed value for field obj.twentythree is not the expected type, validation failed.")
     end
   end
 end

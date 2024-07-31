@@ -36,7 +36,11 @@ import * as SeedObject from "../index";
  *         nineteen: {
  *             id: "name-129fsdj9",
  *             value: "nineteen"
- *         }
+ *         },
+ *         twenty: 20,
+ *         twentyone: 21,
+ *         twentytwo: 22.22,
+ *         twentythree: "23"
  *     }
  */
 export interface Type {
@@ -59,4 +63,8 @@ export interface Type {
     seventeen: (string | undefined)[];
     eighteen: "eighteen";
     nineteen: SeedObject.Name;
+    twenty: number;
+    twentyone: number;
+    twentytwo: number;
+    twentythree: string;
 }
