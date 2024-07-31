@@ -19,14 +19,15 @@ public class UserClient
     /// Retrieve a user.
     /// This endpoint is used to retrieve a user.
     /// </summary>
-    public async Task GetUserAsync(string userId)
+    public async Task GetUserAsync(string userId, RequestOptions? options = null)
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = $"users/{userId}"
+                Path = $"users/{userId}",
+                Options = options
             }
         );
     }
@@ -35,7 +36,10 @@ public class UserClient
     /// Create a new user.
     /// This endpoint is used to create a new user.
     /// </summary>
-    public async Task<User> CreateUserAsync(CreateUserRequest request)
+    public async Task<User> CreateUserAsync(
+        CreateUserRequest request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -43,7 +47,8 @@ public class UserClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "users",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

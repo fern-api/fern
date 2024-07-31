@@ -15,7 +15,10 @@ public class DummyClient
         _client = client;
     }
 
-    public async Task GenerateStreamAsync(GenerateStreamRequest request)
+    public async Task GenerateStreamAsync(
+        GenerateStreamRequest request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -23,12 +26,16 @@ public class DummyClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "generate-stream",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
     }
 
-    public async Task<StreamResponse> GenerateAsync(Generateequest request)
+    public async Task<StreamResponse> GenerateAsync(
+        Generateequest request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -36,7 +43,8 @@ public class DummyClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "generate",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

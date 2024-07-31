@@ -15,31 +15,36 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Task PostAsync(MyRequest request)
+    public async Task PostAsync(MyRequest request, RequestOptions? options = null)
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = ""
+                Path = "",
+                Options = options
             }
         );
     }
 
-    public async Task JustFileAsync(JustFileRequet request)
+    public async Task JustFileAsync(JustFileRequet request, RequestOptions? options = null)
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "/just-file"
+                Path = "/just-file",
+                Options = options
             }
         );
     }
 
-    public async Task JustFileWithQueryParamsAsync(JustFileWithQueryParamsRequet request)
+    public async Task JustFileWithQueryParamsAsync(
+        JustFileWithQueryParamsRequet request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         _query["integer"] = request.Integer.ToString();
@@ -59,7 +64,8 @@ public class ServiceClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/just-file-with-query-params",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
     }

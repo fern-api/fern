@@ -15,7 +15,10 @@ public class ReqWithHeadersClient
         _client = client;
     }
 
-    public async Task GetWithCustomHeaderAsync(ReqWithHeaders request)
+    public async Task GetWithCustomHeaderAsync(
+        ReqWithHeaders request,
+        RequestOptions? options = null
+    )
     {
         var _headers = new Dictionary<string, string>()
         {
@@ -28,7 +31,8 @@ public class ReqWithHeadersClient
                 Method = HttpMethod.Post,
                 Path = "/test-headers/custom-header",
                 Body = request.Body,
-                Headers = _headers
+                Headers = _headers,
+                Options = options
             }
         );
     }

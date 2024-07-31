@@ -12,6 +12,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { EndpointGenerator } from "../endpoint/EndpointGenerator";
 import { RawClient } from "../endpoint/RawClient";
+import { CLIENT_OPTIONS_CLASS_NAME } from "../options/ClientOptionsGenerator";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -220,7 +221,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                             csharp.codeblock((writer) => {
                                 writer.writeNode(headerSupplierDictionary);
                             }),
-                            csharp.codeblock("clientOptions ?? new ClientOptions()")
+                            csharp.codeblock(`clientOptions ?? new ${CLIENT_OPTIONS_CLASS_NAME}()`)
                         ]
                     })
                 );

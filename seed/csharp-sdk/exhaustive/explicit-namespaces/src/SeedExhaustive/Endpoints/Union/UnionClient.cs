@@ -14,7 +14,7 @@ public class UnionClient
         _client = client;
     }
 
-    public async Task<object> GetAndReturnUnionAsync(object request)
+    public async Task<object> GetAndReturnUnionAsync(object request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -22,7 +22,8 @@ public class UnionClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/union",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

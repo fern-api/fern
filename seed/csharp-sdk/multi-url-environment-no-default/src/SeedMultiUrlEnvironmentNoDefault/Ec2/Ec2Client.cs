@@ -15,7 +15,7 @@ public class Ec2Client
         _client = client;
     }
 
-    public async Task BootInstanceAsync(BootInstanceRequest request)
+    public async Task BootInstanceAsync(BootInstanceRequest request, RequestOptions? options = null)
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -23,7 +23,8 @@ public class Ec2Client
                 BaseUrl = _client.Options.Environment.Ec2,
                 Method = HttpMethod.Post,
                 Path = "/ec2/boot",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
     }

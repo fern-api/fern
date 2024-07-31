@@ -15,7 +15,10 @@ public class S3Client
         _client = client;
     }
 
-    public async Task<string> GetPresignedUrlAsync(GetPresignedUrlRequest request)
+    public async Task<string> GetPresignedUrlAsync(
+        GetPresignedUrlRequest request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -23,7 +26,8 @@ public class S3Client
                 BaseUrl = _client.Options.Environment.S3,
                 Method = HttpMethod.Post,
                 Path = "/s3/presigned-url",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

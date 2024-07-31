@@ -15,7 +15,7 @@ public class PackageClient
         _client = client;
     }
 
-    public async Task TestAsync(TestRequest request)
+    public async Task TestAsync(TestRequest request, RequestOptions? options = null)
     {
         var _query = new Dictionary<string, object>() { };
         _query["for"] = request.For;
@@ -25,7 +25,8 @@ public class PackageClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
     }

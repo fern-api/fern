@@ -14,14 +14,15 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Task DownloadFileAsync()
+    public async Task DownloadFileAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = ""
+                Path = "",
+                Options = options
             }
         );
     }

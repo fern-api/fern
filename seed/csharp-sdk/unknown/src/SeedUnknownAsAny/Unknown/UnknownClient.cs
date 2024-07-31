@@ -14,7 +14,7 @@ public class UnknownClient
         _client = client;
     }
 
-    public async Task<IEnumerable<object>> PostAsync(object request)
+    public async Task<IEnumerable<object>> PostAsync(object request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -22,7 +22,8 @@ public class UnknownClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

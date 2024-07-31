@@ -17,14 +17,15 @@ public class CustomAuthClient
     /// <summary>
     /// GET request with custom auth scheme
     /// </summary>
-    public async Task<bool> GetWithCustomAuthAsync()
+    public async Task<bool> GetWithCustomAuthAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "custom-auth"
+                Path = "custom-auth",
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -38,7 +39,7 @@ public class CustomAuthClient
     /// <summary>
     /// POST request with custom auth scheme
     /// </summary>
-    public async Task<bool> PostWithCustomAuthAsync(object request)
+    public async Task<bool> PostWithCustomAuthAsync(object request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -46,7 +47,8 @@ public class CustomAuthClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "custom-auth",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

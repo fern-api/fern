@@ -16,7 +16,6 @@ export declare namespace EndpointGenerator {
     }
 }
 
-const REQUEST_PARAMETER_NAME = "request";
 const RESPONSE_VARIABLE_NAME = "response";
 const RESPONSE_BODY_VARIABLE_NAME = "responseBody";
 
@@ -52,6 +51,13 @@ export class EndpointGenerator {
                 })
             );
         }
+        parameters.push(
+            csharp.parameter({
+                type: csharp.Type.optional(csharp.Type.reference(this.context.getRequestOptionsClassReference())),
+                name: this.context.getRequestOptionsParameterName(),
+                initializer: "null"
+            })
+        );
         const return_ = this.getEndpointReturnType({ endpoint });
         return csharp.method({
             name: this.context.getEndpointMethodName(endpoint),

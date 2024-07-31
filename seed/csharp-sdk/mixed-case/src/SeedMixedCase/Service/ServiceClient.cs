@@ -15,14 +15,15 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Task<object> GetResourceAsync(string resourceId)
+    public async Task<object> GetResourceAsync(string resourceId, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = $"/resource/{resourceId}"
+                Path = $"/resource/{resourceId}",
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -33,7 +34,10 @@ public class ServiceClient
         throw new Exception(responseBody);
     }
 
-    public async Task<IEnumerable<object>> ListResourcesAsync(ListResourcesRequest request)
+    public async Task<IEnumerable<object>> ListResourcesAsync(
+        ListResourcesRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         _query["page_limit"] = request.PageLimit.ToString();
@@ -44,7 +48,8 @@ public class ServiceClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "/resource",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

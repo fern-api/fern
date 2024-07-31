@@ -23,7 +23,11 @@ public partial class SeedPackageYmlClient
 
     public ServiceClient Service { get; init; }
 
-    public async Task<string> EchoAsync(string id, EchoRequest request)
+    public async Task<string> EchoAsync(
+        string id,
+        EchoRequest request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -31,7 +35,8 @@ public partial class SeedPackageYmlClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"/{id}/",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

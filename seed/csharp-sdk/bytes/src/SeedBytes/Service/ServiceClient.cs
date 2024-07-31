@@ -14,7 +14,7 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Task UploadAsync(Stream request)
+    public async Task UploadAsync(Stream request, RequestOptions? options = null)
     {
         await _client.MakeRequestAsync(
             new RawClient.StreamApiRequest
@@ -22,7 +22,8 @@ public class ServiceClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "upload-content",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
     }

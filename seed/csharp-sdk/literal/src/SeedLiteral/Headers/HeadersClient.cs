@@ -15,7 +15,10 @@ public class HeadersClient
         _client = client;
     }
 
-    public async Task<SendResponse> SendAsync(SendLiteralsInHeadersRequest request)
+    public async Task<SendResponse> SendAsync(
+        SendLiteralsInHeadersRequest request,
+        RequestOptions? options = null
+    )
     {
         var _headers = new Dictionary<string, string>()
         {
@@ -28,7 +31,8 @@ public class HeadersClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "headers",
-                Headers = _headers
+                Headers = _headers,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

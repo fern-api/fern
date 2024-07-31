@@ -20,7 +20,8 @@ public class PathParamClient
         Operand operand,
         Operand? maybeOperand,
         OneOf<Color, Operand> operandOrColor,
-        OneOf<Color, Operand>? maybeOperandOrColor
+        OneOf<Color, Operand>? maybeOperandOrColor,
+        RequestOptions? options = null
     )
     {
         await _client.MakeRequestAsync(
@@ -28,7 +29,8 @@ public class PathParamClient
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = $"path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}"
+                Path = $"path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}",
+                Options = options
             }
         );
     }

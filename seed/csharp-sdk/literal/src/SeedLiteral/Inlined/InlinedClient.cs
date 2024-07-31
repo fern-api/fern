@@ -15,7 +15,10 @@ public class InlinedClient
         _client = client;
     }
 
-    public async Task<SendResponse> SendAsync(SendLiteralsInlinedRequest request)
+    public async Task<SendResponse> SendAsync(
+        SendLiteralsInlinedRequest request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -23,7 +26,8 @@ public class InlinedClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "inlined",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

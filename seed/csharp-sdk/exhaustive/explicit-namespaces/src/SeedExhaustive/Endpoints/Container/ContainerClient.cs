@@ -16,7 +16,8 @@ public class ContainerClient
     }
 
     public async Task<IEnumerable<string>> GetAndReturnListOfPrimitivesAsync(
-        IEnumerable<string> request
+        IEnumerable<string> request,
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -25,7 +26,8 @@ public class ContainerClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/container/list-of-primitives",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -37,7 +39,8 @@ public class ContainerClient
     }
 
     public async Task<IEnumerable<ObjectWithRequiredField>> GetAndReturnListOfObjectsAsync(
-        IEnumerable<ObjectWithRequiredField> request
+        IEnumerable<ObjectWithRequiredField> request,
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -46,7 +49,8 @@ public class ContainerClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/container/list-of-objects",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -57,7 +61,10 @@ public class ContainerClient
         throw new Exception(responseBody);
     }
 
-    public async Task<HashSet<string>> GetAndReturnSetOfPrimitivesAsync(HashSet<string> request)
+    public async Task<HashSet<string>> GetAndReturnSetOfPrimitivesAsync(
+        HashSet<string> request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -65,7 +72,8 @@ public class ContainerClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/container/set-of-primitives",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -77,7 +85,8 @@ public class ContainerClient
     }
 
     public async Task<HashSet<ObjectWithRequiredField>> GetAndReturnSetOfObjectsAsync(
-        HashSet<ObjectWithRequiredField> request
+        HashSet<ObjectWithRequiredField> request,
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -86,7 +95,8 @@ public class ContainerClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/container/set-of-objects",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -98,7 +108,8 @@ public class ContainerClient
     }
 
     public async Task<Dictionary<string, string>> GetAndReturnMapPrimToPrimAsync(
-        Dictionary<string, string> request
+        Dictionary<string, string> request,
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -107,7 +118,8 @@ public class ContainerClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/container/map-prim-to-prim",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -120,7 +132,10 @@ public class ContainerClient
 
     public async Task<
         Dictionary<string, ObjectWithRequiredField>
-    > GetAndReturnMapOfPrimToObjectAsync(Dictionary<string, ObjectWithRequiredField> request)
+    > GetAndReturnMapOfPrimToObjectAsync(
+        Dictionary<string, ObjectWithRequiredField> request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -128,7 +143,8 @@ public class ContainerClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/container/map-prim-to-object",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -142,7 +158,8 @@ public class ContainerClient
     }
 
     public async Task<ObjectWithRequiredField?> GetAndReturnOptionalAsync(
-        ObjectWithRequiredField? request
+        ObjectWithRequiredField? request,
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -151,7 +168,8 @@ public class ContainerClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/container/opt-objects",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

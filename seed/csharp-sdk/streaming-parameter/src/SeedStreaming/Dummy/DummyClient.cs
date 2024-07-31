@@ -15,7 +15,7 @@ public class DummyClient
         _client = client;
     }
 
-    public async Task GenerateAsync(GenerateRequest request)
+    public async Task GenerateAsync(GenerateRequest request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -23,7 +23,8 @@ public class DummyClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "generate",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
     }

@@ -14,7 +14,10 @@ public class PrimitiveClient
         _client = client;
     }
 
-    public async Task<string> GetAndReturnStringAsync(string request)
+    public async Task<string> GetAndReturnStringAsync(
+        string request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -22,7 +25,8 @@ public class PrimitiveClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/primitive/string",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -33,7 +37,7 @@ public class PrimitiveClient
         throw new Exception(responseBody);
     }
 
-    public async Task<int> GetAndReturnIntAsync(int request)
+    public async Task<int> GetAndReturnIntAsync(int request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -41,7 +45,8 @@ public class PrimitiveClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/primitive/integer",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -52,7 +57,7 @@ public class PrimitiveClient
         throw new Exception(responseBody);
     }
 
-    public async Task<long> GetAndReturnLongAsync(long request)
+    public async Task<long> GetAndReturnLongAsync(long request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -60,7 +65,8 @@ public class PrimitiveClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/primitive/long",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -71,7 +77,10 @@ public class PrimitiveClient
         throw new Exception(responseBody);
     }
 
-    public async Task<double> GetAndReturnDoubleAsync(double request)
+    public async Task<double> GetAndReturnDoubleAsync(
+        double request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -79,7 +88,8 @@ public class PrimitiveClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/primitive/double",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -90,7 +100,7 @@ public class PrimitiveClient
         throw new Exception(responseBody);
     }
 
-    public async Task<bool> GetAndReturnBoolAsync(bool request)
+    public async Task<bool> GetAndReturnBoolAsync(bool request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -98,7 +108,8 @@ public class PrimitiveClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/primitive/boolean",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -109,7 +120,10 @@ public class PrimitiveClient
         throw new Exception(responseBody);
     }
 
-    public async Task<DateTime> GetAndReturnDatetimeAsync(DateTime request)
+    public async Task<DateTime> GetAndReturnDatetimeAsync(
+        DateTime request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -117,7 +131,8 @@ public class PrimitiveClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/primitive/datetime",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -128,7 +143,10 @@ public class PrimitiveClient
         throw new Exception(responseBody);
     }
 
-    public async Task<DateOnly> GetAndReturnDateAsync(DateOnly request)
+    public async Task<DateOnly> GetAndReturnDateAsync(
+        DateOnly request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -136,7 +154,8 @@ public class PrimitiveClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/primitive/date",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -147,7 +166,7 @@ public class PrimitiveClient
         throw new Exception(responseBody);
     }
 
-    public async Task<string> GetAndReturnUuidAsync(string request)
+    public async Task<string> GetAndReturnUuidAsync(string request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -155,7 +174,8 @@ public class PrimitiveClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/primitive/uuid",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -166,7 +186,10 @@ public class PrimitiveClient
         throw new Exception(responseBody);
     }
 
-    public async Task<string> GetAndReturnBase64Async(string request)
+    public async Task<string> GetAndReturnBase64Async(
+        string request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -174,7 +197,8 @@ public class PrimitiveClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/primitive/base64",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

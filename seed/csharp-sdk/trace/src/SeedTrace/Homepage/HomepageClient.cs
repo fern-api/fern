@@ -14,14 +14,15 @@ public class HomepageClient
         _client = client;
     }
 
-    public async Task<IEnumerable<string>> GetHomepageProblemsAsync()
+    public async Task<IEnumerable<string>> GetHomepageProblemsAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "/homepage-problems"
+                Path = "/homepage-problems",
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -32,7 +33,10 @@ public class HomepageClient
         throw new Exception(responseBody);
     }
 
-    public async Task SetHomepageProblemsAsync(IEnumerable<string> request)
+    public async Task SetHomepageProblemsAsync(
+        IEnumerable<string> request,
+        RequestOptions? options = null
+    )
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -40,7 +44,8 @@ public class HomepageClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/homepage-problems",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
     }

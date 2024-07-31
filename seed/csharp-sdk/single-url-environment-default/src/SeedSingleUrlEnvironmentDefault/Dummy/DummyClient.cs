@@ -14,14 +14,15 @@ public class DummyClient
         _client = client;
     }
 
-    public async Task<string> GetDummyAsync()
+    public async Task<string> GetDummyAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "dummy"
+                Path = "dummy",
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

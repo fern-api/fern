@@ -18,7 +18,10 @@ public class ImdbClient
     /// <summary>
     /// Add a movie to the database
     /// </summary>
-    public async Task<string> CreateMovieAsync(CreateMovieRequest request)
+    public async Task<string> CreateMovieAsync(
+        CreateMovieRequest request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -26,7 +29,8 @@ public class ImdbClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/movies/create-movie",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -37,14 +41,15 @@ public class ImdbClient
         throw new Exception(responseBody);
     }
 
-    public async Task<Movie> GetMovieAsync(string movieId)
+    public async Task<Movie> GetMovieAsync(string movieId, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = $"/movies/{movieId}"
+                Path = $"/movies/{movieId}",
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

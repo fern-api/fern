@@ -15,26 +15,34 @@ public class SyspropClient
         _client = client;
     }
 
-    public async Task SetNumWarmInstancesAsync(Language language, int numWarmInstances)
+    public async Task SetNumWarmInstancesAsync(
+        Language language,
+        int numWarmInstances,
+        RequestOptions? options = null
+    )
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Put,
-                Path = $"/sysprop/num-warm-instances/{language}/{numWarmInstances}"
+                Path = $"/sysprop/num-warm-instances/{language}/{numWarmInstances}",
+                Options = options
             }
         );
     }
 
-    public async Task<Dictionary<Language, int>> GetNumWarmInstancesAsync()
+    public async Task<Dictionary<Language, int>> GetNumWarmInstancesAsync(
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "/sysprop/num-warm-instances"
+                Path = "/sysprop/num-warm-instances",
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

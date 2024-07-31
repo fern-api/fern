@@ -16,7 +16,8 @@ public class ObjectClient
     }
 
     public async Task<ObjectWithOptionalField> GetAndReturnWithOptionalFieldAsync(
-        ObjectWithOptionalField request
+        ObjectWithOptionalField request,
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -25,7 +26,8 @@ public class ObjectClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/object/get-and-return-with-optional-field",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -37,7 +39,8 @@ public class ObjectClient
     }
 
     public async Task<ObjectWithRequiredField> GetAndReturnWithRequiredFieldAsync(
-        ObjectWithRequiredField request
+        ObjectWithRequiredField request,
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -46,7 +49,8 @@ public class ObjectClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/object/get-and-return-with-required-field",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -57,7 +61,10 @@ public class ObjectClient
         throw new Exception(responseBody);
     }
 
-    public async Task<ObjectWithMapOfMap> GetAndReturnWithMapOfMapAsync(ObjectWithMapOfMap request)
+    public async Task<ObjectWithMapOfMap> GetAndReturnWithMapOfMapAsync(
+        ObjectWithMapOfMap request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -65,7 +72,8 @@ public class ObjectClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/object/get-and-return-with-map-of-map",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -77,7 +85,8 @@ public class ObjectClient
     }
 
     public async Task<NestedObjectWithOptionalField> GetAndReturnNestedWithOptionalFieldAsync(
-        NestedObjectWithOptionalField request
+        NestedObjectWithOptionalField request,
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -86,7 +95,8 @@ public class ObjectClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/object/get-and-return-nested-with-optional-field",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -99,7 +109,8 @@ public class ObjectClient
 
     public async Task<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsync(
         string string_,
-        NestedObjectWithRequiredField request
+        NestedObjectWithRequiredField request,
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -108,7 +119,8 @@ public class ObjectClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"/object/get-and-return-nested-with-required-field/{string_}",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -120,7 +132,8 @@ public class ObjectClient
     }
 
     public async Task<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsListAsync(
-        IEnumerable<NestedObjectWithRequiredField> request
+        IEnumerable<NestedObjectWithRequiredField> request,
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -129,7 +142,8 @@ public class ObjectClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/object/get-and-return-nested-with-required-field-list",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
