@@ -157,13 +157,18 @@ export class ExampleGenerator {
     private getSnippetForPrimitive(examplePrimitive: ExamplePrimitive): csharp.AstNode {
         const instantiatedPrimitive = examplePrimitive._visit<csharp.InstantiatedPrimitive>({
             integer: (p) => csharp.InstantiatedPrimitive.integer(p),
-            double: (p) => csharp.InstantiatedPrimitive.double(p),
-            string: (p) => csharp.InstantiatedPrimitive.string(p.original),
-            boolean: (p) => csharp.InstantiatedPrimitive.boolean(p),
             long: (p) => csharp.InstantiatedPrimitive.long(p),
+            uint: (p) => csharp.InstantiatedPrimitive.uint(p),
+            uint64: (p) => csharp.InstantiatedPrimitive.ulong(p),
+            float: (p) => csharp.InstantiatedPrimitive.float(p),
+            double: (p) => csharp.InstantiatedPrimitive.double(p),
+            boolean: (p) => csharp.InstantiatedPrimitive.boolean(p),
+            string: (p) => csharp.InstantiatedPrimitive.string(p.original),
             datetime: (datetime) => csharp.InstantiatedPrimitive.dateTime(datetime),
             date: (dateString) => csharp.InstantiatedPrimitive.date(dateString),
             uuid: (p) => csharp.InstantiatedPrimitive.uuid(p),
+            base64: (p) => csharp.InstantiatedPrimitive.string(p),
+            bigInteger: (p) => csharp.InstantiatedPrimitive.string(p),
             _other: (value) => {
                 throw new Error("Unknown example type reference: " + value.type);
             }

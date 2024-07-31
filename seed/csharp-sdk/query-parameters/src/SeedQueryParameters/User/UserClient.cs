@@ -18,20 +18,18 @@ public class UserClient
 
     public async Task<User> GetUsernameAsync(GetUsersRequest request)
     {
-        var _query = new Dictionary<string, object>()
-        {
-            { "limit", request.Limit.ToString() },
-            { "id", request.Id.ToString() },
-            { "date", request.Date.ToString() },
-            { "deadline", request.Deadline.ToString(Constants.DateTimeFormat) },
-            { "bytes", request.Bytes.ToString() },
-            { "user", request.User.ToString() },
-            { "userList", request.UserList.ToString() },
-            { "keyValue", request.KeyValue.ToString() },
-            { "nestedUser", request.NestedUser.ToString() },
-            { "excludeUser", request.ExcludeUser.ToString() },
-            { "filter", request.Filter },
-        };
+        var _query = new Dictionary<string, object>() { };
+        _query["limit"] = request.Limit.ToString();
+        _query["id"] = request.Id.ToString();
+        _query["date"] = request.Date.ToString();
+        _query["deadline"] = request.Deadline.ToString(Constants.DateTimeFormat);
+        _query["bytes"] = request.Bytes.ToString();
+        _query["user"] = request.User.ToString();
+        _query["userList"] = request.UserList.ToString();
+        _query["keyValue"] = request.KeyValue.ToString();
+        _query["nestedUser"] = request.NestedUser.ToString();
+        _query["excludeUser"] = request.ExcludeUser.Select(_value => _value.ToString()).ToList();
+        _query["filter"] = request.Filter;
         if (request.OptionalDeadline != null)
         {
             _query["optionalDeadline"] = request.OptionalDeadline.Value.ToString(

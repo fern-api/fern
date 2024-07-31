@@ -54,12 +54,10 @@ public partial class SeedValidationClient
 
     public async Task<Type> GetAsync(GetRequest request)
     {
-        var _query = new Dictionary<string, object>()
-        {
-            { "decimal", request.Decimal.ToString() },
-            { "even", request.Even.ToString() },
-            { "name", request.Name },
-        };
+        var _query = new Dictionary<string, object>() { };
+        _query["decimal"] = request.Decimal.ToString();
+        _query["even"] = request.Even.ToString();
+        _query["name"] = request.Name;
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {

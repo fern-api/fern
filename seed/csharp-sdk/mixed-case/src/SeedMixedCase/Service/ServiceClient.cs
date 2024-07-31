@@ -48,11 +48,9 @@ public class ServiceClient
 
     public async Task<IEnumerable<object>> ListResourcesAsync(ListResourcesRequest request)
     {
-        var _query = new Dictionary<string, object>()
-        {
-            { "page_limit", request.PageLimit.ToString() },
-            { "beforeDate", request.BeforeDate.ToString() },
-        };
+        var _query = new Dictionary<string, object>() { };
+        _query["page_limit"] = request.PageLimit.ToString();
+        _query["beforeDate"] = request.BeforeDate.ToString();
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {

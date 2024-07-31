@@ -64,4 +64,16 @@ public record Type
 
     [JsonPropertyName("nineteen")]
     public required Name Nineteen { get; set; }
+
+    [JsonPropertyName("twenty")]
+    public required uint Twenty { get; set; }
+
+    [JsonPropertyName("twentyone")]
+    public required ulong Twentyone { get; set; }
+
+    [JsonPropertyName("twentytwo")]
+    public required float Twentytwo { get; set; }
+
+    [JsonPropertyName("twentythree")]
+    public required string Twentythree { get; set; }
 }

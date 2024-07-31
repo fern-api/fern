@@ -121,7 +121,25 @@ public class RawClient(
         url += "?";
         url = request.Query.Aggregate(
             url,
-            (current, queryItem) => current + $"{queryItem.Key}={queryItem.Value}&"
+            (current, queryItem) =>
+            {
+                if (queryItem.Value is System.Collections.IEnumerable collection and not string)
+                {
+                    var items = collection
+                        .Cast<object>()
+                        .Select(value => $"{queryItem.Key}={value}")
+                        .ToList();
+                    if (items.Any())
+                    {
+                        current += string.Join("&", items) + "&";
+                    }
+                }
+                else
+                {
+                    current += $"{queryItem.Key}={queryItem.Value}&";
+                }
+                return current;
+            }
         );
         url = url.Substring(0, url.Length - 1);
         return url;

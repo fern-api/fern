@@ -88,17 +88,20 @@ export class CsharpTypeMapper {
     private convertPrimitive({ primitive }: { primitive: PrimitiveType }): Type {
         return PrimitiveTypeV1._visit<csharp.Type>(primitive.v1, {
             integer: () => csharp.Type.integer(),
-            double: () => csharp.Type.double(),
-            string: () => csharp.Type.string(),
-            boolean: () => csharp.Type.boolean(),
             long: () => csharp.Type.long(),
+            uint: () => csharp.Type.uint(),
+            uint64: () => csharp.Type.ulong(),
+            float: () => csharp.Type.float(),
+            double: () => csharp.Type.double(),
+            boolean: () => csharp.Type.boolean(),
+            string: () => csharp.Type.string(),
             date: () => csharp.Type.date(),
             dateTime: () => csharp.Type.dateTime(),
             uuid: () => csharp.Type.string(),
             // https://learn.microsoft.com/en-us/dotnet/api/system.convert.tobase64string?view=net-8.0
             base64: () => csharp.Type.string(),
-            _other: () => csharp.Type.object(),
-            bigInteger: () => csharp.Type.integer()
+            bigInteger: () => csharp.Type.string(),
+            _other: () => csharp.Type.object()
         });
     }
 
