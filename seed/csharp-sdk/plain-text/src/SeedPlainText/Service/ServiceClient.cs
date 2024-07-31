@@ -24,5 +24,11 @@ public class ServiceClient
                 Path = "text"
             }
         );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedPlainTextApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

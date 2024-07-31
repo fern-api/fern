@@ -17,7 +17,7 @@ public class ServiceClient
 
     public async Task PostAsync(MyRequest request)
     {
-        await _client.MakeRequestAsync(
+        var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
@@ -25,17 +25,37 @@ public class ServiceClient
                 Path = ""
             }
         );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedFileUploadApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task JustFileAsync(JustFileRequet request)
     {
-        await _client.MakeRequestAsync(
+        var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/just-file"
             }
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedFileUploadApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
         );
     }
 
@@ -53,7 +73,7 @@ public class ServiceClient
         {
             _query["maybeInteger"] = request.MaybeInteger.ToString();
         }
-        await _client.MakeRequestAsync(
+        var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
@@ -61,6 +81,16 @@ public class ServiceClient
                 Path = "/just-file-with-query-params",
                 Query = _query
             }
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedFileUploadApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
         );
     }
 }

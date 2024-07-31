@@ -18,13 +18,23 @@ public class SyspropClient
 
     public async Task SetNumWarmInstancesAsync(Language language, int numWarmInstances)
     {
-        await _client.MakeRequestAsync(
+        var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Put,
                 Path = $"/sysprop/num-warm-instances/{language}/{numWarmInstances}"
             }
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
         );
     }
 

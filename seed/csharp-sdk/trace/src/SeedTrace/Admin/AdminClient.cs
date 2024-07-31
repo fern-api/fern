@@ -17,7 +17,7 @@ public class AdminClient
 
     public async Task UpdateTestSubmissionStatusAsync(string submissionId, object request)
     {
-        await _client.MakeRequestAsync(
+        var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
@@ -26,6 +26,16 @@ public class AdminClient
                 Body = request
             }
         );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task SendTestSubmissionUpdateAsync(
@@ -33,7 +43,7 @@ public class AdminClient
         TestSubmissionUpdate request
     )
     {
-        await _client.MakeRequestAsync(
+        var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
@@ -42,11 +52,21 @@ public class AdminClient
                 Body = request
             }
         );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task UpdateWorkspaceSubmissionStatusAsync(string submissionId, object request)
     {
-        await _client.MakeRequestAsync(
+        var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
@@ -55,6 +75,16 @@ public class AdminClient
                 Body = request
             }
         );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task SendWorkspaceSubmissionUpdateAsync(
@@ -62,7 +92,7 @@ public class AdminClient
         WorkspaceSubmissionUpdate request
     )
     {
-        await _client.MakeRequestAsync(
+        var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
@@ -70,6 +100,16 @@ public class AdminClient
                 Path = $"/admin/store-workspace-submission-status-v2/{submissionId}",
                 Body = request
             }
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
         );
     }
 
@@ -79,7 +119,7 @@ public class AdminClient
         StoreTracedTestCaseRequest request
     )
     {
-        await _client.MakeRequestAsync(
+        var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
@@ -87,6 +127,16 @@ public class AdminClient
                 Path = $"/admin/store-test-trace/submission/{submissionId}/testCase/{testCaseId}",
                 Body = request
             }
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
         );
     }
 
@@ -96,7 +146,7 @@ public class AdminClient
         IEnumerable<TraceResponseV2> request
     )
     {
-        await _client.MakeRequestAsync(
+        var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
@@ -106,6 +156,16 @@ public class AdminClient
                 Body = request
             }
         );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task StoreTracedWorkspaceAsync(
@@ -113,7 +173,7 @@ public class AdminClient
         StoreTracedWorkspaceRequest request
     )
     {
-        await _client.MakeRequestAsync(
+        var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
@@ -122,6 +182,16 @@ public class AdminClient
                 Body = request
             }
         );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task StoreTracedWorkspaceV2Async(
@@ -129,7 +199,7 @@ public class AdminClient
         IEnumerable<TraceResponseV2> request
     )
     {
-        await _client.MakeRequestAsync(
+        var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
@@ -137,6 +207,16 @@ public class AdminClient
                 Path = $"/admin/store-workspace-trace-v2/submission/{submissionId}",
                 Body = request
             }
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
         );
     }
 }

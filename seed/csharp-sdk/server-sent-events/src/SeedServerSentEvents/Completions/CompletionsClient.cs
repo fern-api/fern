@@ -26,5 +26,11 @@ public class CompletionsClient
                 Body = request
             }
         );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedServerSentEventsApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

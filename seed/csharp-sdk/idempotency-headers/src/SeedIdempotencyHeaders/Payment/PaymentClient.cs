@@ -49,13 +49,23 @@ public class PaymentClient
 
     public async Task DeleteAsync(string paymentId)
     {
-        await _client.MakeRequestAsync(
+        var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Delete,
                 Path = $"/payment/{paymentId}"
             }
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedIdempotencyHeadersApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
         );
     }
 }

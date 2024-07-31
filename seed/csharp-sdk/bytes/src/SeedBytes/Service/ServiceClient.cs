@@ -16,7 +16,7 @@ public class ServiceClient
 
     public async Task UploadAsync(Stream request)
     {
-        await _client.MakeRequestAsync(
+        var response = await _client.MakeRequestAsync(
             new RawClient.StreamApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
@@ -24,6 +24,16 @@ public class ServiceClient
                 Path = "upload-content",
                 Body = request
             }
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedBytesApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
         );
     }
 }

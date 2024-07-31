@@ -70,9 +70,7 @@ export class EndpointGenerator {
                     headerParameterCodeBlock.code.write(writer);
                 }
                 const requestBodyCodeBlock = request?.getRequestBodyCodeBlock();
-                if (endpoint.response?.body != null) {
-                    writer.write(`var ${RESPONSE_VARIABLE_NAME} = `);
-                }
+                writer.write(`var ${RESPONSE_VARIABLE_NAME} = `);
                 writer.writeNodeStatement(
                     this.rawClient.makeRequest({
                         baseUrl: this.getBaseURLForEndpoint({ endpoint }),
@@ -170,6 +168,11 @@ export class EndpointGenerator {
 
     private getEndpointErrorHandling({ endpoint }: { endpoint: HttpEndpoint }): csharp.CodeBlock {
         return csharp.codeblock((writer) => {
+            if (endpoint.response?.body == null) {
+                writer.writeTextStatement(
+                    `var ${RESPONSE_BODY_VARIABLE_NAME} = await ${RESPONSE_VARIABLE_NAME}.Raw.Content.ReadAsStringAsync()`
+                );
+            }
             if (endpoint.errors.length > 0 && this.context.ir.errorDiscriminationStrategy.type === "statusCode") {
                 writer.writeLine("try");
                 writer.writeLine("{");
@@ -180,7 +183,10 @@ export class EndpointGenerator {
                 writer.writeLine("{");
                 writer.indent();
                 for (const error of endpoint.errors) {
-                    const fullError = this.context.ir.errors[error.error.errorId]!;
+                    const fullError = this.context.ir.errors[error.error.errorId];
+                    if (fullError == null) {
+                        throw new Error("Unexpected no error found for error id: " + error.error.errorId);
+                    }
                     writer.writeLine(`case ${fullError.statusCode}:`);
                     writer.indent();
                     writer.write("throw new ");
@@ -221,17 +227,24 @@ export class EndpointGenerator {
         endpoint: HttpEndpoint;
     }): csharp.CodeBlock | undefined {
         if (endpoint.response?.body == null) {
-            return undefined;
+            return csharp.codeblock((writer) => {
+                writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400) {`);
+                writer.indent();
+                writer.writeLine("return;");
+                writer.dedent();
+                writer.writeLine("}");
+            });
         }
-        return endpoint.response.body._visit({
-            streamParameter: () => undefined,
-            fileDownload: () => undefined,
-            json: (reference) => {
-                const astType = this.context.csharpTypeMapper.convert({ reference: reference.responseBodyType });
-                return csharp.codeblock((writer) => {
-                    writer.writeTextStatement(
-                        `var ${RESPONSE_BODY_VARIABLE_NAME} = await ${RESPONSE_VARIABLE_NAME}.Raw.Content.ReadAsStringAsync()`
-                    );
+        const body = endpoint.response.body;
+        return csharp.codeblock((writer) => {
+            writer.writeTextStatement(
+                `var ${RESPONSE_BODY_VARIABLE_NAME} = await ${RESPONSE_VARIABLE_NAME}.Raw.Content.ReadAsStringAsync()`
+            );
+            body._visit({
+                streamParameter: () => undefined,
+                fileDownload: () => undefined,
+                json: (reference) => {
+                    const astType = this.context.csharpTypeMapper.convert({ reference: reference.responseBodyType });
                     writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400) {`);
                     writer.writeNewLineIfLastLineNot();
 
@@ -262,11 +275,11 @@ export class EndpointGenerator {
                     writer.dedent();
                     writer.writeLine("}");
                     writer.writeLine();
-                });
-            },
-            streaming: () => undefined,
-            text: () => undefined,
-            _other: () => undefined
+                },
+                streaming: () => undefined,
+                text: () => undefined,
+                _other: () => undefined
+            });
         });
     }
 }

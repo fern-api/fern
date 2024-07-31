@@ -26,5 +26,11 @@ public class DummyClient
                 Body = request
             }
         );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedStreamingApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

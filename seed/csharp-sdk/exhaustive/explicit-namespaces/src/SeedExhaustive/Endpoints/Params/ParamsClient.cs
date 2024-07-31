@@ -57,7 +57,7 @@ public class ParamsClient
         var _query = new Dictionary<string, object>() { };
         _query["query"] = request.Query;
         _query["number"] = request.Number.ToString();
-        await _client.MakeRequestAsync(
+        var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
@@ -65,6 +65,16 @@ public class ParamsClient
                 Path = "/params",
                 Query = _query
             }
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedExhaustiveApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
         );
     }
 
@@ -76,7 +86,7 @@ public class ParamsClient
         var _query = new Dictionary<string, object>() { };
         _query["query"] = request.Query;
         _query["numer"] = request.Numer.Select(_value => _value.ToString()).ToList();
-        await _client.MakeRequestAsync(
+        var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
@@ -84,6 +94,16 @@ public class ParamsClient
                 Path = "/params",
                 Query = _query
             }
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedExhaustiveApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
         );
     }
 
@@ -94,7 +114,7 @@ public class ParamsClient
     {
         var _query = new Dictionary<string, object>() { };
         _query["query"] = request.Query;
-        await _client.MakeRequestAsync(
+        var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
@@ -102,6 +122,16 @@ public class ParamsClient
                 Path = $"/params/path-query/{param}",
                 Query = _query
             }
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedExhaustiveApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
         );
     }
 

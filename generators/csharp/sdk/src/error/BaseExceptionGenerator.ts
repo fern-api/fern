@@ -25,7 +25,8 @@ export class BaseExceptionGenerator extends FileGenerator<CSharpFile, SdkCustomC
                     })
                 ],
                 superClassArguments: [csharp.codeblock("message"), csharp.codeblock("innerException")]
-            }
+            },
+            summary: "Base exception class for all exceptions thrown by the SDK."
         });
         return new CSharpFile({
             clazz: class_,
