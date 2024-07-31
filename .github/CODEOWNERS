@@ -4,7 +4,8 @@ packages/generators/cli/* @armandobelardo
 packages/generators/commons/* @armandobelardo
 packages/generators/docker/* @armandobelardo
 generators/typescript/* @dsinghvi
-generators/java/* @dsinghvi
+generators/java/* @dcb6
 generators/ruby/* @armandobelardo
 generators/python/* @armandobelardo
 generators/go/* @amckinney
+generators/csharp/* @dcb6
