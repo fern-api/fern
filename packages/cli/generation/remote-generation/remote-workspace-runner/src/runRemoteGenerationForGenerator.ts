@@ -51,7 +51,7 @@ export async function runRemoteGenerationForGenerator({
     });
 
     const fdr = createFdrService({ token: token.value });
-    const apiDefinition = convertIrToFdrApi({ ir: ir, snippetsConfig: {} });
+    const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig: {} });
     const response = await fdr.api.v1.register.registerApiDefinition({
         orgId: organization,
         apiId: ir.apiName.originalName,
