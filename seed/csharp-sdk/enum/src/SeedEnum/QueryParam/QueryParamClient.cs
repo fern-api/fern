@@ -18,11 +18,9 @@ public class QueryParamClient
 
     public async Task SendAsync(SendEnumAsQueryParamRequest request)
     {
-        var _query = new Dictionary<string, object>()
-        {
-            { "operand", JsonSerializer.Serialize(request.Operand) },
-            { "operandOrColor", request.OperandOrColor.ToString() },
-        };
+        var _query = new Dictionary<string, object>() { };
+        _query["operand"] = JsonSerializer.Serialize(request.Operand);
+        _query["operandOrColor"] = request.OperandOrColor.ToString();
         if (request.MaybeOperand != null)
         {
             _query["maybeOperand"] = JsonSerializer.Serialize(request.MaybeOperand.Value);
@@ -44,19 +42,17 @@ public class QueryParamClient
 
     public async Task SendListAsync(SendEnumListAsQueryParamRequest request)
     {
-        var _query = new Dictionary<string, object>()
-        {
-            { "operand", JsonSerializer.Serialize(request.Operand) },
-            { "operandOrColor", request.OperandOrColor.ToString() },
-        };
-        if (request.MaybeOperand != null)
-        {
-            _query["maybeOperand"] = JsonSerializer.Serialize(request.MaybeOperand.Value);
-        }
-        if (request.MaybeOperandOrColor != null)
-        {
-            _query["maybeOperandOrColor"] = request.MaybeOperandOrColor.ToString();
-        }
+        var _query = new Dictionary<string, object>() { };
+        _query["operand"] = request
+            .Operand.Select(_value => JsonSerializer.Serialize(_value))
+            .ToList();
+        _query["maybeOperand"] = request.MaybeOperand.Select(_value => _value.ToString()).ToList();
+        _query["operandOrColor"] = request
+            .OperandOrColor.Select(_value => _value.ToString())
+            .ToList();
+        _query["maybeOperandOrColor"] = request
+            .MaybeOperandOrColor.Select(_value => _value.ToString())
+            .ToList();
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {

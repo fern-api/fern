@@ -41,11 +41,10 @@ public class ServiceClient
 
     public async Task JustFileWithQueryParamsAsync(JustFileWithQueryParamsRequet request)
     {
-        var _query = new Dictionary<string, object>()
-        {
-            { "integer", request.Integer.ToString() },
-            { "listOfStrings", request.ListOfStrings },
-        };
+        var _query = new Dictionary<string, object>() { };
+        _query["integer"] = request.Integer.ToString();
+        _query["listOfStrings"] = request.ListOfStrings;
+        _query["optionalListOfStrings"] = request.OptionalListOfStrings;
         if (request.MaybeString != null)
         {
             _query["maybeString"] = request.MaybeString;
@@ -53,10 +52,6 @@ public class ServiceClient
         if (request.MaybeInteger != null)
         {
             _query["maybeInteger"] = request.MaybeInteger.ToString();
-        }
-        if (request.OptionalListOfStrings != null)
-        {
-            _query["optionalListOfStrings"] = request.OptionalListOfStrings;
         }
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

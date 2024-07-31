@@ -20,10 +20,8 @@ public class PlaylistClient
     /// </summary>
     public async Task<Playlist> CreatePlaylistAsync(int serviceParam, CreatePlaylistRequest request)
     {
-        var _query = new Dictionary<string, object>()
-        {
-            { "datetime", request.Datetime.ToString(Constants.DateTimeFormat) },
-        };
+        var _query = new Dictionary<string, object>() { };
+        _query["datetime"] = request.Datetime.ToString(Constants.DateTimeFormat);
         if (request.OptionalDatetime != null)
         {
             _query["optionalDatetime"] = request.OptionalDatetime.Value.ToString(
@@ -56,19 +54,14 @@ public class PlaylistClient
         GetPlaylistsRequest request
     )
     {
-        var _query = new Dictionary<string, object>()
-        {
-            { "otherField", request.OtherField },
-            { "multiLineDocs", request.MultiLineDocs },
-            { "multipleField", request.MultipleField },
-        };
+        var _query = new Dictionary<string, object>() { };
+        _query["otherField"] = request.OtherField;
+        _query["multiLineDocs"] = request.MultiLineDocs;
+        _query["optionalMultipleField"] = request.OptionalMultipleField;
+        _query["multipleField"] = request.MultipleField;
         if (request.Limit != null)
         {
             _query["limit"] = request.Limit.ToString();
-        }
-        if (request.OptionalMultipleField != null)
-        {
-            _query["optionalMultipleField"] = request.OptionalMultipleField;
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
