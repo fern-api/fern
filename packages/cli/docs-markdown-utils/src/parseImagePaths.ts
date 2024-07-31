@@ -1,3 +1,4 @@
+import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, relative, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import grayMatter from "gray-matter";
@@ -36,13 +37,16 @@ export function parseImagePaths(
 
     const filepaths = new Set<AbsoluteFilePath>();
 
-    if (data.image) {
-        const resolvedPath = resolvePath(data.image, metadata);
+    function mapImage(image: string | undefined) {
+        const resolvedPath = resolvePath(image, metadata);
         if (resolvedPath != null) {
             filepaths.add(resolvedPath);
-            data.image = resolvedPath;
+            return resolvedPath;
         }
+        return;
     }
+
+    visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
 
     const tree = fromMarkdown(content, {
         extensions: [mdx()],
@@ -203,9 +207,7 @@ export function replaceImagePathsAndUrls(
         return;
     }
 
-    if (data.image) {
-        data.image = mapImage(data.image);
-    }
+    visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
 
     visit(tree, (node) => {
         if (node.position == null) {
@@ -368,4 +370,26 @@ function trimAnchor(text: unknown): string | undefined {
         return undefined;
     }
     return text.replace(/#.*$/, "");
+}
+
+function visitFrontmatterImages(
+    data: Record<string, string | DocsV1Write.FileIdOrUrl>,
+    keys: string[],
+    mapImage: (image: string | undefined) => string | undefined
+) {
+    for (const key of keys) {
+        const value = data[key];
+        if (value != null && typeof value === "string") {
+            const mappedImage = mapImage(value);
+            data[key] = mappedImage
+                ? {
+                      type: "fileId",
+                      value: mappedImage
+                  }
+                : {
+                      type: "url",
+                      value
+                  };
+        }
+    }
 }
