@@ -6,8 +6,6 @@ import { mdxFromMarkdown } from "mdast-util-mdx";
 import { mdx } from "micromark-extension-mdx";
 import { visit } from "unist-util-visit";
 
-let counter = {};
-
 interface AbsolutePathMetadata {
     absolutePathToMdx: AbsoluteFilePath;
     absolutePathToFernFolder: AbsoluteFilePath;
@@ -18,16 +16,6 @@ const STR_REGEX = new RegExp(`^${STR_SEGMENT}$`);
 const SRC_REGEX = new RegExp(`src={?${STR_SEGMENT}(?! \\+)}?`, "g");
 
 const MEDIA_NODE_NAMES = ["img", "video", "audio", "source", "embed"];
-
-export function simpleHashFunction(input: string): number {
-    let hash = 0;
-    for (let i = 0; i < input.length; i++) {
-        const char = input.charCodeAt(i);
-        hash = (hash << 5) - hash + char;
-        hash = hash & hash; // Convert to 32-bit integer
-    }
-    return Math.abs(hash);
-}
 
 /**
  * Parse all images in the markdown. Since mdx filepath is a relative path from the root of the project,
@@ -200,17 +188,23 @@ export function replaceImagePathsAndUrls(
 
     let offset = 0;
 
-    if (data.image) {
-        if (data.image != null && !isExternalUrl(data.image) && !isDataUrl(data.image)) {
+    function mapImage(image: string | undefined) {
+        if (image != null && !isExternalUrl(image) && !isDataUrl(image)) {
             try {
-                const fileId = fileIdsMap.get(AbsoluteFilePath.of(data.image));
+                const fileId = fileIdsMap.get(AbsoluteFilePath.of(image));
                 if (fileId != null) {
-                    data.image = `file:${fileId}`;
+                    return `file:${fileId}`;
                 }
             } catch (e) {
                 // do nothing
+                return;
             }
         }
+        return;
+    }
+
+    if (data.image) {
+        data.image = mapImage(data.image);
     }
 
     visit(tree, (node) => {
@@ -222,15 +216,9 @@ export function replaceImagePathsAndUrls(
         let replaced = original;
 
         function replaceSrc(src: string | undefined) {
-            if (src != null && !isExternalUrl(src) && !isDataUrl(src)) {
-                try {
-                    const fileId = fileIdsMap.get(AbsoluteFilePath.of(src));
-                    if (fileId != null) {
-                        replaced = replaced.replace(src, `file:${fileId}`);
-                    }
-                } catch (e) {
-                    // do nothing
-                }
+            const imageSrc = mapImage(src);
+            if (src && imageSrc) {
+                replaced = replaced.replace(src, imageSrc);
             }
         }
 

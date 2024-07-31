@@ -146,7 +146,6 @@ export class DocsDefinitionResolver {
                 },
                 this.taskContext
             );
-            console.log(this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)]);
         }
 
         const pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {};
