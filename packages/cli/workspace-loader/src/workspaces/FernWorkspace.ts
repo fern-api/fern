@@ -121,7 +121,7 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
         const parseResult = await parseYamlFiles(yamlFiles);
         if (!parseResult.didSucceed) {
             handleFailedWorkspaceParserResultRaw(parseResult.failures, defaultedContext.logger);
-            return defaultedContext.failAndThrow("Unable to parse YAML files in your API definition.");
+            return defaultedContext.failAndThrow();
         }
 
         const structuralValidationResult = validateStructureOfYamlFiles({
@@ -130,7 +130,7 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
         });
         if (!structuralValidationResult.didSucceed) {
             handleFailedWorkspaceParserResultRaw(structuralValidationResult.failures, defaultedContext.logger);
-            return defaultedContext.failAndThrow("Unable to validate the structure of the file.");
+            return defaultedContext.failAndThrow();
         }
 
         const processPackageMarkersResult = await processPackageMarkers({
@@ -142,7 +142,7 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
         });
         if (!processPackageMarkersResult.didSucceed) {
             handleFailedWorkspaceParserResultRaw(processPackageMarkersResult.failures, defaultedContext.logger);
-            return defaultedContext.failAndThrow("Unable to process dependencies within your API.");
+            return defaultedContext.failAndThrow();
         }
 
         if (!this.downloaded) {
