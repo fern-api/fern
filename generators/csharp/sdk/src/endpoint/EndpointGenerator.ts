@@ -1,6 +1,6 @@
 import { csharp } from "@fern-api/csharp-codegen";
 import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
-import { BASE_URL_FIELD_NAME, ENVIRONMENT_FIELD_NAME } from "../options/RequestOptionsGenerator";
+import { BASE_URL_FIELD_NAME, ENVIRONMENT_FIELD_NAME } from "../options/BaseOptionsGenerator";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { RawClient } from "./RawClient";
 import { EndpointRequest } from "./request/EndpointRequest";
