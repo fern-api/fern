@@ -2,6 +2,7 @@
 
 exports[`ir {"name":"auth-header-prefix"} 1`] = `
 "{
+    "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": {
         "originalName": "my-api",
@@ -145,6 +146,7 @@ exports[`ir {"name":"auth-header-prefix"} 1`] = `
 
 exports[`ir {"name":"extended-examples"} 1`] = `
 "{
+    "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": {
         "originalName": "api",
@@ -1237,6 +1239,7 @@ exports[`ir {"name":"extended-examples"} 1`] = `
 
 exports[`ir {"name":"file-upload"} 1`] = `
 "{
+    "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": {
         "originalName": "my-api",
@@ -7833,6 +7836,7 @@ exports[`ir {"name":"migration","version":"v1"} 1`] = `
 
 exports[`ir {"name":"multiple-environment-urls"} 1`] = `
 "{
+    "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": {
         "originalName": "api",
@@ -8530,6 +8534,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
 
 exports[`ir {"name":"navigation-points-to"} 1`] = `
 "{
+    "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": {
         "originalName": "my-api",
@@ -8827,6 +8832,7 @@ exports[`ir {"name":"navigation-points-to"} 1`] = `
 
 exports[`ir {"name":"nested-example-reference"} 1`] = `
 "{
+    "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": {
         "originalName": "api",
@@ -10935,6 +10941,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
 
 exports[`ir {"name":"packages"} 1`] = `
 "{
+    "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": {
         "originalName": "packages",
@@ -12111,6 +12118,7 @@ exports[`ir {"name":"packages"} 1`] = `
 
 exports[`ir {"name":"response-property"} 1`] = `
 "{
+    "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": {
         "originalName": "response-property",
@@ -13584,6 +13592,7 @@ exports[`ir {"name":"response-property"} 1`] = `
 
 exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
 "{
+    "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": {
         "originalName": "my-api",
@@ -15252,6 +15261,7 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
 
 exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
 "{
+    "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": {
         "originalName": "my-api",
@@ -19283,6 +19293,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
 
 exports[`ir {"name":"simple"} 1`] = `
 "{
+    "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": {
         "originalName": "my-api",
@@ -34246,6 +34257,7 @@ exports[`ir {"name":"simple"} 1`] = `
 
 exports[`ir {"name":"streaming"} 1`] = `
 "{
+    "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": {
         "originalName": "my-api",
@@ -34879,6 +34891,7 @@ exports[`ir {"name":"streaming"} 1`] = `
 
 exports[`ir {"name":"variables"} 1`] = `
 "{
+    "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": {
         "originalName": "my-api",
@@ -36069,6 +36082,7 @@ exports[`ir {"name":"variables"} 1`] = `
 
 exports[`ir {"name":"webhooks"} 1`] = `
 "{
+    "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": {
         "originalName": "my-api",
