@@ -104,7 +104,7 @@ class ReferencedAPICollector {
 
         const dbApiDefinition = convertAPIDefinitionToDb(
             apiDefinition,
-            id,
+            ir.apiDefinitionId ?? id,
             new SDKSnippetHolder({
                 snippetsConfigWithSdkId: {},
                 snippetsBySdkId: {},
