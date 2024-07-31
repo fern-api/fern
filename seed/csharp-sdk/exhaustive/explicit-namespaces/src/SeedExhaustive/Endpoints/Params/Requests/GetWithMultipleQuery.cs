@@ -2,7 +2,7 @@ namespace SeedExhaustive.Endpoints.Params;
 
 public record GetWithMultipleQuery
 {
-    public required string Query { get; set; }
+    public IEnumerable<string> Query { get; set; } = new List<string>();
 
-    public required int Numer { get; set; }
+    public IEnumerable<int> Numer { get; set; } = new List<int>();
 }

@@ -3,6 +3,7 @@ export { Class } from "./Class";
 export { ClassInstantiation } from "./ClassInstantiation";
 export { ClassReference } from "./ClassReference";
 export { CodeBlock } from "./CodeBlock";
+export { Writer } from "./core/Writer";
 export { CoreClassReference } from "./CoreClassReference";
 export * as dependencies from "./dependencies";
 export { Dictionary } from "./Dictionary";
