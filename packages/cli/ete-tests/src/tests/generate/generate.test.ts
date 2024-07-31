@@ -1,35 +1,32 @@
-import { AbsoluteFilePath, getDirectoryContents, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { cp } from "fs/promises";
-import tmp from "tmp-promise";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import stripAnsi from "strip-ansi";
 import { runFernCli } from "../../utils/runFernCli";
+import { init } from "../init/init";
 
-describe("fern generate with settings", () => {
-    // it("single api", async () => {
-    //     const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures/api-settings"));
+const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
+// const FIXTURES = ["docs"];
 
-    //     const tmpDir = await tmp.dir();
-    //     const directory = AbsoluteFilePath.of(tmpDir.path);
+describe("fern generate", () => {
+    it("default api (fern init)", async () => {
+        const pathOfDirectory = await init();
 
-    //     await cp(fixturesDir, directory, { recursive: true });
-
-    //     await runFernCli(["generate", "--local", "--keepDocker"], {
-    //         cwd: directory
-    //     });
-
-    //     expect(await getDirectoryContents(join(directory, RelativeFilePath.of("sdks/python")))).toMatchSnapshot();
-    // }, 180_000);
-
-    it("dependencies-based api", async () => {
-        const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures/api-settings-unioned"));
-        const tmpDir = await tmp.dir();
-        const directory = AbsoluteFilePath.of(tmpDir.path);
-
-        await cp(fixturesDir, directory, { recursive: true });
-
-        await runFernCli(["generate", "--local", "--keepDocker", "--api", "unioned"], {
-            cwd: directory
+        await runFernCli(["generate", "--local", "--keepDocker"], {
+            cwd: pathOfDirectory
         });
 
-        expect(await getDirectoryContents(join(directory, RelativeFilePath.of("sdks/python")))).toMatchSnapshot();
+        expect(await doesPathExist(join(pathOfDirectory, RelativeFilePath.of("sdks/typescript")))).toBe(true);
+    }, 180_000);
+
+    it("missing docs page", async () => {
+        const { stdout } = await runFernCli(["generate", "--docs"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("docs-missing-page")),
+            reject: false
+        });
+
+        expect(
+            stripAnsi(stdout)
+                // for some reason, locally the output contains a newline that Circle doesn't
+                .trim()
+        ).toMatchSnapshot();
     }, 180_000);
 });
