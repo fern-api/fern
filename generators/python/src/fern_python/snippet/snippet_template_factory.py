@@ -361,7 +361,7 @@ class SnippetTemplateFactory:
                 imports=[],
                 is_optional=True,
                 values=value_map,
-                template_string=f"{name}{self._get_name_value_separator(name=name, is_function_parameter=is_function_parameter)}{TEMPLATE_SENTINEL}",
+                template_string=f"{self._get_name_value_separator(name=name, is_function_parameter=is_function_parameter)}{TEMPLATE_SENTINEL}",
                 template_input=PayloadInput(
                     location=location,
                     path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs),

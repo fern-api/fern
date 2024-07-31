@@ -256,7 +256,6 @@ class SnippetTestFactory:
                 date=lambda _: "date",
                 uuid_=lambda _: "uuid",
             ),
-
             container=lambda container: container.visit(
                 list_=lambda item_type: (
                     "list",
