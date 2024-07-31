@@ -1,11 +1,11 @@
 import { Access } from "./Access";
+import { Annotation } from "./Annotation";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Parameter } from "./Parameter";
 import { Type } from "./Type";
-import { Annotation } from "./Annotation";
 
 export enum MethodType {
     INSTANCE,
@@ -20,6 +20,8 @@ export declare namespace Method {
         access: Access;
         /* Whether the method is sync or async. Defaults to false. */
         isAsync: boolean;
+        /* Whether the method overrides a method in it's base class */
+        override?: boolean;
         /* The parameters of the method */
         parameters: Parameter[];
         /* The return type of the method */
@@ -46,12 +48,14 @@ export class Method extends AstNode {
     public readonly summary: string | undefined;
     public readonly type: MethodType;
     public readonly reference: ClassReference | undefined;
+    public readonly override: boolean;
     private readonly parameters: Parameter[];
     private readonly annotations: Annotation[];
 
     constructor({
         name,
         isAsync,
+        override,
         access,
         return_,
         body,
@@ -64,6 +68,7 @@ export class Method extends AstNode {
         super();
         this.name = name;
         this.isAsync = isAsync;
+        this.override = override ?? false;
         this.access = access;
         this.return = return_;
         this.body = body;
@@ -102,6 +107,9 @@ export class Method extends AstNode {
         }
         if (this.isAsync) {
             writer.write("async ");
+        }
+        if (this.override) {
+            writer.write("override ");
         }
         if (this.return == null) {
             if (this.isAsync) {

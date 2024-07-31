@@ -12,6 +12,8 @@ export declare namespace Field {
         name: string;
         /* The type of the field */
         type: Type;
+        /* Whether the the field should use the new keyword */
+        new_?: boolean;
         /* Whether the field has a getter method */
         get?: boolean;
         /* Whether the field has an init method. Cannot be used with a set method. */
@@ -39,6 +41,7 @@ export class Field extends AstNode {
     public readonly name: string;
     public readonly access: Access;
     private type: Type;
+    private new_: boolean;
     private get: boolean;
     private init: boolean;
     private set: boolean;
@@ -52,6 +55,7 @@ export class Field extends AstNode {
     constructor({
         name,
         type,
+        new_,
         get,
         init,
         set,
@@ -66,6 +70,7 @@ export class Field extends AstNode {
         super();
         this.name = name;
         this.type = type;
+        this.new_ = new_ ?? false;
         this.get = get ?? false;
         this.init = init ?? false;
         this.set = set ?? false;
@@ -109,6 +114,9 @@ export class Field extends AstNode {
         }
 
         writer.write(`${this.access} `);
+        if (this.new_) {
+            writer.write("new ");
+        }
         const underlyingTypeIfOptional = this.type.underlyingTypeIfOptional();
         const isOptional = underlyingTypeIfOptional != null;
         const isCollection = (underlyingTypeIfOptional ?? this.type).isCollection();

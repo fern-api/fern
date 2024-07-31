@@ -1,5 +1,6 @@
 import { Access } from "./Access";
 import { Annotation } from "./Annotation";
+import { ClassInstantiation } from "./ClassInstantiation";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
@@ -7,6 +8,7 @@ import { Writer } from "./core/Writer";
 import { Field } from "./Field";
 import { Interface } from "./Interface";
 import { Method } from "./Method";
+import { MethodInvocation } from "./MethodInvocation";
 import { Parameter } from "./Parameter";
 
 export declare namespace Class {
@@ -23,6 +25,8 @@ export declare namespace Class {
         partial?: boolean;
         /* Defaults to false */
         record?: boolean;
+        /* Summary for the method */
+        summary?: string;
         /* The class to inherit from if any */
         parentClassReference?: ClassReference;
         /* Any interfaces the class extends */
@@ -31,6 +35,8 @@ export declare namespace Class {
         isNestedClass?: boolean;
         /* Any annotations to add to the class */
         annotations?: Annotation[];
+        /* Any annotations to add to the class */
+        primaryConstructor?: PrimaryConstructor;
     }
 
     interface Constructor {
@@ -40,6 +46,15 @@ export declare namespace Class {
         parameters: Parameter[];
         /* The access of the constructor */
         access: Access;
+        /* The base constructor call, ex: public SomeClassName(string message) : base(message) { } */
+        baseConstructorCall?: MethodInvocation;
+    }
+
+    interface PrimaryConstructor {
+        /* The parameters of the constructor */
+        parameters: Parameter[];
+        /* If this class extends another class, these will be the arguments passed to that parent class's constructor */
+        superClassArguments: (CodeBlock | ClassInstantiation)[];
     }
 }
 
@@ -54,7 +69,9 @@ export class Class extends AstNode {
     public readonly interfaceReferences: ClassReference[];
     public readonly isNestedClass: boolean;
     public readonly record: boolean;
+    public readonly summary: string | undefined;
     public readonly annotations: Annotation[] = [];
+    public readonly primaryConstructor: Class.PrimaryConstructor | undefined;
 
     private fields: Field[] = [];
     private constructors: Class.Constructor[] = [];
@@ -72,7 +89,9 @@ export class Class extends AstNode {
         interfaceReferences,
         isNestedClass,
         record,
-        annotations
+        summary,
+        annotations,
+        primaryConstructor
     }: Class.Args) {
         super();
         this.name = name;
@@ -82,6 +101,7 @@ export class Class extends AstNode {
         this.partial = partial ?? false;
         this.isNestedClass = isNestedClass ?? false;
         this.record = record ?? false;
+        this.summary = summary;
 
         this.parentClassReference = parentClassReference;
         this.interfaceReferences = interfaceReferences ?? [];
@@ -90,6 +110,7 @@ export class Class extends AstNode {
             name: this.name,
             namespace: this.namespace
         });
+        this.primaryConstructor = primaryConstructor;
     }
 
     public addField(field: Field): void {
@@ -121,6 +142,13 @@ export class Class extends AstNode {
             writer.writeLine(`namespace ${this.namespace};`);
             writer.newLine();
         }
+        if (this.summary != null) {
+            writer.writeLine("/// <summary>");
+            this.summary.split("\n").forEach((line) => {
+                writer.writeLine(`/// ${line}`);
+            });
+            writer.writeLine("/// </summary>");
+        }
         if (this.annotations.length > 0) {
             writer.write("[");
             this.annotations.forEach((annotation) => {
@@ -138,6 +166,17 @@ export class Class extends AstNode {
         }
         writer.write(this.record ? " record" : " class");
         writer.write(` ${this.name}`);
+        if (this.primaryConstructor != null && this.primaryConstructor.parameters.length > 0) {
+            const primaryConstructor = this.primaryConstructor;
+            writer.write("(");
+            primaryConstructor.parameters.forEach((parameter, index) => {
+                parameter.write(writer);
+                if (index < primaryConstructor.parameters.length - 1) {
+                    writer.write(", ");
+                }
+            });
+            writer.write(")");
+        }
         if (this.parentClassReference != null || this.interfaceReferences.length > 0) {
             writer.write(" : ");
             if (this.parentClassReference != null) {
@@ -145,6 +184,17 @@ export class Class extends AstNode {
                 if (this.interfaceReferences.length > 0) {
                     writer.write(", ");
                 }
+            }
+            if (this.primaryConstructor != null && this.primaryConstructor.superClassArguments.length > 0) {
+                const primaryConstructor = this.primaryConstructor;
+                writer.write("(");
+                this.primaryConstructor.superClassArguments.forEach((argument, index) => {
+                    argument.write(writer);
+                    if (index < primaryConstructor.superClassArguments.length - 1) {
+                        writer.write(", ");
+                    }
+                });
+                writer.write(")");
             }
             this.interfaceReferences.forEach((interfaceReference, index) => {
                 interfaceReference.write(writer);
@@ -212,7 +262,10 @@ export class Class extends AstNode {
                 }
             });
             writer.write(")");
-
+            if (constructor.baseConstructorCall != null) {
+                writer.write(" : ");
+                constructor.baseConstructorCall.write(writer);
+            }
             writer.writeLine(" {");
             writer.indent();
             constructor.body?.write(writer);

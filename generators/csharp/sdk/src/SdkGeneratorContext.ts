@@ -111,6 +111,31 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return `${this.getComputedClientName()}Client`;
     }
 
+    public getBaseExceptionClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getExceptionPrefix() + "Exception",
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getBaseApiExceptionClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getExceptionPrefix() + "ApiException",
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getExceptionClassReference(name: string): csharp.ClassReference {
+        return csharp.classReference({
+            name: name,
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    private getExceptionPrefix() {
+        return this.customConfig["client-class-name"] ?? this.getComputedClientName();
+    }
+
     public getRawClientClassReference(): csharp.ClassReference {
         return csharp.classReference({
             name: "RawClient",

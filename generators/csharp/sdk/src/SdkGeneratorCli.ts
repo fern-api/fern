@@ -6,6 +6,9 @@ import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ClientOptionsGenerator } from "./client-options/ClientOptionsGenerator";
 import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator";
 import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator copy";
+import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator";
+import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator";
+import { ErrorGenerator } from "./error/ErrorGenerator";
 import { RootClientGenerator } from "./root-client/RootClientGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
@@ -85,6 +88,17 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
 
         const clientOptions = new ClientOptionsGenerator(context);
         context.project.addSourceFiles(clientOptions.generate());
+
+        const baseException = new BaseExceptionGenerator(context);
+        context.project.addSourceFiles(baseException.generate());
+
+        const baseApiException = new BaseApiExceptionGenerator(context);
+        context.project.addSourceFiles(baseApiException.generate());
+
+        for (const [_, error] of Object.entries(context.ir.errors)) {
+            const errorGenerator = new ErrorGenerator(context, error);
+            context.project.addSourceFiles(errorGenerator.generate());
+        }
 
         const rootClient = new RootClientGenerator(context);
         context.project.addSourceFiles(rootClient.generate());
