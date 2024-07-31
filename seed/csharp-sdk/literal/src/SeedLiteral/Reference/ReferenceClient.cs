@@ -16,7 +16,7 @@ public class ReferenceClient
         _client = client;
     }
 
-    public async Task<SendResponse> SendAsync(SendRequest request)
+    public async Task<SendResponse> SendAsync(SendRequest request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -24,7 +24,8 @@ public class ReferenceClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "reference",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

@@ -16,7 +16,10 @@ public class QueryClient
         _client = client;
     }
 
-    public async Task<SendResponse> SendAsync(SendLiteralsInQueryRequest request)
+    public async Task<SendResponse> SendAsync(
+        SendLiteralsInQueryRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         _query["prompt"] = request.Prompt.ToString();
@@ -28,7 +31,8 @@ public class QueryClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "query",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

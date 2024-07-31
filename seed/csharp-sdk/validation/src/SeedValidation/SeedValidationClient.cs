@@ -21,7 +21,7 @@ public partial class SeedValidationClient
         );
     }
 
-    public async Task<Type> CreateAsync(CreateRequest request)
+    public async Task<Type> CreateAsync(CreateRequest request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -29,7 +29,8 @@ public partial class SeedValidationClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/create",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -52,7 +53,7 @@ public partial class SeedValidationClient
         );
     }
 
-    public async Task<Type> GetAsync(GetRequest request)
+    public async Task<Type> GetAsync(GetRequest request, RequestOptions? options = null)
     {
         var _query = new Dictionary<string, object>() { };
         _query["decimal"] = request.Decimal.ToString();
@@ -64,7 +65,8 @@ public partial class SeedValidationClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

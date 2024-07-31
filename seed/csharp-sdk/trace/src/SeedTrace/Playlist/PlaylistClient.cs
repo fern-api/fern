@@ -19,7 +19,11 @@ public class PlaylistClient
     /// <summary>
     /// Create a new playlist
     /// </summary>
-    public async Task<Playlist> CreatePlaylistAsync(int serviceParam, CreatePlaylistRequest request)
+    public async Task<Playlist> CreatePlaylistAsync(
+        int serviceParam,
+        CreatePlaylistRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         _query["datetime"] = request.Datetime.ToString(Constants.DateTimeFormat);
@@ -36,7 +40,8 @@ public class PlaylistClient
                 Method = HttpMethod.Post,
                 Path = $"/v2/playlist/{serviceParam}/create",
                 Body = request.Body,
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -64,7 +69,8 @@ public class PlaylistClient
     /// </summary>
     public async Task<IEnumerable<Playlist>> GetPlaylistsAsync(
         int serviceParam,
-        GetPlaylistsRequest request
+        GetPlaylistsRequest request,
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -82,7 +88,8 @@ public class PlaylistClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"/v2/playlist/{serviceParam}/all",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -108,14 +115,19 @@ public class PlaylistClient
     /// <summary>
     /// Returns a playlist
     /// </summary>
-    public async Task<Playlist> GetPlaylistAsync(int serviceParam, string playlistId)
+    public async Task<Playlist> GetPlaylistAsync(
+        int serviceParam,
+        string playlistId,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = $"/v2/playlist/{serviceParam}/{playlistId}"
+                Path = $"/v2/playlist/{serviceParam}/{playlistId}",
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -144,7 +156,8 @@ public class PlaylistClient
     public async Task<Playlist?> UpdatePlaylistAsync(
         int serviceParam,
         string playlistId,
-        UpdatePlaylistRequest? request
+        UpdatePlaylistRequest? request,
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -153,7 +166,8 @@ public class PlaylistClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Put,
                 Path = $"/v2/playlist/{serviceParam}/{playlistId}",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -179,14 +193,19 @@ public class PlaylistClient
     /// <summary>
     /// Deletes a playlist
     /// </summary>
-    public async Task DeletePlaylistAsync(int serviceParam, string playlistId)
+    public async Task DeletePlaylistAsync(
+        int serviceParam,
+        string playlistId,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Delete,
-                Path = $"/v2/playlist/{serviceParam}/{playlistId}"
+                Path = $"/v2/playlist/{serviceParam}/{playlistId}",
+                Options = options
             }
         );
         if (response.StatusCode is >= 200 and < 400)

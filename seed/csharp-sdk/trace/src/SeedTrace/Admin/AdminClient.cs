@@ -15,7 +15,11 @@ public class AdminClient
         _client = client;
     }
 
-    public async Task UpdateTestSubmissionStatusAsync(string submissionId, object request)
+    public async Task UpdateTestSubmissionStatusAsync(
+        string submissionId,
+        object request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -23,7 +27,8 @@ public class AdminClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"/admin/store-test-submission-status/{submissionId}",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         if (response.StatusCode is >= 200 and < 400)
@@ -40,7 +45,8 @@ public class AdminClient
 
     public async Task SendTestSubmissionUpdateAsync(
         string submissionId,
-        TestSubmissionUpdate request
+        TestSubmissionUpdate request,
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -49,7 +55,8 @@ public class AdminClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"/admin/store-test-submission-status-v2/{submissionId}",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         if (response.StatusCode is >= 200 and < 400)
@@ -64,7 +71,11 @@ public class AdminClient
         );
     }
 
-    public async Task UpdateWorkspaceSubmissionStatusAsync(string submissionId, object request)
+    public async Task UpdateWorkspaceSubmissionStatusAsync(
+        string submissionId,
+        object request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -72,7 +83,8 @@ public class AdminClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"/admin/store-workspace-submission-status/{submissionId}",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         if (response.StatusCode is >= 200 and < 400)
@@ -89,7 +101,8 @@ public class AdminClient
 
     public async Task SendWorkspaceSubmissionUpdateAsync(
         string submissionId,
-        WorkspaceSubmissionUpdate request
+        WorkspaceSubmissionUpdate request,
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -98,7 +111,8 @@ public class AdminClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"/admin/store-workspace-submission-status-v2/{submissionId}",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         if (response.StatusCode is >= 200 and < 400)
@@ -116,7 +130,8 @@ public class AdminClient
     public async Task StoreTracedTestCaseAsync(
         string submissionId,
         string testCaseId,
-        StoreTracedTestCaseRequest request
+        StoreTracedTestCaseRequest request,
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -125,7 +140,8 @@ public class AdminClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"/admin/store-test-trace/submission/{submissionId}/testCase/{testCaseId}",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         if (response.StatusCode is >= 200 and < 400)
@@ -143,7 +159,8 @@ public class AdminClient
     public async Task StoreTracedTestCaseV2Async(
         string submissionId,
         string testCaseId,
-        IEnumerable<TraceResponseV2> request
+        IEnumerable<TraceResponseV2> request,
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -153,7 +170,8 @@ public class AdminClient
                 Method = HttpMethod.Post,
                 Path =
                     $"/admin/store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         if (response.StatusCode is >= 200 and < 400)
@@ -170,7 +188,8 @@ public class AdminClient
 
     public async Task StoreTracedWorkspaceAsync(
         string submissionId,
-        StoreTracedWorkspaceRequest request
+        StoreTracedWorkspaceRequest request,
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -179,7 +198,8 @@ public class AdminClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"/admin/store-workspace-trace/submission/{submissionId}",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         if (response.StatusCode is >= 200 and < 400)
@@ -196,7 +216,8 @@ public class AdminClient
 
     public async Task StoreTracedWorkspaceV2Async(
         string submissionId,
-        IEnumerable<TraceResponseV2> request
+        IEnumerable<TraceResponseV2> request,
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -205,7 +226,8 @@ public class AdminClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"/admin/store-workspace-trace-v2/submission/{submissionId}",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         if (response.StatusCode is >= 200 and < 400)

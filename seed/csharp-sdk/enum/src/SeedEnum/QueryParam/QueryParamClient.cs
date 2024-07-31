@@ -16,7 +16,7 @@ public class QueryParamClient
         _client = client;
     }
 
-    public async Task SendAsync(SendEnumAsQueryParamRequest request)
+    public async Task SendAsync(SendEnumAsQueryParamRequest request, RequestOptions? options = null)
     {
         var _query = new Dictionary<string, object>() { };
         _query["operand"] = JsonSerializer.Serialize(request.Operand);
@@ -35,7 +35,8 @@ public class QueryParamClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "query",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
         if (response.StatusCode is >= 200 and < 400)
@@ -50,7 +51,10 @@ public class QueryParamClient
         );
     }
 
-    public async Task SendListAsync(SendEnumListAsQueryParamRequest request)
+    public async Task SendListAsync(
+        SendEnumListAsQueryParamRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         _query["operand"] = request
@@ -69,7 +73,8 @@ public class QueryParamClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "query-list",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
         if (response.StatusCode is >= 200 and < 400)

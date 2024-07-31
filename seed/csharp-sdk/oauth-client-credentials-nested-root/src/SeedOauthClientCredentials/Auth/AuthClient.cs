@@ -16,7 +16,10 @@ public class AuthClient
         _client = client;
     }
 
-    public async Task<TokenResponse> GetTokenAsync(GetTokenRequest request)
+    public async Task<TokenResponse> GetTokenAsync(
+        GetTokenRequest request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -24,7 +27,8 @@ public class AuthClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/token",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

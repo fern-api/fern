@@ -16,14 +16,15 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Task<Movie> GetMovieAsync(string movieId)
+    public async Task<Movie> GetMovieAsync(string movieId, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = $"/movie/{movieId}"
+                Path = $"/movie/{movieId}",
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -46,7 +47,7 @@ public class ServiceClient
         );
     }
 
-    public async Task<string> CreateMovieAsync(Movie request)
+    public async Task<string> CreateMovieAsync(Movie request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -54,7 +55,8 @@ public class ServiceClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/movie",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -77,7 +79,10 @@ public class ServiceClient
         );
     }
 
-    public async Task<object> GetMetadataAsync(GetMetadataRequest request)
+    public async Task<object> GetMetadataAsync(
+        GetMetadataRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         _query["tag"] = request.Tag;
@@ -96,7 +101,8 @@ public class ServiceClient
                 Method = HttpMethod.Get,
                 Path = "/metadata",
                 Query = _query,
-                Headers = _headers
+                Headers = _headers,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -119,14 +125,15 @@ public class ServiceClient
         );
     }
 
-    public async Task<Response> GetResponseAsync()
+    public async Task<Response> GetResponseAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "/response"
+                Path = "/response",
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

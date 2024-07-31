@@ -16,14 +16,15 @@ public class UserClient
         _client = client;
     }
 
-    public async Task<User> GetUserAsync(string userId)
+    public async Task<User> GetUserAsync(string userId, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = $"/users/{userId}"
+                Path = $"/users/{userId}",
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

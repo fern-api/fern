@@ -16,7 +16,10 @@ public class UserClient
         _client = client;
     }
 
-    public async Task<User> GetUsernameAsync(GetUsersRequest request)
+    public async Task<User> GetUsernameAsync(
+        GetUsersRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         _query["limit"] = request.Limit.ToString();
@@ -50,7 +53,8 @@ public class UserClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "/user",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

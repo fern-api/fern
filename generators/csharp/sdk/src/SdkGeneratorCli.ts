@@ -3,12 +3,8 @@ import { generateModels, generateTests } from "@fern-api/fern-csharp-model";
 import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { ClientOptionsGenerator } from "./client-options/ClientOptionsGenerator";
 import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator";
 import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator copy";
-import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator";
-import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator";
-import { ErrorGenerator } from "./error/ErrorGenerator";
 import { RootClientGenerator } from "./root-client/RootClientGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
@@ -86,19 +82,10 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
             }
         }
 
-        const clientOptions = new ClientOptionsGenerator(context);
+        const baseOptionsGenerator = new BaseOptionsGenerator(context);
+
+        const clientOptions = new ClientOptionsGenerator(context, baseOptionsGenerator);
         context.project.addSourceFiles(clientOptions.generate());
-
-        const baseException = new BaseExceptionGenerator(context);
-        context.project.addSourceFiles(baseException.generate());
-
-        const baseApiException = new BaseApiExceptionGenerator(context);
-        context.project.addSourceFiles(baseApiException.generate());
-
-        for (const [_, _error] of Object.entries(context.ir.errors)) {
-            const errorGenerator = new ErrorGenerator(context, _error);
-            context.project.addSourceFiles(errorGenerator.generate());
-        }
 
         const rootClient = new RootClientGenerator(context);
         context.project.addSourceFiles(rootClient.generate());

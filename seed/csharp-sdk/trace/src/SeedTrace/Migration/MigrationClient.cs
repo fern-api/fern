@@ -17,7 +17,8 @@ public class MigrationClient
     }
 
     public async Task<IEnumerable<Migration>> GetAttemptedMigrationsAsync(
-        GetAttemptedMigrationsRequest request
+        GetAttemptedMigrationsRequest request,
+        RequestOptions? options = null
     )
     {
         var _headers = new Dictionary<string, string>()
@@ -30,7 +31,8 @@ public class MigrationClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "/migration-info/all",
-                Headers = _headers
+                Headers = _headers,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

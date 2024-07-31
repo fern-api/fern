@@ -18,14 +18,15 @@ public class FolderClient
 
     public ServiceClient Service { get; }
 
-    public async Task FooAsync()
+    public async Task FooAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = ""
+                Path = "",
+                Options = options
             }
         );
         if (response.StatusCode is >= 200 and < 400)

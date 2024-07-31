@@ -18,14 +18,15 @@ public class PropertyBasedErrorClient
     /// <summary>
     /// GET request that always throws an error
     /// </summary>
-    public async Task<string> ThrowErrorAsync()
+    public async Task<string> ThrowErrorAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "property-based-error"
+                Path = "property-based-error",
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

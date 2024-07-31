@@ -16,7 +16,7 @@ public class FooClient
         _client = client;
     }
 
-    public async Task<ImportingType> FindAsync(FindRequest request)
+    public async Task<ImportingType> FindAsync(FindRequest request, RequestOptions? options = null)
     {
         var _query = new Dictionary<string, object>() { };
         if (request.OptionalString != null)
@@ -29,7 +29,8 @@ public class FooClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

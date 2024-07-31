@@ -15,14 +15,15 @@ public class UnionClient
         _client = client;
     }
 
-    public async Task<object> GetAsync(string id)
+    public async Task<object> GetAsync(string id, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = $"/{id}"
+                Path = $"/{id}",
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -45,7 +46,7 @@ public class UnionClient
         );
     }
 
-    public async Task<bool> UpdateAsync(object request)
+    public async Task<bool> UpdateAsync(object request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -53,7 +54,8 @@ public class UnionClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethodExtensions.Patch,
                 Path = "",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

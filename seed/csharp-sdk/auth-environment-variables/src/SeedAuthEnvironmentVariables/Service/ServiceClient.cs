@@ -19,14 +19,15 @@ public class ServiceClient
     /// <summary>
     /// GET request with custom api key
     /// </summary>
-    public async Task<string> GetWithApiKeyAsync()
+    public async Task<string> GetWithApiKeyAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "apiKey"
+                Path = "apiKey",
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -55,7 +56,10 @@ public class ServiceClient
     /// <summary>
     /// GET request with custom api key
     /// </summary>
-    public async Task<string> GetWithHeaderAsync(HeaderAuthRequest request)
+    public async Task<string> GetWithHeaderAsync(
+        HeaderAuthRequest request,
+        RequestOptions? options = null
+    )
     {
         var _headers = new Dictionary<string, string>()
         {
@@ -67,7 +71,8 @@ public class ServiceClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "apiKeyInHeader",
-                Headers = _headers
+                Headers = _headers,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

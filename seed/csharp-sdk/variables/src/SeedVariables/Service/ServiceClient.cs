@@ -14,14 +14,15 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Task PostAsync(string endpointParam)
+    public async Task PostAsync(string endpointParam, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = $"/{endpointParam}"
+                Path = $"/{endpointParam}",
+                Options = options
             }
         );
         if (response.StatusCode is >= 200 and < 400)

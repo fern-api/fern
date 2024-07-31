@@ -16,14 +16,17 @@ public class NoReqBodyClient
         _client = client;
     }
 
-    public async Task<ObjectWithOptionalField> GetWithNoRequestBodyAsync()
+    public async Task<ObjectWithOptionalField> GetWithNoRequestBodyAsync(
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "/no-req-body"
+                Path = "/no-req-body",
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -46,14 +49,15 @@ public class NoReqBodyClient
         );
     }
 
-    public async Task<string> PostWithNoRequestBodyAsync()
+    public async Task<string> PostWithNoRequestBodyAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "/no-req-body"
+                Path = "/no-req-body",
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

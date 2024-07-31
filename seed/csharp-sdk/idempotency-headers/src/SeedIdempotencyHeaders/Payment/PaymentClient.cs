@@ -16,7 +16,10 @@ public class PaymentClient
         _client = client;
     }
 
-    public async Task<string> CreateAsync(CreatePaymentRequest request)
+    public async Task<string> CreateAsync(
+        CreatePaymentRequest request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -24,7 +27,8 @@ public class PaymentClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/payment",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -47,14 +51,15 @@ public class PaymentClient
         );
     }
 
-    public async Task DeleteAsync(string paymentId)
+    public async Task DeleteAsync(string paymentId, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Delete,
-                Path = $"/payment/{paymentId}"
+                Path = $"/payment/{paymentId}",
+                Options = options
             }
         );
         if (response.StatusCode is >= 200 and < 400)

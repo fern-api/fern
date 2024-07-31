@@ -13,7 +13,8 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
-import { CLIENT_OPTIONS_CLASS_NAME } from "./client-options/ClientOptionsGenerator";
+import { CLIENT_OPTIONS_CLASS_NAME } from "./options/ClientOptionsGenerator";
+import { REQUEST_OPTIONS_CLASS_NAME, REQUEST_OPTIONS_PARAMETER_NAME } from "./options/RequestOptionsGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
 const TYPES_FOLDER_NAME = "Types";
@@ -172,6 +173,17 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             name: CLIENT_OPTIONS_CLASS_NAME,
             namespace: this.getCoreNamespace()
         });
+    }
+
+    public getRequestOptionsClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: REQUEST_OPTIONS_CLASS_NAME,
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getRequestOptionsParameterName(): string {
+        return REQUEST_OPTIONS_PARAMETER_NAME;
     }
 
     public getRequestWrapperReference(serviceId: ServiceId, requestName: Name): csharp.ClassReference {

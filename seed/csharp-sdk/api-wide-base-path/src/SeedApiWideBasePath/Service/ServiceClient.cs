@@ -18,7 +18,8 @@ public class ServiceClient
         string pathParam,
         string serviceParam,
         string resourceParam,
-        int endpointParam
+        int endpointParam,
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -26,7 +27,8 @@ public class ServiceClient
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = $"/test/{pathParam}/{serviceParam}/{endpointParam}/{resourceParam}"
+                Path = $"/test/{pathParam}/{serviceParam}/{endpointParam}/{resourceParam}",
+                Options = options
             }
         );
         if (response.StatusCode is >= 200 and < 400)

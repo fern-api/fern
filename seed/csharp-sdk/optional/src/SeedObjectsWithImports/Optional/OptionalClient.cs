@@ -15,7 +15,10 @@ public class OptionalClient
         _client = client;
     }
 
-    public async Task<string> SendOptionalBodyAsync(Dictionary<string, object?>? request)
+    public async Task<string> SendOptionalBodyAsync(
+        Dictionary<string, object?>? request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -23,7 +26,8 @@ public class OptionalClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "send-optional-body",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
