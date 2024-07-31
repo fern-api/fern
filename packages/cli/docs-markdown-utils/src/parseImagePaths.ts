@@ -6,6 +6,8 @@ import { mdxFromMarkdown } from "mdast-util-mdx";
 import { mdx } from "micromark-extension-mdx";
 import { visit } from "unist-util-visit";
 
+let counter = {};
+
 interface AbsolutePathMetadata {
     absolutePathToMdx: AbsoluteFilePath;
     absolutePathToFernFolder: AbsoluteFilePath;
@@ -16,6 +18,16 @@ const STR_REGEX = new RegExp(`^${STR_SEGMENT}$`);
 const SRC_REGEX = new RegExp(`src={?${STR_SEGMENT}(?! \\+)}?`, "g");
 
 const MEDIA_NODE_NAMES = ["img", "video", "audio", "source", "embed"];
+
+export function simpleHashFunction(input: string): number {
+    let hash = 0;
+    for (let i = 0; i < input.length; i++) {
+        const char = input.charCodeAt(i);
+        hash = (hash << 5) - hash + char;
+        hash = hash & hash; // Convert to 32-bit integer
+    }
+    return Math.abs(hash);
+}
 
 /**
  * Parse all images in the markdown. Since mdx filepath is a relative path from the root of the project,
@@ -30,7 +42,8 @@ export function parseImagePaths(
     filepaths: AbsoluteFilePath[];
     markdown: string;
 } {
-    const { content, data } = grayMatter(markdown);
+    // Don't remove {}! https://github.com/jonschlinkert/gray-matter/issues/43#issuecomment-318258919
+    const { content, data } = grayMatter(markdown, {});
     let replacedContent = content;
 
     const filepaths = new Set<AbsoluteFilePath>();
@@ -186,6 +199,19 @@ export function replaceImagePathsAndUrls(
     });
 
     let offset = 0;
+
+    if (data.image) {
+        if (data.image != null && !isExternalUrl(data.image) && !isDataUrl(data.image)) {
+            try {
+                const fileId = fileIdsMap.get(AbsoluteFilePath.of(data.image));
+                if (fileId != null) {
+                    data.image = `file:${fileId}`;
+                }
+            } catch (e) {
+                // do nothing
+            }
+        }
+    }
 
     visit(tree, (node) => {
         if (node.position == null) {
