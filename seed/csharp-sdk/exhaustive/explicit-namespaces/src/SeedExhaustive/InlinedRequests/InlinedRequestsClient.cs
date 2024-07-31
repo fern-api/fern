@@ -57,7 +57,7 @@ public class InlinedRequestsClient
                     );
             }
         }
-        catch (JsonException e)
+        catch (JsonException)
         {
             // unable to map error response, throwing generic error
         }

@@ -52,7 +52,7 @@ public class CustomAuthClient
                     );
             }
         }
-        catch (JsonException e)
+        catch (JsonException)
         {
             // unable to map error response, throwing generic error
         }
@@ -102,7 +102,7 @@ public class CustomAuthClient
                     throw new BadRequest(JsonUtils.Deserialize<object>(responseBody));
             }
         }
-        catch (JsonException e)
+        catch (JsonException)
         {
             // unable to map error response, throwing generic error
         }
