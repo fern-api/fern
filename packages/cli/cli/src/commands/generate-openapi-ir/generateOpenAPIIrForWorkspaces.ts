@@ -3,7 +3,7 @@ import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import { serialization } from "@fern-api/openapi-ir-sdk";
 import { parse } from "@fern-api/openapi-parser";
 import { Project } from "@fern-api/project-loader";
-import { LazyFernWorkspace } from "@fern-api/workspace-loader/src/workspaces/FernWorkspace";
+import { LazyFernWorkspace } from "@fern-api/workspace-loader";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { CliContext } from "../../cli-context/CliContext";
