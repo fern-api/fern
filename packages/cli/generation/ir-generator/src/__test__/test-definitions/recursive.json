@@ -1,0 +1,358 @@
+{
+    "fdrApiDefinitionId": null,
+    "apiVersion": null,
+    "apiName": {
+        "originalName": "api",
+        "camelCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "snakeCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "API",
+            "safeName": "API"
+        },
+        "pascalCase": {
+            "unsafeName": "API",
+            "safeName": "API"
+        }
+    },
+    "apiDisplayName": null,
+    "apiDocs": null,
+    "auth": {
+        "requirement": "ALL",
+        "schemes": [],
+        "docs": null
+    },
+    "headers": [],
+    "idempotencyHeaders": [],
+    "types": {
+        "type_recursive:Node": {
+            "name": {
+                "name": {
+                    "originalName": "Node",
+                    "camelCase": {
+                        "unsafeName": "node",
+                        "safeName": "node"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "node",
+                        "safeName": "node"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NODE",
+                        "safeName": "NODE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Node",
+                        "safeName": "Node"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "recursive",
+                            "camelCase": {
+                                "unsafeName": "recursive",
+                                "safeName": "recursive"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "recursive",
+                                "safeName": "recursive"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "RECURSIVE",
+                                "safeName": "RECURSIVE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Recursive",
+                                "safeName": "Recursive"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "recursive",
+                        "camelCase": {
+                            "unsafeName": "recursive",
+                            "safeName": "recursive"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "recursive",
+                            "safeName": "recursive"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "RECURSIVE",
+                            "safeName": "RECURSIVE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Recursive",
+                            "safeName": "Recursive"
+                        }
+                    }
+                },
+                "typeId": "type_recursive:Node"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "child",
+                                "camelCase": {
+                                    "unsafeName": "child",
+                                    "safeName": "child"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "child",
+                                    "safeName": "child"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CHILD",
+                                    "safeName": "CHILD"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Child",
+                                    "safeName": "Child"
+                                }
+                            },
+                            "wireValue": "child"
+                        },
+                        "valueType": {
+                            "_type": "named",
+                            "name": {
+                                "originalName": "Node",
+                                "camelCase": {
+                                    "unsafeName": "node",
+                                    "safeName": "node"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "node",
+                                    "safeName": "node"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "NODE",
+                                    "safeName": "NODE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Node",
+                                    "safeName": "Node"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [
+                                    {
+                                        "originalName": "recursive",
+                                        "camelCase": {
+                                            "unsafeName": "recursive",
+                                            "safeName": "recursive"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "recursive",
+                                            "safeName": "recursive"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "RECURSIVE",
+                                            "safeName": "RECURSIVE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Recursive",
+                                            "safeName": "Recursive"
+                                        }
+                                    }
+                                ],
+                                "packagePath": [],
+                                "file": {
+                                    "originalName": "recursive",
+                                    "camelCase": {
+                                        "unsafeName": "recursive",
+                                        "safeName": "recursive"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "recursive",
+                                        "safeName": "recursive"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "RECURSIVE",
+                                        "safeName": "RECURSIVE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Recursive",
+                                        "safeName": "Recursive"
+                                    }
+                                }
+                            },
+                            "typeId": "type_recursive:Node",
+                            "default": null,
+                            "inline": null
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "extra-properties": false,
+                "extendedProperties": []
+            },
+            "referencedTypes": [
+                "type_recursive:Node"
+            ],
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "availability": null,
+            "docs": null
+        }
+    },
+    "errors": {},
+    "services": {},
+    "constants": {
+        "errorInstanceIdKey": {
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceID",
+                    "safeName": "errorInstanceID"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceID",
+                    "safeName": "ErrorInstanceID"
+                }
+            },
+            "wireValue": "errorInstanceId"
+        }
+    },
+    "environments": null,
+    "errorDiscriminationStrategy": {
+        "type": "statusCode"
+    },
+    "basePath": null,
+    "pathParameters": [],
+    "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": [
+            "type_recursive:Node"
+        ]
+    },
+    "webhookGroups": {},
+    "websocketChannels": {},
+    "readmeConfig": null,
+    "subpackages": {
+        "subpackage_recursive": {
+            "name": {
+                "originalName": "recursive",
+                "camelCase": {
+                    "unsafeName": "recursive",
+                    "safeName": "recursive"
+                },
+                "snakeCase": {
+                    "unsafeName": "recursive",
+                    "safeName": "recursive"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "RECURSIVE",
+                    "safeName": "RECURSIVE"
+                },
+                "pascalCase": {
+                    "unsafeName": "Recursive",
+                    "safeName": "Recursive"
+                }
+            },
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "recursive",
+                        "camelCase": {
+                            "unsafeName": "recursive",
+                            "safeName": "recursive"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "recursive",
+                            "safeName": "recursive"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "RECURSIVE",
+                            "safeName": "RECURSIVE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Recursive",
+                            "safeName": "Recursive"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "recursive",
+                    "camelCase": {
+                        "unsafeName": "recursive",
+                        "safeName": "recursive"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "recursive",
+                        "safeName": "recursive"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "RECURSIVE",
+                        "safeName": "RECURSIVE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Recursive",
+                        "safeName": "Recursive"
+                    }
+                }
+            },
+            "service": null,
+            "types": [
+                "type_recursive:Node"
+            ],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": false,
+            "docs": null
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": [],
+            "file": null
+        },
+        "websocket": null,
+        "service": null,
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "subpackage_recursive"
+        ],
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": false,
+        "docs": null
+    },
+    "sdkConfig": {
+        "isAuthMandatory": false,
+        "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
+        "hasFileDownloadEndpoints": false,
+        "platformHeaders": {
+            "language": "X-Fern-Language",
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version"
+        }
+    }
+}

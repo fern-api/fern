@@ -1,0 +1,4 @@
+types:
+  Node:
+    properties:
+      child: Node

@@ -1,0 +1,7 @@
+types:
+  Animal:
+    discriminated: false
+    union:
+      - Animal
+      - AlsoAnimal
+  AlsoAnimal: Animal

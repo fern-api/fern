@@ -1,0 +1,7 @@
+types:
+  Node:
+    properties:
+      child: AlsoNode
+  AlsoNode:
+    properties:
+      child: Node

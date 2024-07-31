@@ -1,0 +1,8 @@
+types:
+  Node:
+    properties:
+      example: string
+  SameSiblings:
+    properties:
+      a: Node
+      b: Node

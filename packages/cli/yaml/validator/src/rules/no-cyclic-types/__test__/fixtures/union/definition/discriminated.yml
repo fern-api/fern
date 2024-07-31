@@ -1,0 +1,9 @@
+types:
+  Animal:
+    discriminant: type2
+    union:
+      dog: Animal
+      person: AlsoAnimal
+  AlsoAnimal:
+    properties:
+      child: Animal

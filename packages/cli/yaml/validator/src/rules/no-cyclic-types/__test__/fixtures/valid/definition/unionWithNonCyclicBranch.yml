@@ -1,0 +1,15 @@
+types:
+  Name: string
+  Animal:
+    discriminant: type2
+    union:
+      dog: Animal
+      person:
+        type: Name
+        key: value2
+      cat: {}
+  Node:
+    discriminant: type2
+    union:
+      node: Node
+      notNode: {}

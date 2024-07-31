@@ -25,6 +25,15 @@ export interface ObjectPropertyWithPath {
     isOptional: boolean;
 }
 
+export interface TypePropertyArgs {
+    typeName: TypeName;
+    filepathOfDeclaration: RelativeFilePath;
+    definitionFile: RawSchemas.DefinitionFileSchema;
+    workspace: FernWorkspace;
+    typeResolver: TypeResolver;
+    smartCasing: boolean;
+}
+
 export type ObjectPropertyPath = ObjectPropertyPathPart[];
 
 export interface ObjectPropertyPathPart {
@@ -161,14 +170,7 @@ export function getAllPropertiesForType({
     workspace,
     typeResolver,
     smartCasing
-}: {
-    typeName: TypeName;
-    filepathOfDeclaration: RelativeFilePath;
-    definitionFile: RawSchemas.DefinitionFileSchema;
-    workspace: FernWorkspace;
-    typeResolver: TypeResolver;
-    smartCasing: boolean;
-}): ObjectPropertyWithPath[] {
+}: TypePropertyArgs): ObjectPropertyWithPath[] {
     const resolvedType = typeResolver.resolveNamedType({
         referenceToNamedType: typeName,
         file: constructFernFileContext({
