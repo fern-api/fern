@@ -471,7 +471,7 @@ export class SdkGenerator {
                         await this.FdrClient.templates.registerBatch({
                             orgId: this.config.organization,
                             apiId: this.config.apiName,
-                            apiDefinitionId: uuidv4(),
+                            apiDefinitionId: this.intermediateRepresentation.fdrApiDefinitionId ?? uuidv4(),
                             snippets: this.endpointSnippetTemplates
                         });
                     } catch (e) {

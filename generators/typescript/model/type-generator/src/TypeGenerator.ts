@@ -274,6 +274,9 @@ function isTypeStringLike(type: TypeReference): boolean {
     return PrimitiveTypeV1._visit(type.primitive.v1, {
         integer: () => false,
         double: () => false,
+        uint: () => false,
+        uint64: () => false,
+        float: () => false,
         string: () => true,
         boolean: () => false,
         long: () => false,

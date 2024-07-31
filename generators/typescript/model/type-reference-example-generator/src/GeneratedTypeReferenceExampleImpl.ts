@@ -42,6 +42,11 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                     integer: (integerExample) => ts.factory.createNumericLiteral(integerExample),
                     double: (doubleExample) => ts.factory.createNumericLiteral(doubleExample),
                     long: (longExample) => ts.factory.createNumericLiteral(longExample),
+                    uint: (uintExample) => ts.factory.createNumericLiteral(uintExample),
+                    uint64: (uint64Example) => ts.factory.createNumericLiteral(uint64Example),
+                    float: (floatExample) => ts.factory.createNumericLiteral(floatExample),
+                    bigInteger: (bigIntegerExample) => ts.factory.createNumericLiteral(bigIntegerExample),
+                    base64: (base64Example) => ts.factory.createStringLiteral(base64Example),
                     boolean: (booleanExample) => (booleanExample ? ts.factory.createTrue() : ts.factory.createFalse()),
                     uuid: (uuidExample) => ts.factory.createStringLiteral(uuidExample),
                     datetime: (datetimeExample) =>
@@ -57,21 +62,21 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                 return ExampleContainer._visit<ts.Expression>(exampleContainer, {
                     list: (exampleItems) =>
                         ts.factory.createArrayLiteralExpression(
-                            exampleItems.map((exampleItem) =>
+                            exampleItems.list.map((exampleItem) =>
                                 this.buildExample({ example: exampleItem, context, opts })
                             )
                         ),
                     set: (exampleItems) =>
                         ts.factory.createNewExpression(ts.factory.createIdentifier("Set"), undefined, [
                             ts.factory.createArrayLiteralExpression(
-                                exampleItems.map((exampleItem) =>
+                                exampleItems.set.map((exampleItem) =>
                                     this.buildExample({ example: exampleItem, context, opts })
                                 )
                             )
                         ]),
                     map: (examplePairs) =>
                         ts.factory.createObjectLiteralExpression(
-                            examplePairs.map((examplePair) =>
+                            examplePairs.map.map((examplePair) =>
                                 ts.factory.createPropertyAssignment(
                                     this.getExampleAsPropertyName({ example: examplePair.key, context, opts }),
                                     this.buildExample({ example: examplePair.value, context, opts })
@@ -80,15 +85,15 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                             true
                         ),
                     optional: (exampleItem) =>
-                        exampleItem != null
-                            ? this.buildExample({ example: exampleItem, context, opts })
+                        exampleItem.optional != null
+                            ? this.buildExample({ example: exampleItem.optional, context, opts })
                             : ts.factory.createIdentifier("undefined"),
                     literal: (exampleItem) =>
                         exampleItem != null
                             ? this.buildExample({
                                   example: {
-                                      jsonExample: this.getJsonExampleForPrimitive(exampleItem),
-                                      shape: ExampleTypeReferenceShape.primitive(exampleItem)
+                                      jsonExample: this.getJsonExampleForPrimitive(exampleItem.literal),
+                                      shape: ExampleTypeReferenceShape.primitive(exampleItem.literal)
                                   },
                                   context,
                                   opts
@@ -133,6 +138,16 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                 return `"${primitiveExample.datetime.toISOString()}"`;
             case "date":
                 return `"${primitiveExample.date}"`;
+            case "uint":
+                return primitiveExample.uint;
+            case "uint64":
+                return primitiveExample.uint64;
+            case "float":
+                return primitiveExample.float;
+            case "bigInteger":
+                return primitiveExample.bigInteger;
+            case "base64":
+                return `"${primitiveExample.base64}"`;
             default:
                 assertNever(primitiveExample);
         }
@@ -149,6 +164,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
     }): ts.PropertyName {
         return ExampleTypeReferenceShape._visit<ts.PropertyName>(example.shape, {
             primitive: (primitiveExample) =>
+                // uint, uint64, float, base64, bigIntegerts
                 ExamplePrimitive._visit<ts.PropertyName>(primitiveExample, {
                     string: (stringExample) => ts.factory.createStringLiteral(stringExample.original),
                     integer: (integerExample) => ts.factory.createNumericLiteral(integerExample),
@@ -156,6 +172,11 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                     long: (longExample) => ts.factory.createNumericLiteral(longExample),
                     boolean: (booleanExample) =>
                         booleanExample ? ts.factory.createIdentifier("true") : ts.factory.createIdentifier("false"),
+                    uint: (uintExample) => ts.factory.createNumericLiteral(uintExample),
+                    uint64: (uint64Example) => ts.factory.createNumericLiteral(uint64Example),
+                    float: (floatExample) => ts.factory.createNumericLiteral(floatExample),
+                    bigInteger: (bigIntegerExample) => ts.factory.createNumericLiteral(bigIntegerExample),
+                    base64: (base64Example) => ts.factory.createStringLiteral(base64Example),
                     uuid: (uuidExample) => ts.factory.createStringLiteral(uuidExample),
                     datetime: () => {
                         throw new Error("Cannot convert datetime to property name");
