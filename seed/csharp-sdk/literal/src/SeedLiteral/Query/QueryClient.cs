@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Text.Json;
 using SeedLiteral;
 using SeedLiteral.Core;
 
@@ -35,8 +36,20 @@ public class QueryClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<SendResponse>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<SendResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedLiteralException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedLiteralApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

@@ -11,6 +11,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   can support explicit `null` values. Note that this does _not_ affect every `unknown` type to be an `object?`
   since it would otherwise alter its required/optional characteristics.
 
+## [0.3.5 - 2024-07-31]
+
+- Improvement: We now generate Exception types for all errors that are defined in the IR. Generated clients with an
+  error discrimination strategy of "status code" will throw one of these typed Exceptions based on the status code of
+  error responses. Example error type:
+  ```csharp
+  public sealed class UnauthorizedRequest(UnauthorizedRequestErrorBody body)
+      : MyCompanyApiException("UnauthorizedRequest", 401, body)
+  {
+      public new UnauthorizedRequestErrorBody Body { get; } = body;
+  }
+  ```
+
 ## [0.3.4 - 2024-07-30]
 
 - Improvement: Make datetime deserialization more lenient, and include milliseconds in datetime serialization.

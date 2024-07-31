@@ -16,7 +16,7 @@ public class SeedCustomAuthApiException(string message, int statusCode, object b
     public int StatusCode { get; } = statusCode;
 
     /// <summary>
-    /// The body of the response that triggered the exception..
+    /// The body of the response that triggered the exception.
     /// </summary>
     public object Body { get; } = body;
 

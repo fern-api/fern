@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Text.Json;
 using OneOf;
 using SeedUndiscriminatedUnions;
 using SeedUndiscriminatedUnions.Core;
@@ -48,18 +49,30 @@ public class UnionClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<
-                OneOf<
-                    string,
-                    IEnumerable<string>,
-                    int,
-                    IEnumerable<int>,
-                    IEnumerable<IEnumerable<int>>,
-                    HashSet<string>
-                >
-            >(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<
+                    OneOf<
+                        string,
+                        IEnumerable<string>,
+                        int,
+                        IEnumerable<int>,
+                        IEnumerable<IEnumerable<int>>,
+                        HashSet<string>
+                    >
+                >(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedUndiscriminatedUnionsApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task<Dictionary<OneOf<KeyType, string>, string>> GetMetadataAsync()
@@ -75,8 +88,22 @@ public class UnionClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<Dictionary<OneOf<KeyType, string>, string>>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<Dictionary<OneOf<KeyType, string>, string>>(
+                    responseBody
+                )!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedUndiscriminatedUnionsApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

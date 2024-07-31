@@ -2,7 +2,7 @@ using SeedCustomAuth.Core;
 
 #nullable enable
 
-namespace SeedCustomAuth.Core;
+namespace SeedCustomAuth;
 
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.

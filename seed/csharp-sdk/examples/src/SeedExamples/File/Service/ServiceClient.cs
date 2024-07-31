@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Text.Json;
 using SeedExamples;
 using SeedExamples.Core;
 using SeedExamples.File;
@@ -32,8 +33,32 @@ public class ServiceClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<File>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<File>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExamplesException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        try
+        {
+            switch (response.StatusCode)
+            {
+                case 404:
+                    throw new NotFoundError(JsonUtils.Deserialize<string>(responseBody));
+            }
+        }
+        catch (JsonException)
+        {
+            // unable to map error response, throwing generic error
+        }
+        throw new SeedExamplesApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

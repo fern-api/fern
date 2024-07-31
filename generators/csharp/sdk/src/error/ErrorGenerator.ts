@@ -7,17 +7,15 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
 export class ErrorGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     readonly classReference;
 
-    constructor(context: SdkGeneratorContext, readonly errorDeclation: ErrorDeclaration) {
+    constructor(context: SdkGeneratorContext, readonly errorDeclaration: ErrorDeclaration) {
         super(context);
-        this.classReference = this.context.getExceptionClassReference(
-            this.errorDeclation.name.name.pascalCase.safeName
-        );
+        this.classReference = this.context.getExceptionClassReference(this.errorDeclaration.name);
     }
 
     public doGenerate(): CSharpFile {
         const bodyType =
-            this.errorDeclation.type != null
-                ? this.context.csharpTypeMapper.convert({ reference: this.errorDeclation.type })
+            this.errorDeclaration.type != null
+                ? this.context.csharpTypeMapper.convert({ reference: this.errorDeclaration.type })
                 : csharp.Type.object();
         const class_ = csharp.class_({
             ...this.classReference,
@@ -27,13 +25,13 @@ export class ErrorGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSch
                 parameters: [csharp.parameter({ name: "body", type: bodyType })],
                 superClassArguments: [
                     csharp.codeblock(`"${this.classReference.name}"`),
-                    csharp.codeblock(`${this.errorDeclation.statusCode}`),
+                    csharp.codeblock(`${this.errorDeclaration.statusCode}`),
                     csharp.codeblock("body")
                 ]
             },
             summary: "This exception type will be thrown for any non-2XX API responses."
         });
-        if (this.errorDeclation.type != null) {
+        if (this.errorDeclaration.type != null) {
             class_.addField(
                 csharp.field({
                     name: "Body",
@@ -48,13 +46,13 @@ export class ErrorGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSch
         }
         return new CSharpFile({
             clazz: class_,
-            directory: this.context.getCoreDirectory()
+            directory: this.context.getDirectoryForError(this.errorDeclaration.name)
         });
     }
 
     protected getFilepath(): RelativeFilePath {
         return join(
-            this.context.project.filepaths.getCoreFilesDirectory(),
+            this.context.project.filepaths.getSourceFileDirectory(),
             RelativeFilePath.of(`${this.classReference.name}.cs`)
         );
     }

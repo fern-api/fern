@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Text.Json;
 using SeedExtraProperties;
 using SeedExtraProperties.Core;
 
@@ -29,8 +30,20 @@ public class UserClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<User>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<User>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExtraPropertiesException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedExtraPropertiesApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

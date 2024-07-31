@@ -1,5 +1,7 @@
 using System.Net.Http;
+using System.Text.Json;
 using SeedExhaustive.Core;
+using SeedExhaustive.GeneralErrors;
 using SeedExhaustive.InlinedRequests;
 using SeedExhaustive.Types.Object;
 
@@ -35,8 +37,34 @@ public class InlinedRequestsClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        try
+        {
+            switch (response.StatusCode)
+            {
+                case 400:
+                    throw new BadRequestBody(
+                        JsonUtils.Deserialize<BadObjectRequestInfo>(responseBody)
+                    );
+            }
+        }
+        catch (JsonException)
+        {
+            // unable to map error response, throwing generic error
+        }
+        throw new SeedExhaustiveApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

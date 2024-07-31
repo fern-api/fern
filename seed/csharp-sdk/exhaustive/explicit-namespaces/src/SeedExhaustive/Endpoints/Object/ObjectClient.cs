@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Text.Json;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types.Object;
 
@@ -31,9 +32,21 @@ public class ObjectClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedExhaustiveApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task<ObjectWithRequiredField> GetAndReturnWithRequiredFieldAsync(
@@ -52,9 +65,21 @@ public class ObjectClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<ObjectWithRequiredField>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<ObjectWithRequiredField>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedExhaustiveApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task<ObjectWithMapOfMap> GetAndReturnWithMapOfMapAsync(ObjectWithMapOfMap request)
@@ -71,9 +96,21 @@ public class ObjectClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<ObjectWithMapOfMap>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<ObjectWithMapOfMap>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedExhaustiveApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task<NestedObjectWithOptionalField> GetAndReturnNestedWithOptionalFieldAsync(
@@ -92,9 +129,21 @@ public class ObjectClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<NestedObjectWithOptionalField>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<NestedObjectWithOptionalField>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedExhaustiveApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsync(
@@ -114,9 +163,21 @@ public class ObjectClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<NestedObjectWithRequiredField>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<NestedObjectWithRequiredField>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedExhaustiveApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsListAsync(
@@ -135,8 +196,20 @@ public class ObjectClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<NestedObjectWithRequiredField>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<NestedObjectWithRequiredField>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedExhaustiveApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

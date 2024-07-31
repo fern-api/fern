@@ -1,6 +1,7 @@
 import { AbstractCsharpGeneratorContext, AsIsFiles, csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
+    DeclaredErrorName,
     FernFilepath,
     HttpEndpoint,
     HttpService,
@@ -16,6 +17,7 @@ import { CLIENT_OPTIONS_CLASS_NAME } from "./client-options/ClientOptionsGenerat
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
 const TYPES_FOLDER_NAME = "Types";
+const EXCEPTIONS_FOLDER_NAME = "Exceptions";
 
 export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCustomConfigSchema> {
     /**
@@ -53,6 +55,15 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             [
                 ...typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName),
                 TYPES_FOLDER_NAME
+            ].join("/")
+        );
+    }
+
+    public getDirectoryForError(declaredErrorName: DeclaredErrorName): RelativeFilePath {
+        return RelativeFilePath.of(
+            [
+                ...declaredErrorName.fernFilepath.allParts.map((path) => path.pascalCase.safeName),
+                EXCEPTIONS_FOLDER_NAME
             ].join("/")
         );
     }
@@ -125,10 +136,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         });
     }
 
-    public getExceptionClassReference(name: string): csharp.ClassReference {
+    public getExceptionClassReference(declaredErrorName: DeclaredErrorName): csharp.ClassReference {
         return csharp.classReference({
-            name: name,
-            namespace: this.getCoreNamespace()
+            name: this.getPascalCaseSafeName(declaredErrorName.name),
+            namespace: this.getNamespaceFromFernFilepath(declaredErrorName.fernFilepath)
         });
     }
 

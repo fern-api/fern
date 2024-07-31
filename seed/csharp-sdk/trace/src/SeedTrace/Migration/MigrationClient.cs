@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Text.Json;
 using SeedTrace;
 using SeedTrace.Core;
 
@@ -35,8 +36,20 @@ public class MigrationClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<IEnumerable<Migration>>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<IEnumerable<Migration>>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedTraceException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

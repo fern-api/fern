@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Text.Json;
 using SeedIdempotencyHeaders;
 using SeedIdempotencyHeaders.Core;
 
@@ -29,9 +30,21 @@ public class PaymentClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<string>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<string>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedIdempotencyHeadersException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedIdempotencyHeadersApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task DeleteAsync(string paymentId)

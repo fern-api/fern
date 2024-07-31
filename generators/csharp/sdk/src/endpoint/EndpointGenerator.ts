@@ -85,10 +85,11 @@ export class EndpointGenerator {
                         queryBagReference: queryParameterCodeBlock?.queryParameterBagReference
                     })
                 );
-                const responseStatements = this.getEndpointResponseStatements({ endpoint });
-                if (responseStatements != null) {
-                    writer.writeNode(responseStatements);
+                const successResponseStatements = this.getEndpointSuccessResponseStatements({ endpoint });
+                if (successResponseStatements != null) {
+                    writer.writeNode(successResponseStatements);
                 }
+                writer.writeNode(this.getEndpointErrorHandling({ endpoint }));
             })
         });
     }
@@ -167,7 +168,58 @@ export class EndpointGenerator {
         });
     }
 
-    private getEndpointResponseStatements({ endpoint }: { endpoint: HttpEndpoint }): csharp.CodeBlock | undefined {
+    private getEndpointErrorHandling({ endpoint }: { endpoint: HttpEndpoint }): csharp.CodeBlock {
+        return csharp.codeblock((writer) => {
+            if (endpoint.errors.length > 0 && this.context.ir.errorDiscriminationStrategy.type === "statusCode") {
+                writer.writeLine("try");
+                writer.writeLine("{");
+                writer.indent();
+                writer.write("switch (");
+                writer.write(`${RESPONSE_VARIABLE_NAME}.StatusCode)`);
+
+                writer.writeLine("{");
+                writer.indent();
+                for (const error of endpoint.errors) {
+                    const fullError = this.context.ir.errors[error.error.errorId]!;
+                    writer.writeLine(`case ${fullError.statusCode}:`);
+                    writer.indent();
+                    writer.write("throw new ");
+                    writer.writeNode(this.context.getExceptionClassReference(fullError.name));
+                    writer.write("(");
+                    writer.writeNode(this.context.getJsonUtilsClassReference());
+                    writer.write(".Deserialize<");
+                    writer.writeNode(
+                        fullError.type != null
+                            ? this.context.csharpTypeMapper.convert({ reference: fullError.type })
+                            : csharp.Type.object()
+                    );
+                    writer.writeTextStatement(`>(${RESPONSE_BODY_VARIABLE_NAME}))`);
+                }
+                writer.writeLine("}");
+                writer.dedent();
+                writer.writeLine("}");
+                writer.writeLine("catch (JsonException)");
+                writer.writeLine("{");
+                writer.indent();
+                writer.writeLine("// unable to map error response, throwing generic error");
+                writer.dedent();
+                writer.writeLine("}");
+            }
+            writer.write("throw new ");
+            writer.writeNode(this.context.getBaseApiExceptionClassReference());
+            writer.write(
+                `($"Error with status code {${RESPONSE_VARIABLE_NAME}.StatusCode}", ${RESPONSE_VARIABLE_NAME}.StatusCode, `
+            );
+            writer.writeNode(this.context.getJsonUtilsClassReference());
+            writer.writeTextStatement(`.Deserialize<object>(${RESPONSE_BODY_VARIABLE_NAME}))`);
+        });
+    }
+
+    private getEndpointSuccessResponseStatements({
+        endpoint
+    }: {
+        endpoint: HttpEndpoint;
+    }): csharp.CodeBlock | undefined {
         if (endpoint.response?.body == null) {
             return undefined;
         }
@@ -184,6 +236,10 @@ export class EndpointGenerator {
                     writer.writeNewLineIfLastLineNot();
 
                     // Deserialize the response as json
+                    writer.indent();
+                    writer.writeLine("try");
+                    writer.writeLine("{");
+                    writer.indent();
                     writer.write("return ");
                     writer.writeNode(this.context.getJsonUtilsClassReference());
                     writer.write(".Deserialize<");
@@ -191,12 +247,21 @@ export class EndpointGenerator {
                     // todo: Maybe remove ! below and handle potential null. Requires introspecting type to know if its
                     // nullable.
                     writer.writeLine(`>(${RESPONSE_BODY_VARIABLE_NAME})!;`);
-
+                    writer.dedent();
+                    writer.writeLine("}");
+                    writer.write("catch (");
+                    writer.writeNode(this.context.getJsonExceptionClassReference());
+                    writer.writeLine(" e)");
+                    writer.writeLine("{");
                     writer.indent();
+                    writer.write("throw new ");
+                    writer.writeNode(this.context.getBaseExceptionClassReference());
+                    writer.writeTextStatement('("Failed to deserialize response", e)');
+                    writer.dedent();
                     writer.writeLine("}");
                     writer.dedent();
-
-                    writer.writeLine(`throw new Exception(${RESPONSE_BODY_VARIABLE_NAME});`);
+                    writer.writeLine("}");
+                    writer.writeLine();
                 });
             },
             streaming: () => undefined,

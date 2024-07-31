@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Text.Json;
 using SeedTrace.Core;
 using SeedTrace.V2.V3;
 
@@ -31,9 +32,21 @@ public class ProblemClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<IEnumerable<LightweightProblemInfoV2>>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<IEnumerable<LightweightProblemInfoV2>>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedTraceException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
@@ -52,9 +65,21 @@ public class ProblemClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<IEnumerable<ProblemInfoV2>>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<IEnumerable<ProblemInfoV2>>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedTraceException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
@@ -73,9 +98,21 @@ public class ProblemClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<ProblemInfoV2>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<ProblemInfoV2>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedTraceException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
@@ -94,8 +131,20 @@ public class ProblemClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<ProblemInfoV2>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<ProblemInfoV2>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedTraceException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Text.Json;
 using SeedExhaustive.Core;
 
 #nullable enable
@@ -28,9 +29,21 @@ public class PrimitiveClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<string>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<string>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedExhaustiveApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task<int> GetAndReturnIntAsync(int request)
@@ -47,9 +60,21 @@ public class PrimitiveClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<int>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<int>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedExhaustiveApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task<long> GetAndReturnLongAsync(long request)
@@ -66,9 +91,21 @@ public class PrimitiveClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<long>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<long>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedExhaustiveApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task<double> GetAndReturnDoubleAsync(double request)
@@ -85,9 +122,21 @@ public class PrimitiveClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<double>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<double>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedExhaustiveApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task<bool> GetAndReturnBoolAsync(bool request)
@@ -104,9 +153,21 @@ public class PrimitiveClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<bool>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<bool>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedExhaustiveApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task<DateTime> GetAndReturnDatetimeAsync(DateTime request)
@@ -123,9 +184,21 @@ public class PrimitiveClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<DateTime>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<DateTime>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedExhaustiveApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task<DateOnly> GetAndReturnDateAsync(DateOnly request)
@@ -142,9 +215,21 @@ public class PrimitiveClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<DateOnly>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<DateOnly>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedExhaustiveApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task<string> GetAndReturnUuidAsync(string request)
@@ -161,9 +246,21 @@ public class PrimitiveClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<string>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<string>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedExhaustiveApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task<string> GetAndReturnBase64Async(string request)
@@ -180,8 +277,20 @@ public class PrimitiveClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<string>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<string>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedExhaustiveApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

@@ -1,15 +1,15 @@
-using SeedCustomAuth;
-using SeedCustomAuth.Core;
+using SeedBasicAuthEnvironmentVariables;
+using SeedBasicAuthEnvironmentVariables.Core;
 
 #nullable enable
 
-namespace SeedCustomAuth.Core;
+namespace SeedBasicAuthEnvironmentVariables;
 
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
 public class UnauthorizedRequest(UnauthorizedRequestErrorBody body)
-    : SeedCustomAuthApiException("UnauthorizedRequest", 401, body)
+    : SeedBasicAuthEnvironmentVariablesApiException("UnauthorizedRequest", 401, body)
 {
     /// <summary>
     /// The body of the response that triggered the exception.

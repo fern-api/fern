@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Text.Json;
 using SeedBearerTokenEnvironmentVariable.Core;
 
 #nullable enable
@@ -30,8 +31,23 @@ public class ServiceClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<string>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<string>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedBearerTokenEnvironmentVariableException(
+                    "Failed to deserialize response",
+                    e
+                );
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedBearerTokenEnvironmentVariableApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

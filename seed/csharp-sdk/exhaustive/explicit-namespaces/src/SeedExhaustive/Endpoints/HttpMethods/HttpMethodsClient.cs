@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Text.Json;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types.Object;
 
@@ -28,9 +29,21 @@ public class HttpMethodsClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<string>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<string>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedExhaustiveApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task<ObjectWithOptionalField> TestPostAsync(ObjectWithRequiredField request)
@@ -47,9 +60,21 @@ public class HttpMethodsClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedExhaustiveApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task<ObjectWithOptionalField> TestPutAsync(
@@ -69,9 +94,21 @@ public class HttpMethodsClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedExhaustiveApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task<ObjectWithOptionalField> TestPatchAsync(
@@ -91,9 +128,21 @@ public class HttpMethodsClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedExhaustiveApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task<bool> TestDeleteAsync(string id)
@@ -109,8 +158,20 @@ public class HttpMethodsClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<bool>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<bool>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedExhaustiveApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }
