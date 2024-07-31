@@ -23,7 +23,7 @@ public class AuthClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/token",
                 Body = request,
@@ -46,7 +46,7 @@ public class AuthClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/token",
                 Body = request,

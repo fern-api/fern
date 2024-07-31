@@ -19,7 +19,7 @@ public class ServiceClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"/file/notification/{notificationId}",
                 Options = options

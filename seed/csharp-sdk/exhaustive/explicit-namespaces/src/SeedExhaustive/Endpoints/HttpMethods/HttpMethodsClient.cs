@@ -20,7 +20,7 @@ public class HttpMethodsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"/http-methods/{id}",
                 Options = options
@@ -42,7 +42,7 @@ public class HttpMethodsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/http-methods",
                 Body = request,
@@ -66,7 +66,7 @@ public class HttpMethodsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Put,
                 Path = $"/http-methods/{id}",
                 Body = request,
@@ -90,7 +90,7 @@ public class HttpMethodsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethodExtensions.Patch,
                 Path = $"/http-methods/{id}",
                 Body = request,
@@ -110,7 +110,7 @@ public class HttpMethodsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Delete,
                 Path = $"/http-methods/{id}",
                 Options = options

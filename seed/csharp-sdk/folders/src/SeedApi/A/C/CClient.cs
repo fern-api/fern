@@ -19,7 +19,7 @@ public class CClient
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "",
                 Options = options

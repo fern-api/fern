@@ -1,6 +1,5 @@
 using System;
 using System.Net.Http;
-using SeedMultiUrlEnvironmentNoDefault.Core;
 
 #nullable enable
 
@@ -9,9 +8,9 @@ namespace SeedMultiUrlEnvironmentNoDefault.Core;
 public partial class RequestOptions
 {
     /// <summary>
-    /// The Environment for the API.
+    /// The Base URL for the API.
     /// </summary>
-    public SeedMultiUrlEnvironmentNoDefaultEnvironment? Environment { get; init; }
+    public string? BaseUrl { get; init; }
 
     /// <summary>
     /// The http client used to make requests.

@@ -1,6 +1,5 @@
 import { csharp } from "@fern-api/csharp-codegen";
 import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
-import { BASE_URL_FIELD_NAME, ENVIRONMENT_FIELD_NAME } from "../options/BaseOptionsGenerator";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { RawClient } from "./RawClient";
 import { EndpointRequest } from "./request/EndpointRequest";
@@ -105,15 +104,10 @@ export class EndpointGenerator {
                 (baseUrlWithId) => baseUrlWithId.id === endpoint.baseUrl
             );
             if (baseUrl != null) {
-                const requestOptionsEnvironment = `${this.context.getRequestOptionsParameterName()}?.${ENVIRONMENT_FIELD_NAME}`;
-                const environmentName = baseUrl.name.pascalCase.safeName;
-                return csharp.codeblock(
-                    `${requestOptionsEnvironment}.${environmentName} ?? _client.Options.Environment.${environmentName}`
-                );
+                return csharp.codeblock(`_client.Options.Environment.${baseUrl.name.pascalCase.safeName}`);
             }
         }
-        const requestOptionsBaseUrl = `${this.context.getRequestOptionsParameterName()}?.${BASE_URL_FIELD_NAME}`;
-        return csharp.codeblock(`${requestOptionsBaseUrl} ?? _client.Options.BaseUrl`);
+        return csharp.codeblock("_client.Options.BaseUrl");
     }
 
     private getEndpointRequest({

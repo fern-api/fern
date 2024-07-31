@@ -2,10 +2,19 @@ import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { BaseOptionsGenerator, OptionArgs } from "./BaseOptionsGenerator";
+import { BaseOptionsGenerator, BASE_URL_FIELD_NAME, BASE_URL_SUMMARY, OptionArgs } from "./BaseOptionsGenerator";
 
 export const REQUEST_OPTIONS_CLASS_NAME = "RequestOptions";
 export const REQUEST_OPTIONS_PARAMETER_NAME = "options";
+
+const BASE_URL_FIELD = csharp.field({
+    access: "public",
+    name: BASE_URL_FIELD_NAME,
+    get: true,
+    init: true,
+    type: csharp.Type.optional(csharp.Type.string()),
+    summary: BASE_URL_SUMMARY
+});
 
 export class RequestOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private baseOptionsGenerator: BaseOptionsGenerator;
@@ -27,7 +36,7 @@ export class RequestOptionsGenerator extends FileGenerator<CSharpFile, SdkCustom
             optional: true,
             includeInitializer: false
         };
-        class_.addField(this.baseOptionsGenerator.getBaseUrlField(optionArgs));
+        class_.addField(BASE_URL_FIELD);
         class_.addField(this.baseOptionsGenerator.getHttpClientField(optionArgs));
         class_.addField(this.baseOptionsGenerator.getMaxRetriesField(optionArgs));
         class_.addField(this.baseOptionsGenerator.getTimeoutField(optionArgs));

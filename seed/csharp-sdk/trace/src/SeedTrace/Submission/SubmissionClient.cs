@@ -26,7 +26,7 @@ public class SubmissionClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"/sessions/create-session/{language}",
                 Options = options
@@ -51,7 +51,7 @@ public class SubmissionClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"/sessions/{sessionId}",
                 Options = options
@@ -73,7 +73,7 @@ public class SubmissionClient
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Delete,
                 Path = $"/sessions/stop/{sessionId}",
                 Options = options
@@ -88,7 +88,7 @@ public class SubmissionClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "/sessions/execution-sessions-state",
                 Options = options

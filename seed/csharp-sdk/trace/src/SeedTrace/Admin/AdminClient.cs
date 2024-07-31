@@ -24,7 +24,7 @@ public class AdminClient
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"/admin/store-test-submission-status/{submissionId}",
                 Body = request,
@@ -42,7 +42,7 @@ public class AdminClient
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"/admin/store-test-submission-status-v2/{submissionId}",
                 Body = request,
@@ -60,7 +60,7 @@ public class AdminClient
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"/admin/store-workspace-submission-status/{submissionId}",
                 Body = request,
@@ -78,7 +78,7 @@ public class AdminClient
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"/admin/store-workspace-submission-status-v2/{submissionId}",
                 Body = request,
@@ -97,7 +97,7 @@ public class AdminClient
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"/admin/store-test-trace/submission/{submissionId}/testCase/{testCaseId}",
                 Body = request,
@@ -116,7 +116,7 @@ public class AdminClient
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path =
                     $"/admin/store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}",
@@ -135,7 +135,7 @@ public class AdminClient
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"/admin/store-workspace-trace/submission/{submissionId}",
                 Body = request,
@@ -153,7 +153,7 @@ public class AdminClient
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"/admin/store-workspace-trace-v2/submission/{submissionId}",
                 Body = request,

@@ -114,7 +114,8 @@ public class RawClient(
 
     private string BuildUrl(BaseApiRequest request)
     {
-        var trimmedBaseUrl = request.BaseUrl.TrimEnd('/');
+        var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl;
+        var trimmedBaseUrl = baseUrl.TrimEnd('/');
         var trimmedBasePath = request.Path.TrimStart('/');
         var url = $"{trimmedBaseUrl}/{trimmedBasePath}";
         if (request.Query.Count <= 0)

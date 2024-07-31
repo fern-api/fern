@@ -27,7 +27,7 @@ public class PathParamClient
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                BaseUrl = options?.BaseUrl ?? _client.Options.BaseUrl,
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}",
                 Options = options
