@@ -35,7 +35,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
             record: true,
             parentClassReference
         });
-        const properties = this.context.flattenedProperties.get(typeId) ?? this.objectDeclaration.properties;
+        const properties = [...this.objectDeclaration.properties]; // todo: add properties from parent class
         properties.forEach((property) => {
             const annotations: csharp.Annotation[] = [];
             const maybeUndiscriminatedUnion = this.context.getAsUndiscriminatedUnionTypeDeclaration(property.valueType);
