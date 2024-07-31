@@ -45,7 +45,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                     uint: (uintExample) => ts.factory.createNumericLiteral(uintExample),
                     uint64: (uint64Example) => ts.factory.createNumericLiteral(uint64Example),
                     float: (floatExample) => ts.factory.createNumericLiteral(floatExample),
-                    bigInteger: (bigIntegerExample) => ts.factory.createNumericLiteral(bigIntegerExample),
+                    bigInteger: (bigIntegerExample) => ts.factory.createStringLiteral(bigIntegerExample),
                     base64: (base64Example) => ts.factory.createStringLiteral(base64Example),
                     boolean: (booleanExample) => (booleanExample ? ts.factory.createTrue() : ts.factory.createFalse()),
                     uuid: (uuidExample) => ts.factory.createStringLiteral(uuidExample),
