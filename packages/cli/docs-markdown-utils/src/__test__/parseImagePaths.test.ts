@@ -105,7 +105,7 @@ describe("parseImagePaths", () => {
         const page = `---\nimage: "path/to/image.png"\n---`;
         const result = parseImagePaths(page, PATHS);
         expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/image.png"]);
-        expect(result.markdown.trim()).toEqual(`---\nimage: /Volume/git/fern/my/docs/folder/path/to/image.png\n---`);
+        expect(result.markdown.trim()).toEqual("---\nimage: /Volume/git/fern/my/docs/folder/path/to/image.png\n---");
     });
 
     it("should parse the same result when run twice for frontmatter text", () => {
