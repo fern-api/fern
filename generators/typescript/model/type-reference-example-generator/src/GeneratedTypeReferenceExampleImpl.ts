@@ -145,7 +145,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
             case "float":
                 return primitiveExample.float;
             case "bigInteger":
-                return primitiveExample.bigInteger;
+                return `"${primitiveExample.bigInteger}"`;
             case "base64":
                 return `"${primitiveExample.base64}"`;
             default:
