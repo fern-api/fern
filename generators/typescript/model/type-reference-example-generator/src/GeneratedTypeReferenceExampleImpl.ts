@@ -164,7 +164,6 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
     }): ts.PropertyName {
         return ExampleTypeReferenceShape._visit<ts.PropertyName>(example.shape, {
             primitive: (primitiveExample) =>
-                // uint, uint64, float, base64, bigIntegerts
                 ExamplePrimitive._visit<ts.PropertyName>(primitiveExample, {
                     string: (stringExample) => ts.factory.createStringLiteral(stringExample.original),
                     integer: (integerExample) => ts.factory.createNumericLiteral(integerExample),

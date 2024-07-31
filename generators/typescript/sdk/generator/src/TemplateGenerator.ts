@@ -176,7 +176,6 @@ export class TemplateGenerator {
         return typeReference._visit<FDRAPIV1Read.TypeReference>({
             primitive: (primitive) =>
                 FDRAPIV1Read.TypeReference.primitive(
-                    // uint, uint64, float
                     PrimitiveTypeV1._visit<FDRAPIV1Read.PrimitiveType>(primitive.v1, {
                         integer: () => FDRAPIV1Read.PrimitiveType.integer({}),
                         string: () => FDRAPIV1Read.PrimitiveType.string({}),
