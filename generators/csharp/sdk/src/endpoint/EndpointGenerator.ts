@@ -204,7 +204,9 @@ export class EndpointGenerator {
                 writer.writeLine("}");
                 writer.dedent();
                 writer.writeLine("}");
-                writer.writeLine("catch (JsonException)");
+                writer.writeLine("catch (");
+                writer.writeNode(this.context.getJsonExceptionClassReference());
+                writer.writeLine(")");
                 writer.writeLine("{");
                 writer.indent();
                 writer.writeLine("// unable to map error response, throwing generic error");

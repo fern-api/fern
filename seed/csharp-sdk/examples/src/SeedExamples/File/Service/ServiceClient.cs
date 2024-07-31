@@ -51,7 +51,7 @@ public class ServiceClient
                     throw new NotFoundError(JsonUtils.Deserialize<string>(responseBody));
             }
         }
-        catch (JsonException)
+        catch (JsonException e)
         {
             // unable to map error response, throwing generic error
         }

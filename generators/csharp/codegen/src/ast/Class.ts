@@ -170,10 +170,10 @@ export class Class extends AstNode {
             const primaryConstructor = this.primaryConstructor;
             writer.write("(");
             primaryConstructor.parameters.forEach((parameter, index) => {
-                parameter.write(writer);
-                if (index < primaryConstructor.parameters.length - 1) {
-                    writer.write(", ");
+                if (index > 0) {
+                    writer.write(",");
                 }
+                parameter.write(writer);
             });
             writer.write(")");
         }

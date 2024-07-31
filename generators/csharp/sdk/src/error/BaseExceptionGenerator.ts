@@ -4,10 +4,6 @@ import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export class BaseExceptionGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
-    constructor(context: SdkGeneratorContext) {
-        super(context);
-    }
-
     public doGenerate(): CSharpFile {
         const class_ = csharp.class_({
             ...this.context.getBaseExceptionClassReference(),

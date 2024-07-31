@@ -81,7 +81,7 @@ public class ImdbClient
                     throw new MovieDoesNotExistError(JsonUtils.Deserialize<string>(responseBody));
             }
         }
-        catch (JsonException)
+        catch (JsonException e)
         {
             // unable to map error response, throwing generic error
         }
