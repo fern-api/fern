@@ -1076,7 +1076,7 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "templateString": "requestrequest=$FERN_INPUT",
+                            "templateString": "request=$FERN_INPUT",
                             "values": {
                                 "SUNNY": "\"SUNNY\"",
                                 "CLOUDY": "\"CLOUDY\"",
@@ -1135,7 +1135,7 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "templateString": "requestrequest=$FERN_INPUT",
+                                "templateString": "request=$FERN_INPUT",
                                 "values": {
                                     "SUNNY": "\"SUNNY\"",
                                     "CLOUDY": "\"CLOUDY\"",
