@@ -15,7 +15,7 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Task<MyResponse> HelloAsync(MyRequest request, RequestOptions? options)
+    public async Task<MyResponse> HelloAsync(MyRequest request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

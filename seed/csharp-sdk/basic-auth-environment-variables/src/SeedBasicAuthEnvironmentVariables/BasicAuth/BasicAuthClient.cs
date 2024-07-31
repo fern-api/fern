@@ -17,7 +17,7 @@ public class BasicAuthClient
     /// <summary>
     /// GET request with basic auth scheme
     /// </summary>
-    public async Task<bool> GetWithBasicAuthAsync(RequestOptions? options)
+    public async Task<bool> GetWithBasicAuthAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -39,7 +39,7 @@ public class BasicAuthClient
     /// <summary>
     /// POST request with basic auth scheme
     /// </summary>
-    public async Task<bool> PostWithBasicAuthAsync(object request, RequestOptions? options)
+    public async Task<bool> PostWithBasicAuthAsync(object request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

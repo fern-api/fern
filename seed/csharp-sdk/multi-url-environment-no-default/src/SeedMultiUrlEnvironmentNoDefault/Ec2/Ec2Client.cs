@@ -15,7 +15,7 @@ public class Ec2Client
         _client = client;
     }
 
-    public async Task BootInstanceAsync(BootInstanceRequest request, RequestOptions? options)
+    public async Task BootInstanceAsync(BootInstanceRequest request, RequestOptions? options = null)
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

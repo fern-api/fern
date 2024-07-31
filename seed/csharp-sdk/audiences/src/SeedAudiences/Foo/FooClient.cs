@@ -15,7 +15,7 @@ public class FooClient
         _client = client;
     }
 
-    public async Task<ImportingType> FindAsync(FindRequest request, RequestOptions? options)
+    public async Task<ImportingType> FindAsync(FindRequest request, RequestOptions? options = null)
     {
         var _query = new Dictionary<string, object>() { };
         if (request.OptionalString != null)

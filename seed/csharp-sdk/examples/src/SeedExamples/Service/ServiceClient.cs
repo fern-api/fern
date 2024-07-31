@@ -15,7 +15,7 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Task<Movie> GetMovieAsync(string movieId, RequestOptions? options)
+    public async Task<Movie> GetMovieAsync(string movieId, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -34,7 +34,7 @@ public class ServiceClient
         throw new Exception(responseBody);
     }
 
-    public async Task<string> CreateMovieAsync(Movie request, RequestOptions? options)
+    public async Task<string> CreateMovieAsync(Movie request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -54,7 +54,10 @@ public class ServiceClient
         throw new Exception(responseBody);
     }
 
-    public async Task<object> GetMetadataAsync(GetMetadataRequest request, RequestOptions? options)
+    public async Task<object> GetMetadataAsync(
+        GetMetadataRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         _query["tag"] = request.Tag;
@@ -85,7 +88,7 @@ public class ServiceClient
         throw new Exception(responseBody);
     }
 
-    public async Task<Response> GetResponseAsync(RequestOptions? options)
+    public async Task<Response> GetResponseAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

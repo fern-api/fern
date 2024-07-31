@@ -15,7 +15,7 @@ public class PathClient
         _client = client;
     }
 
-    public async Task<SendResponse> SendAsync(string id, RequestOptions? options)
+    public async Task<SendResponse> SendAsync(string id, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

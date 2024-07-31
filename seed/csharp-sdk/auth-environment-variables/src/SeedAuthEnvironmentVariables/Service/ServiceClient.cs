@@ -18,7 +18,7 @@ public class ServiceClient
     /// <summary>
     /// GET request with custom api key
     /// </summary>
-    public async Task<string> GetWithApiKeyAsync(RequestOptions? options)
+    public async Task<string> GetWithApiKeyAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -40,7 +40,10 @@ public class ServiceClient
     /// <summary>
     /// GET request with custom api key
     /// </summary>
-    public async Task<string> GetWithHeaderAsync(HeaderAuthRequest request, RequestOptions? options)
+    public async Task<string> GetWithHeaderAsync(
+        HeaderAuthRequest request,
+        RequestOptions? options = null
+    )
     {
         var _headers = new Dictionary<string, string>()
         {

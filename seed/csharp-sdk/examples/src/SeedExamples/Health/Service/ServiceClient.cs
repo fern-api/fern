@@ -17,7 +17,7 @@ public class ServiceClient
     /// <summary>
     /// This endpoint checks the health of a resource.
     /// </summary>
-    public async Task CheckAsync(string id, RequestOptions? options)
+    public async Task CheckAsync(string id, RequestOptions? options = null)
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -33,7 +33,7 @@ public class ServiceClient
     /// <summary>
     /// This endpoint checks the health of the service.
     /// </summary>
-    public async Task<bool> PingAsync(RequestOptions? options)
+    public async Task<bool> PingAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

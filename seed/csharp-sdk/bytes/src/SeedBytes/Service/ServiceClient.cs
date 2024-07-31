@@ -14,7 +14,7 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Task UploadAsync(Stream request, RequestOptions? options)
+    public async Task UploadAsync(Stream request, RequestOptions? options = null)
     {
         await _client.MakeRequestAsync(
             new RawClient.StreamApiRequest

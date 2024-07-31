@@ -20,7 +20,7 @@ public class SubmissionClient
     /// </summary>
     public async Task<ExecutionSessionResponse> CreateExecutionSessionAsync(
         Language language,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -45,7 +45,7 @@ public class SubmissionClient
     /// </summary>
     public async Task<ExecutionSessionResponse?> GetExecutionSessionAsync(
         string sessionId,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -68,7 +68,7 @@ public class SubmissionClient
     /// <summary>
     /// Stops execution session.
     /// </summary>
-    public async Task StopExecutionSessionAsync(string sessionId, RequestOptions? options)
+    public async Task StopExecutionSessionAsync(string sessionId, RequestOptions? options = null)
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -82,7 +82,7 @@ public class SubmissionClient
     }
 
     public async Task<GetExecutionSessionStateResponse> GetExecutionSessionsStateAsync(
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(

@@ -14,7 +14,7 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Task GetTextAsync(RequestOptions? options)
+    public async Task GetTextAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

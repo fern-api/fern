@@ -15,7 +15,7 @@ public class UserClient
         _client = client;
     }
 
-    public async Task<User> GetUserAsync(string userId, RequestOptions? options)
+    public async Task<User> GetUserAsync(string userId, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

@@ -17,7 +17,7 @@ public class CustomAuthClient
     /// <summary>
     /// GET request with custom auth scheme
     /// </summary>
-    public async Task<bool> GetWithCustomAuthAsync(RequestOptions? options)
+    public async Task<bool> GetWithCustomAuthAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -39,7 +39,7 @@ public class CustomAuthClient
     /// <summary>
     /// POST request with custom auth scheme
     /// </summary>
-    public async Task<bool> PostWithCustomAuthAsync(object request, RequestOptions? options)
+    public async Task<bool> PostWithCustomAuthAsync(object request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

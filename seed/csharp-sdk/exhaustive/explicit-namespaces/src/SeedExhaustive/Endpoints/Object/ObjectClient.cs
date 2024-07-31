@@ -17,7 +17,7 @@ public class ObjectClient
 
     public async Task<ObjectWithOptionalField> GetAndReturnWithOptionalFieldAsync(
         ObjectWithOptionalField request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -40,7 +40,7 @@ public class ObjectClient
 
     public async Task<ObjectWithRequiredField> GetAndReturnWithRequiredFieldAsync(
         ObjectWithRequiredField request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -63,7 +63,7 @@ public class ObjectClient
 
     public async Task<ObjectWithMapOfMap> GetAndReturnWithMapOfMapAsync(
         ObjectWithMapOfMap request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -86,7 +86,7 @@ public class ObjectClient
 
     public async Task<NestedObjectWithOptionalField> GetAndReturnNestedWithOptionalFieldAsync(
         NestedObjectWithOptionalField request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -110,7 +110,7 @@ public class ObjectClient
     public async Task<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsync(
         string string_,
         NestedObjectWithRequiredField request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -133,7 +133,7 @@ public class ObjectClient
 
     public async Task<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsListAsync(
         IEnumerable<NestedObjectWithRequiredField> request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(

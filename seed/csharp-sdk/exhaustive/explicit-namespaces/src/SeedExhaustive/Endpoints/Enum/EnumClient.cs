@@ -17,7 +17,7 @@ public class EnumClient
 
     public async Task<WeatherReport> GetAndReturnEnumAsync(
         WeatherReport request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(

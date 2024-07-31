@@ -15,7 +15,7 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Task<object> GetResourceAsync(string resourceId, RequestOptions? options)
+    public async Task<object> GetResourceAsync(string resourceId, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -36,7 +36,7 @@ public class ServiceClient
 
     public async Task<IEnumerable<object>> ListResourcesAsync(
         ListResourcesRequest request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };

@@ -17,7 +17,7 @@ public class AuthClient
 
     public async Task<TokenResponse> GetTokenWithClientCredentialsAsync(
         GetTokenRequest request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -40,7 +40,7 @@ public class AuthClient
 
     public async Task<TokenResponse> RefreshTokenAsync(
         RefreshTokenRequest request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(

@@ -15,7 +15,7 @@ public class InlinedRequestClient
         _client = client;
     }
 
-    public async Task SendAsync(SendEnumInlinedRequest request, RequestOptions? options)
+    public async Task SendAsync(SendEnumInlinedRequest request, RequestOptions? options = null)
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

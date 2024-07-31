@@ -15,7 +15,10 @@ public class PaymentClient
         _client = client;
     }
 
-    public async Task<string> CreateAsync(CreatePaymentRequest request, RequestOptions? options)
+    public async Task<string> CreateAsync(
+        CreatePaymentRequest request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -35,7 +38,7 @@ public class PaymentClient
         throw new Exception(responseBody);
     }
 
-    public async Task DeleteAsync(string paymentId, RequestOptions? options)
+    public async Task DeleteAsync(string paymentId, RequestOptions? options = null)
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

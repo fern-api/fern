@@ -20,7 +20,7 @@ public partial class SeedValidationClient
         );
     }
 
-    public async Task<Type> CreateAsync(CreateRequest request, RequestOptions? options)
+    public async Task<Type> CreateAsync(CreateRequest request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -40,7 +40,7 @@ public partial class SeedValidationClient
         throw new Exception(responseBody);
     }
 
-    public async Task<Type> GetAsync(GetRequest request, RequestOptions? options)
+    public async Task<Type> GetAsync(GetRequest request, RequestOptions? options = null)
     {
         var _query = new Dictionary<string, object>() { };
         _query["decimal"] = request.Decimal.ToString();

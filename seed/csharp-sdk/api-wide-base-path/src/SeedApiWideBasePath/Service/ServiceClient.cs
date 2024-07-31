@@ -19,7 +19,7 @@ public class ServiceClient
         string serviceParam,
         string resourceParam,
         int endpointParam,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         await _client.MakeRequestAsync(

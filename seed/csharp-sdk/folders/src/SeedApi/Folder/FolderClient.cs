@@ -18,7 +18,7 @@ public class FolderClient
 
     public ServiceClient Service { get; }
 
-    public async Task FooAsync(RequestOptions? options)
+    public async Task FooAsync(RequestOptions? options = null)
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

@@ -14,7 +14,7 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Task NopAsync(string id, string nestedId, RequestOptions? options)
+    public async Task NopAsync(string id, string nestedId, RequestOptions? options = null)
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

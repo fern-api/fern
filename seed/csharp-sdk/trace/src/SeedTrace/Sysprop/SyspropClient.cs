@@ -18,7 +18,7 @@ public class SyspropClient
     public async Task SetNumWarmInstancesAsync(
         Language language,
         int numWarmInstances,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         await _client.MakeRequestAsync(
@@ -32,7 +32,9 @@ public class SyspropClient
         );
     }
 
-    public async Task<Dictionary<Language, int>> GetNumWarmInstancesAsync(RequestOptions? options)
+    public async Task<Dictionary<Language, int>> GetNumWarmInstancesAsync(
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

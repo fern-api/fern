@@ -15,7 +15,10 @@ public class UserClient
         _client = client;
     }
 
-    public async Task<User> GetUsernameAsync(GetUsersRequest request, RequestOptions? options)
+    public async Task<User> GetUsernameAsync(
+        GetUsersRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         _query["limit"] = request.Limit.ToString();

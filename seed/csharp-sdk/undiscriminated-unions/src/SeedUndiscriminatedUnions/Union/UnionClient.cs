@@ -34,7 +34,7 @@ public class UnionClient
             IEnumerable<IEnumerable<int>>,
             HashSet<string>
         > request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -65,7 +65,7 @@ public class UnionClient
     }
 
     public async Task<Dictionary<OneOf<KeyType, string>, string>> GetMetadataAsync(
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(

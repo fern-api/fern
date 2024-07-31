@@ -14,7 +14,7 @@ public class UnionClient
         _client = client;
     }
 
-    public async Task<object> GetAndReturnUnionAsync(object request, RequestOptions? options)
+    public async Task<object> GetAndReturnUnionAsync(object request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

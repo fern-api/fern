@@ -15,7 +15,10 @@ public class AuthClient
         _client = client;
     }
 
-    public async Task<TokenResponse> GetTokenAsync(GetTokenRequest request, RequestOptions? options)
+    public async Task<TokenResponse> GetTokenAsync(
+        GetTokenRequest request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

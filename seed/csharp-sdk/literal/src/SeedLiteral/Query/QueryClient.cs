@@ -17,7 +17,7 @@ public class QueryClient
 
     public async Task<SendResponse> SendAsync(
         SendLiteralsInQueryRequest request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };

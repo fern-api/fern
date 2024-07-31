@@ -38,7 +38,7 @@ public partial class SeedExamplesClient
 
     public TypesClient Types { get; init; }
 
-    public async Task<string> EchoAsync(string request, RequestOptions? options)
+    public async Task<string> EchoAsync(string request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

@@ -22,7 +22,7 @@ public class V2Client
 
     public V3Client V3 { get; }
 
-    public async Task TestAsync(RequestOptions? options)
+    public async Task TestAsync(RequestOptions? options = null)
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

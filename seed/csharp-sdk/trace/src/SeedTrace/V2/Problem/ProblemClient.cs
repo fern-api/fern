@@ -19,7 +19,7 @@ public class ProblemClient
     /// Returns lightweight versions of all problems
     /// </summary>
     public async Task<IEnumerable<LightweightProblemInfoV2>> GetLightweightProblemsAsync(
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -42,7 +42,7 @@ public class ProblemClient
     /// <summary>
     /// Returns latest versions of all problems
     /// </summary>
-    public async Task<IEnumerable<ProblemInfoV2>> GetProblemsAsync(RequestOptions? options)
+    public async Task<IEnumerable<ProblemInfoV2>> GetProblemsAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -66,7 +66,7 @@ public class ProblemClient
     /// </summary>
     public async Task<ProblemInfoV2> GetLatestProblemAsync(
         string problemId,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -92,7 +92,7 @@ public class ProblemClient
     public async Task<ProblemInfoV2> GetProblemVersionAsync(
         string problemId,
         int problemVersion,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(

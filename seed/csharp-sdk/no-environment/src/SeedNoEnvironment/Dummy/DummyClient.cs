@@ -14,7 +14,7 @@ public class DummyClient
         _client = client;
     }
 
-    public async Task<string> GetDummyAsync(RequestOptions? options)
+    public async Task<string> GetDummyAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

@@ -15,7 +15,10 @@ public class ReqWithHeadersClient
         _client = client;
     }
 
-    public async Task GetWithCustomHeaderAsync(ReqWithHeaders request, RequestOptions? options)
+    public async Task GetWithCustomHeaderAsync(
+        ReqWithHeaders request,
+        RequestOptions? options = null
+    )
     {
         var _headers = new Dictionary<string, string>()
         {

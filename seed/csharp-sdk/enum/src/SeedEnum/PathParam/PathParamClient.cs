@@ -21,7 +21,7 @@ public class PathParamClient
         Operand? maybeOperand,
         OneOf<Color, Operand> operandOrColor,
         OneOf<Color, Operand>? maybeOperandOrColor,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         await _client.MakeRequestAsync(

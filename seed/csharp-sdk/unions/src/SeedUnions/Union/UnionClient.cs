@@ -14,7 +14,7 @@ public class UnionClient
         _client = client;
     }
 
-    public async Task<object> GetAsync(string id, RequestOptions? options)
+    public async Task<object> GetAsync(string id, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -33,7 +33,7 @@ public class UnionClient
         throw new Exception(responseBody);
     }
 
-    public async Task<bool> UpdateAsync(object request, RequestOptions? options)
+    public async Task<bool> UpdateAsync(object request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

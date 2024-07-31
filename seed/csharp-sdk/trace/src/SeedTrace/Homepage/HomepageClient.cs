@@ -14,7 +14,7 @@ public class HomepageClient
         _client = client;
     }
 
-    public async Task<IEnumerable<string>> GetHomepageProblemsAsync(RequestOptions? options)
+    public async Task<IEnumerable<string>> GetHomepageProblemsAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -33,7 +33,10 @@ public class HomepageClient
         throw new Exception(responseBody);
     }
 
-    public async Task SetHomepageProblemsAsync(IEnumerable<string> request, RequestOptions? options)
+    public async Task SetHomepageProblemsAsync(
+        IEnumerable<string> request,
+        RequestOptions? options = null
+    )
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

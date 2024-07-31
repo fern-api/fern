@@ -18,7 +18,7 @@ public class ParamsClient
     /// <summary>
     /// GET with path param
     /// </summary>
-    public async Task<string> GetWithPathAsync(string param, RequestOptions? options)
+    public async Task<string> GetWithPathAsync(string param, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -40,7 +40,7 @@ public class ParamsClient
     /// <summary>
     /// GET with query param
     /// </summary>
-    public async Task GetWithQueryAsync(GetWithQuery request, RequestOptions? options)
+    public async Task GetWithQueryAsync(GetWithQuery request, RequestOptions? options = null)
     {
         var _query = new Dictionary<string, object>() { };
         _query["query"] = request.Query;
@@ -62,7 +62,7 @@ public class ParamsClient
     /// </summary>
     public async Task GetWithAllowMultipleQueryAsync(
         GetWithMultipleQuery request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -86,7 +86,7 @@ public class ParamsClient
     public async Task GetWithPathAndQueryAsync(
         string param,
         GetWithPathAndQuery request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -109,7 +109,7 @@ public class ParamsClient
     public async Task<string> ModifyWithPathAsync(
         string param,
         string request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(

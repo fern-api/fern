@@ -18,7 +18,10 @@ public class ImdbClient
     /// <summary>
     /// Add a movie to the database
     /// </summary>
-    public async Task<string> CreateMovieAsync(CreateMovieRequest request, RequestOptions? options)
+    public async Task<string> CreateMovieAsync(
+        CreateMovieRequest request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -38,7 +41,7 @@ public class ImdbClient
         throw new Exception(responseBody);
     }
 
-    public async Task<Movie> GetMovieAsync(string movieId, RequestOptions? options)
+    public async Task<Movie> GetMovieAsync(string movieId, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

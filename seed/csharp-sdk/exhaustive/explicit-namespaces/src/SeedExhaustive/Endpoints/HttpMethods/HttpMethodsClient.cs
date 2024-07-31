@@ -15,7 +15,7 @@ public class HttpMethodsClient
         _client = client;
     }
 
-    public async Task<string> TestGetAsync(string id, RequestOptions? options)
+    public async Task<string> TestGetAsync(string id, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -36,7 +36,7 @@ public class HttpMethodsClient
 
     public async Task<ObjectWithOptionalField> TestPostAsync(
         ObjectWithRequiredField request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -60,7 +60,7 @@ public class HttpMethodsClient
     public async Task<ObjectWithOptionalField> TestPutAsync(
         string id,
         ObjectWithRequiredField request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -84,7 +84,7 @@ public class HttpMethodsClient
     public async Task<ObjectWithOptionalField> TestPatchAsync(
         string id,
         ObjectWithOptionalField request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -105,7 +105,7 @@ public class HttpMethodsClient
         throw new Exception(responseBody);
     }
 
-    public async Task<bool> TestDeleteAsync(string id, RequestOptions? options)
+    public async Task<bool> TestDeleteAsync(string id, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

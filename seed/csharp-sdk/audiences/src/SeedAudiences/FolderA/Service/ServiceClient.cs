@@ -15,7 +15,7 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Task<Response> GetDirectThreadAsync(RequestOptions? options)
+    public async Task<Response> GetDirectThreadAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

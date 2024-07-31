@@ -18,7 +18,7 @@ public class UsersClient
 
     public async Task<ListUsersPaginationResponse> ListWithCursorPaginationAsync(
         ListUsersCursorPaginationRequest request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -58,7 +58,7 @@ public class UsersClient
 
     public async Task<ListUsersPaginationResponse> ListWithBodyCursorPaginationAsync(
         ListUsersBodyCursorPaginationRequest request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -81,7 +81,7 @@ public class UsersClient
 
     public async Task<ListUsersPaginationResponse> ListWithOffsetPaginationAsync(
         ListUsersOffsetPaginationRequest request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -121,7 +121,7 @@ public class UsersClient
 
     public async Task<ListUsersPaginationResponse> ListWithBodyOffsetPaginationAsync(
         ListUsersBodyOffsetPaginationRequest request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -144,7 +144,7 @@ public class UsersClient
 
     public async Task<ListUsersPaginationResponse> ListWithOffsetStepPaginationAsync(
         ListUsersOffsetStepPaginationRequest request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -180,7 +180,7 @@ public class UsersClient
 
     public async Task<ListUsersExtendedResponse> ListWithExtendedResultsAsync(
         ListUsersExtendedRequest request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -208,7 +208,7 @@ public class UsersClient
 
     public async Task<UsernameCursor> ListUsernamesAsync(
         ListUsernamesRequest request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -236,7 +236,7 @@ public class UsersClient
 
     public async Task<UsernameContainer> ListWithGlobalConfigAsync(
         ListWithGlobalConfigRequest request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };

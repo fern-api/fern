@@ -16,7 +16,7 @@ public class OptionalClient
 
     public async Task<string> SendOptionalBodyAsync(
         Dictionary<string, object?>? request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(

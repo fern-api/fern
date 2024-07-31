@@ -14,7 +14,10 @@ public class PrimitiveClient
         _client = client;
     }
 
-    public async Task<string> GetAndReturnStringAsync(string request, RequestOptions? options)
+    public async Task<string> GetAndReturnStringAsync(
+        string request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -34,7 +37,7 @@ public class PrimitiveClient
         throw new Exception(responseBody);
     }
 
-    public async Task<int> GetAndReturnIntAsync(int request, RequestOptions? options)
+    public async Task<int> GetAndReturnIntAsync(int request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -54,7 +57,7 @@ public class PrimitiveClient
         throw new Exception(responseBody);
     }
 
-    public async Task<long> GetAndReturnLongAsync(long request, RequestOptions? options)
+    public async Task<long> GetAndReturnLongAsync(long request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -74,7 +77,10 @@ public class PrimitiveClient
         throw new Exception(responseBody);
     }
 
-    public async Task<double> GetAndReturnDoubleAsync(double request, RequestOptions? options)
+    public async Task<double> GetAndReturnDoubleAsync(
+        double request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -94,7 +100,7 @@ public class PrimitiveClient
         throw new Exception(responseBody);
     }
 
-    public async Task<bool> GetAndReturnBoolAsync(bool request, RequestOptions? options)
+    public async Task<bool> GetAndReturnBoolAsync(bool request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -114,7 +120,10 @@ public class PrimitiveClient
         throw new Exception(responseBody);
     }
 
-    public async Task<DateTime> GetAndReturnDatetimeAsync(DateTime request, RequestOptions? options)
+    public async Task<DateTime> GetAndReturnDatetimeAsync(
+        DateTime request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -134,7 +143,10 @@ public class PrimitiveClient
         throw new Exception(responseBody);
     }
 
-    public async Task<DateOnly> GetAndReturnDateAsync(DateOnly request, RequestOptions? options)
+    public async Task<DateOnly> GetAndReturnDateAsync(
+        DateOnly request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -154,7 +166,7 @@ public class PrimitiveClient
         throw new Exception(responseBody);
     }
 
-    public async Task<string> GetAndReturnUuidAsync(string request, RequestOptions? options)
+    public async Task<string> GetAndReturnUuidAsync(string request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -174,7 +186,10 @@ public class PrimitiveClient
         throw new Exception(responseBody);
     }
 
-    public async Task<string> GetAndReturnBase64Async(string request, RequestOptions? options)
+    public async Task<string> GetAndReturnBase64Async(
+        string request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

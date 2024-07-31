@@ -15,7 +15,7 @@ public class PackageClient
         _client = client;
     }
 
-    public async Task TestAsync(TestRequest request, RequestOptions? options)
+    public async Task TestAsync(TestRequest request, RequestOptions? options = null)
     {
         var _query = new Dictionary<string, object>() { };
         _query["for"] = request.For;

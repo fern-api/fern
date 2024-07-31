@@ -16,7 +16,7 @@ public class QueryParamClient
         _client = client;
     }
 
-    public async Task SendAsync(SendEnumAsQueryParamRequest request, RequestOptions? options)
+    public async Task SendAsync(SendEnumAsQueryParamRequest request, RequestOptions? options = null)
     {
         var _query = new Dictionary<string, object>() { };
         _query["operand"] = JsonSerializer.Serialize(request.Operand);
@@ -43,7 +43,7 @@ public class QueryParamClient
 
     public async Task SendListAsync(
         SendEnumListAsQueryParamRequest request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };

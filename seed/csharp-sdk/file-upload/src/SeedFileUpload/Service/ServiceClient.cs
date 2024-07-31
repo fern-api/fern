@@ -15,7 +15,7 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Task PostAsync(MyRequest request, RequestOptions? options)
+    public async Task PostAsync(MyRequest request, RequestOptions? options = null)
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -28,7 +28,7 @@ public class ServiceClient
         );
     }
 
-    public async Task JustFileAsync(JustFileRequet request, RequestOptions? options)
+    public async Task JustFileAsync(JustFileRequet request, RequestOptions? options = null)
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -43,7 +43,7 @@ public class ServiceClient
 
     public async Task JustFileWithQueryParamsAsync(
         JustFileWithQueryParamsRequet request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };

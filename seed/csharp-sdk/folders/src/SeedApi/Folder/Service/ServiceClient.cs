@@ -14,7 +14,7 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Task EndpointAsync(RequestOptions? options)
+    public async Task EndpointAsync(RequestOptions? options = null)
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -27,7 +27,7 @@ public class ServiceClient
         );
     }
 
-    public async Task UnknownRequestAsync(object request, RequestOptions? options)
+    public async Task UnknownRequestAsync(object request, RequestOptions? options = null)
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

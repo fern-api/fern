@@ -17,7 +17,7 @@ public class HeadersClient
 
     public async Task<SendResponse> SendAsync(
         SendLiteralsInHeadersRequest request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var _headers = new Dictionary<string, string>()

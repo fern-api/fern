@@ -15,7 +15,7 @@ public class DummyClient
         _client = client;
     }
 
-    public async Task GenerateAsync(GenerateRequest request, RequestOptions? options)
+    public async Task GenerateAsync(GenerateRequest request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

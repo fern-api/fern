@@ -21,7 +21,7 @@ public class InlinedRequestsClient
     /// </summary>
     public async Task<ObjectWithOptionalField> PostWithObjectBodyandResponseAsync(
         PostWithObjectBody request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(

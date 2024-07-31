@@ -17,7 +17,7 @@ public class S3Client
 
     public async Task<string> GetPresignedUrlAsync(
         GetPresignedUrlRequest request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(

@@ -17,7 +17,7 @@ public class PropertyBasedErrorClient
     /// <summary>
     /// GET request that always throws an error
     /// </summary>
-    public async Task<string> ThrowErrorAsync(RequestOptions? options)
+    public async Task<string> ThrowErrorAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

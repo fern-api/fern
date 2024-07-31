@@ -17,7 +17,7 @@ public class MigrationClient
 
     public async Task<IEnumerable<Migration>> GetAttemptedMigrationsAsync(
         GetAttemptedMigrationsRequest request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var _headers = new Dictionary<string, string>()

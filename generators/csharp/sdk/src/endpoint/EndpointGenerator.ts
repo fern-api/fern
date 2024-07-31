@@ -54,7 +54,8 @@ export class EndpointGenerator {
         parameters.push(
             csharp.parameter({
                 type: csharp.Type.optional(csharp.Type.reference(this.context.getRequestOptionsClassReference())),
-                name: this.context.getRequestOptionsParameterName()
+                name: this.context.getRequestOptionsParameterName(),
+                initializer: "null"
             })
         );
         const return_ = this.getEndpointReturnType({ endpoint });

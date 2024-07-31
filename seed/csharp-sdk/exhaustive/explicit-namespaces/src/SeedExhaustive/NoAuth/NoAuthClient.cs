@@ -17,7 +17,7 @@ public class NoAuthClient
     /// <summary>
     /// POST request with no auth
     /// </summary>
-    public async Task<bool> PostWithNoAuthAsync(object request, RequestOptions? options)
+    public async Task<bool> PostWithNoAuthAsync(object request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

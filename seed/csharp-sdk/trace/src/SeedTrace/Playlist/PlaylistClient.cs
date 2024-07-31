@@ -21,7 +21,7 @@ public class PlaylistClient
     public async Task<Playlist> CreatePlaylistAsync(
         int serviceParam,
         CreatePlaylistRequest request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -57,7 +57,7 @@ public class PlaylistClient
     public async Task<IEnumerable<Playlist>> GetPlaylistsAsync(
         int serviceParam,
         GetPlaylistsRequest request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -93,7 +93,7 @@ public class PlaylistClient
     public async Task<Playlist> GetPlaylistAsync(
         int serviceParam,
         string playlistId,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -120,7 +120,7 @@ public class PlaylistClient
         int serviceParam,
         string playlistId,
         UpdatePlaylistRequest? request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -147,7 +147,7 @@ public class PlaylistClient
     public async Task DeletePlaylistAsync(
         int serviceParam,
         string playlistId,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         await _client.MakeRequestAsync(

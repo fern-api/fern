@@ -14,7 +14,7 @@ public class BClient
         _client = client;
     }
 
-    public async Task FooAsync(RequestOptions? options)
+    public async Task FooAsync(RequestOptions? options = null)
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

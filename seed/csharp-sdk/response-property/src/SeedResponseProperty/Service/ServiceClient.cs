@@ -15,7 +15,7 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Task<Response> GetMovieAsync(string request, RequestOptions? options)
+    public async Task<Response> GetMovieAsync(string request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -35,7 +35,7 @@ public class ServiceClient
         throw new Exception(responseBody);
     }
 
-    public async Task<Response> GetMovieDocsAsync(string request, RequestOptions? options)
+    public async Task<Response> GetMovieDocsAsync(string request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -55,7 +55,10 @@ public class ServiceClient
         throw new Exception(responseBody);
     }
 
-    public async Task<StringResponse> GetMovieNameAsync(string request, RequestOptions? options)
+    public async Task<StringResponse> GetMovieNameAsync(
+        string request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -75,7 +78,10 @@ public class ServiceClient
         throw new Exception(responseBody);
     }
 
-    public async Task<Response> GetMovieMetadataAsync(string request, RequestOptions? options)
+    public async Task<Response> GetMovieMetadataAsync(
+        string request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -95,7 +101,10 @@ public class ServiceClient
         throw new Exception(responseBody);
     }
 
-    public async Task<Response?> GetOptionalMovieAsync(string request, RequestOptions? options)
+    public async Task<Response?> GetOptionalMovieAsync(
+        string request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -115,7 +124,10 @@ public class ServiceClient
         throw new Exception(responseBody);
     }
 
-    public async Task<WithDocs?> GetOptionalMovieDocsAsync(string request, RequestOptions? options)
+    public async Task<WithDocs?> GetOptionalMovieDocsAsync(
+        string request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -137,7 +149,7 @@ public class ServiceClient
 
     public async Task<StringResponse?> GetOptionalMovieNameAsync(
         string request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(

@@ -15,7 +15,10 @@ public class DummyClient
         _client = client;
     }
 
-    public async Task GenerateStreamAsync(GenerateStreamRequest request, RequestOptions? options)
+    public async Task GenerateStreamAsync(
+        GenerateStreamRequest request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -29,7 +32,10 @@ public class DummyClient
         );
     }
 
-    public async Task<StreamResponse> GenerateAsync(Generateequest request, RequestOptions? options)
+    public async Task<StreamResponse> GenerateAsync(
+        Generateequest request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

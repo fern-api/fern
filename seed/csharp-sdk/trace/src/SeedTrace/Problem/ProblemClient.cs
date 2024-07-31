@@ -20,7 +20,7 @@ public class ProblemClient
     /// </summary>
     public async Task<object> CreateProblemAsync(
         CreateProblemRequest request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -47,7 +47,7 @@ public class ProblemClient
     public async Task<UpdateProblemResponse> UpdateProblemAsync(
         string problemId,
         CreateProblemRequest request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -71,7 +71,7 @@ public class ProblemClient
     /// <summary>
     /// Soft deletes a problem
     /// </summary>
-    public async Task DeleteProblemAsync(string problemId, RequestOptions? options)
+    public async Task DeleteProblemAsync(string problemId, RequestOptions? options = null)
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -89,7 +89,7 @@ public class ProblemClient
     /// </summary>
     public async Task<GetDefaultStarterFilesResponse> GetDefaultStarterFilesAsync(
         GetDefaultStarterFilesRequest request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(

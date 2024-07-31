@@ -19,7 +19,7 @@ public partial class SeedAliasClient
         );
     }
 
-    public async Task GetAsync(string typeId, RequestOptions? options)
+    public async Task GetAsync(string typeId, RequestOptions? options = null)
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

@@ -18,7 +18,7 @@ public class AdminClient
     public async Task UpdateTestSubmissionStatusAsync(
         string submissionId,
         object request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         await _client.MakeRequestAsync(
@@ -36,7 +36,7 @@ public class AdminClient
     public async Task SendTestSubmissionUpdateAsync(
         string submissionId,
         TestSubmissionUpdate request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         await _client.MakeRequestAsync(
@@ -54,7 +54,7 @@ public class AdminClient
     public async Task UpdateWorkspaceSubmissionStatusAsync(
         string submissionId,
         object request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         await _client.MakeRequestAsync(
@@ -72,7 +72,7 @@ public class AdminClient
     public async Task SendWorkspaceSubmissionUpdateAsync(
         string submissionId,
         WorkspaceSubmissionUpdate request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         await _client.MakeRequestAsync(
@@ -91,7 +91,7 @@ public class AdminClient
         string submissionId,
         string testCaseId,
         StoreTracedTestCaseRequest request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         await _client.MakeRequestAsync(
@@ -110,7 +110,7 @@ public class AdminClient
         string submissionId,
         string testCaseId,
         IEnumerable<TraceResponseV2> request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         await _client.MakeRequestAsync(
@@ -129,7 +129,7 @@ public class AdminClient
     public async Task StoreTracedWorkspaceAsync(
         string submissionId,
         StoreTracedWorkspaceRequest request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         await _client.MakeRequestAsync(
@@ -147,7 +147,7 @@ public class AdminClient
     public async Task StoreTracedWorkspaceV2Async(
         string submissionId,
         IEnumerable<TraceResponseV2> request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         await _client.MakeRequestAsync(

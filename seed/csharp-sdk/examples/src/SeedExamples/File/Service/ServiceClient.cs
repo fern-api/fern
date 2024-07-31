@@ -22,7 +22,7 @@ public class ServiceClient
     public async Task<File> GetFileAsync(
         string filename,
         GetFileRequest request,
-        RequestOptions? options
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(

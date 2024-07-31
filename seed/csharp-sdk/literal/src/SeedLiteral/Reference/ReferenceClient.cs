@@ -15,7 +15,7 @@ public class ReferenceClient
         _client = client;
     }
 
-    public async Task<SendResponse> SendAsync(SendRequest request, RequestOptions? options)
+    public async Task<SendResponse> SendAsync(SendRequest request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

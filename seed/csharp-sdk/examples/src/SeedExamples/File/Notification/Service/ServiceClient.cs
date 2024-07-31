@@ -14,7 +14,10 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Task<object> GetExceptionAsync(string notificationId, RequestOptions? options)
+    public async Task<object> GetExceptionAsync(
+        string notificationId,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

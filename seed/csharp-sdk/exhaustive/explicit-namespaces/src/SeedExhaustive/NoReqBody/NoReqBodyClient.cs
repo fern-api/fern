@@ -15,7 +15,9 @@ public class NoReqBodyClient
         _client = client;
     }
 
-    public async Task<ObjectWithOptionalField> GetWithNoRequestBodyAsync(RequestOptions? options)
+    public async Task<ObjectWithOptionalField> GetWithNoRequestBodyAsync(
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -34,7 +36,7 @@ public class NoReqBodyClient
         throw new Exception(responseBody);
     }
 
-    public async Task<string> PostWithNoRequestBodyAsync(RequestOptions? options)
+    public async Task<string> PostWithNoRequestBodyAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

@@ -14,7 +14,7 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Task PostAsync(string endpointParam, RequestOptions? options)
+    public async Task PostAsync(string endpointParam, RequestOptions? options = null)
     {
         await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
