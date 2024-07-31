@@ -74,6 +74,7 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
 
     private context: TaskContext;
     private cliVersion: string;
+    private downloaded: boolean = false;
 
     constructor({
         absoluteFilepath,
@@ -103,6 +104,10 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
         { context }: { context?: TaskContext },
         settings?: OSSWorkspace.Settings
     ): Promise<FernWorkspace> {
+        if (this.downloaded) {
+            context?.logger.disable();
+        }
+
         const defaultedContext = context || this.context;
         const absolutePathToDefinition = join(this.absoluteFilepath, RelativeFilePath.of(DEFINITION_DIRECTORY));
         const dependenciesConfiguration = await dependenciesYml.loadDependenciesConfiguration({
@@ -142,6 +147,10 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
                     processPackageMarkersResult.failures
                 )}.`
             );
+        }
+
+        if (!this.downloaded) {
+            this.downloaded = true;
         }
 
         return new FernWorkspace({
