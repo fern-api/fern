@@ -101,6 +101,20 @@ describe("parseImagePaths", () => {
         `);
     });
 
+    it("should parse url from frontmatter json", () => {
+        const page = `---\nimage: { type: "url", value: "https://someurl.com" }\n---`;
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual([]);
+        expect(result.markdown.trim()).toEqual("---\nimage:\n  type: url\n  value: 'https://someurl.com'\n---");
+    });
+
+    it("should parse url from frontmatter yaml", () => {
+        const page = `---\nimage:\n  type: url\n  value: "https://someurl.com"\n---`;
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual([]);
+        expect(result.markdown.trim()).toEqual("---\nimage:\n  type: url\n  value: 'https://someurl.com'\n---");
+    });
+
     it("should parse url from frontmatter text", () => {
         const page = `---\nimage: "https://someurl.com"\n---`;
         const result = parseImagePaths(page, PATHS);

@@ -6627,6 +6627,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/cli/docs-markdown-utils/",\
           "packageDependencies": [\
             ["@fern-api/docs-markdown-utils", "workspace:packages/cli/docs-markdown-utils"],\
+            ["@fern-api/fdr-sdk", "npm:0.98.16-3955e989a"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@types/diff", "npm:5.2.1"],\

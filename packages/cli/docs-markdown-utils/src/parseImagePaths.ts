@@ -182,7 +182,7 @@ export function replaceImagePathsAndUrls(
     metadata: AbsolutePathMetadata,
     context: TaskContext
 ): string {
-    const { content, data } = grayMatter(markdown);
+    const { content, data } = grayMatter(markdown, {});
     let replacedContent = content;
 
     const tree = fromMarkdown(content, {
@@ -379,17 +379,34 @@ function visitFrontmatterImages(
 ) {
     for (const key of keys) {
         const value = data[key];
-        if (value != null && typeof value === "string") {
-            const mappedImage = mapImage(value);
-            data[key] = mappedImage
-                ? {
-                      type: "fileId",
-                      value: mappedImage
-                  }
-                : {
-                      type: "url",
-                      value
-                  };
+        if (value != null) {
+            // realtime validation, this also assumes there can be other stuff in the object, but we only care about the valid keys
+            if (typeof value === "object") {
+                if (Object.hasOwn(value, "type") && Object.hasOwn(value, "value")) {
+                    if (!new Set(["fileId", "url"]).has(value.type) || !(typeof value.value === "string")) {
+                        throw new Error(`Validation failed for frontmatter: {}`);
+                    }
+                }
+
+                if (value.type === "fileId") {
+                    data[key] = {
+                        ...value,
+                        value: mapImage(value.value) ?? value.value
+                    };
+                }
+            } else if (typeof value === "string") {
+                const mappedImage = mapImage(value);
+                data[key] = mappedImage
+                    ? {
+                          type: "fileId",
+                          value: mappedImage
+                      }
+                    : {
+                          type: "url",
+                          value
+                      };
+            }
+            // else do nothing
         }
     }
 }
