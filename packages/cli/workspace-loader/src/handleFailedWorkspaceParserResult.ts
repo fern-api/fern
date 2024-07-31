@@ -13,6 +13,15 @@ export function handleFailedWorkspaceParserResult(result: WorkspaceLoader.Failed
     }
 }
 
+export function handleFailedWorkspaceParserResultRaw(
+    failures: Record<RelativeFilePath, WorkspaceLoader.Failure>,
+    logger: Logger
+): void {
+    for (const [relativeFilepath, failure] of entries(failures)) {
+        handleWorkspaceParserFailureForFile({ relativeFilepath, failure, logger });
+    }
+}
+
 function handleWorkspaceParserFailureForFile({
     relativeFilepath,
     failure,

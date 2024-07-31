@@ -1,6 +1,7 @@
 import { DEFINITION_DIRECTORY, dependenciesYml, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import { handleFailedWorkspaceParserResultRaw } from "../handleFailedWorkspaceParserResult";
 import { listFernFiles } from "../listFernFiles";
 import { parseYamlFiles } from "../parseYamlFiles";
 import { processPackageMarkers } from "../processPackageMarkers";
@@ -119,9 +120,8 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
 
         const parseResult = await parseYamlFiles(yamlFiles);
         if (!parseResult.didSucceed) {
-            return defaultedContext.failAndThrow(
-                `Unable to parse YAML files in your API definition: ${JSON.stringify(parseResult.failures)}.`
-            );
+            handleFailedWorkspaceParserResultRaw(parseResult.failures, defaultedContext.logger);
+            return defaultedContext.failAndThrow("Unable to parse YAML files in your API definition.");
         }
 
         const structuralValidationResult = validateStructureOfYamlFiles({
@@ -129,9 +129,8 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
             absolutePathToDefinition
         });
         if (!structuralValidationResult.didSucceed) {
-            return defaultedContext.failAndThrow(
-                `Unable to validate the structure of the file: ${JSON.stringify(structuralValidationResult.failures)}.`
-            );
+            handleFailedWorkspaceParserResultRaw(structuralValidationResult.failures, defaultedContext.logger);
+            return defaultedContext.failAndThrow("Unable to validate the structure of the file.");
         }
 
         const processPackageMarkersResult = await processPackageMarkers({
@@ -142,11 +141,8 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
             settings
         });
         if (!processPackageMarkersResult.didSucceed) {
-            return defaultedContext.failAndThrow(
-                `Unable to process dependencies within your API: ${JSON.stringify(
-                    processPackageMarkersResult.failures
-                )}.`
-            );
+            handleFailedWorkspaceParserResultRaw(processPackageMarkersResult.failures, defaultedContext.logger);
+            return defaultedContext.failAndThrow("Unable to process dependencies within your API.");
         }
 
         if (!this.downloaded) {
