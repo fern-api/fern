@@ -49,15 +49,20 @@ export class BaseOptionsGenerator {
     }
 
     public getTimeoutField({ optional, includeInitializer }: OptionArgs): csharp.Field {
-        const type = csharp.Type.integer();
+        const type = csharp.Types.reference(
+            csharp.classReference({
+                name: "TimeSpan",
+                namespace: "System"
+            })
+        );
         return csharp.field({
             access: "public",
-            name: "TimeoutInSeconds",
+            name: "Timeout",
             get: true,
             init: true,
             type: optional ? csharp.Type.optional(type) : type,
-            initializer: includeInitializer ? csharp.codeblock("30") : undefined,
-            summary: "The timeout for the request in seconds."
+            initializer: includeInitializer ? csharp.codeblock("new TimeSpan(0, 0, 30)") : undefined,
+            summary: "The timeout for the request."
         });
     }
 

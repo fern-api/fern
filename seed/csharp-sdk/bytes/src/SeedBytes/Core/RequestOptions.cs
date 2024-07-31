@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 
 #nullable enable
@@ -22,7 +23,7 @@ public partial class RequestOptions
     public int? MaxRetries { get; init; }
 
     /// <summary>
-    /// The timeout for the request in seconds.
+    /// The timeout for the request.
     /// </summary>
-    public int? TimeoutInSeconds { get; init; }
+    public TimeSpan? Timeout { get; init; }
 }
