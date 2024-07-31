@@ -80,6 +80,7 @@ export declare namespace SdkGenerator {
         context: GeneratorContext;
         npmPackage: NpmPackage | undefined;
         generateJestTests: boolean;
+        rawConfig: FernGeneratorExec.GeneratorConfig;
         config: Config;
     }
 
@@ -130,6 +131,7 @@ export class SdkGenerator {
     private namespaceExport: string;
     private context: GeneratorContext;
     private intermediateRepresentation: IntermediateRepresentation;
+    private rawConfig: FernGeneratorExec.GeneratorConfig;
     private config: SdkGenerator.Config;
     private npmPackage: NpmPackage | undefined;
     private generateOAuthClients: boolean;
@@ -189,6 +191,7 @@ export class SdkGenerator {
         intermediateRepresentation,
         context,
         npmPackage,
+        rawConfig,
         config,
         generateJestTests
     }: SdkGenerator.Init) {
@@ -197,6 +200,7 @@ export class SdkGenerator {
         this.intermediateRepresentation = intermediateRepresentation;
         this.config = config;
         this.npmPackage = npmPackage;
+        this.rawConfig = rawConfig;
         this.generateJestTests = generateJestTests;
         this.generateOAuthClients =
             this.config.generateOAuthClients &&
@@ -429,17 +433,15 @@ export class SdkGenerator {
         if (this.generateJestTests && this.config.writeUnitTests) {
             this.generateTestFiles();
         }
-        if (this.generateJestTests) {
-            this.jestTestGenerator.addExtras();
-            this.extraScripts = {
-                ...this.extraScripts,
-                ...this.jestTestGenerator.scripts
-            };
-            this.extraFiles = {
-                ...this.extraFiles,
-                ...this.jestTestGenerator.extraFiles
-            };
-        }
+        this.jestTestGenerator.addExtras();
+        this.extraScripts = {
+            ...this.extraScripts,
+            ...this.jestTestGenerator.scripts
+        };
+        this.extraFiles = {
+            ...this.extraFiles,
+            ...this.jestTestGenerator.extraFiles
+        };
 
         if (this.config.snippetFilepath != null) {
             this.generateSnippets();
@@ -1210,6 +1212,7 @@ export class SdkGenerator {
         { isForSnippet }: { isForSnippet?: boolean } = {}
     ): SdkContextImpl {
         return new SdkContextImpl({
+            config: this.rawConfig,
             ir: this.intermediateRepresentation,
             npmPackage: this.npmPackage,
             isForSnippet: isForSnippet ?? false,
