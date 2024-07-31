@@ -74,7 +74,7 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
 
     private context: TaskContext;
     private cliVersion: string;
-    private downloaded: boolean = false;
+    private downloaded = false;
 
     constructor({
         absoluteFilepath,
