@@ -384,7 +384,7 @@ describe("parseImagePaths", () => {
         const result = parseImagePaths(page, PATHS);
         expect(result.filepaths).toEqual([]);
         expect(result.markdown.trim()).toMatchInlineSnapshot(
-            "\"This is a test page with an image <img src={path + '/image.png'} /> <img src={'abc' + 'def.png'} />\""
+            `"This is a test page with an image <img src={path + '/image.png'} /> <img src={'abc' + 'def.png'} />"`
         );
     });
 
