@@ -76,6 +76,9 @@ public class QueryParamClient
         {
             return;
         }
+
+        var timeSpan = TimeSpan.FromSeconds(30);
+        
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         throw new SeedEnumApiException(
             $"Error with status code {response.StatusCode}",
