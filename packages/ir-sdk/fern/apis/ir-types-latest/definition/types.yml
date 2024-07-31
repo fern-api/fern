@@ -182,53 +182,34 @@ types:
   PrimitiveTypeV1:
     enum:
       - INTEGER
-      - UINT
-      - UINT_64
-      - DOUBLE
-      - STRING
-      - BOOLEAN
       - value: LONG
         docs: "Within the range -2^53 to 2^53"
-      - DATE_TIME
+      - UINT
+      - UINT_64
+      - FLOAT
+      - DOUBLE
+      - BOOLEAN
+      - STRING
       - DATE
+      - DATE_TIME
       - UUID
       - BASE_64
       - BIG_INTEGER
   PrimitiveTypeV2:
     union:
-      uint: {}
-      uint64: {}
       integer: IntegerType
-      double: DoubleType
-      string: StringType
-      boolean: BooleanType
       long: LongType
+      uint: UintType
+      uint64: Uint64Type
+      float: FloatType
+      double: DoubleType
+      boolean: BooleanType
+      string: StringType
+      date: DateType
+      dateTime: DateTimeType
+      uuid: UuidType
+      base64: Base64Type
       bigInteger: BigIntegerType
-
-  # TODO: Add the following once the uint types are available.
-  #
-  # UintType:
-  #   properties:
-  #     default: optional<uint>
-  #     validation: optional<UintValidationRules>
-  # UintValidationRules:
-  #   properties:
-  #     min: optional<uint>
-  #     max: optional<uint>
-  #     exclusiveMin: optional<boolean>
-  #     exclusiveMax: optional<boolean>
-  #     multipleOf: optional<uint>
-  # Uint64Type:
-  #   properties:
-  #     default: optional<uint64>
-  #     validation: optional<Uint64ValidationRules>
-  # Uint64ValidationRules:
-  #   properties:
-  #     min: optional<uint64>
-  #     max: optional<uint64>
-  #     exclusiveMin: optional<boolean>
-  #     exclusiveMax: optional<boolean>
-  #     multipleOf: optional<uint64>
 
   IntegerType:
     properties:
@@ -241,6 +222,15 @@ types:
       exclusiveMin: optional<boolean>
       exclusiveMax: optional<boolean>
       multipleOf: optional<integer>
+  LongType:
+    properties:
+      default: optional<long>
+  UintType:
+    properties: {}
+  Uint64Type:
+    properties: {}
+  FloatType:
+    properties: {}
   DoubleType:
     properties:
       default: optional<integer>
@@ -252,6 +242,9 @@ types:
       exclusiveMin: optional<boolean>
       exclusiveMax: optional<boolean>
       multipleOf: optional<double>
+  BooleanType:
+    properties:
+      default: optional<boolean>
   StringType:
     properties:
       default: optional<string>
@@ -262,12 +255,14 @@ types:
       pattern: optional<string>
       minLength: optional<integer>
       maxLength: optional<integer>
-  BooleanType:
-    properties:
-      default: optional<boolean>
-  LongType:
-    properties:
-      default: optional<long>
+  DateType:
+    properties: {}
+  DateTimeType:
+    properties: {}
+  UuidType:
+    properties: {}
+  Base64Type:
+    properties: {}
   BigIntegerType:
     properties:
       default: optional<string>
@@ -416,37 +411,42 @@ types:
       integer:
         type: integer
         key: integer
-      # TODO: Refactor the following once the uint types are available.
-      #
-      # We can safely use an integer here since they have the same wire
-      # representation (i.e. a JSON number).
-      uint:
-        type: integer
-        key: uint
-      uint64:
-        type: integer
-        key: uint64
-      double:
-        type: double
-        key: double
-      string:
-        type: commons.EscapedString
-        key: string
-      boolean:
-        type: boolean
-        key: boolean
       long:
         type: long
         key: long
-      datetime:
-        type: datetime
-        key: datetime
+      uint:
+        type: uint
+        key: uint
+      uint64:
+        type: uint64
+        key: uint64
+      float:
+        type: double # TODO: Refactor the following to be a float once we have a float type.
+        key: float
+      double:
+        type: double
+        key: double
+      boolean:
+        type: boolean
+        key: boolean
+      string:
+        type: commons.EscapedString
+        key: string
       date:
         type: date
         key: date
+      datetime:
+        type: datetime
+        key: datetime
       uuid:
         type: uuid
         key: uuid
+      base64:
+        type: base64
+        key: base64
+      bigInteger:
+        type: bigint
+        key: bigInteger
 
   ExampleNamedType:
     properties:

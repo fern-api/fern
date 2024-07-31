@@ -7,14 +7,14 @@ namespace SeedLiteral;
 public record SendLiteralsInlinedRequest
 {
     [JsonPropertyName("prompt")]
-    public required string Prompt { get; init; }
+    public required string Prompt { get; set; }
 
     [JsonPropertyName("query")]
-    public required string Query { get; init; }
+    public required string Query { get; set; }
 
     [JsonPropertyName("temperature")]
-    public double? Temperature { get; init; }
+    public double? Temperature { get; set; }
 
     [JsonPropertyName("stream")]
-    public required bool Stream { get; init; }
+    public required bool Stream { get; set; }
 }

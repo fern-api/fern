@@ -7,5 +7,5 @@ namespace SeedTrace;
 public record ProblemDescription
 {
     [JsonPropertyName("boards")]
-    public IEnumerable<object> Boards { get; init; } = new List<object>();
+    public IEnumerable<object> Boards { get; set; } = new List<object>();
 }

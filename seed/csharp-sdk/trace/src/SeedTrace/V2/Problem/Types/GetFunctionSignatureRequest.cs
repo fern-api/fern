@@ -7,5 +7,5 @@ namespace SeedTrace.V2;
 public record GetFunctionSignatureRequest
 {
     [JsonPropertyName("functionSignature")]
-    public required object FunctionSignature { get; init; }
+    public required object FunctionSignature { get; set; }
 }

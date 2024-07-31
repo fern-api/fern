@@ -1,3 +1,4 @@
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Constants, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import {
     CoreUtilitiesManager,
@@ -61,6 +62,7 @@ const ROOT_CLIENT_VARIABLE_NAME = "client";
 export declare namespace SdkContextImpl {
     export interface Init {
         ir: IntermediateRepresentation;
+        config: FernGeneratorExec.GeneratorConfig;
         sourceFile: SourceFile;
         importsManager: ImportsManager;
         dependencyManager: DependencyManager;
@@ -111,6 +113,7 @@ export declare namespace SdkContextImpl {
 
 export class SdkContextImpl implements SdkContext {
     public readonly ir: IntermediateRepresentation;
+    public readonly config: FernGeneratorExec.GeneratorConfig;
     public readonly sourceFile: SourceFile;
     public readonly externalDependencies: ExternalDependencies;
     public readonly coreUtilities: CoreUtilities;
@@ -143,6 +146,7 @@ export class SdkContextImpl implements SdkContext {
 
     constructor({
         ir,
+        config,
         npmPackage,
         isForSnippet,
         intermediateRepresentation,
@@ -190,6 +194,7 @@ export class SdkContextImpl implements SdkContext {
         omitUndefined
     }: SdkContextImpl.Init) {
         this.ir = ir;
+        this.config = config;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.omitUndefined = omitUndefined;

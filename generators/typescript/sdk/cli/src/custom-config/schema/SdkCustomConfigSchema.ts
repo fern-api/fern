@@ -32,6 +32,7 @@ export const SdkCustomConfigSchema = z.strictObject({
     retainOriginalCasing: z.optional(z.boolean()),
     allowExtraFields: z.optional(z.boolean()),
     inlineFileProperties: z.optional(z.boolean()),
+    generateWireTests: z.optional(z.boolean()),
 
     // deprecated
     timeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),

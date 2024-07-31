@@ -7,5 +7,5 @@ namespace SeedErrorProperty;
 public record PropertyBasedErrorTestBody
 {
     [JsonPropertyName("message")]
-    public required string Message { get; init; }
+    public required string Message { get; set; }
 }

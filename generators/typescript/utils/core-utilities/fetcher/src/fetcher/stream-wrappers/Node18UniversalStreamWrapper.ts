@@ -1,4 +1,3 @@
-// this should be transpiled away as a type
 import type { Writable } from "stream";
 import { EventCallback, StreamWrapper } from "./chooseStreamWrapper";
 
@@ -76,6 +75,12 @@ export class Node18UniversalStreamWrapper
         this._startReading();
 
         return dest;
+    }
+
+    public pipeTo(
+        dest: Node18UniversalStreamWrapper | Writable | WritableStream<Uint8Array>
+    ): Node18UniversalStreamWrapper | Writable | WritableStream<Uint8Array> {
+        return this.pipe(dest);
     }
 
     public unpipe(dest: Node18UniversalStreamWrapper | Writable | WritableStream<Uint8Array>): void {

@@ -7,11 +7,11 @@ namespace SeedTrace;
 public record TestCaseResult
 {
     [JsonPropertyName("expectedResult")]
-    public required object ExpectedResult { get; init; }
+    public required object ExpectedResult { get; set; }
 
     [JsonPropertyName("actualResult")]
-    public required object ActualResult { get; init; }
+    public required object ActualResult { get; set; }
 
     [JsonPropertyName("passed")]
-    public required bool Passed { get; init; }
+    public required bool Passed { get; set; }
 }

@@ -7,14 +7,14 @@ namespace SeedApi;
 public record Movie
 {
     [JsonPropertyName("id")]
-    public required string Id { get; init; }
+    public required string Id { get; set; }
 
     [JsonPropertyName("title")]
-    public required string Title { get; init; }
+    public required string Title { get; set; }
 
     /// <summary>
     /// The rating scale is one to five stars
     /// </summary>
     [JsonPropertyName("rating")]
-    public required double Rating { get; init; }
+    public required double Rating { get; set; }
 }

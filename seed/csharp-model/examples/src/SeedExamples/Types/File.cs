@@ -7,8 +7,8 @@ namespace SeedExamples;
 public record File
 {
     [JsonPropertyName("name")]
-    public required string Name { get; init; }
+    public required string Name { get; set; }
 
     [JsonPropertyName("contents")]
-    public required string Contents { get; init; }
+    public required string Contents { get; set; }
 }

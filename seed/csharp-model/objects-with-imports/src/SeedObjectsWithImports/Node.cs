@@ -8,11 +8,11 @@ namespace SeedObjectsWithImports;
 public record Node
 {
     [JsonPropertyName("id")]
-    public required string Id { get; init; }
+    public required string Id { get; set; }
 
     [JsonPropertyName("label")]
-    public string? Label { get; init; }
+    public string? Label { get; set; }
 
     [JsonPropertyName("metadata")]
-    public Metadata? Metadata { get; init; }
+    public Metadata? Metadata { get; set; }
 }

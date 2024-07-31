@@ -7,8 +7,8 @@ namespace SeedTrace;
 public record InvalidRequestResponse
 {
     [JsonPropertyName("request")]
-    public required object Request { get; init; }
+    public required object Request { get; set; }
 
     [JsonPropertyName("cause")]
-    public required object Cause { get; init; }
+    public required object Cause { get; set; }
 }

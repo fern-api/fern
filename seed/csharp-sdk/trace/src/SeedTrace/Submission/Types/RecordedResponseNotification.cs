@@ -7,11 +7,11 @@ namespace SeedTrace;
 public record RecordedResponseNotification
 {
     [JsonPropertyName("submissionId")]
-    public required string SubmissionId { get; init; }
+    public required string SubmissionId { get; set; }
 
     [JsonPropertyName("traceResponsesSize")]
-    public required int TraceResponsesSize { get; init; }
+    public required int TraceResponsesSize { get; set; }
 
     [JsonPropertyName("testCaseId")]
-    public string? TestCaseId { get; init; }
+    public string? TestCaseId { get; set; }
 }

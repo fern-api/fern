@@ -7,5 +7,5 @@ namespace SeedTrace;
 public record UpdateProblemResponse
 {
     [JsonPropertyName("problemVersion")]
-    public required int ProblemVersion { get; init; }
+    public required int ProblemVersion { get; set; }
 }

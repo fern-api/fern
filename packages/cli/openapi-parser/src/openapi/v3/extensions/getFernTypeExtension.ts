@@ -105,6 +105,17 @@ export function getSchemaFromFernType({
                                 example: undefined
                             })
                         });
+                    case "FLOAT":
+                        return SchemaWithExample.primitive({
+                            nameOverride,
+                            generatedName,
+                            description,
+                            availability,
+                            groupName,
+                            schema: PrimitiveSchemaValueWithExample.float({
+                                example: undefined
+                            })
+                        });
                     case "DOUBLE":
                         return SchemaWithExample.primitive({
                             nameOverride,
