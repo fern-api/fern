@@ -227,7 +227,9 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                         AST.FunctionParameter(
                                             name=BUILDER_ARGUMENT_NAME,
                                             type_hint=self._context.get_type_hint_for_type_reference(
-                                                ir_types.TypeReference.factory.named(cast(ir_types.NamedType, type_name))
+                                                ir_types.TypeReference.factory.named(
+                                                    cast(ir_types.NamedType, type_name)
+                                                )
                                             ),
                                         )
                                     ],
