@@ -1,7 +1,8 @@
 * @dsinghvi
 fern/* @dsinghvi
 generators/go/* @amckinney
-generators/java/* @dsinghvi
+generators/java/* @dcb6
+generators/csharp/* @dcb6
 generators/python/* @armandobelardo
 generators/ruby/* @armandobelardo
 generators/typescript/* @dsinghvi
