@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0 - 2024-07-30]
+
+- Feature: Add support for `allow-multiple` query parameters, which are sent in the `explode` format.
+  Given that optional lists are assigned a default, empty list, we use a simple `LINQ` expression to
+  handle the serialization, which is shown below:
+
+  ```csharp
+  _query["operand"] = request
+      .Operand.Select(_value => JsonSerializer.Serialize(_value))
+      .ToList();
+  ```
+
+- Improvement: `map<string, unknown>` types are now generated as `Dictionary<string, object?>` types so they
+  can support explicit `null` values. Note that this does _not_ affect every `unknown` type to be an `object?`
+  since it would otherwise alter its required/optional characteristics.
+
 ## [0.3.4 - 2024-07-30]
 
 - Improvement: Make datetime deserialization more lenient, and include milliseconds in datetime serialization.

@@ -17,12 +17,10 @@ public class QueryClient
 
     public async Task<SendResponse> SendAsync(SendLiteralsInQueryRequest request)
     {
-        var _query = new Dictionary<string, object>()
-        {
-            { "prompt", request.Prompt.ToString() },
-            { "query", request.Query },
-            { "stream", request.Stream.ToString() },
-        };
+        var _query = new Dictionary<string, object>() { };
+        _query["prompt"] = request.Prompt.ToString();
+        _query["query"] = request.Query;
+        _query["stream"] = request.Stream.ToString();
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {

@@ -30,7 +30,7 @@ public record GetUsersRequest
 
     public User? OptionalUser { get; set; }
 
-    public required User ExcludeUser { get; set; }
+    public IEnumerable<User> ExcludeUser { get; set; } = new List<User>();
 
-    public required string Filter { get; set; }
+    public IEnumerable<string> Filter { get; set; } = new List<string>();
 }
