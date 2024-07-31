@@ -31,7 +31,7 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "templateString": "operandoperand=$FERN_INPUT",
+                            "templateString": "operand=$FERN_INPUT",
                             "values": {
                                 ">": "\">\"",
                                 "=": "\"=\"",
@@ -49,7 +49,7 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "templateString": "maybe_operandmaybe_operand=$FERN_INPUT",
+                            "templateString": "maybe_operand=$FERN_INPUT",
                             "values": {
                                 ">": "\">\"",
                                 "=": "\"=\"",
@@ -77,7 +77,7 @@
                                     "template": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "None$FERN_INPUT",
+                                        "templateString": "$FERN_INPUT",
                                         "values": {
                                             "red": "\"red\"",
                                             "blue": "\"blue\""
@@ -97,7 +97,7 @@
                                     "template": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "None$FERN_INPUT",
+                                        "templateString": "$FERN_INPUT",
                                         "values": {
                                             ">": "\">\"",
                                             "=": "\"=\"",
@@ -132,7 +132,7 @@
                                     "template": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "None$FERN_INPUT",
+                                        "templateString": "$FERN_INPUT",
                                         "values": {
                                             "red": "\"red\"",
                                             "blue": "\"blue\""
@@ -152,7 +152,7 @@
                                     "template": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "None$FERN_INPUT",
+                                        "templateString": "$FERN_INPUT",
                                         "values": {
                                             ">": "\">\"",
                                             "=": "\"=\"",
@@ -200,7 +200,7 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "templateString": "operandoperand=$FERN_INPUT",
+                                "templateString": "operand=$FERN_INPUT",
                                 "values": {
                                     ">": "\">\"",
                                     "=": "\"=\"",
@@ -218,7 +218,7 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "templateString": "maybe_operandmaybe_operand=$FERN_INPUT",
+                                "templateString": "maybe_operand=$FERN_INPUT",
                                 "values": {
                                     ">": "\">\"",
                                     "=": "\"=\"",
@@ -246,7 +246,7 @@
                                         "template": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "None$FERN_INPUT",
+                                            "templateString": "$FERN_INPUT",
                                             "values": {
                                                 "red": "\"red\"",
                                                 "blue": "\"blue\""
@@ -266,7 +266,7 @@
                                         "template": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "None$FERN_INPUT",
+                                            "templateString": "$FERN_INPUT",
                                             "values": {
                                                 ">": "\">\"",
                                                 "=": "\"=\"",
@@ -301,7 +301,7 @@
                                         "template": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "None$FERN_INPUT",
+                                            "templateString": "$FERN_INPUT",
                                             "values": {
                                                 "red": "\"red\"",
                                                 "blue": "\"blue\""
@@ -321,7 +321,7 @@
                                         "template": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "None$FERN_INPUT",
+                                            "templateString": "$FERN_INPUT",
                                             "values": {
                                                 ">": "\">\"",
                                                 "=": "\"=\"",
@@ -381,7 +381,7 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "templateString": "operandoperand=$FERN_INPUT",
+                            "templateString": "operand=$FERN_INPUT",
                             "values": {
                                 ">": "\">\"",
                                 "=": "\"=\"",
@@ -399,7 +399,7 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "templateString": "maybe_operandmaybe_operand=$FERN_INPUT",
+                            "templateString": "maybe_operand=$FERN_INPUT",
                             "values": {
                                 ">": "\">\"",
                                 "=": "\"=\"",
@@ -427,7 +427,7 @@
                                     "template": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "None$FERN_INPUT",
+                                        "templateString": "$FERN_INPUT",
                                         "values": {
                                             "red": "\"red\"",
                                             "blue": "\"blue\""
@@ -447,7 +447,7 @@
                                     "template": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "None$FERN_INPUT",
+                                        "templateString": "$FERN_INPUT",
                                         "values": {
                                             ">": "\">\"",
                                             "=": "\"=\"",
@@ -482,7 +482,7 @@
                                     "template": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "None$FERN_INPUT",
+                                        "templateString": "$FERN_INPUT",
                                         "values": {
                                             "red": "\"red\"",
                                             "blue": "\"blue\""
@@ -502,7 +502,7 @@
                                     "template": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "None$FERN_INPUT",
+                                        "templateString": "$FERN_INPUT",
                                         "values": {
                                             ">": "\">\"",
                                             "=": "\"=\"",
@@ -550,7 +550,7 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "templateString": "operandoperand=$FERN_INPUT",
+                                "templateString": "operand=$FERN_INPUT",
                                 "values": {
                                     ">": "\">\"",
                                     "=": "\"=\"",
@@ -568,7 +568,7 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "templateString": "maybe_operandmaybe_operand=$FERN_INPUT",
+                                "templateString": "maybe_operand=$FERN_INPUT",
                                 "values": {
                                     ">": "\">\"",
                                     "=": "\"=\"",
@@ -596,7 +596,7 @@
                                         "template": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "None$FERN_INPUT",
+                                            "templateString": "$FERN_INPUT",
                                             "values": {
                                                 "red": "\"red\"",
                                                 "blue": "\"blue\""
@@ -616,7 +616,7 @@
                                         "template": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "None$FERN_INPUT",
+                                            "templateString": "$FERN_INPUT",
                                             "values": {
                                                 ">": "\">\"",
                                                 "=": "\"=\"",
@@ -651,7 +651,7 @@
                                         "template": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "None$FERN_INPUT",
+                                            "templateString": "$FERN_INPUT",
                                             "values": {
                                                 "red": "\"red\"",
                                                 "blue": "\"blue\""
@@ -671,7 +671,7 @@
                                         "template": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "None$FERN_INPUT",
+                                            "templateString": "$FERN_INPUT",
                                             "values": {
                                                 ">": "\">\"",
                                                 "=": "\"=\"",
@@ -731,7 +731,7 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "templateString": "operandoperand=$FERN_INPUT",
+                            "templateString": "operand=$FERN_INPUT",
                             "values": {
                                 ">": "\">\"",
                                 "=": "\"=\"",
@@ -749,7 +749,7 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "templateString": "maybe_operandmaybe_operand=$FERN_INPUT",
+                            "templateString": "maybe_operand=$FERN_INPUT",
                             "values": {
                                 ">": "\">\"",
                                 "=": "\"=\"",
@@ -777,7 +777,7 @@
                                     "template": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "None$FERN_INPUT",
+                                        "templateString": "$FERN_INPUT",
                                         "values": {
                                             "red": "\"red\"",
                                             "blue": "\"blue\""
@@ -797,7 +797,7 @@
                                     "template": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "None$FERN_INPUT",
+                                        "templateString": "$FERN_INPUT",
                                         "values": {
                                             ">": "\">\"",
                                             "=": "\"=\"",
@@ -832,7 +832,7 @@
                                     "template": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "None$FERN_INPUT",
+                                        "templateString": "$FERN_INPUT",
                                         "values": {
                                             "red": "\"red\"",
                                             "blue": "\"blue\""
@@ -852,7 +852,7 @@
                                     "template": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "None$FERN_INPUT",
+                                        "templateString": "$FERN_INPUT",
                                         "values": {
                                             ">": "\">\"",
                                             "=": "\"=\"",
@@ -900,7 +900,7 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "templateString": "operandoperand=$FERN_INPUT",
+                                "templateString": "operand=$FERN_INPUT",
                                 "values": {
                                     ">": "\">\"",
                                     "=": "\"=\"",
@@ -918,7 +918,7 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "templateString": "maybe_operandmaybe_operand=$FERN_INPUT",
+                                "templateString": "maybe_operand=$FERN_INPUT",
                                 "values": {
                                     ">": "\">\"",
                                     "=": "\"=\"",
@@ -946,7 +946,7 @@
                                         "template": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "None$FERN_INPUT",
+                                            "templateString": "$FERN_INPUT",
                                             "values": {
                                                 "red": "\"red\"",
                                                 "blue": "\"blue\""
@@ -966,7 +966,7 @@
                                         "template": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "None$FERN_INPUT",
+                                            "templateString": "$FERN_INPUT",
                                             "values": {
                                                 ">": "\">\"",
                                                 "=": "\"=\"",
@@ -1001,7 +1001,7 @@
                                         "template": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "None$FERN_INPUT",
+                                            "templateString": "$FERN_INPUT",
                                             "values": {
                                                 "red": "\"red\"",
                                                 "blue": "\"blue\""
@@ -1021,7 +1021,7 @@
                                         "template": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "None$FERN_INPUT",
+                                            "templateString": "$FERN_INPUT",
                                             "values": {
                                                 ">": "\">\"",
                                                 "=": "\"=\"",
@@ -1081,7 +1081,7 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "templateString": "operandoperand=$FERN_INPUT",
+                            "templateString": "operand=$FERN_INPUT",
                             "values": {
                                 ">": "\">\"",
                                 "=": "\"=\"",
@@ -1099,7 +1099,7 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "templateString": "maybe_operandmaybe_operand=$FERN_INPUT",
+                            "templateString": "maybe_operand=$FERN_INPUT",
                             "values": {
                                 ">": "\">\"",
                                 "=": "\"=\"",
@@ -1127,7 +1127,7 @@
                                     "template": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "None$FERN_INPUT",
+                                        "templateString": "$FERN_INPUT",
                                         "values": {
                                             "red": "\"red\"",
                                             "blue": "\"blue\""
@@ -1147,7 +1147,7 @@
                                     "template": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "None$FERN_INPUT",
+                                        "templateString": "$FERN_INPUT",
                                         "values": {
                                             ">": "\">\"",
                                             "=": "\"=\"",
@@ -1182,7 +1182,7 @@
                                     "template": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "None$FERN_INPUT",
+                                        "templateString": "$FERN_INPUT",
                                         "values": {
                                             "red": "\"red\"",
                                             "blue": "\"blue\""
@@ -1202,7 +1202,7 @@
                                     "template": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "None$FERN_INPUT",
+                                        "templateString": "$FERN_INPUT",
                                         "values": {
                                             ">": "\">\"",
                                             "=": "\"=\"",
@@ -1250,7 +1250,7 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "templateString": "operandoperand=$FERN_INPUT",
+                                "templateString": "operand=$FERN_INPUT",
                                 "values": {
                                     ">": "\">\"",
                                     "=": "\"=\"",
@@ -1268,7 +1268,7 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "templateString": "maybe_operandmaybe_operand=$FERN_INPUT",
+                                "templateString": "maybe_operand=$FERN_INPUT",
                                 "values": {
                                     ">": "\">\"",
                                     "=": "\"=\"",
@@ -1296,7 +1296,7 @@
                                         "template": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "None$FERN_INPUT",
+                                            "templateString": "$FERN_INPUT",
                                             "values": {
                                                 "red": "\"red\"",
                                                 "blue": "\"blue\""
@@ -1316,7 +1316,7 @@
                                         "template": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "None$FERN_INPUT",
+                                            "templateString": "$FERN_INPUT",
                                             "values": {
                                                 ">": "\">\"",
                                                 "=": "\"=\"",
@@ -1351,7 +1351,7 @@
                                         "template": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "None$FERN_INPUT",
+                                            "templateString": "$FERN_INPUT",
                                             "values": {
                                                 "red": "\"red\"",
                                                 "blue": "\"blue\""
@@ -1371,7 +1371,7 @@
                                         "template": {
                                             "imports": [],
                                             "isOptional": true,
-                                            "templateString": "None$FERN_INPUT",
+                                            "templateString": "$FERN_INPUT",
                                             "values": {
                                                 ">": "\">\"",
                                                 "=": "\"=\"",
