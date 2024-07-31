@@ -1,4 +1,6 @@
 import { csharp } from "@fern-api/csharp-codegen";
+import { Writer } from "@fern-api/csharp-codegen/src/ast/core/Writer";
+import { ResponseError } from "@fern-fern/ir-sdk/api";
 import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { RawClient } from "./RawClient";
@@ -189,23 +191,7 @@ export class EndpointGenerator {
                 writer.writeLine("{");
                 writer.indent();
                 for (const error of endpoint.errors) {
-                    const fullError = this.context.ir.errors[error.error.errorId];
-                    if (fullError == null) {
-                        throw new Error("Unexpected no error found for error id: " + error.error.errorId);
-                    }
-                    writer.writeLine(`case ${fullError.statusCode}:`);
-                    writer.indent();
-                    writer.write("throw new ");
-                    writer.writeNode(this.context.getExceptionClassReference(fullError.name));
-                    writer.write("(");
-                    writer.writeNode(this.context.getJsonUtilsClassReference());
-                    writer.write(".Deserialize<");
-                    writer.writeNode(
-                        fullError.type != null
-                            ? this.context.csharpTypeMapper.convert({ reference: fullError.type })
-                            : csharp.Type.object()
-                    );
-                    writer.writeTextStatement(`>(${RESPONSE_BODY_VARIABLE_NAME}))`);
+                    this.writeErrorCase(error, writer);
                 }
                 writer.writeLine("}");
                 writer.dedent();
@@ -227,6 +213,26 @@ export class EndpointGenerator {
             writer.writeNode(this.context.getJsonUtilsClassReference());
             writer.writeTextStatement(`.Deserialize<object>(${RESPONSE_BODY_VARIABLE_NAME}))`);
         });
+    }
+
+    private writeErrorCase(error: ResponseError, writer: Writer) {
+        const fullError = this.context.ir.errors[error.error.errorId];
+        if (fullError == null) {
+            throw new Error("Unexpected no error found for error id: " + error.error.errorId);
+        }
+        writer.writeLine(`case ${fullError.statusCode}:`);
+        writer.indent();
+        writer.write("throw new ");
+        writer.writeNode(this.context.getExceptionClassReference(fullError.name));
+        writer.write("(");
+        writer.writeNode(this.context.getJsonUtilsClassReference());
+        writer.write(".Deserialize<");
+        writer.writeNode(
+            fullError.type != null
+                ? this.context.csharpTypeMapper.convert({ reference: fullError.type })
+                : csharp.Type.object()
+        );
+        writer.writeTextStatement(`>(${RESPONSE_BODY_VARIABLE_NAME}))`);
     }
 
     private getEndpointSuccessResponseStatements({
