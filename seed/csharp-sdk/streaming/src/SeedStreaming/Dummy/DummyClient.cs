@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Text.Json;
 using SeedStreaming;
 using SeedStreaming.Core;
 
@@ -30,6 +31,12 @@ public class DummyClient
                 Options = options
             }
         );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedStreamingApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task<StreamResponse> GenerateAsync(
@@ -50,8 +57,20 @@ public class DummyClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<StreamResponse>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<StreamResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedStreamingException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedStreamingApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

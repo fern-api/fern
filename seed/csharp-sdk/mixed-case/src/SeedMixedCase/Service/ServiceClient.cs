@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Text.Json;
 using SeedMixedCase;
 using SeedMixedCase.Core;
 
@@ -29,9 +30,21 @@ public class ServiceClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<object>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<object>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedMixedCaseException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedMixedCaseApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task<IEnumerable<object>> ListResourcesAsync(
@@ -55,8 +68,20 @@ public class ServiceClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<IEnumerable<object>>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<IEnumerable<object>>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedMixedCaseException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedMixedCaseApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

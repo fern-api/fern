@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Text.Json;
 using SeedApi;
 using SeedApi.Core;
 
@@ -36,9 +37,21 @@ public class ImdbClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<string>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<string>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedApiException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedApiApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task<Movie> GetMovieAsync(string movieId, RequestOptions? options = null)
@@ -55,8 +68,32 @@ public class ImdbClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<Movie>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<Movie>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedApiException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        try
+        {
+            switch (response.StatusCode)
+            {
+                case 404:
+                    throw new MovieDoesNotExistError(JsonUtils.Deserialize<string>(responseBody));
+            }
+        }
+        catch (JsonException)
+        {
+            // unable to map error response, throwing generic error
+        }
+        throw new SeedApiApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

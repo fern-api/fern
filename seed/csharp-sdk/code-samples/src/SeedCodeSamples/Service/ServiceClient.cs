@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Text.Json;
 using SeedCodeSamples;
 using SeedCodeSamples.Core;
 
@@ -30,8 +31,20 @@ public class ServiceClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<MyResponse>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<MyResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedCodeSamplesException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedCodeSamplesApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

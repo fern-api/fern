@@ -1,4 +1,6 @@
 using System.Net.Http;
+using System.Text.Json;
+using SeedBasicAuthEnvironmentVariables;
 using SeedBasicAuthEnvironmentVariables.Core;
 
 #nullable enable
@@ -31,9 +33,38 @@ public class BasicAuthClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<bool>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<bool>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedBasicAuthEnvironmentVariablesException(
+                    "Failed to deserialize response",
+                    e
+                );
+            }
         }
-        throw new Exception(responseBody);
+
+        try
+        {
+            switch (response.StatusCode)
+            {
+                case 401:
+                    throw new UnauthorizedRequest(
+                        JsonUtils.Deserialize<UnauthorizedRequestErrorBody>(responseBody)
+                    );
+            }
+        }
+        catch (JsonException)
+        {
+            // unable to map error response, throwing generic error
+        }
+        throw new SeedBasicAuthEnvironmentVariablesApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
@@ -54,8 +85,39 @@ public class BasicAuthClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<bool>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<bool>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedBasicAuthEnvironmentVariablesException(
+                    "Failed to deserialize response",
+                    e
+                );
+            }
         }
-        throw new Exception(responseBody);
+
+        try
+        {
+            switch (response.StatusCode)
+            {
+                case 401:
+                    throw new UnauthorizedRequest(
+                        JsonUtils.Deserialize<UnauthorizedRequestErrorBody>(responseBody)
+                    );
+                case 400:
+                    throw new BadRequest(JsonUtils.Deserialize<object>(responseBody));
+            }
+        }
+        catch (JsonException)
+        {
+            // unable to map error response, throwing generic error
+        }
+        throw new SeedBasicAuthEnvironmentVariablesApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

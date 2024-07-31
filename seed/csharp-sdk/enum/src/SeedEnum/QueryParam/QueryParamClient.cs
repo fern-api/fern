@@ -29,7 +29,7 @@ public class QueryParamClient
         {
             _query["maybeOperandOrColor"] = request.MaybeOperandOrColor.ToString();
         }
-        await _client.MakeRequestAsync(
+        var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
@@ -38,6 +38,16 @@ public class QueryParamClient
                 Query = _query,
                 Options = options
             }
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedEnumApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
         );
     }
 
@@ -57,7 +67,7 @@ public class QueryParamClient
         _query["maybeOperandOrColor"] = request
             .MaybeOperandOrColor.Select(_value => _value.ToString())
             .ToList();
-        await _client.MakeRequestAsync(
+        var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
@@ -66,6 +76,16 @@ public class QueryParamClient
                 Query = _query,
                 Options = options
             }
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedEnumApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
         );
     }
 }

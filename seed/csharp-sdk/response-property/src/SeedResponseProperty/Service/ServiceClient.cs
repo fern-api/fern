@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Text.Json;
 using SeedResponseProperty;
 using SeedResponseProperty.Core;
 
@@ -30,9 +31,21 @@ public class ServiceClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<Response>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<Response>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedResponsePropertyException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedResponsePropertyApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task<Response> GetMovieDocsAsync(string request, RequestOptions? options = null)
@@ -50,9 +63,21 @@ public class ServiceClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<Response>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<Response>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedResponsePropertyException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedResponsePropertyApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task<StringResponse> GetMovieNameAsync(
@@ -73,9 +98,21 @@ public class ServiceClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<StringResponse>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<StringResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedResponsePropertyException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedResponsePropertyApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task<Response> GetMovieMetadataAsync(
@@ -96,9 +133,21 @@ public class ServiceClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<Response>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<Response>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedResponsePropertyException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedResponsePropertyApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task<Response?> GetOptionalMovieAsync(
@@ -119,9 +168,21 @@ public class ServiceClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<Response?>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<Response?>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedResponsePropertyException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedResponsePropertyApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task<WithDocs?> GetOptionalMovieDocsAsync(
@@ -142,9 +203,21 @@ public class ServiceClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<WithDocs?>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<WithDocs?>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedResponsePropertyException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedResponsePropertyApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task<StringResponse?> GetOptionalMovieNameAsync(
@@ -165,8 +238,20 @@ public class ServiceClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<StringResponse?>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<StringResponse?>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedResponsePropertyException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedResponsePropertyApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

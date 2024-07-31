@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Text.Json;
 using SeedUnknownAsAny.Core;
 
 #nullable enable
@@ -29,8 +30,20 @@ public class UnknownClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<IEnumerable<object>>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<IEnumerable<object>>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedUnknownAsAnyException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedUnknownAsAnyApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

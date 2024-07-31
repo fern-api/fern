@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Text.Json;
 using SeedValidation;
 using SeedValidation.Core;
 
@@ -35,9 +36,21 @@ public partial class SeedValidationClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<Type>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<Type>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedValidationException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedValidationApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     public async Task<Type> GetAsync(GetRequest request, RequestOptions? options = null)
@@ -59,8 +72,20 @@ public partial class SeedValidationClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<Type>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<Type>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedValidationException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedValidationApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

@@ -104,6 +104,13 @@ export abstract class AbstractCsharpGeneratorContext<
         });
     }
 
+    public getJsonExceptionClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: "System.Text.Json",
+            name: "JsonException"
+        });
+    }
+
     public getCollectionItemSerializerReference(
         itemType: csharp.ClassReference,
         serializer: csharp.ClassReference

@@ -1,6 +1,7 @@
 import { AbstractCsharpGeneratorContext, AsIsFiles, csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
+    DeclaredErrorName,
     FernFilepath,
     HttpEndpoint,
     HttpService,
@@ -17,6 +18,7 @@ import { REQUEST_OPTIONS_CLASS_NAME, REQUEST_OPTIONS_PARAMETER_NAME } from "./op
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
 const TYPES_FOLDER_NAME = "Types";
+const EXCEPTIONS_FOLDER_NAME = "Exceptions";
 
 export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCustomConfigSchema> {
     /**
@@ -54,6 +56,15 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             [
                 ...typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName),
                 TYPES_FOLDER_NAME
+            ].join("/")
+        );
+    }
+
+    public getDirectoryForError(declaredErrorName: DeclaredErrorName): RelativeFilePath {
+        return RelativeFilePath.of(
+            [
+                ...declaredErrorName.fernFilepath.allParts.map((path) => path.pascalCase.safeName),
+                EXCEPTIONS_FOLDER_NAME
             ].join("/")
         );
     }
@@ -110,6 +121,31 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             return this.customConfig["client-class-name"];
         }
         return `${this.getComputedClientName()}Client`;
+    }
+
+    public getBaseExceptionClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getExceptionPrefix() + "Exception",
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getBaseApiExceptionClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getExceptionPrefix() + "ApiException",
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getExceptionClassReference(declaredErrorName: DeclaredErrorName): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getPascalCaseSafeName(declaredErrorName.name),
+            namespace: this.getNamespaceFromFernFilepath(declaredErrorName.fernFilepath)
+        });
+    }
+
+    private getExceptionPrefix() {
+        return this.customConfig["client-class-name"] ?? this.getComputedClientName();
     }
 
     public getRawClientClassReference(): csharp.ClassReference {
