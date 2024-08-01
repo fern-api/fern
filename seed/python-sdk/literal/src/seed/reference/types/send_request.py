@@ -5,12 +5,14 @@ import typing
 import pydantic
 
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .some_literal import SomeLiteral
 
 
 class SendRequest(UniversalBaseModel):
     prompt: typing.Literal["You are a helpful assistant"] = "You are a helpful assistant"
     query: str
     stream: typing.Literal[False] = False
+    context: SomeLiteral = "You're super wise"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

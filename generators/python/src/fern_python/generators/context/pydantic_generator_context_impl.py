@@ -61,13 +61,14 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
     def get_initializer_for_type_reference(
         self,
         type_reference: ir_types.TypeReference,
+        ignore_literals: bool = False,
     ) -> Optional[AST.Expression]:
-        if not self._allow_leveraging_defaults:
-            return None
-
         default_value = None
         union = type_reference.get_as_union()
-        if union.type == "primitive":
+        
+        # Only populate primitive defaults if we're allowed to leverage them via config
+        # Otherwise we want to be able to generate defaults for literals, and aliases of literals
+        if union.type == "primitive" and self._allow_leveraging_defaults:
             maybe_v2_scheme = union.primitive.v_2
             if maybe_v2_scheme is not None:
                 default_value = maybe_v2_scheme.visit(
@@ -85,6 +86,28 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                     base_64=lambda _: None,
                     float_=lambda _: None,
                 )
+        elif union.type == "named":
+            type_declaration = self.get_declaration_for_type_id(union.type_id)
+            default_value = type_declaration.shape.visit(
+                alias=lambda a: self.get_initializer_for_type_reference(a.alias_of, ignore_literals=ignore_literals),
+                enum=lambda _: None,
+                object=lambda _: None,
+                union=lambda _: None,
+                undiscriminated_union=lambda _: None,
+            )
+        elif union.type == "container":
+            default_value = union.container.visit(
+                literal=lambda lv: lv.visit(
+                    string=lambda s: AST.Expression(f'"{s}"'),
+                    boolean=lambda b: AST.Expression(f'{b}'),
+                ) if not ignore_literals else None,
+                list_=lambda _: None,
+                set_=lambda _: None,
+                # Ignore literal defaults when the wrapping type is optional
+                optional=lambda opt: self.get_initializer_for_type_reference(opt, ignore_literals=True),
+                map_=lambda _: None,
+            )
+
         return default_value
 
     def get_class_reference_for_type_id(

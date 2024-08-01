@@ -102,6 +102,14 @@ client.inlined.send(
 <dl>
 <dd>
 
+**context:** `typing.Optional[typing.Literal["You're super wise"]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **temperature:** `typing.Optional[float]` 
     
 </dd>

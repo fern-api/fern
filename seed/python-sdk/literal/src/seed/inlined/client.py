@@ -21,6 +21,7 @@ class InlinedClient:
         self,
         *,
         query: str,
+        context: typing.Optional[typing.Literal["You're super wise"]] = OMIT,
         temperature: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None
     ) -> SendResponse:
@@ -28,6 +29,8 @@ class InlinedClient:
         Parameters
         ----------
         query : str
+
+        context : typing.Optional[typing.Literal["You're super wise"]]
 
         temperature : typing.Optional[float]
 
@@ -53,7 +56,13 @@ class InlinedClient:
         _response = self._client_wrapper.httpx_client.request(
             "inlined",
             method="POST",
-            json={"query": query, "temperature": temperature, "prompt": "You are a helpful assistant", "stream": False},
+            json={
+                "context": context,
+                "query": query,
+                "temperature": temperature,
+                "prompt": "You are a helpful assistant",
+                "stream": False,
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -74,6 +83,7 @@ class AsyncInlinedClient:
         self,
         *,
         query: str,
+        context: typing.Optional[typing.Literal["You're super wise"]] = OMIT,
         temperature: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None
     ) -> SendResponse:
@@ -81,6 +91,8 @@ class AsyncInlinedClient:
         Parameters
         ----------
         query : str
+
+        context : typing.Optional[typing.Literal["You're super wise"]]
 
         temperature : typing.Optional[float]
 
@@ -114,7 +126,13 @@ class AsyncInlinedClient:
         _response = await self._client_wrapper.httpx_client.request(
             "inlined",
             method="POST",
-            json={"query": query, "temperature": temperature, "prompt": "You are a helpful assistant", "stream": False},
+            json={
+                "context": context,
+                "query": query,
+                "temperature": temperature,
+                "prompt": "You are a helpful assistant",
+                "stream": False,
+            },
             request_options=request_options,
             omit=OMIT,
         )

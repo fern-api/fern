@@ -7,6 +7,9 @@ types:
       prompt: literal<"You are a helpful assistant">
       query: string
       stream: literal<false>
+      context: SomeLiteral
+  SomeLiteral:
+    type: literal<"You're super wise">
 
 service:
   auth: false
@@ -21,6 +24,7 @@ service:
         - request: 
             prompt: "You are a helpful assistant"
             stream: false
+            context: "You're super wise"
             query: "What is the weather today"
           response: 
             body: 

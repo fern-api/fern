@@ -44,7 +44,12 @@ class ReferenceClient:
         _response = self._client_wrapper.httpx_client.request(
             "reference",
             method="POST",
-            json={"query": query, "prompt": "You are a helpful assistant", "stream": False},
+            json={
+                "query": query,
+                "prompt": "You are a helpful assistant",
+                "stream": False,
+                "context": "You're super wise",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -96,7 +101,12 @@ class AsyncReferenceClient:
         _response = await self._client_wrapper.httpx_client.request(
             "reference",
             method="POST",
-            json={"query": query, "prompt": "You are a helpful assistant", "stream": False},
+            json={
+                "query": query,
+                "prompt": "You are a helpful assistant",
+                "stream": False,
+                "context": "You're super wise",
+            },
             request_options=request_options,
             omit=OMIT,
         )

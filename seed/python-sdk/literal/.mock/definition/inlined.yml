@@ -13,6 +13,7 @@ service:
         body: 
           properties: 
             prompt: literal<"You are a helpful assistant">
+            context: optional<literal<"You're super wise">>
             query: string
             temperature: optional<double>
             stream: literal<false>
@@ -21,6 +22,7 @@ service:
         - request:
             temperature: 10.1
             prompt: "You are a helpful assistant"
+            context: "You're super wise"
             stream: false
             query: "What is the weather today"
           response: 
@@ -28,4 +30,3 @@ service:
               message: "The weather is sunny"
               status: 200
               success: true
-        
