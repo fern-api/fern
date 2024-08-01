@@ -220,7 +220,7 @@ export class TemplateGenerator {
                                 boolean: (bool) => FDRAPIV1Read.LiteralType.booleanLiteral(bool),
                                 string: (str) => FDRAPIV1Read.LiteralType.stringLiteral(str),
                                 _other: () => {
-                                    throw new Error("Unknown literal type: " + literalValue);
+                                    throw new Error("Unknown literal type: " + literalValue.type);
                                 }
                             })
                         ),
