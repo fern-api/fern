@@ -21,19 +21,11 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
 
     public doGenerate(): CSharpFile {
         const typeId = this.typeDeclaration.name.typeId;
-        if (this.objectDeclaration.extends.length > 1) {
-            throw new Error(`Multiple inheritance is not supported in C#. Type: ${typeId}`);
-        }
-        const parentClassReference =
-            this.objectDeclaration.extends[0] != null
-                ? this.context.csharpTypeMapper.convertToClassReference(this.objectDeclaration.extends[0])
-                : undefined;
         const class_ = csharp.class_({
             ...this.classReference,
             partial: false,
             access: "public",
-            record: true,
-            parentClassReference
+            record: true
         });
         const properties = [...this.objectDeclaration.properties]; // todo: add properties from parent class
         properties.forEach((property) => {

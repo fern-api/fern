@@ -253,8 +253,8 @@ export class EndpointGenerator {
                 `var ${RESPONSE_BODY_VARIABLE_NAME} = await ${RESPONSE_VARIABLE_NAME}.Raw.Content.ReadAsStringAsync()`
             );
             body._visit({
-                streamParameter: () => undefined,
-                fileDownload: () => undefined,
+                streamParameter: () => this.context.logger.error("Stream parameters not supported"),
+                fileDownload: () => this.context.logger.error("File download not supported"),
                 json: (reference) => {
                     const astType = this.context.csharpTypeMapper.convert({ reference: reference.responseBodyType });
                     writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400) {`);
@@ -288,23 +288,16 @@ export class EndpointGenerator {
                     writer.writeLine("}");
                     writer.writeLine();
                 },
-                streaming: () => undefined,
+                streaming: () => this.context.logger.error("Streaming not supported"),
                 text: () => {
-                    return csharp.codeblock((writer) => {
-                        writer.writeTextStatement(
-                            `var ${RESPONSE_BODY_VARIABLE_NAME} = await ${RESPONSE_VARIABLE_NAME}.Raw.Content.ReadAsStringAsync()`
-                        );
-                        writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400) {`);
-                        writer.writeNewLineIfLastLineNot();
+                    writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400) {`);
+                    writer.writeNewLineIfLastLineNot();
 
-                        writer.writeTextStatement(`return ${RESPONSE_BODY_VARIABLE_NAME}`);
+                    writer.writeTextStatement(`return ${RESPONSE_BODY_VARIABLE_NAME}`);
 
-                        writer.indent();
-                        writer.writeLine("}");
-                        writer.dedent();
-
-                        writer.writeLine(`throw new Exception(${RESPONSE_BODY_VARIABLE_NAME});`);
-                    });
+                    writer.indent();
+                    writer.writeLine("}");
+                    writer.dedent();
                 },
                 _other: () => undefined
             });

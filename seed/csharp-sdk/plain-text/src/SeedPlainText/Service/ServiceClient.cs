@@ -14,7 +14,7 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Task<string> GetTextAsync()
+    public async Task<string> GetTextAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -26,15 +26,14 @@ public class ServiceClient
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return responseBody;
+        }
         throw new SeedPlainTextApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
             JsonUtils.Deserialize<object>(responseBody)
         );
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            return responseBody;
-        }
-        throw new Exception(responseBody);
     }
 }
