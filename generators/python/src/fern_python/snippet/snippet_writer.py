@@ -234,7 +234,7 @@ class SnippetWriter:
                 use_typeddict_request=use_typeddict_request,
                 as_request=as_request,
             ),
-            literal=lambda _: None,
+            literal=lambda lit: self._get_snippet_for_primitive(lit) if use_typeddict_request and as_request else None,
         )
 
     def _get_snippet_for_unknown(

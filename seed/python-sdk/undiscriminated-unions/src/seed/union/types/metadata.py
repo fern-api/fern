@@ -5,6 +5,6 @@ import typing
 from .key import Key
 
 """
-{"name": "exampleName", "value": "exampleValue"}
+{"name": "exampleName", "value": "exampleValue", "default": "exampleDefault"}
 """
 Metadata = typing.Dict[Key, str]

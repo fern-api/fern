@@ -246,6 +246,8 @@ client = SeedLiteral(
     base_url="https://yourhost.com/path/to/api",
 )
 client.reference.send(
+    prompt="You are a helpful assistant",
+    stream=False,
     query="What is the weather today",
 )
 

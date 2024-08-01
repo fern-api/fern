@@ -1,6 +1,6 @@
 {
     "types": {
-        "type_union:Metadata": "{\"name\": \"exampleName\", \"value\": \"exampleValue\"}\n"
+        "type_union:Metadata": "{\"name\": \"exampleName\", \"value\": \"exampleValue\", \"default\": \"exampleDefault\"}\n"
     },
     "endpoints": [
         {

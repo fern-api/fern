@@ -418,6 +418,7 @@ client.service.create_movie(
     title="The Boy and the Heron",
     from_="Hayao Miyazaki",
     rating=8.0,
+    type="movie",
     tag="tag-wf9as23d",
     metadata={
         "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
