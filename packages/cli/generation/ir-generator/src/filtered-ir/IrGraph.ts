@@ -25,6 +25,7 @@ import {
     AudienceId,
     EndpointId,
     EndpointNode,
+    EnvironmentId,
     ErrorId,
     ErrorNode,
     InlinedRequestPropertiesNode,
@@ -335,6 +336,7 @@ export class IrGraph {
     public build(): FilteredIr {
         const typeIds = new Set<TypeId>();
         const errorIds = new Set<ErrorId>();
+        const environments = new Set<EnvironmentId>();
 
         for (const endpointId of this.endpointsNeededForAudience.keys()) {
             const endpointNode = this.getEndpointNode(endpointId);
@@ -430,6 +432,7 @@ export class IrGraph {
         }
 
         return new FilteredIrImpl({
+            environments,
             types: typeIds,
             properties,
             errors: errorIds,

@@ -1,8 +1,9 @@
-import { ErrorDeclaration, HttpEndpoint, HttpService, TypeDeclaration, Webhook } from "@fern-api/ir-sdk";
+import { EnvironmentId, ErrorDeclaration, HttpEndpoint, HttpService, TypeDeclaration, Webhook } from "@fern-api/ir-sdk";
 import { IdGenerator } from "../IdGenerator";
 import { EndpointId, ErrorId, ServiceId, SubpackageId, TypeId, WebhookId } from "./ids";
 
 export interface FilteredIr {
+    hasEnvironment(environment: string): boolean;
     hasType(type: TypeDeclaration): boolean;
     hasTypeId(type: string): boolean;
     hasProperty(type: string, property: string): boolean;
@@ -19,6 +20,7 @@ export interface FilteredIr {
 }
 
 export class FilteredIrImpl implements FilteredIr {
+    private environments: Set<EnvironmentId> = new Set();
     private types: Set<TypeId> = new Set();
     private properties: Record<TypeId, Set<string> | undefined>;
     private errors: Set<ErrorId> = new Set();
@@ -31,6 +33,7 @@ export class FilteredIrImpl implements FilteredIr {
     private subpackages: Set<SubpackageId> = new Set();
 
     public constructor({
+        environments,
         types,
         errors,
         services,
@@ -42,6 +45,7 @@ export class FilteredIrImpl implements FilteredIr {
         webhookPayloadProperties,
         properties
     }: {
+        environments: Set<EnvironmentId>;
         types: Set<TypeId>;
         properties: Record<TypeId, Set<string> | undefined>;
         errors: Set<ErrorId>;
@@ -53,6 +57,7 @@ export class FilteredIrImpl implements FilteredIr {
         webhookPayloadProperties: Record<WebhookId, Set<string> | undefined>;
         subpackages: Set<SubpackageId>;
     }) {
+        this.environments = environments;
         this.types = types;
         this.properties = properties;
         this.errors = errors;
@@ -63,6 +68,9 @@ export class FilteredIrImpl implements FilteredIr {
         this.subpackages = subpackages;
         this.requestProperties = requestProperties;
         this.queryParameters = queryParameters;
+    }
+    public hasEnvironment(environment: string): boolean {
+        return this.environments.has(environment);
     }
 
     public hasTypeId(typeId: string): boolean {
