@@ -87,6 +87,7 @@ class PydanticModelObjectSnippetGenerator(AbstractObjectSnippetGenerator):
                     request_parameter_names={},
                     use_typeddict_request=False,
                     as_request=False,
+                    in_typeddict=False,
                 ),
             ),
         )

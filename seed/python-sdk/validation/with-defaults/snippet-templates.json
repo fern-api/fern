@@ -79,7 +79,7 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "templateString": "shapeshape=$FERN_INPUT",
+                            "templateString": "shape=$FERN_INPUT",
                             "values": {
                                 "SQUARE": "\"SQUARE\"",
                                 "CIRCLE": "\"CIRCLE\"",
@@ -168,7 +168,7 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "templateString": "shapeshape=$FERN_INPUT",
+                                "templateString": "shape=$FERN_INPUT",
                                 "values": {
                                     "SQUARE": "\"SQUARE\"",
                                     "CIRCLE": "\"CIRCLE\"",

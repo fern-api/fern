@@ -1,4 +1,4 @@
-from typing import Callable, Optional
+from typing import Callable, Optional, cast
 
 import fern.ir.resources as ir_types
 
@@ -34,7 +34,7 @@ class TypeReferenceToTypeHintConverter:
                 for_typeddict=for_typeddict,
             ),
             named=lambda type_name: self._get_type_hint_for_named(
-                type_name=type_name,
+                type_name=cast(ir_types.DeclaredTypeName, type_name),
                 must_import_after_current_declaration=must_import_after_current_declaration,
                 as_request=in_endpoint if in_endpoint is not None else False,
                 as_if_type_checking_import=as_if_type_checking_import,
@@ -137,7 +137,7 @@ class TypeReferenceToTypeHintConverter:
                     )
                 ),
                 named=lambda type_reference: self._get_set_type_hint_for_named(
-                    type_reference,
+                    cast(ir_types.DeclaredTypeName, type_reference),
                     must_import_after_current_declaration=must_import_after_current_declaration,
                     as_if_type_checking_import=as_if_type_checking_import,
                     in_endpoint=in_endpoint,
@@ -204,5 +204,8 @@ class TypeReferenceToTypeHintConverter:
             date=AST.TypeHint.date,
             base_64=AST.TypeHint.str_,
             big_integer=AST.TypeHint.str_,
+            uint=AST.TypeHint.int_,
+            uint_64=AST.TypeHint.int_,
+            float_=AST.TypeHint.float_,
         )
         return to_return

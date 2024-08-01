@@ -150,14 +150,8 @@ class FernTypedDict:
             )
         )
 
-    def to_snippet(self) -> AST.Expression:
-        return AST.Expression("TODO")
-
     def finish(self) -> None:
-        if self._type_declaration is not None and len(self._type_declaration.examples) > 0:
-            snippet = SourceFileFactory.create_snippet()
-            snippet.add_expression(self.to_snippet())
-            self._class_declaration.add_snippet(snippet.to_str())
+        return
 
     def __enter__(self) -> FernTypedDict:
         return self
@@ -196,7 +190,7 @@ class FernTypedDict:
                     value=property.value,
                 )
             )
-        return snippet_writer._get_snippet_for_map(example_dict_pairs, use_typeddict_request=True, as_request=True)
+        return snippet_writer._get_snippet_for_map(example_dict_pairs, use_typeddict_request=True, as_request=True, in_typeddict=True)
 
     @classmethod
     def type_to_snippet(

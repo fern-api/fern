@@ -105,6 +105,13 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         );
     }
 
+    public getJsonExceptionClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: "System.Text.Json",
+            name: "JsonException"
+        });
+    }
+
     public getSubpackageClassReference(subpackage: Subpackage): csharp.ClassReference {
         return csharp.classReference({
             name: `${subpackage.name.pascalCase.unsafeName}Client`,

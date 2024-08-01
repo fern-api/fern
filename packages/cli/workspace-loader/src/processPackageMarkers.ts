@@ -9,6 +9,7 @@ import { ParsedFernFile } from "./types/FernFile";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
 import { FernDefinition } from "./types/Workspace";
 import { validateStructureOfYamlFiles } from "./validateStructureOfYamlFiles";
+import { OSSWorkspace } from "./workspaces";
 
 export declare namespace processPackageMarkers {
     export type Return = SuccessfulResult | FailedResult;
@@ -34,12 +35,14 @@ export async function processPackageMarkers({
     dependenciesConfiguration,
     structuralValidationResult,
     context,
-    cliVersion
+    cliVersion,
+    settings
 }: {
     dependenciesConfiguration: dependenciesYml.DependenciesConfiguration;
     structuralValidationResult: validateStructureOfYamlFiles.SuccessfulResult;
     context: TaskContext;
     cliVersion: string;
+    settings?: OSSWorkspace.Settings;
 }): Promise<processPackageMarkers.Return> {
     const packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>> = {};
     const importedDefinitions: Record<RelativeFilePath, processPackageMarkers.ImportedDefinition> = {};
@@ -75,7 +78,8 @@ export async function processPackageMarkers({
                             dependenciesConfiguration,
                             context,
                             rootApiFile: structuralValidationResult.rootApiFile.contents,
-                            cliVersion
+                            cliVersion,
+                            settings
                         });
                         if (loadDependencyResult.didSucceed) {
                             importedDefinitions[dirname(pathOfPackageMarker)] = {

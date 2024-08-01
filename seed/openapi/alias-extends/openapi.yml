@@ -1,0 +1,54 @@
+openapi: 3.0.1
+info:
+  title: alias-extends
+  version: ''
+  description: A Test Definition for extending an alias
+paths:
+  /extends/extended-inline-request-body:
+    post:
+      operationId: extendedInlineRequestBody
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                child:
+                  type: string
+              required:
+                - child
+              allOf:
+                - $ref: '#/components/schemas/AliasType'
+components:
+  schemas:
+    AliasType:
+      title: AliasType
+      $ref: '#/components/schemas/Parent'
+    Parent:
+      title: Parent
+      type: object
+      properties:
+        parent:
+          type: string
+          example: Property from the parent
+      required:
+        - parent
+    Child:
+      title: Child
+      type: object
+      properties:
+        child:
+          type: string
+          example: Property from the child
+      required:
+        - child
+      allOf:
+        - $ref: '#/components/schemas/Parent'
+  securitySchemes: {}

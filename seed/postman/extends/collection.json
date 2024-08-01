@@ -12,5 +12,38 @@
     }
   ],
   "auth": null,
-  "item": []
+  "item": [
+    {
+      "_type": "endpoint",
+      "name": "Extended Inline Request Body",
+      "request": {
+        "description": null,
+        "url": {
+          "raw": "{{baseUrl}}/extends/extended-inline-request-body",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "extends",
+            "extended-inline-request-body"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"unique\": \"example\",\n    \"docs\": \"This is an example type.\",\n    \"name\": \"Example\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    }
+  ]
 }

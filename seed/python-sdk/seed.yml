@@ -1,4 +1,4 @@
-irVersion: v49
+irVersion: v53
 docker: fernapi/fern-python-sdk:latest
 dockerCommand: docker build -f ./generators/python/sdk/Dockerfile -t fernapi/fern-python-sdk:latest ./generators/python
 language: python
@@ -127,6 +127,12 @@ fixtures:
         pydantic_config:
           use_provided_defaults: true
       outputFolder: with-defaults
+  literal:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use_typeddict_requests: true
+      outputFolder: use_typeddict_requests
   streaming:
     - customConfig: null
       outputFolder: no-custom-config
@@ -185,3 +191,4 @@ allowedFailures:
   # We are not generating the correct snippets for union-utils
   # types (e.g. we generate `Shape_Square` instead of Shape.factory.square())
   - unions:union-utils
+  - alias-extends

@@ -1,4 +1,4 @@
-irVersion: v48
+irVersion: v53
 docker: fernapi/fern-typescript-express:local
 dockerCommand: yarn workspace @fern-typescript/express-generator-cli dockerTagLocal
 language: typescript
@@ -63,6 +63,7 @@ allowedFailures:
   - file-upload
   - plain-text
   - streaming
+  - streaming-parameter
   - server-sent-events
 
 

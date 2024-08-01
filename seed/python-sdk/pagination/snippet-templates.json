@@ -80,7 +80,7 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "templateString": "orderorder=$FERN_INPUT",
+                            "templateString": "order=$FERN_INPUT",
                             "values": {
                                 "asc": "\"asc\"",
                                 "desc": "\"desc\""
@@ -185,7 +185,7 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "templateString": "orderorder=$FERN_INPUT",
+                                "templateString": "order=$FERN_INPUT",
                                 "values": {
                                     "asc": "\"asc\"",
                                     "desc": "\"desc\""
@@ -454,7 +454,7 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "templateString": "orderorder=$FERN_INPUT",
+                            "templateString": "order=$FERN_INPUT",
                             "values": {
                                 "asc": "\"asc\"",
                                 "desc": "\"desc\""
@@ -559,7 +559,7 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "templateString": "orderorder=$FERN_INPUT",
+                                "templateString": "order=$FERN_INPUT",
                                 "values": {
                                     "asc": "\"asc\"",
                                     "desc": "\"desc\""
@@ -828,7 +828,7 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "templateString": "orderorder=$FERN_INPUT",
+                            "templateString": "order=$FERN_INPUT",
                             "values": {
                                 "asc": "\"asc\"",
                                 "desc": "\"desc\""
@@ -917,7 +917,7 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "templateString": "orderorder=$FERN_INPUT",
+                                "templateString": "order=$FERN_INPUT",
                                 "values": {
                                     "asc": "\"asc\"",
                                     "desc": "\"desc\""

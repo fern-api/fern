@@ -239,6 +239,7 @@ class PydanticModelDiscriminatedUnionSnippetGenerator(AbstractDiscriminatedUnion
                     request_parameter_names={},
                     use_typeddict_request=self.use_typeddict_request,
                     as_request=self.as_request,
+                    in_typeddict=False,
                 ),
             )
         else:
@@ -272,6 +273,7 @@ class PydanticModelDiscriminatedUnionSnippetGenerator(AbstractDiscriminatedUnion
                 example_type_reference=example,
                 use_typeddict_request=self.use_typeddict_request,
                 as_request=self.as_request,
+                in_typeddict=False,
             )
             if isinstance(example, ir_types.ExampleTypeReference)
             else example

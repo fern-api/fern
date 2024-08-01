@@ -2,11 +2,11 @@ import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/yaml-schema";
 import { processPackageMarkers } from "../processPackageMarkers";
-import { FernWorkspace } from "../workspaces/FernWorkspace";
+import { FernWorkspace, LazyFernWorkspace } from "../workspaces/FernWorkspace";
 import { OSSWorkspace } from "../workspaces/OSSWorkspace";
 import { ParsedFernFile } from "./FernFile";
 
-export type Workspace = DocsWorkspace | FernWorkspace | OSSWorkspace;
+export type Workspace = DocsWorkspace | LazyFernWorkspace | OSSWorkspace;
 
 export interface DocsWorkspace {
     type: "docs";
