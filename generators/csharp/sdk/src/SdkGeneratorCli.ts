@@ -49,7 +49,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
             baseApiExceptionClassName &&
             baseExceptionClassName === baseApiExceptionClassName
         ) {
-            throw new Error(`The 'base-api-exception-class-name' and 'base-exception-class-name' cannot be the same.`);
+            throw new Error("The 'base-api-exception-class-name' and 'base-exception-class-name' cannot be the same.");
         }
 
         return customConfig;
