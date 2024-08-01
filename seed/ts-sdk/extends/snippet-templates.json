@@ -7,7 +7,7 @@
         },
         "endpointId": {
             "path": "/extends/extended-inline-request-body",
-            "method": "GET",
+            "method": "POST",
             "identifierOverride": "endpoint_.extendedInlineRequestBody"
         },
         "snippetTemplate": {

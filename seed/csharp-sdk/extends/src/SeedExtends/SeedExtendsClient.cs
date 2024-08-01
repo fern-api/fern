@@ -29,7 +29,7 @@ public partial class SeedExtendsClient
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
+                Method = HttpMethod.Post,
                 Path = "/extends/extended-inline-request-body",
                 Body = request,
                 Options = options

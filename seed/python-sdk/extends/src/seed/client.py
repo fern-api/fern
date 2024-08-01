@@ -92,7 +92,11 @@ class SeedExtends:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "extends/extended-inline-request-body", method="GET", request_options=request_options, omit=OMIT
+            "extends/extended-inline-request-body",
+            method="POST",
+            json={"unique": unique, "name": name, "docs": docs},
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -190,7 +194,11 @@ class AsyncSeedExtends:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "extends/extended-inline-request-body", method="GET", request_options=request_options, omit=OMIT
+            "extends/extended-inline-request-body",
+            method="POST",
+            json={"unique": unique, "name": name, "docs": docs},
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:

@@ -66,7 +66,7 @@ class AbstractRootService(AbstractFernService):
         # https://github.com/tiangolo/fastapi/pull/5077
         wrapper.__globals__.update(cls.extended_inline_request_body.__globals__)
 
-        router.get(
+        router.post(
             path="/extends/extended-inline-request-body",
             response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,

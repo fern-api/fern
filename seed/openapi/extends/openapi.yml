@@ -4,7 +4,7 @@ info:
   version: ''
 paths:
   /extends/extended-inline-request-body:
-    get:
+    post:
       operationId: extendedInlineRequestBody
       tags:
         - ''

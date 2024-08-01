@@ -37,7 +37,7 @@ export class RootService {
     }
 
     public toRouter(): express.Router {
-        this.router.get("/extended-inline-request-body", async (req, res, next) => {
+        this.router.post("/extended-inline-request-body", async (req, res, next) => {
             const request = serializers.Inlined.parse(req.body);
             if (request.ok) {
                 req.body = request.value;

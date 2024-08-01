@@ -10,7 +10,7 @@
             "example_identifier": "default",
             "id": {
                 "path": "/extends/extended-inline-request-body",
-                "method": "GET",
+                "method": "POST",
                 "identifier_override": "endpoint_.extendedInlineRequestBody"
             },
             "snippet": {

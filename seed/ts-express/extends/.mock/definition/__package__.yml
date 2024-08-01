@@ -4,7 +4,7 @@ service:
   endpoints:
     extendedInlineRequestBody:
       path: /extended-inline-request-body
-      method: GET
+      method: POST
       request:
         name: Inlined
         body:

@@ -31,7 +31,7 @@
           "variable": []
         },
         "header": [],
-        "method": "GET",
+        "method": "POST",
         "auth": null,
         "body": {
           "mode": "raw",

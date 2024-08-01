@@ -52,7 +52,7 @@ func (c *Client) ExtendedInlineRequestBody(
 		ctx,
 		&core.CallParams{
 			URL:         endpointURL,
-			Method:      http.MethodGet,
+			Method:      http.MethodPost,
 			MaxAttempts: options.MaxAttempts,
 			Headers:     headers,
 			Client:      options.HTTPClient,
