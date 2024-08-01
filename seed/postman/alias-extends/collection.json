@@ -1,0 +1,49 @@
+{
+  "info": {
+    "name": "Alias Extends",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "A Test Definition for extending an alias"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": null,
+  "item": [
+    {
+      "_type": "endpoint",
+      "name": "Extended Inline Request Body",
+      "request": {
+        "description": null,
+        "url": {
+          "raw": "{{baseUrl}}/extends/extended-inline-request-body",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "extends",
+            "extended-inline-request-body"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"child\": \"example\",\n    \"parent\": \"Property from the parent\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    }
+  ]
+}

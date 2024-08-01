@@ -20,15 +20,17 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
     }
 
     public doGenerate(): CSharpFile {
-        const typeId = this.typeDeclaration.name.typeId;
         const class_ = csharp.class_({
             ...this.classReference,
             partial: false,
             access: "public",
             record: true
         });
-        const properties = this.context.flattenedProperties.get(typeId) ?? this.objectDeclaration.properties;
-        properties.forEach((property) => {
+        const flattenedProperties = [
+            ...this.objectDeclaration.properties,
+            ...(this.objectDeclaration.extendedProperties ?? [])
+        ];
+        flattenedProperties.forEach((property) => {
             const annotations: csharp.Annotation[] = [];
             const maybeUndiscriminatedUnion = this.context.getAsUndiscriminatedUnionTypeDeclaration(property.valueType);
             if (maybeUndiscriminatedUnion != null) {

@@ -147,6 +147,8 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
 
         if (!this.downloaded) {
             this.downloaded = true;
+        } else {
+            context?.logger.enable();
         }
 
         return new FernWorkspace({

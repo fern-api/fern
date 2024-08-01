@@ -4,6 +4,23 @@ import { FernWorkspace } from "@fern-api/workspace-loader";
 import validatePackageName from "validate-npm-package-name";
 import { logViolations } from "./logViolations";
 
+export async function validateAPIWorkspaceWithoutExiting({
+    workspace,
+    context,
+    logWarnings,
+    logSummary = true
+}: {
+    workspace: FernWorkspace;
+    context: TaskContext;
+    logWarnings: boolean;
+    logSummary?: boolean;
+}): Promise<{ hasErrors: boolean }> {
+    const violations = await validateFernWorkspace(workspace, context.logger);
+    const { hasErrors } = logViolations({ violations, context, logWarnings, logSummary });
+
+    return { hasErrors };
+}
+
 export async function validateAPIWorkspaceAndLogIssues({
     workspace,
     context,
@@ -17,8 +34,7 @@ export async function validateAPIWorkspaceAndLogIssues({
         context.failAndThrow("API name is not valid.");
     }
 
-    const violations = await validateFernWorkspace(workspace, context.logger);
-    const { hasErrors } = logViolations({ violations, context, logWarnings });
+    const { hasErrors } = await validateAPIWorkspaceWithoutExiting({ workspace, context, logWarnings });
 
     if (hasErrors) {
         context.failAndThrow();

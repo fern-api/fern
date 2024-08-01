@@ -1,6 +1,6 @@
 import { wrapWithHttps } from "@fern-api/docs-resolver";
 import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
-import { dirname } from "@fern-api/fs-utils";
+import { dirname, doesPathExist } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
@@ -41,13 +41,22 @@ export async function runPreviewServer({
     context: TaskContext;
     port: number;
 }): Promise<void> {
-    const url = process.env.DOCS_PREVIEW_BUCKET;
-    if (url == null) {
-        context.failAndThrow("Failed to connect to the docs preview server. Please contact support@buildwithfern.com");
-        return;
+    try {
+        const url = process.env.DOCS_PREVIEW_BUCKET;
+        if (url == null) {
+            throw new Error("Failed to connect to the docs preview server. Please contact support@buildwithfern.com");
+        }
+        await downloadBundle({ bucketUrl: url, logger: context.logger, preferCached: true });
+    } catch (err) {
+        const pathToBundle = getPathToBundleFolder();
+        if (await doesPathExist(pathToBundle)) {
+            context.logger.warn("Failed to download latest docs application. Falling back to existing bundle.");
+        } else {
+            context.logger.warn("Failed to download docs application. Please reach out to support@buildwithfern.com.");
+            return;
+        }
     }
 
-    await downloadBundle({ bucketUrl: url, logger: context.logger, preferCached: true });
     const absoluteFilePathToFern = dirname(initialProject.config._absolutePath);
 
     const app = express();
@@ -79,10 +88,12 @@ export async function runPreviewServer({
     let docsDefinition: DocsV1Read.DocsDefinition | undefined;
 
     const reloadDocsDefinition = async () => {
-        context.logger.info("Reloading docs");
+        context.logger.info("Reloading docs...");
         const startTime = Date.now();
         try {
             project = await reloadProject();
+            context.logger.info("Validating docs...");
+            await validateProject(project);
             const newDocsDefinition = await getPreviewDocsDefinition({
                 domain: instance.host,
                 project,
@@ -91,8 +102,11 @@ export async function runPreviewServer({
             context.logger.info(`Reload completed in ${Date.now() - startTime}ms`);
             return newDocsDefinition;
         } catch (err) {
-            context.logger.error("Failed to reload because of validation errors: ");
-            await validateProject(project);
+            if (docsDefinition == null) {
+                context.logger.error("Failed to read docs configuration. Rendering blank page.");
+            } else {
+                context.logger.error("Failed to read docs configuration. Rendering last successful configuration.");
+            }
             return docsDefinition;
         }
     };
