@@ -1,11 +1,10 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
 
 #nullable enable
 
 namespace SeedTrace;
 
-public record Playlist : PlaylistCreateRequest
+public record Playlist
 {
     [JsonPropertyName("playlist_id")]
     public required string PlaylistId { get; set; }

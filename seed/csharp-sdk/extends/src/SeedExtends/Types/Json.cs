@@ -1,11 +1,10 @@
 using System.Text.Json.Serialization;
-using SeedExtends;
 
 #nullable enable
 
 namespace SeedExtends;
 
-public record Json : Docs
+public record Json
 {
     [JsonPropertyName("raw")]
     public required string Raw { get; set; }
