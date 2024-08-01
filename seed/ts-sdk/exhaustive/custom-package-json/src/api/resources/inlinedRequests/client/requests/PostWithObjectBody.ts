@@ -29,7 +29,7 @@ import * as Fiddle from "../../../../index";
  *     }
  */
 export interface PostWithObjectBody {
-    string: string;
-    integer: number;
-    nestedObject: Fiddle.types.ObjectWithOptionalField;
+    "string": string;
+    "integer": number;
+    "nestedObject": Fiddle.types.ObjectWithOptionalField;
 }

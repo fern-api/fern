@@ -182,13 +182,13 @@ wasmer-compiler-cranelift = ">=1.0.0"
 
 [[package]]
 name = "fern-fern-fdr-sdk"
-version = "0.0.5502"
+version = "0.0.5525"
 description = ""
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "fern_fern_fdr_sdk-0.0.5502-py3-none-any.whl", hash = "sha256:a3bb822b9d84620f16f6dd3a353cd8312d735a33cc7b5fc926106b06d8e65eb0"},
-    {file = "fern_fern_fdr_sdk-0.0.5502.tar.gz", hash = "sha256:3f39b23caf770c127b1f98520491c8e724fd06b1c19d8af6105b01705430761a"},
+    {file = "fern_fern_fdr_sdk-0.0.5525-py3-none-any.whl", hash = "sha256:97603ad56595e6a42f4955501d3d1157de55e0bad9a787812ea6f9dee9caba8b"},
+    {file = "fern_fern_fdr_sdk-0.0.5525.tar.gz", hash = "sha256:7955d1460b02a74a3f60bd59a00b681f9243d01aa0edb78049c753abfe78aa8e"},
 ]
 
 [package.dependencies]
@@ -245,14 +245,14 @@ url = "https://pypi.buildwithfern.com"
 reference = "fern-prod"
 
 [[package]]
-name = "fern-fern-ir-v50"
-version = "50.0.0"
+name = "fern-fern-ir-v53"
+version = "53.1.0"
 description = ""
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "fern_fern_ir_v50-50.0.0-py3-none-any.whl", hash = "sha256:e384309bedba62ef624920e5da1733e7d955ebf62c39571b49826d58a7b90139"},
-    {file = "fern_fern_ir_v50-50.0.0.tar.gz", hash = "sha256:92557a3142672c36594644037b03efb867568b5f87cf7a3a3a0cbbd52ba68980"},
+    {file = "fern_fern_ir_v53-53.1.0-py3-none-any.whl", hash = "sha256:2778a639fc0d80f265131379c216199dee3e09072bd430825195581623fad7ad"},
+    {file = "fern_fern_ir_v53-53.1.0.tar.gz", hash = "sha256:58a1b8b8ed2c179117b0127cc9518249289f69143a31e9e8aec2c47b19d9bc26"},
 ]
 
 [package.dependencies]
@@ -1074,4 +1074,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "8df764529aa1853c1f7fddd3a3353070cc4e2504ad321ba74ebc28bf82c94cfa"
+content-hash = "c9b9a9e95b4dfff05edcf427fd070da496fd755936ace8c39d62eb3f3866808d"

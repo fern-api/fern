@@ -1,3 +1,4 @@
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { JavaScriptRuntime } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
@@ -16,6 +17,7 @@ import { VersionContext } from "./version";
 
 export interface SdkContext extends ModelContext {
     ir: IntermediateRepresentation;
+    config: FernGeneratorExec.GeneratorConfig;
     sdkInstanceReferenceForSnippet: ts.Identifier;
     namespaceExport: string;
     endpointErrorUnion: EndpointErrorUnionContext;

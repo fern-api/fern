@@ -8,11 +8,11 @@ namespace SeedTrace;
 public record GetDefaultStarterFilesRequest
 {
     [JsonPropertyName("inputParams")]
-    public IEnumerable<VariableTypeAndName> InputParams { get; init; } =
+    public IEnumerable<VariableTypeAndName> InputParams { get; set; } =
         new List<VariableTypeAndName>();
 
     [JsonPropertyName("outputType")]
-    public required object OutputType { get; init; }
+    public required object OutputType { get; set; }
 
     /// <summary>
     /// The name of the `method` that the student has to complete.
@@ -24,5 +24,5 @@ public record GetDefaultStarterFilesRequest
     ///
     /// </summary>
     [JsonPropertyName("methodName")]
-    public required string MethodName { get; init; }
+    public required string MethodName { get; set; }
 }

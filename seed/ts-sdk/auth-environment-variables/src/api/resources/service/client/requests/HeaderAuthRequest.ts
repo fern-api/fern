@@ -12,5 +12,5 @@ export interface HeaderAuthRequest {
     /**
      * Specifies the endpoint key.
      */
-    xEndpointHeader: string;
+    "xEndpointHeader": string;
 }

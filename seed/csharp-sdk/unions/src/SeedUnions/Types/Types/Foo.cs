@@ -7,5 +7,5 @@ namespace SeedUnions;
 public record Foo
 {
     [JsonPropertyName("name")]
-    public required string Name { get; init; }
+    public required string Name { get; set; }
 }

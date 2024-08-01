@@ -12,8 +12,8 @@
  *     }
  */
 export interface RefreshTokenRequest {
-    clientId: string;
-    clientSecret: string;
-    refreshToken: string;
-    scope?: string;
+    "clientId": string;
+    "clientSecret": string;
+    "refreshToken": string;
+    "scope"?: string;
 }

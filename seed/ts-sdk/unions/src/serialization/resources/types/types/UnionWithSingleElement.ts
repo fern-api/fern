@@ -7,22 +7,17 @@ import * as SeedUnions from "../../../../api/index";
 import * as core from "../../../../core";
 import { Foo } from "./Foo";
 
-export const UnionWithSingleElement: core.serialization.Schema<
-    serializers.UnionWithSingleElement.Raw,
-    SeedUnions.UnionWithSingleElement
-> = core.serialization
-    .union("type", {
-        foo: Foo,
-    })
-    .transform<SeedUnions.UnionWithSingleElement>({
-        transform: (value) => value,
-        untransform: (value) => value,
+export const UnionWithSingleElement: core.serialization.Schema<serializers.UnionWithSingleElement.Raw, SeedUnions.UnionWithSingleElement> = core.serialization.union("type", {
+        "foo": Foo
+    }).transform<SeedUnions.UnionWithSingleElement>({
+        transform: value => value,
+        untransform: value => value
     });
 
 export declare namespace UnionWithSingleElement {
     type Raw = UnionWithSingleElement.Foo;
 
     interface Foo extends Foo.Raw {
-        type: "foo";
+        "type": "foo";
     }
 }

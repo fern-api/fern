@@ -2,5 +2,5 @@ namespace SeedSingleUrlEnvironmentNoDefault.Core;
 
 public static class Constants
 {
-    public const string DateTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssK";
+    public const string DateTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffK";
 }

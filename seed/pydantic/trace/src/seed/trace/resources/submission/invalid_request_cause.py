@@ -13,8 +13,8 @@ from .submission_id import SubmissionId
 
 
 class InvalidRequestCause_SubmissionIdNotFound(UniversalBaseModel):
-    missing_submission_id: SubmissionId = pydantic.Field(alias="missingSubmissionId")
     type: typing.Literal["submissionIdNotFound"] = "submissionIdNotFound"
+    missing_submission_id: SubmissionId = pydantic.Field(alias="missingSubmissionId")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -25,9 +25,9 @@ class InvalidRequestCause_SubmissionIdNotFound(UniversalBaseModel):
 
 
 class InvalidRequestCause_CustomTestCasesUnsupported(UniversalBaseModel):
+    type: typing.Literal["customTestCasesUnsupported"] = "customTestCasesUnsupported"
     problem_id: ProblemId = pydantic.Field(alias="problemId")
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
-    type: typing.Literal["customTestCasesUnsupported"] = "customTestCasesUnsupported"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -38,9 +38,9 @@ class InvalidRequestCause_CustomTestCasesUnsupported(UniversalBaseModel):
 
 
 class InvalidRequestCause_UnexpectedLanguage(UniversalBaseModel):
+    type: typing.Literal["unexpectedLanguage"] = "unexpectedLanguage"
     expected_language: Language = pydantic.Field(alias="expectedLanguage")
     actual_language: Language = pydantic.Field(alias="actualLanguage")
-    type: typing.Literal["unexpectedLanguage"] = "unexpectedLanguage"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

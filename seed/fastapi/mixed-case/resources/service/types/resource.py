@@ -34,7 +34,7 @@ class Resource(UniversalRootModel):
     """
     Examples
     --------
-    from seed.mixed_case import Resource_User
+    from seed.mixed_case.resources.service import Resource_User
 
     Resource_User(
         user_name="username",

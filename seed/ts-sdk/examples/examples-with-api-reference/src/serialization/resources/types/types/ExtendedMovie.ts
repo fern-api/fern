@@ -7,15 +7,12 @@ import * as SeedExamples from "../../../../api/index";
 import * as core from "../../../../core";
 import { Movie } from "./Movie";
 
-export const ExtendedMovie: core.serialization.ObjectSchema<serializers.ExtendedMovie.Raw, SeedExamples.ExtendedMovie> =
-    core.serialization
-        .object({
-            cast: core.serialization.list(core.serialization.string()),
-        })
-        .extend(Movie);
+export const ExtendedMovie: core.serialization.ObjectSchema<serializers.ExtendedMovie.Raw, SeedExamples.ExtendedMovie> = core.serialization.object({
+        "cast": core.serialization.list(core.serialization.string())
+    }).extend(Movie);
 
 export declare namespace ExtendedMovie {
     interface Raw extends Movie.Raw {
-        cast: string[];
+        "cast": string[];
     }
 }

@@ -7,11 +7,10 @@ import * as Fiddle from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { NestedObjectWithRequiredField } from "../../../../types/resources/object/types/NestedObjectWithRequiredField";
 
-export const Request: core.serialization.Schema<
-    serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.Raw,
-    Fiddle.types.NestedObjectWithRequiredField[]
-> = core.serialization.list(NestedObjectWithRequiredField);
+export const Request: core.serialization.Schema<serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.Raw, Fiddle.types.NestedObjectWithRequiredField[]> = core.serialization.list(NestedObjectWithRequiredField);
 
 export declare namespace Request {
     type Raw = NestedObjectWithRequiredField.Raw[];
 }
+
+

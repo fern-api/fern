@@ -7,11 +7,13 @@ namespace SeedEnum;
 
 public record SendEnumListAsQueryParamRequest
 {
-    public required Operand Operand { get; init; }
+    public IEnumerable<Operand> Operand { get; set; } = new List<Operand>();
 
-    public Operand? MaybeOperand { get; init; }
+    public IEnumerable<Operand> MaybeOperand { get; set; } = new List<Operand>();
 
-    public required OneOf<Color, Operand> OperandOrColor { get; init; }
+    public IEnumerable<OneOf<Color, Operand>> OperandOrColor { get; set; } =
+        new List<OneOf<Color, Operand>>();
 
-    public OneOf<Color, Operand>? MaybeOperandOrColor { get; init; }
+    public IEnumerable<OneOf<Color, Operand>> MaybeOperandOrColor { get; set; } =
+        new List<OneOf<Color, Operand>>();
 }

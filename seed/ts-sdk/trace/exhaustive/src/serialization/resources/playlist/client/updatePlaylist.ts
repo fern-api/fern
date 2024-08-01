@@ -9,48 +9,36 @@ import { UpdatePlaylistRequest } from "../types/UpdatePlaylistRequest";
 import { Playlist } from "../types/Playlist";
 import { PlaylistIdNotFoundErrorBody } from "../types/PlaylistIdNotFoundErrorBody";
 
-export const Request: core.serialization.Schema<
-    serializers.playlist.updatePlaylist.Request.Raw,
-    SeedTrace.UpdatePlaylistRequest | undefined
-> = UpdatePlaylistRequest.optional();
+export const Request: core.serialization.Schema<serializers.playlist.updatePlaylist.Request.Raw, SeedTrace.UpdatePlaylistRequest | undefined> = UpdatePlaylistRequest.optional();
 
 export declare namespace Request {
     type Raw = UpdatePlaylistRequest.Raw | null | undefined;
 }
 
-export const Response: core.serialization.Schema<
-    serializers.playlist.updatePlaylist.Response.Raw,
-    SeedTrace.Playlist | undefined
-> = Playlist.optional();
+export const Response: core.serialization.Schema<serializers.playlist.updatePlaylist.Response.Raw, SeedTrace.Playlist | undefined> = Playlist.optional();
 
 export declare namespace Response {
     type Raw = Playlist.Raw | null | undefined;
 }
 
-export const Error: core.serialization.Schema<
-    serializers.playlist.updatePlaylist.Error.Raw,
-    SeedTrace.playlist.updatePlaylist.Error
-> = core.serialization
-    .union("errorName", {
-        PlaylistIdNotFoundError: core.serialization.object({
-            content: PlaylistIdNotFoundErrorBody,
-        }),
-    })
-    .transform<SeedTrace.playlist.updatePlaylist.Error>({
-        transform: (value) => {
+export const Error: core.serialization.Schema<serializers.playlist.updatePlaylist.Error.Raw, SeedTrace.playlist.updatePlaylist.Error> = core.serialization.union("errorName", {
+        "PlaylistIdNotFoundError": core.serialization.object({
+            "content": PlaylistIdNotFoundErrorBody
+        })
+    }).transform<SeedTrace.playlist.updatePlaylist.Error>({
+        transform: value => {
             switch (value.errorName) {
-                case "PlaylistIdNotFoundError":
-                    return SeedTrace.playlist.updatePlaylist.Error.playlistIdNotFoundError(value.content);
+                case "PlaylistIdNotFoundError": return SeedTrace.playlist.updatePlaylist.Error.playlistIdNotFoundError(value.content);
             }
         },
-        untransform: ({ _visit, ...value }) => value as any,
+        untransform: ({ _visit, ...value }) => value as any
     });
 
 export declare namespace Error {
     type Raw = Error.PlaylistIdNotFoundError;
 
     interface PlaylistIdNotFoundError {
-        errorName: "PlaylistIdNotFoundError";
-        content: PlaylistIdNotFoundErrorBody.Raw;
+        "errorName": "PlaylistIdNotFoundError";
+        "content": PlaylistIdNotFoundErrorBody.Raw;
     }
 }

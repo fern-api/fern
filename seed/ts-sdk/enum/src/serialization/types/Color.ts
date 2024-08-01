@@ -6,10 +6,7 @@ import * as serializers from "../index";
 import * as SeedEnum from "../../api/index";
 import * as core from "../../core";
 
-export const Color: core.serialization.Schema<serializers.Color.Raw, SeedEnum.Color> = core.serialization.enum_([
-    "red",
-    "blue",
-]);
+export const Color: core.serialization.Schema<serializers.Color.Raw, SeedEnum.Color> = core.serialization.enum_(["red", "blue"]);
 
 export declare namespace Color {
     type Raw = "red" | "blue";

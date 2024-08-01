@@ -1,7 +1,5 @@
 # Reference
-
 ## Users
-
 <details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithCursorPagination</a>({ ...params }) -> core.Page<SeedPagination.User></code></summary>
 <dl>
 <dd>
@@ -19,10 +17,10 @@ await client.users.listWithCursorPagination({
     page: 1,
     perPage: 1,
     order: SeedPagination.Order.Asc,
-    startingAfter: "string",
+    startingAfter: "string"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -36,20 +34,21 @@ await client.users.listWithCursorPagination({
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsersCursorPaginationRequest`
-
+**request:** `SeedPagination.ListUsersCursorPaginationRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Users.RequestOptions`
+**requestOptions:** `Users.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -70,11 +69,11 @@ await client.users.listWithCursorPagination({
 ```typescript
 await client.users.listWithBodyCursorPagination({
     pagination: {
-        cursor: "string",
-    },
+        cursor: "string"
+    }
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -88,20 +87,21 @@ await client.users.listWithBodyCursorPagination({
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsersBodyCursorPaginationRequest`
-
+**request:** `SeedPagination.ListUsersBodyCursorPaginationRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Users.RequestOptions`
+**requestOptions:** `Users.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -124,10 +124,10 @@ await client.users.listWithOffsetPagination({
     page: 1,
     perPage: 1,
     order: SeedPagination.Order.Asc,
-    startingAfter: "string",
+    startingAfter: "string"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -141,20 +141,21 @@ await client.users.listWithOffsetPagination({
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsersOffsetPaginationRequest`
-
+**request:** `SeedPagination.ListUsersOffsetPaginationRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Users.RequestOptions`
+**requestOptions:** `Users.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -175,11 +176,11 @@ await client.users.listWithOffsetPagination({
 ```typescript
 await client.users.listWithBodyOffsetPagination({
     pagination: {
-        page: 1,
-    },
+        page: 1
+    }
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -193,20 +194,21 @@ await client.users.listWithBodyOffsetPagination({
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsersBodyOffsetPaginationRequest`
-
+**request:** `SeedPagination.ListUsersBodyOffsetPaginationRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Users.RequestOptions`
+**requestOptions:** `Users.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -228,10 +230,10 @@ await client.users.listWithBodyOffsetPagination({
 await client.users.listWithOffsetStepPagination({
     page: 1,
     limit: 1,
-    order: SeedPagination.Order.Asc,
+    order: SeedPagination.Order.Asc
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -245,20 +247,21 @@ await client.users.listWithOffsetStepPagination({
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsersOffsetStepPaginationRequest`
-
+**request:** `SeedPagination.ListUsersOffsetStepPaginationRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Users.RequestOptions`
+**requestOptions:** `Users.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -278,10 +281,10 @@ await client.users.listWithOffsetStepPagination({
 
 ```typescript
 await client.users.listWithExtendedResults({
-    cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -295,20 +298,21 @@ await client.users.listWithExtendedResults({
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsersExtendedRequest`
-
+**request:** `SeedPagination.ListUsersExtendedRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Users.RequestOptions`
+**requestOptions:** `Users.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -328,10 +332,10 @@ await client.users.listWithExtendedResults({
 
 ```typescript
 await client.users.listUsernames({
-    startingAfter: "string",
+    startingAfter: "string"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -345,20 +349,21 @@ await client.users.listUsernames({
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsernamesRequest`
-
+**request:** `SeedPagination.ListUsernamesRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Users.RequestOptions`
+**requestOptions:** `Users.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -378,10 +383,10 @@ await client.users.listUsernames({
 
 ```typescript
 await client.users.listWithGlobalConfig({
-    offset: 1,
+    offset: 1
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -395,20 +400,21 @@ await client.users.listWithGlobalConfig({
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListWithGlobalConfigRequest`
-
+**request:** `SeedPagination.ListWithGlobalConfigRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Users.RequestOptions`
+**requestOptions:** `Users.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

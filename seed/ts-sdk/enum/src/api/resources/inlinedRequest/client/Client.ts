@@ -24,7 +24,8 @@ export declare namespace InlinedRequest {
 }
 
 export class InlinedRequest {
-    constructor(protected readonly _options: InlinedRequest.Options) {}
+    constructor(protected readonly _options: InlinedRequest.Options) {
+    }
 
     /**
      * @param {SeedEnum.SendEnumInlinedRequest} request
@@ -36,10 +37,7 @@ export class InlinedRequest {
      *         operandOrColor: SeedEnum.Color.Red
      *     })
      */
-    public async send(
-        request: SeedEnum.SendEnumInlinedRequest,
-        requestOptions?: InlinedRequest.RequestOptions
-    ): Promise<void> {
+    public async send(request: SeedEnum.SendEnumInlinedRequest, requestOptions?: InlinedRequest.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "inlined"),
             method: "POST",
@@ -48,14 +46,14 @@ export class InlinedRequest {
                 "X-Fern-SDK-Name": "@fern/enum",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                "X-Fern-Runtime-Version": core.RUNTIME.version
             },
             contentType: "application/json",
             requestType: "json",
             body: serializers.SendEnumInlinedRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
+            abortSignal: requestOptions?.abortSignal
         });
         if (_response.ok) {
             return;
@@ -64,22 +62,19 @@ export class InlinedRequest {
         if (_response.error.reason === "status-code") {
             throw new errors.SeedEnumError({
                 statusCode: _response.error.statusCode,
-                body: _response.error.body,
+                body: _response.error.body
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedEnumError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.SeedEnumTimeoutError();
-            case "unknown":
-                throw new errors.SeedEnumError({
-                    message: _response.error.errorMessage,
-                });
+            case "non-json": throw new errors.SeedEnumError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody
+            });
+            case "timeout": throw new errors.SeedEnumTimeoutError;
+            case "unknown": throw new errors.SeedEnumError({
+                message: _response.error.errorMessage
+            });
         }
     }
 }

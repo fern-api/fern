@@ -5,6 +5,6 @@ export type {
     inferParsedUnion,
     inferRawDiscriminant,
     inferRawUnion,
-    UnionSubtypes,
+    UnionSubtypes
 } from "./types";
 export { union } from "./union";

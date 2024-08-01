@@ -9,5 +9,5 @@
  *     }
  */
 export interface Request {
-    request?: unknown;
+    "request"?: unknown;
 }

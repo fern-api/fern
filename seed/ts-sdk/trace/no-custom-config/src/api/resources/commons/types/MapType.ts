@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../index";
 
 export interface MapType {
-    keyType: SeedTrace.VariableType;
-    valueType: SeedTrace.VariableType;
+    "keyType": SeedTrace.VariableType;
+    "valueType": SeedTrace.VariableType;
 }

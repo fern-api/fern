@@ -1,5 +1,5 @@
 
-irVersion: v51
+irVersion: v53
 docker: fernapi/fern-csharp-sdk:latest
 dockerCommand: yarn workspace @fern-api/fern-csharp-sdk dockerTagLatest
 language: csharp
@@ -23,6 +23,14 @@ fixtures:
           Moq: 4.20.70
           Moq.Contrib.HttpClient: "1.4.0"
       outputFolder: extra-dependencies
+    - customConfig:
+        base-api-exception-class-name: CustomApiException
+        base-exception-class-name: CustomException
+      outputFolder: exception-class-names
+  exhaustive:
+    - customConfig:
+        explicit-namespaces: true
+      outputFolder: explicit-namespaces
 allowedFailures:
   - objects-with-imports
   - examples

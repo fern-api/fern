@@ -7,15 +7,12 @@ import * as SeedTrace from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { TestCaseTemplate } from "./TestCaseTemplate";
 
-export const GetGeneratedTestCaseTemplateFileRequest: core.serialization.ObjectSchema<
-    serializers.v2.GetGeneratedTestCaseTemplateFileRequest.Raw,
-    SeedTrace.v2.GetGeneratedTestCaseTemplateFileRequest
-> = core.serialization.object({
-    template: TestCaseTemplate,
-});
+export const GetGeneratedTestCaseTemplateFileRequest: core.serialization.ObjectSchema<serializers.v2.GetGeneratedTestCaseTemplateFileRequest.Raw, SeedTrace.v2.GetGeneratedTestCaseTemplateFileRequest> = core.serialization.object({
+        "template": TestCaseTemplate
+    });
 
 export declare namespace GetGeneratedTestCaseTemplateFileRequest {
     interface Raw {
-        template: TestCaseTemplate.Raw;
+        "template": TestCaseTemplate.Raw;
     }
 }

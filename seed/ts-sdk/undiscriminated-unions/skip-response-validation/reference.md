@@ -1,7 +1,5 @@
 # Reference
-
 ## Union
-
 <details><summary><code>client.union.<a href="/src/api/resources/union/client/Client.ts">get</a>({ ...params }) -> SeedUndiscriminatedUnions.MyUnion</code></summary>
 <dl>
 <dd>
@@ -16,8 +14,8 @@
 
 ```typescript
 await client.union.get("string");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -31,20 +29,21 @@ await client.union.get("string");
 <dl>
 <dd>
 
-**request:** `SeedUndiscriminatedUnions.MyUnion`
-
+**request:** `SeedUndiscriminatedUnions.MyUnion` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Union.RequestOptions`
+**requestOptions:** `Union.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -64,8 +63,8 @@ await client.union.get("string");
 
 ```typescript
 await client.union.getMetadata();
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -79,12 +78,13 @@ await client.union.getMetadata();
 <dl>
 <dd>
 
-**requestOptions:** `Union.RequestOptions`
+**requestOptions:** `Union.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

@@ -3,8 +3,8 @@
  */
 
 export interface FileInfoV2 {
-    filename: string;
-    directory: string;
-    contents: string;
-    editable: boolean;
+    "filename": string;
+    "directory": string;
+    "contents": string;
+    "editable": boolean;
 }

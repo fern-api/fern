@@ -5,18 +5,16 @@
 import * as serializers from "../../../../../index";
 import * as core from "../../../../../../core";
 
-export const Request: core.serialization.Schema<serializers.endpoints.primitive.getAndReturnLong.Request.Raw, number> =
-    core.serialization.number();
+export const Request: core.serialization.Schema<serializers.endpoints.primitive.getAndReturnLong.Request.Raw, number> = core.serialization.number();
 
 export declare namespace Request {
     type Raw = number;
 }
 
-export const Response: core.serialization.Schema<
-    serializers.endpoints.primitive.getAndReturnLong.Response.Raw,
-    number
-> = core.serialization.number();
+export const Response: core.serialization.Schema<serializers.endpoints.primitive.getAndReturnLong.Response.Raw, number> = core.serialization.number();
 
 export declare namespace Response {
     type Raw = number;
 }
+
+

@@ -3,9 +3,14 @@ import { generateModels, generateTests } from "@fern-api/fern-csharp-model";
 import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { ClientOptionsGenerator } from "./client-options/ClientOptionsGenerator";
 import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator";
 import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator copy";
+import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator";
+import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator";
+import { ErrorGenerator } from "./error/ErrorGenerator";
+import { BaseOptionsGenerator } from "./options/BaseOptionsGenerator";
+import { ClientOptionsGenerator } from "./options/ClientOptionsGenerator";
+import { RequestOptionsGenerator } from "./options/RequestOptionsGenerator";
 import { RootClientGenerator } from "./root-client/RootClientGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
@@ -29,7 +34,25 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
 
     protected parseCustomConfigOrThrow(customConfig: unknown): SdkCustomConfigSchema {
         const parsed = customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : undefined;
-        return parsed ?? {};
+        if (parsed != null) {
+            return this.validateCustomConfig(parsed);
+        }
+        return {};
+    }
+
+    private validateCustomConfig(customConfig: SdkCustomConfigSchema): SdkCustomConfigSchema {
+        const baseExceptionClassName = customConfig["base-exception-class-name"];
+        const baseApiExceptionClassName = customConfig["base-api-exception-class-name"];
+
+        if (
+            baseExceptionClassName &&
+            baseApiExceptionClassName &&
+            baseExceptionClassName === baseApiExceptionClassName
+        ) {
+            throw new Error("The 'base-api-exception-class-name' and 'base-exception-class-name' cannot be the same.");
+        }
+
+        return customConfig;
     }
 
     protected async publishPackage(context: SdkGeneratorContext): Promise<void> {
@@ -83,8 +106,24 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
             }
         }
 
-        const clientOptions = new ClientOptionsGenerator(context);
+        const baseOptionsGenerator = new BaseOptionsGenerator(context);
+
+        const clientOptions = new ClientOptionsGenerator(context, baseOptionsGenerator);
         context.project.addSourceFiles(clientOptions.generate());
+
+        const requestOptions = new RequestOptionsGenerator(context, baseOptionsGenerator);
+        context.project.addSourceFiles(requestOptions.generate());
+
+        const baseException = new BaseExceptionGenerator(context);
+        context.project.addSourceFiles(baseException.generate());
+
+        const baseApiException = new BaseApiExceptionGenerator(context);
+        context.project.addSourceFiles(baseApiException.generate());
+
+        for (const [_, _error] of Object.entries(context.ir.errors)) {
+            const errorGenerator = new ErrorGenerator(context, _error);
+            context.project.addSourceFiles(errorGenerator.generate());
+        }
 
         const rootClient = new RootClientGenerator(context);
         context.project.addSourceFiles(rootClient.generate());

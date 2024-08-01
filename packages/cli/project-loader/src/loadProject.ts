@@ -7,10 +7,14 @@ import {
 } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { APIWorkspace, loadAPIWorkspace, loadDocsWorkspace } from "@fern-api/workspace-loader";
+import {
+    APIWorkspace,
+    handleFailedWorkspaceParserResult,
+    loadAPIWorkspace,
+    loadDocsWorkspace
+} from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { readdir } from "fs/promises";
-import { handleFailedWorkspaceParserResult } from "./handleFailedWorkspaceParserResult";
 import { Project } from "./Project";
 
 export declare namespace loadProject {

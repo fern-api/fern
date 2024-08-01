@@ -25,3 +25,7 @@ class PydanticModelCustomConfig(BasePydanticModelCustomConfig):
     skip_validation: bool = False
     # Leverage defaults specified in the API specification
     use_provided_defaults: bool = False
+
+    # Whether or not to generate TypedDicts instead of Pydantic
+    # Models for request objects.
+    use_typeddict_requests: bool = False

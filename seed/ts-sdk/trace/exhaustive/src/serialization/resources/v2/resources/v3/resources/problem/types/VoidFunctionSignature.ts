@@ -7,15 +7,12 @@ import * as SeedTrace from "../../../../../../../../api/index";
 import * as core from "../../../../../../../../core";
 import { Parameter } from "./Parameter";
 
-export const VoidFunctionSignature: core.serialization.ObjectSchema<
-    serializers.v2.v3.VoidFunctionSignature.Raw,
-    SeedTrace.v2.v3.VoidFunctionSignature
-> = core.serialization.object({
-    parameters: core.serialization.list(Parameter),
-});
+export const VoidFunctionSignature: core.serialization.ObjectSchema<serializers.v2.v3.VoidFunctionSignature.Raw, SeedTrace.v2.v3.VoidFunctionSignature> = core.serialization.object({
+        "parameters": core.serialization.list(Parameter)
+    });
 
 export declare namespace VoidFunctionSignature {
     interface Raw {
-        parameters: Parameter.Raw[];
+        "parameters": Parameter.Raw[];
     }
 }

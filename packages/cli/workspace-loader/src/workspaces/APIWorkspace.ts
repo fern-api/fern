@@ -1,4 +1,4 @@
-import { FernWorkspace } from "./FernWorkspace";
+import { LazyFernWorkspace } from "./FernWorkspace";
 import { OSSWorkspace } from "./OSSWorkspace";
 
-export type APIWorkspace = FernWorkspace | OSSWorkspace;
+export type APIWorkspace = LazyFernWorkspace | OSSWorkspace;

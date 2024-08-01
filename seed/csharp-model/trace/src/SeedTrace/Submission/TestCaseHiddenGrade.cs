@@ -7,5 +7,5 @@ namespace SeedTrace;
 public record TestCaseHiddenGrade
 {
     [JsonPropertyName("passed")]
-    public required bool Passed { get; init; }
+    public required bool Passed { get; set; }
 }

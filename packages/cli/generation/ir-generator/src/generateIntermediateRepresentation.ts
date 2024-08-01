@@ -30,6 +30,7 @@ import { constructHttpPath } from "./converters/services/constructHttpPath";
 import { convertHttpHeader, convertHttpService, convertPathParameters } from "./converters/services/convertHttpService";
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
 import { ExampleGenerator } from "./examples/ExampleGenerator";
+import { addExtendedPropertiesToIr } from "./extended-properties/addExtendedPropertiesToIr";
 import { constructFernFileContext, constructRootApiFileContext, FernFileContext } from "./FernFileContext";
 import { FilteredIr } from "./filtered-ir/FilteredIr";
 import { IrGraph } from "./filtered-ir/IrGraph";
@@ -47,6 +48,7 @@ import { convertToFernFilepath } from "./utils/convertToFernFilepath";
 import { parseErrorName } from "./utils/parseErrorName";
 
 export async function generateIntermediateRepresentation({
+    fdrApiDefinitionId,
     workspace,
     generationLanguage,
     keywords,
@@ -55,6 +57,7 @@ export async function generateIntermediateRepresentation({
     audiences,
     readme
 }: {
+    fdrApiDefinitionId?: string;
     workspace: FernWorkspace;
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
     keywords: string[] | undefined;
@@ -89,6 +92,7 @@ export async function generateIntermediateRepresentation({
     const variableResolver = new VariableResolverImpl();
 
     const intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage"> = {
+        fdrApiDefinitionId,
         apiVersion: await convertApiVersionScheme({
             file: rootApiFileContext,
             rawApiFileSchema: workspace.definition.rootApiFile.contents
@@ -420,9 +424,13 @@ export async function generateIntermediateRepresentation({
     const readmeConfig =
         readme != null ? convertReadmeConfig({ readme, services: intermediateRepresentation.services }) : undefined;
 
+    const { types, services } = addExtendedPropertiesToIr(intermediateRepresentationForAudiences);
+
     return {
         ...intermediateRepresentationForAudiences,
         ...packageTreeGenerator.build(filteredIr),
+        types,
+        services,
         sdkConfig: {
             isAuthMandatory,
             hasStreamingEndpoints,

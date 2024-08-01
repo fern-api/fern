@@ -2,9 +2,9 @@ namespace SeedExamples;
 
 public record GetMetadataRequest
 {
-    public bool? Shallow { get; init; }
+    public bool? Shallow { get; set; }
 
-    public string? Tag { get; init; }
+    public IEnumerable<string> Tag { get; set; } = new List<string>();
 
-    public required string XApiVersion { get; init; }
+    public required string XApiVersion { get; set; }
 }

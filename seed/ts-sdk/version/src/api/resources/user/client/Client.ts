@@ -28,7 +28,8 @@ export declare namespace User {
 }
 
 export class User {
-    constructor(protected readonly _options: User.Options) {}
+    constructor(protected readonly _options: User.Options) {
+    }
 
     /**
      * @param {SeedVersion.UserId} userId
@@ -39,53 +40,42 @@ export class User {
      */
     public async getUser(userId: SeedVersion.UserId, requestOptions?: User.RequestOptions): Promise<SeedVersion.User> {
         const _response = await core.fetcher({
-            url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                `/users/${encodeURIComponent(serializers.UserId.jsonOrThrow(userId))}`
-            ),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `/users/${encodeURIComponent(serializers.UserId.jsonOrThrow(userId))}`),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/version",
                 "X-Fern-SDK-Version": "0.0.1",
-                "X-API-Version": requestOptions?.xApiVersion ?? this._options?.xApiVersion ?? "2.0.0",
+                "X-API-Version": requestOptions?.xApiVersion ?? (this._options?.xApiVersion ?? "2.0.0"),
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                "X-Fern-Runtime-Version": core.RUNTIME.version
             },
             contentType: "application/json",
             requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
+            abortSignal: requestOptions?.abortSignal
         });
         if (_response.ok) {
-            return serializers.User.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return serializers.User.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] });
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedVersionError({
                 statusCode: _response.error.statusCode,
-                body: _response.error.body,
+                body: _response.error.body
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedVersionError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.SeedVersionTimeoutError();
-            case "unknown":
-                throw new errors.SeedVersionError({
-                    message: _response.error.errorMessage,
-                });
+            case "non-json": throw new errors.SeedVersionError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody
+            });
+            case "timeout": throw new errors.SeedVersionTimeoutError;
+            case "unknown": throw new errors.SeedVersionError({
+                message: _response.error.errorMessage
+            });
         }
     }
 }

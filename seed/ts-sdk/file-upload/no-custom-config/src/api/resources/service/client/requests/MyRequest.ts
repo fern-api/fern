@@ -9,9 +9,9 @@ import * as SeedFileUpload from "../../../../index";
  *     {}
  */
 export interface MyRequest {
-    maybeString?: string;
-    integer: number;
-    maybeInteger?: number;
-    optionalListOfStrings?: string[];
-    listOfObjects: SeedFileUpload.MyObject[];
+    "maybeString"?: string;
+    "integer": number;
+    "maybeInteger"?: number;
+    "optionalListOfStrings"?: string[];
+    "listOfObjects": SeedFileUpload.MyObject[];
 }

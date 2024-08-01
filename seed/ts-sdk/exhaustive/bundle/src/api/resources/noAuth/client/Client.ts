@@ -24,7 +24,8 @@ export declare namespace NoAuth {
 }
 
 export class NoAuth {
-    constructor(protected readonly _options: NoAuth.Options) {}
+    constructor(protected readonly _options: NoAuth.Options) {
+    }
 
     /**
      * POST request with no auth
@@ -37,60 +38,44 @@ export class NoAuth {
      *         "key": "value"
      *     })
      */
-    public async postWithNoAuth(
-        request?: unknown,
-        requestOptions?: NoAuth.RequestOptions
-    ): Promise<core.APIResponse<boolean, Fiddle.noAuth.postWithNoAuth.Error>> {
+    public async postWithNoAuth(request?: unknown, requestOptions?: NoAuth.RequestOptions): Promise<core.APIResponse<boolean, Fiddle.noAuth.postWithNoAuth.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/no-auth"),
             method: "POST",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
+                "Authorization": await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                "X-Fern-Runtime-Version": core.RUNTIME.version
             },
             contentType: "application/json",
             requestType: "json",
             body: request,
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
+            abortSignal: requestOptions?.abortSignal
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: serializers.noAuth.postWithNoAuth.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                body: serializers.noAuth.postWithNoAuth.Response.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] })
             };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
-                case 400:
-                    return {
-                        ok: false,
-                        error: Fiddle.noAuth.postWithNoAuth.Error.badRequestBody(
-                            serializers.BadObjectRequestInfo.parseOrThrow(_response.error.body, {
-                                unrecognizedObjectKeys: "passthrough",
-                                allowUnrecognizedUnionMembers: true,
-                                allowUnrecognizedEnumValues: true,
-                                breadcrumbsPrefix: ["response"],
-                            })
-                        ),
-                    };
+                case 400: return {
+                    ok: false,
+                    error: Fiddle.noAuth.postWithNoAuth.Error.badRequestBody(serializers.BadObjectRequestInfo.parseOrThrow(_response.error.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] }))
+                };
             }
         }
 
         return {
             ok: false,
-            error: Fiddle.noAuth.postWithNoAuth.Error._unknown(_response.error),
+            error: Fiddle.noAuth.postWithNoAuth.Error._unknown(_response.error)
         };
     }
 

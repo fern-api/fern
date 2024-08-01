@@ -1,3 +1,16 @@
+service:
+  auth: false
+  base-path: /extends
+  endpoints:
+    extendedInlineRequestBody:
+      path: /extended-inline-request-body
+      method: POST
+      request:
+        name: Inlined
+        body:
+          properties:
+            unique: string
+          extends: ExampleType
 types:
   ExampleType:
     extends: Docs

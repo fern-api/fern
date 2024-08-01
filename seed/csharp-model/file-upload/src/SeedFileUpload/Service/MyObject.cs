@@ -7,5 +7,5 @@ namespace SeedFileUpload;
 public record MyObject
 {
     [JsonPropertyName("foo")]
-    public required string Foo { get; init; }
+    public required string Foo { get; set; }
 }

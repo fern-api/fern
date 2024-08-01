@@ -28,18 +28,13 @@
   },
   "dependencies": {
     "@fern-api/configuration": "workspace:*",
-    "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
-    "@fern-api/logger": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "chalk": "^5.0.1",
-    "js-yaml": "^4.1.0",
-    "zod": "^3.22.3"
+    "chalk": "^5.3.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
-    "@types/js-yaml": "^4.0.8",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",

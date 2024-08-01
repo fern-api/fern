@@ -10,7 +10,7 @@ class FileInfo(str, enum.Enum):
     """
     Examples
     --------
-    from seed.objects_with_imports import FileInfo
+    from seed.objects_with_imports.resources.file import FileInfo
 
     FileInfo.REGULAR
     """

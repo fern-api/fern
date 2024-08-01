@@ -2619,11 +2619,11 @@ The client secret is auto generated on the server and returned. The client does 
                 },
                 "focusX": {
                   "docs": "Override the y focus point.",
-                  "type": "optional<double>",
+                  "type": "optional<float>",
                 },
                 "focusY": {
                   "docs": "Override the x focus point.",
-                  "type": "optional<double>",
+                  "type": "optional<float>",
                 },
                 "force": {
                   "docs": "True to force a new resize even if it already stored.",
@@ -2710,11 +2710,11 @@ The client secret is auto generated on the server and returned. The client does 
                 },
                 "focusX": {
                   "docs": "Override the y focus point.",
-                  "type": "optional<double>",
+                  "type": "optional<float>",
                 },
                 "focusY": {
                   "docs": "Override the x focus point.",
-                  "type": "optional<double>",
+                  "type": "optional<float>",
                 },
                 "force": {
                   "docs": "True to force a new resize even if it already stored.",
@@ -21038,11 +21038,11 @@ The client secret is auto generated on the server and returned. The client does 
                 },
                 "focusX": {
                   "docs": "Override the y focus point.",
-                  "type": "optional<double>",
+                  "type": "optional<float>",
                 },
                 "focusY": {
                   "docs": "Override the x focus point.",
-                  "type": "optional<double>",
+                  "type": "optional<float>",
                 },
                 "force": {
                   "docs": "True to force a new resize even if it already stored.",
@@ -21129,11 +21129,11 @@ The client secret is auto generated on the server and returned. The client does 
                 },
                 "focusX": {
                   "docs": "Override the y focus point.",
-                  "type": "optional<double>",
+                  "type": "optional<float>",
                 },
                 "focusY": {
                   "docs": "Override the x focus point.",
-                  "type": "optional<double>",
+                  "type": "optional<float>",
                 },
                 "force": {
                   "docs": "True to force a new resize even if it already stored.",

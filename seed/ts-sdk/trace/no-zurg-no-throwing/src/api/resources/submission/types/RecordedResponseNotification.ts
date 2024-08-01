@@ -5,7 +5,7 @@
 import * as SeedTrace from "../../../index";
 
 export interface RecordedResponseNotification {
-    submissionId: SeedTrace.SubmissionId;
-    traceResponsesSize: number;
-    testCaseId?: string;
+    "submissionId": SeedTrace.SubmissionId;
+    "traceResponsesSize": number;
+    "testCaseId"?: string;
 }

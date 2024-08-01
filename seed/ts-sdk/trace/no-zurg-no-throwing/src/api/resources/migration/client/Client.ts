@@ -28,7 +28,8 @@ export declare namespace Migration {
 }
 
 export class Migration {
-    constructor(protected readonly _options: Migration.Options = {}) {}
+    constructor(protected readonly _options: Migration.Options = {}) {
+    }
 
     /**
      * @param {SeedTrace.GetAttemptedMigrationsRequest} request
@@ -39,46 +40,37 @@ export class Migration {
      *         "admin-key-header": "string"
      *     })
      */
-    public async getAttemptedMigrations(
-        request: SeedTrace.GetAttemptedMigrationsRequest,
-        requestOptions?: Migration.RequestOptions
-    ): Promise<core.APIResponse<SeedTrace.Migration[], SeedTrace.migration.getAttemptedMigrations.Error>> {
+    public async getAttemptedMigrations(request: SeedTrace.GetAttemptedMigrationsRequest, requestOptions?: Migration.RequestOptions): Promise<core.APIResponse<SeedTrace.Migration[], SeedTrace.migration.getAttemptedMigrations.Error>> {
         const { "admin-key-header": adminKeyHeader } = request;
         const _response = await core.fetcher({
-            url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/migration-info/all"
-            ),
+            url: urlJoin(await core.Supplier.get(this._options.environment) ?? environments.SeedTraceEnvironment.Prod, "/migration-info/all"),
             method: "GET",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header":
-                    (await core.Supplier.get(this._options.xRandomHeader)) != null
-                        ? await core.Supplier.get(this._options.xRandomHeader)
-                        : undefined,
+                "Authorization": await this._getAuthorizationHeader(),
+                "X-Random-Header": await core.Supplier.get(this._options.xRandomHeader) != null ? await core.Supplier.get(this._options.xRandomHeader) : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
-                "admin-key-header": adminKeyHeader,
+                "admin-key-header": adminKeyHeader
             },
             contentType: "application/json",
             requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
+            abortSignal: requestOptions?.abortSignal
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: _response.body as SeedTrace.Migration[],
+                body: _response.body as SeedTrace.Migration[]
             };
         }
 
         return {
             ok: false,
-            error: SeedTrace.migration.getAttemptedMigrations.Error._unknown(_response.error),
+            error: SeedTrace.migration.getAttemptedMigrations.Error._unknown(_response.error)
         };
     }
 

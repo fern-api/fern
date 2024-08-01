@@ -1,4 +1,4 @@
-from typing import List, Optional, Set
+from typing import List, Optional, Set, cast
 
 import fern.ir.resources as ir_types
 from typing_extensions import Never
@@ -13,7 +13,7 @@ from fern_python.pydantic_codegen import PydanticField, PydanticModel
 from ....context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig
 from ...fern_aware_pydantic_model import FernAwarePydanticModel
-from ..abstract_type_generator import AbstractTypeGenerator
+from ..abc.abstract_type_generator import AbstractTypeGenerator
 from ..get_visit_method import VisitableItem, VisitorArgument, get_visit_method
 
 VISITOR_RETURN_TYPE = AST.GenericTypeVar(name="T_Result")
@@ -32,7 +32,11 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
         snippet: Optional[str] = None,
     ):
         super().__init__(
-            context=context, custom_config=custom_config, source_file=source_file, docs=docs, snippet=snippet
+            context=context,
+            custom_config=custom_config,
+            source_file=source_file,
+            docs=docs,
+            snippet=snippet,
         )
         self._name = name
         self._union = union
@@ -140,7 +144,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
         factory_declaration = AST.ClassDeclaration(name="_Factory")
         factory = self._source_file.add_class_declaration(factory_declaration)
 
-        model_name = self._context.get_class_name_for_type_id(self._name.type_id)
+        model_name = self._context.get_class_name_for_type_id(self._name.type_id, as_request=False)
         internal_union_class_declaration = AST.ClassDeclaration(name="_" + model_name)
 
         with FernAwarePydanticModel(
@@ -178,7 +182,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     source_file=self._source_file,
                     base_models=single_union_type.shape.visit(
                         same_properties_as_object=lambda type_name: [
-                            self._context.get_class_reference_for_type_id(type_name.type_id)
+                            self._context.get_class_reference_for_type_id(type_name.type_id, as_request=False)
                         ],
                         single_property=lambda _: [],
                         no_properties=lambda: [],
@@ -223,7 +227,9 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                         AST.FunctionParameter(
                                             name=BUILDER_ARGUMENT_NAME,
                                             type_hint=self._context.get_type_hint_for_type_reference(
-                                                ir_types.TypeReference.factory.named(type_name)
+                                                ir_types.TypeReference.factory.named(
+                                                    cast(ir_types.NamedType, type_name)
+                                                )
                                             ),
                                         )
                                     ],
@@ -236,7 +242,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                     no_properties=lambda: None,
                                 ),
                                 return_type=self._context.get_type_hint_for_type_reference(
-                                    ir_types.TypeReference.factory.named(self._name)
+                                    ir_types.TypeReference.factory.named(cast(ir_types.NamedType, self._name))
                                 ),
                             ),
                             body=AST.CodeWriter(
@@ -276,7 +282,10 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                         # as a workaround, we explicitly pass references to update_forward_refs
                         # so they are in scope
                         internal_pydantic_model_for_single_union_type.update_forward_refs(
-                            {self._context.get_class_reference_for_type_id(type_id) for type_id in forward_refed_types}
+                            {
+                                self._context.get_class_reference_for_type_id(type_id, as_request=False)
+                                for type_id in forward_refed_types
+                            }
                         )
 
                         # to avoid issues with circular dependencies, make sure all imports
@@ -297,7 +306,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                     expression=AST.Expression(
                                         AST.FunctionInvocation(
                                             function_definition=self._context.get_class_reference_for_type_id(
-                                                type_name.type_id
+                                                type_name.type_id, as_request=False
                                             ),
                                             args=[
                                                 AST.Expression(
@@ -308,7 +317,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                         )
                                     ),
                                     type=external_pydantic_model.get_type_hint_for_type_reference(
-                                        ir_types.TypeReference.factory.named(type_name)
+                                        ir_types.TypeReference.factory.named(cast(ir_types.NamedType, type_name))
                                     ),
                                 ),
                                 single_property=lambda property: VisitorArgument(

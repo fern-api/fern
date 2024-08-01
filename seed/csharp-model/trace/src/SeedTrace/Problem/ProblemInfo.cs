@@ -8,35 +8,35 @@ namespace SeedTrace;
 public record ProblemInfo
 {
     [JsonPropertyName("problemId")]
-    public required string ProblemId { get; init; }
+    public required string ProblemId { get; set; }
 
     [JsonPropertyName("problemDescription")]
-    public required ProblemDescription ProblemDescription { get; init; }
+    public required ProblemDescription ProblemDescription { get; set; }
 
     [JsonPropertyName("problemName")]
-    public required string ProblemName { get; init; }
+    public required string ProblemName { get; set; }
 
     [JsonPropertyName("problemVersion")]
-    public required int ProblemVersion { get; init; }
+    public required int ProblemVersion { get; set; }
 
     [JsonPropertyName("files")]
-    public Dictionary<Language, ProblemFiles> Files { get; init; } =
+    public Dictionary<Language, ProblemFiles> Files { get; set; } =
         new Dictionary<Language, ProblemFiles>();
 
     [JsonPropertyName("inputParams")]
-    public IEnumerable<VariableTypeAndName> InputParams { get; init; } =
+    public IEnumerable<VariableTypeAndName> InputParams { get; set; } =
         new List<VariableTypeAndName>();
 
     [JsonPropertyName("outputType")]
-    public required object OutputType { get; init; }
+    public required object OutputType { get; set; }
 
     [JsonPropertyName("testcases")]
-    public IEnumerable<TestCaseWithExpectedResult> Testcases { get; init; } =
+    public IEnumerable<TestCaseWithExpectedResult> Testcases { get; set; } =
         new List<TestCaseWithExpectedResult>();
 
     [JsonPropertyName("methodName")]
-    public required string MethodName { get; init; }
+    public required string MethodName { get; set; }
 
     [JsonPropertyName("supportsCustomTestCases")]
-    public required bool SupportsCustomTestCases { get; init; }
+    public required bool SupportsCustomTestCases { get; set; }
 }

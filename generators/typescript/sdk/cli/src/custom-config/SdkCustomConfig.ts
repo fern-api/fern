@@ -31,4 +31,6 @@ export interface SdkCustomConfig {
     packageJson: Record<string, unknown> | undefined;
     publishToJsr: boolean | undefined;
     omitUndefined: boolean | undefined;
+    generateWireTests: boolean | undefined;
+    noScripts: boolean | undefined;
 }

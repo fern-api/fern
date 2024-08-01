@@ -22,7 +22,8 @@ export declare namespace SeedIdempotencyHeadersClient {
 }
 
 export class SeedIdempotencyHeadersClient {
-    constructor(protected readonly _options: SeedIdempotencyHeadersClient.Options) {}
+    constructor(protected readonly _options: SeedIdempotencyHeadersClient.Options) {
+    }
 
     protected _payment: Payment | undefined;
 

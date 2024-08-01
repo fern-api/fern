@@ -1,4 +1,5 @@
 {
+    "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": {
         "originalName": "response-property",
@@ -99,7 +100,8 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "userProvidedExamples": [],
@@ -305,7 +307,8 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "userProvidedExamples": [],
@@ -421,7 +424,8 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "userProvidedExamples": [],
@@ -799,7 +803,8 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "userProvidedExamples": [],
@@ -1065,7 +1070,100 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "metadata",
+                                "camelCase": {
+                                    "unsafeName": "metadata",
+                                    "safeName": "metadata"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "metadata",
+                                    "safeName": "metadata"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "METADATA",
+                                    "safeName": "METADATA"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Metadata",
+                                    "safeName": "Metadata"
+                                }
+                            },
+                            "wireValue": "metadata"
+                        },
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "map",
+                                "keyType": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                },
+                                "valueType": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "docs",
+                                "camelCase": {
+                                    "unsafeName": "docs",
+                                    "safeName": "docs"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "docs",
+                                    "safeName": "docs"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "DOCS",
+                                    "safeName": "DOCS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Docs",
+                                    "safeName": "Docs"
+                                }
+                            },
+                            "wireValue": "docs"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ]
             },
             "referencedTypes": [
                 "type_:WithMetadata",

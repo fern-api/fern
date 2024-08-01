@@ -102,6 +102,7 @@ export {
     MethodInvocation,
     MethodType,
     Parameter,
-    Type
+    Type,
+    Writer
 } from "./ast";
 export { AstNode } from "./ast/core/AstNode";

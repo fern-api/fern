@@ -38,12 +38,8 @@ open class Room {
         print("Hey!")
     }
 
-<<<<<<< HEAD
-}"
-=======
 }
 "
->>>>>>> main
 `;
 
 exports[`Swift Language makes file header 1`] = `"This is the header to a file"`;

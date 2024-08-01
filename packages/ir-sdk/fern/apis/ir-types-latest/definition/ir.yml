@@ -15,6 +15,9 @@ types:
   IntermediateRepresentation:
     docs: "Complete representation of the API schema"
     properties:
+      fdrApiDefinitionId:
+        type: optional<string>
+        docs: The unique identifier for the API definition used within FDR. This is retrieved once a definition has been registered.
       apiVersion: optional<ApiVersionScheme>
       apiName:
         type: commons.Name

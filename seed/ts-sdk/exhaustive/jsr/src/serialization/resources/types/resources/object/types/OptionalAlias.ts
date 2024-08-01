@@ -6,10 +6,7 @@ import * as serializers from "../../../../../index";
 import * as SeedExhaustive from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 
-export const OptionalAlias: core.serialization.Schema<
-    serializers.types.OptionalAlias.Raw,
-    SeedExhaustive.types.OptionalAlias
-> = core.serialization.string().optional();
+export const OptionalAlias: core.serialization.Schema<serializers.types.OptionalAlias.Raw, SeedExhaustive.types.OptionalAlias> = core.serialization.string().optional();
 
 export declare namespace OptionalAlias {
     type Raw = string | null | undefined;

@@ -126,7 +126,8 @@ class UsersClient:
 
         Examples
         --------
-        from seed import SeedPagination, WithCursor
+        from seed import SeedPagination
+        from seed.users import WithCursor
 
         client = SeedPagination(
             token="YOUR_TOKEN",
@@ -260,7 +261,8 @@ class UsersClient:
 
         Examples
         --------
-        from seed import SeedPagination, WithPage
+        from seed import SeedPagination
+        from seed.users import WithPage
 
         client = SeedPagination(
             token="YOUR_TOKEN",
@@ -638,7 +640,8 @@ class AsyncUsersClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedPagination, WithCursor
+        from seed import AsyncSeedPagination
+        from seed.users import WithCursor
 
         client = AsyncSeedPagination(
             token="YOUR_TOKEN",
@@ -788,7 +791,8 @@ class AsyncUsersClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedPagination, WithPage
+        from seed import AsyncSeedPagination
+        from seed.users import WithPage
 
         client = AsyncSeedPagination(
             token="YOUR_TOKEN",

@@ -1,4 +1,5 @@
 {
+    "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": {
         "originalName": "unknown-as-any",
@@ -210,7 +211,8 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "userProvidedExamples": [],

@@ -4,7 +4,7 @@
 
 import * as SeedTrace from "../../../../../index";
 
-export type AssertCorrectnessCheck =
+export type AssertCorrectnessCheck = 
     | SeedTrace.v2.AssertCorrectnessCheck.DeepEquality
     | SeedTrace.v2.AssertCorrectnessCheck.Custom;
 

@@ -22,7 +22,8 @@ export declare namespace SeedAudiencesClient {
 }
 
 export class SeedAudiencesClient {
-    constructor(protected readonly _options: SeedAudiencesClient.Options) {}
+    constructor(protected readonly _options: SeedAudiencesClient.Options) {
+    }
 
     protected _folderA: FolderA | undefined;
 

@@ -3,5 +3,5 @@
  */
 
 export interface RuntimeError {
-    message: string;
+    "message": string;
 }

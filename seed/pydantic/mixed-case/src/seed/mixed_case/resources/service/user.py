@@ -11,7 +11,7 @@ class User(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.mixed_case import User
+    from seed.mixed_case.resources import User
 
     User(
         user_name="username",

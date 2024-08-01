@@ -7,8 +7,8 @@ namespace SeedExtends;
 public record Json
 {
     [JsonPropertyName("raw")]
-    public required string Raw { get; init; }
+    public required string Raw { get; set; }
 
     [JsonPropertyName("docs")]
-    public required string Docs { get; init; }
+    public required string Docs { get; set; }
 }
