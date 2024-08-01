@@ -33,7 +33,7 @@ import * as SeedExamples from "../../../index";
  *     }
  */
 export interface Node {
-    name: string;
-    nodes?: SeedExamples.Node[];
-    trees?: SeedExamples.Tree[];
+    "name": string;
+    "nodes"?: SeedExamples.Node[];
+    "trees"?: SeedExamples.Tree[];
 }

@@ -6,52 +6,43 @@ import * as serializers from "../../../index";
 import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const ProblemDescriptionBoard: core.serialization.Schema<
-    serializers.ProblemDescriptionBoard.Raw,
-    SeedTrace.ProblemDescriptionBoard
-> = core.serialization
-    .union("type", {
-        html: core.serialization.object({
-            value: core.serialization.string(),
+export const ProblemDescriptionBoard: core.serialization.Schema<serializers.ProblemDescriptionBoard.Raw, SeedTrace.ProblemDescriptionBoard> = core.serialization.union("type", {
+        "html": core.serialization.object({
+            "value": core.serialization.string()
         }),
-        variable: core.serialization.object({
-            value: core.serialization.lazy(() => serializers.VariableValue),
+        "variable": core.serialization.object({
+            "value": core.serialization.lazy(() => serializers.VariableValue)
         }),
-        testCaseId: core.serialization.object({
-            value: core.serialization.string(),
-        }),
-    })
-    .transform<SeedTrace.ProblemDescriptionBoard>({
-        transform: (value) => {
+        "testCaseId": core.serialization.object({
+            "value": core.serialization.string()
+        })
+    }).transform<SeedTrace.ProblemDescriptionBoard>({
+        transform: value => {
             switch (value.type) {
-                case "html":
-                    return SeedTrace.ProblemDescriptionBoard.html(value.value);
-                case "variable":
-                    return SeedTrace.ProblemDescriptionBoard.variable(value.value);
-                case "testCaseId":
-                    return SeedTrace.ProblemDescriptionBoard.testCaseId(value.value);
-                default:
-                    return SeedTrace.ProblemDescriptionBoard._unknown(value);
+                case "html": return SeedTrace.ProblemDescriptionBoard.html(value.value);
+                case "variable": return SeedTrace.ProblemDescriptionBoard.variable(value.value);
+                case "testCaseId": return SeedTrace.ProblemDescriptionBoard.testCaseId(value.value);
+                default: return SeedTrace.ProblemDescriptionBoard._unknown(value);
             }
         },
-        untransform: ({ _visit, ...value }) => value as any,
+        untransform: ({ _visit, ...value }) => value as any
     });
 
 export declare namespace ProblemDescriptionBoard {
     type Raw = ProblemDescriptionBoard.Html | ProblemDescriptionBoard.Variable | ProblemDescriptionBoard.TestCaseId;
 
     interface Html {
-        type: "html";
-        value: string;
+        "type": "html";
+        "value": string;
     }
 
     interface Variable {
-        type: "variable";
-        value: serializers.VariableValue.Raw;
+        "type": "variable";
+        "value": serializers.VariableValue.Raw;
     }
 
     interface TestCaseId {
-        type: "testCaseId";
-        value: string;
+        "type": "testCaseId";
+        "value": string;
     }
 }

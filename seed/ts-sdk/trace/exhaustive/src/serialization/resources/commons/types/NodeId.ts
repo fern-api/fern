@@ -6,11 +6,9 @@ import * as serializers from "../../../index";
 import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const NodeId: core.serialization.Schema<serializers.NodeId.Raw, SeedTrace.NodeId> = core.serialization
-    .string()
-    .transform({
+export const NodeId: core.serialization.Schema<serializers.NodeId.Raw, SeedTrace.NodeId> = core.serialization.string().transform({
         transform: SeedTrace.NodeId,
-        untransform: (value) => value,
+        untransform: value => value
     });
 
 export declare namespace NodeId {

@@ -5,9 +5,10 @@
 import * as serializers from "../../../../../index";
 import * as core from "../../../../../../core";
 
-export const Response: core.serialization.Schema<serializers.health.service.ping.Response.Raw, boolean> =
-    core.serialization.boolean();
+export const Response: core.serialization.Schema<serializers.health.service.ping.Response.Raw, boolean> = core.serialization.boolean();
 
 export declare namespace Response {
     type Raw = boolean;
 }
+
+

@@ -32,13 +32,13 @@ export function union<D extends string | Discriminant<any, any>, U extends Union
                 transformDiscriminantValue: (discriminantValue) =>
                     discriminantValueSchema.parse(discriminantValue, {
                         allowUnrecognizedEnumValues: opts?.allowUnrecognizedUnionMembers,
-                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), rawDiscriminant],
+                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), rawDiscriminant]
                     }),
                 getAdditionalPropertiesSchema: (discriminantValue) => union[discriminantValue],
                 allowUnrecognizedUnionMembers: opts?.allowUnrecognizedUnionMembers,
                 transformAdditionalProperties: (additionalProperties, additionalPropertiesSchema) =>
                     additionalPropertiesSchema.parse(additionalProperties, opts),
-                breadcrumbsPrefix: opts?.breadcrumbsPrefix,
+                breadcrumbsPrefix: opts?.breadcrumbsPrefix
             });
         },
         json: (parsed, opts) => {
@@ -49,22 +49,22 @@ export function union<D extends string | Discriminant<any, any>, U extends Union
                 transformDiscriminantValue: (discriminantValue) =>
                     discriminantValueSchema.json(discriminantValue, {
                         allowUnrecognizedEnumValues: opts?.allowUnrecognizedUnionMembers,
-                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), parsedDiscriminant],
+                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), parsedDiscriminant]
                     }),
                 getAdditionalPropertiesSchema: (discriminantValue) => union[discriminantValue],
                 allowUnrecognizedUnionMembers: opts?.allowUnrecognizedUnionMembers,
                 transformAdditionalProperties: (additionalProperties, additionalPropertiesSchema) =>
                     additionalPropertiesSchema.json(additionalProperties, opts),
-                breadcrumbsPrefix: opts?.breadcrumbsPrefix,
+                breadcrumbsPrefix: opts?.breadcrumbsPrefix
             });
         },
-        getType: () => SchemaType.UNION,
+        getType: () => SchemaType.UNION
     };
 
     return {
         ...maybeSkipValidation(baseSchema),
         ...getSchemaUtils(baseSchema),
-        ...getObjectLikeUtils(baseSchema),
+        ...getObjectLikeUtils(baseSchema)
     };
 }
 
@@ -80,7 +80,7 @@ function transformAndValidateUnion<
     getAdditionalPropertiesSchema,
     allowUnrecognizedUnionMembers = false,
     transformAdditionalProperties,
-    breadcrumbsPrefix = [],
+    breadcrumbsPrefix = []
 }: {
     value: unknown;
     discriminant: string;
@@ -100,9 +100,9 @@ function transformAndValidateUnion<
             errors: [
                 {
                     path: breadcrumbsPrefix,
-                    message: getErrorMessageForIncorrectType(value, "object"),
-                },
-            ],
+                    message: getErrorMessageForIncorrectType(value, "object")
+                }
+            ]
         };
     }
 
@@ -114,9 +114,9 @@ function transformAndValidateUnion<
             errors: [
                 {
                     path: breadcrumbsPrefix,
-                    message: `Missing discriminant ("${discriminant}")`,
-                },
-            ],
+                    message: `Missing discriminant ("${discriminant}")`
+                }
+            ]
         };
     }
 
@@ -124,7 +124,7 @@ function transformAndValidateUnion<
     if (!transformedDiscriminantValue.ok) {
         return {
             ok: false,
-            errors: transformedDiscriminantValue.errors,
+            errors: transformedDiscriminantValue.errors
         };
     }
 
@@ -136,8 +136,8 @@ function transformAndValidateUnion<
                 ok: true,
                 value: {
                     [transformedDiscriminant]: transformedDiscriminantValue.value,
-                    ...additionalProperties,
-                } as Record<TransformedDiscriminant, TransformedDiscriminantValue> & TransformedAdditionalProperties,
+                    ...additionalProperties
+                } as Record<TransformedDiscriminant, TransformedDiscriminantValue> & TransformedAdditionalProperties
             };
         } else {
             return {
@@ -145,9 +145,9 @@ function transformAndValidateUnion<
                 errors: [
                     {
                         path: [...breadcrumbsPrefix, discriminant],
-                        message: "Unexpected discriminant value",
-                    },
-                ],
+                        message: "Unexpected discriminant value"
+                    }
+                ]
             };
         }
     }
@@ -164,7 +164,7 @@ function transformAndValidateUnion<
         ok: true,
         value: {
             [transformedDiscriminant]: discriminantValue,
-            ...transformedAdditionalProperties.value,
-        } as Record<TransformedDiscriminant, TransformedDiscriminantValue> & TransformedAdditionalProperties,
+            ...transformedAdditionalProperties.value
+        } as Record<TransformedDiscriminant, TransformedDiscriminantValue> & TransformedAdditionalProperties
     };
 }

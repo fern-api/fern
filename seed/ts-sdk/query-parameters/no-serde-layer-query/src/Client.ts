@@ -21,7 +21,8 @@ export declare namespace SeedQueryParametersClient {
 }
 
 export class SeedQueryParametersClient {
-    constructor(protected readonly _options: SeedQueryParametersClient.Options) {}
+    constructor(protected readonly _options: SeedQueryParametersClient.Options) {
+    }
 
     protected _user: User | undefined;
 

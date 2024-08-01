@@ -8,8 +8,7 @@ import * as core from "../../core";
 import { BasicType } from "./BasicType";
 import { ComplexType } from "./ComplexType";
 
-export const Type: core.serialization.Schema<serializers.Type.Raw, SeedExamples.Type> =
-    core.serialization.undiscriminatedUnion([BasicType, ComplexType]);
+export const Type: core.serialization.Schema<serializers.Type.Raw, SeedExamples.Type> = core.serialization.undiscriminatedUnion([BasicType, ComplexType]);
 
 export declare namespace Type {
     type Raw = BasicType.Raw | ComplexType.Raw;

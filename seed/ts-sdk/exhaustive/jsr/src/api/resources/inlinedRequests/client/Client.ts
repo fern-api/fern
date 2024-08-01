@@ -25,7 +25,8 @@ export declare namespace InlinedRequests {
 }
 
 export class InlinedRequests {
-    constructor(protected readonly _options: InlinedRequests.Options) {}
+    constructor(protected readonly _options: InlinedRequests.Options) {
+    }
 
     /**
      * POST with custom object in request body, response is an object
@@ -58,68 +59,48 @@ export class InlinedRequests {
      *         }
      *     })
      */
-    public async postWithObjectBodyandResponse(
-        request: SeedExhaustive.PostWithObjectBody,
-        requestOptions?: InlinedRequests.RequestOptions
-    ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
+    public async postWithObjectBodyandResponse(request: SeedExhaustive.PostWithObjectBody, requestOptions?: InlinedRequests.RequestOptions): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/req-bodies/object"),
             method: "POST",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
+                "Authorization": await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                "X-Fern-Runtime-Version": core.RUNTIME.version
             },
             contentType: "application/json",
             requestType: "json",
             body: serializers.PostWithObjectBody.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
+            abortSignal: requestOptions?.abortSignal
         });
         if (_response.ok) {
-            return serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] });
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
-                case 400:
-                    throw new SeedExhaustive.BadRequestBody(
-                        serializers.BadObjectRequestInfo.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
-                default:
-                    throw new errors.SeedExhaustiveError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
+                case 400: throw new SeedExhaustive.BadRequestBody(serializers.BadObjectRequestInfo.parseOrThrow(_response.error.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] }));
+                default: throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.body
+                });
             }
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
-            case "unknown":
-                throw new errors.SeedExhaustiveError({
-                    message: _response.error.errorMessage,
-                });
+            case "non-json": throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody
+            });
+            case "timeout": throw new errors.SeedExhaustiveTimeoutError;
+            case "unknown": throw new errors.SeedExhaustiveError({
+                message: _response.error.errorMessage
+            });
         }
     }
 

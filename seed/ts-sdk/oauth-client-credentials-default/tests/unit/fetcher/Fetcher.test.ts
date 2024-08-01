@@ -19,7 +19,7 @@ describe("Test fetcherImpl", () => {
             getBody: mockGetBody,
             getFetchFn: mockGetFetchFn,
             requestWithRetries: mockRequestWithRetries,
-            getResponseBody: mockGetResponseBody,
+            getResponseBody: mockGetResponseBody
         }));
     });
 
@@ -30,7 +30,7 @@ describe("Test fetcherImpl", () => {
             headers: { "X-Test": "x-test-header" },
             body: { data: "test" },
             contentType: "application/json",
-            requestType: "json",
+            requestType: "json"
         };
 
         mockCreateUrl.mockReturnValue("https://test.com");

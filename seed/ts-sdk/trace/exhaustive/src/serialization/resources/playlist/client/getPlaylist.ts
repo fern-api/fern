@@ -7,37 +7,30 @@ import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 import { PlaylistIdNotFoundErrorBody } from "../types/PlaylistIdNotFoundErrorBody";
 
-export const Error: core.serialization.Schema<
-    serializers.playlist.getPlaylist.Error.Raw,
-    SeedTrace.playlist.getPlaylist.Error
-> = core.serialization
-    .union("errorName", {
-        PlaylistIdNotFoundError: core.serialization.object({
-            content: PlaylistIdNotFoundErrorBody,
+export const Error: core.serialization.Schema<serializers.playlist.getPlaylist.Error.Raw, SeedTrace.playlist.getPlaylist.Error> = core.serialization.union("errorName", {
+        "PlaylistIdNotFoundError": core.serialization.object({
+            "content": PlaylistIdNotFoundErrorBody
         }),
-        UnauthorizedError: core.serialization.object({}),
-    })
-    .transform<SeedTrace.playlist.getPlaylist.Error>({
-        transform: (value) => {
+        "UnauthorizedError": core.serialization.object({})
+    }).transform<SeedTrace.playlist.getPlaylist.Error>({
+        transform: value => {
             switch (value.errorName) {
-                case "PlaylistIdNotFoundError":
-                    return SeedTrace.playlist.getPlaylist.Error.playlistIdNotFoundError(value.content);
-                case "UnauthorizedError":
-                    return SeedTrace.playlist.getPlaylist.Error.unauthorizedError();
+                case "PlaylistIdNotFoundError": return SeedTrace.playlist.getPlaylist.Error.playlistIdNotFoundError(value.content);
+                case "UnauthorizedError": return SeedTrace.playlist.getPlaylist.Error.unauthorizedError();
             }
         },
-        untransform: ({ _visit, ...value }) => value as any,
+        untransform: ({ _visit, ...value }) => value as any
     });
 
 export declare namespace Error {
     type Raw = Error.PlaylistIdNotFoundError | Error.UnauthorizedError;
 
     interface PlaylistIdNotFoundError {
-        errorName: "PlaylistIdNotFoundError";
-        content: PlaylistIdNotFoundErrorBody.Raw;
+        "errorName": "PlaylistIdNotFoundError";
+        "content": PlaylistIdNotFoundErrorBody.Raw;
     }
 
     interface UnauthorizedError {
-        errorName: "UnauthorizedError";
+        "errorName": "UnauthorizedError";
     }
 }

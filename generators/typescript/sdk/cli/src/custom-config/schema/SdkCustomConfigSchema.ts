@@ -33,6 +33,7 @@ export const SdkCustomConfigSchema = z.strictObject({
     allowExtraFields: z.optional(z.boolean()),
     inlineFileProperties: z.optional(z.boolean()),
     generateWireTests: z.optional(z.boolean()),
+    noScripts: z.optional(z.boolean()),
 
     // deprecated
     timeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),

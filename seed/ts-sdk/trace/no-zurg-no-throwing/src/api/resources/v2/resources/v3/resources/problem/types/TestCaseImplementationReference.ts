@@ -4,7 +4,7 @@
 
 import * as SeedTrace from "../../../../../../../index";
 
-export type TestCaseImplementationReference =
+export type TestCaseImplementationReference = 
     | SeedTrace.v2.v3.TestCaseImplementationReference.TemplateId
     | SeedTrace.v2.v3.TestCaseImplementationReference.Implementation;
 

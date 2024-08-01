@@ -12,7 +12,7 @@
  * @example
  *     SeedEnum.Operand.LessThan
  */
-export type Operand =
+export type Operand = 
     | ">"
     | "="
     /**
@@ -21,7 +21,7 @@ export type Operand =
     | "less_than";
 
 export const Operand = {
-    GreaterThan: ">",
-    EqualTo: "=",
-    LessThan: "less_than",
-} as const;
+        GreaterThan: ">",
+        EqualTo: "=",
+        LessThan: "less_than"
+    } as const;

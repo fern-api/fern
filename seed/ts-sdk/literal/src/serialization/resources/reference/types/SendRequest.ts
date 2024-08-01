@@ -6,17 +6,16 @@ import * as serializers from "../../../index";
 import * as SeedLiteral from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const SendRequest: core.serialization.ObjectSchema<serializers.SendRequest.Raw, SeedLiteral.SendRequest> =
-    core.serialization.object({
-        prompt: core.serialization.stringLiteral("You are a helpful assistant"),
-        query: core.serialization.string(),
-        stream: core.serialization.booleanLiteral(false),
+export const SendRequest: core.serialization.ObjectSchema<serializers.SendRequest.Raw, SeedLiteral.SendRequest> = core.serialization.object({
+        "prompt": core.serialization.stringLiteral("You are a helpful assistant"),
+        "query": core.serialization.string(),
+        "stream": core.serialization.booleanLiteral(false)
     });
 
 export declare namespace SendRequest {
     interface Raw {
-        prompt: "You are a helpful assistant";
-        query: string;
-        stream: false;
+        "prompt": "You are a helpful assistant";
+        "query": string;
+        "stream": false;
     }
 }

@@ -9,40 +9,34 @@ import { CompileError } from "./CompileError";
 import { RuntimeError } from "./RuntimeError";
 import { InternalError } from "./InternalError";
 
-export const ErrorInfo: core.serialization.Schema<serializers.ErrorInfo.Raw, SeedTrace.ErrorInfo> = core.serialization
-    .union("type", {
-        compileError: CompileError,
-        runtimeError: RuntimeError,
-        internalError: InternalError,
-    })
-    .transform<SeedTrace.ErrorInfo>({
-        transform: (value) => {
+export const ErrorInfo: core.serialization.Schema<serializers.ErrorInfo.Raw, SeedTrace.ErrorInfo> = core.serialization.union("type", {
+        "compileError": CompileError,
+        "runtimeError": RuntimeError,
+        "internalError": InternalError
+    }).transform<SeedTrace.ErrorInfo>({
+        transform: value => {
             switch (value.type) {
-                case "compileError":
-                    return SeedTrace.ErrorInfo.compileError(value);
-                case "runtimeError":
-                    return SeedTrace.ErrorInfo.runtimeError(value);
-                case "internalError":
-                    return SeedTrace.ErrorInfo.internalError(value);
-                default:
-                    return SeedTrace.ErrorInfo._unknown(value);
+                case "compileError": return SeedTrace.ErrorInfo.compileError(value);
+                case "runtimeError": return SeedTrace.ErrorInfo.runtimeError(value);
+                case "internalError": return SeedTrace.ErrorInfo.internalError(value);
+                default: return SeedTrace.ErrorInfo._unknown(value);
             }
         },
-        untransform: ({ _visit, ...value }) => value as any,
+        untransform: ({ _visit, ...value }) => value as any
     });
 
 export declare namespace ErrorInfo {
     type Raw = ErrorInfo.CompileError | ErrorInfo.RuntimeError | ErrorInfo.InternalError;
 
     interface CompileError extends CompileError.Raw {
-        type: "compileError";
+        "type": "compileError";
     }
 
     interface RuntimeError extends RuntimeError.Raw {
-        type: "runtimeError";
+        "type": "runtimeError";
     }
 
     interface InternalError extends InternalError.Raw {
-        type: "internalError";
+        "type": "internalError";
     }
 }

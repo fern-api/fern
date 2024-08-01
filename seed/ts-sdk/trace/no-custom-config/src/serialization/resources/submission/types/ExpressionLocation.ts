@@ -6,17 +6,14 @@ import * as serializers from "../../../index";
 import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const ExpressionLocation: core.serialization.ObjectSchema<
-    serializers.ExpressionLocation.Raw,
-    SeedTrace.ExpressionLocation
-> = core.serialization.object({
-    start: core.serialization.number(),
-    offset: core.serialization.number(),
-});
+export const ExpressionLocation: core.serialization.ObjectSchema<serializers.ExpressionLocation.Raw, SeedTrace.ExpressionLocation> = core.serialization.object({
+        "start": core.serialization.number(),
+        "offset": core.serialization.number()
+    });
 
 export declare namespace ExpressionLocation {
     interface Raw {
-        start: number;
-        offset: number;
+        "start": number;
+        "offset": number;
     }
 }

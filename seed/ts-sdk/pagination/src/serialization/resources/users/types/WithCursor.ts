@@ -6,13 +6,12 @@ import * as serializers from "../../../index";
 import * as SeedPagination from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const WithCursor: core.serialization.ObjectSchema<serializers.WithCursor.Raw, SeedPagination.WithCursor> =
-    core.serialization.object({
-        cursor: core.serialization.string().optional(),
+export const WithCursor: core.serialization.ObjectSchema<serializers.WithCursor.Raw, SeedPagination.WithCursor> = core.serialization.object({
+        "cursor": core.serialization.string().optional()
     });
 
 export declare namespace WithCursor {
     interface Raw {
-        cursor?: string | null;
+        "cursor"?: string | null;
     }
 }

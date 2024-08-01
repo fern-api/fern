@@ -4,7 +4,9 @@
 
 import * as SeedTrace from "../../../index";
 
-export type TestCaseGrade = SeedTrace.TestCaseGrade.Hidden | SeedTrace.TestCaseGrade.NonHidden;
+export type TestCaseGrade = 
+    | SeedTrace.TestCaseGrade.Hidden
+    | SeedTrace.TestCaseGrade.NonHidden;
 
 export declare namespace TestCaseGrade {
     interface Hidden extends SeedTrace.TestCaseHiddenGrade {

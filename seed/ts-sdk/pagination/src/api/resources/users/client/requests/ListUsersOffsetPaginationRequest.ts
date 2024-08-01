@@ -17,15 +17,15 @@ export interface ListUsersOffsetPaginationRequest {
     /**
      * Defaults to first page
      */
-    page?: number;
+    "page"?: number;
     /**
      * Defaults to per page
      */
-    perPage?: number;
-    order?: SeedPagination.Order;
+    "perPage"?: number;
+    "order"?: SeedPagination.Order;
     /**
      * The cursor used for pagination in order to fetch
      * the next page of results.
      */
-    startingAfter?: string;
+    "startingAfter"?: string;
 }

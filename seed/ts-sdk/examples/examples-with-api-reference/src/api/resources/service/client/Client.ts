@@ -26,7 +26,8 @@ export declare namespace Service {
 }
 
 export class Service {
-    constructor(protected readonly _options: Service.Options) {}
+    constructor(protected readonly _options: Service.Options) {
+    }
 
     /**
      * @param {SeedExamples.MovieId} movieId
@@ -35,58 +36,44 @@ export class Service {
      * @example
      *     await client.service.getMovie("movie-c06a4ad7")
      */
-    public async getMovie(
-        movieId: SeedExamples.MovieId,
-        requestOptions?: Service.RequestOptions
-    ): Promise<SeedExamples.Movie> {
+    public async getMovie(movieId: SeedExamples.MovieId, requestOptions?: Service.RequestOptions): Promise<SeedExamples.Movie> {
         const _response = await core.fetcher({
-            url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                `/movie/${encodeURIComponent(serializers.MovieId.jsonOrThrow(movieId))}`
-            ),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `/movie/${encodeURIComponent(serializers.MovieId.jsonOrThrow(movieId))}`),
             method: "GET",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
+                "Authorization": await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/examples",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                "X-Fern-Runtime-Version": core.RUNTIME.version
             },
             contentType: "application/json",
             requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
+            abortSignal: requestOptions?.abortSignal
         });
         if (_response.ok) {
-            return serializers.Movie.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return serializers.Movie.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] });
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExamplesError({
                 statusCode: _response.error.statusCode,
-                body: _response.error.body,
+                body: _response.error.body
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExamplesError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.SeedExamplesTimeoutError();
-            case "unknown":
-                throw new errors.SeedExamplesError({
-                    message: _response.error.errorMessage,
-                });
+            case "non-json": throw new errors.SeedExamplesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody
+            });
+            case "timeout": throw new errors.SeedExamplesTimeoutError;
+            case "unknown": throw new errors.SeedExamplesError({
+                message: _response.error.errorMessage
+            });
         }
     }
 
@@ -117,56 +104,45 @@ export class Service {
      *         }
      *     })
      */
-    public async createMovie(
-        request: SeedExamples.Movie,
-        requestOptions?: Service.RequestOptions
-    ): Promise<SeedExamples.MovieId> {
+    public async createMovie(request: SeedExamples.Movie, requestOptions?: Service.RequestOptions): Promise<SeedExamples.MovieId> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/movie"),
             method: "POST",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
+                "Authorization": await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/examples",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                "X-Fern-Runtime-Version": core.RUNTIME.version
             },
             contentType: "application/json",
             requestType: "json",
             body: serializers.Movie.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
+            abortSignal: requestOptions?.abortSignal
         });
         if (_response.ok) {
-            return serializers.MovieId.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return serializers.MovieId.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] });
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExamplesError({
                 statusCode: _response.error.statusCode,
-                body: _response.error.body,
+                body: _response.error.body
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExamplesError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.SeedExamplesTimeoutError();
-            case "unknown":
-                throw new errors.SeedExamplesError({
-                    message: _response.error.errorMessage,
-                });
+            case "non-json": throw new errors.SeedExamplesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody
+            });
+            case "timeout": throw new errors.SeedExamplesTimeoutError;
+            case "unknown": throw new errors.SeedExamplesError({
+                message: _response.error.errorMessage
+            });
         }
     }
 
@@ -181,10 +157,7 @@ export class Service {
      *         tag: "development"
      *     })
      */
-    public async getMetadata(
-        request: SeedExamples.GetMetadataRequest,
-        requestOptions?: Service.RequestOptions
-    ): Promise<SeedExamples.Metadata> {
+    public async getMetadata(request: SeedExamples.GetMetadataRequest, requestOptions?: Service.RequestOptions): Promise<SeedExamples.Metadata> {
         const { shallow, tag, xApiVersion } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (shallow != null) {
@@ -193,8 +166,9 @@ export class Service {
 
         if (tag != null) {
             if (Array.isArray(tag)) {
-                _queryParams["tag"] = tag.map((item) => item);
-            } else {
+                _queryParams["tag"] = tag.map(item => item);
+            }
+            else {
                 _queryParams["tag"] = tag;
             }
         }
@@ -203,49 +177,41 @@ export class Service {
             url: urlJoin(await core.Supplier.get(this._options.environment), "/metadata"),
             method: "GET",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
+                "Authorization": await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/examples",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
-                "X-API-Version": xApiVersion,
+                "X-API-Version": xApiVersion
             },
             contentType: "application/json",
             queryParameters: _queryParams,
             requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
+            abortSignal: requestOptions?.abortSignal
         });
         if (_response.ok) {
-            return serializers.Metadata.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return serializers.Metadata.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] });
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExamplesError({
                 statusCode: _response.error.statusCode,
-                body: _response.error.body,
+                body: _response.error.body
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExamplesError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.SeedExamplesTimeoutError();
-            case "unknown":
-                throw new errors.SeedExamplesError({
-                    message: _response.error.errorMessage,
-                });
+            case "non-json": throw new errors.SeedExamplesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody
+            });
+            case "timeout": throw new errors.SeedExamplesTimeoutError;
+            case "unknown": throw new errors.SeedExamplesError({
+                message: _response.error.errorMessage
+            });
         }
     }
 
@@ -260,47 +226,39 @@ export class Service {
             url: urlJoin(await core.Supplier.get(this._options.environment), "/response"),
             method: "POST",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
+                "Authorization": await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/examples",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                "X-Fern-Runtime-Version": core.RUNTIME.version
             },
             contentType: "application/json",
             requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
+            abortSignal: requestOptions?.abortSignal
         });
         if (_response.ok) {
-            return serializers.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return serializers.Response.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] });
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExamplesError({
                 statusCode: _response.error.statusCode,
-                body: _response.error.body,
+                body: _response.error.body
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExamplesError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.SeedExamplesTimeoutError();
-            case "unknown":
-                throw new errors.SeedExamplesError({
-                    message: _response.error.errorMessage,
-                });
+            case "non-json": throw new errors.SeedExamplesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody
+            });
+            case "timeout": throw new errors.SeedExamplesTimeoutError;
+            case "unknown": throw new errors.SeedExamplesError({
+                message: _response.error.errorMessage
+            });
         }
     }
 

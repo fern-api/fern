@@ -19,6 +19,6 @@ import * as SeedMixedCase from "../../../index";
  *     }
  */
 export interface NestedUser {
-    name: string;
-    nestedUser: SeedMixedCase.User;
+    "name": string;
+    "nestedUser": SeedMixedCase.User;
 }

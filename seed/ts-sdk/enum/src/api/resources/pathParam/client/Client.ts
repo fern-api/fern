@@ -24,7 +24,8 @@ export declare namespace PathParam {
 }
 
 export class PathParam {
-    constructor(protected readonly _options: PathParam.Options) {}
+    constructor(protected readonly _options: PathParam.Options) {
+    }
 
     /**
      * @param {SeedEnum.Operand} operand
@@ -36,35 +37,22 @@ export class PathParam {
      * @example
      *     await client.pathParam.send(SeedEnum.Operand.GreaterThan, SeedEnum.Operand.LessThan, SeedEnum.Color.Red, SeedEnum.Color.Red)
      */
-    public async send(
-        operand: SeedEnum.Operand,
-        maybeOperand: SeedEnum.Operand | undefined,
-        operandOrColor: SeedEnum.ColorOrOperand,
-        maybeOperandOrColor: SeedEnum.ColorOrOperand | undefined,
-        requestOptions?: PathParam.RequestOptions
-    ): Promise<void> {
+    public async send(operand: SeedEnum.Operand, maybeOperand: SeedEnum.Operand | undefined, operandOrColor: SeedEnum.ColorOrOperand, maybeOperandOrColor: SeedEnum.ColorOrOperand | undefined, requestOptions?: PathParam.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
-            url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                `path/${encodeURIComponent(serializers.Operand.jsonOrThrow(operand))}/${encodeURIComponent(
-                    maybeOperand
-                )}/${encodeURIComponent(serializers.ColorOrOperand.jsonOrThrow(operandOrColor))}/${encodeURIComponent(
-                    maybeOperandOrColor
-                )}`
-            ),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `path/${encodeURIComponent(serializers.Operand.jsonOrThrow(operand))}/${encodeURIComponent(maybeOperand)}/${encodeURIComponent(serializers.ColorOrOperand.jsonOrThrow(operandOrColor))}/${encodeURIComponent(maybeOperandOrColor)}`),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/enum",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                "X-Fern-Runtime-Version": core.RUNTIME.version
             },
             contentType: "application/json",
             requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
+            abortSignal: requestOptions?.abortSignal
         });
         if (_response.ok) {
             return;
@@ -73,22 +61,19 @@ export class PathParam {
         if (_response.error.reason === "status-code") {
             throw new errors.SeedEnumError({
                 statusCode: _response.error.statusCode,
-                body: _response.error.body,
+                body: _response.error.body
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedEnumError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.SeedEnumTimeoutError();
-            case "unknown":
-                throw new errors.SeedEnumError({
-                    message: _response.error.errorMessage,
-                });
+            case "non-json": throw new errors.SeedEnumError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody
+            });
+            case "timeout": throw new errors.SeedEnumTimeoutError;
+            case "unknown": throw new errors.SeedEnumError({
+                message: _response.error.errorMessage
+            });
         }
     }
 }

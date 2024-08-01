@@ -21,7 +21,7 @@ export class Node18UniversalStreamWrapper
             readable: [],
             close: [],
             pause: [],
-            resume: [],
+            resume: []
         };
         this.paused = false;
         this.resumeCallback = null;

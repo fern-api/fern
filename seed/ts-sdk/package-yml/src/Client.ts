@@ -26,7 +26,8 @@ export declare namespace SeedPackageYmlClient {
 }
 
 export class SeedPackageYmlClient {
-    constructor(protected readonly _options: SeedPackageYmlClient.Options) {}
+    constructor(protected readonly _options: SeedPackageYmlClient.Options) {
+    }
 
     /**
      * @param {SeedPackageYml.EchoRequest} request
@@ -38,58 +39,44 @@ export class SeedPackageYmlClient {
      *         size: 20
      *     })
      */
-    public async echo(
-        request: SeedPackageYml.EchoRequest,
-        requestOptions?: SeedPackageYmlClient.RequestOptions
-    ): Promise<string> {
+    public async echo(request: SeedPackageYml.EchoRequest, requestOptions?: SeedPackageYmlClient.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
-            url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                `/${encodeURIComponent(this._options.id)}/`
-            ),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `/${encodeURIComponent(this._options.id)}/`),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/package-yml",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                "X-Fern-Runtime-Version": core.RUNTIME.version
             },
             contentType: "application/json",
             requestType: "json",
             body: serializers.EchoRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
+            abortSignal: requestOptions?.abortSignal
         });
         if (_response.ok) {
-            return serializers.echo.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return serializers.echo.Response.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] });
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedPackageYmlError({
                 statusCode: _response.error.statusCode,
-                body: _response.error.body,
+                body: _response.error.body
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedPackageYmlError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.SeedPackageYmlTimeoutError();
-            case "unknown":
-                throw new errors.SeedPackageYmlError({
-                    message: _response.error.errorMessage,
-                });
+            case "non-json": throw new errors.SeedPackageYmlError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody
+            });
+            case "timeout": throw new errors.SeedPackageYmlTimeoutError;
+            case "unknown": throw new errors.SeedPackageYmlError({
+                message: _response.error.errorMessage
+            });
         }
     }
 

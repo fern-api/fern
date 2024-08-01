@@ -7,15 +7,14 @@ import * as SeedPagination from "../../../../api/index";
 import * as core from "../../../../core";
 import { UserListContainer } from "./UserListContainer";
 
-export const UserPage: core.serialization.ObjectSchema<serializers.UserPage.Raw, SeedPagination.UserPage> =
-    core.serialization.object({
-        data: UserListContainer,
-        next: core.serialization.string().optional(),
+export const UserPage: core.serialization.ObjectSchema<serializers.UserPage.Raw, SeedPagination.UserPage> = core.serialization.object({
+        "data": UserListContainer,
+        "next": core.serialization.string().optional()
     });
 
 export declare namespace UserPage {
     interface Raw {
-        data: UserListContainer.Raw;
-        next?: string | null;
+        "data": UserListContainer.Raw;
+        "next"?: string | null;
     }
 }

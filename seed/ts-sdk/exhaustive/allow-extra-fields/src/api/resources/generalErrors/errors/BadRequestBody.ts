@@ -10,7 +10,7 @@ export class BadRequestBody extends errors.SeedExhaustiveError {
         super({
             message: "BadRequestBody",
             statusCode: 400,
-            body: body,
+            body: body
         });
         Object.setPrototypeOf(this, BadRequestBody.prototype);
     }

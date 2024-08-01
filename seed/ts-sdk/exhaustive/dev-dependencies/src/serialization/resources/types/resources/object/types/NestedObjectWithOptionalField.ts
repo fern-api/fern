@@ -7,17 +7,14 @@ import * as Fiddle from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { ObjectWithOptionalField } from "./ObjectWithOptionalField";
 
-export const NestedObjectWithOptionalField: core.serialization.ObjectSchema<
-    serializers.types.NestedObjectWithOptionalField.Raw,
-    Fiddle.types.NestedObjectWithOptionalField
-> = core.serialization.object({
-    string: core.serialization.string().optional(),
-    nestedObject: core.serialization.property("NestedObject", ObjectWithOptionalField.optional()),
-});
+export const NestedObjectWithOptionalField: core.serialization.ObjectSchema<serializers.types.NestedObjectWithOptionalField.Raw, Fiddle.types.NestedObjectWithOptionalField> = core.serialization.object({
+        "string": core.serialization.string().optional(),
+        "nestedObject": core.serialization.property("NestedObject", ObjectWithOptionalField.optional())
+    });
 
 export declare namespace NestedObjectWithOptionalField {
     interface Raw {
-        string?: string | null;
-        NestedObject?: ObjectWithOptionalField.Raw | null;
+        "string"?: string | null;
+        "NestedObject"?: ObjectWithOptionalField.Raw | null;
     }
 }

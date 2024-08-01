@@ -9,7 +9,7 @@
  *     }
  */
 export interface SendLiteralsInQueryRequest {
-    prompt: "You are a helpful assistant";
-    query: string;
-    stream: false;
+    "prompt": "You are a helpful assistant";
+    "query": string;
+    "stream": false;
 }

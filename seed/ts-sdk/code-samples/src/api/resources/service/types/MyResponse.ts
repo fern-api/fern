@@ -3,6 +3,6 @@
  */
 
 export interface MyResponse {
-    id: string;
-    name?: string;
+    "id": string;
+    "name"?: string;
 }

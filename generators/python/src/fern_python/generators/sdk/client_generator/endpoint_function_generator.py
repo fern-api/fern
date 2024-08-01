@@ -1505,6 +1505,7 @@ class EndpointFunctionSnippetGenerator:
                 example_type_reference=example_property.value,
                 as_request=True,
                 use_typeddict_request=self.context.custom_config.pydantic_config.use_typeddict_requests,
+                force_include_literals=True,
             )
             if not self._is_inlined_request_literal(example_property.name.wire_value, disqualify_optionals=True) and property_value is not None:
                 snippets.append(
@@ -1542,6 +1543,7 @@ class EndpointFunctionSnippetGenerator:
             request_parameter_names,
             as_request=True,
             use_typeddict_request=self.context.custom_config.pydantic_config.use_typeddict_requests,
+            in_typeddict=False,
         )
 
     def _get_snippet_for_request_reference(

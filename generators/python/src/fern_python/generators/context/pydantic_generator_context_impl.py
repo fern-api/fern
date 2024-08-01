@@ -230,3 +230,26 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
             primitive=lambda _: None,
             unknown=lambda: None,
         )
+    
+    # Unwrap optional and alias example references
+    def unwrap_example_type_reference(
+        self, example_type_reference: ir_types.ExampleTypeReference
+    ) -> ir_types.ExampleTypeReference:
+        return example_type_reference.shape.visit(
+            primitive=lambda _: example_type_reference,
+            named=lambda named: named.shape.visit(
+                alias=lambda alias: self.unwrap_example_type_reference(alias.value),
+                enum=lambda _: example_type_reference,
+                object=lambda _: example_type_reference,
+                union=lambda _: example_type_reference,
+                undiscriminated_union=lambda _: example_type_reference,
+            ),
+            container=lambda container: container.visit(
+                list_=lambda _: example_type_reference,
+                set_=lambda _: example_type_reference,
+                optional=lambda optional: self.unwrap_example_type_reference(optional.optional) if optional.optional is not None else example_type_reference,
+                map_=lambda _: example_type_reference,
+                literal=lambda _: example_type_reference,
+            ),
+            unknown=lambda _: example_type_reference,
+        )

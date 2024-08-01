@@ -10,7 +10,7 @@ export class PlaylistIdNotFoundError extends errors.SeedTraceError {
         super({
             message: "PlaylistIdNotFoundError",
             statusCode: 404,
-            body: body,
+            body: body
         });
         Object.setPrototypeOf(this, PlaylistIdNotFoundError.prototype);
     }

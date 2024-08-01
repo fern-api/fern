@@ -7,19 +7,16 @@ import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 import { SubmissionId } from "./SubmissionId";
 
-export const RecordedResponseNotification: core.serialization.ObjectSchema<
-    serializers.RecordedResponseNotification.Raw,
-    SeedTrace.RecordedResponseNotification
-> = core.serialization.object({
-    submissionId: SubmissionId,
-    traceResponsesSize: core.serialization.number(),
-    testCaseId: core.serialization.string().optional(),
-});
+export const RecordedResponseNotification: core.serialization.ObjectSchema<serializers.RecordedResponseNotification.Raw, SeedTrace.RecordedResponseNotification> = core.serialization.object({
+        "submissionId": SubmissionId,
+        "traceResponsesSize": core.serialization.number(),
+        "testCaseId": core.serialization.string().optional()
+    });
 
 export declare namespace RecordedResponseNotification {
     interface Raw {
-        submissionId: SubmissionId.Raw;
-        traceResponsesSize: number;
-        testCaseId?: string | null;
+        "submissionId": SubmissionId.Raw;
+        "traceResponsesSize": number;
+        "testCaseId"?: string | null;
     }
 }

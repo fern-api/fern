@@ -12,5 +12,5 @@ import * as SeedExtends from "../index";
  *     }
  */
 export interface Json extends SeedExtends.Docs {
-    raw: string;
+    "raw": string;
 }

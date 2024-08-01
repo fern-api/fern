@@ -6,15 +6,14 @@ import * as serializers from "../../../index";
 import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const TestCase: core.serialization.ObjectSchema<serializers.TestCase.Raw, SeedTrace.TestCase> =
-    core.serialization.object({
-        id: core.serialization.string(),
-        params: core.serialization.list(core.serialization.lazy(() => serializers.VariableValue)),
+export const TestCase: core.serialization.ObjectSchema<serializers.TestCase.Raw, SeedTrace.TestCase> = core.serialization.object({
+        "id": core.serialization.string(),
+        "params": core.serialization.list(core.serialization.lazy(() => serializers.VariableValue))
     });
 
 export declare namespace TestCase {
     interface Raw {
-        id: string;
-        params: serializers.VariableValue.Raw[];
+        "id": string;
+        "params": serializers.VariableValue.Raw[];
     }
 }

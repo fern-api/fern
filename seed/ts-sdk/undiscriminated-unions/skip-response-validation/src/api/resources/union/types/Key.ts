@@ -4,4 +4,6 @@
 
 import * as SeedUndiscriminatedUnions from "../../../index";
 
-export type Key = SeedUndiscriminatedUnions.KeyType | "default";
+export type Key = 
+    | SeedUndiscriminatedUnions.KeyType
+    | "default";

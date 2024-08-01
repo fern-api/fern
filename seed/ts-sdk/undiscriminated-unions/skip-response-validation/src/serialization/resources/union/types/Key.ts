@@ -7,8 +7,7 @@ import * as SeedUndiscriminatedUnions from "../../../../api/index";
 import * as core from "../../../../core";
 import { KeyType } from "./KeyType";
 
-export const Key: core.serialization.Schema<serializers.Key.Raw, SeedUndiscriminatedUnions.Key> =
-    core.serialization.undiscriminatedUnion([KeyType, core.serialization.stringLiteral("default")]);
+export const Key: core.serialization.Schema<serializers.Key.Raw, SeedUndiscriminatedUnions.Key> = core.serialization.undiscriminatedUnion([KeyType, core.serialization.stringLiteral("default")]);
 
 export declare namespace Key {
     type Raw = KeyType.Raw | "default";

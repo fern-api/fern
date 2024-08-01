@@ -24,7 +24,8 @@ export declare namespace Object_ {
 }
 
 export class Object_ {
-    constructor(protected readonly _options: Object_.Options) {}
+    constructor(protected readonly _options: Object_.Options) {
+    }
 
     /**
      * @param {Fiddle.types.ObjectWithOptionalField} request
@@ -49,51 +50,35 @@ export class Object_ {
      *         bigint: "123456789123456789"
      *     })
      */
-    public async getAndReturnWithOptionalField(
-        request: Fiddle.types.ObjectWithOptionalField,
-        requestOptions?: Object_.RequestOptions
-    ): Promise<
-        core.APIResponse<
-            Fiddle.types.ObjectWithOptionalField,
-            Fiddle.endpoints.object.getAndReturnWithOptionalField.Error
-        >
-    > {
+    public async getAndReturnWithOptionalField(request: Fiddle.types.ObjectWithOptionalField, requestOptions?: Object_.RequestOptions): Promise<core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.endpoints.object.getAndReturnWithOptionalField.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                "/object/get-and-return-with-optional-field"
-            ),
+            url: urlJoin(await core.Supplier.get(this._options.environment), "/object/get-and-return-with-optional-field"),
             method: "POST",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
+                "Authorization": await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                "X-Fern-Runtime-Version": core.RUNTIME.version
             },
             contentType: "application/json",
             requestType: "json",
             body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
+            abortSignal: requestOptions?.abortSignal
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                body: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] })
             };
         }
 
         return {
             ok: false,
-            error: Fiddle.endpoints.object.getAndReturnWithOptionalField.Error._unknown(_response.error),
+            error: Fiddle.endpoints.object.getAndReturnWithOptionalField.Error._unknown(_response.error)
         };
     }
 
@@ -106,51 +91,35 @@ export class Object_ {
      *         string: "string"
      *     })
      */
-    public async getAndReturnWithRequiredField(
-        request: Fiddle.types.ObjectWithRequiredField,
-        requestOptions?: Object_.RequestOptions
-    ): Promise<
-        core.APIResponse<
-            Fiddle.types.ObjectWithRequiredField,
-            Fiddle.endpoints.object.getAndReturnWithRequiredField.Error
-        >
-    > {
+    public async getAndReturnWithRequiredField(request: Fiddle.types.ObjectWithRequiredField, requestOptions?: Object_.RequestOptions): Promise<core.APIResponse<Fiddle.types.ObjectWithRequiredField, Fiddle.endpoints.object.getAndReturnWithRequiredField.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                "/object/get-and-return-with-required-field"
-            ),
+            url: urlJoin(await core.Supplier.get(this._options.environment), "/object/get-and-return-with-required-field"),
             method: "POST",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
+                "Authorization": await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                "X-Fern-Runtime-Version": core.RUNTIME.version
             },
             contentType: "application/json",
             requestType: "json",
             body: serializers.types.ObjectWithRequiredField.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
+            abortSignal: requestOptions?.abortSignal
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: serializers.types.ObjectWithRequiredField.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                body: serializers.types.ObjectWithRequiredField.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] })
             };
         }
 
         return {
             ok: false,
-            error: Fiddle.endpoints.object.getAndReturnWithRequiredField.Error._unknown(_response.error),
+            error: Fiddle.endpoints.object.getAndReturnWithRequiredField.Error._unknown(_response.error)
         };
     }
 
@@ -167,45 +136,35 @@ export class Object_ {
      *         }
      *     })
      */
-    public async getAndReturnWithMapOfMap(
-        request: Fiddle.types.ObjectWithMapOfMap,
-        requestOptions?: Object_.RequestOptions
-    ): Promise<
-        core.APIResponse<Fiddle.types.ObjectWithMapOfMap, Fiddle.endpoints.object.getAndReturnWithMapOfMap.Error>
-    > {
+    public async getAndReturnWithMapOfMap(request: Fiddle.types.ObjectWithMapOfMap, requestOptions?: Object_.RequestOptions): Promise<core.APIResponse<Fiddle.types.ObjectWithMapOfMap, Fiddle.endpoints.object.getAndReturnWithMapOfMap.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/object/get-and-return-with-map-of-map"),
             method: "POST",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
+                "Authorization": await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                "X-Fern-Runtime-Version": core.RUNTIME.version
             },
             contentType: "application/json",
             requestType: "json",
             body: serializers.types.ObjectWithMapOfMap.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
+            abortSignal: requestOptions?.abortSignal
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: serializers.types.ObjectWithMapOfMap.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                body: serializers.types.ObjectWithMapOfMap.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] })
             };
         }
 
         return {
             ok: false,
-            error: Fiddle.endpoints.object.getAndReturnWithMapOfMap.Error._unknown(_response.error),
+            error: Fiddle.endpoints.object.getAndReturnWithMapOfMap.Error._unknown(_response.error)
         };
     }
 
@@ -235,53 +194,35 @@ export class Object_ {
      *         }
      *     })
      */
-    public async getAndReturnNestedWithOptionalField(
-        request: Fiddle.types.NestedObjectWithOptionalField,
-        requestOptions?: Object_.RequestOptions
-    ): Promise<
-        core.APIResponse<
-            Fiddle.types.NestedObjectWithOptionalField,
-            Fiddle.endpoints.object.getAndReturnNestedWithOptionalField.Error
-        >
-    > {
+    public async getAndReturnNestedWithOptionalField(request: Fiddle.types.NestedObjectWithOptionalField, requestOptions?: Object_.RequestOptions): Promise<core.APIResponse<Fiddle.types.NestedObjectWithOptionalField, Fiddle.endpoints.object.getAndReturnNestedWithOptionalField.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                "/object/get-and-return-nested-with-optional-field"
-            ),
+            url: urlJoin(await core.Supplier.get(this._options.environment), "/object/get-and-return-nested-with-optional-field"),
             method: "POST",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
+                "Authorization": await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                "X-Fern-Runtime-Version": core.RUNTIME.version
             },
             contentType: "application/json",
             requestType: "json",
-            body: serializers.types.NestedObjectWithOptionalField.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-            }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            body: serializers.types.NestedObjectWithOptionalField.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
+            abortSignal: requestOptions?.abortSignal
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: serializers.types.NestedObjectWithOptionalField.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                body: serializers.types.NestedObjectWithOptionalField.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] })
             };
         }
 
         return {
             ok: false,
-            error: Fiddle.endpoints.object.getAndReturnNestedWithOptionalField.Error._unknown(_response.error),
+            error: Fiddle.endpoints.object.getAndReturnNestedWithOptionalField.Error._unknown(_response.error)
         };
     }
 
@@ -312,54 +253,35 @@ export class Object_ {
      *         }
      *     })
      */
-    public async getAndReturnNestedWithRequiredField(
-        string: string,
-        request: Fiddle.types.NestedObjectWithRequiredField,
-        requestOptions?: Object_.RequestOptions
-    ): Promise<
-        core.APIResponse<
-            Fiddle.types.NestedObjectWithRequiredField,
-            Fiddle.endpoints.object.getAndReturnNestedWithRequiredField.Error
-        >
-    > {
+    public async getAndReturnNestedWithRequiredField(string: string, request: Fiddle.types.NestedObjectWithRequiredField, requestOptions?: Object_.RequestOptions): Promise<core.APIResponse<Fiddle.types.NestedObjectWithRequiredField, Fiddle.endpoints.object.getAndReturnNestedWithRequiredField.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                `/object/get-and-return-nested-with-required-field/${encodeURIComponent(string)}`
-            ),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `/object/get-and-return-nested-with-required-field/${encodeURIComponent(string)}`),
             method: "POST",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
+                "Authorization": await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                "X-Fern-Runtime-Version": core.RUNTIME.version
             },
             contentType: "application/json",
             requestType: "json",
-            body: serializers.types.NestedObjectWithRequiredField.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-            }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            body: serializers.types.NestedObjectWithRequiredField.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
+            abortSignal: requestOptions?.abortSignal
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                body: serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] })
             };
         }
 
         return {
             ok: false,
-            error: Fiddle.endpoints.object.getAndReturnNestedWithRequiredField.Error._unknown(_response.error),
+            error: Fiddle.endpoints.object.getAndReturnNestedWithRequiredField.Error._unknown(_response.error)
         };
     }
 
@@ -389,53 +311,35 @@ export class Object_ {
      *             }
      *         }])
      */
-    public async getAndReturnNestedWithRequiredFieldAsList(
-        request: Fiddle.types.NestedObjectWithRequiredField[],
-        requestOptions?: Object_.RequestOptions
-    ): Promise<
-        core.APIResponse<
-            Fiddle.types.NestedObjectWithRequiredField,
-            Fiddle.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Error
-        >
-    > {
+    public async getAndReturnNestedWithRequiredFieldAsList(request: Fiddle.types.NestedObjectWithRequiredField[], requestOptions?: Object_.RequestOptions): Promise<core.APIResponse<Fiddle.types.NestedObjectWithRequiredField, Fiddle.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                "/object/get-and-return-nested-with-required-field-list"
-            ),
+            url: urlJoin(await core.Supplier.get(this._options.environment), "/object/get-and-return-nested-with-required-field-list"),
             method: "POST",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
+                "Authorization": await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                "X-Fern-Runtime-Version": core.RUNTIME.version
             },
             contentType: "application/json",
             requestType: "json",
-            body: serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-            }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            body: serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
+            abortSignal: requestOptions?.abortSignal
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                body: serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] })
             };
         }
 
         return {
             ok: false,
-            error: Fiddle.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Error._unknown(_response.error),
+            error: Fiddle.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Error._unknown(_response.error)
         };
     }
 

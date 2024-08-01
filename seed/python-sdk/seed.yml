@@ -14,6 +14,10 @@ local:
   runCommand: poetry run python -m src.fern_python.generators.sdk.cli
   env: 
     PYTEST_CURRENT_TEST: "some value"
+customFixtureConfig:
+  customConfig: 
+    use_typeddict_requests: true
+  outputFolder: client-filename
 fixtures:
   examples: 
     - customConfig: null
@@ -123,6 +127,12 @@ fixtures:
         pydantic_config:
           use_provided_defaults: true
       outputFolder: with-defaults
+  literal:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use_typeddict_requests: true
+      outputFolder: use_typeddict_requests
   streaming:
     - customConfig: null
       outputFolder: no-custom-config

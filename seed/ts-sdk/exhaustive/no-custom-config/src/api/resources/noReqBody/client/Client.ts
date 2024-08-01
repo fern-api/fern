@@ -25,7 +25,8 @@ export declare namespace NoReqBody {
 }
 
 export class NoReqBody {
-    constructor(protected readonly _options: NoReqBody.Options) {}
+    constructor(protected readonly _options: NoReqBody.Options) {
+    }
 
     /**
      * @param {NoReqBody.RequestOptions} requestOptions - Request-specific configuration.
@@ -33,54 +34,44 @@ export class NoReqBody {
      * @example
      *     await client.noReqBody.getWithNoRequestBody()
      */
-    public async getWithNoRequestBody(
-        requestOptions?: NoReqBody.RequestOptions
-    ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
+    public async getWithNoRequestBody(requestOptions?: NoReqBody.RequestOptions): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/no-req-body"),
             method: "GET",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
+                "Authorization": await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                "X-Fern-Runtime-Version": core.RUNTIME.version
             },
             contentType: "application/json",
             requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
+            abortSignal: requestOptions?.abortSignal
         });
         if (_response.ok) {
-            return serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] });
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
-                body: _response.error.body,
+                body: _response.error.body
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
-            case "unknown":
-                throw new errors.SeedExhaustiveError({
-                    message: _response.error.errorMessage,
-                });
+            case "non-json": throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody
+            });
+            case "timeout": throw new errors.SeedExhaustiveTimeoutError;
+            case "unknown": throw new errors.SeedExhaustiveError({
+                message: _response.error.errorMessage
+            });
         }
     }
 
@@ -95,47 +86,39 @@ export class NoReqBody {
             url: urlJoin(await core.Supplier.get(this._options.environment), "/no-req-body"),
             method: "POST",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
+                "Authorization": await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                "X-Fern-Runtime-Version": core.RUNTIME.version
             },
             contentType: "application/json",
             requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
+            abortSignal: requestOptions?.abortSignal
         });
         if (_response.ok) {
-            return serializers.noReqBody.postWithNoRequestBody.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return serializers.noReqBody.postWithNoRequestBody.Response.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] });
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
-                body: _response.error.body,
+                body: _response.error.body
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
-            case "unknown":
-                throw new errors.SeedExhaustiveError({
-                    message: _response.error.errorMessage,
-                });
+            case "non-json": throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody
+            });
+            case "timeout": throw new errors.SeedExhaustiveTimeoutError;
+            case "unknown": throw new errors.SeedExhaustiveError({
+                message: _response.error.errorMessage
+            });
         }
     }
 

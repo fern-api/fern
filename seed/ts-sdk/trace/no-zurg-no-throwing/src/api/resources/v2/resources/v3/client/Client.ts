@@ -27,7 +27,8 @@ export declare namespace V3 {
 }
 
 export class V3 {
-    constructor(protected readonly _options: V3.Options = {}) {}
+    constructor(protected readonly _options: V3.Options = {}) {
+    }
 
     protected _problem: Problem | undefined;
 

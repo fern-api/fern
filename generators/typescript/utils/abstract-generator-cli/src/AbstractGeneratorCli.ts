@@ -90,7 +90,9 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     });
                 },
                 github: async (githubOutputMode) => {
-                    await typescriptProject.format(logger);
+                    if (this.shouldRunScripts(customConfig)) {
+                        await typescriptProject.format(logger);
+                    }
                     await typescriptProject.deleteGitIgnoredFiles(logger);
                     await typescriptProject.writeArbitraryFiles(async (pathToProject) => {
                         await writeGitHubWorkflows({
@@ -160,6 +162,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     protected abstract publishToJsr(customConfig: CustomConfig): boolean;
     protected abstract outputSourceFiles(customConfig: CustomConfig): boolean;
     protected abstract shouldTolerateRepublish(customConfig: CustomConfig): boolean;
+    protected abstract shouldRunScripts(customConfig: CustomConfig): boolean;
 }
 
 class GeneratorContextImpl implements GeneratorContext {

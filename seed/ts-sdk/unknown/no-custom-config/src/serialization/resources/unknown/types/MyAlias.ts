@@ -6,8 +6,7 @@ import * as serializers from "../../../index";
 import * as SeedUnknownAsAny from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const MyAlias: core.serialization.Schema<serializers.MyAlias.Raw, SeedUnknownAsAny.MyAlias> =
-    core.serialization.unknown();
+export const MyAlias: core.serialization.Schema<serializers.MyAlias.Raw, SeedUnknownAsAny.MyAlias> = core.serialization.unknown();
 
 export declare namespace MyAlias {
     type Raw = unknown;

@@ -40,7 +40,7 @@ describe("NodePre18StreamWrapper", () => {
             write(chunk, encoding, callback) {
                 expect(chunk.toString()).toEqual("test");
                 callback();
-            },
+            }
         });
 
         stream.pipe(dest);
@@ -54,7 +54,7 @@ describe("NodePre18StreamWrapper", () => {
             write(chunk, encoding, callback) {
                 buffer.push(chunk);
                 callback();
-            },
+            }
         });
         stream.pipe(dest);
         stream.unpipe();

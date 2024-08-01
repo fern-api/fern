@@ -6,17 +6,16 @@ import * as serializers from "../../../index";
 import * as SeedMultiLineDocs from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedMultiLineDocs.User> =
-    core.serialization.object({
-        id: core.serialization.string(),
-        name: core.serialization.string(),
-        age: core.serialization.number().optional(),
+export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedMultiLineDocs.User> = core.serialization.object({
+        "id": core.serialization.string(),
+        "name": core.serialization.string(),
+        "age": core.serialization.number().optional()
     });
 
 export declare namespace User {
     interface Raw {
-        id: string;
-        name: string;
-        age?: number | null;
+        "id": string;
+        "name": string;
+        "age"?: number | null;
     }
 }

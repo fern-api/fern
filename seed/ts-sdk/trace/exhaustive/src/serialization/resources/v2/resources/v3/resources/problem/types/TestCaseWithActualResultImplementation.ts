@@ -8,17 +8,14 @@ import * as core from "../../../../../../../../core";
 import { NonVoidFunctionDefinition } from "./NonVoidFunctionDefinition";
 import { AssertCorrectnessCheck } from "./AssertCorrectnessCheck";
 
-export const TestCaseWithActualResultImplementation: core.serialization.ObjectSchema<
-    serializers.v2.v3.TestCaseWithActualResultImplementation.Raw,
-    SeedTrace.v2.v3.TestCaseWithActualResultImplementation
-> = core.serialization.object({
-    getActualResult: NonVoidFunctionDefinition,
-    assertCorrectnessCheck: AssertCorrectnessCheck,
-});
+export const TestCaseWithActualResultImplementation: core.serialization.ObjectSchema<serializers.v2.v3.TestCaseWithActualResultImplementation.Raw, SeedTrace.v2.v3.TestCaseWithActualResultImplementation> = core.serialization.object({
+        "getActualResult": NonVoidFunctionDefinition,
+        "assertCorrectnessCheck": AssertCorrectnessCheck
+    });
 
 export declare namespace TestCaseWithActualResultImplementation {
     interface Raw {
-        getActualResult: NonVoidFunctionDefinition.Raw;
-        assertCorrectnessCheck: AssertCorrectnessCheck.Raw;
+        "getActualResult": NonVoidFunctionDefinition.Raw;
+        "assertCorrectnessCheck": AssertCorrectnessCheck.Raw;
     }
 }

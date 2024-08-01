@@ -5,7 +5,8 @@
 import * as Fiddle from "../../../../../index";
 import * as core from "../../../../../../core";
 
-export type Error = Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error._Unknown;
+export type Error = 
+    | Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error._Unknown;
 
 export declare namespace Error {
     interface _Unknown extends _Utils {
@@ -14,9 +15,7 @@ export declare namespace Error {
     }
 
     interface _Utils {
-        _visit: <_Result>(
-            visitor: Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error._Visitor<_Result>
-        ) => _Result;
+        _visit: <_Result>(visitor: Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error._Visitor<_Result>) => _Result;
     }
 
     interface _Visitor<_Result> {
@@ -25,28 +24,19 @@ export declare namespace Error {
 }
 
 export const Error = {
-    _unknown: (
-        fetcherError: core.Fetcher.Error
-    ): Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error._Unknown => {
-        return {
-            statusCode: undefined,
-            content: fetcherError,
-            _visit: function <_Result>(
-                this: Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error._Unknown,
-                visitor: Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error._Visitor<_Result>
-            ) {
-                return Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error._visit(this, visitor);
-            },
-        };
-    },
+        _unknown: (fetcherError: core.Fetcher.Error): Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error._Unknown => {
+            return {
+                statusCode: undefined,
+                content: fetcherError,
+                "_visit": function <_Result>(this: Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error._Unknown, visitor: Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error._Visitor<_Result>) {
+                    return Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error._visit(this, visitor);
+                }
+            };
+        },
 
-    _visit: <_Result>(
-        value: Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error,
-        visitor: Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error._Visitor<_Result>
-    ): _Result => {
-        switch (value.statusCode) {
-            default:
-                return visitor._other(value as any);
-        }
-    },
-} as const;
+        _visit: <_Result>(value: Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error, visitor: Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error._Visitor<_Result>): _Result => {
+            switch (value.statusCode) {
+                default: return visitor._other(value as any);
+            }
+        },
+    } as const;

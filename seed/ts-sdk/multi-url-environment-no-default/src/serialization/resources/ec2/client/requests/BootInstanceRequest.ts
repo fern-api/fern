@@ -6,15 +6,12 @@ import * as serializers from "../../../../index";
 import * as SeedMultiUrlEnvironmentNoDefault from "../../../../../api/index";
 import * as core from "../../../../../core";
 
-export const BootInstanceRequest: core.serialization.Schema<
-    serializers.BootInstanceRequest.Raw,
-    SeedMultiUrlEnvironmentNoDefault.BootInstanceRequest
-> = core.serialization.object({
-    size: core.serialization.string(),
-});
+export const BootInstanceRequest: core.serialization.Schema<serializers.BootInstanceRequest.Raw, SeedMultiUrlEnvironmentNoDefault.BootInstanceRequest> = core.serialization.object({
+        "size": core.serialization.string()
+    });
 
 export declare namespace BootInstanceRequest {
     interface Raw {
-        size: string;
+        "size": string;
     }
 }

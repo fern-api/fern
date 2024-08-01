@@ -113,3 +113,15 @@ class PydanticGeneratorContext(ABC):
         self, type_reference: ir_types.TypeReference
     ) -> Optional[List[ir_types.TypeId]]:
         ...
+
+    @abstractmethod
+    def maybe_get_type_ids_for_type_reference(
+        self, type_reference: ir_types.TypeReference
+    ) -> Optional[List[ir_types.TypeId]]:
+        ...
+
+    @abstractmethod
+    def unwrap_example_type_reference(
+        self, example_type_reference: ir_types.ExampleTypeReference
+    ) -> ir_types.ExampleTypeReference:
+        ...

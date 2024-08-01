@@ -5,7 +5,7 @@
 import * as SeedTrace from "../../../index";
 import * as core from "../../../../core";
 
-export type Error =
+export type Error = 
     | SeedTrace.playlist.getPlaylist.Error.PlaylistIdNotFoundError
     | SeedTrace.playlist.getPlaylist.Error.UnauthorizedError
     | SeedTrace.playlist.getPlaylist.Error._Unknown;
@@ -37,57 +37,40 @@ export declare namespace Error {
 }
 
 export const Error = {
-    playlistIdNotFoundError: (
-        value: SeedTrace.PlaylistIdNotFoundErrorBody
-    ): SeedTrace.playlist.getPlaylist.Error.PlaylistIdNotFoundError => {
-        return {
-            content: value,
-            errorName: "PlaylistIdNotFoundError",
-            _visit: function <_Result>(
-                this: SeedTrace.playlist.getPlaylist.Error.PlaylistIdNotFoundError,
-                visitor: SeedTrace.playlist.getPlaylist.Error._Visitor<_Result>
-            ) {
-                return SeedTrace.playlist.getPlaylist.Error._visit(this, visitor);
-            },
-        };
-    },
+        playlistIdNotFoundError: (value: SeedTrace.PlaylistIdNotFoundErrorBody): SeedTrace.playlist.getPlaylist.Error.PlaylistIdNotFoundError => {
+            return {
+                content: value,
+                errorName: "PlaylistIdNotFoundError",
+                "_visit": function <_Result>(this: SeedTrace.playlist.getPlaylist.Error.PlaylistIdNotFoundError, visitor: SeedTrace.playlist.getPlaylist.Error._Visitor<_Result>) {
+                    return SeedTrace.playlist.getPlaylist.Error._visit(this, visitor);
+                }
+            };
+        },
 
-    unauthorizedError: (): SeedTrace.playlist.getPlaylist.Error.UnauthorizedError => {
-        return {
-            errorName: "UnauthorizedError",
-            _visit: function <_Result>(
-                this: SeedTrace.playlist.getPlaylist.Error.UnauthorizedError,
-                visitor: SeedTrace.playlist.getPlaylist.Error._Visitor<_Result>
-            ) {
-                return SeedTrace.playlist.getPlaylist.Error._visit(this, visitor);
-            },
-        };
-    },
+        unauthorizedError: (): SeedTrace.playlist.getPlaylist.Error.UnauthorizedError => {
+            return {
+                errorName: "UnauthorizedError",
+                "_visit": function <_Result>(this: SeedTrace.playlist.getPlaylist.Error.UnauthorizedError, visitor: SeedTrace.playlist.getPlaylist.Error._Visitor<_Result>) {
+                    return SeedTrace.playlist.getPlaylist.Error._visit(this, visitor);
+                }
+            };
+        },
 
-    _unknown: (fetcherError: core.Fetcher.Error): SeedTrace.playlist.getPlaylist.Error._Unknown => {
-        return {
-            errorName: undefined,
-            content: fetcherError,
-            _visit: function <_Result>(
-                this: SeedTrace.playlist.getPlaylist.Error._Unknown,
-                visitor: SeedTrace.playlist.getPlaylist.Error._Visitor<_Result>
-            ) {
-                return SeedTrace.playlist.getPlaylist.Error._visit(this, visitor);
-            },
-        };
-    },
+        _unknown: (fetcherError: core.Fetcher.Error): SeedTrace.playlist.getPlaylist.Error._Unknown => {
+            return {
+                errorName: undefined,
+                content: fetcherError,
+                "_visit": function <_Result>(this: SeedTrace.playlist.getPlaylist.Error._Unknown, visitor: SeedTrace.playlist.getPlaylist.Error._Visitor<_Result>) {
+                    return SeedTrace.playlist.getPlaylist.Error._visit(this, visitor);
+                }
+            };
+        },
 
-    _visit: <_Result>(
-        value: SeedTrace.playlist.getPlaylist.Error,
-        visitor: SeedTrace.playlist.getPlaylist.Error._Visitor<_Result>
-    ): _Result => {
-        switch (value.errorName) {
-            case "PlaylistIdNotFoundError":
-                return visitor.playlistIdNotFoundError(value.content);
-            case "UnauthorizedError":
-                return visitor.unauthorizedError();
-            default:
-                return visitor._other(value as any);
-        }
-    },
-} as const;
+        _visit: <_Result>(value: SeedTrace.playlist.getPlaylist.Error, visitor: SeedTrace.playlist.getPlaylist.Error._Visitor<_Result>): _Result => {
+            switch (value.errorName) {
+                case "PlaylistIdNotFoundError": return visitor.playlistIdNotFoundError(value.content);
+                case "UnauthorizedError": return visitor.unauthorizedError();
+                default: return visitor._other(value as any);
+            }
+        },
+    } as const;

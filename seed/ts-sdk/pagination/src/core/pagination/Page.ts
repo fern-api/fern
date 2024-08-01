@@ -15,7 +15,7 @@ export class Page<T> implements AsyncIterable<T> {
         response,
         hasNextPage,
         getItems,
-        loadPage,
+        loadPage
     }: {
         response: unknown;
         hasNextPage: (response: unknown) => boolean;

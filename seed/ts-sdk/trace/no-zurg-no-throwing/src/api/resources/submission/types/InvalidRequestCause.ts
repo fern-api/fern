@@ -4,7 +4,7 @@
 
 import * as SeedTrace from "../../../index";
 
-export type InvalidRequestCause =
+export type InvalidRequestCause = 
     /**
      * The submission request references a submission id that doesn't exist. */
     | SeedTrace.InvalidRequestCause.SubmissionIdNotFound

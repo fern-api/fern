@@ -8,15 +8,15 @@ import * as core from "../../../../core";
 import { MovieId } from "./MovieId";
 
 export const Movie: core.serialization.ObjectSchema<serializers.Movie.Raw, SeedApi.Movie> = core.serialization.object({
-    id: MovieId,
-    title: core.serialization.string(),
-    rating: core.serialization.number(),
-});
+        "id": MovieId,
+        "title": core.serialization.string(),
+        "rating": core.serialization.number()
+    });
 
 export declare namespace Movie {
     interface Raw {
-        id: MovieId.Raw;
-        title: string;
-        rating: number;
+        "id": MovieId.Raw;
+        "title": string;
+        "rating": number;
     }
 }

@@ -3,5 +3,5 @@
  */
 
 export interface Foo {
-    name: string;
+    "name": string;
 }
