@@ -10,11 +10,11 @@ import { LoggableFernCliError } from "@fern-api/task-context";
 
 type TypesAndServices = Pick<IntermediateRepresentation, "types" | "services">;
 
-export function addExtendedPrpoertiesToIr(ir: TypesAndServices): TypesAndServices {
+export function addExtendedPropertiesToIr(ir: TypesAndServices): TypesAndServices {
     return {
         types: Object.fromEntries(
             Object.entries(ir.types).map(([typeId, typeDeclaration]) => {
-                return [typeId, addExtendedPrpoertiesToType({ typeDeclaration, ir })];
+                return [typeId, addExtendedPropertiesToType({ typeDeclaration, ir })];
             })
         ),
         services: Object.fromEntries(
@@ -24,7 +24,7 @@ export function addExtendedPrpoertiesToIr(ir: TypesAndServices): TypesAndService
                     {
                         ...serviceDeclration,
                         endpoints: serviceDeclration.endpoints.map((endpoint) => {
-                            return addExtendedPrpoertiesToEndpoint({ endpoint, ir });
+                            return addExtendedPropertiesToEndpoint({ endpoint, ir });
                         })
                     }
                 ];
@@ -33,7 +33,7 @@ export function addExtendedPrpoertiesToIr(ir: TypesAndServices): TypesAndService
     };
 }
 
-function addExtendedPrpoertiesToEndpoint({
+function addExtendedPropertiesToEndpoint({
     endpoint,
     ir
 }: {
@@ -54,7 +54,7 @@ function addExtendedPrpoertiesToEndpoint({
     };
 }
 
-function addExtendedPrpoertiesToType({
+function addExtendedPropertiesToType({
     typeDeclaration,
     ir
 }: {
