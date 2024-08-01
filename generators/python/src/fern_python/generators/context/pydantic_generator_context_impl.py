@@ -65,7 +65,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
     ) -> Optional[AST.Expression]:
         default_value = None
         union = type_reference.get_as_union()
-        
+
         # Only populate primitive defaults if we're allowed to leverage them via config
         # Otherwise we want to be able to generate defaults for literals, and aliases of literals
         if union.type == "primitive" and self._allow_leveraging_defaults:
@@ -99,8 +99,10 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
             default_value = union.container.visit(
                 literal=lambda lv: lv.visit(
                     string=lambda s: AST.Expression(f'"{s}"'),
-                    boolean=lambda b: AST.Expression(f'{b}'),
-                ) if not ignore_literals else None,
+                    boolean=lambda b: AST.Expression(f"{b}"),
+                )
+                if not ignore_literals
+                else None,
                 list_=lambda _: None,
                 set_=lambda _: None,
                 # Ignore literal defaults when the wrapping type is optional
@@ -230,7 +232,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
             primitive=lambda _: None,
             unknown=lambda: None,
         )
-    
+
     # Unwrap optional and alias example references
     def unwrap_example_type_reference(
         self, example_type_reference: ir_types.ExampleTypeReference
@@ -247,7 +249,9 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
             container=lambda container: container.visit(
                 list_=lambda _: example_type_reference,
                 set_=lambda _: example_type_reference,
-                optional=lambda optional: self.unwrap_example_type_reference(optional.optional) if optional.optional is not None else example_type_reference,
+                optional=lambda optional: self.unwrap_example_type_reference(optional.optional)
+                if optional.optional is not None
+                else example_type_reference,
                 map_=lambda _: example_type_reference,
                 literal=lambda _: example_type_reference,
             ),

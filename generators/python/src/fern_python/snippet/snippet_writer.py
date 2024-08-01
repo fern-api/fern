@@ -70,7 +70,7 @@ class SnippetWriter:
         force_include_literals: bool = False,
     ) -> Optional[AST.Expression]:
         unwrapped_reference = self._context.unwrap_example_type_reference(example_type_reference)
-        
+
         return unwrapped_reference.shape.visit(
             primitive=lambda primitive: self._get_snippet_for_primitive(
                 primitive=primitive,
@@ -80,7 +80,7 @@ class SnippetWriter:
                 use_typeddict_request=use_typeddict_request,
                 as_request=as_request,
                 in_typeddict=in_typeddict,
-                force_include_literals=force_include_literals
+                force_include_literals=force_include_literals,
             ),
             unknown=lambda unknown: self._get_snippet_for_unknown(
                 unknown=unknown,
@@ -215,7 +215,6 @@ class SnippetWriter:
     ) -> AST.Expression:
         string = escaped_string.original
         return AST.Expression(repr(string))
-        
 
     def _get_snippet_for_container(
         self,
@@ -254,7 +253,9 @@ class SnippetWriter:
                 as_request=as_request,
                 in_typeddict=in_typeddict,
             ),
-            literal=lambda lit: self._get_snippet_for_primitive(lit.literal) if in_typeddict or force_include_literals else None,
+            literal=lambda lit: self._get_snippet_for_primitive(lit.literal)
+            if in_typeddict or force_include_literals
+            else None,
         )
 
     def _get_snippet_for_unknown(

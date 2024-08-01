@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-import json
 from typing import Dict, List, Optional, Set, Tuple, Union
 
 import fern.ir.resources as ir_types
@@ -1428,7 +1427,10 @@ class EndpointFunctionSnippetGenerator:
                 as_request=True,
                 use_typeddict_request=self.context.custom_config.pydantic_config.use_typeddict_requests,
             )
-            if not self._is_query_literal(query_parameter.name.wire_value, disqualify_optionals=True) and query_parameter_value is not None:
+            if (
+                not self._is_query_literal(query_parameter.name.wire_value, disqualify_optionals=True)
+                and query_parameter_value is not None
+            ):
                 args.append(
                     self.snippet_writer.get_snippet_for_named_parameter(
                         parameter_name=get_parameter_name(query_parameter.name.name),
@@ -1507,7 +1509,10 @@ class EndpointFunctionSnippetGenerator:
                 use_typeddict_request=self.context.custom_config.pydantic_config.use_typeddict_requests,
                 force_include_literals=True,
             )
-            if not self._is_inlined_request_literal(example_property.name.wire_value, disqualify_optionals=True) and property_value is not None:
+            if (
+                not self._is_inlined_request_literal(example_property.name.wire_value, disqualify_optionals=True)
+                and property_value is not None
+            ):
                 snippets.append(
                     self.snippet_writer.get_snippet_for_named_parameter(
                         parameter_name=get_parameter_name(example_property.name.name),
@@ -1631,7 +1636,7 @@ class EndpointFunctionSnippetGenerator:
             if td_shape.type == "alias":
                 resolved_type = td_shape.resolved_type.get_as_union()
                 return resolved_type.type == "container" and resolved_type.container.get_as_union().type == "optional"
-        
+
         return union.type == "container" and union.container.get_as_union().type == "optional"
 
 
@@ -1647,6 +1652,7 @@ def get_parameter_name(name: ir_types.Name) -> str:
 
 def is_endpoint_path_empty(endpoint: ir_types.HttpEndpoint) -> bool:
     return len(endpoint.full_path.head) == 0 and len(endpoint.full_path.parts) == 0
+
 
 def unwrap_optional_type(type_reference: ir_types.TypeReference) -> ir_types.TypeReference:
     type_as_union = type_reference.get_as_union()

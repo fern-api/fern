@@ -365,7 +365,11 @@ class SnippetTestFactory:
                     )
                     writer.write(f"assert ")
                     writer.write_node(sync_expression)
-                    if endpoint.response is not None and endpoint.response.body is not None and endpoint.response.body.get_as_union().type == "text":
+                    if (
+                        endpoint.response is not None
+                        and endpoint.response.body is not None
+                        and endpoint.response.body.get_as_union().type == "text"
+                    ):
                         # HttpX returns an empty string for text responses that are empty/no content
                         writer.write(f" == ''  # type: ignore[func-returns-value]")
                     else:
