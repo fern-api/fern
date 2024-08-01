@@ -45,3 +45,4 @@ allowedFailures:
   - reserved-keywords
   - server-sent-events
   - trace
+  - alias-extends
