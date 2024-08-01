@@ -1,4 +1,5 @@
 {
+    "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": {
         "originalName": "api",
@@ -116,12 +117,8 @@
                                 "optional": {
                                     "_type": "primitive",
                                     "primitive": {
-                                        "v1": "DOUBLE",
-                                        "v2": {
-                                            "type": "double",
-                                            "default": null,
-                                            "validation": null
-                                        }
+                                        "v1": "FLOAT",
+                                        "v2": null
                                     }
                                 }
                             }
@@ -307,12 +304,8 @@
                                 "optional": {
                                     "_type": "primitive",
                                     "primitive": {
-                                        "v1": "DOUBLE",
-                                        "v2": {
-                                            "type": "double",
-                                            "default": null,
-                                            "validation": null
-                                        }
+                                        "v1": "FLOAT",
+                                        "v2": null
                                     }
                                 }
                             }
@@ -350,12 +343,8 @@
                                 "optional": {
                                     "_type": "primitive",
                                     "primitive": {
-                                        "v1": "DOUBLE",
-                                        "v2": {
-                                            "type": "double",
-                                            "default": null,
-                                            "validation": null
-                                        }
+                                        "v1": "FLOAT",
+                                        "v2": null
                                     }
                                 }
                             }
@@ -393,12 +382,8 @@
                                 "optional": {
                                     "_type": "primitive",
                                     "primitive": {
-                                        "v1": "DOUBLE",
-                                        "v2": {
-                                            "type": "double",
-                                            "default": null,
-                                            "validation": null
-                                        }
+                                        "v1": "FLOAT",
+                                        "v2": null
                                     }
                                 }
                             }
@@ -701,8 +686,8 @@
                                                                             "shape": {
                                                                                 "type": "primitive",
                                                                                 "primitive": {
-                                                                                    "type": "double",
-                                                                                    "double": 1.1
+                                                                                    "type": "float",
+                                                                                    "float": 1.1
                                                                                 }
                                                                             },
                                                                             "jsonExample": 1.1
@@ -710,12 +695,8 @@
                                                                         "valueType": {
                                                                             "_type": "primitive",
                                                                             "primitive": {
-                                                                                "v1": "DOUBLE",
-                                                                                "v2": {
-                                                                                    "type": "double",
-                                                                                    "default": null,
-                                                                                    "validation": null
-                                                                                }
+                                                                                "v1": "FLOAT",
+                                                                                "v2": null
                                                                             }
                                                                         }
                                                                     }
@@ -926,8 +907,8 @@
                                                                                                             "shape": {
                                                                                                                 "type": "primitive",
                                                                                                                 "primitive": {
-                                                                                                                    "type": "double",
-                                                                                                                    "double": 1.1
+                                                                                                                    "type": "float",
+                                                                                                                    "float": 1.1
                                                                                                                 }
                                                                                                             },
                                                                                                             "jsonExample": 1.1
@@ -935,12 +916,8 @@
                                                                                                         "valueType": {
                                                                                                             "_type": "primitive",
                                                                                                             "primitive": {
-                                                                                                                "v1": "DOUBLE",
-                                                                                                                "v2": {
-                                                                                                                    "type": "double",
-                                                                                                                    "default": null,
-                                                                                                                    "validation": null
-                                                                                                                }
+                                                                                                                "v1": "FLOAT",
+                                                                                                                "v2": null
                                                                                                             }
                                                                                                         }
                                                                                                     }
@@ -1007,8 +984,8 @@
                                                                                                             "shape": {
                                                                                                                 "type": "primitive",
                                                                                                                 "primitive": {
-                                                                                                                    "type": "double",
-                                                                                                                    "double": 1.1
+                                                                                                                    "type": "float",
+                                                                                                                    "float": 1.1
                                                                                                                 }
                                                                                                             },
                                                                                                             "jsonExample": 1.1
@@ -1016,12 +993,8 @@
                                                                                                         "valueType": {
                                                                                                             "_type": "primitive",
                                                                                                             "primitive": {
-                                                                                                                "v1": "DOUBLE",
-                                                                                                                "v2": {
-                                                                                                                    "type": "double",
-                                                                                                                    "default": null,
-                                                                                                                    "validation": null
-                                                                                                                }
+                                                                                                                "v1": "FLOAT",
+                                                                                                                "v2": null
                                                                                                             }
                                                                                                         }
                                                                                                     }
@@ -1088,8 +1061,8 @@
                                                                                                             "shape": {
                                                                                                                 "type": "primitive",
                                                                                                                 "primitive": {
-                                                                                                                    "type": "double",
-                                                                                                                    "double": 1.1
+                                                                                                                    "type": "float",
+                                                                                                                    "float": 1.1
                                                                                                                 }
                                                                                                             },
                                                                                                             "jsonExample": 1.1
@@ -1097,12 +1070,8 @@
                                                                                                         "valueType": {
                                                                                                             "_type": "primitive",
                                                                                                             "primitive": {
-                                                                                                                "v1": "DOUBLE",
-                                                                                                                "v2": {
-                                                                                                                    "type": "double",
-                                                                                                                    "default": null,
-                                                                                                                    "validation": null
-                                                                                                                }
+                                                                                                                "v1": "FLOAT",
+                                                                                                                "v2": null
                                                                                                             }
                                                                                                         }
                                                                                                     }
@@ -1386,8 +1355,8 @@
                                                                             "shape": {
                                                                                 "type": "primitive",
                                                                                 "primitive": {
-                                                                                    "type": "double",
-                                                                                    "double": 1.1
+                                                                                    "type": "float",
+                                                                                    "float": 1.1
                                                                                 }
                                                                             },
                                                                             "jsonExample": 1.1
@@ -1395,12 +1364,8 @@
                                                                         "valueType": {
                                                                             "_type": "primitive",
                                                                             "primitive": {
-                                                                                "v1": "DOUBLE",
-                                                                                "v2": {
-                                                                                    "type": "double",
-                                                                                    "default": null,
-                                                                                    "validation": null
-                                                                                }
+                                                                                "v1": "FLOAT",
+                                                                                "v2": null
                                                                             }
                                                                         }
                                                                     }
@@ -1611,8 +1576,8 @@
                                                                                                             "shape": {
                                                                                                                 "type": "primitive",
                                                                                                                 "primitive": {
-                                                                                                                    "type": "double",
-                                                                                                                    "double": 1.1
+                                                                                                                    "type": "float",
+                                                                                                                    "float": 1.1
                                                                                                                 }
                                                                                                             },
                                                                                                             "jsonExample": 1.1
@@ -1620,12 +1585,8 @@
                                                                                                         "valueType": {
                                                                                                             "_type": "primitive",
                                                                                                             "primitive": {
-                                                                                                                "v1": "DOUBLE",
-                                                                                                                "v2": {
-                                                                                                                    "type": "double",
-                                                                                                                    "default": null,
-                                                                                                                    "validation": null
-                                                                                                                }
+                                                                                                                "v1": "FLOAT",
+                                                                                                                "v2": null
                                                                                                             }
                                                                                                         }
                                                                                                     }
@@ -1692,8 +1653,8 @@
                                                                                                             "shape": {
                                                                                                                 "type": "primitive",
                                                                                                                 "primitive": {
-                                                                                                                    "type": "double",
-                                                                                                                    "double": 1.1
+                                                                                                                    "type": "float",
+                                                                                                                    "float": 1.1
                                                                                                                 }
                                                                                                             },
                                                                                                             "jsonExample": 1.1
@@ -1701,12 +1662,8 @@
                                                                                                         "valueType": {
                                                                                                             "_type": "primitive",
                                                                                                             "primitive": {
-                                                                                                                "v1": "DOUBLE",
-                                                                                                                "v2": {
-                                                                                                                    "type": "double",
-                                                                                                                    "default": null,
-                                                                                                                    "validation": null
-                                                                                                                }
+                                                                                                                "v1": "FLOAT",
+                                                                                                                "v2": null
                                                                                                             }
                                                                                                         }
                                                                                                     }
@@ -1773,8 +1730,8 @@
                                                                                                             "shape": {
                                                                                                                 "type": "primitive",
                                                                                                                 "primitive": {
-                                                                                                                    "type": "double",
-                                                                                                                    "double": 1.1
+                                                                                                                    "type": "float",
+                                                                                                                    "float": 1.1
                                                                                                                 }
                                                                                                             },
                                                                                                             "jsonExample": 1.1
@@ -1782,12 +1739,8 @@
                                                                                                         "valueType": {
                                                                                                             "_type": "primitive",
                                                                                                             "primitive": {
-                                                                                                                "v1": "DOUBLE",
-                                                                                                                "v2": {
-                                                                                                                    "type": "double",
-                                                                                                                    "default": null,
-                                                                                                                    "validation": null
-                                                                                                                }
+                                                                                                                "v1": "FLOAT",
+                                                                                                                "v2": null
                                                                                                             }
                                                                                                         }
                                                                                                     }
@@ -1912,7 +1865,7 @@
                                         }
                                     }
                                 },
-                                "id": "caedda4f49f9aeed14208c95dd8075ce11473cbd",
+                                "id": "e3b2fb4112907027d3b290ac22a16838d6ccd505",
                                 "docs": null
                             }
                         }

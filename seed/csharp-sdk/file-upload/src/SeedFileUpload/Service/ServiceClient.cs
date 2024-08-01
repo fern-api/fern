@@ -15,37 +15,61 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Task PostAsync(MyRequest request)
+    public async Task PostAsync(MyRequest request, RequestOptions? options = null)
     {
-        await _client.MakeRequestAsync(
+        var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = ""
+                Path = "",
+                Options = options
             }
         );
-    }
-
-    public async Task JustFileAsync(JustFileRequet request)
-    {
-        await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "/just-file"
-            }
-        );
-    }
-
-    public async Task JustFileWithQueryParamsAsync(JustFileWithQueryParamsRequet request)
-    {
-        var _query = new Dictionary<string, object>()
+        if (response.StatusCode is >= 200 and < 400)
         {
-            { "integer", request.Integer.ToString() },
-            { "listOfStrings", request.ListOfStrings },
-        };
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedFileUploadApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
+    }
+
+    public async Task JustFileAsync(JustFileRequet request, RequestOptions? options = null)
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Post,
+                Path = "/just-file",
+                Options = options
+            }
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedFileUploadApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
+    }
+
+    public async Task JustFileWithQueryParamsAsync(
+        JustFileWithQueryParamsRequet request,
+        RequestOptions? options = null
+    )
+    {
+        var _query = new Dictionary<string, object>() { };
+        _query["integer"] = request.Integer.ToString();
+        _query["listOfStrings"] = request.ListOfStrings;
+        _query["optionalListOfStrings"] = request.OptionalListOfStrings;
         if (request.MaybeString != null)
         {
             _query["maybeString"] = request.MaybeString;
@@ -54,18 +78,25 @@ public class ServiceClient
         {
             _query["maybeInteger"] = request.MaybeInteger.ToString();
         }
-        if (request.OptionalListOfStrings != null)
-        {
-            _query["optionalListOfStrings"] = request.OptionalListOfStrings;
-        }
-        await _client.MakeRequestAsync(
+        var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/just-file-with-query-params",
-                Query = _query
+                Query = _query,
+                Options = options
             }
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedFileUploadApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
         );
     }
 }

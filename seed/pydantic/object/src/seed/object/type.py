@@ -56,6 +56,10 @@ class Type(UniversalBaseModel):
             id="name-129fsdj9",
             value="nineteen",
         ),
+        twenty=20,
+        twentyone=21,
+        twentytwo=22.22,
+        twentythree="23",
     )
     """
 
@@ -78,6 +82,10 @@ class Type(UniversalBaseModel):
     seventeen: typing.List[typing.Optional[uuid.UUID]]
     eighteen: typing.Literal["eighteen"] = "eighteen"
     nineteen: Name
+    twenty: int
+    twentyone: int
+    twentytwo: float
+    twentythree: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

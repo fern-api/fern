@@ -3525,7 +3525,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
-    "@fern-fern/ir-sdk": ^51
+    "@fern-fern/ir-sdk": ^53
     "@types/jest": ^29.5.12
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
@@ -3563,6 +3563,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/docs-markdown-utils@workspace:packages/cli/docs-markdown-utils"
   dependencies:
+    "@fern-api/fdr-sdk": 0.98.16-3955e989a
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@types/diff": ^5.2.1
@@ -3734,7 +3735,7 @@ __metadata:
     "@fern-api/csharp-codegen": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
-    "@fern-fern/ir-sdk": ^51
+    "@fern-fern/ir-sdk": ^53
     "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
@@ -3762,7 +3763,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
     "@fern-fern/generator-exec-sdk": ^0.0.898
-    "@fern-fern/ir-sdk": ^51
+    "@fern-fern/ir-sdk": ^53
     "@types/jest": ^29.5.12
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
@@ -4005,6 +4006,7 @@ __metadata:
     "@fern-fern/ir-v5-model": 0.0.3
     "@fern-fern/ir-v50-sdk": 0.0.3
     "@fern-fern/ir-v51-sdk": 0.0.1
+    "@fern-fern/ir-v52-sdk": 0.0.1
     "@fern-fern/ir-v6-model": 0.0.33
     "@fern-fern/ir-v7-model": 0.0.2
     "@fern-fern/ir-v8-model": 0.0.1
@@ -4873,10 +4875,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-sdk@npm:^51":
-  version: 51.0.0
-  resolution: "@fern-fern/ir-sdk@npm:51.0.0"
-  checksum: 9f6ead5e338b33a3c52d80760d63786f2e3f7181f5bd8c08f93d1daf4804a7f1dd6a310dd7e700f9399198c7d8436e955e8784d1057915061f3a2c4d08b8e5cd
+"@fern-fern/ir-sdk@npm:^53":
+  version: 53.0.0
+  resolution: "@fern-fern/ir-sdk@npm:53.0.0"
+  checksum: b00e1629848ba1c2f4146d969ef25cb770f6254d619b3f2b05ca7273d3a1c71a80b96cee243b15eb2d5881054fa09658856b98b8ceeef120929009c8730aaacf
   languageName: node
   linkType: hard
 
@@ -5209,6 +5211,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fern-fern/ir-v52-sdk@npm:0.0.1":
+  version: 0.0.1
+  resolution: "@fern-fern/ir-v52-sdk@npm:0.0.1"
+  checksum: c939ddced256f888394b3e569b32f0a6741e0428c27d0ebb3edf8bd8a2afbb794d158716e19d1cdfd6c2c24ba15b5fe35d3f8f66c274004dee687523c8bed23c
+  languageName: node
+  linkType: hard
+
 "@fern-fern/ir-v6-model@npm:0.0.33":
   version: 0.0.33
   resolution: "@fern-fern/ir-v6-model@npm:0.0.33"
@@ -5421,6 +5430,7 @@ __metadata:
   resolution: "@fern-typescript/contexts@workspace:generators/typescript/utils/contexts"
   dependencies:
     "@fern-api/logger": "workspace:*"
+    "@fern-fern/generator-exec-sdk": ^0.0.898
     "@fern-fern/ir-sdk": 50.2.0
     "@fern-typescript/commons": "workspace:*"
     "@types/jest": ^29.5.12

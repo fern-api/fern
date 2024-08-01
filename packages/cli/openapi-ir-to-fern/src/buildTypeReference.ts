@@ -93,6 +93,11 @@ export function buildPrimitiveTypeReference(primitiveSchema: PrimitiveSchema): R
                 description: primitiveSchema.description,
                 schema: primitiveSchema.schema
             });
+        case "float":
+            return buildFloatTypeReference({
+                description: primitiveSchema.description,
+                schema: primitiveSchema.schema
+            });
         case "double":
             return buildDoubleTypeReference({
                 description: primitiveSchema.description,
@@ -232,6 +237,26 @@ function buildIntegerTypeReference({
     return result;
 }
 
+function buildFloatTypeReference({
+    description,
+    schema
+}: {
+    description: string | undefined;
+    schema: PrimitiveSchemaValue.Float;
+}): RawSchemas.TypeReferenceWithDocsSchema {
+    const type = "float";
+    if (description == null) {
+        return type;
+    }
+    const result: RawSchemas.TypeReferenceWithDocsSchema = {
+        type
+    };
+    if (description != null) {
+        result.docs = description;
+    }
+    return result;
+}
+
 function buildDoubleTypeReference({
     description,
     schema
@@ -286,6 +311,7 @@ function maybeValidFormat(format: string | undefined): string | undefined {
         case "date-time":
         case "password":
         case "byte":
+        case "bytes":
         case "binary":
         case "email":
         case "uuid":

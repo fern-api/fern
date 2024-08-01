@@ -64,7 +64,8 @@ public class RawClient(
             httpRequest.Content = new StreamContent(streamRequest.Body);
         }
         // Send the request
-        var response = await Options.HttpClient.SendAsync(httpRequest);
+        var httpClient = request.Options?.HttpClient ?? Options.HttpClient;
+        var response = await httpClient.SendAsync(httpRequest);
         return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
     }
 
@@ -82,7 +83,7 @@ public class RawClient(
 
         public Dictionary<string, string> Headers { get; init; } = new();
 
-        public object? RequestOptions { get; init; }
+        public RequestOptions? Options { get; init; }
     }
 
     /// <summary>
@@ -113,7 +114,8 @@ public class RawClient(
 
     private string BuildUrl(BaseApiRequest request)
     {
-        var trimmedBaseUrl = request.BaseUrl.TrimEnd('/');
+        var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl;
+        var trimmedBaseUrl = baseUrl.TrimEnd('/');
         var trimmedBasePath = request.Path.TrimStart('/');
         var url = $"{trimmedBaseUrl}/{trimmedBasePath}";
         if (request.Query.Count <= 0)
@@ -121,7 +123,25 @@ public class RawClient(
         url += "?";
         url = request.Query.Aggregate(
             url,
-            (current, queryItem) => current + $"{queryItem.Key}={queryItem.Value}&"
+            (current, queryItem) =>
+            {
+                if (queryItem.Value is System.Collections.IEnumerable collection and not string)
+                {
+                    var items = collection
+                        .Cast<object>()
+                        .Select(value => $"{queryItem.Key}={value}")
+                        .ToList();
+                    if (items.Any())
+                    {
+                        current += string.Join("&", items) + "&";
+                    }
+                }
+                else
+                {
+                    current += $"{queryItem.Key}={queryItem.Value}&";
+                }
+                return current;
+            }
         );
         url = url.Substring(0, url.Length - 1);
         return url;

@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Text.Json;
 using SeedQueryParameters;
 using SeedQueryParameters.Core;
 
@@ -15,22 +16,23 @@ public class UserClient
         _client = client;
     }
 
-    public async Task<User> GetUsernameAsync(GetUsersRequest request)
+    public async Task<User> GetUsernameAsync(
+        GetUsersRequest request,
+        RequestOptions? options = null
+    )
     {
-        var _query = new Dictionary<string, object>()
-        {
-            { "limit", request.Limit.ToString() },
-            { "id", request.Id.ToString() },
-            { "date", request.Date.ToString() },
-            { "deadline", request.Deadline.ToString(Constants.DateTimeFormat) },
-            { "bytes", request.Bytes.ToString() },
-            { "user", request.User.ToString() },
-            { "userList", request.UserList.ToString() },
-            { "keyValue", request.KeyValue.ToString() },
-            { "nestedUser", request.NestedUser.ToString() },
-            { "excludeUser", request.ExcludeUser.ToString() },
-            { "filter", request.Filter },
-        };
+        var _query = new Dictionary<string, object>() { };
+        _query["limit"] = request.Limit.ToString();
+        _query["id"] = request.Id.ToString();
+        _query["date"] = request.Date.ToString();
+        _query["deadline"] = request.Deadline.ToString(Constants.DateTimeFormat);
+        _query["bytes"] = request.Bytes.ToString();
+        _query["user"] = request.User.ToString();
+        _query["userList"] = request.UserList.ToString();
+        _query["keyValue"] = request.KeyValue.ToString();
+        _query["nestedUser"] = request.NestedUser.ToString();
+        _query["excludeUser"] = request.ExcludeUser.Select(_value => _value.ToString()).ToList();
+        _query["filter"] = request.Filter;
         if (request.OptionalDeadline != null)
         {
             _query["optionalDeadline"] = request.OptionalDeadline.Value.ToString(
@@ -51,14 +53,27 @@ public class UserClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "/user",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<User>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<User>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedQueryParametersException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedQueryParametersApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

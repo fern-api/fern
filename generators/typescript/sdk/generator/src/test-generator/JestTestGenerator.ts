@@ -70,7 +70,7 @@ export class JestTestGenerator {
         const folders = service.name.fernFilepath.packagePath.map((folder) => folder.originalName);
         const filename = `${service.name.fernFilepath.file?.camelCase.unsafeName ?? "main"}.test.ts`;
 
-        const filePath = path.join(...folders, filename);
+        const filePath = path.join("wire", ...folders, filename);
         return {
             directories: [],
             file: {
@@ -96,7 +96,8 @@ export class JestTestGenerator {
     public get scripts(): Record<string, string> {
         if (this.writeUnitTests) {
             return {
-                test: "fern test --command='jest'"
+                test: "jest tests/unit",
+                "wire:test": "npm install -g fern-api && fern test --command 'jest tests/wire'"
             };
         } else {
             return {
@@ -261,7 +262,11 @@ describe("test", () => {
         const notSupportedRequest =
             !!endpoint.requestBody &&
             (endpoint.requestBody.type === "bytes" || endpoint.requestBody.type === "fileUpload");
-        const shouldSkip = endpoint.idempotent || notSupportedResponse || notSupportedRequest;
+        const shouldSkip =
+            endpoint.idempotent ||
+            (endpoint.pagination != null && context.config.generatePaginatedClients) ||
+            notSupportedResponse ||
+            notSupportedRequest;
         if (shouldSkip) {
             return;
         }

@@ -47,6 +47,7 @@ import { convertToFernFilepath } from "./utils/convertToFernFilepath";
 import { parseErrorName } from "./utils/parseErrorName";
 
 export async function generateIntermediateRepresentation({
+    fdrApiDefinitionId,
     workspace,
     generationLanguage,
     keywords,
@@ -55,6 +56,7 @@ export async function generateIntermediateRepresentation({
     audiences,
     readme
 }: {
+    fdrApiDefinitionId?: string;
     workspace: FernWorkspace;
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
     keywords: string[] | undefined;
@@ -89,6 +91,7 @@ export async function generateIntermediateRepresentation({
     const variableResolver = new VariableResolverImpl();
 
     const intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage"> = {
+        fdrApiDefinitionId,
         apiVersion: await convertApiVersionScheme({
             file: rootApiFileContext,
             rawApiFileSchema: workspace.definition.rootApiFile.contents

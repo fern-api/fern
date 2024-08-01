@@ -21,10 +21,16 @@ public class ServiceClient
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "text"
+                Path = "text",
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedPlainTextApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
         if (response.StatusCode is >= 200 and < 400)
         {
             return responseBody;

@@ -8,6 +8,8 @@ import * as FernIr from "../../..";
  * Complete representation of the API schema
  */
 export interface IntermediateRepresentation {
+    /** The unique identifier for the API definition used within FDR. This is retrieved once a definition has been registered. */
+    fdrApiDefinitionId: string | undefined;
     apiVersion: FernIr.ApiVersionScheme | undefined;
     /** This is the human readable unique id for the API. */
     apiName: FernIr.Name;

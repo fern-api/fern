@@ -24463,11 +24463,11 @@ The table below shows the operators you can use to define how you want to search
           },
           "happy_reaction_percentage": {
             "docs": "The percentage of happy reactions the article has received against other types of reaction.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "neutral_reaction_percentage": {
             "docs": "The percentage of neutral reactions the article has received against other types of reaction.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "reactions": {
             "docs": "The number of total reactions the article has received.",
@@ -24475,7 +24475,7 @@ The table below shows the operators you can use to define how you want to search
           },
           "sad_reaction_percentage": {
             "docs": "The percentage of sad reactions the article has received against other types of reaction.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "type": {
             "docs": "The type of object - \`article_statistics\`.",
@@ -48815,11 +48815,11 @@ The table below shows the operators you can use to define how you want to search
           },
           "happy_reaction_percentage": {
             "docs": "The percentage of happy reactions the article has received against other types of reaction.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "neutral_reaction_percentage": {
             "docs": "The percentage of neutral reactions the article has received against other types of reaction.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "reactions": {
             "docs": "The number of total reactions the article has received.",
@@ -48827,7 +48827,7 @@ The table below shows the operators you can use to define how you want to search
           },
           "sad_reaction_percentage": {
             "docs": "The percentage of sad reactions the article has received against other types of reaction.",
-            "type": "optional<double>",
+            "type": "optional<float>",
           },
           "type": {
             "docs": "The type of object - \`article_statistics\`.",
