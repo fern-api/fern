@@ -508,7 +508,7 @@ export class SdkGenerator {
                   extraScripts: this.extraScripts,
                   extraConfigs: this.config.packageJson,
                   outputJsr: this.config.outputJsr,
-                  runScripts: this.config.runScripts,
+                  runScripts: this.config.runScripts
               })
             : new SimpleTypescriptProject({
                   npmPackage: this.npmPackage,
@@ -524,7 +524,7 @@ export class SdkGenerator {
                   extraScripts: this.extraScripts,
                   resolutions: {},
                   extraConfigs: this.config.packageJson,
-                  runScripts: this.config.runScripts,
+                  runScripts: this.config.runScripts
               });
     }
 

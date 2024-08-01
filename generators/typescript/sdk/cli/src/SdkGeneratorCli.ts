@@ -165,7 +165,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
     protected publishToJsr(customConfig: SdkCustomConfig): boolean {
         return customConfig.publishToJsr ?? false;
     }
-    
+
     protected exectuionEnvironment(config: FernGeneratorExec.GeneratorConfig): "local" | "dev" | "prod" {
         return config.environment.type === "local"
             ? "local"

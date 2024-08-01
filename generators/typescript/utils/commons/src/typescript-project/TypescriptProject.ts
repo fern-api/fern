@@ -78,7 +78,7 @@ export abstract class TypescriptProject {
             testDirectory: RelativeFilePath.of(TypescriptProject.TEST_DIRECTORY),
             distDirectory: RelativeFilePath.of(TypescriptProject.DIST_DIRECTORY),
             yarnBuildCommand: this.getYarnBuildCommand(),
-            yarnFormatCommand: this.getYarnFormatCommand(),
+            yarnFormatCommand: this.getYarnFormatCommand()
         });
     }
 
