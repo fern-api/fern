@@ -13,7 +13,6 @@ from fern_python.external_dependencies.typing_extensions import (
     TYPING_EXTENSIONS_DEPENDENCY,
 )
 from fern_python.snippet.snippet_writer import SnippetWriter
-from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 
 from ..context import PydanticGeneratorContext
 
@@ -190,7 +189,9 @@ class FernTypedDict:
                     value=property.value,
                 )
             )
-        return snippet_writer._get_snippet_for_map(example_dict_pairs, use_typeddict_request=True, as_request=True, in_typeddict=True)
+        return snippet_writer._get_snippet_for_map(
+            example_dict_pairs, use_typeddict_request=True, as_request=True, in_typeddict=True
+        )
 
     @classmethod
     def type_to_snippet(
