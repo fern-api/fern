@@ -10,7 +10,7 @@ export class MovieDoesNotExistError extends errors.SeedApiError {
         super({
             message: "MovieDoesNotExistError",
             statusCode: 404,
-            body: body
+            body: body,
         });
         Object.setPrototypeOf(this, MovieDoesNotExistError.prototype);
     }

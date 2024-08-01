@@ -89,6 +89,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             generateJestTests: config.output.mode.type === "github",
             rawConfig: config,
             config: {
+                runScripts: !customConfig.noScripts,
                 organization: config.organization,
                 apiName: intermediateRepresentation.apiName.originalName,
                 whitelabel: config.whitelabel,
@@ -164,11 +165,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
     protected publishToJsr(customConfig: SdkCustomConfig): boolean {
         return customConfig.publishToJsr ?? false;
     }
-
-    protected shouldRunScripts(customConfig: SdkCustomConfig): boolean {
-        return customConfig.noScripts ?? false;
-    }
-
+    
     protected exectuionEnvironment(config: FernGeneratorExec.GeneratorConfig): "local" | "dev" | "prod" {
         return config.environment.type === "local"
             ? "local"

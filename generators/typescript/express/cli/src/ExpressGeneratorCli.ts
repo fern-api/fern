@@ -92,8 +92,4 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
     protected publishToJsr(customConfig: ExpressCustomConfig): boolean {
         return false;
     }
-
-    protected shouldRunScripts(customConfig: ExpressCustomConfig): boolean {
-        return true;
-    }
 }
