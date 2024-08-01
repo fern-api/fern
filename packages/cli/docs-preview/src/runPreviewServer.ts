@@ -88,10 +88,12 @@ export async function runPreviewServer({
     let docsDefinition: DocsV1Read.DocsDefinition | undefined;
 
     const reloadDocsDefinition = async () => {
-        context.logger.info("Reloading docs");
+        context.logger.info("Reloading docs...");
         const startTime = Date.now();
         try {
             project = await reloadProject();
+            context.logger.info("Validating docs...");
+            await validateProject(project);
             const newDocsDefinition = await getPreviewDocsDefinition({
                 domain: instance.host,
                 project,
@@ -100,8 +102,11 @@ export async function runPreviewServer({
             context.logger.info(`Reload completed in ${Date.now() - startTime}ms`);
             return newDocsDefinition;
         } catch (err) {
-            context.logger.error("Failed to reload because of validation errors: ");
-            await validateProject(project);
+            if (docsDefinition == null) {
+                context.logger.error("Failed to read docs configuration. Rendering blank page.");
+            } else {
+                context.logger.error("Failed to read docs configuration. Rendering last successful configuration.");
+            }
             return docsDefinition;
         }
     };

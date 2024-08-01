@@ -6,6 +6,7 @@ import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 import { DocsWorkspace } from "./types/Workspace";
+import { APIWorkspace } from "./workspaces";
 
 export async function loadDocsWorkspace({
     fernDirectory,
