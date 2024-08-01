@@ -317,6 +317,92 @@ func (f *FieldValue) Accept(visitor FieldValueVisitor) error {
 	}
 }
 
+type MetadataValue struct {
+	Double                    float64
+	String                    string
+	Boolean                   bool
+	MetadataValueOptionalList []*MetadataValue
+}
+
+func NewMetadataValueFromDouble(value float64) *MetadataValue {
+	return &MetadataValue{Double: value}
+}
+
+func NewMetadataValueFromString(value string) *MetadataValue {
+	return &MetadataValue{String: value}
+}
+
+func NewMetadataValueFromBoolean(value bool) *MetadataValue {
+	return &MetadataValue{Boolean: value}
+}
+
+func NewMetadataValueFromMetadataValueOptionalList(value []*MetadataValue) *MetadataValue {
+	return &MetadataValue{MetadataValueOptionalList: value}
+}
+
+func (m *MetadataValue) UnmarshalJSON(data []byte) error {
+	var valueDouble float64
+	if err := json.Unmarshal(data, &valueDouble); err == nil {
+		m.Double = valueDouble
+		return nil
+	}
+	var valueString string
+	if err := json.Unmarshal(data, &valueString); err == nil {
+		m.String = valueString
+		return nil
+	}
+	var valueBoolean bool
+	if err := json.Unmarshal(data, &valueBoolean); err == nil {
+		m.Boolean = valueBoolean
+		return nil
+	}
+	var valueMetadataValueOptionalList []*MetadataValue
+	if err := json.Unmarshal(data, &valueMetadataValueOptionalList); err == nil {
+		m.MetadataValueOptionalList = valueMetadataValueOptionalList
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, m)
+}
+
+func (m MetadataValue) MarshalJSON() ([]byte, error) {
+	if m.Double != 0 {
+		return json.Marshal(m.Double)
+	}
+	if m.String != "" {
+		return json.Marshal(m.String)
+	}
+	if m.Boolean != false {
+		return json.Marshal(m.Boolean)
+	}
+	if m.MetadataValueOptionalList != nil {
+		return json.Marshal(m.MetadataValueOptionalList)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", m)
+}
+
+type MetadataValueVisitor interface {
+	VisitDouble(float64) error
+	VisitString(string) error
+	VisitBoolean(bool) error
+	VisitMetadataValueOptionalList([]*MetadataValue) error
+}
+
+func (m *MetadataValue) Accept(visitor MetadataValueVisitor) error {
+	if m.Double != 0 {
+		return visitor.VisitDouble(m.Double)
+	}
+	if m.String != "" {
+		return visitor.VisitString(m.String)
+	}
+	if m.Boolean != false {
+		return visitor.VisitBoolean(m.Boolean)
+	}
+	if m.MetadataValueOptionalList != nil {
+		return visitor.VisitMetadataValueOptionalList(m.MetadataValueOptionalList)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", m)
+}
+
 // This type allows us to test a circular reference with a union type (see FieldValue).
 type ObjectFieldValue struct {
 	Name  FieldName   `json:"name" url:"name"`
