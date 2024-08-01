@@ -4,6 +4,7 @@ import {
     ContainerType,
     DeclaredServiceName,
     DeclaredTypeName,
+    EnvironmentsConfig,
     ErrorDeclaration,
     FernFilepath,
     FileUploadRequestProperty,
@@ -11,6 +12,8 @@ import {
     HttpRequestBody,
     HttpResponseBody,
     HttpService,
+    MultipleBaseUrlsEnvironment,
+    SingleBaseUrlEnvironment,
     TypeReference,
     Webhook,
     WebhookPayload
@@ -25,7 +28,6 @@ import {
     AudienceId,
     EndpointId,
     EndpointNode,
-    EnvironmentId,
     ErrorId,
     ErrorNode,
     InlinedRequestPropertiesNode,
@@ -51,6 +53,7 @@ export class IrGraph {
     private webhooks: Record<WebhookId, WebhookNode> = {};
     private audiences: Audiences;
     private typesReferencedByService: Record<TypeId, Set<ServiceId>> = {};
+    private environmentsNeededForAudience: Set<SingleBaseUrlEnvironment | MultipleBaseUrlsEnvironment> = new Set();
     private typesNeededForAudience: Set<TypeId> = new Set();
     private servicesNeededForAudience: Set<ServiceId> = new Set();
     private endpointsNeededForAudience: Set<EndpointId> = new Set();
@@ -59,6 +62,14 @@ export class IrGraph {
 
     public constructor(audiences: ConfigAudiences) {
         this.audiences = audiencesFromConfig(audiences);
+    }
+
+    public addEnvironments(environments: EnvironmentsConfig | undefined) {
+        if (environments) {
+            environments.environments.environments.forEach((environment) =>
+                this.environmentsNeededForAudience.add(environment)
+            );
+        }
     }
 
     public addType({
@@ -336,7 +347,6 @@ export class IrGraph {
     public build(): FilteredIr {
         const typeIds = new Set<TypeId>();
         const errorIds = new Set<ErrorId>();
-        const environments = new Set<EnvironmentId>();
 
         for (const endpointId of this.endpointsNeededForAudience.keys()) {
             const endpointNode = this.getEndpointNode(endpointId);
@@ -432,12 +442,12 @@ export class IrGraph {
         }
 
         return new FilteredIrImpl({
-            environments,
             types: typeIds,
             properties,
             errors: errorIds,
             requestProperties,
             queryParameters,
+            environments: this.environmentsNeededForAudience,
             services: this.servicesNeededForAudience,
             endpoints: this.endpointsNeededForAudience,
             webhooks: this.webhooksNeededForAudience,

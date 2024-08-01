@@ -1,5 +1,4 @@
 import {
-    EnvironmentId,
     ErrorDeclaration,
     HttpEndpoint,
     HttpService,
@@ -29,7 +28,7 @@ export interface FilteredIr {
 }
 
 export class FilteredIrImpl implements FilteredIr {
-    private environments: Set<EnvironmentId> = new Set();
+    private environments: Set<SingleBaseUrlEnvironment | MultipleBaseUrlsEnvironment> = new Set();
     private types: Set<TypeId> = new Set();
     private properties: Record<TypeId, Set<string> | undefined>;
     private errors: Set<ErrorId> = new Set();
@@ -42,22 +41,22 @@ export class FilteredIrImpl implements FilteredIr {
     private subpackages: Set<SubpackageId> = new Set();
 
     public constructor({
-        environments,
         types,
+        properties,
         errors,
+        environments,
         services,
         endpoints,
         webhooks,
         subpackages,
         queryParameters,
         requestProperties,
-        webhookPayloadProperties,
-        properties
+        webhookPayloadProperties
     }: {
-        environments: Set<EnvironmentId>;
         types: Set<TypeId>;
         properties: Record<TypeId, Set<string> | undefined>;
         errors: Set<ErrorId>;
+        environments: Set<SingleBaseUrlEnvironment | MultipleBaseUrlsEnvironment>;
         services: Set<ServiceId>;
         queryParameters: Record<EndpointId, Set<string> | undefined>;
         requestProperties: Record<EndpointId, Set<string> | undefined>;
@@ -78,7 +77,7 @@ export class FilteredIrImpl implements FilteredIr {
         this.requestProperties = requestProperties;
         this.queryParameters = queryParameters;
     }
-    public hasEnvironment(environment: string): boolean {
+    public hasEnvironment(environment: SingleBaseUrlEnvironment | MultipleBaseUrlsEnvironment): boolean {
         return this.environments.has(environment);
     }
 

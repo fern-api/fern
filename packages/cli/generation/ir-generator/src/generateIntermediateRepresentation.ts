@@ -91,6 +91,11 @@ export async function generateIntermediateRepresentation({
     const exampleResolver = new ExampleResolverImpl(typeResolver);
     const variableResolver = new VariableResolverImpl();
 
+    const environments = convertEnvironments({
+        casingsGenerator,
+        rawApiFileSchema: workspace.definition.rootApiFile.contents
+    });
+
     const intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage"> = {
         fdrApiDefinitionId,
         apiVersion: await convertApiVersionScheme({
@@ -126,10 +131,7 @@ export async function generateIntermediateRepresentation({
         errors: {},
         services: {},
         constants: generateFernConstants(casingsGenerator),
-        environments: convertEnvironments({
-            casingsGenerator,
-            rawApiFileSchema: workspace.definition.rootApiFile.contents
-        }),
+        environments,
         errorDiscriminationStrategy: convertErrorDiscriminationStrategy(
             workspace.definition.rootApiFile.contents["error-discrimination"],
             rootApiFileContext
@@ -161,6 +163,8 @@ export async function generateIntermediateRepresentation({
         websocketChannels: {},
         readmeConfig: undefined
     };
+
+    irGraph.addEnvironments(environments);
 
     const packageTreeGenerator = new PackageTreeGenerator();
 
