@@ -15,6 +15,7 @@ export declare namespace PersistedTypescriptProject {
         testDirectory: RelativeFilePath;
         yarnBuildCommand: string[];
         yarnFormatCommand: string[];
+        runScripts: boolean;
     }
 }
 
@@ -30,13 +31,16 @@ export class PersistedTypescriptProject {
     private hasFormatted = false;
     private hasBuilt = false;
 
+    private runScripts;
+
     constructor({
         directory,
         srcDirectory,
         distDirectory,
         testDirectory,
         yarnBuildCommand,
-        yarnFormatCommand
+        yarnFormatCommand,
+        runScripts
     }: PersistedTypescriptProject.Init) {
         this.directory = directory;
         this.srcDirectory = srcDirectory;
@@ -44,6 +48,7 @@ export class PersistedTypescriptProject {
         this.testDirectory = testDirectory;
         this.yarnBuildCommand = yarnBuildCommand;
         this.yarnFormatCommand = yarnFormatCommand;
+        this.runScripts = runScripts;
     }
 
     public getSrcDirectory(): AbsoluteFilePath {
@@ -55,6 +60,10 @@ export class PersistedTypescriptProject {
     }
 
     public async installDependencies(logger: Logger): Promise<void> {
+        if (!this.runScripts) {
+            return;
+        }
+
         if (this.hasInstalled) {
             return;
         }
@@ -75,6 +84,10 @@ export class PersistedTypescriptProject {
     }
 
     public async format(logger: Logger): Promise<void> {
+        if (!this.runScripts) {
+            return;
+        }
+
         if (this.hasFormatted) {
             return;
         }
@@ -91,6 +104,10 @@ export class PersistedTypescriptProject {
     }
 
     public async build(logger: Logger): Promise<void> {
+        if (!this.runScripts) {
+            return;
+        }
+
         if (this.hasBuilt) {
             return;
         }
