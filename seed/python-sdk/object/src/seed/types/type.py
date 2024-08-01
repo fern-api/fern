@@ -52,7 +52,6 @@ class Type(UniversalBaseModel):
                 "07791987-dec3-43b5-8dc4-250ab5dc0478",
             ),
         ],
-        eighteen="eighteen",
         nineteen=Name(
             id="name-129fsdj9",
             value="nineteen",
