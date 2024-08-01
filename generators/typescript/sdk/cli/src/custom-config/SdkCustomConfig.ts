@@ -32,4 +32,5 @@ export interface SdkCustomConfig {
     publishToJsr: boolean | undefined;
     omitUndefined: boolean | undefined;
     generateWireTests: boolean | undefined;
+    noScripts: boolean | undefined;
 }
