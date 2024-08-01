@@ -64,7 +64,7 @@ export class IrGraph {
         this.audiences = audiencesFromConfig(audiences);
     }
 
-    public addEnvironments(environments: EnvironmentsConfig | undefined) {
+    public addEnvironments(environments: EnvironmentsConfig | undefined): void {
         if (environments) {
             environments.environments.environments.forEach((environment) =>
                 this.environmentsNeededForAudience.add(environment)
