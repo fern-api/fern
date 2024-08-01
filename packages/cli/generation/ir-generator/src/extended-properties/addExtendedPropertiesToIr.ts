@@ -73,9 +73,8 @@ function addExtendedPropertiesToType({
                     )
                 }
             };
-        default:
-            return typeDeclaration;
     }
+    return typeDeclaration;
 }
 
 function getExtendedPropertiesForDeclaredTypeName(

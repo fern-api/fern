@@ -462,22 +462,22 @@
         "type_:Object": {
             "name": {
                 "name": {
-                    "originalName": "Type",
+                    "originalName": "Object",
                     "camelCase": {
-                        "unsafeName": "type",
-                        "safeName": "type"
+                        "unsafeName": "object",
+                        "safeName": "object"
                     },
                     "snakeCase": {
-                        "unsafeName": "type",
-                        "safeName": "type"
+                        "unsafeName": "object",
+                        "safeName": "object"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "TYPE",
-                        "safeName": "TYPE"
+                        "unsafeName": "OBJECT",
+                        "safeName": "OBJECT"
                     },
                     "pascalCase": {
-                        "unsafeName": "Type",
-                        "safeName": "Type"
+                        "unsafeName": "Object",
+                        "safeName": "Object"
                     }
                 },
                 "fernFilepath": {
@@ -485,110 +485,74 @@
                     "packagePath": [],
                     "file": null
                 },
-                "typeId": "type_:Type"
+                "typeId": "type_:Object"
             },
             "shape": {
-                "_type": "object",
-                "extends": [],
-                "properties": [
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "id",
-                                "camelCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                }
-                            },
-                            "wireValue": "id"
+                "_type": "alias",
+                "aliasOf": {
+                    "_type": "named",
+                    "name": {
+                        "originalName": "Type",
+                        "camelCase": {
+                            "unsafeName": "type",
+                            "safeName": "type"
                         },
-                        "valueType": {
-                            "_type": "named",
-                            "name": {
-                                "originalName": "TypeId",
-                                "camelCase": {
-                                    "unsafeName": "typeID",
-                                    "safeName": "typeID"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type_id",
-                                    "safeName": "type_id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE_ID",
-                                    "safeName": "TYPE_ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "TypeID",
-                                    "safeName": "TypeID"
-                                }
-                            },
-                            "fernFilepath": {
-                                "allParts": [],
-                                "packagePath": [],
-                                "file": null
-                            },
-                            "typeId": "type_:TypeId",
-                            "default": null,
-                            "inline": null
+                        "snakeCase": {
+                            "unsafeName": "type",
+                            "safeName": "type"
                         },
-                        "availability": null,
-                        "docs": null
+                        "screamingSnakeCase": {
+                            "unsafeName": "TYPE",
+                            "safeName": "TYPE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Type",
+                            "safeName": "Type"
+                        }
                     },
-                    {
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    },
+                    "typeId": "type_:Type",
+                    "default": null,
+                    "inline": null
+                },
+                "resolvedType": {
+                    "_type": "named",
+                    "name": {
                         "name": {
-                            "name": {
-                                "originalName": "name",
-                                "camelCase": {
-                                    "unsafeName": "name",
-                                    "safeName": "name"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "name",
-                                    "safeName": "name"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "NAME",
-                                    "safeName": "NAME"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Name",
-                                    "safeName": "Name"
-                                }
+                            "originalName": "Type",
+                            "camelCase": {
+                                "unsafeName": "type",
+                                "safeName": "type"
                             },
-                            "wireValue": "name"
-                        },
-                        "valueType": {
-                            "_type": "primitive",
-                            "primitive": {
-                                "v1": "STRING",
-                                "v2": {
-                                    "type": "string",
-                                    "default": null,
-                                    "validation": null
-                                }
+                            "snakeCase": {
+                                "unsafeName": "type",
+                                "safeName": "type"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TYPE",
+                                "safeName": "TYPE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Type",
+                                "safeName": "Type"
                             }
                         },
-                        "availability": null,
-                        "docs": null
-                    }
-                ],
-                "extra-properties": false,
-                "extendedProperties": []
+                        "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": [],
+                            "file": null
+                        },
+                        "typeId": "type_:Type"
+                    },
+                    "shape": "OBJECT"
+                }
             },
             "referencedTypes": [
+                "type_:Type",
                 "type_:TypeId"
             ],
             "userProvidedExamples": [
@@ -613,182 +577,221 @@
                         }
                     },
                     "shape": {
-                        "type": "object",
-                        "properties": [
-                            {
-                                "name": {
+                        "type": "alias",
+                        "value": {
+                            "shape": {
+                                "type": "named",
+                                "typeName": {
+                                    "typeId": "type_:Type",
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
                                     "name": {
-                                        "originalName": "id",
+                                        "originalName": "Type",
                                         "camelCase": {
-                                            "unsafeName": "id",
-                                            "safeName": "id"
+                                            "unsafeName": "type",
+                                            "safeName": "type"
                                         },
                                         "snakeCase": {
-                                            "unsafeName": "id",
-                                            "safeName": "id"
+                                            "unsafeName": "type",
+                                            "safeName": "type"
                                         },
                                         "screamingSnakeCase": {
-                                            "unsafeName": "ID",
-                                            "safeName": "ID"
+                                            "unsafeName": "TYPE",
+                                            "safeName": "TYPE"
                                         },
                                         "pascalCase": {
-                                            "unsafeName": "ID",
-                                            "safeName": "ID"
+                                            "unsafeName": "Type",
+                                            "safeName": "Type"
                                         }
-                                    },
-                                    "wireValue": "id"
+                                    }
                                 },
-                                "value": {
-                                    "shape": {
-                                        "type": "named",
-                                        "typeName": {
-                                            "typeId": "type_:TypeId",
-                                            "fernFilepath": {
-                                                "allParts": [],
-                                                "packagePath": [],
-                                                "file": null
-                                            },
+                                "shape": {
+                                    "type": "object",
+                                    "properties": [
+                                        {
                                             "name": {
-                                                "originalName": "TypeId",
-                                                "camelCase": {
-                                                    "unsafeName": "typeID",
-                                                    "safeName": "typeID"
+                                                "name": {
+                                                    "originalName": "id",
+                                                    "camelCase": {
+                                                        "unsafeName": "id",
+                                                        "safeName": "id"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "id",
+                                                        "safeName": "id"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "ID",
+                                                        "safeName": "ID"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "ID",
+                                                        "safeName": "ID"
+                                                    }
                                                 },
-                                                "snakeCase": {
-                                                    "unsafeName": "type_id",
-                                                    "safeName": "type_id"
+                                                "wireValue": "id"
+                                            },
+                                            "value": {
+                                                "shape": {
+                                                    "type": "named",
+                                                    "typeName": {
+                                                        "typeId": "type_:TypeId",
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "name": {
+                                                            "originalName": "TypeId",
+                                                            "camelCase": {
+                                                                "unsafeName": "typeID",
+                                                                "safeName": "typeID"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "type_id",
+                                                                "safeName": "type_id"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "TYPE_ID",
+                                                                "safeName": "TYPE_ID"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "TypeID",
+                                                                "safeName": "TypeID"
+                                                            }
+                                                        }
+                                                    },
+                                                    "shape": {
+                                                        "type": "alias",
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "primitive",
+                                                                "primitive": {
+                                                                    "type": "string",
+                                                                    "string": {
+                                                                        "original": "kljasc85"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "jsonExample": "kljasc85"
+                                                        }
+                                                    }
                                                 },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "TYPE_ID",
-                                                    "safeName": "TYPE_ID"
+                                                "jsonExample": "kljasc85"
+                                            },
+                                            "originalTypeDeclaration": {
+                                                "typeId": "type_:Type",
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
                                                 },
-                                                "pascalCase": {
-                                                    "unsafeName": "TypeID",
-                                                    "safeName": "TypeID"
+                                                "name": {
+                                                    "originalName": "Type",
+                                                    "camelCase": {
+                                                        "unsafeName": "type",
+                                                        "safeName": "type"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "type",
+                                                        "safeName": "type"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "TYPE",
+                                                        "safeName": "TYPE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Type",
+                                                        "safeName": "Type"
+                                                    }
                                                 }
                                             }
                                         },
-                                        "shape": {
-                                            "type": "alias",
+                                        {
+                                            "name": {
+                                                "name": {
+                                                    "originalName": "name",
+                                                    "camelCase": {
+                                                        "unsafeName": "name",
+                                                        "safeName": "name"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "name",
+                                                        "safeName": "name"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "NAME",
+                                                        "safeName": "NAME"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Name",
+                                                        "safeName": "Name"
+                                                    }
+                                                },
+                                                "wireValue": "name"
+                                            },
                                             "value": {
                                                 "shape": {
                                                     "type": "primitive",
                                                     "primitive": {
                                                         "type": "string",
                                                         "string": {
-                                                            "original": "type-df89sdg1"
+                                                            "original": "bar"
                                                         }
                                                     }
                                                 },
-                                                "jsonExample": "type-df89sdg1"
+                                                "jsonExample": "bar"
+                                            },
+                                            "originalTypeDeclaration": {
+                                                "typeId": "type_:Type",
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "name": {
+                                                    "originalName": "Type",
+                                                    "camelCase": {
+                                                        "unsafeName": "type",
+                                                        "safeName": "type"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "type",
+                                                        "safeName": "type"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "TYPE",
+                                                        "safeName": "TYPE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Type",
+                                                        "safeName": "Type"
+                                                    }
+                                                }
                                             }
                                         }
-                                    },
-                                    "jsonExample": "type-df89sdg1"
-                                },
-                                "originalTypeDeclaration": {
-                                    "name": {
-                                        "originalName": "Type",
-                                        "camelCase": {
-                                            "unsafeName": "type",
-                                            "safeName": "type"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "type",
-                                            "safeName": "type"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "TYPE",
-                                            "safeName": "TYPE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Type",
-                                            "safeName": "Type"
-                                        }
-                                    },
-                                    "fernFilepath": {
-                                        "allParts": [],
-                                        "packagePath": [],
-                                        "file": null
-                                    },
-                                    "typeId": "type_:Type"
+                                    ]
                                 }
                             },
-                            {
-                                "name": {
-                                    "name": {
-                                        "originalName": "name",
-                                        "camelCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "NAME",
-                                            "safeName": "NAME"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Name",
-                                            "safeName": "Name"
-                                        }
-                                    },
-                                    "wireValue": "name"
-                                },
-                                "value": {
-                                    "shape": {
-                                        "type": "primitive",
-                                        "primitive": {
-                                            "type": "string",
-                                            "string": {
-                                                "original": "foo"
-                                            }
-                                        }
-                                    },
-                                    "jsonExample": "foo"
-                                },
-                                "originalTypeDeclaration": {
-                                    "name": {
-                                        "originalName": "Type",
-                                        "camelCase": {
-                                            "unsafeName": "type",
-                                            "safeName": "type"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "type",
-                                            "safeName": "type"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "TYPE",
-                                            "safeName": "TYPE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Type",
-                                            "safeName": "Type"
-                                        }
-                                    },
-                                    "fernFilepath": {
-                                        "allParts": [],
-                                        "packagePath": [],
-                                        "file": null
-                                    },
-                                    "typeId": "type_:Type"
-                                }
+                            "jsonExample": {
+                                "id": "kljasc85",
+                                "name": "bar"
                             }
-                        ]
+                        }
                     },
                     "jsonExample": {
-                        "id": "type-df89sdg1",
-                        "name": "foo"
+                        "id": "kljasc85",
+                        "name": "bar"
                     },
                     "docs": null
                 }
             ],
             "autogeneratedExamples": [],
             "availability": null,
-            "docs": "A simple type with just a name."
+            "docs": "Object is an alias for a type."
         }
     },
     "errors": {},
