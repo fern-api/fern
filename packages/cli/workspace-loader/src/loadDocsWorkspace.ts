@@ -30,7 +30,7 @@ export async function loadDocsWorkspace({
             absoluteFilepath: fernDirectory,
             config: docsConfiguration,
             workspaceName: undefined,
-            absoluteFilepathToDocsConfig: join(fernDirectory, RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME)),
+            absoluteFilepathToDocsConfig: join(fernDirectory, RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME))
         };
     }
     return undefined;
