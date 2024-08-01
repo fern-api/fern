@@ -26,7 +26,7 @@ export default class EnumBuilder extends CodeBuilder<SwiftFile> {
 
     // Value for the type of enum used
     // TODO: Handle more enum types in the future
-    const inheritanceClass = Swift.factories.primatives.makeString();
+    const inheritanceClass = Swift.makeString();
     
     // Break up the fields and values
     const fields = this.enumDeclaration.values.map(enumValue => {
@@ -43,7 +43,7 @@ export default class EnumBuilder extends CodeBuilder<SwiftFile> {
     });
 
     const output = Swift.makeFile({
-      fileHeader: Swift.factories.fileHeaders.makeHeaderWithFernStub(name),
+      fileHeader: Swift.makeHeaderWithFernStub(name),
       node: Swift.makeEnum({
         accessLevel: AccessLevel.Public,
         name: name,

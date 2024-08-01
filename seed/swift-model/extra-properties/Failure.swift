@@ -13,9 +13,9 @@ public struct Failure: Codable {
         case status = "status"
     }
 
-    public let status: string :: literal TODO
+    public let status: String
 
-    public init(status: string :: literal TODO) {
+    public init(status: String) {
         self.status = status
     }
 

@@ -1,5 +1,5 @@
 import { Writer } from "@fern-api/generator-commons";
-import { Enum, SwiftClass } from "..";
+import Swift, { Enum, SwiftClass } from "..";
 
 /*
 
@@ -34,7 +34,6 @@ Breakdown:
 
 export declare namespace SwiftDictionary {
     interface Args {
-        class: SwiftClass;
         /* Key Type */
         keyClass: SwiftClass | Enum;
         /* Value Type */
@@ -46,13 +45,14 @@ export declare namespace SwiftDictionary {
 export class SwiftDictionary extends SwiftClass {
 
     constructor(args: SwiftDictionary.Args) {
+        const clazz = Swift.makeClass({ name: "Dictionary" });
         super({
-          accessLevel: args.class.accessLevel,
+          accessLevel: clazz.accessLevel,
           name: `[${args.keyClass.name}: ${args.valueClass.name}]`,
-          subclasses: args.class.subclasses,
-          fields: args.class.fields,
-          functions: args.class.functions,
-          inheritance: args.class.inheritance,
+          subclasses: clazz.subclasses,
+          fields: clazz.fields,
+          functions: clazz.functions,
+          inheritance: clazz.inheritance,
         });
       }
     

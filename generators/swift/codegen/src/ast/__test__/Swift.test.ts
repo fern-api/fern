@@ -18,7 +18,7 @@ describe("Swift Language", () => {
     });
 
     it("uses a factory", () => {
-        const output = Swift.factories.enums.makeCodingKeys([]);
+        const output = Swift.makeCodingKeys([]);
         expect(output.render()).toMatchSnapshot();
     });
 
@@ -34,7 +34,7 @@ describe("Swift Language", () => {
         const output = Swift.makeEnum({
             name: "CodingKeys",
             inheritance: [
-                Swift.factories.primatives.makeString(),
+                Swift.makeString(),
                 Swift.makeClass({ name: "CodingKey" })
             ],
             enumCases: [
@@ -59,11 +59,11 @@ describe("Swift Language", () => {
             params: [
                 Swift.makeParam({
                     title: "name",
-                    class: Swift.factories.primatives.makeString()
+                    class: Swift.makeString()
                 }),
                 Swift.makeParam({
                     title: "age",
-                    class: Swift.factories.primatives.makeString(),
+                    class: Swift.makeString(),
                     defaultValue: "TODO"
                 })
             ]
@@ -168,7 +168,7 @@ describe("Swift Language", () => {
                         name: "closeDoor",
                         async: true,
                         throws: true,
-                        returnClass: Swift.factories.primatives.makeInt()
+                        returnClass: Swift.makeInt()
                     })
                 ]
             })

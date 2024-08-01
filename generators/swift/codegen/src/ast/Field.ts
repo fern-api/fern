@@ -1,5 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Swift, { AccessLevel, SwiftClass } from "..";
+import Swift, { AccessLevel, Enum, SwiftClass } from "..";
 import { Optional } from "./Optional";
 import { VariableType } from "./VariableType";
 
@@ -9,7 +9,7 @@ export declare namespace Field {
         accessLevel?: AccessLevel;
         variableType?: VariableType;
         name: string;
-        class: SwiftClass | Optional,
+        class: SwiftClass | Optional | Enum,
     }
 }
 
@@ -18,7 +18,7 @@ export class Field extends AstNode {
     public readonly accessLevel?: AccessLevel;
     public readonly variableType?: VariableType;
     public readonly name: string;
-    public readonly class: SwiftClass | Optional;
+    public readonly class: SwiftClass | Optional | Enum;
 
     constructor(args: Field.Args) {
         super(Swift.indentSize);
