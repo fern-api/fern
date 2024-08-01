@@ -1541,6 +1541,7 @@ class EndpointFunctionSnippetGenerator:
             request_parameter_names,
             as_request=True,
             use_typeddict_request=self.context.custom_config.pydantic_config.use_typeddict_requests,
+            in_typeddict=False,
         )
 
     def _get_snippet_for_request_reference(

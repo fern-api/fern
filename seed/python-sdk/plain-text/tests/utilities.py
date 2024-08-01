@@ -78,8 +78,10 @@ def validate_field(response: typing.Any, json_expectation: typing.Any, type_expe
 
     # When dealing with containers of models, etc. we're validating them implicitly, so no need to check the resultant list
     if not is_container_of_complex_type:
-        assert json_expectation == response, "Primitives found, expected: {0}, Actual: {1}".format(
-            json_expectation, response
+        assert (
+            json_expectation == response
+        ), "Primitives found, expected: {0} (type: {1}), Actual: {2} (type: {3})".format(
+            json_expectation, type(json_expectation), response, type(response)
         )
 
 
@@ -101,9 +103,12 @@ def validate_response(response: typing.Any, json_expectation: typing.Any, type_e
         assert len(response) == len(json_expectation), "Length mismatch, expected: {0}, Actual: {1}".format(
             len(response), len(json_expectation)
         )
+        content_expectation = type_expectations
+        if isinstance(type_expectations, tuple):
+            content_expectation = type_expectations[1]
         for idx, item in enumerate(response):
             validate_response(
-                response=item, json_expectation=json_expectation[idx], type_expectations=type_expectations[idx]
+                response=item, json_expectation=json_expectation[idx], type_expectations=content_expectation[idx]
             )
     else:
         response_json = response

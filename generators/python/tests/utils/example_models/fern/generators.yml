@@ -3,7 +3,7 @@ groups:
   dummy_types:
     generators:
       - name: ferntest/fern-pydantic-model
-        ir-version: v46
+        ir-version: v53
         version: 0.0.0
         output:
           location: local-file-system
