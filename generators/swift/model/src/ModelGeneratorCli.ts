@@ -8,6 +8,7 @@ import { z } from "zod";
 import EnumBuilder from "./builders/EnumBuilder";
 import ObjectBuilder from "./builders/ObjectBuilder";
 import TypeAliasBuilder from "./builders/TypeAliasBuilder";
+import UndiscriminatedUnionBuilder from "./builders/UndiscriminatedUnionBuilder";
 
 // Generate Models
 
@@ -19,10 +20,10 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
 
         // Build file for declaration
         const file = typeDeclaration.shape._visit<SwiftFile | undefined>({
-            alias: () => new TypeAliasBuilder(context, typeDeclaration).build(),
-            enum: (etd: EnumTypeDeclaration) => new EnumBuilder(context, typeDeclaration, etd).build(),
+            alias:                            () => new TypeAliasBuilder(context, typeDeclaration).build(),
+            enum:     (etd: EnumTypeDeclaration) => new EnumBuilder(context, typeDeclaration, etd).build(),
             object: (otd: ObjectTypeDeclaration) => new ObjectBuilder(context, typeDeclaration, otd).build(),
-            undiscriminatedUnion: () => undefined,
+            undiscriminatedUnion:             () => new UndiscriminatedUnionBuilder(context, typeDeclaration).build(),
             union: () => undefined,
             _other: () => undefined
         });

@@ -4,6 +4,7 @@ import { AccessLevel } from "./ast/AccessLevel";
 import { Comment } from "./ast/Comment";
 import { Enum } from "./ast/Enum";
 import { EnumCase } from "./ast/EnumCase";
+import { EnumCaseAssociatedValue } from "./ast/EnumCaseAssociatedValue";
 import { Field } from "./ast/Field";
 import { File } from "./ast/File";
 import { FileHeader } from "./ast/FileHeader";
@@ -23,6 +24,7 @@ export { AccessLevel } from "./ast/AccessLevel";
 export { Comment } from "./ast/Comment";
 export { Enum } from "./ast/Enum";
 export { EnumCase } from "./ast/EnumCase";
+export { EnumCaseAssociatedValue } from "./ast/EnumCaseAssociatedValue";
 export { Field } from "./ast/Field";
 export { File } from "./ast/File";
 export { FileHeader } from "./ast/FileHeader";
@@ -78,6 +80,10 @@ export default class Swift {
 
   public static makeEnumCase(args: EnumCase.Args): EnumCase {
     return new EnumCase(args);
+  }
+
+  public static makeEnumCaseAssociatedValue(args: EnumCaseAssociatedValue.Args): EnumCaseAssociatedValue {
+    return new EnumCaseAssociatedValue(args);
   }
 
   public static makeEnum(args: Enum.Args): Enum {
@@ -162,14 +168,14 @@ export default class Swift {
    * }
    * 
    */
-  public static makeCodingKeys(enumArgs: EnumCase.Args[]): Enum {
+  public static makeCodingKeys(args: EnumCase.Args[]): Enum {
     return Swift.makeEnum({
       name: "CodingKeys",
       inheritance: [
         Swift.makeString(),
         Swift.makeClass({ name: "CodingKey" })
       ],
-      enumCases: enumArgs.map(value => {
+      enumCases: args.map(value => {
         return Swift.makeEnumCase(value);
       })
     });
