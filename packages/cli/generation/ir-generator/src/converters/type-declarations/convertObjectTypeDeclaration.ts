@@ -14,7 +14,8 @@ export async function convertObjectTypeDeclaration({
     return Type.object({
         extends: getExtensionsAsList(object.extends).map((extended) => parseTypeName({ typeName: extended, file })),
         properties: await getObjectPropertiesFromRawObjectSchema(object, file),
-        extraProperties: object["extra-properties"] ?? false
+        extraProperties: object["extra-properties"] ?? false,
+        extendedProperties: undefined
     });
 }
 

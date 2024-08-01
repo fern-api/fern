@@ -376,7 +376,8 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_folder-b/common:Foo",
@@ -636,7 +637,8 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_folder-c/common:Foo"
@@ -789,7 +791,8 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "userProvidedExamples": [],
@@ -962,7 +965,8 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_commons:Imported"
@@ -1232,7 +1236,8 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "userProvidedExamples": [],
@@ -2298,7 +2303,8 @@
                                 "docs": null
                             }
                         ],
-                        "extra-properties": false
+                        "extra-properties": false,
+                        "extendedProperties": []
                     },
                     "sdkRequest": {
                         "shape": {

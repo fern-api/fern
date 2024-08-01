@@ -94,6 +94,9 @@ types:
       name: commons.Name
       extends: list<types.DeclaredTypeName>
       properties: list<InlinedRequestBodyProperty>
+      extendedProperties: 
+        type: optional<list<types.ObjectProperty>>
+        docs: A list of properties that all the parents of this request have. 
       contentType: optional<string>
       extra-properties:
         docs: Whether to allow extra properties on the request.

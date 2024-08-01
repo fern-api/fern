@@ -391,7 +391,8 @@
                         "docs": "The rating scale is one to five stars"
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_imdb:MovieId"
@@ -546,7 +547,8 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "userProvidedExamples": [],

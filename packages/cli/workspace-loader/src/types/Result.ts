@@ -1,13 +1,14 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { ZodError } from "zod";
-import { FernWorkspace, OSSWorkspace } from "../workspaces";
+import { OSSWorkspace } from "../workspaces";
+import { LazyFernWorkspace } from "../workspaces/FernWorkspace";
 
 export declare namespace WorkspaceLoader {
     export type Result = SuccessfulResult | FailedResult;
 
     export interface SuccessfulResult {
         didSucceed: true;
-        workspace: FernWorkspace | OSSWorkspace;
+        workspace: LazyFernWorkspace | OSSWorkspace;
     }
 
     export interface FailedResult {

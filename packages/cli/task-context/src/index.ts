@@ -1,4 +1,5 @@
 export { FernCliError } from "./FernCliError";
+export { LoggableFernCliError } from "./LoggableFernCliError";
 export { createMockTaskContext } from "./MockTaskContext";
 export {
     TaskResult,

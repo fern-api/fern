@@ -99,7 +99,8 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": true
+                "extra-properties": true,
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "userProvidedExamples": [],
@@ -215,7 +216,8 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": true
+                "extra-properties": true,
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "userProvidedExamples": [],
@@ -450,7 +452,8 @@
                                 "docs": null
                             }
                         ],
-                        "extra-properties": true
+                        "extra-properties": true,
+                        "extendedProperties": []
                     },
                     "sdkRequest": {
                         "shape": {

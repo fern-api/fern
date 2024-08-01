@@ -3419,7 +3419,7 @@ __metadata:
     ansi-escapes: ^5.0.0
     axios: ^0.28.0
     boxen: ^7.1.1
-    chalk: ^5.0.1
+    chalk: ^5.3.0
     depcheck: ^1.4.6
     env-cmd: toddbluhm/env-cmd
     esbuild: ^0.15.7
@@ -3604,7 +3604,7 @@ __metadata:
     "@types/uuid": ^9.0.8
     "@types/ws": ^8.5.10
     "@types/xml2js": ^0.4.14
-    chalk: ^5.0.1
+    chalk: ^5.3.0
     cors: ^2.8.5
     decompress: ^4.2.1
     depcheck: ^1.4.6
@@ -3902,7 +3902,7 @@ __metadata:
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     axios: ^0.28.0
-    chalk: ^5.0.1
+    chalk: ^5.3.0
     depcheck: ^1.4.6
     eslint: ^8.56.0
     fs-extra: ^11.1.1
@@ -4093,7 +4093,7 @@ __metadata:
     "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     "@types/tmp": ^0.2.4
-    chalk: ^5.0.1
+    chalk: ^5.3.0
     decompress: ^4.2.1
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -4112,7 +4112,7 @@ __metadata:
     "@fern-api/core-utils": "workspace:*"
     "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
-    chalk: ^5.0.1
+    chalk: ^5.3.0
     depcheck: ^1.4.6
     eslint: ^8.56.0
     jest: ^29.7.0
@@ -4155,7 +4155,7 @@ __metadata:
     "@types/qs": 6.9.15
     axios: ^0.28.0
     boxen: ^7.1.1
-    chalk: ^5.0.1
+    chalk: ^5.3.0
     depcheck: ^1.4.6
     eslint: ^8.56.0
     inquirer: ^9.2.23
@@ -4345,23 +4345,18 @@ __metadata:
   resolution: "@fern-api/project-loader@workspace:packages/cli/project-loader"
   dependencies:
     "@fern-api/configuration": "workspace:*"
-    "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
-    "@fern-api/logger": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@types/jest": ^29.5.12
-    "@types/js-yaml": ^4.0.8
     "@types/node": ^18.7.18
-    chalk: ^5.0.1
+    chalk: ^5.3.0
     depcheck: ^1.4.6
     eslint: ^8.56.0
     jest: ^29.7.0
-    js-yaml: ^4.1.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4
-    zod: ^3.22.3
   languageName: unknown
   linkType: soft
 
@@ -4419,7 +4414,7 @@ __metadata:
     "@types/tar": ^6.1.11
     "@types/terminal-link": ^1.2.0
     axios: ^0.28.0
-    chalk: ^5.0.1
+    chalk: ^5.3.0
     decompress: ^4.2.1
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -4494,7 +4489,7 @@ __metadata:
     "@types/node": ^18.7.18
     "@types/yargs": ^17.0.28
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
-    chalk: ^5.0.1
+    chalk: ^5.3.0
     depcheck: ^1.4.6
     esbuild: ^0.15.7
     eslint: ^8.56.0
@@ -4534,7 +4529,7 @@ __metadata:
     "@types/pretty-ms": ^5.0.1
     "@types/yargs": ^17.0.28
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
-    chalk: ^5.0.1
+    chalk: ^5.3.0
     console-table-printer: ^2.12.0
     depcheck: ^1.4.6
     env-cmd: toddbluhm/env-cmd
@@ -4645,7 +4640,7 @@ __metadata:
     "@types/jest": ^29.5.12
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
-    chalk: ^5.0.1
+    chalk: ^5.3.0
     depcheck: ^1.4.6
     eslint: ^8.56.0
     jest: ^29.7.0
@@ -4678,6 +4673,7 @@ __metadata:
     "@fern-api/core": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
+    "@fern-api/logger": "workspace:*"
     "@fern-api/openapi-ir-to-fern": "workspace:*"
     "@fern-api/openapi-parser": "workspace:*"
     "@fern-api/semver-utils": "workspace:*"
@@ -4690,6 +4686,7 @@ __metadata:
     "@types/node": ^18.7.18
     "@types/tar": ^6.1.11
     axios: ^0.28.0
+    chalk: ^5.3.0
     depcheck: ^1.4.6
     eslint: ^8.56.0
     jest: ^29.7.0
@@ -4716,7 +4713,7 @@ __metadata:
     "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     "@types/prettier": ^2.7.1
-    chalk: ^5.0.1
+    chalk: ^5.3.0
     depcheck: ^1.4.6
     eslint: ^8.56.0
     jest: ^29.7.0
@@ -4741,7 +4738,7 @@ __metadata:
     "@types/jest": ^29.5.12
     "@types/js-yaml": ^4.0.8
     "@types/node": ^18.7.18
-    chalk: ^5.0.1
+    chalk: ^5.3.0
     depcheck: ^1.4.6
     eslint: ^8.56.0
     find-up: ^6.3.0
