@@ -1,0 +1,16 @@
+api:
+  path: ./openapi/hume.yaml
+
+default-group: python-sdk
+groups:
+  python-sdk:
+    generators:
+      - name: fernapi/fern-pydantic-model
+        version: 1.0.0-rc0
+        output:
+          location: local-file-system
+          path: ../sdks/python
+        api:
+          settings:
+            unions: v1
+            use-title: false

@@ -36,7 +36,7 @@ describe("dependencies", () => {
             reject: false
         });
         expect(stripAnsi(stdout).trim()).toEqual(
-            "Dependency is not listed in dependencies.yml: @fern/unlisted-dependency"
+            "[api]: Dependency is not listed in dependencies.yml: @fern/unlisted-dependency"
         );
     }, 90_000);
 
@@ -45,7 +45,7 @@ describe("dependencies", () => {
             cwd: join(FIXTURES_DIR, RelativeFilePath.of("other-definitions-specified")),
             reject: false
         });
-        expect(stripAnsi(stdout).trim()).toEqual("Exported package contains API definitions: package1");
+        expect(stripAnsi(stdout).trim()).toEqual("[api]: Exported package contains API definitions: package1");
     }, 90_000);
 
     it("fails when exporting package marker has non-export keys", async () => {

@@ -13,7 +13,10 @@ export abstract class AbstractAPIWorkspace<Settings> {
     /**
      * @returns The Fern Definition that corresponds to this workspace
      */
-    public abstract getDefinition({ context }: { context: TaskContext }, settings?: Settings): Promise<FernDefinition>;
+    public abstract getDefinition({ context }: { context?: TaskContext }, settings?: Settings): Promise<FernDefinition>;
 
-    public abstract toFernWorkspace({ context }: { context: TaskContext }, settings?: Settings): Promise<FernWorkspace>;
+    public abstract toFernWorkspace(
+        { context }: { context?: TaskContext },
+        settings?: Settings
+    ): Promise<FernWorkspace>;
 }
