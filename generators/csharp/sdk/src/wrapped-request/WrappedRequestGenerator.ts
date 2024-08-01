@@ -95,7 +95,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 );
             },
             inlinedRequestBody: (request) => {
-                for (const property of [...request.properties]) {
+                for (const property of [...request.properties, ...(request.extendedProperties ?? [])]) {
                     const annotations: csharp.Annotation[] = [];
                     const maybeUndiscriminatedUnion = this.context.getAsUndiscriminatedUnionTypeDeclaration(
                         property.valueType
@@ -153,7 +153,6 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 for (const property of inlinedRequestBody.properties) {
                     orderedFields.push({ name: property.name.name, value: property.value });
                 }
-                // todo: handle extra properties here
             },
             _other: () => undefined
         });
