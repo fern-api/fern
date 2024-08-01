@@ -1,6 +1,6 @@
 import { wrapWithHttps } from "@fern-api/docs-resolver";
 import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
-import { dirname } from "@fern-api/fs-utils";
+import { dirname, doesPathExist } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
@@ -41,13 +41,22 @@ export async function runPreviewServer({
     context: TaskContext;
     port: number;
 }): Promise<void> {
-    const url = process.env.DOCS_PREVIEW_BUCKET;
-    if (url == null) {
-        context.failAndThrow("Failed to connect to the docs preview server. Please contact support@buildwithfern.com");
-        return;
+    try {
+        const url = process.env.DOCS_PREVIEW_BUCKET;
+        if (url == null) {
+            throw new Error("Failed to connect to the docs preview server. Please contact support@buildwithfern.com");
+        }
+        await downloadBundle({ bucketUrl: url, logger: context.logger, preferCached: true });
+    } catch (err) {
+        const pathToBundle = getPathToBundleFolder();
+        if (await doesPathExist(pathToBundle)) {
+            context.logger.warn("Failed to download latest docs application. Falling back to existing bundle.");
+        } else {
+            context.logger.warn("Failed to download docs application. Please reach out to support@buildwithfern.com.");
+            return;
+        }
     }
 
-    await downloadBundle({ bucketUrl: url, logger: context.logger, preferCached: true });
     const absoluteFilePathToFern = dirname(initialProject.config._absolutePath);
 
     const app = express();
