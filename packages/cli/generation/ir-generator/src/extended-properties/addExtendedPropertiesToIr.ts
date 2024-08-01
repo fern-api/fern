@@ -73,15 +73,6 @@ function addExtendedPropertiesToType({
                     )
                 }
             };
-        case "alias": {
-            if (typeDeclaration.shape.resolvedType.type === "named") {
-                return addExtendedPropertiesToType({
-                    typeDeclaration: getTypeDeclaration(typeDeclaration.shape.resolvedType.name.typeId, ir.types),
-                    ir
-                });
-            }
-            return typeDeclaration;
-        }
         default:
             return typeDeclaration;
     }
