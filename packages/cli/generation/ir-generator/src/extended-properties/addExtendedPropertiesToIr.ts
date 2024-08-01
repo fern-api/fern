@@ -8,9 +8,9 @@ import {
 } from "@fern-api/ir-sdk";
 import { LoggableFernCliError } from "@fern-api/task-context";
 
-export function addExtendedPrpoertiesToIr(
-    ir: Pick<IntermediateRepresentation, "types" | "services">
-): Pick<IntermediateRepresentation, "types" | "services"> {
+type TypesAndServices = Pick<IntermediateRepresentation, "types" | "services">;
+
+export function addExtendedPrpoertiesToIr(ir: TypesAndServices): TypesAndServices {
     return {
         types: Object.fromEntries(
             Object.entries(ir.types).map(([typeId, typeDeclaration]) => {
@@ -38,7 +38,7 @@ function addExtendedPrpoertiesToEndpoint({
     ir
 }: {
     endpoint: HttpEndpoint;
-    ir: IntermediateRepresentation;
+    ir: TypesAndServices;
 }): HttpEndpoint {
     if (endpoint.requestBody?.type !== "inlinedRequestBody") {
         return endpoint;
@@ -59,7 +59,7 @@ function addExtendedPrpoertiesToType({
     ir
 }: {
     typeDeclaration: TypeDeclaration;
-    ir: IntermediateRepresentation;
+    ir: TypesAndServices;
 }): TypeDeclaration {
     if (typeDeclaration.shape.type !== "object") {
         return typeDeclaration;
@@ -77,13 +77,13 @@ function addExtendedPrpoertiesToType({
 
 function getExtendedPropertiesForDeclaredTypeName(
     declaredTypeName: DeclaredTypeName,
-    ir: IntermediateRepresentation
+    ir: TypesAndServices
 ): ObjectProperty[] {
     const objectTypeDeclaration = getObjectTypeDeclarationFromTypeId(declaredTypeName.typeId, ir);
     return getAllPropertiesForObject({ objectTypeDeclaration, ir });
 }
 
-function getObjectTypeDeclarationFromTypeId(typeId: string, ir: IntermediateRepresentation): ObjectTypeDeclaration {
+function getObjectTypeDeclarationFromTypeId(typeId: string, ir: TypesAndServices): ObjectTypeDeclaration {
     const maybeType = ir.types[typeId];
     if (maybeType?.shape.type !== "object") {
         throw new LoggableFernCliError(
@@ -98,7 +98,7 @@ function getAllPropertiesForObject({
     ir
 }: {
     objectTypeDeclaration: ObjectTypeDeclaration;
-    ir: IntermediateRepresentation;
+    ir: TypesAndServices;
 }): ObjectProperty[] {
     const extendedProperties = objectTypeDeclaration.extends.flatMap((extended) => {
         const extendedObjectDeclaration = getObjectTypeDeclarationFromTypeId(extended.typeId, ir);
