@@ -98,6 +98,7 @@ export async function runPreviewServer({
                 context
             });
             context.logger.info(`Reload completed in ${Date.now() - startTime}ms`);
+            await validateProject(project);
             return newDocsDefinition;
         } catch (err) {
             context.logger.error("Failed to reload because of validation errors: ");

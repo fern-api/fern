@@ -6,6 +6,7 @@ import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 import { DocsWorkspace } from "./types/Workspace";
+import { APIWorkspace } from "./workspaces";
 
 export async function loadDocsWorkspace({
     fernDirectory,
@@ -29,7 +30,7 @@ export async function loadDocsWorkspace({
             absoluteFilepath: fernDirectory,
             config: docsConfiguration,
             workspaceName: undefined,
-            absoluteFilepathToDocsConfig: join(fernDirectory, RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME))
+            absoluteFilepathToDocsConfig: join(fernDirectory, RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME)),
         };
     }
     return undefined;
