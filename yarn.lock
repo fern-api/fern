@@ -3563,6 +3563,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/docs-markdown-utils@workspace:packages/cli/docs-markdown-utils"
   dependencies:
+    "@fern-api/fdr-sdk": 0.98.16-3955e989a
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@types/diff": ^5.2.1

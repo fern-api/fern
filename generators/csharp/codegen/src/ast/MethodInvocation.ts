@@ -13,7 +13,7 @@ export declare namespace MethodInvocation {
         /* A map of the field for the class and the value to be assigned to it. */
         arguments_: (CodeBlock | ClassInstantiation)[];
         /* In the event of an instance method, you'll want to invoke it on said instance */
-        on: CodeBlock;
+        on?: CodeBlock;
         /* Any generics used in the method invocation */
         generics?: csharp.Type[];
     }

@@ -3,45 +3,19 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Name } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
-
-export const HTTP_CLIENT_FIELD = csharp.field({
-    access: "public",
-    name: "HttpClient",
-    get: true,
-    init: true,
-    type: csharp.Type.reference(
-        csharp.classReference({
-            name: "HttpClient",
-            namespace: "System.Net.Http"
-        })
-    ),
-    initializer: csharp.codeblock("new HttpClient()"),
-    summary: "The http client used to make requests."
-});
-
-export const MAX_RETRIES_FIELD = csharp.field({
-    access: "public",
-    name: "MaxRetries",
-    get: true,
-    init: true,
-    type: csharp.Type.integer(),
-    initializer: csharp.codeblock("2"),
-    summary: "The http client used to make requests."
-});
-
-export const TIMEOUT_IN_SECONDS = csharp.field({
-    access: "public",
-    name: "TimeoutInSeconds",
-    get: true,
-    init: true,
-    type: csharp.Type.integer(),
-    initializer: csharp.codeblock("30"),
-    summary: "The timeout for the request in seconds."
-});
+import { BaseOptionsGenerator, BASE_URL_FIELD_NAME, BASE_URL_SUMMARY, OptionArgs } from "./BaseOptionsGenerator";
 
 export const CLIENT_OPTIONS_CLASS_NAME = "ClientOptions";
 
 export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+    private baseOptionsGenerator: BaseOptionsGenerator;
+
+    constructor(context: SdkGeneratorContext, baseOptionsGenerator: BaseOptionsGenerator) {
+        super(context);
+
+        this.baseOptionsGenerator = baseOptionsGenerator;
+    }
+
     public doGenerate(): CSharpFile {
         const class_ = csharp.class_({
             name: CLIENT_OPTIONS_CLASS_NAME,
@@ -49,10 +23,14 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
             partial: true,
             access: "public"
         });
+        const optionArgs: OptionArgs = {
+            optional: false,
+            includeInitializer: true
+        };
         class_.addField(this.getBaseUrlField());
-        class_.addField(HTTP_CLIENT_FIELD);
-        class_.addField(MAX_RETRIES_FIELD);
-        class_.addField(TIMEOUT_IN_SECONDS);
+        class_.addField(this.baseOptionsGenerator.getHttpClientField(optionArgs));
+        class_.addField(this.baseOptionsGenerator.getMaxRetriesField(optionArgs));
+        class_.addField(this.baseOptionsGenerator.getTimeoutField(optionArgs));
         return new CSharpFile({
             clazz: class_,
             directory: this.context.getCoreDirectory()
@@ -90,12 +68,12 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
                 singleBaseUrl: () => {
                     return csharp.field({
                         access: "public",
-                        name: "BaseUrl",
+                        name: BASE_URL_FIELD_NAME,
                         get: true,
                         init: true,
                         useRequired: defaultEnvironment != null,
                         type: csharp.Type.string(),
-                        summary: "The Base URL for the API.",
+                        summary: BASE_URL_SUMMARY,
                         initializer:
                             defaultEnvironment != null
                                 ? csharp.codeblock((writer) => {
@@ -132,12 +110,12 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
 
         return csharp.field({
             access: "public",
-            name: "BaseUrl",
+            name: BASE_URL_FIELD_NAME,
             get: true,
             init: true,
             useRequired: defaultEnvironment != null,
             type: csharp.Type.string(),
-            summary: "The Base URL for the API.",
+            summary: BASE_URL_SUMMARY,
             initializer:
                 defaultEnvironment != null
                     ? csharp.codeblock((writer) => {

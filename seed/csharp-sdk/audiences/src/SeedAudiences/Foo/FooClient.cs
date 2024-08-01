@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Text.Json;
 using SeedAudiences;
 using SeedAudiences.Core;
 
@@ -15,7 +16,7 @@ public class FooClient
         _client = client;
     }
 
-    public async Task<ImportingType> FindAsync(FindRequest request)
+    public async Task<ImportingType> FindAsync(FindRequest request, RequestOptions? options = null)
     {
         var _query = new Dictionary<string, object>() { };
         if (request.OptionalString != null)
@@ -28,14 +29,27 @@ public class FooClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<ImportingType>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<ImportingType>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedAudiencesException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedAudiencesApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }
