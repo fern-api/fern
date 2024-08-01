@@ -713,7 +713,8 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_:Shape"
@@ -1314,7 +1315,8 @@
                                 "docs": null
                             }
                         ],
-                        "extra-properties": false
+                        "extra-properties": false,
+                        "extendedProperties": []
                     },
                     "sdkRequest": {
                         "shape": {

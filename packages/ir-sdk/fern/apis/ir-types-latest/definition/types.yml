@@ -75,6 +75,9 @@ types:
         docs: A list of other types to inherit from
         type: list<DeclaredTypeName>
       properties: list<ObjectProperty>
+      extendedProperties: 
+        type: optional<list<ObjectProperty>>
+        docs: A list of properties that all the parents of this object have. 
       extra-properties:
         docs: Whether to allow extra properties on the object.
         type: boolean

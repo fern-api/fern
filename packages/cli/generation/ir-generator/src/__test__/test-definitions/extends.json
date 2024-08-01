@@ -128,7 +128,46 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "docs",
+                                "camelCase": {
+                                    "unsafeName": "docs",
+                                    "safeName": "docs"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "docs",
+                                    "safeName": "docs"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "DOCS",
+                                    "safeName": "DOCS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Docs",
+                                    "safeName": "Docs"
+                                }
+                            },
+                            "wireValue": "docs"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ]
             },
             "referencedTypes": [
                 "type_:Docs"
@@ -394,7 +433,83 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "raw",
+                                "camelCase": {
+                                    "unsafeName": "raw",
+                                    "safeName": "raw"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "raw",
+                                    "safeName": "raw"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "RAW",
+                                    "safeName": "RAW"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Raw",
+                                    "safeName": "Raw"
+                                }
+                            },
+                            "wireValue": "raw"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "docs",
+                                "camelCase": {
+                                    "unsafeName": "docs",
+                                    "safeName": "docs"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "docs",
+                                    "safeName": "docs"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "DOCS",
+                                    "safeName": "DOCS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Docs",
+                                    "safeName": "Docs"
+                                }
+                            },
+                            "wireValue": "docs"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ]
             },
             "referencedTypes": [
                 "type_:JSON",
@@ -697,7 +812,8 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "userProvidedExamples": [
@@ -897,7 +1013,46 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "docs",
+                                "camelCase": {
+                                    "unsafeName": "docs",
+                                    "safeName": "docs"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "docs",
+                                    "safeName": "docs"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "DOCS",
+                                    "safeName": "DOCS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Docs",
+                                    "safeName": "Docs"
+                                }
+                            },
+                            "wireValue": "docs"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ]
             },
             "referencedTypes": [
                 "type_:Docs"
