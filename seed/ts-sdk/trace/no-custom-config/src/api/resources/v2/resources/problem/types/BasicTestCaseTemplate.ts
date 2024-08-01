@@ -5,8 +5,8 @@
 import * as SeedTrace from "../../../../../index";
 
 export interface BasicTestCaseTemplate {
-    templateId: SeedTrace.v2.TestCaseTemplateId;
-    name: string;
-    description: SeedTrace.v2.TestCaseImplementationDescription;
-    expectedValueParameterId: SeedTrace.v2.ParameterId;
+    "templateId": SeedTrace.v2.TestCaseTemplateId;
+    "name": string;
+    "description": SeedTrace.v2.TestCaseImplementationDescription;
+    "expectedValueParameterId": SeedTrace.v2.ParameterId;
 }

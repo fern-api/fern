@@ -3,5 +3,5 @@
  */
 
 export interface WithPage {
-    page?: number;
+    "page"?: number;
 }

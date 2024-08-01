@@ -5,5 +5,5 @@
 import * as SeedTrace from "../../../index";
 
 export interface ProblemDescription {
-    boards: SeedTrace.ProblemDescriptionBoard[];
+    "boards": SeedTrace.ProblemDescriptionBoard[];
 }

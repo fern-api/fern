@@ -5,5 +5,5 @@
 import * as SeedTrace from "../../../index";
 
 export interface DebugMapValue {
-    keyValuePairs: SeedTrace.DebugKeyValuePairs[];
+    "keyValuePairs": SeedTrace.DebugKeyValuePairs[];
 }

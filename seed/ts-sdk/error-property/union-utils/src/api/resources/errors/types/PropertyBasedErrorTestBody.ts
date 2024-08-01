@@ -3,5 +3,5 @@
  */
 
 export interface PropertyBasedErrorTestBody {
-    message: string;
+    "message": string;
 }

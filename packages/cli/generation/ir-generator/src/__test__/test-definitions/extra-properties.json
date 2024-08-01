@@ -1,4 +1,5 @@
 {
+    "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": {
         "originalName": "extra-properties",
@@ -98,7 +99,8 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": true
+                "extra-properties": true,
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "userProvidedExamples": [],
@@ -214,7 +216,8 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": true
+                "extra-properties": true,
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "userProvidedExamples": [],
@@ -449,7 +452,8 @@
                                 "docs": null
                             }
                         ],
-                        "extra-properties": true
+                        "extra-properties": true,
+                        "extendedProperties": []
                     },
                     "sdkRequest": {
                         "shape": {

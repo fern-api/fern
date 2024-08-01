@@ -1,7 +1,5 @@
 # Reference
-
 ## Optional
-
 <details><summary><code>client.optional.<a href="/src/api/resources/optional/client/Client.ts">sendOptionalBody</a>({ ...params }) -> string</code></summary>
 <dl>
 <dd>
@@ -16,12 +14,12 @@
 
 ```typescript
 await client.optional.sendOptionalBody({
-    string: {
-        key: "value",
-    },
+    "string": {
+        "key": "value"
+    }
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -35,20 +33,21 @@ await client.optional.sendOptionalBody({
 <dl>
 <dd>
 
-**request:** `Record<string, unknown>`
-
+**request:** `Record<string, unknown>` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Optional.RequestOptions`
+**requestOptions:** `Optional.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

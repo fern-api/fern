@@ -1,4 +1,5 @@
 {
+    "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": {
         "originalName": "pagination",
@@ -143,7 +144,8 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_:UsernamePage"
@@ -272,7 +274,8 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "userProvidedExamples": [],
@@ -524,7 +527,8 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "userProvidedExamples": [],
@@ -646,7 +650,8 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "userProvidedExamples": [],
@@ -825,7 +830,8 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_users:User"
@@ -1039,7 +1045,8 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_users:UserListContainer",
@@ -1164,7 +1171,8 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "userProvidedExamples": [],
@@ -1346,7 +1354,142 @@
                         "docs": "The totall number of /users"
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "data",
+                                "camelCase": {
+                                    "unsafeName": "data",
+                                    "safeName": "data"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "data",
+                                    "safeName": "data"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "DATA",
+                                    "safeName": "DATA"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Data",
+                                    "safeName": "Data"
+                                }
+                            },
+                            "wireValue": "data"
+                        },
+                        "valueType": {
+                            "_type": "named",
+                            "name": {
+                                "originalName": "UserListContainer",
+                                "camelCase": {
+                                    "unsafeName": "userListContainer",
+                                    "safeName": "userListContainer"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "user_list_container",
+                                    "safeName": "user_list_container"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "USER_LIST_CONTAINER",
+                                    "safeName": "USER_LIST_CONTAINER"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "UserListContainer",
+                                    "safeName": "UserListContainer"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [
+                                    {
+                                        "originalName": "users",
+                                        "camelCase": {
+                                            "unsafeName": "users",
+                                            "safeName": "users"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "users",
+                                            "safeName": "users"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "USERS",
+                                            "safeName": "USERS"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Users",
+                                            "safeName": "Users"
+                                        }
+                                    }
+                                ],
+                                "packagePath": [],
+                                "file": {
+                                    "originalName": "users",
+                                    "camelCase": {
+                                        "unsafeName": "users",
+                                        "safeName": "users"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "users",
+                                        "safeName": "users"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "USERS",
+                                        "safeName": "USERS"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Users",
+                                        "safeName": "Users"
+                                    }
+                                }
+                            },
+                            "typeId": "type_users:UserListContainer",
+                            "default": null,
+                            "inline": null
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "next",
+                                "camelCase": {
+                                    "unsafeName": "next",
+                                    "safeName": "next"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "next",
+                                    "safeName": "next"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "NEXT",
+                                    "safeName": "NEXT"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Next",
+                                    "safeName": "Next"
+                                }
+                            },
+                            "wireValue": "next"
+                        },
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "UUID",
+                                        "v2": null
+                                    }
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ]
             },
             "referencedTypes": [
                 "type_users:UserPage",
@@ -1666,7 +1809,8 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_users:Page",
@@ -1960,7 +2104,8 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_users:NextPage"
@@ -2115,7 +2260,8 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "userProvidedExamples": [],
@@ -2268,7 +2414,8 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "userProvidedExamples": [],
@@ -4200,7 +4347,8 @@
                                 "docs": "The object that contains the cursor used for pagination\nin order to fetch the next page of results.\n"
                             }
                         ],
-                        "extra-properties": false
+                        "extra-properties": false,
+                        "extendedProperties": []
                     },
                     "sdkRequest": {
                         "shape": {
@@ -7390,7 +7538,8 @@
                                 "docs": "The object that contains the offset used for pagination\nin order to fetch the next page of results.\n"
                             }
                         ],
-                        "extra-properties": false
+                        "extra-properties": false,
+                        "extendedProperties": []
                     },
                     "sdkRequest": {
                         "shape": {

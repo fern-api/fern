@@ -4,8 +4,11 @@ import { Writer } from "./core/Writer";
 type InternalPrimitiveInstantiation =
     | IntegerInstantiation
     | LongInstantiation
+    | UintInstantiation
+    | UlongInstantiation
     | StringInstantiation
     | BooleanInstantiation
+    | FloatInstanation
     | DoubleInstantiation
     | DateInstantiation
     | DateTimeInstantiation
@@ -22,6 +25,16 @@ interface LongInstantiation {
     value: number;
 }
 
+interface UintInstantiation {
+    type: "uint";
+    value: number;
+}
+
+interface UlongInstantiation {
+    type: "ulong";
+    value: number;
+}
+
 interface StringInstantiation {
     type: "string";
     value: string;
@@ -30,6 +43,11 @@ interface StringInstantiation {
 interface BooleanInstantiation {
     type: "boolean";
     value: boolean;
+}
+
+interface FloatInstanation {
+    type: "float";
+    value: number;
 }
 
 interface DoubleInstantiation {
@@ -69,10 +87,19 @@ export class PrimitiveInstantiation extends AstNode {
             case "long":
                 writer.write(this.internalType.value.toString());
                 break;
+            case "uint":
+                writer.write(this.internalType.value.toString());
+                break;
+            case "ulong":
+                writer.write(this.internalType.value.toString());
+                break;
             case "string":
                 writer.write(`"${PrimitiveInstantiation.escapeForCSharp(this.internalType.value)}"`);
                 break;
             case "boolean":
+                writer.write(this.internalType.value.toString());
+                break;
+            case "float":
                 writer.write(this.internalType.value.toString());
                 break;
             case "double":
@@ -133,6 +160,27 @@ export class PrimitiveInstantiation extends AstNode {
     public static long(value: number): PrimitiveInstantiation {
         return new this({
             type: "long",
+            value
+        });
+    }
+
+    public static uint(value: number): PrimitiveInstantiation {
+        return new this({
+            type: "uint",
+            value
+        });
+    }
+
+    public static ulong(value: number): PrimitiveInstantiation {
+        return new this({
+            type: "ulong",
+            value
+        });
+    }
+
+    public static float(value: number): PrimitiveInstantiation {
+        return new this({
+            type: "float",
             value
         });
     }

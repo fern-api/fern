@@ -21,7 +21,17 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 "../getResponseBody": "../../../src/core/fetcher/getResponseBody",
                 "../makeRequest": "../../../src/core/fetcher/makeRequest",
                 "../requestWithRetries": "../../../src/core/fetcher/requestWithRetries",
-                "../signals": "../../../src/core/fetcher/signals"
+                "../signals": "../../../src/core/fetcher/signals",
+                "../../stream-wrappers/Node18UniversalStreamWrapper":
+                    "../../../../src/core/fetcher/stream-wrappers/Node18UniversalStreamWrapper",
+                "../../stream-wrappers/NodePre18StreamWrapper":
+                    "../../../../src/core/fetcher/stream-wrappers/NodePre18StreamWrapper",
+                "../../stream-wrappers/UndiciStreamWrapper":
+                    "../../../../src/core/fetcher/stream-wrappers/UndiciStreamWrapper",
+                "../../stream-wrappers/chooseStreamWrapper":
+                    "../../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper",
+                "../stream-wrappers/chooseStreamWrapper":
+                    "../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper"
             }
         },
         originalPathOnDocker: AbsoluteFilePath.of("/assets/fetcher/fetcher"),

@@ -29,7 +29,7 @@ groups:
         output:
           location: maven
           url: maven.buildwithfern.com
-          coordinate: com.fern.fern:irV52
+          coordinate: com.fern.fern:irV53
         config:
           wrapped-aliases: true
           enable-forward-compatible-enums: true
@@ -40,7 +40,7 @@ groups:
         output:
           location: pypi
           url: pypi.buildwithfern.com
-          package-name: fern_fern_ir_v52
+          package-name: fern_fern_ir_v53
         config:
           wrapped_aliases: true
           include_union_utils: true

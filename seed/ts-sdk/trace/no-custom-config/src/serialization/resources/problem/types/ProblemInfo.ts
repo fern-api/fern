@@ -12,31 +12,30 @@ import { Language } from "../../commons/types/Language";
 import { VariableTypeAndName } from "./VariableTypeAndName";
 import { TestCaseWithExpectedResult } from "../../commons/types/TestCaseWithExpectedResult";
 
-export const ProblemInfo: core.serialization.ObjectSchema<serializers.ProblemInfo.Raw, SeedTrace.ProblemInfo> =
-    core.serialization.object({
-        problemId: ProblemId,
-        problemDescription: ProblemDescription,
-        problemName: core.serialization.string(),
-        problemVersion: core.serialization.number(),
-        files: core.serialization.record(Language, ProblemFiles.optional()),
-        inputParams: core.serialization.list(VariableTypeAndName),
-        outputType: core.serialization.lazy(() => serializers.VariableType),
-        testcases: core.serialization.list(TestCaseWithExpectedResult),
-        methodName: core.serialization.string(),
-        supportsCustomTestCases: core.serialization.boolean(),
+export const ProblemInfo: core.serialization.ObjectSchema<serializers.ProblemInfo.Raw, SeedTrace.ProblemInfo> = core.serialization.object({
+        "problemId": ProblemId,
+        "problemDescription": ProblemDescription,
+        "problemName": core.serialization.string(),
+        "problemVersion": core.serialization.number(),
+        "files": core.serialization.record(Language, ProblemFiles.optional()),
+        "inputParams": core.serialization.list(VariableTypeAndName),
+        "outputType": core.serialization.lazy(() => serializers.VariableType),
+        "testcases": core.serialization.list(TestCaseWithExpectedResult),
+        "methodName": core.serialization.string(),
+        "supportsCustomTestCases": core.serialization.boolean()
     });
 
 export declare namespace ProblemInfo {
     interface Raw {
-        problemId: ProblemId.Raw;
-        problemDescription: ProblemDescription.Raw;
-        problemName: string;
-        problemVersion: number;
-        files: Record<Language.Raw, ProblemFiles.Raw | null | undefined>;
-        inputParams: VariableTypeAndName.Raw[];
-        outputType: serializers.VariableType.Raw;
-        testcases: TestCaseWithExpectedResult.Raw[];
-        methodName: string;
-        supportsCustomTestCases: boolean;
+        "problemId": ProblemId.Raw;
+        "problemDescription": ProblemDescription.Raw;
+        "problemName": string;
+        "problemVersion": number;
+        "files": Record<Language.Raw, ProblemFiles.Raw | null | undefined>;
+        "inputParams": VariableTypeAndName.Raw[];
+        "outputType": serializers.VariableType.Raw;
+        "testcases": TestCaseWithExpectedResult.Raw[];
+        "methodName": string;
+        "supportsCustomTestCases": boolean;
     }
 }

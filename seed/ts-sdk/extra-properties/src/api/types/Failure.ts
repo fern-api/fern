@@ -3,5 +3,5 @@
  */
 
 export interface Failure {
-    status: "failure";
+    "status": "failure";
 }

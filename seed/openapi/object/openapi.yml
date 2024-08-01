@@ -88,6 +88,20 @@ components:
             - eighteen
         nineteen:
           $ref: '#/components/schemas/Name'
+        twenty:
+          type: integer
+          example: 20
+        twentyone:
+          type: integer
+          format: int64
+          example: 21
+        twentytwo:
+          type: number
+          format: double
+          example: 22.22
+        twentythree:
+          type: string
+          example: '23'
       required:
         - one
         - two
@@ -107,6 +121,10 @@ components:
         - seventeen
         - eighteen
         - nineteen
+        - twenty
+        - twentyone
+        - twentytwo
+        - twentythree
     Name:
       title: Name
       type: object

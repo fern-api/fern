@@ -3,7 +3,7 @@
  */
 
 export const SeedTraceEnvironment = {
-    Prod: "https://api.trace.come",
-} as const;
+        Prod: "https://api.trace.come",
+    } as const;
 
 export type SeedTraceEnvironment = typeof SeedTraceEnvironment.Prod;

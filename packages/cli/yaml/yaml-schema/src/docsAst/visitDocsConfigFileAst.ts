@@ -1,5 +1,5 @@
 import { docsYml } from "@fern-api/configuration";
-import { parseImagePaths, replaceReferencedMarkdown } from "@fern-api/docs-markdown-utils";
+import { parseImagePaths, replaceReferencedCode, replaceReferencedMarkdown } from "@fern-api/docs-markdown-utils";
 import { AbsoluteFilePath, dirname, doesPathExist, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
@@ -43,6 +43,12 @@ export async function visitDocsConfigFileYamlAst(
     // this should happen before we parse image paths, as the referenced markdown files may contain images.
     for (const [relativePath, markdown] of Object.entries(pageEntries)) {
         pageEntries[RelativeFilePath.of(relativePath)] = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMdx: resolve(absolutePathToFernFolder, relativePath),
+            context
+        });
+        pageEntries[RelativeFilePath.of(relativePath)] = await replaceReferencedCode({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMdx: resolve(absolutePathToFernFolder, relativePath),

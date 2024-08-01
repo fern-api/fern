@@ -16,7 +16,8 @@ pip install fern_pagination
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedPagination, WithCursor
+from seed import SeedPagination
+from seed.users import WithCursor
 
 client = SeedPagination(
     token="YOUR_TOKEN",
@@ -41,7 +42,8 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedPagination, WithCursor
+from seed import AsyncSeedPagination
+from seed.users import WithCursor
 
 client = AsyncSeedPagination(
     token="YOUR_TOKEN",
@@ -71,7 +73,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```python
-from .api_error import ApiError
+from seed.core.api_error import ApiError
 
 try:
     client.users.list_with_body_cursor_pagination(...)

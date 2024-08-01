@@ -63,7 +63,11 @@ public class TypeTest
   ""nineteen"": {
     ""id"": ""name-129fsdj9"",
     ""value"": ""nineteen""
-  }
+  },
+  ""twenty"": 20,
+  ""twentyone"": 21,
+  ""twentytwo"": 22.22,
+  ""twentythree"": ""23""
 }
 ";
 

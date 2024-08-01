@@ -6,15 +6,14 @@ import * as serializers from "../../../index";
 import * as SeedResponseProperty from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const Movie: core.serialization.ObjectSchema<serializers.Movie.Raw, SeedResponseProperty.Movie> =
-    core.serialization.object({
-        id: core.serialization.string(),
-        name: core.serialization.string(),
+export const Movie: core.serialization.ObjectSchema<serializers.Movie.Raw, SeedResponseProperty.Movie> = core.serialization.object({
+        "id": core.serialization.string(),
+        "name": core.serialization.string()
     });
 
 export declare namespace Movie {
     interface Raw {
-        id: string;
-        name: string;
+        "id": string;
+        "name": string;
     }
 }

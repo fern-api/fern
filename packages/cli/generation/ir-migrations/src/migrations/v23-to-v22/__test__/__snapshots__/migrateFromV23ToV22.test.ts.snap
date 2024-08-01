@@ -10002,6 +10002,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
           "requestBody": {
             "_visit": [Function],
             "contentType": undefined,
+            "extendedProperties": [],
             "extends": [],
             "extraProperties": false,
             "name": {
@@ -12889,6 +12890,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "shape": {
         "_type": "object",
         "_visit": [Function],
+        "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
         "properties": [
@@ -13386,6 +13388,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "shape": {
         "_type": "object",
         "_visit": [Function],
+        "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
         "properties": [
@@ -13796,6 +13799,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "shape": {
         "_type": "object",
         "_visit": [Function],
+        "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
         "properties": [
@@ -14089,6 +14093,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "shape": {
         "_type": "object",
         "_visit": [Function],
+        "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
         "properties": [
@@ -14701,6 +14706,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "shape": {
         "_type": "object",
         "_visit": [Function],
+        "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
         "properties": [
@@ -15479,6 +15485,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "shape": {
         "_type": "object",
         "_visit": [Function],
+        "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
         "properties": [
@@ -15667,6 +15674,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "shape": {
         "_type": "object",
         "_visit": [Function],
+        "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
         "properties": [

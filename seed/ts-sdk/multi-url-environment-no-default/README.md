@@ -16,17 +16,11 @@ npm i -s @fern/multi-url-environment-no-default
 Instantiate and use the client with the following:
 
 ```typescript
-import {
-    SeedMultiUrlEnvironmentNoDefaultEnvironment,
-    SeedMultiUrlEnvironmentNoDefaultClient,
-} from "@fern/multi-url-environment-no-default";
+import { SeedMultiUrlEnvironmentNoDefaultEnvironment, SeedMultiUrlEnvironmentNoDefaultClient } from "@fern/multi-url-environment-no-default";
 
-const client = new SeedMultiUrlEnvironmentNoDefaultClient({
-    environment: SeedMultiUrlEnvironmentNoDefaultEnvironment.Production,
-    token: "YOUR_TOKEN",
-});
+const client = new SeedMultiUrlEnvironmentNoDefaultClient({ environment: SeedMultiUrlEnvironmentNoDefaultEnvironment.Production, token: "YOUR_TOKEN" });
 await client.ec2.bootInstance({
-    size: "string",
+    size: "string"
 });
 ```
 
@@ -36,7 +30,7 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedMultiUrlEnvironmentNoDefault } from "@fern/multi-url-environment-no-default";
+import { SeedMultiUrlEnvironmentNoDefault } from "@fern/multi-url-environment-no-default"; 
 
 const request: SeedMultiUrlEnvironmentNoDefault.BootInstanceRequest = {
     ...
@@ -72,9 +66,9 @@ retry limit (default: 2).
 
 A request is deemed retriable when any of the following HTTP status codes is returned:
 
--   [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
--   [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
--   [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
 
 Use the `maxRetries` request option to configure this behavior.
 
@@ -111,12 +105,12 @@ controller.abort(); // aborts the request
 The SDK defaults to `node-fetch` but will use the global fetch client if present. The SDK works in the following
 runtimes:
 
--   Node.js 18+
--   Vercel
--   Cloudflare Workers
--   Deno v1.25+
--   Bun 1.0+
--   React Native
+- Node.js 18+
+- Vercel
+- Cloudflare Workers
+- Deno v1.25+
+- Bun 1.0+
+- React Native
 
 ### Customizing Fetch Client
 

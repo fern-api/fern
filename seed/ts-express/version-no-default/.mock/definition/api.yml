@@ -1,0 +1,7 @@
+name: version
+version:
+  header: X-API-Version
+  values:
+    - "1.0.0"
+    - "2.0.0"
+    - "latest"

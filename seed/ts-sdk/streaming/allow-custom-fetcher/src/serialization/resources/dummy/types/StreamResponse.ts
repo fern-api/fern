@@ -6,17 +6,14 @@ import * as serializers from "../../../index";
 import * as SeedStreaming from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const StreamResponse: core.serialization.ObjectSchema<
-    serializers.StreamResponse.Raw,
-    SeedStreaming.StreamResponse
-> = core.serialization.object({
-    id: core.serialization.string(),
-    name: core.serialization.string().optional(),
-});
+export const StreamResponse: core.serialization.ObjectSchema<serializers.StreamResponse.Raw, SeedStreaming.StreamResponse> = core.serialization.object({
+        "id": core.serialization.string(),
+        "name": core.serialization.string().optional()
+    });
 
 export declare namespace StreamResponse {
     interface Raw {
-        id: string;
-        name?: string | null;
+        "id": string;
+        "name"?: string | null;
     }
 }

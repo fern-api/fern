@@ -4,7 +4,7 @@
 
 import * as SeedTrace from "../../../index";
 
-export type TestSubmissionUpdateInfo =
+export type TestSubmissionUpdateInfo = 
     | SeedTrace.TestSubmissionUpdateInfo.Running
     | SeedTrace.TestSubmissionUpdateInfo.Stopped
     | SeedTrace.TestSubmissionUpdateInfo.Errored

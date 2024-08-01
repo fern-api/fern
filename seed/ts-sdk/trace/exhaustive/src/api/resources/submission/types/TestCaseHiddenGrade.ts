@@ -3,5 +3,5 @@
  */
 
 export interface TestCaseHiddenGrade {
-    passed: boolean;
+    "passed": boolean;
 }

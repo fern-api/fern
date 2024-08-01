@@ -7,5 +7,5 @@ namespace SeedResponseProperty;
 public record WithMetadata
 {
     [JsonPropertyName("metadata")]
-    public Dictionary<string, string> Metadata { get; init; } = new Dictionary<string, string>();
+    public Dictionary<string, string> Metadata { get; set; } = new Dictionary<string, string>();
 }

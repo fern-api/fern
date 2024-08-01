@@ -23,8 +23,8 @@ class Base(UniversalBaseModel):
 
 
 class Shape_Circle(Base):
-    radius: float
     type: typing.Literal["circle"] = "circle"
+    radius: float
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -37,8 +37,8 @@ class Shape_Circle(Base):
 
 
 class Shape_Square(Base):
-    length: float
     type: typing.Literal["square"] = "square"
+    length: float
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

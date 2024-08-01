@@ -7,18 +7,16 @@ import * as core from "../../../../core";
 import * as SeedResponseProperty from "../../../../api/index";
 import { Response } from "../types/Response";
 
-export const Request: core.serialization.Schema<serializers.service.getOptionalMovie.Request.Raw, string> =
-    core.serialization.string();
+export const Request: core.serialization.Schema<serializers.service.getOptionalMovie.Request.Raw, string> = core.serialization.string();
 
 export declare namespace Request {
     type Raw = string;
 }
 
-export const Response: core.serialization.Schema<
-    serializers.service.getOptionalMovie.Response.Raw,
-    SeedResponseProperty.Response | undefined
-> = Response.optional();
+export const Response: core.serialization.Schema<serializers.service.getOptionalMovie.Response.Raw, SeedResponseProperty.Response | undefined> = Response.optional();
 
 export declare namespace Response {
     type Raw = Response.Raw | null | undefined;
 }
+
+

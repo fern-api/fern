@@ -6,13 +6,12 @@ import * as serializers from "../../../index";
 import * as SeedUnions from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const Square: core.serialization.ObjectSchema<serializers.Square.Raw, SeedUnions.Square> =
-    core.serialization.object({
-        length: core.serialization.number(),
+export const Square: core.serialization.ObjectSchema<serializers.Square.Raw, SeedUnions.Square> = core.serialization.object({
+        "length": core.serialization.number()
     });
 
 export declare namespace Square {
     interface Raw {
-        length: number;
+        "length": number;
     }
 }

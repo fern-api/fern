@@ -7,8 +7,8 @@ namespace SeedTrace;
 public record WorkspaceSubmissionUpdate
 {
     [JsonPropertyName("updateTime")]
-    public required DateTime UpdateTime { get; init; }
+    public required DateTime UpdateTime { get; set; }
 
     [JsonPropertyName("updateInfo")]
-    public required object UpdateInfo { get; init; }
+    public required object UpdateInfo { get; set; }
 }

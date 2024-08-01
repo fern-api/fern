@@ -5,6 +5,65 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.38.1] - 2024-08-01
+
+- Feature: A feature flag called `noScripts` has been introduced to prevent the generator
+  from running any scripts such as `yarn format` or `yarn install`. If any of the scripts 
+  cause errors, toggling this option will allow you to receive the generated code. 
+
+  ```
+  - name: fernapi/fern-typescript-node-sdk
+    version: 0.38.1
+    config: 
+      noScripts: true
+  ```
+
+## [0.38.0-rc0] - 2024-07-31
+
+- internal: Upgrade to IRv53.
+- chore: The generator now creates snippet templates for undiscriminated unions.
+
+## [0.37.0-rc0] - 2024-07-29
+
+- Feature: The business plan Typescript SDK will now generate wire tests if the feature flag 
+  in the configuration is turned on. 
+
+  ```
+  - name: fernapi/fern-typescript-node-sdk
+    version: 0.37.0-rc0
+    config: 
+      generateWireTests: true
+  ```
+
+## [0.36.6] - 2024-07-29
+
+- Fix: Now import paths are correctly added to getResponseBody tests. CI checks also added.
+
+## [0.36.5] - 2024-07-29
+
+- Fix: Now, server sent events are treated differently as streaming responses, to ensure the correct wrapping happens.
+
+## [0.36.4] - 2024-07-26
+
+- Fix: Now, import paths are correctly added to stream wrapper tests.
+
+## [0.36.3] - 2024-07-26
+
+- Fix: Support starting the stream on `StreamWrapper.pipe(...)` for shorter syntax when dealing with `node:stream` primitives.
+
+## [0.36.2] - 2024-07-26
+
+- Fix: This release comes with numerous improvements to streaming responses:
+
+  1. Introduces new stream wrapper polyfills that implement the ability to stream to more streams, per environment.
+  2. For `Node 18+`, stream responses can now be piped to `WritableStream`. They can also be streamed to `stream.Writable`, as possible before.
+  3. For `< Node 18`, stream responses can be piped to `stream.Writeable`, as before.
+  4. For `Browser` environments, stream responses can be piped to `WritableStream`.
+  5. For `Cloudflare Workers`, stream responses can be piped to `WritableStream`.
+
+- Fix: Now, there are generated unit tests for the `fetcher/stream-wrappers` core directory which makes sure that
+  Fern's stream wrapping from responses work as expected!
+
 ## [0.36.1] - 2024-07-16
 
 - Fix: Now, there are generated unit tests for the `auth` and `fetcher` core directory which makes sure that

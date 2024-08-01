@@ -16,7 +16,7 @@ import tmp from "tmp-promise";
 import { loadAPIWorkspace } from "./loadAPIWorkspace";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
 import { FernDefinition } from "./types/Workspace";
-import { FernWorkspace } from "./workspaces";
+import { FernWorkspace, OSSWorkspace } from "./workspaces";
 
 const FIDDLE = createFiddleService();
 
@@ -39,13 +39,15 @@ export async function loadDependency({
     dependenciesConfiguration,
     context,
     rootApiFile,
-    cliVersion
+    cliVersion,
+    settings
 }: {
     dependencyName: string;
     dependenciesConfiguration: dependenciesYml.DependenciesConfiguration;
     context: TaskContext;
     rootApiFile: RootApiFileSchema;
     cliVersion: string;
+    settings?: OSSWorkspace.Settings;
 }): Promise<loadDependency.Return> {
     let definition: FernDefinition | undefined;
     let failure: WorkspaceLoader.DependencyFailure = {
@@ -69,14 +71,16 @@ export async function loadDependency({
                         definition = await validateVersionedDependencyAndGetDefinition({
                             context: contextForDependency,
                             dependency,
-                            cliVersion
+                            cliVersion,
+                            settings
                         });
                         return;
                     case "local":
                         definition = await validateLocalDependencyAndGetDefinition({
                             context: contextForDependency,
                             dependency,
-                            cliVersion
+                            cliVersion,
+                            settings
                         });
                         return;
                     default:
@@ -96,11 +100,13 @@ export async function loadDependency({
 async function validateLocalDependencyAndGetDefinition({
     dependency,
     context,
-    cliVersion
+    cliVersion,
+    settings
 }: {
     dependency: dependenciesYml.LocalApiDependency;
     context: TaskContext;
     cliVersion: string;
+    settings?: OSSWorkspace.Settings;
 }): Promise<FernDefinition | undefined> {
     // parse workspace
     context.logger.info("Parsing...");
@@ -115,17 +121,19 @@ async function validateLocalDependencyAndGetDefinition({
         return undefined;
     }
 
-    return await loadDependencyWorkspaceResult.workspace.getDefinition({ context });
+    return await loadDependencyWorkspaceResult.workspace.getDefinition({ context }, settings);
 }
 
 async function validateVersionedDependencyAndGetDefinition({
     dependency,
     context,
-    cliVersion
+    cliVersion,
+    settings
 }: {
     dependency: dependenciesYml.VersionedDependency;
     context: TaskContext;
     cliVersion: string;
+    settings?: OSSWorkspace.Settings;
 }): Promise<FernDefinition | undefined> {
     // load API
     context.logger.info("Downloading manifest...");
@@ -218,7 +226,7 @@ async function validateVersionedDependencyAndGetDefinition({
         return undefined;
     }
 
-    return await loadDependencyWorkspaceResult.workspace.getDefinition({ context });
+    return await loadDependencyWorkspaceResult.workspace.getDefinition({ context }, settings);
 }
 
 async function getAreRootApiFilesEquivalent(

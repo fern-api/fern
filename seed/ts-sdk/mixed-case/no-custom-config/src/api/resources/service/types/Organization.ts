@@ -9,5 +9,5 @@
  *     }
  */
 export interface Organization {
-    name: string;
+    "name": string;
 }

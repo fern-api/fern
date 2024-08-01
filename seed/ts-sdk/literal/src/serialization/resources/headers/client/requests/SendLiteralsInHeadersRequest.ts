@@ -6,15 +6,12 @@ import * as serializers from "../../../../index";
 import * as SeedLiteral from "../../../../../api/index";
 import * as core from "../../../../../core";
 
-export const SendLiteralsInHeadersRequest: core.serialization.Schema<
-    serializers.SendLiteralsInHeadersRequest.Raw,
-    SeedLiteral.SendLiteralsInHeadersRequest
-> = core.serialization.object({
-    query: core.serialization.string(),
-});
+export const SendLiteralsInHeadersRequest: core.serialization.Schema<serializers.SendLiteralsInHeadersRequest.Raw, SeedLiteral.SendLiteralsInHeadersRequest> = core.serialization.object({
+        "query": core.serialization.string()
+    });
 
 export declare namespace SendLiteralsInHeadersRequest {
     interface Raw {
-        query: string;
+        "query": string;
     }
 }

@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../../../index";
 
 export interface NonVoidFunctionDefinition {
-    signature: SeedTrace.v2.NonVoidFunctionSignature;
-    code: SeedTrace.v2.FunctionImplementationForMultipleLanguages;
+    "signature": SeedTrace.v2.NonVoidFunctionSignature;
+    "code": SeedTrace.v2.FunctionImplementationForMultipleLanguages;
 }

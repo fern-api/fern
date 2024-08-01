@@ -6,10 +6,7 @@ import * as serializers from "../../../index";
 import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const SubmissionTypeEnum: core.serialization.Schema<
-    serializers.SubmissionTypeEnum.Raw,
-    SeedTrace.SubmissionTypeEnum
-> = core.serialization.enum_(["TEST"]);
+export const SubmissionTypeEnum: core.serialization.Schema<serializers.SubmissionTypeEnum.Raw, SeedTrace.SubmissionTypeEnum> = core.serialization.enum_(["TEST"]);
 
 export declare namespace SubmissionTypeEnum {
     type Raw = "TEST";

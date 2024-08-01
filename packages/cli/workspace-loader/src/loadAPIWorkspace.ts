@@ -1,22 +1,13 @@
-import {
-    ASYNCAPI_DIRECTORY,
-    DEFINITION_DIRECTORY,
-    dependenciesYml,
-    generatorsYml,
-    OPENAPI_DIRECTORY
-} from "@fern-api/configuration";
+import { ASYNCAPI_DIRECTORY, generatorsYml, OPENAPI_DIRECTORY } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { listFernFiles } from "./listFernFiles";
 import { loadAPIChangelog } from "./loadAPIChangelog";
 import { getValidAbsolutePathToAsyncAPIFromFolder } from "./loadAsyncAPIFile";
 import { getValidAbsolutePathToOpenAPIFromFolder } from "./loadOpenAPIFile";
-import { parseYamlFiles } from "./parseYamlFiles";
-import { processPackageMarkers } from "./processPackageMarkers";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
 import { APIChangelog, Spec } from "./types/Workspace";
-import { validateStructureOfYamlFiles } from "./validateStructureOfYamlFiles";
-import { FernWorkspace, OSSWorkspace } from "./workspaces";
+import { OSSWorkspace } from "./workspaces";
+import { LazyFernWorkspace } from "./workspaces/FernWorkspace";
 
 export async function loadAPIWorkspace({
     absolutePathToWorkspace,
@@ -144,50 +135,13 @@ export async function loadAPIWorkspace({
         };
     }
 
-    const absolutePathToDefinition = join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY));
-
-    const dependenciesConfiguration = await dependenciesYml.loadDependenciesConfiguration({
-        absolutePathToWorkspace,
-        context
-    });
-    const yamlFiles = await listFernFiles(absolutePathToDefinition, "{yml,yaml}");
-
-    const parseResult = await parseYamlFiles(yamlFiles);
-    if (!parseResult.didSucceed) {
-        return parseResult;
-    }
-
-    const structuralValidationResult = validateStructureOfYamlFiles({
-        files: parseResult.files,
-        absolutePathToDefinition
-    });
-    if (!structuralValidationResult.didSucceed) {
-        return structuralValidationResult;
-    }
-
-    const processPackageMarkersResult = await processPackageMarkers({
-        dependenciesConfiguration,
-        structuralValidationResult,
-        context,
-        cliVersion
-    });
-    if (!processPackageMarkersResult.didSucceed) {
-        return processPackageMarkersResult;
-    }
-
-    const fernWorkspace = new FernWorkspace({
+    const fernWorkspace = new LazyFernWorkspace({
         absoluteFilepath: absolutePathToWorkspace,
         generatorsConfiguration,
-        dependenciesConfiguration,
         workspaceName,
-        definition: {
-            absoluteFilepath: absolutePathToDefinition,
-            rootApiFile: structuralValidationResult.rootApiFile,
-            namedDefinitionFiles: structuralValidationResult.namedDefinitionFiles,
-            packageMarkers: processPackageMarkersResult.packageMarkers,
-            importedDefinitions: processPackageMarkersResult.importedDefinitions
-        },
-        changelog
+        changelog,
+        context,
+        cliVersion
     });
 
     return {

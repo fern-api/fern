@@ -36,27 +36,35 @@ import * as SeedObject from "../index";
  *         nineteen: {
  *             id: "name-129fsdj9",
  *             value: "nineteen"
- *         }
+ *         },
+ *         twenty: 20,
+ *         twentyone: 21,
+ *         twentytwo: 22.22,
+ *         twentythree: "23"
  *     }
  */
 export interface Type {
-    one: number;
-    two: number;
-    three: string;
-    four: boolean;
-    five: number;
-    six: Date;
-    seven: string;
-    eight: string;
-    nine: string;
-    ten: number[];
-    eleven: Set<number>;
-    twelve: Record<string, boolean>;
-    thirteen?: number;
-    fourteen?: unknown;
-    fifteen: number[][];
-    sixteen: Record<string, number>[];
-    seventeen: (string | undefined)[];
-    eighteen: "eighteen";
-    nineteen: SeedObject.Name;
+    "one": number;
+    "two": number;
+    "three": string;
+    "four": boolean;
+    "five": number;
+    "six": Date;
+    "seven": string;
+    "eight": string;
+    "nine": string;
+    "ten": number[];
+    "eleven": Set<number>;
+    "twelve": Record<string, boolean>;
+    "thirteen"?: number;
+    "fourteen"?: unknown;
+    "fifteen": number[][];
+    "sixteen": Record<string, number>[];
+    "seventeen": (string | undefined)[];
+    "eighteen": "eighteen";
+    "nineteen": SeedObject.Name;
+    "twenty": number;
+    "twentyone": number;
+    "twentytwo": number;
+    "twentythree": string;
 }

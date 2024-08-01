@@ -21,7 +21,7 @@ export declare namespace Fetcher {
         withCredentials?: boolean;
         abortSignal?: AbortSignal;
         requestType?: "json" | "file" | "bytes";
-        responseType?: "json" | "blob" | "streaming" | "text";
+        responseType?: "json" | "blob" | "sse" | "streaming" | "text";
         duplex?: "half";
     }
 
@@ -89,10 +89,6 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
         let responseBody = await getResponseBody(response, args.responseType);
 
         if (response.status >= 200 && response.status < 400) {
-            if (args.duplex && args.responseType === "streaming") {
-                responseBody = (await import("stream")).Readable.from(responseBody as any);
-            }
-
             return {
                 ok: true,
                 body: responseBody as R,

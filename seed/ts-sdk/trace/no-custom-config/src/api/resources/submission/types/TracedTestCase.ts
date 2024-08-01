@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../index";
 
 export interface TracedTestCase {
-    result: SeedTrace.TestCaseResultWithStdout;
-    traceResponsesSize: number;
+    "result": SeedTrace.TestCaseResultWithStdout;
+    "traceResponsesSize": number;
 }

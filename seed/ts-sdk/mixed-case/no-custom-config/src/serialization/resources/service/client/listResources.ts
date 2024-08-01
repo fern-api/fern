@@ -7,11 +7,10 @@ import * as SeedMixedCase from "../../../../api/index";
 import * as core from "../../../../core";
 import { Resource } from "../types/Resource";
 
-export const Response: core.serialization.Schema<
-    serializers.service.listResources.Response.Raw,
-    SeedMixedCase.Resource[]
-> = core.serialization.list(Resource);
+export const Response: core.serialization.Schema<serializers.service.listResources.Response.Raw, SeedMixedCase.Resource[]> = core.serialization.list(Resource);
 
 export declare namespace Response {
     type Raw = Resource.Raw[];
 }
+
+

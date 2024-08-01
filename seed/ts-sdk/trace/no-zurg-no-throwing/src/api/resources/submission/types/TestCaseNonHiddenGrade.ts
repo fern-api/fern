@@ -5,8 +5,8 @@
 import * as SeedTrace from "../../../index";
 
 export interface TestCaseNonHiddenGrade {
-    passed: boolean;
-    actualResult?: SeedTrace.VariableValue;
-    exception?: SeedTrace.ExceptionV2;
-    stdout: string;
+    "passed": boolean;
+    "actualResult"?: SeedTrace.VariableValue;
+    "exception"?: SeedTrace.ExceptionV2;
+    "stdout": string;
 }

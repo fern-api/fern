@@ -10,7 +10,7 @@ import { initializeAPI, initializeDocs } from "@fern-api/init";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import { askToLogin, login } from "@fern-api/login";
 import { loadProject, Project } from "@fern-api/project-loader";
-import { FernCliError } from "@fern-api/task-context";
+import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
 import getPort from "get-port";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
@@ -84,6 +84,8 @@ async function runCli() {
         if (error instanceof FernCliError) {
             // thrower is responsible for logging, so we generally don't need to log here.
             cliContext.failWithoutThrowing();
+        } else if (error instanceof LoggableFernCliError) {
+            cliContext.logger.error(`Failed. ${error.log}`);
         } else {
             cliContext.failWithoutThrowing("Failed.", error);
         }

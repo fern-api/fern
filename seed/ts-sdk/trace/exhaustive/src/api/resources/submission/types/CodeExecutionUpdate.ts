@@ -4,7 +4,7 @@
 
 import * as SeedTrace from "../../../index";
 
-export type CodeExecutionUpdate =
+export type CodeExecutionUpdate = 
     /**
      * Statuses if an executor for the session isn't ready (Before RunningResponse). */
     | SeedTrace.CodeExecutionUpdate.BuildingExecutor
@@ -105,195 +105,148 @@ export declare namespace CodeExecutionUpdate {
         recorded: (value: SeedTrace.RecordedResponseNotification) => _Result;
         invalidRequest: (value: SeedTrace.InvalidRequestResponse) => _Result;
         finished: (value: SeedTrace.FinishedResponse) => _Result;
-        _other: (value: { type: string }) => _Result;
+        _other: (value: {
+                type: string;
+            }) => _Result;
     }
 }
 
 export const CodeExecutionUpdate = {
-    buildingExecutor: (value: SeedTrace.BuildingExecutorResponse): SeedTrace.CodeExecutionUpdate.BuildingExecutor => {
-        return {
-            ...value,
-            type: "buildingExecutor",
-            _visit: function <_Result>(
-                this: SeedTrace.CodeExecutionUpdate.BuildingExecutor,
-                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>
-            ) {
-                return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
-            },
-        };
-    },
+        buildingExecutor: (value: SeedTrace.BuildingExecutorResponse): SeedTrace.CodeExecutionUpdate.BuildingExecutor => {
+            return {
+                ...value,
+                type: "buildingExecutor",
+                "_visit": function <_Result>(this: SeedTrace.CodeExecutionUpdate.BuildingExecutor, visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>) {
+                    return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
+                }
+            };
+        },
 
-    running: (value: SeedTrace.RunningResponse): SeedTrace.CodeExecutionUpdate.Running => {
-        return {
-            ...value,
-            type: "running",
-            _visit: function <_Result>(
-                this: SeedTrace.CodeExecutionUpdate.Running,
-                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>
-            ) {
-                return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
-            },
-        };
-    },
+        running: (value: SeedTrace.RunningResponse): SeedTrace.CodeExecutionUpdate.Running => {
+            return {
+                ...value,
+                type: "running",
+                "_visit": function <_Result>(this: SeedTrace.CodeExecutionUpdate.Running, visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>) {
+                    return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
+                }
+            };
+        },
 
-    errored: (value: SeedTrace.ErroredResponse): SeedTrace.CodeExecutionUpdate.Errored => {
-        return {
-            ...value,
-            type: "errored",
-            _visit: function <_Result>(
-                this: SeedTrace.CodeExecutionUpdate.Errored,
-                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>
-            ) {
-                return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
-            },
-        };
-    },
+        errored: (value: SeedTrace.ErroredResponse): SeedTrace.CodeExecutionUpdate.Errored => {
+            return {
+                ...value,
+                type: "errored",
+                "_visit": function <_Result>(this: SeedTrace.CodeExecutionUpdate.Errored, visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>) {
+                    return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
+                }
+            };
+        },
 
-    stopped: (value: SeedTrace.StoppedResponse): SeedTrace.CodeExecutionUpdate.Stopped => {
-        return {
-            ...value,
-            type: "stopped",
-            _visit: function <_Result>(
-                this: SeedTrace.CodeExecutionUpdate.Stopped,
-                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>
-            ) {
-                return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
-            },
-        };
-    },
+        stopped: (value: SeedTrace.StoppedResponse): SeedTrace.CodeExecutionUpdate.Stopped => {
+            return {
+                ...value,
+                type: "stopped",
+                "_visit": function <_Result>(this: SeedTrace.CodeExecutionUpdate.Stopped, visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>) {
+                    return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
+                }
+            };
+        },
 
-    graded: (value: SeedTrace.GradedResponse): SeedTrace.CodeExecutionUpdate.Graded => {
-        return {
-            ...value,
-            type: "graded",
-            _visit: function <_Result>(
-                this: SeedTrace.CodeExecutionUpdate.Graded,
-                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>
-            ) {
-                return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
-            },
-        };
-    },
+        graded: (value: SeedTrace.GradedResponse): SeedTrace.CodeExecutionUpdate.Graded => {
+            return {
+                ...value,
+                type: "graded",
+                "_visit": function <_Result>(this: SeedTrace.CodeExecutionUpdate.Graded, visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>) {
+                    return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
+                }
+            };
+        },
 
-    gradedV2: (value: SeedTrace.GradedResponseV2): SeedTrace.CodeExecutionUpdate.GradedV2 => {
-        return {
-            ...value,
-            type: "gradedV2",
-            _visit: function <_Result>(
-                this: SeedTrace.CodeExecutionUpdate.GradedV2,
-                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>
-            ) {
-                return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
-            },
-        };
-    },
+        gradedV2: (value: SeedTrace.GradedResponseV2): SeedTrace.CodeExecutionUpdate.GradedV2 => {
+            return {
+                ...value,
+                type: "gradedV2",
+                "_visit": function <_Result>(this: SeedTrace.CodeExecutionUpdate.GradedV2, visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>) {
+                    return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
+                }
+            };
+        },
 
-    workspaceRan: (value: SeedTrace.WorkspaceRanResponse): SeedTrace.CodeExecutionUpdate.WorkspaceRan => {
-        return {
-            ...value,
-            type: "workspaceRan",
-            _visit: function <_Result>(
-                this: SeedTrace.CodeExecutionUpdate.WorkspaceRan,
-                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>
-            ) {
-                return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
-            },
-        };
-    },
+        workspaceRan: (value: SeedTrace.WorkspaceRanResponse): SeedTrace.CodeExecutionUpdate.WorkspaceRan => {
+            return {
+                ...value,
+                type: "workspaceRan",
+                "_visit": function <_Result>(this: SeedTrace.CodeExecutionUpdate.WorkspaceRan, visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>) {
+                    return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
+                }
+            };
+        },
 
-    recording: (value: SeedTrace.RecordingResponseNotification): SeedTrace.CodeExecutionUpdate.Recording => {
-        return {
-            ...value,
-            type: "recording",
-            _visit: function <_Result>(
-                this: SeedTrace.CodeExecutionUpdate.Recording,
-                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>
-            ) {
-                return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
-            },
-        };
-    },
+        recording: (value: SeedTrace.RecordingResponseNotification): SeedTrace.CodeExecutionUpdate.Recording => {
+            return {
+                ...value,
+                type: "recording",
+                "_visit": function <_Result>(this: SeedTrace.CodeExecutionUpdate.Recording, visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>) {
+                    return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
+                }
+            };
+        },
 
-    recorded: (value: SeedTrace.RecordedResponseNotification): SeedTrace.CodeExecutionUpdate.Recorded => {
-        return {
-            ...value,
-            type: "recorded",
-            _visit: function <_Result>(
-                this: SeedTrace.CodeExecutionUpdate.Recorded,
-                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>
-            ) {
-                return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
-            },
-        };
-    },
+        recorded: (value: SeedTrace.RecordedResponseNotification): SeedTrace.CodeExecutionUpdate.Recorded => {
+            return {
+                ...value,
+                type: "recorded",
+                "_visit": function <_Result>(this: SeedTrace.CodeExecutionUpdate.Recorded, visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>) {
+                    return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
+                }
+            };
+        },
 
-    invalidRequest: (value: SeedTrace.InvalidRequestResponse): SeedTrace.CodeExecutionUpdate.InvalidRequest => {
-        return {
-            ...value,
-            type: "invalidRequest",
-            _visit: function <_Result>(
-                this: SeedTrace.CodeExecutionUpdate.InvalidRequest,
-                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>
-            ) {
-                return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
-            },
-        };
-    },
+        invalidRequest: (value: SeedTrace.InvalidRequestResponse): SeedTrace.CodeExecutionUpdate.InvalidRequest => {
+            return {
+                ...value,
+                type: "invalidRequest",
+                "_visit": function <_Result>(this: SeedTrace.CodeExecutionUpdate.InvalidRequest, visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>) {
+                    return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
+                }
+            };
+        },
 
-    finished: (value: SeedTrace.FinishedResponse): SeedTrace.CodeExecutionUpdate.Finished => {
-        return {
-            ...value,
-            type: "finished",
-            _visit: function <_Result>(
-                this: SeedTrace.CodeExecutionUpdate.Finished,
-                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>
-            ) {
-                return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
-            },
-        };
-    },
+        finished: (value: SeedTrace.FinishedResponse): SeedTrace.CodeExecutionUpdate.Finished => {
+            return {
+                ...value,
+                type: "finished",
+                "_visit": function <_Result>(this: SeedTrace.CodeExecutionUpdate.Finished, visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>) {
+                    return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
+                }
+            };
+        },
 
-    _unknown: (value: { type: string }): SeedTrace.CodeExecutionUpdate._Unknown => {
-        return {
-            ...(value as any),
-            _visit: function <_Result>(
-                this: SeedTrace.CodeExecutionUpdate._Unknown,
-                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>
-            ) {
-                return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
-            },
-        };
-    },
+        _unknown: (value: {
+            type: string;
+        }): SeedTrace.CodeExecutionUpdate._Unknown => {
+            return {
+                ...(value as any),
+                "_visit": function <_Result>(this: SeedTrace.CodeExecutionUpdate._Unknown, visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>) {
+                    return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
+                }
+            };
+        },
 
-    _visit: <_Result>(
-        value: SeedTrace.CodeExecutionUpdate,
-        visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>
-    ): _Result => {
-        switch (value.type) {
-            case "buildingExecutor":
-                return visitor.buildingExecutor(value);
-            case "running":
-                return visitor.running(value);
-            case "errored":
-                return visitor.errored(value);
-            case "stopped":
-                return visitor.stopped(value);
-            case "graded":
-                return visitor.graded(value);
-            case "gradedV2":
-                return visitor.gradedV2(value);
-            case "workspaceRan":
-                return visitor.workspaceRan(value);
-            case "recording":
-                return visitor.recording(value);
-            case "recorded":
-                return visitor.recorded(value);
-            case "invalidRequest":
-                return visitor.invalidRequest(value);
-            case "finished":
-                return visitor.finished(value);
-            default:
-                return visitor._other(value as any);
-        }
-    },
-} as const;
+        _visit: <_Result>(value: SeedTrace.CodeExecutionUpdate, visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>): _Result => {
+            switch (value.type) {
+                case "buildingExecutor": return visitor.buildingExecutor(value);
+                case "running": return visitor.running(value);
+                case "errored": return visitor.errored(value);
+                case "stopped": return visitor.stopped(value);
+                case "graded": return visitor.graded(value);
+                case "gradedV2": return visitor.gradedV2(value);
+                case "workspaceRan": return visitor.workspaceRan(value);
+                case "recording": return visitor.recording(value);
+                case "recorded": return visitor.recorded(value);
+                case "invalidRequest": return visitor.invalidRequest(value);
+                case "finished": return visitor.finished(value);
+                default: return visitor._other(value as any);
+            }
+        },
+    } as const;

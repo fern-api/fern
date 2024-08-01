@@ -5,8 +5,8 @@
 import * as SeedTrace from "../../../index";
 
 export type PlaylistId = string & {
-    PlaylistId: void;
-};
+        PlaylistId: void;
+    };
 
 export function PlaylistId(value: string): SeedTrace.PlaylistId {
     return value as unknown as SeedTrace.PlaylistId;

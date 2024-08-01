@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0-rc0] - 2024-07-31
+
+- Internal: The generator now consumes IRv53.
+
 ## [1.0.0-rc0] - 2024-07-16
 
 - Break: The generated server stubs now support Pydantic V2 outright, it no longer uses `pydantic.v1` models. This change introduces additional breaks:

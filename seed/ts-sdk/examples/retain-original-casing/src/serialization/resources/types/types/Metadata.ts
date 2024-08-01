@@ -7,42 +7,36 @@ import * as serializers from "../../../index";
 import * as SeedExamples from "../../../../api/index";
 
 const _Base = core.serialization.object({
-    extra: core.serialization.record(core.serialization.string(), core.serialization.string()),
-    tags: core.serialization.set(core.serialization.string()),
-});
-export const Metadata: core.serialization.Schema<serializers.Metadata.Raw, SeedExamples.Metadata> = core.serialization
-    .union("type", {
-        html: core.serialization
-            .object({
-                value: core.serialization.string(),
-            })
-            .extend(_Base),
-        markdown: core.serialization
-            .object({
-                value: core.serialization.string(),
-            })
-            .extend(_Base),
-    })
-    .transform<SeedExamples.Metadata>({
-        transform: (value) => value,
-        untransform: (value) => value,
+        "extra": core.serialization.record(core.serialization.string(), core.serialization.string()),
+        "tags": core.serialization.set(core.serialization.string())
+    });
+export const Metadata: core.serialization.Schema<serializers.Metadata.Raw, SeedExamples.Metadata> = core.serialization.union("type", {
+        "html": core.serialization.object({
+            "value": core.serialization.string()
+        }).extend(_Base),
+        "markdown": core.serialization.object({
+            "value": core.serialization.string()
+        }).extend(_Base)
+    }).transform<SeedExamples.Metadata>({
+        transform: value => value,
+        untransform: value => value
     });
 
 export declare namespace Metadata {
     type Raw = Metadata.Html | Metadata.Markdown;
 
     interface Html extends _Base {
-        type: "html";
-        value: string;
+        "type": "html";
+        "value": string;
     }
 
     interface Markdown extends _Base {
-        type: "markdown";
-        value: string;
+        "type": "markdown";
+        "value": string;
     }
 
     interface _Base {
-        extra: Record<string, string>;
-        tags: string[];
+        "extra": Record<string, string>;
+        "tags": string[];
     }
 }

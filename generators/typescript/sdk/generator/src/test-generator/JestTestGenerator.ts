@@ -70,7 +70,7 @@ export class JestTestGenerator {
         const folders = service.name.fernFilepath.packagePath.map((folder) => folder.originalName);
         const filename = `${service.name.fernFilepath.file?.camelCase.unsafeName ?? "main"}.test.ts`;
 
-        const filePath = path.join(...folders, filename);
+        const filePath = path.join("wire", ...folders, filename);
         return {
             directories: [],
             file: {
@@ -96,7 +96,8 @@ export class JestTestGenerator {
     public get scripts(): Record<string, string> {
         if (this.writeUnitTests) {
             return {
-                test: "fern test --command='jest'"
+                test: "jest tests/unit",
+                "wire:test": "npm install -g fern-api && fern test --command 'jest tests/wire'"
             };
         } else {
             return {
@@ -261,7 +262,11 @@ describe("test", () => {
         const notSupportedRequest =
             !!endpoint.requestBody &&
             (endpoint.requestBody.type === "bytes" || endpoint.requestBody.type === "fileUpload");
-        const shouldSkip = endpoint.idempotent || notSupportedResponse || notSupportedRequest;
+        const shouldSkip =
+            endpoint.idempotent ||
+            (endpoint.pagination != null && context.config.generatePaginatedClients) ||
+            notSupportedResponse ||
+            notSupportedRequest;
         if (shouldSkip) {
             return;
         }
@@ -317,6 +322,11 @@ describe("test", () => {
                             string: (value) => literalOf(value.original),
                             boolean: (value) => literalOf(value),
                             long: (value) => literalOf(value),
+                            uint: (value) => literalOf(value),
+                            uint64: (value) => literalOf(value),
+                            float: (value) => literalOf(value),
+                            base64: (value) => literalOf(value),
+                            bigInteger: (value) => literalOf(value),
                             datetime: (value) => code`new Date(${literalOf(value.toISOString())})`,
                             date: (value) => literalOf(value),
                             uuid: (value) => literalOf(value),
@@ -326,25 +336,25 @@ describe("test", () => {
                     container: (value) => {
                         return value._visit({
                             list: (value) => {
-                                return arrayOf(...value.map((item) => visitExampleTypeReference(item)));
+                                return arrayOf(...value.list.map((item) => visitExampleTypeReference(item)));
                             },
                             map: (value) => {
                                 return Object.fromEntries(
-                                    value.map((item) => {
+                                    value.map.map((item) => {
                                         return [item.key.jsonExample, visitExampleTypeReference(item.value)];
                                     })
                                 );
                             },
                             optional: (value) => {
-                                if (!value) {
+                                if (!value.optional) {
                                     return code`undefined`;
                                 }
-                                return visitExampleTypeReference(value);
+                                return visitExampleTypeReference(value.optional);
                             },
                             set: (value) => {
                                 // return code`new Set(${arrayOf(value.map(visitExampleTypeReference))})`;
                                 // Sets are not supported in ts-sdk
-                                return arrayOf(...value.map(visitExampleTypeReference));
+                                return arrayOf(...value.set.map(visitExampleTypeReference));
                             },
                             literal: (value) => {
                                 return jsonExample;

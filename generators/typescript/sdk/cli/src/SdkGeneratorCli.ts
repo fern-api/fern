@@ -6,8 +6,8 @@ import { JavaScriptRuntime, NpmPackage, PersistedTypescriptProject } from "@fern
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { SdkGenerator } from "@fern-typescript/sdk-generator";
 import { camelCase, upperFirst } from "lodash-es";
-import { SdkCustomConfig } from "./custom-config/SdkCustomConfig";
 import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSchema";
+import { SdkCustomConfig } from "./custom-config/SdkCustomConfig";
 
 export declare namespace SdkGeneratorCli {
     export interface Init {
@@ -56,7 +56,9 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             inlineFileProperties: parsed?.inlineFileProperties ?? false,
             packageJson: parsed?.packageJson,
             publishToJsr: parsed?.publishToJsr ?? false,
-            omitUndefined: parsed?.omitUndefined ?? false
+            omitUndefined: parsed?.omitUndefined ?? false,
+            generateWireTests: parsed?.generateWireTests ?? false,
+            noScripts: parsed?.noScripts ?? false
         };
     }
 
@@ -85,6 +87,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             context: generatorContext,
             npmPackage,
             generateJestTests: config.output.mode.type === "github",
+            rawConfig: config,
             config: {
                 organization: config.organization,
                 apiName: intermediateRepresentation.apiName.originalName,
@@ -127,7 +130,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 tolerateRepublish: customConfig.tolerateRepublish,
                 allowExtraFields: customConfig.allowExtraFields ?? false,
                 inlineFileProperties: customConfig.inlineFileProperties ?? false,
-                writeUnitTests: false,
+                writeUnitTests: customConfig.generateWireTests ?? config.writeUnitTests,
                 executionEnvironment: this.exectuionEnvironment(config),
                 packageJson: customConfig.packageJson,
                 githubRepoUrl: maybeGithubOutputMode?.repoUrl,
@@ -160,6 +163,10 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
 
     protected publishToJsr(customConfig: SdkCustomConfig): boolean {
         return customConfig.publishToJsr ?? false;
+    }
+
+    protected shouldRunScripts(customConfig: SdkCustomConfig): boolean {
+        return customConfig.noScripts ?? false;
     }
 
     protected exectuionEnvironment(config: FernGeneratorExec.GeneratorConfig): "local" | "dev" | "prod" {

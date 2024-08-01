@@ -9,30 +9,28 @@ import { Circle } from "./Circle";
 import { Square } from "./Square";
 
 const _Base = core.serialization.object({
-    id: core.serialization.string(),
-});
-export const Shape: core.serialization.Schema<serializers.Shape.Raw, SeedUnions.Shape> = core.serialization
-    .union("type", {
-        circle: Circle.extend(_Base),
-        square: Square.extend(_Base),
-    })
-    .transform<SeedUnions.Shape>({
-        transform: (value) => value,
-        untransform: (value) => value,
+        "id": core.serialization.string()
+    });
+export const Shape: core.serialization.Schema<serializers.Shape.Raw, SeedUnions.Shape> = core.serialization.union("type", {
+        "circle": Circle.extend(_Base),
+        "square": Square.extend(_Base)
+    }).transform<SeedUnions.Shape>({
+        transform: value => value,
+        untransform: value => value
     });
 
 export declare namespace Shape {
     type Raw = Shape.Circle | Shape.Square;
 
     interface Circle extends _Base, Circle.Raw {
-        type: "circle";
+        "type": "circle";
     }
 
     interface Square extends _Base, Square.Raw {
-        type: "square";
+        "type": "square";
     }
 
     interface _Base {
-        id: string;
+        "id": string;
     }
 }

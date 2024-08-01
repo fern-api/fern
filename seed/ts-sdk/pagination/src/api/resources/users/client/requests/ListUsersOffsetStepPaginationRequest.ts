@@ -16,12 +16,12 @@ export interface ListUsersOffsetStepPaginationRequest {
     /**
      * Defaults to first page
      */
-    page?: number;
+    "page"?: number;
     /**
      * The maxiumum number of elements to return.
      * This is also used as the step size in this
      * paginated endpoint.
      */
-    limit?: number;
-    order?: SeedPagination.Order;
+    "limit"?: number;
+    "order"?: SeedPagination.Order;
 }

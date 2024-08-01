@@ -6,9 +6,11 @@
  * @example
  *     SeedEnum.Color.Red
  */
-export type Color = "red" | "blue";
+export type Color = 
+    | "red"
+    | "blue";
 
 export const Color = {
-    Red: "red",
-    Blue: "blue",
-} as const;
+        Red: "red",
+        Blue: "blue"
+    } as const;

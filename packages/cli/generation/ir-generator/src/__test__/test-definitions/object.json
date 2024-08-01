@@ -1,4 +1,5 @@
 {
+    "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": {
         "originalName": "object",
@@ -819,9 +820,142 @@
                         },
                         "availability": null,
                         "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "twenty",
+                                "camelCase": {
+                                    "unsafeName": "twenty",
+                                    "safeName": "twenty"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "twenty",
+                                    "safeName": "twenty"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TWENTY",
+                                    "safeName": "TWENTY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Twenty",
+                                    "safeName": "Twenty"
+                                }
+                            },
+                            "wireValue": "twenty"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "UINT",
+                                "v2": null
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "twentyone",
+                                "camelCase": {
+                                    "unsafeName": "twentyone",
+                                    "safeName": "twentyone"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "twentyone",
+                                    "safeName": "twentyone"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TWENTYONE",
+                                    "safeName": "TWENTYONE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Twentyone",
+                                    "safeName": "Twentyone"
+                                }
+                            },
+                            "wireValue": "twentyone"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "UINT_64",
+                                "v2": null
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "twentytwo",
+                                "camelCase": {
+                                    "unsafeName": "twentytwo",
+                                    "safeName": "twentytwo"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "twentytwo",
+                                    "safeName": "twentytwo"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TWENTYTWO",
+                                    "safeName": "TWENTYTWO"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Twentytwo",
+                                    "safeName": "Twentytwo"
+                                }
+                            },
+                            "wireValue": "twentytwo"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "FLOAT",
+                                "v2": null
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "twentythree",
+                                "camelCase": {
+                                    "unsafeName": "twentythree",
+                                    "safeName": "twentythree"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "twentythree",
+                                    "safeName": "twentythree"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TWENTYTHREE",
+                                    "safeName": "TWENTYTHREE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Twentythree",
+                                    "safeName": "Twentythree"
+                                }
+                            },
+                            "wireValue": "twentythree"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "BIG_INTEGER",
+                                "v2": null
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_:Name"
@@ -2620,6 +2754,252 @@
                                     },
                                     "typeId": "type_:Type"
                                 }
+                            },
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "twenty",
+                                        "camelCase": {
+                                            "unsafeName": "twenty",
+                                            "safeName": "twenty"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "twenty",
+                                            "safeName": "twenty"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "TWENTY",
+                                            "safeName": "TWENTY"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Twenty",
+                                            "safeName": "Twenty"
+                                        }
+                                    },
+                                    "wireValue": "twenty"
+                                },
+                                "value": {
+                                    "shape": {
+                                        "type": "primitive",
+                                        "primitive": {
+                                            "type": "uint",
+                                            "uint": 20
+                                        }
+                                    },
+                                    "jsonExample": 20
+                                },
+                                "originalTypeDeclaration": {
+                                    "name": {
+                                        "originalName": "Type",
+                                        "camelCase": {
+                                            "unsafeName": "type",
+                                            "safeName": "type"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "type",
+                                            "safeName": "type"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "TYPE",
+                                            "safeName": "TYPE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Type",
+                                            "safeName": "Type"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "typeId": "type_:Type"
+                                }
+                            },
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "twentyone",
+                                        "camelCase": {
+                                            "unsafeName": "twentyone",
+                                            "safeName": "twentyone"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "twentyone",
+                                            "safeName": "twentyone"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "TWENTYONE",
+                                            "safeName": "TWENTYONE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Twentyone",
+                                            "safeName": "Twentyone"
+                                        }
+                                    },
+                                    "wireValue": "twentyone"
+                                },
+                                "value": {
+                                    "shape": {
+                                        "type": "primitive",
+                                        "primitive": {
+                                            "type": "uint64",
+                                            "uint64": 21
+                                        }
+                                    },
+                                    "jsonExample": 21
+                                },
+                                "originalTypeDeclaration": {
+                                    "name": {
+                                        "originalName": "Type",
+                                        "camelCase": {
+                                            "unsafeName": "type",
+                                            "safeName": "type"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "type",
+                                            "safeName": "type"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "TYPE",
+                                            "safeName": "TYPE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Type",
+                                            "safeName": "Type"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "typeId": "type_:Type"
+                                }
+                            },
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "twentytwo",
+                                        "camelCase": {
+                                            "unsafeName": "twentytwo",
+                                            "safeName": "twentytwo"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "twentytwo",
+                                            "safeName": "twentytwo"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "TWENTYTWO",
+                                            "safeName": "TWENTYTWO"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Twentytwo",
+                                            "safeName": "Twentytwo"
+                                        }
+                                    },
+                                    "wireValue": "twentytwo"
+                                },
+                                "value": {
+                                    "shape": {
+                                        "type": "primitive",
+                                        "primitive": {
+                                            "type": "float",
+                                            "float": 22.22
+                                        }
+                                    },
+                                    "jsonExample": 22.22
+                                },
+                                "originalTypeDeclaration": {
+                                    "name": {
+                                        "originalName": "Type",
+                                        "camelCase": {
+                                            "unsafeName": "type",
+                                            "safeName": "type"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "type",
+                                            "safeName": "type"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "TYPE",
+                                            "safeName": "TYPE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Type",
+                                            "safeName": "Type"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "typeId": "type_:Type"
+                                }
+                            },
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "twentythree",
+                                        "camelCase": {
+                                            "unsafeName": "twentythree",
+                                            "safeName": "twentythree"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "twentythree",
+                                            "safeName": "twentythree"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "TWENTYTHREE",
+                                            "safeName": "TWENTYTHREE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Twentythree",
+                                            "safeName": "Twentythree"
+                                        }
+                                    },
+                                    "wireValue": "twentythree"
+                                },
+                                "value": {
+                                    "shape": {
+                                        "type": "primitive",
+                                        "primitive": {
+                                            "type": "string",
+                                            "string": {
+                                                "original": "23"
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": "23"
+                                },
+                                "originalTypeDeclaration": {
+                                    "name": {
+                                        "originalName": "Type",
+                                        "camelCase": {
+                                            "unsafeName": "type",
+                                            "safeName": "type"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "type",
+                                            "safeName": "type"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "TYPE",
+                                            "safeName": "TYPE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Type",
+                                            "safeName": "Type"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "typeId": "type_:Type"
+                                }
                             }
                         ]
                     },
@@ -2670,7 +3050,11 @@
                         "nineteen": {
                             "id": "name-129fsdj9",
                             "value": "nineteen"
-                        }
+                        },
+                        "twenty": 20,
+                        "twentyone": 21,
+                        "twentytwo": 22.22,
+                        "twentythree": "23"
                     },
                     "docs": null
                 }
@@ -2786,7 +3170,8 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": false
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "userProvidedExamples": [

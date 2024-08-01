@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Text.Json;
 using SeedMixedCase;
 using SeedMixedCase.Core;
 
@@ -15,45 +16,72 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Task<object> GetResourceAsync(string resourceId)
+    public async Task<object> GetResourceAsync(string resourceId, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = $"/resource/{resourceId}"
+                Path = $"/resource/{resourceId}",
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<object>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<object>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedMixedCaseException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedMixedCaseApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
-    public async Task<IEnumerable<object>> ListResourcesAsync(ListResourcesRequest request)
+    public async Task<IEnumerable<object>> ListResourcesAsync(
+        ListResourcesRequest request,
+        RequestOptions? options = null
+    )
     {
-        var _query = new Dictionary<string, object>()
-        {
-            { "page_limit", request.PageLimit.ToString() },
-            { "beforeDate", request.BeforeDate.ToString() },
-        };
+        var _query = new Dictionary<string, object>() { };
+        _query["page_limit"] = request.PageLimit.ToString();
+        _query["beforeDate"] = request.BeforeDate.ToString();
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "/resource",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonUtils.Deserialize<IEnumerable<object>>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<IEnumerable<object>>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedMixedCaseException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedMixedCaseApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

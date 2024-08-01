@@ -7,8 +7,8 @@ namespace SeedTrace;
 public record TestCase
 {
     [JsonPropertyName("id")]
-    public required string Id { get; init; }
+    public required string Id { get; set; }
 
     [JsonPropertyName("params")]
-    public IEnumerable<object> Params { get; init; } = new List<object>();
+    public IEnumerable<object> Params { get; set; } = new List<object>();
 }

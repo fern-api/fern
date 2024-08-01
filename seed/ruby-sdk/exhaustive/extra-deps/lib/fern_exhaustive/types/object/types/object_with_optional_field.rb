@@ -9,7 +9,9 @@ module SeedExhaustiveClient
   module Types
     class Object_
       class ObjectWithOptionalField
-        # @return [String]
+        # @return [String] This is a rather long descriptor of this single field in a more complex type. If
+        #  you ask me I think this is a pretty good description for this field all things
+        #  considered.
         attr_reader :string
         # @return [Integer]
         attr_reader :integer
@@ -43,7 +45,9 @@ module SeedExhaustiveClient
 
         OMIT = Object.new
 
-        # @param string [String]
+        # @param string [String] This is a rather long descriptor of this single field in a more complex type. If
+        #  you ask me I think this is a pretty good description for this field all things
+        #  considered.
         # @param integer [Integer]
         # @param long [Long]
         # @param double [Float]

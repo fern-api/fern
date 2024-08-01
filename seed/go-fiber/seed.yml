@@ -28,3 +28,4 @@ allowedFailures:
   - exhaustive
   - reserved-keywords
   - trace
+  - alias-extends

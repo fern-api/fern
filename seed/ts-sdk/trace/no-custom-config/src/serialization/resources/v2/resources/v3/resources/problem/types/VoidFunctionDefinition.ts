@@ -8,17 +8,14 @@ import * as core from "../../../../../../../../core";
 import { Parameter } from "./Parameter";
 import { FunctionImplementationForMultipleLanguages } from "./FunctionImplementationForMultipleLanguages";
 
-export const VoidFunctionDefinition: core.serialization.ObjectSchema<
-    serializers.v2.v3.VoidFunctionDefinition.Raw,
-    SeedTrace.v2.v3.VoidFunctionDefinition
-> = core.serialization.object({
-    parameters: core.serialization.list(Parameter),
-    code: FunctionImplementationForMultipleLanguages,
-});
+export const VoidFunctionDefinition: core.serialization.ObjectSchema<serializers.v2.v3.VoidFunctionDefinition.Raw, SeedTrace.v2.v3.VoidFunctionDefinition> = core.serialization.object({
+        "parameters": core.serialization.list(Parameter),
+        "code": FunctionImplementationForMultipleLanguages
+    });
 
 export declare namespace VoidFunctionDefinition {
     interface Raw {
-        parameters: Parameter.Raw[];
-        code: FunctionImplementationForMultipleLanguages.Raw;
+        "parameters": Parameter.Raw[];
+        "code": FunctionImplementationForMultipleLanguages.Raw;
     }
 }

@@ -8,27 +8,22 @@ import * as core from "../../../../../../../../core";
 import { DeepEqualityCorrectnessCheck } from "./DeepEqualityCorrectnessCheck";
 import { VoidFunctionDefinitionThatTakesActualResult } from "./VoidFunctionDefinitionThatTakesActualResult";
 
-export const AssertCorrectnessCheck: core.serialization.Schema<
-    serializers.v2.v3.AssertCorrectnessCheck.Raw,
-    SeedTrace.v2.v3.AssertCorrectnessCheck
-> = core.serialization
-    .union("type", {
-        deepEquality: DeepEqualityCorrectnessCheck,
-        custom: VoidFunctionDefinitionThatTakesActualResult,
-    })
-    .transform<SeedTrace.v2.v3.AssertCorrectnessCheck>({
-        transform: (value) => value,
-        untransform: (value) => value,
+export const AssertCorrectnessCheck: core.serialization.Schema<serializers.v2.v3.AssertCorrectnessCheck.Raw, SeedTrace.v2.v3.AssertCorrectnessCheck> = core.serialization.union("type", {
+        "deepEquality": DeepEqualityCorrectnessCheck,
+        "custom": VoidFunctionDefinitionThatTakesActualResult
+    }).transform<SeedTrace.v2.v3.AssertCorrectnessCheck>({
+        transform: value => value,
+        untransform: value => value
     });
 
 export declare namespace AssertCorrectnessCheck {
     type Raw = AssertCorrectnessCheck.DeepEquality | AssertCorrectnessCheck.Custom;
 
     interface DeepEquality extends DeepEqualityCorrectnessCheck.Raw {
-        type: "deepEquality";
+        "type": "deepEquality";
     }
 
     interface Custom extends VoidFunctionDefinitionThatTakesActualResult.Raw {
-        type: "custom";
+        "type": "custom";
     }
 }

@@ -2,5 +2,5 @@ namespace SeedPagination;
 
 public record ListWithGlobalConfigRequest
 {
-    public int? Offset { get; init; }
+    public int? Offset { get; set; }
 }

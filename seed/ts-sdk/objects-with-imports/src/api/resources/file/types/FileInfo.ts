@@ -9,7 +9,7 @@
  * @example
  *     SeedObjectsWithImports.FileInfo.Directory
  */
-export type FileInfo =
+export type FileInfo = 
     /**
      * A regular file (e.g. foo.txt). */
     | "REGULAR"
@@ -18,6 +18,6 @@ export type FileInfo =
     | "DIRECTORY";
 
 export const FileInfo = {
-    Regular: "REGULAR",
-    Directory: "DIRECTORY",
-} as const;
+        Regular: "REGULAR",
+        Directory: "DIRECTORY"
+    } as const;

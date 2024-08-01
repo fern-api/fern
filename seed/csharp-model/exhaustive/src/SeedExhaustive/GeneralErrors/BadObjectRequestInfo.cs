@@ -7,5 +7,5 @@ namespace SeedExhaustive;
 public record BadObjectRequestInfo
 {
     [JsonPropertyName("message")]
-    public required string Message { get; init; }
+    public required string Message { get; set; }
 }

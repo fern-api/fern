@@ -5,10 +5,10 @@
 import * as SeedTrace from "../../../index";
 
 export interface SubmitRequestV2 {
-    submissionId: SeedTrace.SubmissionId;
-    language: SeedTrace.Language;
-    submissionFiles: SeedTrace.SubmissionFileInfo[];
-    problemId: SeedTrace.ProblemId;
-    problemVersion?: number;
-    userId?: string;
+    "submissionId": SeedTrace.SubmissionId;
+    "language": SeedTrace.Language;
+    "submissionFiles": SeedTrace.SubmissionFileInfo[];
+    "problemId": SeedTrace.ProblemId;
+    "problemVersion"?: number;
+    "userId"?: string;
 }

@@ -7,14 +7,14 @@ namespace SeedTrace;
 public record DoublyLinkedListNodeValue
 {
     [JsonPropertyName("nodeId")]
-    public required string NodeId { get; init; }
+    public required string NodeId { get; set; }
 
     [JsonPropertyName("val")]
-    public required double Val { get; init; }
+    public required double Val { get; set; }
 
     [JsonPropertyName("next")]
-    public string? Next { get; init; }
+    public string? Next { get; set; }
 
     [JsonPropertyName("prev")]
-    public string? Prev { get; init; }
+    public string? Prev { get; set; }
 }

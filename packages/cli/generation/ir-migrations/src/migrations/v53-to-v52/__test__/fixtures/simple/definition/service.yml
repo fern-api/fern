@@ -1,0 +1,35 @@
+types:
+  UserType:
+    enum:
+      - ADMIN
+      - AUTHENTICATED
+      - UNAUTHENTICATED
+
+  User:
+    properties:
+      userType:
+        type: UserType
+        default: UNAUTHENTICATED
+      name: string
+      age: uint
+      weight: float
+
+  ListUsersResponse:
+    properties:
+      users:
+        type: list<User>
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    listUsers:
+      method: GET
+      path: /users
+      request:
+        name: ListUserRequest
+        query-parameters:
+          userType:
+            type: UserType
+            default: UNAUTHENTICATED
+      response: ListUsersResponse 

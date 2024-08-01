@@ -10,7 +10,7 @@ export class PropertyBasedErrorTest extends errors.SeedErrorPropertyError {
         super({
             message: "PropertyBasedErrorTest",
             statusCode: 400,
-            body: body,
+            body: body
         });
         Object.setPrototypeOf(this, PropertyBasedErrorTest.prototype);
     }

@@ -7,5 +7,5 @@ namespace SeedAudiences;
 public record ImportingType
 {
     [JsonPropertyName("imported")]
-    public required string Imported { get; init; }
+    public required string Imported { get; set; }
 }

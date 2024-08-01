@@ -7,8 +7,11 @@ import { CoreClassReference } from "./CoreClassReference";
 type InternalType =
     | Integer
     | Long
+    | Uint
+    | Ulong
     | String_
     | Boolean_
+    | Float
     | Double
     | Date
     | DateTime
@@ -31,12 +34,24 @@ interface Long {
     type: "long";
 }
 
+interface Uint {
+    type: "uint";
+}
+
+interface Ulong {
+    type: "ulong";
+}
+
 interface String_ {
     type: "string";
 }
 
 interface Boolean_ {
     type: "boolean";
+}
+
+interface Float {
+    type: "float";
 }
 
 interface Double {
@@ -114,11 +129,20 @@ export class Type extends AstNode {
             case "long":
                 writer.write("long");
                 break;
+            case "uint":
+                writer.write("uint");
+                break;
+            case "ulong":
+                writer.write("ulong");
+                break;
             case "string":
                 writer.write("string");
                 break;
             case "boolean":
                 writer.write("bool");
+                break;
+            case "float":
+                writer.write("float");
                 break;
             case "double":
                 writer.write("double");
@@ -249,6 +273,24 @@ export class Type extends AstNode {
     public static long(): Type {
         return new this({
             type: "long"
+        });
+    }
+
+    public static uint(): Type {
+        return new this({
+            type: "uint"
+        });
+    }
+
+    public static ulong(): Type {
+        return new this({
+            type: "ulong"
+        });
+    }
+
+    public static float(): Type {
+        return new this({
+            type: "float"
         });
     }
 

@@ -1,4 +1,4 @@
-irVersion: v49
+irVersion: v53
 docker: fernapi/fern-python-sdk:latest
 dockerCommand: docker build -f ./generators/python/sdk/Dockerfile -t fernapi/fern-python-sdk:latest ./generators/python
 language: python
@@ -14,6 +14,10 @@ local:
   runCommand: poetry run python -m src.fern_python.generators.sdk.cli
   env: 
     PYTEST_CURRENT_TEST: "some value"
+customFixtureConfig:
+  customConfig: 
+    use_typeddict_requests: true
+  outputFolder: client-filename
 fixtures:
   examples: 
     - customConfig: null
@@ -123,6 +127,12 @@ fixtures:
         pydantic_config:
           use_provided_defaults: true
       outputFolder: with-defaults
+  literal:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use_typeddict_requests: true
+      outputFolder: use_typeddict_requests
   streaming:
     - customConfig: null
       outputFolder: no-custom-config
@@ -165,8 +175,10 @@ allowedFailures:
   - extra-properties
   - trace
   - circular-references-advanced
-  # Remove the 'validation' fixture as soon as a CLI is released with
-  # default enum value support (i.e. via 'fern check').
+  # Remove the following fixtures soon as a CLI is released with
+  # default enum value support and the latest primitive types.
+  # This causes a 'fern check' issue when 'fern test' is run.
+  - object
   - validation:no-custom-config
   - validation:with-defaults
   # === Allowed failures due to unit testing ===
@@ -179,3 +191,4 @@ allowedFailures:
   # We are not generating the correct snippets for union-utils
   # types (e.g. we generate `Shape_Square` instead of Shape.factory.square())
   - unions:union-utils
+  - alias-extends

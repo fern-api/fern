@@ -9,43 +9,34 @@ import { VoidFunctionSignature } from "./VoidFunctionSignature";
 import { NonVoidFunctionSignature } from "./NonVoidFunctionSignature";
 import { VoidFunctionSignatureThatTakesActualResult } from "./VoidFunctionSignatureThatTakesActualResult";
 
-export const FunctionSignature: core.serialization.Schema<
-    serializers.v2.v3.FunctionSignature.Raw,
-    SeedTrace.v2.v3.FunctionSignature
-> = core.serialization
-    .union("type", {
-        void: VoidFunctionSignature,
-        nonVoid: NonVoidFunctionSignature,
-        voidThatTakesActualResult: VoidFunctionSignatureThatTakesActualResult,
-    })
-    .transform<SeedTrace.v2.v3.FunctionSignature>({
-        transform: (value) => {
+export const FunctionSignature: core.serialization.Schema<serializers.v2.v3.FunctionSignature.Raw, SeedTrace.v2.v3.FunctionSignature> = core.serialization.union("type", {
+        "void": VoidFunctionSignature,
+        "nonVoid": NonVoidFunctionSignature,
+        "voidThatTakesActualResult": VoidFunctionSignatureThatTakesActualResult
+    }).transform<SeedTrace.v2.v3.FunctionSignature>({
+        transform: value => {
             switch (value.type) {
-                case "void":
-                    return SeedTrace.v2.v3.FunctionSignature.void(value);
-                case "nonVoid":
-                    return SeedTrace.v2.v3.FunctionSignature.nonVoid(value);
-                case "voidThatTakesActualResult":
-                    return SeedTrace.v2.v3.FunctionSignature.voidThatTakesActualResult(value);
-                default:
-                    return SeedTrace.v2.v3.FunctionSignature._unknown(value);
+                case "void": return SeedTrace.v2.v3.FunctionSignature.void(value);
+                case "nonVoid": return SeedTrace.v2.v3.FunctionSignature.nonVoid(value);
+                case "voidThatTakesActualResult": return SeedTrace.v2.v3.FunctionSignature.voidThatTakesActualResult(value);
+                default: return SeedTrace.v2.v3.FunctionSignature._unknown(value);
             }
         },
-        untransform: ({ _visit, ...value }) => value as any,
+        untransform: ({ _visit, ...value }) => value as any
     });
 
 export declare namespace FunctionSignature {
     type Raw = FunctionSignature.Void | FunctionSignature.NonVoid | FunctionSignature.VoidThatTakesActualResult;
 
     interface Void extends VoidFunctionSignature.Raw {
-        type: "void";
+        "type": "void";
     }
 
     interface NonVoid extends NonVoidFunctionSignature.Raw {
-        type: "nonVoid";
+        "type": "nonVoid";
     }
 
     interface VoidThatTakesActualResult extends VoidFunctionSignatureThatTakesActualResult.Raw {
-        type: "voidThatTakesActualResult";
+        "type": "voidThatTakesActualResult";
     }
 }

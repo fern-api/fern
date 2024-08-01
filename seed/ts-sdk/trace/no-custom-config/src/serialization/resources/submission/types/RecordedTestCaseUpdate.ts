@@ -7,17 +7,14 @@ import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 import { TestCaseId } from "../../v2/resources/problem/types/TestCaseId";
 
-export const RecordedTestCaseUpdate: core.serialization.ObjectSchema<
-    serializers.RecordedTestCaseUpdate.Raw,
-    SeedTrace.RecordedTestCaseUpdate
-> = core.serialization.object({
-    testCaseId: TestCaseId,
-    traceResponsesSize: core.serialization.number(),
-});
+export const RecordedTestCaseUpdate: core.serialization.ObjectSchema<serializers.RecordedTestCaseUpdate.Raw, SeedTrace.RecordedTestCaseUpdate> = core.serialization.object({
+        "testCaseId": TestCaseId,
+        "traceResponsesSize": core.serialization.number()
+    });
 
 export declare namespace RecordedTestCaseUpdate {
     interface Raw {
-        testCaseId: TestCaseId.Raw;
-        traceResponsesSize: number;
+        "testCaseId": TestCaseId.Raw;
+        "traceResponsesSize": number;
     }
 }

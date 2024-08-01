@@ -1,14 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`validate docs 1`] = `
-"Missing file: api.yml
-[docs]: Found 3 errors and 0 warnings. Run fern check --warnings to print out the warnings.
-[docs]: docs.yml -> favicon
-        Path favicon.ico does not exist
-[docs]: docs.yml -> logo -> dark
-        Path logo.png does not exist
-[docs]: docs.yml -> navigation -> 0 -> layout -> 0 -> section -> contents -> 0 -> page
-        Path ./dummy-page.mdx does not exist"
+"[docs]:Found 3 errors and 0 warnings. Run fern check --warnings to print out the warnings.
+[docs]:docs.yml -> favicon
+       Path favicon.ico does not exist
+[docs]:docs.yml -> logo -> dark
+       Path logo.png does not exist
+[docs]:docs.yml -> navigation -> 0 -> layout -> 0 -> section -> contents -> 0 -> page
+       Path ./dummy-page.mdx does not exist"
 `;
 
 exports[`validate simple 1`] = `

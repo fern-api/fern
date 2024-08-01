@@ -46,13 +46,18 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         });
 
         for (const query of this.endpoint.queryParameters) {
+            const type = query.allowMultiple
+                ? csharp.Type.list(
+                      this.context.csharpTypeMapper.convert({ reference: query.valueType, unboxOptionals: true })
+                  )
+                : this.context.csharpTypeMapper.convert({ reference: query.valueType });
             class_.addField(
                 csharp.field({
                     name: query.name.name.pascalCase.safeName,
-                    type: this.context.csharpTypeMapper.convert({ reference: query.valueType }),
+                    type,
                     access: "public",
                     get: true,
-                    init: true,
+                    set: true,
                     summary: query.docs,
                     useRequired: true
                 })
@@ -66,7 +71,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     type: this.context.csharpTypeMapper.convert({ reference: header.valueType }),
                     access: "public",
                     get: true,
-                    init: true,
+                    set: true,
                     summary: header.docs,
                     useRequired: true
                 })
@@ -83,15 +88,14 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                         type: this.context.csharpTypeMapper.convert({ reference: reference.requestBodyType }),
                         access: "public",
                         get: true,
-                        init: true,
+                        set: true,
                         summary: reference.docs,
                         useRequired: true
                     })
                 );
             },
             inlinedRequestBody: (request) => {
-                // TODO(dsinghvi): handle extends of inlined request bodies
-                for (const property of request.properties) {
+                for (const property of [...request.properties, ...(request.extendedProperties ?? [])]) {
                     const annotations: csharp.Annotation[] = [];
                     const maybeUndiscriminatedUnion = this.context.getAsUndiscriminatedUnionTypeDeclaration(
                         property.valueType
@@ -112,7 +116,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                             type: this.context.csharpTypeMapper.convert({ reference: property.valueType }),
                             access: "public",
                             get: true,
-                            init: true,
+                            set: true,
                             summary: property.docs,
                             jsonPropertyName: addJsonAnnotations ? property.name.wireValue : undefined,
                             annotations,

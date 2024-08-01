@@ -7,15 +7,12 @@ import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 import { WorkspaceSubmissionStatus } from "./WorkspaceSubmissionStatus";
 
-export const WorkspaceSubmissionState: core.serialization.ObjectSchema<
-    serializers.WorkspaceSubmissionState.Raw,
-    SeedTrace.WorkspaceSubmissionState
-> = core.serialization.object({
-    status: WorkspaceSubmissionStatus,
-});
+export const WorkspaceSubmissionState: core.serialization.ObjectSchema<serializers.WorkspaceSubmissionState.Raw, SeedTrace.WorkspaceSubmissionState> = core.serialization.object({
+        "status": WorkspaceSubmissionStatus
+    });
 
 export declare namespace WorkspaceSubmissionState {
     interface Raw {
-        status: WorkspaceSubmissionStatus.Raw;
+        "status": WorkspaceSubmissionStatus.Raw;
     }
 }

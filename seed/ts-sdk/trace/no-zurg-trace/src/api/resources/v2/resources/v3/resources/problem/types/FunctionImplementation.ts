@@ -3,6 +3,6 @@
  */
 
 export interface FunctionImplementation {
-    impl: string;
-    imports?: string;
+    "impl": string;
+    "imports"?: string;
 }

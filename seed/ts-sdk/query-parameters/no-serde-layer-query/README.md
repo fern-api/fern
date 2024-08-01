@@ -27,35 +27,33 @@ await client.user.getUsername({
     bytes: "SGVsbG8gd29ybGQh",
     user: {
         name: "string",
-        tags: ["string"],
+        tags: ["string"]
     },
-    userList: [
-        {
+    userList: [{
             name: "string",
-            tags: ["string"],
-        },
-    ],
+            tags: ["string"]
+        }],
     optionalDeadline: new Date("2024-01-15T09:30:00.000Z"),
     keyValue: {
-        string: "string",
+        "string": "string"
     },
     optionalString: "string",
     nestedUser: {
         name: "string",
         user: {
             name: "string",
-            tags: ["string"],
-        },
+            tags: ["string"]
+        }
     },
     optionalUser: {
         name: "string",
-        tags: ["string"],
+        tags: ["string"]
     },
     excludeUser: {
         name: "string",
-        tags: ["string"],
+        tags: ["string"]
     },
-    filter: "string",
+    filter: "string"
 });
 ```
 
@@ -65,7 +63,7 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedQueryParameters } from "@fern/query-parameters";
+import { SeedQueryParameters } from "@fern/query-parameters"; 
 
 const request: SeedQueryParameters.GetUsersRequest = {
     ...
@@ -101,9 +99,9 @@ retry limit (default: 2).
 
 A request is deemed retriable when any of the following HTTP status codes is returned:
 
--   [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
--   [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
--   [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
 
 Use the `maxRetries` request option to configure this behavior.
 
@@ -140,12 +138,12 @@ controller.abort(); // aborts the request
 The SDK defaults to `node-fetch` but will use the global fetch client if present. The SDK works in the following
 runtimes:
 
--   Node.js 18+
--   Vercel
--   Cloudflare Workers
--   Deno v1.25+
--   Bun 1.0+
--   React Native
+- Node.js 18+
+- Vercel
+- Cloudflare Workers
+- Deno v1.25+
+- Bun 1.0+
+- React Native
 
 ### Customizing Fetch Client
 

@@ -33,7 +33,8 @@ export declare namespace SeedLiteralClient {
 }
 
 export class SeedLiteralClient {
-    constructor(protected readonly _options: SeedLiteralClient.Options) {}
+    constructor(protected readonly _options: SeedLiteralClient.Options) {
+    }
 
     protected _headers: Headers | undefined;
 
