@@ -1,7 +1,5 @@
 # Reference
-
 ## Service
-
 <details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">hello</a>({ ...params }) -> SeedCodeSamples.MyResponse</code></summary>
 <dl>
 <dd>
@@ -16,10 +14,10 @@
 
 ```typescript
 await client.service.hello({
-    numEvents: 5,
+    numEvents: 5
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -33,20 +31,21 @@ await client.service.hello({
 <dl>
 <dd>
 
-**request:** `SeedCodeSamples.MyRequest`
-
+**request:** `SeedCodeSamples.MyRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

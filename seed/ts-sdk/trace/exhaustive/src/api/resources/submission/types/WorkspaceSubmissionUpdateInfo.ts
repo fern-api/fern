@@ -4,7 +4,7 @@
 
 import * as SeedTrace from "../../../index";
 
-export type WorkspaceSubmissionUpdateInfo =
+export type WorkspaceSubmissionUpdateInfo = 
     | SeedTrace.WorkspaceSubmissionUpdateInfo.Running
     | SeedTrace.WorkspaceSubmissionUpdateInfo.Ran
     | SeedTrace.WorkspaceSubmissionUpdateInfo.Stopped
@@ -61,132 +61,101 @@ export declare namespace WorkspaceSubmissionUpdateInfo {
         tracedV2: (value: SeedTrace.WorkspaceTracedUpdate) => _Result;
         errored: (value: SeedTrace.ErrorInfo) => _Result;
         finished: () => _Result;
-        _other: (value: { type: string }) => _Result;
+        _other: (value: {
+                type: string;
+            }) => _Result;
     }
 }
 
 export const WorkspaceSubmissionUpdateInfo = {
-    running: (value: SeedTrace.RunningSubmissionState): SeedTrace.WorkspaceSubmissionUpdateInfo.Running => {
-        return {
-            value: value,
-            type: "running",
-            _visit: function <_Result>(
-                this: SeedTrace.WorkspaceSubmissionUpdateInfo.Running,
-                visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>
-            ) {
-                return SeedTrace.WorkspaceSubmissionUpdateInfo._visit(this, visitor);
-            },
-        };
-    },
+        running: (value: SeedTrace.RunningSubmissionState): SeedTrace.WorkspaceSubmissionUpdateInfo.Running => {
+            return {
+                value: value,
+                type: "running",
+                "_visit": function <_Result>(this: SeedTrace.WorkspaceSubmissionUpdateInfo.Running, visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>) {
+                    return SeedTrace.WorkspaceSubmissionUpdateInfo._visit(this, visitor);
+                }
+            };
+        },
 
-    ran: (value: SeedTrace.WorkspaceRunDetails): SeedTrace.WorkspaceSubmissionUpdateInfo.Ran => {
-        return {
-            ...value,
-            type: "ran",
-            _visit: function <_Result>(
-                this: SeedTrace.WorkspaceSubmissionUpdateInfo.Ran,
-                visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>
-            ) {
-                return SeedTrace.WorkspaceSubmissionUpdateInfo._visit(this, visitor);
-            },
-        };
-    },
+        ran: (value: SeedTrace.WorkspaceRunDetails): SeedTrace.WorkspaceSubmissionUpdateInfo.Ran => {
+            return {
+                ...value,
+                type: "ran",
+                "_visit": function <_Result>(this: SeedTrace.WorkspaceSubmissionUpdateInfo.Ran, visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>) {
+                    return SeedTrace.WorkspaceSubmissionUpdateInfo._visit(this, visitor);
+                }
+            };
+        },
 
-    stopped: (): SeedTrace.WorkspaceSubmissionUpdateInfo.Stopped => {
-        return {
-            type: "stopped",
-            _visit: function <_Result>(
-                this: SeedTrace.WorkspaceSubmissionUpdateInfo.Stopped,
-                visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>
-            ) {
-                return SeedTrace.WorkspaceSubmissionUpdateInfo._visit(this, visitor);
-            },
-        };
-    },
+        stopped: (): SeedTrace.WorkspaceSubmissionUpdateInfo.Stopped => {
+            return {
+                type: "stopped",
+                "_visit": function <_Result>(this: SeedTrace.WorkspaceSubmissionUpdateInfo.Stopped, visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>) {
+                    return SeedTrace.WorkspaceSubmissionUpdateInfo._visit(this, visitor);
+                }
+            };
+        },
 
-    traced: (): SeedTrace.WorkspaceSubmissionUpdateInfo.Traced => {
-        return {
-            type: "traced",
-            _visit: function <_Result>(
-                this: SeedTrace.WorkspaceSubmissionUpdateInfo.Traced,
-                visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>
-            ) {
-                return SeedTrace.WorkspaceSubmissionUpdateInfo._visit(this, visitor);
-            },
-        };
-    },
+        traced: (): SeedTrace.WorkspaceSubmissionUpdateInfo.Traced => {
+            return {
+                type: "traced",
+                "_visit": function <_Result>(this: SeedTrace.WorkspaceSubmissionUpdateInfo.Traced, visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>) {
+                    return SeedTrace.WorkspaceSubmissionUpdateInfo._visit(this, visitor);
+                }
+            };
+        },
 
-    tracedV2: (value: SeedTrace.WorkspaceTracedUpdate): SeedTrace.WorkspaceSubmissionUpdateInfo.TracedV2 => {
-        return {
-            ...value,
-            type: "tracedV2",
-            _visit: function <_Result>(
-                this: SeedTrace.WorkspaceSubmissionUpdateInfo.TracedV2,
-                visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>
-            ) {
-                return SeedTrace.WorkspaceSubmissionUpdateInfo._visit(this, visitor);
-            },
-        };
-    },
+        tracedV2: (value: SeedTrace.WorkspaceTracedUpdate): SeedTrace.WorkspaceSubmissionUpdateInfo.TracedV2 => {
+            return {
+                ...value,
+                type: "tracedV2",
+                "_visit": function <_Result>(this: SeedTrace.WorkspaceSubmissionUpdateInfo.TracedV2, visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>) {
+                    return SeedTrace.WorkspaceSubmissionUpdateInfo._visit(this, visitor);
+                }
+            };
+        },
 
-    errored: (value: SeedTrace.ErrorInfo): SeedTrace.WorkspaceSubmissionUpdateInfo.Errored => {
-        return {
-            value: value,
-            type: "errored",
-            _visit: function <_Result>(
-                this: SeedTrace.WorkspaceSubmissionUpdateInfo.Errored,
-                visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>
-            ) {
-                return SeedTrace.WorkspaceSubmissionUpdateInfo._visit(this, visitor);
-            },
-        };
-    },
+        errored: (value: SeedTrace.ErrorInfo): SeedTrace.WorkspaceSubmissionUpdateInfo.Errored => {
+            return {
+                value: value,
+                type: "errored",
+                "_visit": function <_Result>(this: SeedTrace.WorkspaceSubmissionUpdateInfo.Errored, visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>) {
+                    return SeedTrace.WorkspaceSubmissionUpdateInfo._visit(this, visitor);
+                }
+            };
+        },
 
-    finished: (): SeedTrace.WorkspaceSubmissionUpdateInfo.Finished => {
-        return {
-            type: "finished",
-            _visit: function <_Result>(
-                this: SeedTrace.WorkspaceSubmissionUpdateInfo.Finished,
-                visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>
-            ) {
-                return SeedTrace.WorkspaceSubmissionUpdateInfo._visit(this, visitor);
-            },
-        };
-    },
+        finished: (): SeedTrace.WorkspaceSubmissionUpdateInfo.Finished => {
+            return {
+                type: "finished",
+                "_visit": function <_Result>(this: SeedTrace.WorkspaceSubmissionUpdateInfo.Finished, visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>) {
+                    return SeedTrace.WorkspaceSubmissionUpdateInfo._visit(this, visitor);
+                }
+            };
+        },
 
-    _unknown: (value: { type: string }): SeedTrace.WorkspaceSubmissionUpdateInfo._Unknown => {
-        return {
-            ...(value as any),
-            _visit: function <_Result>(
-                this: SeedTrace.WorkspaceSubmissionUpdateInfo._Unknown,
-                visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>
-            ) {
-                return SeedTrace.WorkspaceSubmissionUpdateInfo._visit(this, visitor);
-            },
-        };
-    },
+        _unknown: (value: {
+            type: string;
+        }): SeedTrace.WorkspaceSubmissionUpdateInfo._Unknown => {
+            return {
+                ...(value as any),
+                "_visit": function <_Result>(this: SeedTrace.WorkspaceSubmissionUpdateInfo._Unknown, visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>) {
+                    return SeedTrace.WorkspaceSubmissionUpdateInfo._visit(this, visitor);
+                }
+            };
+        },
 
-    _visit: <_Result>(
-        value: SeedTrace.WorkspaceSubmissionUpdateInfo,
-        visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>
-    ): _Result => {
-        switch (value.type) {
-            case "running":
-                return visitor.running(value.value);
-            case "ran":
-                return visitor.ran(value);
-            case "stopped":
-                return visitor.stopped();
-            case "traced":
-                return visitor.traced();
-            case "tracedV2":
-                return visitor.tracedV2(value);
-            case "errored":
-                return visitor.errored(value.value);
-            case "finished":
-                return visitor.finished();
-            default:
-                return visitor._other(value as any);
-        }
-    },
-} as const;
+        _visit: <_Result>(value: SeedTrace.WorkspaceSubmissionUpdateInfo, visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>): _Result => {
+            switch (value.type) {
+                case "running": return visitor.running(value.value);
+                case "ran": return visitor.ran(value);
+                case "stopped": return visitor.stopped();
+                case "traced": return visitor.traced();
+                case "tracedV2": return visitor.tracedV2(value);
+                case "errored": return visitor.errored(value.value);
+                case "finished": return visitor.finished();
+                default: return visitor._other(value as any);
+            }
+        },
+    } as const;

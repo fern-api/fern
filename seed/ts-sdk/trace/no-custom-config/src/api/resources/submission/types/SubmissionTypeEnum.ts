@@ -5,8 +5,9 @@
 /**
  * Keep in sync with SubmissionType.
  */
-export type SubmissionTypeEnum = "TEST";
+export type SubmissionTypeEnum = 
+    | "TEST";
 
 export const SubmissionTypeEnum = {
-    Test: "TEST",
-} as const;
+        Test: "TEST"
+    } as const;

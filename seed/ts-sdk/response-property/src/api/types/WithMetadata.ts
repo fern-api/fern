@@ -3,5 +3,5 @@
  */
 
 export interface WithMetadata {
-    metadata: Record<string, string>;
+    "metadata": Record<string, string>;
 }

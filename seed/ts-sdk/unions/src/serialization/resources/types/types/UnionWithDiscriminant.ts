@@ -8,33 +8,28 @@ import * as core from "../../../../core";
 import { Foo } from "./Foo";
 import { Bar } from "./Bar";
 
-export const UnionWithDiscriminant: core.serialization.Schema<
-    serializers.UnionWithDiscriminant.Raw,
-    SeedUnions.UnionWithDiscriminant
-> = core.serialization
-    .union(core.serialization.discriminant("type", "_type"), {
-        foo: core.serialization.object({
-            foo: Foo,
+export const UnionWithDiscriminant: core.serialization.Schema<serializers.UnionWithDiscriminant.Raw, SeedUnions.UnionWithDiscriminant> = core.serialization.union(core.serialization.discriminant("type", "_type"), {
+        "foo": core.serialization.object({
+            "foo": Foo
         }),
-        bar: core.serialization.object({
-            bar: Bar,
-        }),
-    })
-    .transform<SeedUnions.UnionWithDiscriminant>({
-        transform: (value) => value,
-        untransform: (value) => value,
+        "bar": core.serialization.object({
+            "bar": Bar
+        })
+    }).transform<SeedUnions.UnionWithDiscriminant>({
+        transform: value => value,
+        untransform: value => value
     });
 
 export declare namespace UnionWithDiscriminant {
     type Raw = UnionWithDiscriminant.Foo | UnionWithDiscriminant.Bar;
 
     interface Foo {
-        _type: "foo";
-        foo: Foo.Raw;
+        "_type": "foo";
+        "foo": Foo.Raw;
     }
 
     interface Bar {
-        _type: "bar";
-        bar: Bar.Raw;
+        "_type": "bar";
+        "bar": Bar.Raw;
     }
 }

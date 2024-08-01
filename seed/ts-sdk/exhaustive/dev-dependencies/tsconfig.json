@@ -14,6 +14,8 @@
         "rootDir": "src",
         "baseUrl": "src"
     },
-    "include": ["src"],
+    "include": [
+        "src"
+    ],
     "exclude": []
 }

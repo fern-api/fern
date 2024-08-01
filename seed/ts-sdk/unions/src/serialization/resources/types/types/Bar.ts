@@ -7,11 +7,11 @@ import * as SeedUnions from "../../../../api/index";
 import * as core from "../../../../core";
 
 export const Bar: core.serialization.ObjectSchema<serializers.Bar.Raw, SeedUnions.Bar> = core.serialization.object({
-    name: core.serialization.string(),
-});
+        "name": core.serialization.string()
+    });
 
 export declare namespace Bar {
     interface Raw {
-        name: string;
+        "name": string;
     }
 }

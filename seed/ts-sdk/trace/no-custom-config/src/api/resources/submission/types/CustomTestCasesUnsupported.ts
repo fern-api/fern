@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../index";
 
 export interface CustomTestCasesUnsupported {
-    problemId: SeedTrace.ProblemId;
-    submissionId: SeedTrace.SubmissionId;
+    "problemId": SeedTrace.ProblemId;
+    "submissionId": SeedTrace.SubmissionId;
 }

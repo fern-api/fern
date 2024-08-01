@@ -6,15 +6,12 @@ import * as serializers from "../../../index";
 import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const TestCaseHiddenGrade: core.serialization.ObjectSchema<
-    serializers.TestCaseHiddenGrade.Raw,
-    SeedTrace.TestCaseHiddenGrade
-> = core.serialization.object({
-    passed: core.serialization.boolean(),
-});
+export const TestCaseHiddenGrade: core.serialization.ObjectSchema<serializers.TestCaseHiddenGrade.Raw, SeedTrace.TestCaseHiddenGrade> = core.serialization.object({
+        "passed": core.serialization.boolean()
+    });
 
 export declare namespace TestCaseHiddenGrade {
     interface Raw {
-        passed: boolean;
+        "passed": boolean;
     }
 }

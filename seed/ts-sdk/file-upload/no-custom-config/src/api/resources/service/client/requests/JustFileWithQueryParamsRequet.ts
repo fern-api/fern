@@ -13,9 +13,9 @@
  *     }
  */
 export interface JustFileWithQueryParamsRequet {
-    maybeString?: string;
-    integer: number;
-    maybeInteger?: number;
-    listOfStrings: string | string[];
-    optionalListOfStrings?: string | string[];
+    "maybeString"?: string;
+    "integer": number;
+    "maybeInteger"?: number;
+    "listOfStrings": string | string[];
+    "optionalListOfStrings"?: string | string[];
 }

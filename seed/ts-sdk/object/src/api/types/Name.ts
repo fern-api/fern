@@ -10,6 +10,6 @@
  *     }
  */
 export interface Name {
-    id: string;
-    value: string;
+    "id": string;
+    "value": string;
 }

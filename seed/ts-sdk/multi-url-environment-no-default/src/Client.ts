@@ -9,10 +9,7 @@ import { S3 } from "./api/resources/s3/client/Client";
 
 export declare namespace SeedMultiUrlEnvironmentNoDefaultClient {
     interface Options {
-        environment: core.Supplier<
-            | environments.SeedMultiUrlEnvironmentNoDefaultEnvironment
-            | environments.SeedMultiUrlEnvironmentNoDefaultEnvironmentUrls
-        >;
+        environment: core.Supplier<environments.SeedMultiUrlEnvironmentNoDefaultEnvironment | environments.SeedMultiUrlEnvironmentNoDefaultEnvironmentUrls>;
         token: core.Supplier<core.BearerToken>;
     }
 
@@ -27,7 +24,8 @@ export declare namespace SeedMultiUrlEnvironmentNoDefaultClient {
 }
 
 export class SeedMultiUrlEnvironmentNoDefaultClient {
-    constructor(protected readonly _options: SeedMultiUrlEnvironmentNoDefaultClient.Options) {}
+    constructor(protected readonly _options: SeedMultiUrlEnvironmentNoDefaultClient.Options) {
+    }
 
     protected _ec2: Ec2 | undefined;
 

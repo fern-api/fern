@@ -3,5 +3,5 @@
  */
 
 export interface LangServerResponse {
-    response?: unknown;
+    "response"?: unknown;
 }

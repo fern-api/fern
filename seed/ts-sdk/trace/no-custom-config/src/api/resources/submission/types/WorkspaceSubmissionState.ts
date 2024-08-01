@@ -5,5 +5,5 @@
 import * as SeedTrace from "../../../index";
 
 export interface WorkspaceSubmissionState {
-    status: SeedTrace.WorkspaceSubmissionStatus;
+    "status": SeedTrace.WorkspaceSubmissionStatus;
 }

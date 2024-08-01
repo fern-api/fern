@@ -4,7 +4,7 @@
 
 import * as SeedApi from "../../../index";
 
-export type FieldValue =
+export type FieldValue = 
     | SeedApi.FieldValue.PrimitiveValue
     | SeedApi.FieldValue.ObjectValue
     | SeedApi.FieldValue.ContainerValue;

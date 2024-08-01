@@ -9,7 +9,7 @@ export function stringLiteral<V extends string>(literal: V): Schema<V, V> {
             if (value === literal) {
                 return {
                     ok: true,
-                    value: literal,
+                    value: literal
                 };
             } else {
                 return {
@@ -17,9 +17,9 @@ export function stringLiteral<V extends string>(literal: V): Schema<V, V> {
                     errors: [
                         {
                             path: breadcrumbsPrefix,
-                            message: getErrorMessageForIncorrectType(value, `"${literal}"`),
-                        },
-                    ],
+                            message: getErrorMessageForIncorrectType(value, `"${literal}"`)
+                        }
+                    ]
                 };
             }
         }

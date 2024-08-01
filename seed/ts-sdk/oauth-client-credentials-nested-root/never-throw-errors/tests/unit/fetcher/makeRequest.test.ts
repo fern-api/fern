@@ -30,7 +30,7 @@ describe("Test makeRequest", () => {
                 method: "POST",
                 headers: mockHeaders,
                 body: mockBody,
-                credentials: undefined,
+                credentials: undefined
             })
         );
         expect(calledOptions.signal).toBeDefined();
@@ -49,7 +49,7 @@ describe("Test makeRequest", () => {
                 method: "GET",
                 headers: mockHeaders,
                 body: undefined,
-                credentials: undefined,
+                credentials: undefined
             })
         );
         expect(calledOptions.signal).toBeDefined();

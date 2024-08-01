@@ -8,35 +8,33 @@ import * as core from "../../../../core";
 import { PrimitiveValue } from "./PrimitiveValue";
 import { ObjectValue } from "./ObjectValue";
 
-export const FieldValue: core.serialization.Schema<serializers.FieldValue.Raw, SeedApi.FieldValue> = core.serialization
-    .union("type", {
-        primitive_value: core.serialization.object({
-            value: PrimitiveValue,
+export const FieldValue: core.serialization.Schema<serializers.FieldValue.Raw, SeedApi.FieldValue> = core.serialization.union("type", {
+        "primitive_value": core.serialization.object({
+            "value": PrimitiveValue
         }),
-        object_value: ObjectValue,
-        container_value: core.serialization.object({
-            value: core.serialization.lazy(() => serializers.ContainerValue),
-        }),
-    })
-    .transform<SeedApi.FieldValue>({
-        transform: (value) => value,
-        untransform: (value) => value,
+        "object_value": ObjectValue,
+        "container_value": core.serialization.object({
+            "value": core.serialization.lazy(() => serializers.ContainerValue)
+        })
+    }).transform<SeedApi.FieldValue>({
+        transform: value => value,
+        untransform: value => value
     });
 
 export declare namespace FieldValue {
     type Raw = FieldValue.PrimitiveValue | FieldValue.ObjectValue | FieldValue.ContainerValue;
 
     interface PrimitiveValue {
-        type: "primitive_value";
-        value: PrimitiveValue.Raw;
+        "type": "primitive_value";
+        "value": PrimitiveValue.Raw;
     }
 
     interface ObjectValue extends ObjectValue.Raw {
-        type: "object_value";
+        "type": "object_value";
     }
 
     interface ContainerValue {
-        type: "container_value";
-        value: serializers.ContainerValue.Raw;
+        "type": "container_value";
+        "value": serializers.ContainerValue.Raw;
     }
 }

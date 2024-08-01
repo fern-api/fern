@@ -5,6 +5,6 @@
 import * as SeedPagination from "../../../index";
 
 export interface UserPage {
-    data: SeedPagination.UserListContainer;
-    next?: string;
+    "data": SeedPagination.UserListContainer;
+    "next"?: string;
 }

@@ -3,6 +3,6 @@
  */
 
 export interface NextPage {
-    page: number;
-    startingAfter: string;
+    "page": number;
+    "startingAfter": string;
 }

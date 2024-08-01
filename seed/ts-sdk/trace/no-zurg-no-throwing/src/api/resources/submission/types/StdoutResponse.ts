@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../index";
 
 export interface StdoutResponse {
-    submissionId: SeedTrace.SubmissionId;
-    stdout: string;
+    "submissionId": SeedTrace.SubmissionId;
+    "stdout": string;
 }

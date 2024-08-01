@@ -5,11 +5,11 @@
 import * as SeedTrace from "../../../index";
 
 export interface ExecutionSessionState {
-    lastTimeContacted?: string;
+    "lastTimeContacted"?: string;
     /** The auto-generated session id. Formatted as a uuid. */
-    sessionId: string;
-    isWarmInstance: boolean;
-    awsTaskId?: string;
-    language: SeedTrace.Language;
-    status: SeedTrace.ExecutionSessionStatus;
+    "sessionId": string;
+    "isWarmInstance": boolean;
+    "awsTaskId"?: string;
+    "language": SeedTrace.Language;
+    "status": SeedTrace.ExecutionSessionStatus;
 }

@@ -3,6 +3,6 @@
  */
 
 export interface GenericValue {
-    stringifiedType?: string;
-    stringifiedValue: string;
+    "stringifiedType"?: string;
+    "stringifiedValue": string;
 }

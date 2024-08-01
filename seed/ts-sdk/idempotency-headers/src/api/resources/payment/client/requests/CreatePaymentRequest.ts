@@ -12,6 +12,6 @@ import * as SeedIdempotencyHeaders from "../../../../index";
  *     }
  */
 export interface CreatePaymentRequest {
-    amount: number;
-    currency: SeedIdempotencyHeaders.Currency;
+    "amount": number;
+    "currency": SeedIdempotencyHeaders.Currency;
 }

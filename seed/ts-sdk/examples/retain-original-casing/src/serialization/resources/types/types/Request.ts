@@ -6,13 +6,12 @@ import * as serializers from "../../../index";
 import * as SeedExamples from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const Request: core.serialization.ObjectSchema<serializers.Request.Raw, SeedExamples.Request> =
-    core.serialization.object({
-        request: core.serialization.unknown(),
+export const Request: core.serialization.ObjectSchema<serializers.Request.Raw, SeedExamples.Request> = core.serialization.object({
+        "request": core.serialization.unknown()
     });
 
 export declare namespace Request {
     interface Raw {
-        request?: unknown;
+        "request"?: unknown;
     }
 }

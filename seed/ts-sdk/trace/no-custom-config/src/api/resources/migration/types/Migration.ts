@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../index";
 
 export interface Migration {
-    name: string;
-    status: SeedTrace.MigrationStatus;
+    "name": string;
+    "status": SeedTrace.MigrationStatus;
 }

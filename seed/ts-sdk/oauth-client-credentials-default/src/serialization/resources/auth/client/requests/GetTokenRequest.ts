@@ -6,17 +6,14 @@ import * as serializers from "../../../../index";
 import * as SeedOauthClientCredentialsDefault from "../../../../../api/index";
 import * as core from "../../../../../core";
 
-export const GetTokenRequest: core.serialization.Schema<
-    serializers.GetTokenRequest.Raw,
-    SeedOauthClientCredentialsDefault.GetTokenRequest
-> = core.serialization.object({
-    clientId: core.serialization.property("client_id", core.serialization.string()),
-    clientSecret: core.serialization.property("client_secret", core.serialization.string()),
-});
+export const GetTokenRequest: core.serialization.Schema<serializers.GetTokenRequest.Raw, SeedOauthClientCredentialsDefault.GetTokenRequest> = core.serialization.object({
+        "clientId": core.serialization.property("client_id", core.serialization.string()),
+        "clientSecret": core.serialization.property("client_secret", core.serialization.string())
+    });
 
 export declare namespace GetTokenRequest {
     interface Raw {
-        client_id: string;
-        client_secret: string;
+        "client_id": string;
+        "client_secret": string;
     }
 }

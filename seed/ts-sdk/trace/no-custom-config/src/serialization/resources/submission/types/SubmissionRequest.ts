@@ -10,47 +10,37 @@ import { SubmitRequestV2 } from "./SubmitRequestV2";
 import { WorkspaceSubmitRequest } from "./WorkspaceSubmitRequest";
 import { StopRequest } from "./StopRequest";
 
-export const SubmissionRequest: core.serialization.Schema<
-    serializers.SubmissionRequest.Raw,
-    SeedTrace.SubmissionRequest
-> = core.serialization
-    .union("type", {
-        initializeProblemRequest: InitializeProblemRequest,
-        initializeWorkspaceRequest: core.serialization.object({}),
-        submitV2: SubmitRequestV2,
-        workspaceSubmit: WorkspaceSubmitRequest,
-        stop: StopRequest,
-    })
-    .transform<SeedTrace.SubmissionRequest>({
-        transform: (value) => value,
-        untransform: (value) => value,
+export const SubmissionRequest: core.serialization.Schema<serializers.SubmissionRequest.Raw, SeedTrace.SubmissionRequest> = core.serialization.union("type", {
+        "initializeProblemRequest": InitializeProblemRequest,
+        "initializeWorkspaceRequest": core.serialization.object({}),
+        "submitV2": SubmitRequestV2,
+        "workspaceSubmit": WorkspaceSubmitRequest,
+        "stop": StopRequest
+    }).transform<SeedTrace.SubmissionRequest>({
+        transform: value => value,
+        untransform: value => value
     });
 
 export declare namespace SubmissionRequest {
-    type Raw =
-        | SubmissionRequest.InitializeProblemRequest
-        | SubmissionRequest.InitializeWorkspaceRequest
-        | SubmissionRequest.SubmitV2
-        | SubmissionRequest.WorkspaceSubmit
-        | SubmissionRequest.Stop;
+    type Raw = SubmissionRequest.InitializeProblemRequest | SubmissionRequest.InitializeWorkspaceRequest | SubmissionRequest.SubmitV2 | SubmissionRequest.WorkspaceSubmit | SubmissionRequest.Stop;
 
     interface InitializeProblemRequest extends InitializeProblemRequest.Raw {
-        type: "initializeProblemRequest";
+        "type": "initializeProblemRequest";
     }
 
     interface InitializeWorkspaceRequest {
-        type: "initializeWorkspaceRequest";
+        "type": "initializeWorkspaceRequest";
     }
 
     interface SubmitV2 extends SubmitRequestV2.Raw {
-        type: "submitV2";
+        "type": "submitV2";
     }
 
     interface WorkspaceSubmit extends WorkspaceSubmitRequest.Raw {
-        type: "workspaceSubmit";
+        "type": "workspaceSubmit";
     }
 
     interface Stop extends StopRequest.Raw {
-        type: "stop";
+        "type": "stop";
     }
 }

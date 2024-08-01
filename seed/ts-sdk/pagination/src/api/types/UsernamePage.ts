@@ -3,6 +3,6 @@
  */
 
 export interface UsernamePage {
-    after?: string;
-    data: string[];
+    "after"?: string;
+    "data": string[];
 }

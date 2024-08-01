@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../index";
 
 export interface Playlist extends SeedTrace.PlaylistCreateRequest {
-    playlistId: SeedTrace.PlaylistId;
-    ownerId: SeedTrace.UserId;
+    "playlistId": SeedTrace.PlaylistId;
+    "ownerId": SeedTrace.UserId;
 }

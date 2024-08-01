@@ -5,8 +5,8 @@
 import * as SeedTrace from "../../../index";
 
 export interface TestSubmissionStatusV2 {
-    updates: SeedTrace.TestSubmissionUpdate[];
-    problemId: SeedTrace.ProblemId;
-    problemVersion: number;
-    problemInfo: SeedTrace.v2.ProblemInfoV2;
+    "updates": SeedTrace.TestSubmissionUpdate[];
+    "problemId": SeedTrace.ProblemId;
+    "problemVersion": number;
+    "problemInfo": SeedTrace.v2.ProblemInfoV2;
 }

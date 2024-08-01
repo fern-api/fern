@@ -12,5 +12,5 @@ import * as SeedExtends from "../index";
  *     }
  */
 export interface ExampleType extends SeedExtends.Docs {
-    name: string;
+    "name": string;
 }

@@ -3,6 +3,6 @@
  */
 
 export interface EchoRequest {
-    name: string;
-    size: number;
+    "name": string;
+    "size": number;
 }

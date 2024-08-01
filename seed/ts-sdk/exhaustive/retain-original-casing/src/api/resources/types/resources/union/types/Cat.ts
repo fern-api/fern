@@ -3,6 +3,6 @@
  */
 
 export interface Cat {
-    name: string;
-    likesToMeow: boolean;
+    "name": string;
+    "likesToMeow": boolean;
 }

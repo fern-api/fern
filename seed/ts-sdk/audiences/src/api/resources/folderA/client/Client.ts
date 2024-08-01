@@ -21,7 +21,8 @@ export declare namespace FolderA {
 }
 
 export class FolderA {
-    constructor(protected readonly _options: FolderA.Options) {}
+    constructor(protected readonly _options: FolderA.Options) {
+    }
 
     protected _service: Service | undefined;
 

@@ -10,27 +10,24 @@ import { TracedFile } from "./TracedFile";
 import { ExpressionLocation } from "./ExpressionLocation";
 import { StackInformation } from "./StackInformation";
 
-export const TraceResponseV2: core.serialization.ObjectSchema<
-    serializers.TraceResponseV2.Raw,
-    SeedTrace.TraceResponseV2
-> = core.serialization.object({
-    submissionId: SubmissionId,
-    lineNumber: core.serialization.number(),
-    file: TracedFile,
-    returnValue: core.serialization.lazy(() => serializers.DebugVariableValue).optional(),
-    expressionLocation: ExpressionLocation.optional(),
-    stack: StackInformation,
-    stdout: core.serialization.string().optional(),
-});
+export const TraceResponseV2: core.serialization.ObjectSchema<serializers.TraceResponseV2.Raw, SeedTrace.TraceResponseV2> = core.serialization.object({
+        "submissionId": SubmissionId,
+        "lineNumber": core.serialization.number(),
+        "file": TracedFile,
+        "returnValue": core.serialization.lazy(() => serializers.DebugVariableValue).optional(),
+        "expressionLocation": ExpressionLocation.optional(),
+        "stack": StackInformation,
+        "stdout": core.serialization.string().optional()
+    });
 
 export declare namespace TraceResponseV2 {
     interface Raw {
-        submissionId: SubmissionId.Raw;
-        lineNumber: number;
-        file: TracedFile.Raw;
-        returnValue?: serializers.DebugVariableValue.Raw | null;
-        expressionLocation?: ExpressionLocation.Raw | null;
-        stack: StackInformation.Raw;
-        stdout?: string | null;
+        "submissionId": SubmissionId.Raw;
+        "lineNumber": number;
+        "file": TracedFile.Raw;
+        "returnValue"?: serializers.DebugVariableValue.Raw | null;
+        "expressionLocation"?: ExpressionLocation.Raw | null;
+        "stack": StackInformation.Raw;
+        "stdout"?: string | null;
     }
 }

@@ -8,7 +8,7 @@ export class UnauthorizedError extends errors.SeedTraceError {
     constructor() {
         super({
             message: "UnauthorizedError",
-            statusCode: 401,
+            statusCode: 401
         });
         Object.setPrototypeOf(this, UnauthorizedError.prototype);
     }

@@ -4,4 +4,6 @@
 
 import * as SeedExamples from "../index";
 
-export type Type = SeedExamples.BasicType | SeedExamples.ComplexType;
+export type Type = 
+    | SeedExamples.BasicType
+    | SeedExamples.ComplexType;

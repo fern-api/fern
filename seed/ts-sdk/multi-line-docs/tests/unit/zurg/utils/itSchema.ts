@@ -16,7 +16,7 @@ export function itSchema<Raw, Parsed>(
         raw,
         parsed,
         opts,
-        only = false,
+        only = false
     }: {
         raw: Raw;
         parsed: Parsed;
@@ -37,7 +37,7 @@ export function itParse<Raw, Parsed>(
     {
         raw,
         parsed,
-        opts,
+        opts
     }: {
         raw: Raw;
         parsed: Parsed;
@@ -60,7 +60,7 @@ export function itJson<Raw, Parsed>(
     {
         raw,
         parsed,
-        opts,
+        opts
     }: {
         raw: Raw;
         parsed: Parsed;

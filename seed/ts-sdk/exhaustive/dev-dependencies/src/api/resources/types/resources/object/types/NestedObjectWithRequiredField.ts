@@ -5,6 +5,6 @@
 import * as Fiddle from "../../../../../index";
 
 export interface NestedObjectWithRequiredField {
-    string: string;
-    nestedObject: Fiddle.types.ObjectWithOptionalField;
+    "string": string;
+    "nestedObject": Fiddle.types.ObjectWithOptionalField;
 }

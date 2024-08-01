@@ -7,25 +7,20 @@ import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 import { PlaylistId } from "./PlaylistId";
 
-export const PlaylistIdNotFoundErrorBody: core.serialization.Schema<
-    serializers.PlaylistIdNotFoundErrorBody.Raw,
-    SeedTrace.PlaylistIdNotFoundErrorBody
-> = core.serialization
-    .union("type", {
-        playlistId: core.serialization.object({
-            value: PlaylistId,
-        }),
-    })
-    .transform<SeedTrace.PlaylistIdNotFoundErrorBody>({
-        transform: (value) => value,
-        untransform: (value) => value,
+export const PlaylistIdNotFoundErrorBody: core.serialization.Schema<serializers.PlaylistIdNotFoundErrorBody.Raw, SeedTrace.PlaylistIdNotFoundErrorBody> = core.serialization.union("type", {
+        "playlistId": core.serialization.object({
+            "value": PlaylistId
+        })
+    }).transform<SeedTrace.PlaylistIdNotFoundErrorBody>({
+        transform: value => value,
+        untransform: value => value
     });
 
 export declare namespace PlaylistIdNotFoundErrorBody {
     type Raw = PlaylistIdNotFoundErrorBody.PlaylistId;
 
     interface PlaylistId {
-        type: "playlistId";
-        value: PlaylistId.Raw;
+        "type": "playlistId";
+        "value": PlaylistId.Raw;
     }
 }

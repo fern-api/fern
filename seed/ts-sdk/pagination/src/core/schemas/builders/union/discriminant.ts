@@ -4,7 +4,7 @@ export function discriminant<RawDiscriminant extends string, ParsedDiscriminant 
 ): Discriminant<RawDiscriminant, ParsedDiscriminant> {
     return {
         parsedDiscriminant,
-        rawDiscriminant,
+        rawDiscriminant
     };
 }
 

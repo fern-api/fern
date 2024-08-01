@@ -6,8 +6,7 @@ import * as serializers from "../../../../../index";
 import * as SeedExamples from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 
-export const Tag: core.serialization.Schema<serializers.commons.Tag.Raw, SeedExamples.commons.Tag> =
-    core.serialization.string();
+export const Tag: core.serialization.Schema<serializers.commons.Tag.Raw, SeedExamples.commons.Tag> = core.serialization.string();
 
 export declare namespace Tag {
     type Raw = string;

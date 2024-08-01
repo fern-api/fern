@@ -4,7 +4,9 @@
 
 import * as SeedTrace from "../../../index";
 
-export type SubmissionStatusV2 = SeedTrace.SubmissionStatusV2.Test | SeedTrace.SubmissionStatusV2.Workspace;
+export type SubmissionStatusV2 = 
+    | SeedTrace.SubmissionStatusV2.Test
+    | SeedTrace.SubmissionStatusV2.Workspace;
 
 export declare namespace SubmissionStatusV2 {
     interface Test extends SeedTrace.TestSubmissionStatusV2 {
