@@ -95,8 +95,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 );
             },
             inlinedRequestBody: (request) => {
-                // TODO(dsinghvi): handle extends of inlined request bodies
-                for (const property of request.properties) {
+                for (const property of [...request.properties, ...(request.extendedProperties ?? [])]) {
                     const annotations: csharp.Annotation[] = [];
                     const maybeUndiscriminatedUnion = this.context.getAsUndiscriminatedUnionTypeDeclaration(
                         property.valueType
