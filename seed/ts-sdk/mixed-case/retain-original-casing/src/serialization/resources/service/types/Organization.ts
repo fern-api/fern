@@ -6,13 +6,12 @@ import * as serializers from "../../../index";
 import * as SeedMixedCase from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const Organization: core.serialization.ObjectSchema<serializers.Organization.Raw, SeedMixedCase.Organization> =
-    core.serialization.object({
-        name: core.serialization.string(),
+export const Organization: core.serialization.ObjectSchema<serializers.Organization.Raw, SeedMixedCase.Organization> = core.serialization.object({
+        "name": core.serialization.string()
     });
 
 export declare namespace Organization {
     interface Raw {
-        name: string;
+        "name": string;
     }
 }

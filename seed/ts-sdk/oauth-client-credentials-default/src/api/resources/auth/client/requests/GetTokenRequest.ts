@@ -10,6 +10,6 @@
  *     }
  */
 export interface GetTokenRequest {
-    clientId: string;
-    clientSecret: string;
+    "clientId": string;
+    "clientSecret": string;
 }

@@ -1,7 +1,5 @@
 # Reference
-
 ## Imdb
-
 <details><summary><code>client.imdb.<a href="/src/api/resources/imdb/client/Client.ts">createMovie</a>({ ...params }) -> SeedApi.MovieId</code></summary>
 <dl>
 <dd>
@@ -15,7 +13,6 @@
 <dd>
 
 Add a movie to the database
-
 </dd>
 </dl>
 </dd>
@@ -32,10 +29,10 @@ Add a movie to the database
 ```typescript
 await client.imdb.createMovie({
     title: "string",
-    rating: 1.1,
+    rating: 1.1
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -49,20 +46,21 @@ await client.imdb.createMovie({
 <dl>
 <dd>
 
-**request:** `SeedApi.CreateMovieRequest`
-
+**request:** `SeedApi.CreateMovieRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Imdb.RequestOptions`
+**requestOptions:** `Imdb.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -82,8 +80,8 @@ await client.imdb.createMovie({
 
 ```typescript
 await client.imdb.getMovie("string");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -97,20 +95,21 @@ await client.imdb.getMovie("string");
 <dl>
 <dd>
 
-**movieId:** `SeedApi.MovieId`
-
+**movieId:** `SeedApi.MovieId` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Imdb.RequestOptions`
+**requestOptions:** `Imdb.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

@@ -4,7 +4,9 @@
 
 import * as SeedUnions from "../../../index";
 
-export type UnionWithOptionalTime = SeedUnions.UnionWithOptionalTime.Date_ | SeedUnions.UnionWithOptionalTime.Dateimte;
+export type UnionWithOptionalTime = 
+    | SeedUnions.UnionWithOptionalTime.Date_
+    | SeedUnions.UnionWithOptionalTime.Dateimte;
 
 export declare namespace UnionWithOptionalTime {
     interface Date_ {

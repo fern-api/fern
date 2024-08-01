@@ -3,5 +3,5 @@
  */
 
 export interface UpdateProblemResponse {
-    problemVersion: number;
+    "problemVersion": number;
 }

@@ -8,17 +8,14 @@ import * as core from "../../../../../../core";
 import { NonVoidFunctionSignature } from "./NonVoidFunctionSignature";
 import { FunctionImplementationForMultipleLanguages } from "./FunctionImplementationForMultipleLanguages";
 
-export const NonVoidFunctionDefinition: core.serialization.ObjectSchema<
-    serializers.v2.NonVoidFunctionDefinition.Raw,
-    SeedTrace.v2.NonVoidFunctionDefinition
-> = core.serialization.object({
-    signature: NonVoidFunctionSignature,
-    code: FunctionImplementationForMultipleLanguages,
-});
+export const NonVoidFunctionDefinition: core.serialization.ObjectSchema<serializers.v2.NonVoidFunctionDefinition.Raw, SeedTrace.v2.NonVoidFunctionDefinition> = core.serialization.object({
+        "signature": NonVoidFunctionSignature,
+        "code": FunctionImplementationForMultipleLanguages
+    });
 
 export declare namespace NonVoidFunctionDefinition {
     interface Raw {
-        signature: NonVoidFunctionSignature.Raw;
-        code: FunctionImplementationForMultipleLanguages.Raw;
+        "signature": NonVoidFunctionSignature.Raw;
+        "code": FunctionImplementationForMultipleLanguages.Raw;
     }
 }

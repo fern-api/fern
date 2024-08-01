@@ -6,41 +6,36 @@ import * as serializers from "../../../index";
 import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const ProblemDescriptionBoard: core.serialization.Schema<
-    serializers.ProblemDescriptionBoard.Raw,
-    SeedTrace.ProblemDescriptionBoard
-> = core.serialization
-    .union("type", {
-        html: core.serialization.object({
-            value: core.serialization.string(),
+export const ProblemDescriptionBoard: core.serialization.Schema<serializers.ProblemDescriptionBoard.Raw, SeedTrace.ProblemDescriptionBoard> = core.serialization.union("type", {
+        "html": core.serialization.object({
+            "value": core.serialization.string()
         }),
-        variable: core.serialization.object({
-            value: core.serialization.lazy(() => serializers.VariableValue),
+        "variable": core.serialization.object({
+            "value": core.serialization.lazy(() => serializers.VariableValue)
         }),
-        testCaseId: core.serialization.object({
-            value: core.serialization.string(),
-        }),
-    })
-    .transform<SeedTrace.ProblemDescriptionBoard>({
-        transform: (value) => value,
-        untransform: (value) => value,
+        "testCaseId": core.serialization.object({
+            "value": core.serialization.string()
+        })
+    }).transform<SeedTrace.ProblemDescriptionBoard>({
+        transform: value => value,
+        untransform: value => value
     });
 
 export declare namespace ProblemDescriptionBoard {
     type Raw = ProblemDescriptionBoard.Html | ProblemDescriptionBoard.Variable | ProblemDescriptionBoard.TestCaseId;
 
     interface Html {
-        type: "html";
-        value: string;
+        "type": "html";
+        "value": string;
     }
 
     interface Variable {
-        type: "variable";
-        value: serializers.VariableValue.Raw;
+        "type": "variable";
+        "value": serializers.VariableValue.Raw;
     }
 
     interface TestCaseId {
-        type: "testCaseId";
-        value: string;
+        "type": "testCaseId";
+        "value": string;
     }
 }

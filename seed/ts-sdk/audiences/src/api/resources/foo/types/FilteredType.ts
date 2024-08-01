@@ -3,6 +3,6 @@
  */
 
 export interface FilteredType {
-    publicProperty?: string;
-    privateProperty: number;
+    "publicProperty"?: string;
+    "privateProperty": number;
 }

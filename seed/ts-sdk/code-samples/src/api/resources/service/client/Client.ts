@@ -24,7 +24,8 @@ export declare namespace Service {
 }
 
 export class Service {
-    constructor(protected readonly _options: Service.Options) {}
+    constructor(protected readonly _options: Service.Options) {
+    }
 
     /**
      * @param {SeedCodeSamples.MyRequest} request
@@ -35,10 +36,7 @@ export class Service {
      *         numEvents: 5
      *     })
      */
-    public async hello(
-        request: SeedCodeSamples.MyRequest,
-        requestOptions?: Service.RequestOptions
-    ): Promise<SeedCodeSamples.MyResponse> {
+    public async hello(request: SeedCodeSamples.MyRequest, requestOptions?: Service.RequestOptions): Promise<SeedCodeSamples.MyResponse> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "hello"),
             method: "POST",
@@ -47,43 +45,35 @@ export class Service {
                 "X-Fern-SDK-Name": "@fern/code-samples",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                "X-Fern-Runtime-Version": core.RUNTIME.version
             },
             contentType: "application/json",
             requestType: "json",
             body: serializers.MyRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
+            abortSignal: requestOptions?.abortSignal
         });
         if (_response.ok) {
-            return serializers.MyResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return serializers.MyResponse.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] });
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedCodeSamplesError({
                 statusCode: _response.error.statusCode,
-                body: _response.error.body,
+                body: _response.error.body
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedCodeSamplesError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.SeedCodeSamplesTimeoutError();
-            case "unknown":
-                throw new errors.SeedCodeSamplesError({
-                    message: _response.error.errorMessage,
-                });
+            case "non-json": throw new errors.SeedCodeSamplesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody
+            });
+            case "timeout": throw new errors.SeedCodeSamplesTimeoutError;
+            case "unknown": throw new errors.SeedCodeSamplesError({
+                message: _response.error.errorMessage
+            });
         }
     }
 }

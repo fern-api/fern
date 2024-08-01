@@ -6,17 +6,16 @@ import * as serializers from "../../../index";
 import * as SeedMixedCase from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedMixedCase.User> =
-    core.serialization.object({
-        userName: core.serialization.string(),
-        metadata_tags: core.serialization.list(core.serialization.string()),
-        EXTRA_PROPERTIES: core.serialization.record(core.serialization.string(), core.serialization.string()),
+export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedMixedCase.User> = core.serialization.object({
+        "userName": core.serialization.string(),
+        "metadata_tags": core.serialization.list(core.serialization.string()),
+        "EXTRA_PROPERTIES": core.serialization.record(core.serialization.string(), core.serialization.string())
     });
 
 export declare namespace User {
     interface Raw {
-        userName: string;
-        metadata_tags: string[];
-        EXTRA_PROPERTIES: Record<string, string>;
+        "userName": string;
+        "metadata_tags": string[];
+        "EXTRA_PROPERTIES": Record<string, string>;
     }
 }

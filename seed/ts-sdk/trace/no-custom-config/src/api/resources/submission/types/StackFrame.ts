@@ -5,7 +5,7 @@
 import * as SeedTrace from "../../../index";
 
 export interface StackFrame {
-    methodName: string;
-    lineNumber: number;
-    scopes: SeedTrace.Scope[];
+    "methodName": string;
+    "lineNumber": number;
+    "scopes": SeedTrace.Scope[];
 }

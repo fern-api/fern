@@ -31,5 +31,5 @@ import * as SeedObjectsWithImports from "../index";
  *     }
  */
 export interface Tree {
-    nodes?: SeedObjectsWithImports.Node[];
+    "nodes"?: SeedObjectsWithImports.Node[];
 }

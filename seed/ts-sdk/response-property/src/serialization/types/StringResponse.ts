@@ -6,15 +6,12 @@ import * as serializers from "../index";
 import * as SeedResponseProperty from "../../api/index";
 import * as core from "../../core";
 
-export const StringResponse: core.serialization.ObjectSchema<
-    serializers.StringResponse.Raw,
-    SeedResponseProperty.StringResponse
-> = core.serialization.object({
-    data: core.serialization.string(),
-});
+export const StringResponse: core.serialization.ObjectSchema<serializers.StringResponse.Raw, SeedResponseProperty.StringResponse> = core.serialization.object({
+        "data": core.serialization.string()
+    });
 
 export declare namespace StringResponse {
     interface Raw {
-        data: string;
+        "data": string;
     }
 }

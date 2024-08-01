@@ -7,15 +7,12 @@ import * as SeedPagination from "../../../../../api/index";
 import * as core from "../../../../../core";
 import { WithPage } from "../../types/WithPage";
 
-export const ListUsersBodyOffsetPaginationRequest: core.serialization.Schema<
-    serializers.ListUsersBodyOffsetPaginationRequest.Raw,
-    SeedPagination.ListUsersBodyOffsetPaginationRequest
-> = core.serialization.object({
-    pagination: WithPage.optional(),
-});
+export const ListUsersBodyOffsetPaginationRequest: core.serialization.Schema<serializers.ListUsersBodyOffsetPaginationRequest.Raw, SeedPagination.ListUsersBodyOffsetPaginationRequest> = core.serialization.object({
+        "pagination": WithPage.optional()
+    });
 
 export declare namespace ListUsersBodyOffsetPaginationRequest {
     interface Raw {
-        pagination?: WithPage.Raw | null;
+        "pagination"?: WithPage.Raw | null;
     }
 }

@@ -32,7 +32,7 @@ import * as SeedObjectsWithImports from "../index";
  *     }
  */
 export interface Node {
-    id: string;
-    label?: string;
-    metadata?: SeedObjectsWithImports.commons.Metadata;
+    "id": string;
+    "label"?: string;
+    "metadata"?: SeedObjectsWithImports.commons.Metadata;
 }

@@ -5,8 +5,8 @@
 import * as SeedTrace from "../../../index";
 
 export type UserId = string & {
-    UserId: void;
-};
+        UserId: void;
+    };
 
 export function UserId(value: string): SeedTrace.UserId {
     return value as unknown as SeedTrace.UserId;

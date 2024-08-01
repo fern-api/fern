@@ -7,33 +7,28 @@ import * as SeedTrace from "../../../../../../../../api/index";
 import * as core from "../../../../../../../../core";
 import { ParameterId } from "./ParameterId";
 
-export const TestCaseImplementationDescriptionBoard: core.serialization.Schema<
-    serializers.v2.v3.TestCaseImplementationDescriptionBoard.Raw,
-    SeedTrace.v2.v3.TestCaseImplementationDescriptionBoard
-> = core.serialization
-    .union("type", {
-        html: core.serialization.object({
-            value: core.serialization.string(),
+export const TestCaseImplementationDescriptionBoard: core.serialization.Schema<serializers.v2.v3.TestCaseImplementationDescriptionBoard.Raw, SeedTrace.v2.v3.TestCaseImplementationDescriptionBoard> = core.serialization.union("type", {
+        "html": core.serialization.object({
+            "value": core.serialization.string()
         }),
-        paramId: core.serialization.object({
-            value: ParameterId,
-        }),
-    })
-    .transform<SeedTrace.v2.v3.TestCaseImplementationDescriptionBoard>({
-        transform: (value) => value,
-        untransform: (value) => value,
+        "paramId": core.serialization.object({
+            "value": ParameterId
+        })
+    }).transform<SeedTrace.v2.v3.TestCaseImplementationDescriptionBoard>({
+        transform: value => value,
+        untransform: value => value
     });
 
 export declare namespace TestCaseImplementationDescriptionBoard {
     type Raw = TestCaseImplementationDescriptionBoard.Html | TestCaseImplementationDescriptionBoard.ParamId;
 
     interface Html {
-        type: "html";
-        value: string;
+        "type": "html";
+        "value": string;
     }
 
     interface ParamId {
-        type: "paramId";
-        value: ParameterId.Raw;
+        "type": "paramId";
+        "value": ParameterId.Raw;
     }
 }

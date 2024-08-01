@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../../../index";
 
 export interface TestCaseImplementation {
-    description: SeedTrace.v2.TestCaseImplementationDescription;
-    function: SeedTrace.v2.TestCaseFunction;
+    "description": SeedTrace.v2.TestCaseImplementationDescription;
+    "function": SeedTrace.v2.TestCaseFunction;
 }

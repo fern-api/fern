@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../../../../../index";
 
 export interface GetBasicSolutionFileRequest {
-    methodName: string;
-    signature: SeedTrace.v2.v3.NonVoidFunctionSignature;
+    "methodName": string;
+    "signature": SeedTrace.v2.v3.NonVoidFunctionSignature;
 }

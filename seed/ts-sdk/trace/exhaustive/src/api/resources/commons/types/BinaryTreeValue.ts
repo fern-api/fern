@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../index";
 
 export interface BinaryTreeValue {
-    root?: SeedTrace.NodeId;
-    nodes: Record<SeedTrace.NodeId, SeedTrace.BinaryTreeNodeValue>;
+    "root"?: SeedTrace.NodeId;
+    "nodes": Record<SeedTrace.NodeId, SeedTrace.BinaryTreeNodeValue>;
 }

@@ -21,7 +21,8 @@ export declare namespace SeedMultiLineDocsClient {
 }
 
 export class SeedMultiLineDocsClient {
-    constructor(protected readonly _options: SeedMultiLineDocsClient.Options) {}
+    constructor(protected readonly _options: SeedMultiLineDocsClient.Options) {
+    }
 
     protected _user: User | undefined;
 

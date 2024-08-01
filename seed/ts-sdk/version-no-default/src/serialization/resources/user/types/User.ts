@@ -8,13 +8,13 @@ import * as core from "../../../../core";
 import { UserId } from "./UserId";
 
 export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedVersion.User> = core.serialization.object({
-    id: UserId,
-    name: core.serialization.string(),
-});
+        "id": UserId,
+        "name": core.serialization.string()
+    });
 
 export declare namespace User {
     interface Raw {
-        id: UserId.Raw;
-        name: string;
+        "id": UserId.Raw;
+        "name": string;
     }
 }

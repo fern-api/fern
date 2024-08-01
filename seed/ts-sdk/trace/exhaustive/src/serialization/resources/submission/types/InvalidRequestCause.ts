@@ -9,46 +9,34 @@ import { SubmissionIdNotFound } from "./SubmissionIdNotFound";
 import { CustomTestCasesUnsupported } from "./CustomTestCasesUnsupported";
 import { UnexpectedLanguageError } from "./UnexpectedLanguageError";
 
-export const InvalidRequestCause: core.serialization.Schema<
-    serializers.InvalidRequestCause.Raw,
-    SeedTrace.InvalidRequestCause
-> = core.serialization
-    .union("type", {
-        submissionIdNotFound: SubmissionIdNotFound,
-        customTestCasesUnsupported: CustomTestCasesUnsupported,
-        unexpectedLanguage: UnexpectedLanguageError,
-    })
-    .transform<SeedTrace.InvalidRequestCause>({
-        transform: (value) => {
+export const InvalidRequestCause: core.serialization.Schema<serializers.InvalidRequestCause.Raw, SeedTrace.InvalidRequestCause> = core.serialization.union("type", {
+        "submissionIdNotFound": SubmissionIdNotFound,
+        "customTestCasesUnsupported": CustomTestCasesUnsupported,
+        "unexpectedLanguage": UnexpectedLanguageError
+    }).transform<SeedTrace.InvalidRequestCause>({
+        transform: value => {
             switch (value.type) {
-                case "submissionIdNotFound":
-                    return SeedTrace.InvalidRequestCause.submissionIdNotFound(value);
-                case "customTestCasesUnsupported":
-                    return SeedTrace.InvalidRequestCause.customTestCasesUnsupported(value);
-                case "unexpectedLanguage":
-                    return SeedTrace.InvalidRequestCause.unexpectedLanguage(value);
-                default:
-                    return SeedTrace.InvalidRequestCause._unknown(value);
+                case "submissionIdNotFound": return SeedTrace.InvalidRequestCause.submissionIdNotFound(value);
+                case "customTestCasesUnsupported": return SeedTrace.InvalidRequestCause.customTestCasesUnsupported(value);
+                case "unexpectedLanguage": return SeedTrace.InvalidRequestCause.unexpectedLanguage(value);
+                default: return SeedTrace.InvalidRequestCause._unknown(value);
             }
         },
-        untransform: ({ _visit, ...value }) => value as any,
+        untransform: ({ _visit, ...value }) => value as any
     });
 
 export declare namespace InvalidRequestCause {
-    type Raw =
-        | InvalidRequestCause.SubmissionIdNotFound
-        | InvalidRequestCause.CustomTestCasesUnsupported
-        | InvalidRequestCause.UnexpectedLanguage;
+    type Raw = InvalidRequestCause.SubmissionIdNotFound | InvalidRequestCause.CustomTestCasesUnsupported | InvalidRequestCause.UnexpectedLanguage;
 
     interface SubmissionIdNotFound extends SubmissionIdNotFound.Raw {
-        type: "submissionIdNotFound";
+        "type": "submissionIdNotFound";
     }
 
     interface CustomTestCasesUnsupported extends CustomTestCasesUnsupported.Raw {
-        type: "customTestCasesUnsupported";
+        "type": "customTestCasesUnsupported";
     }
 
     interface UnexpectedLanguage extends UnexpectedLanguageError.Raw {
-        type: "unexpectedLanguage";
+        "type": "unexpectedLanguage";
     }
 }

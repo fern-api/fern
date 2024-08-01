@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../index";
 
 export interface InitializeProblemRequest {
-    problemId: SeedTrace.ProblemId;
-    problemVersion?: number;
+    "problemId": SeedTrace.ProblemId;
+    "problemVersion"?: number;
 }

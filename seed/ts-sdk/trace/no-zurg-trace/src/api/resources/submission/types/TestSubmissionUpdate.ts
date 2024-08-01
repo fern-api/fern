@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../index";
 
 export interface TestSubmissionUpdate {
-    updateTime: string;
-    updateInfo: SeedTrace.TestSubmissionUpdateInfo;
+    "updateTime": string;
+    "updateInfo": SeedTrace.TestSubmissionUpdateInfo;
 }

@@ -15,5 +15,5 @@ import * as SeedExamples from "../../../index";
  *     }
  */
 export interface Tree {
-    nodes?: SeedExamples.Node[];
+    "nodes"?: SeedExamples.Node[];
 }

@@ -5,5 +5,5 @@
 import * as SeedAudiences from "../../../../../index";
 
 export interface Foo {
-    foo?: SeedAudiences.folderC.Foo;
+    "foo"?: SeedAudiences.folderC.Foo;
 }

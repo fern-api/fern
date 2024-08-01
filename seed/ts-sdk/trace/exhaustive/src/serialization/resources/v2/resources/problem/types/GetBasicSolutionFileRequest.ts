@@ -7,17 +7,14 @@ import * as SeedTrace from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { NonVoidFunctionSignature } from "./NonVoidFunctionSignature";
 
-export const GetBasicSolutionFileRequest: core.serialization.ObjectSchema<
-    serializers.v2.GetBasicSolutionFileRequest.Raw,
-    SeedTrace.v2.GetBasicSolutionFileRequest
-> = core.serialization.object({
-    methodName: core.serialization.string(),
-    signature: NonVoidFunctionSignature,
-});
+export const GetBasicSolutionFileRequest: core.serialization.ObjectSchema<serializers.v2.GetBasicSolutionFileRequest.Raw, SeedTrace.v2.GetBasicSolutionFileRequest> = core.serialization.object({
+        "methodName": core.serialization.string(),
+        "signature": NonVoidFunctionSignature
+    });
 
 export declare namespace GetBasicSolutionFileRequest {
     interface Raw {
-        methodName: string;
-        signature: NonVoidFunctionSignature.Raw;
+        "methodName": string;
+        "signature": NonVoidFunctionSignature.Raw;
     }
 }

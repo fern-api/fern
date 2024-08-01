@@ -5,18 +5,16 @@
 import * as serializers from "../../../index";
 import * as core from "../../../../core";
 
-export const Request: core.serialization.Schema<
-    serializers.optional.sendOptionalBody.Request.Raw,
-    Record<string, unknown> | undefined
-> = core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional();
+export const Request: core.serialization.Schema<serializers.optional.sendOptionalBody.Request.Raw, Record<string, unknown> | undefined> = core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional();
 
 export declare namespace Request {
     type Raw = Record<string, unknown> | null | undefined;
 }
 
-export const Response: core.serialization.Schema<serializers.optional.sendOptionalBody.Response.Raw, string> =
-    core.serialization.string();
+export const Response: core.serialization.Schema<serializers.optional.sendOptionalBody.Response.Raw, string> = core.serialization.string();
 
 export declare namespace Response {
     type Raw = string;
 }
+
+

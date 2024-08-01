@@ -24,7 +24,8 @@ export declare namespace NoReqBody {
 }
 
 export class NoReqBody {
-    constructor(protected readonly _options: NoReqBody.Options) {}
+    constructor(protected readonly _options: NoReqBody.Options) {
+    }
 
     /**
      * @param {NoReqBody.RequestOptions} requestOptions - Request-specific configuration.
@@ -32,41 +33,34 @@ export class NoReqBody {
      * @example
      *     await client.noReqBody.getWithNoRequestBody()
      */
-    public async getWithNoRequestBody(
-        requestOptions?: NoReqBody.RequestOptions
-    ): Promise<core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.noReqBody.getWithNoRequestBody.Error>> {
+    public async getWithNoRequestBody(requestOptions?: NoReqBody.RequestOptions): Promise<core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.noReqBody.getWithNoRequestBody.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/no-req-body"),
             method: "GET",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
+                "Authorization": await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                "X-Fern-Runtime-Version": core.RUNTIME.version
             },
             contentType: "application/json",
             requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
+            abortSignal: requestOptions?.abortSignal
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                body: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] })
             };
         }
 
         return {
             ok: false,
-            error: Fiddle.noReqBody.getWithNoRequestBody.Error._unknown(_response.error),
+            error: Fiddle.noReqBody.getWithNoRequestBody.Error._unknown(_response.error)
         };
     }
 
@@ -76,41 +70,34 @@ export class NoReqBody {
      * @example
      *     await client.noReqBody.postWithNoRequestBody()
      */
-    public async postWithNoRequestBody(
-        requestOptions?: NoReqBody.RequestOptions
-    ): Promise<core.APIResponse<string, Fiddle.noReqBody.postWithNoRequestBody.Error>> {
+    public async postWithNoRequestBody(requestOptions?: NoReqBody.RequestOptions): Promise<core.APIResponse<string, Fiddle.noReqBody.postWithNoRequestBody.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/no-req-body"),
             method: "POST",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
+                "Authorization": await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                "X-Fern-Runtime-Version": core.RUNTIME.version
             },
             contentType: "application/json",
             requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
+            abortSignal: requestOptions?.abortSignal
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: serializers.noReqBody.postWithNoRequestBody.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                body: serializers.noReqBody.postWithNoRequestBody.Response.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] })
             };
         }
 
         return {
             ok: false,
-            error: Fiddle.noReqBody.postWithNoRequestBody.Error._unknown(_response.error),
+            error: Fiddle.noReqBody.postWithNoRequestBody.Error._unknown(_response.error)
         };
     }
 

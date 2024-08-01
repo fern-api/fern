@@ -4,7 +4,7 @@
 
 import * as SeedTrace from "../../../index";
 
-export type SubmissionRequest =
+export type SubmissionRequest = 
     | SeedTrace.SubmissionRequest.InitializeProblemRequest
     | SeedTrace.SubmissionRequest.InitializeWorkspaceRequest
     | SeedTrace.SubmissionRequest.SubmitV2
@@ -47,106 +47,81 @@ export declare namespace SubmissionRequest {
         submitV2: (value: SeedTrace.SubmitRequestV2) => _Result;
         workspaceSubmit: (value: SeedTrace.WorkspaceSubmitRequest) => _Result;
         stop: (value: SeedTrace.StopRequest) => _Result;
-        _other: (value: { type: string }) => _Result;
+        _other: (value: {
+                type: string;
+            }) => _Result;
     }
 }
 
 export const SubmissionRequest = {
-    initializeProblemRequest: (
-        value: SeedTrace.InitializeProblemRequest
-    ): SeedTrace.SubmissionRequest.InitializeProblemRequest => {
-        return {
-            ...value,
-            type: "initializeProblemRequest",
-            _visit: function <_Result>(
-                this: SeedTrace.SubmissionRequest.InitializeProblemRequest,
-                visitor: SeedTrace.SubmissionRequest._Visitor<_Result>
-            ) {
-                return SeedTrace.SubmissionRequest._visit(this, visitor);
-            },
-        };
-    },
+        initializeProblemRequest: (value: SeedTrace.InitializeProblemRequest): SeedTrace.SubmissionRequest.InitializeProblemRequest => {
+            return {
+                ...value,
+                type: "initializeProblemRequest",
+                "_visit": function <_Result>(this: SeedTrace.SubmissionRequest.InitializeProblemRequest, visitor: SeedTrace.SubmissionRequest._Visitor<_Result>) {
+                    return SeedTrace.SubmissionRequest._visit(this, visitor);
+                }
+            };
+        },
 
-    initializeWorkspaceRequest: (): SeedTrace.SubmissionRequest.InitializeWorkspaceRequest => {
-        return {
-            type: "initializeWorkspaceRequest",
-            _visit: function <_Result>(
-                this: SeedTrace.SubmissionRequest.InitializeWorkspaceRequest,
-                visitor: SeedTrace.SubmissionRequest._Visitor<_Result>
-            ) {
-                return SeedTrace.SubmissionRequest._visit(this, visitor);
-            },
-        };
-    },
+        initializeWorkspaceRequest: (): SeedTrace.SubmissionRequest.InitializeWorkspaceRequest => {
+            return {
+                type: "initializeWorkspaceRequest",
+                "_visit": function <_Result>(this: SeedTrace.SubmissionRequest.InitializeWorkspaceRequest, visitor: SeedTrace.SubmissionRequest._Visitor<_Result>) {
+                    return SeedTrace.SubmissionRequest._visit(this, visitor);
+                }
+            };
+        },
 
-    submitV2: (value: SeedTrace.SubmitRequestV2): SeedTrace.SubmissionRequest.SubmitV2 => {
-        return {
-            ...value,
-            type: "submitV2",
-            _visit: function <_Result>(
-                this: SeedTrace.SubmissionRequest.SubmitV2,
-                visitor: SeedTrace.SubmissionRequest._Visitor<_Result>
-            ) {
-                return SeedTrace.SubmissionRequest._visit(this, visitor);
-            },
-        };
-    },
+        submitV2: (value: SeedTrace.SubmitRequestV2): SeedTrace.SubmissionRequest.SubmitV2 => {
+            return {
+                ...value,
+                type: "submitV2",
+                "_visit": function <_Result>(this: SeedTrace.SubmissionRequest.SubmitV2, visitor: SeedTrace.SubmissionRequest._Visitor<_Result>) {
+                    return SeedTrace.SubmissionRequest._visit(this, visitor);
+                }
+            };
+        },
 
-    workspaceSubmit: (value: SeedTrace.WorkspaceSubmitRequest): SeedTrace.SubmissionRequest.WorkspaceSubmit => {
-        return {
-            ...value,
-            type: "workspaceSubmit",
-            _visit: function <_Result>(
-                this: SeedTrace.SubmissionRequest.WorkspaceSubmit,
-                visitor: SeedTrace.SubmissionRequest._Visitor<_Result>
-            ) {
-                return SeedTrace.SubmissionRequest._visit(this, visitor);
-            },
-        };
-    },
+        workspaceSubmit: (value: SeedTrace.WorkspaceSubmitRequest): SeedTrace.SubmissionRequest.WorkspaceSubmit => {
+            return {
+                ...value,
+                type: "workspaceSubmit",
+                "_visit": function <_Result>(this: SeedTrace.SubmissionRequest.WorkspaceSubmit, visitor: SeedTrace.SubmissionRequest._Visitor<_Result>) {
+                    return SeedTrace.SubmissionRequest._visit(this, visitor);
+                }
+            };
+        },
 
-    stop: (value: SeedTrace.StopRequest): SeedTrace.SubmissionRequest.Stop => {
-        return {
-            ...value,
-            type: "stop",
-            _visit: function <_Result>(
-                this: SeedTrace.SubmissionRequest.Stop,
-                visitor: SeedTrace.SubmissionRequest._Visitor<_Result>
-            ) {
-                return SeedTrace.SubmissionRequest._visit(this, visitor);
-            },
-        };
-    },
+        stop: (value: SeedTrace.StopRequest): SeedTrace.SubmissionRequest.Stop => {
+            return {
+                ...value,
+                type: "stop",
+                "_visit": function <_Result>(this: SeedTrace.SubmissionRequest.Stop, visitor: SeedTrace.SubmissionRequest._Visitor<_Result>) {
+                    return SeedTrace.SubmissionRequest._visit(this, visitor);
+                }
+            };
+        },
 
-    _unknown: (value: { type: string }): SeedTrace.SubmissionRequest._Unknown => {
-        return {
-            ...(value as any),
-            _visit: function <_Result>(
-                this: SeedTrace.SubmissionRequest._Unknown,
-                visitor: SeedTrace.SubmissionRequest._Visitor<_Result>
-            ) {
-                return SeedTrace.SubmissionRequest._visit(this, visitor);
-            },
-        };
-    },
+        _unknown: (value: {
+            type: string;
+        }): SeedTrace.SubmissionRequest._Unknown => {
+            return {
+                ...(value as any),
+                "_visit": function <_Result>(this: SeedTrace.SubmissionRequest._Unknown, visitor: SeedTrace.SubmissionRequest._Visitor<_Result>) {
+                    return SeedTrace.SubmissionRequest._visit(this, visitor);
+                }
+            };
+        },
 
-    _visit: <_Result>(
-        value: SeedTrace.SubmissionRequest,
-        visitor: SeedTrace.SubmissionRequest._Visitor<_Result>
-    ): _Result => {
-        switch (value.type) {
-            case "initializeProblemRequest":
-                return visitor.initializeProblemRequest(value);
-            case "initializeWorkspaceRequest":
-                return visitor.initializeWorkspaceRequest();
-            case "submitV2":
-                return visitor.submitV2(value);
-            case "workspaceSubmit":
-                return visitor.workspaceSubmit(value);
-            case "stop":
-                return visitor.stop(value);
-            default:
-                return visitor._other(value as any);
-        }
-    },
-} as const;
+        _visit: <_Result>(value: SeedTrace.SubmissionRequest, visitor: SeedTrace.SubmissionRequest._Visitor<_Result>): _Result => {
+            switch (value.type) {
+                case "initializeProblemRequest": return visitor.initializeProblemRequest(value);
+                case "initializeWorkspaceRequest": return visitor.initializeWorkspaceRequest();
+                case "submitV2": return visitor.submitV2(value);
+                case "workspaceSubmit": return visitor.workspaceSubmit(value);
+                case "stop": return visitor.stop(value);
+                default: return visitor._other(value as any);
+            }
+        },
+    } as const;

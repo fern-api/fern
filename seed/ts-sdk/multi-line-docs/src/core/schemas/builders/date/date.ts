@@ -16,9 +16,9 @@ export function date(): Schema<string, Date> {
                     errors: [
                         {
                             path: breadcrumbsPrefix,
-                            message: getErrorMessageForIncorrectType(raw, "string"),
-                        },
-                    ],
+                            message: getErrorMessageForIncorrectType(raw, "string")
+                        }
+                    ]
                 };
             }
             if (!ISO_8601_REGEX.test(raw)) {
@@ -27,21 +27,21 @@ export function date(): Schema<string, Date> {
                     errors: [
                         {
                             path: breadcrumbsPrefix,
-                            message: getErrorMessageForIncorrectType(raw, "ISO 8601 date string"),
-                        },
-                    ],
+                            message: getErrorMessageForIncorrectType(raw, "ISO 8601 date string")
+                        }
+                    ]
                 };
             }
             return {
                 ok: true,
-                value: new Date(raw),
+                value: new Date(raw)
             };
         },
         json: (date, { breadcrumbsPrefix = [] } = {}) => {
             if (date instanceof Date) {
                 return {
                     ok: true,
-                    value: date.toISOString(),
+                    value: date.toISOString()
                 };
             } else {
                 return {
@@ -49,17 +49,17 @@ export function date(): Schema<string, Date> {
                     errors: [
                         {
                             path: breadcrumbsPrefix,
-                            message: getErrorMessageForIncorrectType(date, "Date object"),
-                        },
-                    ],
+                            message: getErrorMessageForIncorrectType(date, "Date object")
+                        }
+                    ]
                 };
             }
         },
-        getType: () => SchemaType.DATE,
+        getType: () => SchemaType.DATE
     };
 
     return {
         ...maybeSkipValidation(baseSchema),
-        ...getSchemaUtils(baseSchema),
+        ...getSchemaUtils(baseSchema)
     };
 }

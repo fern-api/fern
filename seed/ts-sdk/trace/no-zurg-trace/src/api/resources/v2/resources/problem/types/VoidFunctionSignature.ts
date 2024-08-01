@@ -5,5 +5,5 @@
 import * as SeedTrace from "../../../../../index";
 
 export interface VoidFunctionSignature {
-    parameters: SeedTrace.v2.Parameter[];
+    "parameters": SeedTrace.v2.Parameter[];
 }

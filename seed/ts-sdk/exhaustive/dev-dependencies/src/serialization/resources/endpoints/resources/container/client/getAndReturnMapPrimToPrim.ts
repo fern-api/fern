@@ -5,20 +5,16 @@
 import * as serializers from "../../../../../index";
 import * as core from "../../../../../../core";
 
-export const Request: core.serialization.Schema<
-    serializers.endpoints.container.getAndReturnMapPrimToPrim.Request.Raw,
-    Record<string, string>
-> = core.serialization.record(core.serialization.string(), core.serialization.string());
+export const Request: core.serialization.Schema<serializers.endpoints.container.getAndReturnMapPrimToPrim.Request.Raw, Record<string, string>> = core.serialization.record(core.serialization.string(), core.serialization.string());
 
 export declare namespace Request {
     type Raw = Record<string, string>;
 }
 
-export const Response: core.serialization.Schema<
-    serializers.endpoints.container.getAndReturnMapPrimToPrim.Response.Raw,
-    Record<string, string>
-> = core.serialization.record(core.serialization.string(), core.serialization.string());
+export const Response: core.serialization.Schema<serializers.endpoints.container.getAndReturnMapPrimToPrim.Response.Raw, Record<string, string>> = core.serialization.record(core.serialization.string(), core.serialization.string());
 
 export declare namespace Response {
     type Raw = Record<string, string>;
 }
+
+

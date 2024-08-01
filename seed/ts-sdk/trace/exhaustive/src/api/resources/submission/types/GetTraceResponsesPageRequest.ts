@@ -3,5 +3,5 @@
  */
 
 export interface GetTraceResponsesPageRequest {
-    offset?: number;
+    "offset"?: number;
 }

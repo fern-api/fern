@@ -10,6 +10,6 @@
  *     }
  */
 export interface SendLiteralsInlinedRequest {
-    query: string;
-    temperature?: number;
+    "query": string;
+    "temperature"?: number;
 }

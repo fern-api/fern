@@ -3,5 +3,5 @@
  */
 
 export interface RootType {
-    s: string;
+    "s": string;
 }

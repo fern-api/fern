@@ -12,6 +12,6 @@ import * as SeedExamples from "../../../index";
  *     }
  */
 export interface Migration {
-    name: string;
-    status: SeedExamples.MigrationStatus;
+    "name": string;
+    "status": SeedExamples.MigrationStatus;
 }
