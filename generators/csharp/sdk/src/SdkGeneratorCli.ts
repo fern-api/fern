@@ -34,7 +34,25 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
 
     protected parseCustomConfigOrThrow(customConfig: unknown): SdkCustomConfigSchema {
         const parsed = customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : undefined;
-        return parsed ?? {};
+        if (parsed != null) {
+            return this.validateCustomConfig(parsed);
+        }
+        return {};
+    }
+
+    private validateCustomConfig(customConfig: SdkCustomConfigSchema): SdkCustomConfigSchema {
+        const baseExceptionClassName = customConfig["base-exception-class-name"];
+        const baseApiExceptionClassName = customConfig["base-api-exception-class-name"];
+
+        if (
+            baseExceptionClassName &&
+            baseApiExceptionClassName &&
+            baseExceptionClassName === baseApiExceptionClassName
+        ) {
+            throw new Error(`The 'base-api-exception-class-name' and 'base-exception-class-name' cannot be the same.`);
+        }
+
+        return customConfig;
     }
 
     protected async publishPackage(context: SdkGeneratorContext): Promise<void> {
