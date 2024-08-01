@@ -1,3 +1,5 @@
+from typing import cast
+
 import fern.ir.resources as ir_types
 from typing_extensions import assert_never
 
@@ -30,7 +32,9 @@ def convert_to_singular_type(context: FastApiGeneratorContext, type: ir_types.Ty
                     context, ir_types.TypeReference.factory.container(resolved_type_union.container)
                 )
             elif resolved_type_union.type == "named":
-                return convert_to_singular_type(context, ir_types.TypeReference.factory.named(resolved_type_union.name))
+                return convert_to_singular_type(
+                    context, ir_types.TypeReference.factory.named(cast(ir_types.NamedType, resolved_type_union.name))
+                )
             elif resolved_type_union.type == "unknown":
                 return convert_to_singular_type(context, ir_types.TypeReference.factory.unknown())
             elif resolved_type_union.type != "void":

@@ -1,4 +1,4 @@
-from typing import List, Optional, Set
+from typing import List, Optional, Set, cast
 
 import fern.ir.resources as ir_types
 from typing_extensions import Never
@@ -227,7 +227,9 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                         AST.FunctionParameter(
                                             name=BUILDER_ARGUMENT_NAME,
                                             type_hint=self._context.get_type_hint_for_type_reference(
-                                                ir_types.TypeReference.factory.named(type_name)
+                                                ir_types.TypeReference.factory.named(
+                                                    cast(ir_types.NamedType, type_name)
+                                                )
                                             ),
                                         )
                                     ],
@@ -240,7 +242,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                     no_properties=lambda: None,
                                 ),
                                 return_type=self._context.get_type_hint_for_type_reference(
-                                    ir_types.TypeReference.factory.named(self._name)
+                                    ir_types.TypeReference.factory.named(cast(ir_types.NamedType, self._name))
                                 ),
                             ),
                             body=AST.CodeWriter(
@@ -315,7 +317,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                         )
                                     ),
                                     type=external_pydantic_model.get_type_hint_for_type_reference(
-                                        ir_types.TypeReference.factory.named(type_name)
+                                        ir_types.TypeReference.factory.named(cast(ir_types.NamedType, type_name))
                                     ),
                                 ),
                                 single_property=lambda property: VisitorArgument(

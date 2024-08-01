@@ -1241,7 +1241,7 @@ class EndpointFunctionGenerator:
         allow_optional: bool,
         allow_enum: bool,
     ) -> bool:
-        def visit_named_type(type_name: ir_types.DeclaredTypeName) -> bool:
+        def visit_named_type(type_name: ir_types.NamedType) -> bool:
             type_declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(type_name.type_id)
             return type_declaration.shape.visit(
                 alias=lambda alias: self._does_type_reference_match_primitives(
