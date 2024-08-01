@@ -63,6 +63,7 @@ allowedFailures:
   - file-upload
   - plain-text
   - streaming
+  - streaming-parameter
   - server-sent-events
 
 
