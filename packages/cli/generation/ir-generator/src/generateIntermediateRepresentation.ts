@@ -30,6 +30,7 @@ import { constructHttpPath } from "./converters/services/constructHttpPath";
 import { convertHttpHeader, convertHttpService, convertPathParameters } from "./converters/services/convertHttpService";
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
 import { ExampleGenerator } from "./examples/ExampleGenerator";
+import { addExtendedPrpoertiesToIr } from "./extended-properties/addExtendedPropertiesToIr";
 import { constructFernFileContext, constructRootApiFileContext, FernFileContext } from "./FernFileContext";
 import { FilteredIr } from "./filtered-ir/FilteredIr";
 import { IrGraph } from "./filtered-ir/IrGraph";
@@ -423,9 +424,13 @@ export async function generateIntermediateRepresentation({
     const readmeConfig =
         readme != null ? convertReadmeConfig({ readme, services: intermediateRepresentation.services }) : undefined;
 
+    const { types, services } = addExtendedPrpoertiesToIr(intermediateRepresentationForAudiences);
+
     return {
         ...intermediateRepresentationForAudiences,
         ...packageTreeGenerator.build(filteredIr),
+        types,
+        services,
         sdkConfig: {
             isAuthMandatory,
             hasStreamingEndpoints,
