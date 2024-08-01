@@ -322,6 +322,11 @@ describe("test", () => {
                             string: (value) => literalOf(value.original),
                             boolean: (value) => literalOf(value),
                             long: (value) => literalOf(value),
+                            uint: (value) => literalOf(value),
+                            uint64: (value) => literalOf(value),
+                            float: (value) => literalOf(value),
+                            base64: (value) => literalOf(value),
+                            bigInteger: (value) => literalOf(value),
                             datetime: (value) => code`new Date(${literalOf(value.toISOString())})`,
                             date: (value) => literalOf(value),
                             uuid: (value) => literalOf(value),
@@ -331,25 +336,25 @@ describe("test", () => {
                     container: (value) => {
                         return value._visit({
                             list: (value) => {
-                                return arrayOf(...value.map((item) => visitExampleTypeReference(item)));
+                                return arrayOf(...value.list.map((item) => visitExampleTypeReference(item)));
                             },
                             map: (value) => {
                                 return Object.fromEntries(
-                                    value.map((item) => {
+                                    value.map.map((item) => {
                                         return [item.key.jsonExample, visitExampleTypeReference(item.value)];
                                     })
                                 );
                             },
                             optional: (value) => {
-                                if (!value) {
+                                if (!value.optional) {
                                     return code`undefined`;
                                 }
-                                return visitExampleTypeReference(value);
+                                return visitExampleTypeReference(value.optional);
                             },
                             set: (value) => {
                                 // return code`new Set(${arrayOf(value.map(visitExampleTypeReference))})`;
                                 // Sets are not supported in ts-sdk
-                                return arrayOf(...value.map(visitExampleTypeReference));
+                                return arrayOf(...value.set.map(visitExampleTypeReference));
                             },
                             literal: (value) => {
                                 return jsonExample;

@@ -119,7 +119,11 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                                 if (originalTypeForProperty.type === "union") {
                                     const propertyKey = originalTypeForProperty.getSinglePropertyKey({
                                         name: property.name,
-                                        type: TypeReference.named(property.originalTypeDeclaration)
+                                        type: TypeReference.named({
+                                            ...property.originalTypeDeclaration,
+                                            default: undefined,
+                                            inline: undefined
+                                        })
                                     });
                                     return ts.factory.createPropertyAssignment(
                                         propertyKey,

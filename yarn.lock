@@ -4858,10 +4858,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-sdk@npm:50.2.0":
-  version: 50.2.0
-  resolution: "@fern-fern/ir-sdk@npm:50.2.0"
-  checksum: 052a039584eb1bfad93f7106ddc3b53603fb059ab0190ca9afaba35f36ea54f13208b8267901b07712dea6aca2e64ab19fde282a7ccb9b6d87e0b5fa3377b550
+"@fern-fern/ir-sdk@npm:53.1.0":
+  version: 53.1.0
+  resolution: "@fern-fern/ir-sdk@npm:53.1.0"
+  checksum: 813f60b02dd91f6b8c8734a4e3a20478cc67f7ee32ba5ec2c05809f406d0817f5fe41a95eeeaaf30abf60c2d0336ee0ee109b3cc4bbdc91c5dfc073b65a782b4
   languageName: node
   linkType: hard
 
@@ -5261,16 +5261,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/snippet-sdk@npm:^0.0.5492":
-  version: 0.0.5492
-  resolution: "@fern-fern/snippet-sdk@npm:0.0.5492"
+"@fern-fern/snippet-sdk@npm:^0.0.5526":
+  version: 0.0.5526
+  resolution: "@fern-fern/snippet-sdk@npm:0.0.5526"
   dependencies:
     form-data: 4.0.0
     js-base64: 3.7.2
     node-fetch: 2.7.0
     qs: 6.11.2
     url-join: 4.0.1
-  checksum: dccf0d1e185e1d1d08ddca901cd6343ae7145f6d24a1893075ecdc3ec58269ab96f0e72f149eaf66a767cd128664acd1ae2c3095f86fd46d418565ff220d4420
+  checksum: 45c9c9f5681244e9b300aa9a6ec7fa2d2a7f74d42822975241a22975a288c45ef1f78305360220af9fa1c125fa1bf9006462a15c3fe4cf60739c51bd10b6f3b7
   languageName: node
   linkType: hard
 
@@ -5300,7 +5300,7 @@ __metadata:
     "@fern-api/generator-commons": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-fern/generator-exec-sdk": ^0.0.898
-    "@fern-fern/ir-sdk": 50.2.0
+    "@fern-fern/ir-sdk": 53.1.0
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@types/jest": ^29.5.12
@@ -5391,7 +5391,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
-    "@fern-fern/ir-sdk": 50.2.0
+    "@fern-fern/ir-sdk": 53.1.0
     "@fern-typescript/fetcher": "workspace:*"
     "@fern-typescript/zurg": "workspace:*"
     "@types/decompress": ^4.2.7
@@ -5428,7 +5428,7 @@ __metadata:
   dependencies:
     "@fern-api/logger": "workspace:*"
     "@fern-fern/generator-exec-sdk": ^0.0.898
-    "@fern-fern/ir-sdk": 50.2.0
+    "@fern-fern/ir-sdk": 53.1.0
     "@fern-typescript/commons": "workspace:*"
     "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
@@ -5446,7 +5446,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/endpoint-error-union-generator@workspace:generators/typescript/sdk/endpoint-error-union-generator"
   dependencies:
-    "@fern-fern/ir-sdk": 50.2.0
+    "@fern-fern/ir-sdk": 53.1.0
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/resolvers": "workspace:*"
@@ -5467,7 +5467,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/environments-generator@workspace:generators/typescript/sdk/environments-generator"
   dependencies:
-    "@fern-fern/ir-sdk": 50.2.0
+    "@fern-fern/ir-sdk": 53.1.0
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@types/jest": ^29.5.12
@@ -5487,7 +5487,7 @@ __metadata:
   resolution: "@fern-typescript/express-endpoint-type-schemas-generator@workspace:generators/typescript/express/express-endpoint-type-schemas-generator"
   dependencies:
     "@fern-api/core-utils": "workspace:*"
-    "@fern-fern/ir-sdk": 50.2.0
+    "@fern-fern/ir-sdk": 53.1.0
     "@fern-typescript/abstract-schema-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
@@ -5507,7 +5507,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/express-error-generator@workspace:generators/typescript/express/express-error-generator"
   dependencies:
-    "@fern-fern/ir-sdk": 50.2.0
+    "@fern-fern/ir-sdk": 53.1.0
     "@fern-typescript/abstract-error-class-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
@@ -5528,7 +5528,7 @@ __metadata:
   resolution: "@fern-typescript/express-error-schema-generator@workspace:generators/typescript/express/express-error-schema-generator"
   dependencies:
     "@fern-api/core-utils": "workspace:*"
-    "@fern-fern/ir-sdk": 50.2.0
+    "@fern-fern/ir-sdk": 53.1.0
     "@fern-typescript/abstract-schema-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
@@ -5549,7 +5549,7 @@ __metadata:
   resolution: "@fern-typescript/express-generator-cli@workspace:generators/typescript/express/cli"
   dependencies:
     "@fern-fern/generator-exec-sdk": ^0.0.898
-    "@fern-fern/ir-sdk": 50.2.0
+    "@fern-fern/ir-sdk": 53.1.0
     "@fern-typescript/abstract-generator-cli": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
@@ -5578,7 +5578,7 @@ __metadata:
   dependencies:
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
-    "@fern-fern/ir-sdk": 50.2.0
+    "@fern-fern/ir-sdk": 53.1.0
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/express-endpoint-type-schemas-generator": "workspace:*"
@@ -5610,7 +5610,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/express-inlined-request-body-generator@workspace:generators/typescript/express/express-inlined-request-body-generator"
   dependencies:
-    "@fern-fern/ir-sdk": 50.2.0
+    "@fern-fern/ir-sdk": 53.1.0
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@types/jest": ^29.5.12
@@ -5628,7 +5628,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/express-inlined-request-schema-generator@workspace:generators/typescript/express/express-inlined-request-body-schema-generator"
   dependencies:
-    "@fern-fern/ir-sdk": 50.2.0
+    "@fern-fern/ir-sdk": 53.1.0
     "@fern-typescript/abstract-schema-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
@@ -5648,7 +5648,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/express-register-generator@workspace:generators/typescript/express/express-register-generator"
   dependencies:
-    "@fern-fern/ir-sdk": 50.2.0
+    "@fern-fern/ir-sdk": 53.1.0
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/resolvers": "workspace:*"
@@ -5670,7 +5670,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/express-service-generator@workspace:generators/typescript/express/express-service-generator"
   dependencies:
-    "@fern-fern/ir-sdk": 50.2.0
+    "@fern-fern/ir-sdk": 53.1.0
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/resolvers": "workspace:*"
@@ -5759,7 +5759,7 @@ __metadata:
   resolution: "@fern-typescript/request-wrapper-generator@workspace:generators/typescript/sdk/request-wrapper-generator"
   dependencies:
     "@fern-api/core-utils": "workspace:*"
-    "@fern-fern/ir-sdk": 50.2.0
+    "@fern-fern/ir-sdk": 53.1.0
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@types/jest": ^29.5.12
@@ -5778,7 +5778,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/resolvers@workspace:generators/typescript/utils/resolvers"
   dependencies:
-    "@fern-fern/ir-sdk": 50.2.0
+    "@fern-fern/ir-sdk": 53.1.0
     "@fern-typescript/commons": "workspace:*"
     "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
@@ -5796,7 +5796,7 @@ __metadata:
   resolution: "@fern-typescript/sdk-client-class-generator@workspace:generators/typescript/sdk/client-class-generator"
   dependencies:
     "@fern-api/core-utils": "workspace:*"
-    "@fern-fern/ir-sdk": 50.2.0
+    "@fern-fern/ir-sdk": 53.1.0
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/resolvers": "workspace:*"
@@ -5818,7 +5818,7 @@ __metadata:
   resolution: "@fern-typescript/sdk-endpoint-type-schemas-generator@workspace:generators/typescript/sdk/sdk-endpoint-type-schemas-generator"
   dependencies:
     "@fern-api/core-utils": "workspace:*"
-    "@fern-fern/ir-sdk": 50.2.0
+    "@fern-fern/ir-sdk": 53.1.0
     "@fern-typescript/abstract-schema-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
@@ -5840,7 +5840,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/sdk-error-generator@workspace:generators/typescript/sdk/sdk-error-generator"
   dependencies:
-    "@fern-fern/ir-sdk": 50.2.0
+    "@fern-fern/ir-sdk": 53.1.0
     "@fern-typescript/abstract-error-class-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
@@ -5861,7 +5861,7 @@ __metadata:
   resolution: "@fern-typescript/sdk-error-schema-generator@workspace:generators/typescript/sdk/sdk-error-schema-generator"
   dependencies:
     "@fern-api/core-utils": "workspace:*"
-    "@fern-fern/ir-sdk": 50.2.0
+    "@fern-fern/ir-sdk": 53.1.0
     "@fern-typescript/abstract-schema-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
@@ -5883,7 +5883,7 @@ __metadata:
   dependencies:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
-    "@fern-fern/ir-sdk": 50.2.0
+    "@fern-fern/ir-sdk": 53.1.0
     "@fern-typescript/abstract-generator-cli": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
@@ -5918,8 +5918,8 @@ __metadata:
     "@fern-api/logging-execa": "workspace:*"
     "@fern-fern/generator-cli-sdk": 0.0.56
     "@fern-fern/generator-exec-sdk": ^0.0.898
-    "@fern-fern/ir-sdk": 50.2.0
-    "@fern-fern/snippet-sdk": ^0.0.5492
+    "@fern-fern/ir-sdk": 53.1.0
+    "@fern-fern/snippet-sdk": ^0.0.5526
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/endpoint-error-union-generator": "workspace:*"
@@ -5964,7 +5964,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/sdk-inlined-request-schema-generator@workspace:generators/typescript/sdk/sdk-inlined-request-body-schema-generator"
   dependencies:
-    "@fern-fern/ir-sdk": 50.2.0
+    "@fern-fern/ir-sdk": 53.1.0
     "@fern-typescript/abstract-schema-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
@@ -5984,7 +5984,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/type-generator@workspace:generators/typescript/model/type-generator"
   dependencies:
-    "@fern-fern/ir-sdk": 50.2.0
+    "@fern-fern/ir-sdk": 53.1.0
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/union-generator": "workspace:*"
@@ -6004,7 +6004,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/type-reference-converters@workspace:generators/typescript/model/type-reference-converters"
   dependencies:
-    "@fern-fern/ir-sdk": 50.2.0
+    "@fern-fern/ir-sdk": 53.1.0
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/resolvers": "workspace:*"
     "@types/jest": ^29.5.12
@@ -6024,7 +6024,7 @@ __metadata:
   resolution: "@fern-typescript/type-reference-example-generator@workspace:generators/typescript/model/type-reference-example-generator"
   dependencies:
     "@fern-api/core-utils": "workspace:*"
-    "@fern-fern/ir-sdk": 50.2.0
+    "@fern-fern/ir-sdk": 53.1.0
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@types/jest": ^29.5.12
@@ -6043,7 +6043,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/type-schema-generator@workspace:generators/typescript/model/type-schema-generator"
   dependencies:
-    "@fern-fern/ir-sdk": 50.2.0
+    "@fern-fern/ir-sdk": 53.1.0
     "@fern-typescript/abstract-schema-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
@@ -6065,7 +6065,7 @@ __metadata:
   resolution: "@fern-typescript/union-generator@workspace:generators/typescript/model/union-generator"
   dependencies:
     "@fern-api/core-utils": "workspace:*"
-    "@fern-fern/ir-sdk": 50.2.0
+    "@fern-fern/ir-sdk": 53.1.0
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@types/jest": ^29.5.12
@@ -6084,7 +6084,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/union-schema-generator@workspace:generators/typescript/model/union-schema-generator"
   dependencies:
-    "@fern-fern/ir-sdk": 50.2.0
+    "@fern-fern/ir-sdk": 53.1.0
     "@fern-typescript/abstract-schema-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
