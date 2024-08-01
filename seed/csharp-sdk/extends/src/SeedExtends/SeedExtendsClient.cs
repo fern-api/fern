@@ -1,4 +1,6 @@
 using System;
+using System.Net.Http;
+using SeedExtends;
 using SeedExtends.Core;
 
 #nullable enable
@@ -15,6 +17,33 @@ public partial class SeedExtendsClient
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
             new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
+        );
+    }
+
+    public async Task ExtendedInlineRequestBodyAsync(
+        Inlined request,
+        RequestOptions? options = null
+    )
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = "/extends/extended-inline-request-body",
+                Body = request,
+                Options = options
+            }
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedExtendsApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
         );
     }
 }
