@@ -5,5 +5,5 @@
 import * as SeedTrace from "../../../index";
 
 export interface Scope {
-    variables: Record<string, SeedTrace.DebugVariableValue>;
+    "variables": Record<string, SeedTrace.DebugVariableValue>;
 }

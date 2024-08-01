@@ -6,15 +6,12 @@ import * as serializers from "../../../index";
 import * as SeedBasicAuthEnvironmentVariables from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const UnauthorizedRequestErrorBody: core.serialization.ObjectSchema<
-    serializers.UnauthorizedRequestErrorBody.Raw,
-    SeedBasicAuthEnvironmentVariables.UnauthorizedRequestErrorBody
-> = core.serialization.object({
-    message: core.serialization.string(),
-});
+export const UnauthorizedRequestErrorBody: core.serialization.ObjectSchema<serializers.UnauthorizedRequestErrorBody.Raw, SeedBasicAuthEnvironmentVariables.UnauthorizedRequestErrorBody> = core.serialization.object({
+        "message": core.serialization.string()
+    });
 
 export declare namespace UnauthorizedRequestErrorBody {
     interface Raw {
-        message: string;
+        "message": string;
     }
 }

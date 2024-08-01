@@ -6,17 +6,14 @@ import * as serializers from "../../../index";
 import * as SeedApi from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const CreateMovieRequest: core.serialization.ObjectSchema<
-    serializers.CreateMovieRequest.Raw,
-    SeedApi.CreateMovieRequest
-> = core.serialization.object({
-    title: core.serialization.string(),
-    rating: core.serialization.number(),
-});
+export const CreateMovieRequest: core.serialization.ObjectSchema<serializers.CreateMovieRequest.Raw, SeedApi.CreateMovieRequest> = core.serialization.object({
+        "title": core.serialization.string(),
+        "rating": core.serialization.number()
+    });
 
 export declare namespace CreateMovieRequest {
     interface Raw {
-        title: string;
-        rating: number;
+        "title": string;
+        "rating": number;
     }
 }

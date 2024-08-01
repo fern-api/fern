@@ -3,5 +3,5 @@
  */
 
 export interface CompileError {
-    message: string;
+    "message": string;
 }

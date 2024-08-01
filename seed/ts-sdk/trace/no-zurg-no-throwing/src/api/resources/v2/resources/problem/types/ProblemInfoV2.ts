@@ -5,14 +5,14 @@
 import * as SeedTrace from "../../../../../index";
 
 export interface ProblemInfoV2 {
-    problemId: SeedTrace.ProblemId;
-    problemDescription: SeedTrace.ProblemDescription;
-    problemName: string;
-    problemVersion: number;
-    supportedLanguages: SeedTrace.Language[];
-    customFiles: SeedTrace.v2.CustomFiles;
-    generatedFiles: SeedTrace.v2.GeneratedFiles;
-    customTestCaseTemplates: SeedTrace.v2.TestCaseTemplate[];
-    testcases: SeedTrace.v2.TestCaseV2[];
-    isPublic: boolean;
+    "problemId": SeedTrace.ProblemId;
+    "problemDescription": SeedTrace.ProblemDescription;
+    "problemName": string;
+    "problemVersion": number;
+    "supportedLanguages": SeedTrace.Language[];
+    "customFiles": SeedTrace.v2.CustomFiles;
+    "generatedFiles": SeedTrace.v2.GeneratedFiles;
+    "customTestCaseTemplates": SeedTrace.v2.TestCaseTemplate[];
+    "testcases": SeedTrace.v2.TestCaseV2[];
+    "isPublic": boolean;
 }

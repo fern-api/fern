@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.0 - 2024-08-01]
+
+- Feature: Add the `base-api-exception-class-name` and `base-exception-class-name` generator configuration.
+  These control the class names of the genrated `ApiException` and `Exception` class names (e.g. `AcmeApiException`
+  and `AcmeException`).
+
+  The configuration looks like the following:
+
+  ```yaml
+  - name: fernapi/fern-csharp-sdk
+    version: 0.9.0
+    config:
+      base-api-exception-class-name: AcmeApiException
+      base-exception-class-name: AcmeException
+  ```
+
 ## [0.8.0 - 2024-07-31]
 
 - Feature: Support text response types.

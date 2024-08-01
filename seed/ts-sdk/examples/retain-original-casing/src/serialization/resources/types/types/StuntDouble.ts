@@ -6,15 +6,14 @@ import * as serializers from "../../../index";
 import * as SeedExamples from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const StuntDouble: core.serialization.ObjectSchema<serializers.StuntDouble.Raw, SeedExamples.StuntDouble> =
-    core.serialization.object({
-        name: core.serialization.string(),
-        actorOrActressId: core.serialization.string(),
+export const StuntDouble: core.serialization.ObjectSchema<serializers.StuntDouble.Raw, SeedExamples.StuntDouble> = core.serialization.object({
+        "name": core.serialization.string(),
+        "actorOrActressId": core.serialization.string()
     });
 
 export declare namespace StuntDouble {
     interface Raw {
-        name: string;
-        actorOrActressId: string;
+        "name": string;
+        "actorOrActressId": string;
     }
 }

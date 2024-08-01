@@ -3,5 +3,5 @@
  */
 
 export interface GetShapeRequest {
-    id: string;
+    "id": string;
 }

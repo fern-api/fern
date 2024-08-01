@@ -15,11 +15,11 @@ export interface CreateUserRequest {
      * This name is unique to each user.
      *
      */
-    name: string;
+    "name": string;
     /**
      * The age of the user.
      * This propery is not required.
      *
      */
-    age?: number;
+    "age"?: number;
 }

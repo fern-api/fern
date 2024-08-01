@@ -3,5 +3,5 @@
  */
 
 export interface TestCaseExpects {
-    expectedStdout?: string;
+    "expectedStdout"?: string;
 }

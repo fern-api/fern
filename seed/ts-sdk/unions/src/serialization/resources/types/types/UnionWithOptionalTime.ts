@@ -6,33 +6,28 @@ import * as serializers from "../../../index";
 import * as SeedUnions from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const UnionWithOptionalTime: core.serialization.Schema<
-    serializers.UnionWithOptionalTime.Raw,
-    SeedUnions.UnionWithOptionalTime
-> = core.serialization
-    .union("type", {
-        date: core.serialization.object({
-            value: core.serialization.string().optional(),
+export const UnionWithOptionalTime: core.serialization.Schema<serializers.UnionWithOptionalTime.Raw, SeedUnions.UnionWithOptionalTime> = core.serialization.union("type", {
+        "date": core.serialization.object({
+            "value": core.serialization.string().optional()
         }),
-        dateimte: core.serialization.object({
-            value: core.serialization.date().optional(),
-        }),
-    })
-    .transform<SeedUnions.UnionWithOptionalTime>({
-        transform: (value) => value,
-        untransform: (value) => value,
+        "dateimte": core.serialization.object({
+            "value": core.serialization.date().optional()
+        })
+    }).transform<SeedUnions.UnionWithOptionalTime>({
+        transform: value => value,
+        untransform: value => value
     });
 
 export declare namespace UnionWithOptionalTime {
     type Raw = UnionWithOptionalTime.Date | UnionWithOptionalTime.Dateimte;
 
     interface Date {
-        type: "date";
-        value?: string | null;
+        "type": "date";
+        "value"?: string | null;
     }
 
     interface Dateimte {
-        type: "dateimte";
-        value?: string | null;
+        "type": "dateimte";
+        "value"?: string | null;
     }
 }

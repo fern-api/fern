@@ -5,20 +5,16 @@
 import * as serializers from "../../../../../index";
 import * as core from "../../../../../../core";
 
-export const Request: core.serialization.Schema<
-    serializers.endpoints.container.getAndReturnListOfPrimitives.Request.Raw,
-    string[]
-> = core.serialization.list(core.serialization.string());
+export const Request: core.serialization.Schema<serializers.endpoints.container.getAndReturnListOfPrimitives.Request.Raw, string[]> = core.serialization.list(core.serialization.string());
 
 export declare namespace Request {
     type Raw = string[];
 }
 
-export const Response: core.serialization.Schema<
-    serializers.endpoints.container.getAndReturnListOfPrimitives.Response.Raw,
-    string[]
-> = core.serialization.list(core.serialization.string());
+export const Response: core.serialization.Schema<serializers.endpoints.container.getAndReturnListOfPrimitives.Response.Raw, string[]> = core.serialization.list(core.serialization.string());
 
 export declare namespace Response {
     type Raw = string[];
 }
+
+

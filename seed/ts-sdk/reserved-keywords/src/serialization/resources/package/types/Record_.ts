@@ -6,15 +6,14 @@ import * as serializers from "../../../index";
 import * as SeedNurseryApi from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const Record_: core.serialization.ObjectSchema<serializers.Record_.Raw, SeedNurseryApi.Record_> =
-    core.serialization.object({
-        foo: core.serialization.record(core.serialization.string(), core.serialization.string()),
-        "3D": core.serialization.property("3d", core.serialization.number()),
+export const Record_: core.serialization.ObjectSchema<serializers.Record_.Raw, SeedNurseryApi.Record_> = core.serialization.object({
+        "foo": core.serialization.record(core.serialization.string(), core.serialization.string()),
+        "3D": core.serialization.property("3d", core.serialization.number())
     });
 
 export declare namespace Record_ {
     interface Raw {
-        foo: Record<string, string>;
+        "foo": Record<string, string>;
         "3d": number;
     }
 }

@@ -4,7 +4,9 @@
 
 import * as SeedTrace from "../../../index";
 
-export type CreateProblemResponse = SeedTrace.CreateProblemResponse.Success | SeedTrace.CreateProblemResponse.Error_;
+export type CreateProblemResponse = 
+    | SeedTrace.CreateProblemResponse.Success
+    | SeedTrace.CreateProblemResponse.Error_;
 
 export declare namespace CreateProblemResponse {
     interface Success {

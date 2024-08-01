@@ -9,17 +9,14 @@ import { SubmissionId } from "./SubmissionId";
 import { TestCaseId } from "../../v2/resources/problem/types/TestCaseId";
 import { TestCaseGrade } from "./TestCaseGrade";
 
-export const GradedResponseV2: core.serialization.ObjectSchema<
-    serializers.GradedResponseV2.Raw,
-    SeedTrace.GradedResponseV2
-> = core.serialization.object({
-    submissionId: SubmissionId,
-    testCases: core.serialization.record(TestCaseId, TestCaseGrade),
-});
+export const GradedResponseV2: core.serialization.ObjectSchema<serializers.GradedResponseV2.Raw, SeedTrace.GradedResponseV2> = core.serialization.object({
+        "submissionId": SubmissionId,
+        "testCases": core.serialization.record(TestCaseId, TestCaseGrade)
+    });
 
 export declare namespace GradedResponseV2 {
     interface Raw {
-        submissionId: SubmissionId.Raw;
-        testCases: Record<TestCaseId.Raw, TestCaseGrade.Raw>;
+        "submissionId": SubmissionId.Raw;
+        "testCases": Record<TestCaseId.Raw, TestCaseGrade.Raw>;
     }
 }

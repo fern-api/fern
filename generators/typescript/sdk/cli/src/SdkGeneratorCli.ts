@@ -57,7 +57,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             packageJson: parsed?.packageJson,
             publishToJsr: parsed?.publishToJsr ?? false,
             omitUndefined: parsed?.omitUndefined ?? false,
-            generateWireTests: parsed?.generateWireTests ?? false
+            generateWireTests: parsed?.generateWireTests ?? false,
+            noScripts: parsed?.noScripts ?? false
         };
     }
 
@@ -162,6 +163,10 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
 
     protected publishToJsr(customConfig: SdkCustomConfig): boolean {
         return customConfig.publishToJsr ?? false;
+    }
+
+    protected shouldRunScripts(customConfig: SdkCustomConfig): boolean {
+        return customConfig.noScripts ?? false;
     }
 
     protected exectuionEnvironment(config: FernGeneratorExec.GeneratorConfig): "local" | "dev" | "prod" {

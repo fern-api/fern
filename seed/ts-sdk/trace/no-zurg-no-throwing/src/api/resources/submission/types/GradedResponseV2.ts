@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../index";
 
 export interface GradedResponseV2 {
-    submissionId: SeedTrace.SubmissionId;
-    testCases: Record<SeedTrace.v2.TestCaseId, SeedTrace.TestCaseGrade>;
+    "submissionId": SeedTrace.SubmissionId;
+    "testCases": Record<SeedTrace.v2.TestCaseId, SeedTrace.TestCaseGrade>;
 }

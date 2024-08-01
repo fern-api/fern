@@ -18,5 +18,5 @@ export interface ListUsersBodyCursorPaginationRequest {
      * in order to fetch the next page of results.
      *
      */
-    pagination?: SeedPagination.WithCursor;
+    "pagination"?: SeedPagination.WithCursor;
 }

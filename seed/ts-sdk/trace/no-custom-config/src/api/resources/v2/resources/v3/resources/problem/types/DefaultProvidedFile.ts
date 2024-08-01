@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../../../../../index";
 
 export interface DefaultProvidedFile {
-    file: SeedTrace.v2.v3.FileInfoV2;
-    relatedTypes: SeedTrace.VariableType[];
+    "file": SeedTrace.v2.v3.FileInfoV2;
+    "relatedTypes": SeedTrace.VariableType[];
 }

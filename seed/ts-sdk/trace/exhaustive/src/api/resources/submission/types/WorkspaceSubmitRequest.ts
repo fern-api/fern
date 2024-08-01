@@ -5,8 +5,8 @@
 import * as SeedTrace from "../../../index";
 
 export interface WorkspaceSubmitRequest {
-    submissionId: SeedTrace.SubmissionId;
-    language: SeedTrace.Language;
-    submissionFiles: SeedTrace.SubmissionFileInfo[];
-    userId?: string;
+    "submissionId": SeedTrace.SubmissionId;
+    "language": SeedTrace.Language;
+    "submissionFiles": SeedTrace.SubmissionFileInfo[];
+    "userId"?: string;
 }

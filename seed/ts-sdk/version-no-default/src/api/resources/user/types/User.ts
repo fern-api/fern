@@ -5,6 +5,6 @@
 import * as SeedVersion from "../../../index";
 
 export interface User {
-    id: SeedVersion.UserId;
-    name: string;
+    "id": SeedVersion.UserId;
+    "name": string;
 }

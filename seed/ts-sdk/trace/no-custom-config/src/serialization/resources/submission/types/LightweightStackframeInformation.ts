@@ -6,17 +6,14 @@ import * as serializers from "../../../index";
 import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const LightweightStackframeInformation: core.serialization.ObjectSchema<
-    serializers.LightweightStackframeInformation.Raw,
-    SeedTrace.LightweightStackframeInformation
-> = core.serialization.object({
-    numStackFrames: core.serialization.number(),
-    topStackFrameMethodName: core.serialization.string(),
-});
+export const LightweightStackframeInformation: core.serialization.ObjectSchema<serializers.LightweightStackframeInformation.Raw, SeedTrace.LightweightStackframeInformation> = core.serialization.object({
+        "numStackFrames": core.serialization.number(),
+        "topStackFrameMethodName": core.serialization.string()
+    });
 
 export declare namespace LightweightStackframeInformation {
     interface Raw {
-        numStackFrames: number;
-        topStackFrameMethodName: string;
+        "numStackFrames": number;
+        "topStackFrameMethodName": string;
     }
 }

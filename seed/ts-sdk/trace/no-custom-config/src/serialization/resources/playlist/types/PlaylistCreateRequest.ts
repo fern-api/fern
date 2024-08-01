@@ -7,17 +7,14 @@ import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 import { ProblemId } from "../../commons/types/ProblemId";
 
-export const PlaylistCreateRequest: core.serialization.ObjectSchema<
-    serializers.PlaylistCreateRequest.Raw,
-    SeedTrace.PlaylistCreateRequest
-> = core.serialization.object({
-    name: core.serialization.string(),
-    problems: core.serialization.list(ProblemId),
-});
+export const PlaylistCreateRequest: core.serialization.ObjectSchema<serializers.PlaylistCreateRequest.Raw, SeedTrace.PlaylistCreateRequest> = core.serialization.object({
+        "name": core.serialization.string(),
+        "problems": core.serialization.list(ProblemId)
+    });
 
 export declare namespace PlaylistCreateRequest {
     interface Raw {
-        name: string;
-        problems: ProblemId.Raw[];
+        "name": string;
+        "problems": ProblemId.Raw[];
     }
 }

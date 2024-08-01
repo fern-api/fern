@@ -3,7 +3,7 @@
  */
 
 export interface SubmissionFileInfo {
-    directory: string;
-    filename: string;
-    contents: string;
+    "directory": string;
+    "filename": string;
+    "contents": string;
 }

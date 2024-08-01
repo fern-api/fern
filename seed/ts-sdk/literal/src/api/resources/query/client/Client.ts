@@ -32,7 +32,8 @@ export declare namespace Query {
 }
 
 export class Query {
-    constructor(protected readonly _options: Query.Options) {}
+    constructor(protected readonly _options: Query.Options) {
+    }
 
     /**
      * @param {SeedLiteral.SendLiteralsInQueryRequest} request
@@ -43,10 +44,7 @@ export class Query {
      *         query: "What is the weather today"
      *     })
      */
-    public async send(
-        request: SeedLiteral.SendLiteralsInQueryRequest,
-        requestOptions?: Query.RequestOptions
-    ): Promise<SeedLiteral.SendResponse> {
+    public async send(request: SeedLiteral.SendLiteralsInQueryRequest, requestOptions?: Query.RequestOptions): Promise<SeedLiteral.SendResponse> {
         const { prompt, query, stream } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         _queryParams["prompt"] = prompt;
@@ -56,53 +54,41 @@ export class Query {
             url: urlJoin(await core.Supplier.get(this._options.environment), "query"),
             method: "POST",
             headers: {
-                "X-API-Version": requestOptions?.version ?? this._options?.version ?? "02-02-2024",
-                "X-API-Enable-Audit-Logging": (
-                    requestOptions?.auditLogging ??
-                    this._options?.auditLogging ??
-                    true
-                ).toString(),
+                "X-API-Version": requestOptions?.version ?? (this._options?.version ?? "02-02-2024"),
+                "X-API-Enable-Audit-Logging": (requestOptions?.auditLogging ?? this._options?.auditLogging ?? true).toString(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/literal",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                "X-Fern-Runtime-Version": core.RUNTIME.version
             },
             contentType: "application/json",
             queryParameters: _queryParams,
             requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
+            abortSignal: requestOptions?.abortSignal
         });
         if (_response.ok) {
-            return serializers.SendResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return serializers.SendResponse.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] });
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedLiteralError({
                 statusCode: _response.error.statusCode,
-                body: _response.error.body,
+                body: _response.error.body
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedLiteralError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.SeedLiteralTimeoutError();
-            case "unknown":
-                throw new errors.SeedLiteralError({
-                    message: _response.error.errorMessage,
-                });
+            case "non-json": throw new errors.SeedLiteralError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody
+            });
+            case "timeout": throw new errors.SeedLiteralTimeoutError;
+            case "unknown": throw new errors.SeedLiteralError({
+                message: _response.error.errorMessage
+            });
         }
     }
 }

@@ -3,6 +3,6 @@
  */
 
 export interface TracedFile {
-    filename: string;
-    directory: string;
+    "filename": string;
+    "directory": string;
 }

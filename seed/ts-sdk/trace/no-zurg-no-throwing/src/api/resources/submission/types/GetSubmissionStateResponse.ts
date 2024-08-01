@@ -5,8 +5,8 @@
 import * as SeedTrace from "../../../index";
 
 export interface GetSubmissionStateResponse {
-    timeSubmitted?: string;
-    submission: string;
-    language: SeedTrace.Language;
-    submissionTypeState: SeedTrace.SubmissionTypeState;
+    "timeSubmitted"?: string;
+    "submission": string;
+    "language": SeedTrace.Language;
+    "submissionTypeState": SeedTrace.SubmissionTypeState;
 }

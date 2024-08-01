@@ -131,15 +131,17 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getBaseExceptionClassReference(): csharp.ClassReference {
+        const maybeOverrideName = this.customConfig["base-exception-class-name"];
         return csharp.classReference({
-            name: this.getExceptionPrefix() + "Exception",
+            name: maybeOverrideName ?? this.getExceptionPrefix() + "Exception",
             namespace: this.getCoreNamespace()
         });
     }
 
     public getBaseApiExceptionClassReference(): csharp.ClassReference {
+        const maybeOverrideName = this.customConfig["base-api-exception-class-name"];
         return csharp.classReference({
-            name: this.getExceptionPrefix() + "ApiException",
+            name: maybeOverrideName ?? this.getExceptionPrefix() + "ApiException",
             namespace: this.getCoreNamespace()
         });
     }

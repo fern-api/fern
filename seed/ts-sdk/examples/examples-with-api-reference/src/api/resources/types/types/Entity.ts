@@ -12,6 +12,6 @@ import * as SeedExamples from "../../../index";
  *     }
  */
 export interface Entity {
-    type: SeedExamples.Type;
-    name: string;
+    "type": SeedExamples.Type;
+    "name": string;
 }

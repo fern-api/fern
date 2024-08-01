@@ -1,7 +1,5 @@
 # Reference
-
 ## Union
-
 <details><summary><code>client.union.<a href="/src/api/resources/union/client/Client.ts">get</a>(id) -> SeedUnions.Shape</code></summary>
 <dl>
 <dd>
@@ -16,8 +14,8 @@
 
 ```typescript
 await client.union.get("string");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -31,20 +29,21 @@ await client.union.get("string");
 <dl>
 <dd>
 
-**id:** `string`
-
+**id:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Union.RequestOptions`
+**requestOptions:** `Union.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -66,10 +65,10 @@ await client.union.get("string");
 await client.union.update({
     type: "circle",
     id: "string",
-    radius: 1.1,
+    radius: 1.1
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -83,20 +82,21 @@ await client.union.update({
 <dl>
 <dd>
 
-**request:** `SeedUnions.Shape`
-
+**request:** `SeedUnions.Shape` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Union.RequestOptions`
+**requestOptions:** `Union.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

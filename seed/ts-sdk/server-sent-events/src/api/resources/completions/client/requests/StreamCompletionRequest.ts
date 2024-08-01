@@ -9,5 +9,5 @@
  *     }
  */
 export interface StreamCompletionRequest {
-    query: string;
+    "query": string;
 }

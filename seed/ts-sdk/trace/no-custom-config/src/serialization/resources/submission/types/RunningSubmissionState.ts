@@ -6,22 +6,8 @@ import * as serializers from "../../../index";
 import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const RunningSubmissionState: core.serialization.Schema<
-    serializers.RunningSubmissionState.Raw,
-    SeedTrace.RunningSubmissionState
-> = core.serialization.enum_([
-    "QUEUEING_SUBMISSION",
-    "KILLING_HISTORICAL_SUBMISSIONS",
-    "WRITING_SUBMISSION_TO_FILE",
-    "COMPILING_SUBMISSION",
-    "RUNNING_SUBMISSION",
-]);
+export const RunningSubmissionState: core.serialization.Schema<serializers.RunningSubmissionState.Raw, SeedTrace.RunningSubmissionState> = core.serialization.enum_(["QUEUEING_SUBMISSION", "KILLING_HISTORICAL_SUBMISSIONS", "WRITING_SUBMISSION_TO_FILE", "COMPILING_SUBMISSION", "RUNNING_SUBMISSION"]);
 
 export declare namespace RunningSubmissionState {
-    type Raw =
-        | "QUEUEING_SUBMISSION"
-        | "KILLING_HISTORICAL_SUBMISSIONS"
-        | "WRITING_SUBMISSION_TO_FILE"
-        | "COMPILING_SUBMISSION"
-        | "RUNNING_SUBMISSION";
+    type Raw = "QUEUEING_SUBMISSION" | "KILLING_HISTORICAL_SUBMISSIONS" | "WRITING_SUBMISSION_TO_FILE" | "COMPILING_SUBMISSION" | "RUNNING_SUBMISSION";
 }

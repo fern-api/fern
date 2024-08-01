@@ -21,7 +21,8 @@ export declare namespace SeedMixedCaseClient {
 }
 
 export class SeedMixedCaseClient {
-    constructor(protected readonly _options: SeedMixedCaseClient.Options) {}
+    constructor(protected readonly _options: SeedMixedCaseClient.Options) {
+    }
 
     protected _service: Service | undefined;
 

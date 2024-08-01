@@ -3,5 +3,5 @@
  */
 
 export interface Foo {
-    barProperty: string;
+    "barProperty": string;
 }

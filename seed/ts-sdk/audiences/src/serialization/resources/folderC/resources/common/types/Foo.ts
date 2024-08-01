@@ -6,13 +6,12 @@ import * as serializers from "../../../../../index";
 import * as SeedAudiences from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 
-export const Foo: core.serialization.ObjectSchema<serializers.folderC.Foo.Raw, SeedAudiences.folderC.Foo> =
-    core.serialization.object({
-        barProperty: core.serialization.property("bar_property", core.serialization.string()),
+export const Foo: core.serialization.ObjectSchema<serializers.folderC.Foo.Raw, SeedAudiences.folderC.Foo> = core.serialization.object({
+        "barProperty": core.serialization.property("bar_property", core.serialization.string())
     });
 
 export declare namespace Foo {
     interface Raw {
-        bar_property: string;
+        "bar_property": string;
     }
 }

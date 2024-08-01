@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../index";
 
 export interface TestCase {
-    id: string;
-    params: SeedTrace.VariableValue[];
+    "id": string;
+    "params": SeedTrace.VariableValue[];
 }

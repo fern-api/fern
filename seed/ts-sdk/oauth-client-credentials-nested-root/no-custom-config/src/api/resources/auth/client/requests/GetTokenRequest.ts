@@ -11,7 +11,7 @@
  *     }
  */
 export interface GetTokenRequest {
-    clientId: string;
-    clientSecret: string;
-    scope?: string;
+    "clientId": string;
+    "clientSecret": string;
+    "scope"?: string;
 }

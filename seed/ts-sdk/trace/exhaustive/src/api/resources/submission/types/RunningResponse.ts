@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../index";
 
 export interface RunningResponse {
-    submissionId: SeedTrace.SubmissionId;
-    state: SeedTrace.RunningSubmissionState;
+    "submissionId": SeedTrace.SubmissionId;
+    "state": SeedTrace.RunningSubmissionState;
 }

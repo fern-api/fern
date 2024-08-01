@@ -5,5 +5,5 @@
 import * as SeedTrace from "../../../../../../../index";
 
 export interface Files {
-    files: SeedTrace.v2.v3.FileInfoV2[];
+    "files": SeedTrace.v2.v3.FileInfoV2[];
 }

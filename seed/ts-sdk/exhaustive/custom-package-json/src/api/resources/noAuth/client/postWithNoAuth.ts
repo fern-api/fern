@@ -5,7 +5,9 @@
 import * as Fiddle from "../../../index";
 import * as core from "../../../../core";
 
-export type Error = Fiddle.noAuth.postWithNoAuth.Error.BadRequestBody | Fiddle.noAuth.postWithNoAuth.Error._Unknown;
+export type Error = 
+    | Fiddle.noAuth.postWithNoAuth.Error.BadRequestBody
+    | Fiddle.noAuth.postWithNoAuth.Error._Unknown;
 
 export declare namespace Error {
     interface BadRequestBody extends _Utils {
@@ -29,41 +31,30 @@ export declare namespace Error {
 }
 
 export const Error = {
-    badRequestBody: (value: Fiddle.BadObjectRequestInfo): Fiddle.noAuth.postWithNoAuth.Error.BadRequestBody => {
-        return {
-            content: value,
-            statusCode: 400,
-            _visit: function <_Result>(
-                this: Fiddle.noAuth.postWithNoAuth.Error.BadRequestBody,
-                visitor: Fiddle.noAuth.postWithNoAuth.Error._Visitor<_Result>
-            ) {
-                return Fiddle.noAuth.postWithNoAuth.Error._visit(this, visitor);
-            },
-        };
-    },
+        badRequestBody: (value: Fiddle.BadObjectRequestInfo): Fiddle.noAuth.postWithNoAuth.Error.BadRequestBody => {
+            return {
+                content: value,
+                statusCode: 400,
+                "_visit": function <_Result>(this: Fiddle.noAuth.postWithNoAuth.Error.BadRequestBody, visitor: Fiddle.noAuth.postWithNoAuth.Error._Visitor<_Result>) {
+                    return Fiddle.noAuth.postWithNoAuth.Error._visit(this, visitor);
+                }
+            };
+        },
 
-    _unknown: (fetcherError: core.Fetcher.Error): Fiddle.noAuth.postWithNoAuth.Error._Unknown => {
-        return {
-            statusCode: undefined,
-            content: fetcherError,
-            _visit: function <_Result>(
-                this: Fiddle.noAuth.postWithNoAuth.Error._Unknown,
-                visitor: Fiddle.noAuth.postWithNoAuth.Error._Visitor<_Result>
-            ) {
-                return Fiddle.noAuth.postWithNoAuth.Error._visit(this, visitor);
-            },
-        };
-    },
+        _unknown: (fetcherError: core.Fetcher.Error): Fiddle.noAuth.postWithNoAuth.Error._Unknown => {
+            return {
+                statusCode: undefined,
+                content: fetcherError,
+                "_visit": function <_Result>(this: Fiddle.noAuth.postWithNoAuth.Error._Unknown, visitor: Fiddle.noAuth.postWithNoAuth.Error._Visitor<_Result>) {
+                    return Fiddle.noAuth.postWithNoAuth.Error._visit(this, visitor);
+                }
+            };
+        },
 
-    _visit: <_Result>(
-        value: Fiddle.noAuth.postWithNoAuth.Error,
-        visitor: Fiddle.noAuth.postWithNoAuth.Error._Visitor<_Result>
-    ): _Result => {
-        switch (value.statusCode) {
-            case 400:
-                return visitor.badRequestBody(value.content);
-            default:
-                return visitor._other(value as any);
-        }
-    },
-} as const;
+        _visit: <_Result>(value: Fiddle.noAuth.postWithNoAuth.Error, visitor: Fiddle.noAuth.postWithNoAuth.Error._Visitor<_Result>): _Result => {
+            switch (value.statusCode) {
+                case 400: return visitor.badRequestBody(value.content);
+                default: return visitor._other(value as any);
+            }
+        },
+    } as const;

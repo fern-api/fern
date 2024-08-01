@@ -3,5 +3,5 @@
  */
 
 export interface UnauthorizedRequestErrorBody {
-    message: string;
+    "message": string;
 }

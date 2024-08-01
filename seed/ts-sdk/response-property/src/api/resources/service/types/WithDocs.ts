@@ -3,5 +3,5 @@
  */
 
 export interface WithDocs {
-    docs: string;
+    "docs": string;
 }
