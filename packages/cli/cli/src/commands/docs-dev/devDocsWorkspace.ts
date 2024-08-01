@@ -42,11 +42,13 @@ export async function previewDocsWorkspace({
                     logSummary: false
                 });
                 for (const apiWorkspace of project.apiWorkspaces) {
-                    await validateAPIWorkspaceWithoutExiting({
-                        workspace: await apiWorkspace.toFernWorkspace({ context }),
-                        context,
-                        logWarnings: true,
-                        logSummary: false
+                    await cliContext.runTaskForWorkspace(apiWorkspace, async (apiWorkspaceContext) => {
+                        await validateAPIWorkspaceWithoutExiting({
+                            workspace: await apiWorkspace.toFernWorkspace({ context }),
+                            context: apiWorkspaceContext,
+                            logWarnings: false,
+                            logSummary: false
+                        });
                     });
                 }
             },
