@@ -474,6 +474,7 @@ function filterIntermediateRepresentationForAudiences(
     if (filteredIr == null) {
         return intermediateRepresentation;
     }
+
     const filteredTypes = pickBy(intermediateRepresentation.types, (type) => filteredIr.hasType(type));
     const filteredTypesAndProperties = Object.fromEntries(
         Object.entries(filteredTypes).map(([typeId, typeDeclaration]) => {
@@ -524,8 +525,29 @@ function filterIntermediateRepresentationForAudiences(
         })
     );
 
+    const filteredEnvironmentsConfig = intermediateRepresentation.environments;
+    if (filteredEnvironmentsConfig) {
+        switch (filteredEnvironmentsConfig.environments.type) {
+            case "singleBaseUrl": {
+                filteredEnvironmentsConfig.environments.environments =
+                    filteredEnvironmentsConfig.environments.environments.filter((environment) =>
+                        filteredIr.hasEnvironment(environment)
+                    );
+                break;
+            }
+            case "multipleBaseUrls": {
+                filteredEnvironmentsConfig.environments.environments =
+                    filteredEnvironmentsConfig.environments.environments.filter((environment) =>
+                        filteredIr.hasEnvironment(environment)
+                    );
+                break;
+            }
+        }
+    }
+
     return {
         ...intermediateRepresentation,
+        environments: filteredEnvironmentsConfig,
         types: filteredTypesAndProperties,
         errors: pickBy(intermediateRepresentation.errors, (error) => filteredIr.hasError(error)),
         services: mapValues(

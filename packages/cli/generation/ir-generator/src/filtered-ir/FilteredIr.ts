@@ -1,9 +1,18 @@
-import { EnvironmentId, ErrorDeclaration, HttpEndpoint, HttpService, TypeDeclaration, Webhook } from "@fern-api/ir-sdk";
+import {
+    EnvironmentId,
+    ErrorDeclaration,
+    HttpEndpoint,
+    HttpService,
+    MultipleBaseUrlsEnvironment,
+    SingleBaseUrlEnvironment,
+    TypeDeclaration,
+    Webhook
+} from "@fern-api/ir-sdk";
 import { IdGenerator } from "../IdGenerator";
 import { EndpointId, ErrorId, ServiceId, SubpackageId, TypeId, WebhookId } from "./ids";
 
 export interface FilteredIr {
-    hasEnvironment(environment: string): boolean;
+    hasEnvironment(environment: SingleBaseUrlEnvironment | MultipleBaseUrlsEnvironment): boolean;
     hasType(type: TypeDeclaration): boolean;
     hasTypeId(type: string): boolean;
     hasProperty(type: string, property: string): boolean;
