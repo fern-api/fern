@@ -7,6 +7,7 @@ import {
     TypeDeclaration
 } from "@fern-api/ir-sdk";
 import { LoggableFernCliError } from "@fern-api/task-context";
+import { getTypeDeclaration } from "../utils/getTypeDeclaration";
 
 type TypesAndServices = Pick<IntermediateRepresentation, "types" | "services">;
 
@@ -61,18 +62,29 @@ function addExtendedPropertiesToType({
     typeDeclaration: TypeDeclaration;
     ir: TypesAndServices;
 }): TypeDeclaration {
-    if (typeDeclaration.shape.type !== "object") {
-        return typeDeclaration;
-    }
-    return {
-        ...typeDeclaration,
-        shape: {
-            ...typeDeclaration.shape,
-            extendedProperties: typeDeclaration.shape.extends.flatMap((extended) =>
-                getExtendedPropertiesForDeclaredTypeName(extended, ir)
-            )
+    switch (typeDeclaration.shape.type) {
+        case "object":
+            return {
+                ...typeDeclaration,
+                shape: {
+                    ...typeDeclaration.shape,
+                    extendedProperties: typeDeclaration.shape.extends.flatMap((extended) =>
+                        getExtendedPropertiesForDeclaredTypeName(extended, ir)
+                    )
+                }
+            };
+        case "alias": {
+            if (typeDeclaration.shape.resolvedType.type === "named") {
+                return addExtendedPropertiesToType({
+                    typeDeclaration: getTypeDeclaration(typeDeclaration.shape.resolvedType.name.typeId, ir.types),
+                    ir
+                });
+            }
+            return typeDeclaration;
         }
-    };
+        default:
+            return typeDeclaration;
+    }
 }
 
 function getExtendedPropertiesForDeclaredTypeName(
@@ -84,13 +96,20 @@ function getExtendedPropertiesForDeclaredTypeName(
 }
 
 function getObjectTypeDeclarationFromTypeId(typeId: string, ir: TypesAndServices): ObjectTypeDeclaration {
-    const maybeType = ir.types[typeId];
-    if (maybeType?.shape.type !== "object") {
-        throw new LoggableFernCliError(
-            `Unexpected error: ${typeId} is extended but has shape ${maybeType?.shape.type}`
-        );
+    const typeDeclaration = getTypeDeclaration(typeId, ir.types);
+    switch (typeDeclaration.shape.type) {
+        case "object":
+            return typeDeclaration.shape;
+        case "alias": {
+            if (typeDeclaration.shape.resolvedType.type === "named") {
+                return getObjectTypeDeclarationFromTypeId(typeDeclaration.shape.resolvedType.name.typeId, ir);
+            }
+        }
     }
-    return maybeType.shape;
+
+    throw new LoggableFernCliError(
+        `Unexpected error: ${typeId} is extended but has shape ${typeDeclaration.shape.type}`
+    );
 }
 
 function getAllPropertiesForObject({
