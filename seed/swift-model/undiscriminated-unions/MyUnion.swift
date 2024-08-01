@@ -7,5 +7,5 @@
 
 
 /// Several different types are accepted.
-enum MyUnion {
+public enum MyUnion {
 }
