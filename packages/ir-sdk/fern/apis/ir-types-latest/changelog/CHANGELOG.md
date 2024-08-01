@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v53.2.0] - 2024-07-30
+
+- Improvement: The IR now contains an `extendedProperties` field where all properties from extended types are denormalized. This removes logic
+  that generator authors were consistently reimplementing.
+
 ## [v53.1.0] - 2024-07-30
 
 - Improvement: The IR now contains the API Definition ID such that the generators may specify this ID when uploading snippet templates. This is necessary for resolving union snippets.

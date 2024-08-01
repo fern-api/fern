@@ -1,3 +1,4 @@
+import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, relative, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import grayMatter from "gray-matter";
@@ -30,10 +31,22 @@ export function parseImagePaths(
     filepaths: AbsoluteFilePath[];
     markdown: string;
 } {
-    const { content, data } = grayMatter(markdown);
+    // Don't remove {}! https://github.com/jonschlinkert/gray-matter/issues/43#issuecomment-318258919
+    const { content, data } = grayMatter(markdown, {});
     let replacedContent = content;
 
     const filepaths = new Set<AbsoluteFilePath>();
+
+    function mapImage(image: string | undefined) {
+        const resolvedPath = resolvePath(image, metadata);
+        if (resolvedPath != null) {
+            filepaths.add(resolvedPath);
+            return resolvedPath;
+        }
+        return;
+    }
+
+    visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
 
     const tree = fromMarkdown(content, {
         extensions: [mdx()],
@@ -118,7 +131,7 @@ export function parseImagePaths(
             }
         }
 
-        if (replaced === original) {
+        if (replaced === original && filepaths.size === 0) {
             return;
         }
 
@@ -169,7 +182,7 @@ export function replaceImagePathsAndUrls(
     metadata: AbsolutePathMetadata,
     context: TaskContext
 ): string {
-    const { content, data } = grayMatter(markdown);
+    const { content, data } = grayMatter(markdown, {});
     let replacedContent = content;
 
     const tree = fromMarkdown(content, {
@@ -178,6 +191,23 @@ export function replaceImagePathsAndUrls(
     });
 
     let offset = 0;
+
+    function mapImage(image: string | undefined) {
+        if (image != null && !isExternalUrl(image) && !isDataUrl(image)) {
+            try {
+                const fileId = fileIdsMap.get(AbsoluteFilePath.of(image));
+                if (fileId != null) {
+                    return `file:${fileId}`;
+                }
+            } catch (e) {
+                // do nothing
+                return;
+            }
+        }
+        return;
+    }
+
+    visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
 
     visit(tree, (node) => {
         if (node.position == null) {
@@ -188,15 +218,9 @@ export function replaceImagePathsAndUrls(
         let replaced = original;
 
         function replaceSrc(src: string | undefined) {
-            if (src != null && !isExternalUrl(src) && !isDataUrl(src)) {
-                try {
-                    const fileId = fileIdsMap.get(AbsoluteFilePath.of(src));
-                    if (fileId != null) {
-                        replaced = replaced.replace(src, `file:${fileId}`);
-                    }
-                } catch (e) {
-                    // do nothing
-                }
+            const imageSrc = mapImage(src);
+            if (src && imageSrc) {
+                replaced = replaced.replace(src, imageSrc);
             }
         }
 
@@ -346,4 +370,37 @@ function trimAnchor(text: unknown): string | undefined {
         return undefined;
     }
     return text.replace(/#.*$/, "");
+}
+
+function visitFrontmatterImages(
+    data: Record<string, string | DocsV1Write.FileIdOrUrl>,
+    keys: string[],
+    mapImage: (image: string | undefined) => string | undefined
+) {
+    for (const key of keys) {
+        const value = data[key];
+        if (value != null) {
+            // realtime validation, this also assumes there can be other stuff in the object, but we only care about the valid keys
+            if (typeof value === "object") {
+                if (value.type === "fileId") {
+                    data[key] = {
+                        ...value,
+                        value: mapImage(value.value) ?? value.value
+                    };
+                }
+            } else if (typeof value === "string") {
+                const mappedImage = mapImage(value);
+                data[key] = mappedImage
+                    ? {
+                          type: "fileId",
+                          value: mappedImage
+                      }
+                    : {
+                          type: "url",
+                          value
+                      };
+            }
+            // else do nothing
+        }
+    }
 }

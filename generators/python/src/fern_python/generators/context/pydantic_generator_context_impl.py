@@ -76,7 +76,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                     string=lambda st: AST.Expression(f'"{st.default}"') if st.default is not None else None,
                     boolean=lambda bt: AST.Expression(f"{bt.default}") if bt.default is not None else None,
                     long_=lambda lt: AST.Expression(f"{lt.default}") if lt.default is not None else None,
-                    big_integer=lambda bit: AST.Expression(f"{bit.default}") if bit.default is not None else None,
+                    big_integer=lambda bit: AST.Expression(f'"{bit.default}"') if bit.default is not None else None,
                     uint=lambda _: None,
                     uint_64=lambda _: None,
                     date=lambda _: None,

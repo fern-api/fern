@@ -14,15 +14,22 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Task GetTextAsync()
+    public async Task GetTextAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "text"
+                Path = "text",
+                Options = options
             }
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedPlainTextApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
         );
     }
 }

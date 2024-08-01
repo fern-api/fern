@@ -1,3 +1,4 @@
+export * from "./handleFailedWorkspaceParserResult";
 export { loadAPIWorkspace } from "./loadAPIWorkspace";
 export { loadDependency } from "./loadDependency";
 export { loadDocsWorkspace } from "./loadDocsWorkspace";
