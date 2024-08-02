@@ -89,6 +89,10 @@ export class DocsDefinitionResolver {
                 absolutePathToMdx: this.resolveFilepath(relativePath),
                 context: this.taskContext
             });
+        }
+
+        // replaces all instances of <Code src="path/to/file.js" /> with the content of the referenced code file
+        for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = await replaceReferencedCode({
                 markdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilepath,

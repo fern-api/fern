@@ -85,6 +85,7 @@ export declare namespace SdkGenerator {
     }
 
     export interface Config {
+        runScripts: boolean;
         whitelabel: boolean;
         generateOAuthClients: boolean;
         originalReadmeFilepath: AbsoluteFilePath | undefined;
@@ -506,7 +507,8 @@ export class SdkGenerator {
                   extraFiles: this.extraFiles,
                   extraScripts: this.extraScripts,
                   extraConfigs: this.config.packageJson,
-                  outputJsr: this.config.outputJsr
+                  outputJsr: this.config.outputJsr,
+                  runScripts: this.config.runScripts
               })
             : new SimpleTypescriptProject({
                   npmPackage: this.npmPackage,
@@ -521,7 +523,8 @@ export class SdkGenerator {
                   extraFiles: this.extraFiles,
                   extraScripts: this.extraScripts,
                   resolutions: {},
-                  extraConfigs: this.config.packageJson
+                  extraConfigs: this.config.packageJson,
+                  runScripts: this.config.runScripts
               });
     }
 

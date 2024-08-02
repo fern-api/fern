@@ -5,13 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [3.3.0] - 2024-07-31
+## [3.3.2] - 2024-08-02
 
 - Improvement: Aliased literals are also defaulted within Pydantic models, whereas previously only direct literals were defaulted.
 - Improvement: Snippets now provide optional literals in functions and models.
 - Fix: Generated tests that expect an empty result when they are of type `text` (not JSON) now appropriately expect an empty string instead of `None`.
 
-## [3.3.0-rc1] - 2024-07-31
+## [3.3.1] - 2024-08-02
+
+- Fix: Generated READMEs now reference RequestOptions as TypedDicts correctly.
+
+## [3.3.0-rc1] - 2024-08-01
 
 - Fix: TypedDict snippets now include literals where available.
 
