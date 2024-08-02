@@ -7,17 +7,25 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.literal.core.ObjectMappers;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SendRequest.Builder.class)
 public final class SendRequest {
     private final String query;
 
-    private SendRequest(String query) {
+    private final String context;
+
+    private final Optional<String> maybeContext;
+
+    private SendRequest(String query, String context, Optional<String> maybeContext) {
         this.query = query;
+        this.context = context;
+        this.maybeContext = maybeContext;
     }
 
     @JsonProperty("prompt")
@@ -35,6 +43,16 @@ public final class SendRequest {
         return false;
     }
 
+    @JsonProperty("context")
+    public String getContext() {
+        return context;
+    }
+
+    @JsonProperty("maybeContext")
+    public Optional<String> getMaybeContext() {
+        return maybeContext;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -42,12 +60,12 @@ public final class SendRequest {
     }
 
     private boolean equalTo(SendRequest other) {
-        return query.equals(other.query);
+        return query.equals(other.query) && context.equals(other.context) && maybeContext.equals(other.maybeContext);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.query);
+        return Objects.hash(this.query, this.context, this.maybeContext);
     }
 
     @java.lang.Override
@@ -60,37 +78,71 @@ public final class SendRequest {
     }
 
     public interface QueryStage {
-        _FinalStage query(String query);
+        ContextStage query(String query);
 
         Builder from(SendRequest other);
     }
 
+    public interface ContextStage {
+        _FinalStage context(String context);
+    }
+
     public interface _FinalStage {
         SendRequest build();
+
+        _FinalStage maybeContext(Optional<String> maybeContext);
+
+        _FinalStage maybeContext(String maybeContext);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements QueryStage, _FinalStage {
+    public static final class Builder implements QueryStage, ContextStage, _FinalStage {
         private String query;
+
+        private String context;
+
+        private Optional<String> maybeContext = Optional.empty();
 
         private Builder() {}
 
         @java.lang.Override
         public Builder from(SendRequest other) {
             query(other.getQuery());
+            context(other.getContext());
+            maybeContext(other.getMaybeContext());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("query")
-        public _FinalStage query(String query) {
+        public ContextStage query(String query) {
             this.query = query;
             return this;
         }
 
         @java.lang.Override
+        @JsonSetter("context")
+        public _FinalStage context(String context) {
+            this.context = context;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage maybeContext(String maybeContext) {
+            this.maybeContext = Optional.ofNullable(maybeContext);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "maybeContext", nulls = Nulls.SKIP)
+        public _FinalStage maybeContext(Optional<String> maybeContext) {
+            this.maybeContext = maybeContext;
+            return this;
+        }
+
+        @java.lang.Override
         public SendRequest build() {
-            return new SendRequest(query);
+            return new SendRequest(query, context, maybeContext);
         }
     }
 }

@@ -67,6 +67,9 @@ await client.headers.send({
 ```typescript
 await client.inlined.send({
     temperature: 10.1,
+    context: "You're super wise",
+    aliasedContext: "You're super wise",
+    maybeContext: "You're super wise",
     query: "What is the weather today"
 });
 
@@ -223,6 +226,7 @@ await client.query.send({
 await client.reference.send({
     prompt: "You are a helpful assistant",
     stream: false,
+    context: "You're super wise",
     query: "What is the weather today"
 });
 

@@ -9,9 +9,11 @@ import (
 )
 
 type SendRequest struct {
-	Query  string `json:"query" url:"query"`
-	prompt string
-	stream bool
+	Query        string       `json:"query" url:"query"`
+	Context      SomeLiteral  `json:"context,omitempty" url:"context,omitempty"`
+	MaybeContext *SomeLiteral `json:"maybeContext,omitempty" url:"maybeContext,omitempty"`
+	prompt       string
+	stream       bool
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage

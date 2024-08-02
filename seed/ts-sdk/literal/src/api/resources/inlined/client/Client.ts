@@ -42,6 +42,9 @@ export class Inlined {
      * @example
      *     await client.inlined.send({
      *         temperature: 10.1,
+     *         context: "You're super wise",
+     *         aliasedContext: "You're super wise",
+     *         maybeContext: "You're super wise",
      *         query: "What is the weather today"
      *     })
      */
@@ -60,7 +63,7 @@ export class Inlined {
             },
             contentType: "application/json",
             requestType: "json",
-            body: { ...(serializers.SendLiteralsInlinedRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })), prompt: "You are a helpful assistant", stream: false },
+            body: { ...(serializers.SendLiteralsInlinedRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })), prompt: "You are a helpful assistant", stream: false, aliasedContext: "You're super wise" },
             timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal

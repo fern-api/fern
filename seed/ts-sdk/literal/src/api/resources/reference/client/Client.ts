@@ -43,6 +43,7 @@ export class Reference {
      *     await client.reference.send({
      *         prompt: "You are a helpful assistant",
      *         stream: false,
+     *         context: "You're super wise",
      *         query: "What is the weather today"
      *     })
      */

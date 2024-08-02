@@ -87,6 +87,11 @@ paths:
                   type: string
                   enum:
                     - You are a helpful assistant
+                context:
+                  type: string
+                  enum:
+                    - You're super wise
+                  nullable: true
                 query:
                   type: string
                   example: What is the weather today
@@ -97,15 +102,24 @@ paths:
                 stream:
                   type: boolean
                   example: false
+                aliasedContext:
+                  $ref: '#/components/schemas/SomeAliasedLiteral'
+                maybeContext:
+                  $ref: '#/components/schemas/SomeAliasedLiteral'
+                  nullable: true
               required:
                 - prompt
                 - query
                 - stream
+                - aliasedContext
             examples:
               Example1:
                 value:
                   temperature: 10.1
                   prompt: You are a helpful assistant
+                  context: You're super wise
+                  aliasedContext: You're super wise
+                  maybeContext: You're super wise
                   stream: false
                   query: What is the weather today
   /path/{id}:
@@ -212,6 +226,7 @@ paths:
                 value:
                   prompt: You are a helpful assistant
                   stream: false
+                  context: You're super wise
                   query: What is the weather today
 components:
   schemas:
@@ -232,6 +247,11 @@ components:
         - message
         - status
         - success
+    SomeAliasedLiteral:
+      title: SomeAliasedLiteral
+      type: string
+      enum:
+        - You're super wise
     SendRequest:
       title: SendRequest
       type: object
@@ -246,8 +266,19 @@ components:
         stream:
           type: boolean
           example: false
+        context:
+          $ref: '#/components/schemas/SomeLiteral'
+        maybeContext:
+          $ref: '#/components/schemas/SomeLiteral'
+          nullable: true
       required:
         - prompt
         - query
         - stream
+        - context
+    SomeLiteral:
+      title: SomeLiteral
+      type: string
+      enum:
+        - You're super wise
   securitySchemes: {}
