@@ -67,12 +67,12 @@ class EndpointGenerator:
         if endpoint.auth:
             self._parameters.append(AuthEndpointParameter(context=context))
 
-    def get_endpoint_dot_delimited_path(self):
+    def get_endpoint_dot_delimited_path(self) -> str:
         service_path = [part.original_name for part in self._service.name.fern_filepath.all_parts]
         endpoint = self._endpoint.name.get_as_name().original_name
         return f"{'.'.join(service_path)}.{endpoint}"
-    
-    def is_async(self): 
+
+    def is_async(self) -> bool:
         if isinstance(self._custom_config.async_handlers, bool):
             return self._custom_config.async_handlers
         else:
