@@ -11,12 +11,13 @@ import {
     HttpRequestBody,
     HttpResponseBody,
     HttpService,
+    MultipleBaseUrlsEnvironment,
+    SingleBaseUrlEnvironment,
     TypeReference,
     Webhook,
     WebhookPayload
 } from "@fern-api/ir-sdk";
 import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
-import { EnvironmentsConfigWithAudiences } from "../converters/convertEnvironments";
 import { isReferencedWebhookPayloadSchema } from "../converters/convertWebhookGroup";
 import { FernFileContext } from "../FernFileContext";
 import { IdGenerator } from "../IdGenerator";
@@ -104,16 +105,14 @@ export class IrGraph {
         }
     }
 
-    public markEnvironmentForAudiences(environments?: EnvironmentsConfigWithAudiences) {
-        if (environments != null) {
-            Object.entries(environments.environmentsByAudience).forEach(([audienceId, environmentIdSet]) => {
-                if (this.hasAudience([audienceId])) {
-                    this.environmentsNeededForAudience = new Set([
-                        ...this.environmentsNeededForAudience,
-                        ...environmentIdSet
-                    ]);
-                }
-            });
+    public markEnvironmentForAudiences(
+        environment: SingleBaseUrlEnvironment | MultipleBaseUrlsEnvironment,
+        audiences: string[]
+    ) {
+        if (environment) {
+            if (this.hasAudience(audiences)) {
+                this.environmentsNeededForAudience.add(environment.id);
+            }
         }
     }
 
