@@ -63,14 +63,6 @@ export class IrGraph {
         this.audiences = audiencesFromConfig(audiences);
     }
 
-    public addEnvironments(environments: EnvironmentsConfigWithAudiences | undefined): void {
-        if (environments != null) {
-            Object.entries(environments.environmentsByAudience).forEach(([environmentId, _environment]) =>
-                this.environmentsNeededForAudience.add(environmentId)
-            );
-        }
-    }
-
     public addType({
         declaredTypeName,
         descendantTypeIds,
@@ -108,6 +100,19 @@ export class IrGraph {
             this.addSubpackages(declaredTypeName.fernFilepath);
             this.types[typeId]?.referencedSubpackages.forEach((fernFilePath) => {
                 this.addSubpackages(fernFilePath);
+            });
+        }
+    }
+
+    public markEnvironmentForAudiences(environments?: EnvironmentsConfigWithAudiences) {
+        if (environments != null) {
+            Object.entries(environments.environmentsByAudience).forEach(([audienceId, environmentIdSet]) => {
+                if (this.hasAudience([audienceId])) {
+                    this.environmentsNeededForAudience = new Set([
+                        ...this.environmentsNeededForAudience,
+                        ...environmentIdSet
+                    ]);
+                }
             });
         }
     }
