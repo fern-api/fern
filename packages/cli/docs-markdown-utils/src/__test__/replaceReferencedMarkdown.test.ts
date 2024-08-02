@@ -77,4 +77,28 @@ describe("replaceReferencedMarkdown", () => {
 
         expect(markdownLoader).toHaveBeenCalledTimes(4);
     });
+
+    it("should replace even without indentation", async () => {
+        const markdown = `
+### Prerequisites
+
+<Markdown src="../../../snippets/setup-sdk.mdx" />
+`;
+
+        const markdownLoader = jest.fn().mockResolvedValue("test content");
+
+        const result = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMdx,
+            context,
+            markdownLoader
+        });
+
+        expect(result).toBe(`
+### Prerequisites
+
+test content
+`);
+    });
 });
