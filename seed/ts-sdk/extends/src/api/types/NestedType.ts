@@ -13,5 +13,5 @@ import * as SeedExtends from "../index";
  *     }
  */
 export interface NestedType extends SeedExtends.Json {
-    name: string;
+    "name": string;
 }

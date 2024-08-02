@@ -4,7 +4,10 @@
 
 import * as Fiddle from "../../../../../index";
 
-export type Animal = Fiddle.types.Animal.Dog | Fiddle.types.Animal.Cat | Fiddle.types.Animal._Unknown;
+export type Animal = 
+    | Fiddle.types.Animal.Dog
+    | Fiddle.types.Animal.Cat
+    | Fiddle.types.Animal._Unknown;
 
 export declare namespace Animal {
     interface Dog extends Fiddle.types.Dog, _Utils {
@@ -26,51 +29,49 @@ export declare namespace Animal {
     interface _Visitor<_Result> {
         dog: (value: Fiddle.types.Dog) => _Result;
         cat: (value: Fiddle.types.Cat) => _Result;
-        _other: (value: { animal: string }) => _Result;
+        _other: (value: {
+                animal: string;
+            }) => _Result;
     }
 }
 
 export const Animal = {
-    dog: (value: Fiddle.types.Dog): Fiddle.types.Animal.Dog => {
-        return {
-            ...value,
-            animal: "dog",
-            _visit: function <_Result>(this: Fiddle.types.Animal.Dog, visitor: Fiddle.types.Animal._Visitor<_Result>) {
-                return Fiddle.types.Animal._visit(this, visitor);
-            },
-        };
-    },
+        dog: (value: Fiddle.types.Dog): Fiddle.types.Animal.Dog => {
+            return {
+                ...value,
+                animal: "dog",
+                "_visit": function <_Result>(this: Fiddle.types.Animal.Dog, visitor: Fiddle.types.Animal._Visitor<_Result>) {
+                    return Fiddle.types.Animal._visit(this, visitor);
+                }
+            };
+        },
 
-    cat: (value: Fiddle.types.Cat): Fiddle.types.Animal.Cat => {
-        return {
-            ...value,
-            animal: "cat",
-            _visit: function <_Result>(this: Fiddle.types.Animal.Cat, visitor: Fiddle.types.Animal._Visitor<_Result>) {
-                return Fiddle.types.Animal._visit(this, visitor);
-            },
-        };
-    },
+        cat: (value: Fiddle.types.Cat): Fiddle.types.Animal.Cat => {
+            return {
+                ...value,
+                animal: "cat",
+                "_visit": function <_Result>(this: Fiddle.types.Animal.Cat, visitor: Fiddle.types.Animal._Visitor<_Result>) {
+                    return Fiddle.types.Animal._visit(this, visitor);
+                }
+            };
+        },
 
-    _unknown: (value: { animal: string }): Fiddle.types.Animal._Unknown => {
-        return {
-            ...(value as any),
-            _visit: function <_Result>(
-                this: Fiddle.types.Animal._Unknown,
-                visitor: Fiddle.types.Animal._Visitor<_Result>
-            ) {
-                return Fiddle.types.Animal._visit(this, visitor);
-            },
-        };
-    },
+        _unknown: (value: {
+            animal: string;
+        }): Fiddle.types.Animal._Unknown => {
+            return {
+                ...(value as any),
+                "_visit": function <_Result>(this: Fiddle.types.Animal._Unknown, visitor: Fiddle.types.Animal._Visitor<_Result>) {
+                    return Fiddle.types.Animal._visit(this, visitor);
+                }
+            };
+        },
 
-    _visit: <_Result>(value: Fiddle.types.Animal, visitor: Fiddle.types.Animal._Visitor<_Result>): _Result => {
-        switch (value.animal) {
-            case "dog":
-                return visitor.dog(value);
-            case "cat":
-                return visitor.cat(value);
-            default:
-                return visitor._other(value as any);
-        }
-    },
-} as const;
+        _visit: <_Result>(value: Fiddle.types.Animal, visitor: Fiddle.types.Animal._Visitor<_Result>): _Result => {
+            switch (value.animal) {
+                case "dog": return visitor.dog(value);
+                case "cat": return visitor.cat(value);
+                default: return visitor._other(value as any);
+            }
+        },
+    } as const;

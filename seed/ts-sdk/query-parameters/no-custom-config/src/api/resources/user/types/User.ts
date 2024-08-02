@@ -3,6 +3,6 @@
  */
 
 export interface User {
-    name: string;
-    tags: string[];
+    "name": string;
+    "tags": string[];
 }

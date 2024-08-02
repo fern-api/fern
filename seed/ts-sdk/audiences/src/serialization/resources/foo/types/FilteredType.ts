@@ -6,15 +6,14 @@ import * as serializers from "../../../index";
 import * as SeedAudiences from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const FilteredType: core.serialization.ObjectSchema<serializers.FilteredType.Raw, SeedAudiences.FilteredType> =
-    core.serialization.object({
-        publicProperty: core.serialization.property("public_property", core.serialization.string().optional()),
-        privateProperty: core.serialization.property("private_property", core.serialization.number()),
+export const FilteredType: core.serialization.ObjectSchema<serializers.FilteredType.Raw, SeedAudiences.FilteredType> = core.serialization.object({
+        "publicProperty": core.serialization.property("public_property", core.serialization.string().optional()),
+        "privateProperty": core.serialization.property("private_property", core.serialization.number())
     });
 
 export declare namespace FilteredType {
     interface Raw {
-        public_property?: string | null;
-        private_property: number;
+        "public_property"?: string | null;
+        "private_property": number;
     }
 }

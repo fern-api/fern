@@ -3,5 +3,5 @@
  */
 
 export interface ObjectWithMapOfMap {
-    map: Record<string, Record<string, string>>;
+    "map": Record<string, Record<string, string>>;
 }

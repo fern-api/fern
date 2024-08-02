@@ -5,6 +5,6 @@
 import * as SeedQueryParameters from "../../../index";
 
 export interface NestedUser {
-    name: string;
-    user: SeedQueryParameters.User;
+    "name": string;
+    "user": SeedQueryParameters.User;
 }

@@ -6,8 +6,7 @@ import * as serializers from "../../../../../index";
 import * as SeedExamples from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 
-export const Filename: core.serialization.Schema<serializers.file.Filename.Raw, SeedExamples.file.Filename> =
-    core.serialization.string();
+export const Filename: core.serialization.Schema<serializers.file.Filename.Raw, SeedExamples.file.Filename> = core.serialization.string();
 
 export declare namespace Filename {
     type Raw = string;

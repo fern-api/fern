@@ -5,5 +5,5 @@
 import * as SeedPagination from "../../../index";
 
 export interface UserListContainer {
-    users: SeedPagination.User[];
+    "users": SeedPagination.User[];
 }

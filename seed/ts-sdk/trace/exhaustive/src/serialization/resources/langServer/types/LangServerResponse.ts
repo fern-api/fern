@@ -6,15 +6,12 @@ import * as serializers from "../../../index";
 import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const LangServerResponse: core.serialization.ObjectSchema<
-    serializers.LangServerResponse.Raw,
-    SeedTrace.LangServerResponse
-> = core.serialization.object({
-    response: core.serialization.unknown(),
-});
+export const LangServerResponse: core.serialization.ObjectSchema<serializers.LangServerResponse.Raw, SeedTrace.LangServerResponse> = core.serialization.object({
+        "response": core.serialization.unknown()
+    });
 
 export declare namespace LangServerResponse {
     interface Raw {
-        response?: unknown;
+        "response"?: unknown;
     }
 }

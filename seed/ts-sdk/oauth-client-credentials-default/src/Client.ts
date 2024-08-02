@@ -26,13 +26,24 @@ export class SeedOauthClientCredentialsDefaultClient {
     private readonly _oauthTokenProvider: core.OAuthTokenProvider;
 
     constructor(protected readonly _options: SeedOauthClientCredentialsDefaultClient.Options) {
-        this._oauthTokenProvider = new core.OAuthTokenProvider({
-            clientId: this._options.clientId,
-            clientSecret: this._options.clientSecret,
-            authClient: new Auth({
-                environment: this._options.environment,
-            }),
-        });
+
+
+                        
+
+                        
+
+                        this._oauthTokenProvider = new core.OAuthTokenProvider({
+                            
+                        clientId: this._options.clientId
+                    ,
+                            
+                        clientSecret: this._options.clientSecret
+                    ,
+                            authClient: new Auth({
+                                environment: this._options.environment,
+                            }),
+                        });
+                    
     }
 
     protected _auth: Auth | undefined;
@@ -40,7 +51,7 @@ export class SeedOauthClientCredentialsDefaultClient {
     public get auth(): Auth {
         return (this._auth ??= new Auth({
             ...this._options,
-            token: async () => await this._oauthTokenProvider.getToken(),
+            token: async () => await this._oauthTokenProvider.getToken()
         }));
     }
 }

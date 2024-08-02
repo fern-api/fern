@@ -9,29 +9,27 @@ import { CompileError } from "./CompileError";
 import { RuntimeError } from "./RuntimeError";
 import { InternalError } from "./InternalError";
 
-export const ErrorInfo: core.serialization.Schema<serializers.ErrorInfo.Raw, SeedTrace.ErrorInfo> = core.serialization
-    .union("type", {
-        compileError: CompileError,
-        runtimeError: RuntimeError,
-        internalError: InternalError,
-    })
-    .transform<SeedTrace.ErrorInfo>({
-        transform: (value) => value,
-        untransform: (value) => value,
+export const ErrorInfo: core.serialization.Schema<serializers.ErrorInfo.Raw, SeedTrace.ErrorInfo> = core.serialization.union("type", {
+        "compileError": CompileError,
+        "runtimeError": RuntimeError,
+        "internalError": InternalError
+    }).transform<SeedTrace.ErrorInfo>({
+        transform: value => value,
+        untransform: value => value
     });
 
 export declare namespace ErrorInfo {
     type Raw = ErrorInfo.CompileError | ErrorInfo.RuntimeError | ErrorInfo.InternalError;
 
     interface CompileError extends CompileError.Raw {
-        type: "compileError";
+        "type": "compileError";
     }
 
     interface RuntimeError extends RuntimeError.Raw {
-        type: "runtimeError";
+        "type": "runtimeError";
     }
 
     interface InternalError extends InternalError.Raw {
-        type: "internalError";
+        "type": "internalError";
     }
 }

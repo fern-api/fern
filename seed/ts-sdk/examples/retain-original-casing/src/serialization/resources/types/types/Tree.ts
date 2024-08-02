@@ -6,14 +6,12 @@ import * as serializers from "../../../index";
 import * as SeedExamples from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const Tree: core.serialization.ObjectSchema<serializers.Tree.Raw, SeedExamples.Tree> = core.serialization.object(
-    {
-        nodes: core.serialization.list(core.serialization.lazyObject(() => serializers.Node)).optional(),
-    }
-);
+export const Tree: core.serialization.ObjectSchema<serializers.Tree.Raw, SeedExamples.Tree> = core.serialization.object({
+        "nodes": core.serialization.list(core.serialization.lazyObject(() => serializers.Node)).optional()
+    });
 
 export declare namespace Tree {
     interface Raw {
-        nodes?: serializers.Node.Raw[] | null;
+        "nodes"?: serializers.Node.Raw[] | null;
     }
 }

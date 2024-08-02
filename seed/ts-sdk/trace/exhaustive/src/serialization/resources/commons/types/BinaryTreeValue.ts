@@ -8,17 +8,14 @@ import * as core from "../../../../core";
 import { NodeId } from "./NodeId";
 import { BinaryTreeNodeValue } from "./BinaryTreeNodeValue";
 
-export const BinaryTreeValue: core.serialization.ObjectSchema<
-    serializers.BinaryTreeValue.Raw,
-    SeedTrace.BinaryTreeValue
-> = core.serialization.object({
-    root: NodeId.optional(),
-    nodes: core.serialization.record(NodeId, BinaryTreeNodeValue),
-});
+export const BinaryTreeValue: core.serialization.ObjectSchema<serializers.BinaryTreeValue.Raw, SeedTrace.BinaryTreeValue> = core.serialization.object({
+        "root": NodeId.optional(),
+        "nodes": core.serialization.record(NodeId, BinaryTreeNodeValue)
+    });
 
 export declare namespace BinaryTreeValue {
     interface Raw {
-        root?: NodeId.Raw | null;
-        nodes: Record<NodeId.Raw, BinaryTreeNodeValue.Raw>;
+        "root"?: NodeId.Raw | null;
+        "nodes": Record<NodeId.Raw, BinaryTreeNodeValue.Raw>;
     }
 }

@@ -7,17 +7,14 @@ import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 import { TestCase } from "./TestCase";
 
-export const TestCaseWithExpectedResult: core.serialization.ObjectSchema<
-    serializers.TestCaseWithExpectedResult.Raw,
-    SeedTrace.TestCaseWithExpectedResult
-> = core.serialization.object({
-    testCase: TestCase,
-    expectedResult: core.serialization.lazy(() => serializers.VariableValue),
-});
+export const TestCaseWithExpectedResult: core.serialization.ObjectSchema<serializers.TestCaseWithExpectedResult.Raw, SeedTrace.TestCaseWithExpectedResult> = core.serialization.object({
+        "testCase": TestCase,
+        "expectedResult": core.serialization.lazy(() => serializers.VariableValue)
+    });
 
 export declare namespace TestCaseWithExpectedResult {
     interface Raw {
-        testCase: TestCase.Raw;
-        expectedResult: serializers.VariableValue.Raw;
+        "testCase": TestCase.Raw;
+        "expectedResult": serializers.VariableValue.Raw;
     }
 }

@@ -3,6 +3,6 @@
  */
 
 export interface Dog {
-    name: string;
-    likesToWoof: boolean;
+    "name": string;
+    "likesToWoof": boolean;
 }

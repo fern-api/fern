@@ -3,5 +3,5 @@
  */
 
 export interface UsernameContainer {
-    results: string[];
+    "results": string[];
 }

@@ -6,7 +6,11 @@ export class SeedResponsePropertyError extends Error {
     readonly statusCode?: number;
     readonly body?: unknown;
 
-    constructor({ message, statusCode, body }: { message?: string; statusCode?: number; body?: unknown }) {
+    constructor({ message, statusCode, body }: {
+            message?: string;
+            statusCode?: number;
+            body?: unknown;
+        }) {
         super(buildMessage({ message, statusCode, body }));
         Object.setPrototypeOf(this, SeedResponsePropertyError.prototype);
         if (statusCode != null) {
@@ -19,15 +23,11 @@ export class SeedResponsePropertyError extends Error {
     }
 }
 
-function buildMessage({
-    message,
-    statusCode,
-    body,
-}: {
-    message: string | undefined;
-    statusCode: number | undefined;
-    body: unknown | undefined;
-}): string {
+function buildMessage({ message, statusCode, body }: {
+        message: string | undefined;
+        statusCode: number | undefined;
+        body: unknown | undefined;
+    }): string {
     let lines: string[] = [];
     if (message != null) {
         lines.push(message);

@@ -9,50 +9,41 @@ import { ErrorInfo } from "./ErrorInfo";
 import { RunningSubmissionState } from "./RunningSubmissionState";
 import { SubmissionStatusForTestCase } from "./SubmissionStatusForTestCase";
 
-export const TestSubmissionStatus: core.serialization.Schema<
-    serializers.TestSubmissionStatus.Raw,
-    SeedTrace.TestSubmissionStatus
-> = core.serialization
-    .union("type", {
-        stopped: core.serialization.object({}),
-        errored: core.serialization.object({
-            value: ErrorInfo,
+export const TestSubmissionStatus: core.serialization.Schema<serializers.TestSubmissionStatus.Raw, SeedTrace.TestSubmissionStatus> = core.serialization.union("type", {
+        "stopped": core.serialization.object({}),
+        "errored": core.serialization.object({
+            "value": ErrorInfo
         }),
-        running: core.serialization.object({
-            value: RunningSubmissionState,
+        "running": core.serialization.object({
+            "value": RunningSubmissionState
         }),
-        testCaseIdToState: core.serialization.object({
-            value: core.serialization.record(core.serialization.string(), SubmissionStatusForTestCase),
-        }),
-    })
-    .transform<SeedTrace.TestSubmissionStatus>({
-        transform: (value) => value,
-        untransform: (value) => value,
+        "testCaseIdToState": core.serialization.object({
+            "value": core.serialization.record(core.serialization.string(), SubmissionStatusForTestCase)
+        })
+    }).transform<SeedTrace.TestSubmissionStatus>({
+        transform: value => value,
+        untransform: value => value
     });
 
 export declare namespace TestSubmissionStatus {
-    type Raw =
-        | TestSubmissionStatus.Stopped
-        | TestSubmissionStatus.Errored
-        | TestSubmissionStatus.Running
-        | TestSubmissionStatus.TestCaseIdToState;
+    type Raw = TestSubmissionStatus.Stopped | TestSubmissionStatus.Errored | TestSubmissionStatus.Running | TestSubmissionStatus.TestCaseIdToState;
 
     interface Stopped {
-        type: "stopped";
+        "type": "stopped";
     }
 
     interface Errored {
-        type: "errored";
-        value: ErrorInfo.Raw;
+        "type": "errored";
+        "value": ErrorInfo.Raw;
     }
 
     interface Running {
-        type: "running";
-        value: RunningSubmissionState.Raw;
+        "type": "running";
+        "value": RunningSubmissionState.Raw;
     }
 
     interface TestCaseIdToState {
-        type: "testCaseIdToState";
-        value: Record<string, SubmissionStatusForTestCase.Raw>;
+        "type": "testCaseIdToState";
+        "value": Record<string, SubmissionStatusForTestCase.Raw>;
     }
 }

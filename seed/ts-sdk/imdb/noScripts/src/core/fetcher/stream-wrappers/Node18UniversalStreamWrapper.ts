@@ -1,18 +1,17 @@
 import type { Writable } from "stream";
 import { EventCallback, StreamWrapper } from "./chooseStreamWrapper";
 
-export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | Uint32Array>
-    implements
-        StreamWrapper<Node18UniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat>, ReadFormat>
+export class Node18UniversalStreamWrapper
+    implements StreamWrapper<Node18UniversalStreamWrapper | Writable | WritableStream<Uint8Array>, Uint8Array>
 {
-    private readableStream: ReadableStream<ReadFormat>;
-    private reader: ReadableStreamDefaultReader<ReadFormat>;
+    private readableStream: ReadableStream<Uint8Array>;
+    private reader: ReadableStreamDefaultReader<Uint8Array>;
     private events: Record<string, EventCallback[] | undefined>;
     private paused: boolean;
     private resumeCallback: ((value?: unknown) => void) | null;
     private encoding: string | null;
 
-    constructor(readableStream: ReadableStream<ReadFormat>) {
+    constructor(readableStream: ReadableStream<Uint8Array>) {
         this.readableStream = readableStream;
         this.reader = this.readableStream.getReader();
         this.events = {
@@ -38,8 +37,8 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
     }
 
     public pipe(
-        dest: Node18UniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat>
-    ): Node18UniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat> {
+        dest: Node18UniversalStreamWrapper | Writable | WritableStream<Uint8Array>
+    ): Node18UniversalStreamWrapper | Writable | WritableStream<Uint8Array> {
         this.on("data", async (chunk) => {
             if (dest instanceof Node18UniversalStreamWrapper) {
                 dest._write(chunk);
@@ -79,12 +78,12 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
     }
 
     public pipeTo(
-        dest: Node18UniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat>
-    ): Node18UniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat> {
+        dest: Node18UniversalStreamWrapper | Writable | WritableStream<Uint8Array>
+    ): Node18UniversalStreamWrapper | Writable | WritableStream<Uint8Array> {
         return this.pipe(dest);
     }
 
-    public unpipe(dest: Node18UniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat>): void {
+    public unpipe(dest: Node18UniversalStreamWrapper | Writable | WritableStream<Uint8Array>): void {
         this.off("data", async (chunk) => {
             if (dest instanceof Node18UniversalStreamWrapper) {
                 dest._write(chunk);
@@ -150,7 +149,7 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
         return this.paused;
     }
 
-    public async read(): Promise<ReadFormat | undefined> {
+    public async read(): Promise<Uint8Array | undefined> {
         if (this.paused) {
             await new Promise((resolve) => {
                 this.resumeCallback = resolve;
@@ -169,7 +168,7 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
     }
 
     public async text(): Promise<string> {
-        const chunks: ReadFormat[] = [];
+        const chunks: Uint8Array[] = [];
 
         while (true) {
             const { done, value } = await this.reader.read();
@@ -186,7 +185,7 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
         return JSON.parse(text);
     }
 
-    private _write(chunk: ReadFormat): void {
+    private _write(chunk: Uint8Array): void {
         this._emit("data", chunk);
     }
 
@@ -228,24 +227,5 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
         } catch (error) {
             this._emit("error", error);
         }
-    }
-
-    [Symbol.asyncIterator](): AsyncIterator<ReadFormat> {
-        const iterator: AsyncIterator<ReadFormat> = {
-            next: async () => {
-                if (this.paused) {
-                    await new Promise((resolve) => {
-                        this.resumeCallback = resolve;
-                    });
-                }
-                const { done, value } = await this.reader.read();
-                if (done) {
-                    return { done: true, value: undefined };
-                }
-                return { done: false, value };
-            }
-        };
-
-        return iterator;
     }
 }

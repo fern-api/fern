@@ -8,15 +8,12 @@ import * as core from "../../../../../../../../core";
 import { FunctionImplementation } from "./FunctionImplementation";
 import { Language } from "../../../../../../commons/types/Language";
 
-export const FunctionImplementationForMultipleLanguages: core.serialization.ObjectSchema<
-    serializers.v2.v3.FunctionImplementationForMultipleLanguages.Raw,
-    SeedTrace.v2.v3.FunctionImplementationForMultipleLanguages
-> = core.serialization.object({
-    codeByLanguage: core.serialization.record(Language, FunctionImplementation.optional()),
-});
+export const FunctionImplementationForMultipleLanguages: core.serialization.ObjectSchema<serializers.v2.v3.FunctionImplementationForMultipleLanguages.Raw, SeedTrace.v2.v3.FunctionImplementationForMultipleLanguages> = core.serialization.object({
+        "codeByLanguage": core.serialization.record(Language, FunctionImplementation.optional())
+    });
 
 export declare namespace FunctionImplementationForMultipleLanguages {
     interface Raw {
-        codeByLanguage: Record<Language.Raw, FunctionImplementation.Raw | null | undefined>;
+        "codeByLanguage": Record<Language.Raw, FunctionImplementation.Raw | null | undefined>;
     }
 }

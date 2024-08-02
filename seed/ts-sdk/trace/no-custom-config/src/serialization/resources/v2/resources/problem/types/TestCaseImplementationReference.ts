@@ -8,30 +8,25 @@ import * as core from "../../../../../../core";
 import { TestCaseTemplateId } from "./TestCaseTemplateId";
 import { TestCaseImplementation } from "./TestCaseImplementation";
 
-export const TestCaseImplementationReference: core.serialization.Schema<
-    serializers.v2.TestCaseImplementationReference.Raw,
-    SeedTrace.v2.TestCaseImplementationReference
-> = core.serialization
-    .union("type", {
-        templateId: core.serialization.object({
-            value: TestCaseTemplateId,
+export const TestCaseImplementationReference: core.serialization.Schema<serializers.v2.TestCaseImplementationReference.Raw, SeedTrace.v2.TestCaseImplementationReference> = core.serialization.union("type", {
+        "templateId": core.serialization.object({
+            "value": TestCaseTemplateId
         }),
-        implementation: TestCaseImplementation,
-    })
-    .transform<SeedTrace.v2.TestCaseImplementationReference>({
-        transform: (value) => value,
-        untransform: (value) => value,
+        "implementation": TestCaseImplementation
+    }).transform<SeedTrace.v2.TestCaseImplementationReference>({
+        transform: value => value,
+        untransform: value => value
     });
 
 export declare namespace TestCaseImplementationReference {
     type Raw = TestCaseImplementationReference.TemplateId | TestCaseImplementationReference.Implementation;
 
     interface TemplateId {
-        type: "templateId";
-        value: TestCaseTemplateId.Raw;
+        "type": "templateId";
+        "value": TestCaseTemplateId.Raw;
     }
 
     interface Implementation extends TestCaseImplementation.Raw {
-        type: "implementation";
+        "type": "implementation";
     }
 }

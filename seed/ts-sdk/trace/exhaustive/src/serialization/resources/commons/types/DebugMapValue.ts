@@ -6,13 +6,12 @@ import * as serializers from "../../../index";
 import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const DebugMapValue: core.serialization.ObjectSchema<serializers.DebugMapValue.Raw, SeedTrace.DebugMapValue> =
-    core.serialization.object({
-        keyValuePairs: core.serialization.list(core.serialization.lazyObject(() => serializers.DebugKeyValuePairs)),
+export const DebugMapValue: core.serialization.ObjectSchema<serializers.DebugMapValue.Raw, SeedTrace.DebugMapValue> = core.serialization.object({
+        "keyValuePairs": core.serialization.list(core.serialization.lazyObject(() => serializers.DebugKeyValuePairs))
     });
 
 export declare namespace DebugMapValue {
     interface Raw {
-        keyValuePairs: serializers.DebugKeyValuePairs.Raw[];
+        "keyValuePairs": serializers.DebugKeyValuePairs.Raw[];
     }
 }

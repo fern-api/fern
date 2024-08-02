@@ -7,14 +7,12 @@ import * as SeedAliasExtends from "../../api/index";
 import * as core from "../../core";
 import { Parent } from "./Parent";
 
-export const Child: core.serialization.ObjectSchema<serializers.Child.Raw, SeedAliasExtends.Child> = core.serialization
-    .object({
-        child: core.serialization.string(),
-    })
-    .extend(Parent);
+export const Child: core.serialization.ObjectSchema<serializers.Child.Raw, SeedAliasExtends.Child> = core.serialization.object({
+        "child": core.serialization.string()
+    }).extend(Parent);
 
 export declare namespace Child {
     interface Raw extends Parent.Raw {
-        child: string;
+        "child": string;
     }
 }

@@ -3,5 +3,5 @@
  */
 
 export interface WorkspaceTracedUpdate {
-    traceResponsesSize: number;
+    "traceResponsesSize": number;
 }

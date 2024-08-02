@@ -9,5 +9,5 @@
  *     }
  */
 export interface MyRequest {
-    numEvents: number;
+    "numEvents": number;
 }

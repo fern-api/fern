@@ -5,5 +5,5 @@
 import * as SeedTrace from "../../../index";
 
 export interface InternalError {
-    exceptionInfo: SeedTrace.ExceptionInfo;
+    "exceptionInfo": SeedTrace.ExceptionInfo;
 }

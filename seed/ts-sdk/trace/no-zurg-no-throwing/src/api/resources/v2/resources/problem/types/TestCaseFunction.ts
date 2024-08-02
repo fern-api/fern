@@ -4,7 +4,9 @@
 
 import * as SeedTrace from "../../../../../index";
 
-export type TestCaseFunction = SeedTrace.v2.TestCaseFunction.WithActualResult | SeedTrace.v2.TestCaseFunction.Custom;
+export type TestCaseFunction = 
+    | SeedTrace.v2.TestCaseFunction.WithActualResult
+    | SeedTrace.v2.TestCaseFunction.Custom;
 
 export declare namespace TestCaseFunction {
     interface WithActualResult extends SeedTrace.v2.TestCaseWithActualResultImplementation {

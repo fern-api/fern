@@ -4,7 +4,7 @@
 
 import * as SeedTrace from "../../../index";
 
-export type ProblemDescriptionBoard =
+export type ProblemDescriptionBoard = 
     | SeedTrace.ProblemDescriptionBoard.Html
     | SeedTrace.ProblemDescriptionBoard.Variable
     | SeedTrace.ProblemDescriptionBoard.TestCaseId;

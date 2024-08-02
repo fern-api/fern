@@ -23,7 +23,8 @@ export declare namespace SeedEnumClient {
 }
 
 export class SeedEnumClient {
-    constructor(protected readonly _options: SeedEnumClient.Options) {}
+    constructor(protected readonly _options: SeedEnumClient.Options) {
+    }
 
     protected _inlinedRequest: InlinedRequest | undefined;
 

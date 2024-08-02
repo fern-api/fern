@@ -6,11 +6,9 @@ import * as serializers from "../../../index";
 import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const TerminatedResponse: core.serialization.ObjectSchema<
-    serializers.TerminatedResponse.Raw,
-    SeedTrace.TerminatedResponse
-> = core.serialization.object({});
+export const TerminatedResponse: core.serialization.ObjectSchema<serializers.TerminatedResponse.Raw, SeedTrace.TerminatedResponse> = core.serialization.object({});
 
 export declare namespace TerminatedResponse {
-    interface Raw {}
+    interface Raw {
+    }
 }

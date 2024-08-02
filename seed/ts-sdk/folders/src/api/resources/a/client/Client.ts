@@ -22,7 +22,8 @@ export declare namespace A {
 }
 
 export class A {
-    constructor(protected readonly _options: A.Options) {}
+    constructor(protected readonly _options: A.Options) {
+    }
 
     protected _b: B | undefined;
 

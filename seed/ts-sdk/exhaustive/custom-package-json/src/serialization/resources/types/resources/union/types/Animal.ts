@@ -8,33 +8,28 @@ import * as core from "../../../../../../core";
 import { Dog } from "./Dog";
 import { Cat } from "./Cat";
 
-export const Animal: core.serialization.Schema<serializers.types.Animal.Raw, Fiddle.types.Animal> = core.serialization
-    .union("animal", {
-        dog: Dog,
-        cat: Cat,
-    })
-    .transform<Fiddle.types.Animal>({
-        transform: (value) => {
+export const Animal: core.serialization.Schema<serializers.types.Animal.Raw, Fiddle.types.Animal> = core.serialization.union("animal", {
+        "dog": Dog,
+        "cat": Cat
+    }).transform<Fiddle.types.Animal>({
+        transform: value => {
             switch (value.animal) {
-                case "dog":
-                    return Fiddle.types.Animal.dog(value);
-                case "cat":
-                    return Fiddle.types.Animal.cat(value);
-                default:
-                    return Fiddle.types.Animal._unknown(value);
+                case "dog": return Fiddle.types.Animal.dog(value);
+                case "cat": return Fiddle.types.Animal.cat(value);
+                default: return Fiddle.types.Animal._unknown(value);
             }
         },
-        untransform: ({ _visit, ...value }) => value as any,
+        untransform: ({ _visit, ...value }) => value as any
     });
 
 export declare namespace Animal {
     type Raw = Animal.Dog | Animal.Cat;
 
     interface Dog extends Dog.Raw {
-        animal: "dog";
+        "animal": "dog";
     }
 
     interface Cat extends Cat.Raw {
-        animal: "cat";
+        "animal": "cat";
     }
 }

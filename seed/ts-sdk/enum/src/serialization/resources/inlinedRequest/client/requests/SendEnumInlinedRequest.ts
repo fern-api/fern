@@ -8,21 +8,18 @@ import * as core from "../../../../../core";
 import { Operand } from "../../../../types/Operand";
 import { ColorOrOperand } from "../../../../types/ColorOrOperand";
 
-export const SendEnumInlinedRequest: core.serialization.Schema<
-    serializers.SendEnumInlinedRequest.Raw,
-    SeedEnum.SendEnumInlinedRequest
-> = core.serialization.object({
-    operand: Operand,
-    maybeOperand: Operand.optional(),
-    operandOrColor: ColorOrOperand,
-    maybeOperandOrColor: ColorOrOperand.optional(),
-});
+export const SendEnumInlinedRequest: core.serialization.Schema<serializers.SendEnumInlinedRequest.Raw, SeedEnum.SendEnumInlinedRequest> = core.serialization.object({
+        "operand": Operand,
+        "maybeOperand": Operand.optional(),
+        "operandOrColor": ColorOrOperand,
+        "maybeOperandOrColor": ColorOrOperand.optional()
+    });
 
 export declare namespace SendEnumInlinedRequest {
     interface Raw {
-        operand: Operand.Raw;
-        maybeOperand?: Operand.Raw | null;
-        operandOrColor: ColorOrOperand.Raw;
-        maybeOperandOrColor?: ColorOrOperand.Raw | null;
+        "operand": Operand.Raw;
+        "maybeOperand"?: Operand.Raw | null;
+        "operandOrColor": ColorOrOperand.Raw;
+        "maybeOperandOrColor"?: ColorOrOperand.Raw | null;
     }
 }

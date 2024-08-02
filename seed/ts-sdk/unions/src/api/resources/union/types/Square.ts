@@ -3,5 +3,5 @@
  */
 
 export interface Square {
-    length: number;
+    "length": number;
 }

@@ -5,7 +5,8 @@
 import * as SeedTrace from "../../../index";
 import * as core from "../../../../core";
 
-export type Error = SeedTrace.submission.createExecutionSession.Error._Unknown;
+export type Error = 
+    | SeedTrace.submission.createExecutionSession.Error._Unknown;
 
 export declare namespace Error {
     interface _Unknown {
@@ -19,20 +20,16 @@ export declare namespace Error {
 }
 
 export const Error = {
-    _unknown: (fetcherError: core.Fetcher.Error): SeedTrace.submission.createExecutionSession.Error._Unknown => {
-        return {
-            errorName: undefined,
-            content: fetcherError,
-        };
-    },
+        _unknown: (fetcherError: core.Fetcher.Error): SeedTrace.submission.createExecutionSession.Error._Unknown => {
+            return {
+                errorName: undefined,
+                content: fetcherError
+            };
+        },
 
-    _visit: <_Result>(
-        value: SeedTrace.submission.createExecutionSession.Error,
-        visitor: SeedTrace.submission.createExecutionSession.Error._Visitor<_Result>
-    ): _Result => {
-        switch (value.errorName) {
-            default:
-                return visitor._other(value as any);
-        }
-    },
-} as const;
+        _visit: <_Result>(value: SeedTrace.submission.createExecutionSession.Error, visitor: SeedTrace.submission.createExecutionSession.Error._Visitor<_Result>): _Result => {
+            switch (value.errorName) {
+                default: return visitor._other(value as any);
+            }
+        },
+    } as const;

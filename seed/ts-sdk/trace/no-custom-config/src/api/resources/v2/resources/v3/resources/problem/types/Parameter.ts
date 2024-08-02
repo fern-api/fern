@@ -5,7 +5,7 @@
 import * as SeedTrace from "../../../../../../../index";
 
 export interface Parameter {
-    parameterId: SeedTrace.v2.v3.ParameterId;
-    name: string;
-    variableType: SeedTrace.VariableType;
+    "parameterId": SeedTrace.v2.v3.ParameterId;
+    "name": string;
+    "variableType": SeedTrace.VariableType;
 }

@@ -1,7 +1,5 @@
 # Reference
-
 ## Auth
-
 <details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">getTokenWithClientCredentials</a>({ ...params }) -> SeedOauthClientCredentials.TokenResponse</code></summary>
 <dl>
 <dd>
@@ -18,10 +16,10 @@
 await client.auth.getTokenWithClientCredentials({
     clientId: "string",
     clientSecret: "string",
-    scope: "string",
+    scope: "string"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -35,20 +33,21 @@ await client.auth.getTokenWithClientCredentials({
 <dl>
 <dd>
 
-**request:** `SeedOauthClientCredentials.GetTokenRequest`
-
+**request:** `SeedOauthClientCredentials.GetTokenRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Auth.RequestOptions`
+**requestOptions:** `Auth.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -71,10 +70,10 @@ await client.auth.refreshToken({
     clientId: "string",
     clientSecret: "string",
     refreshToken: "string",
-    scope: "string",
+    scope: "string"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -88,20 +87,21 @@ await client.auth.refreshToken({
 <dl>
 <dd>
 
-**request:** `SeedOauthClientCredentials.RefreshTokenRequest`
-
+**request:** `SeedOauthClientCredentials.RefreshTokenRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Auth.RequestOptions`
+**requestOptions:** `Auth.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

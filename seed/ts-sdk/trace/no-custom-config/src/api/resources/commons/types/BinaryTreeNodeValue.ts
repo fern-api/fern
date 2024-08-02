@@ -5,8 +5,8 @@
 import * as SeedTrace from "../../../index";
 
 export interface BinaryTreeNodeValue {
-    nodeId: SeedTrace.NodeId;
-    val: number;
-    right?: SeedTrace.NodeId;
-    left?: SeedTrace.NodeId;
+    "nodeId": SeedTrace.NodeId;
+    "val": number;
+    "right"?: SeedTrace.NodeId;
+    "left"?: SeedTrace.NodeId;
 }

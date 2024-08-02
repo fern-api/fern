@@ -29,7 +29,8 @@ export declare namespace Sysprop {
 }
 
 export class Sysprop {
-    constructor(protected readonly _options: Sysprop.Options = {}) {}
+    constructor(protected readonly _options: Sysprop.Options = {}) {
+    }
 
     /**
      * @param {SeedTrace.Language} language
@@ -39,48 +40,36 @@ export class Sysprop {
      * @example
      *     await client.sysprop.setNumWarmInstances(SeedTrace.Language.Java, 1)
      */
-    public async setNumWarmInstances(
-        language: SeedTrace.Language,
-        numWarmInstances: number,
-        requestOptions?: Sysprop.RequestOptions
-    ): Promise<core.APIResponse<void, SeedTrace.sysprop.setNumWarmInstances.Error>> {
+    public async setNumWarmInstances(language: SeedTrace.Language, numWarmInstances: number, requestOptions?: Sysprop.RequestOptions): Promise<core.APIResponse<void, SeedTrace.sysprop.setNumWarmInstances.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/sysprop/num-warm-instances/${encodeURIComponent(
-                    serializers.Language.jsonOrThrow(language)
-                )}/${encodeURIComponent(numWarmInstances)}`
-            ),
+            url: urlJoin(await core.Supplier.get(this._options.environment) ?? environments.SeedTraceEnvironment.Prod, `/sysprop/num-warm-instances/${encodeURIComponent(serializers.Language.jsonOrThrow(language))}/${encodeURIComponent(numWarmInstances)}`),
             method: "PUT",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header":
-                    (await core.Supplier.get(this._options.xRandomHeader)) != null
-                        ? await core.Supplier.get(this._options.xRandomHeader)
-                        : undefined,
+                "Authorization": await this._getAuthorizationHeader(),
+                "X-Random-Header": await core.Supplier.get(this._options.xRandomHeader) != null ? await core.Supplier.get(this._options.xRandomHeader) : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                "X-Fern-Runtime-Version": core.RUNTIME.version
             },
             contentType: "application/json",
             requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
-            abortSignal: requestOptions?.abortSignal,
+            abortSignal: requestOptions?.abortSignal
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: undefined,
+                body: undefined
             };
         }
 
         return {
             ok: false,
-            error: SeedTrace.sysprop.setNumWarmInstances.Error._unknown(_response.error),
+            error: SeedTrace.sysprop.setNumWarmInstances.Error._unknown(_response.error)
         };
     }
 
@@ -90,51 +79,36 @@ export class Sysprop {
      * @example
      *     await client.sysprop.getNumWarmInstances()
      */
-    public async getNumWarmInstances(
-        requestOptions?: Sysprop.RequestOptions
-    ): Promise<
-        core.APIResponse<Record<SeedTrace.Language, number | undefined>, SeedTrace.sysprop.getNumWarmInstances.Error>
-    > {
+    public async getNumWarmInstances(requestOptions?: Sysprop.RequestOptions): Promise<core.APIResponse<Record<SeedTrace.Language, number | undefined>, SeedTrace.sysprop.getNumWarmInstances.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/sysprop/num-warm-instances"
-            ),
+            url: urlJoin(await core.Supplier.get(this._options.environment) ?? environments.SeedTraceEnvironment.Prod, "/sysprop/num-warm-instances"),
             method: "GET",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header":
-                    (await core.Supplier.get(this._options.xRandomHeader)) != null
-                        ? await core.Supplier.get(this._options.xRandomHeader)
-                        : undefined,
+                "Authorization": await this._getAuthorizationHeader(),
+                "X-Random-Header": await core.Supplier.get(this._options.xRandomHeader) != null ? await core.Supplier.get(this._options.xRandomHeader) : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                "X-Fern-Runtime-Version": core.RUNTIME.version
             },
             contentType: "application/json",
             requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
-            abortSignal: requestOptions?.abortSignal,
+            abortSignal: requestOptions?.abortSignal
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: serializers.sysprop.getNumWarmInstances.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                body: serializers.sysprop.getNumWarmInstances.Response.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] })
             };
         }
 
         return {
             ok: false,
-            error: SeedTrace.sysprop.getNumWarmInstances.Error._unknown(_response.error),
+            error: SeedTrace.sysprop.getNumWarmInstances.Error._unknown(_response.error)
         };
     }
 

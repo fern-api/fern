@@ -4,7 +4,7 @@
 
 import * as SeedTrace from "../../../index";
 
-export type SubmissionStatusForTestCase =
+export type SubmissionStatusForTestCase = 
     | SeedTrace.SubmissionStatusForTestCase.Graded
     | SeedTrace.SubmissionStatusForTestCase.GradedV2
     | SeedTrace.SubmissionStatusForTestCase.Traced;

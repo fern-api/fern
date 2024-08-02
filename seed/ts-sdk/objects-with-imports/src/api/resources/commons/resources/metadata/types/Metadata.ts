@@ -13,6 +13,6 @@
  *     }
  */
 export interface Metadata {
-    id: string;
-    data?: Record<string, string>;
+    "id": string;
+    "data"?: Record<string, string>;
 }

@@ -9,49 +9,37 @@ import { TestCaseResultWithStdout } from "./TestCaseResultWithStdout";
 import { TestCaseGrade } from "./TestCaseGrade";
 import { TracedTestCase } from "./TracedTestCase";
 
-export const SubmissionStatusForTestCase: core.serialization.Schema<
-    serializers.SubmissionStatusForTestCase.Raw,
-    SeedTrace.SubmissionStatusForTestCase
-> = core.serialization
-    .union("type", {
-        graded: TestCaseResultWithStdout,
-        gradedV2: core.serialization.object({
-            value: TestCaseGrade,
+export const SubmissionStatusForTestCase: core.serialization.Schema<serializers.SubmissionStatusForTestCase.Raw, SeedTrace.SubmissionStatusForTestCase> = core.serialization.union("type", {
+        "graded": TestCaseResultWithStdout,
+        "gradedV2": core.serialization.object({
+            "value": TestCaseGrade
         }),
-        traced: TracedTestCase,
-    })
-    .transform<SeedTrace.SubmissionStatusForTestCase>({
-        transform: (value) => {
+        "traced": TracedTestCase
+    }).transform<SeedTrace.SubmissionStatusForTestCase>({
+        transform: value => {
             switch (value.type) {
-                case "graded":
-                    return SeedTrace.SubmissionStatusForTestCase.graded(value);
-                case "gradedV2":
-                    return SeedTrace.SubmissionStatusForTestCase.gradedV2(value.value);
-                case "traced":
-                    return SeedTrace.SubmissionStatusForTestCase.traced(value);
-                default:
-                    return SeedTrace.SubmissionStatusForTestCase._unknown(value);
+                case "graded": return SeedTrace.SubmissionStatusForTestCase.graded(value);
+                case "gradedV2": return SeedTrace.SubmissionStatusForTestCase.gradedV2(value.value);
+                case "traced": return SeedTrace.SubmissionStatusForTestCase.traced(value);
+                default: return SeedTrace.SubmissionStatusForTestCase._unknown(value);
             }
         },
-        untransform: ({ _visit, ...value }) => value as any,
+        untransform: ({ _visit, ...value }) => value as any
     });
 
 export declare namespace SubmissionStatusForTestCase {
-    type Raw =
-        | SubmissionStatusForTestCase.Graded
-        | SubmissionStatusForTestCase.GradedV2
-        | SubmissionStatusForTestCase.Traced;
+    type Raw = SubmissionStatusForTestCase.Graded | SubmissionStatusForTestCase.GradedV2 | SubmissionStatusForTestCase.Traced;
 
     interface Graded extends TestCaseResultWithStdout.Raw {
-        type: "graded";
+        "type": "graded";
     }
 
     interface GradedV2 {
-        type: "gradedV2";
-        value: TestCaseGrade.Raw;
+        "type": "gradedV2";
+        "value": TestCaseGrade.Raw;
     }
 
     interface Traced extends TracedTestCase.Raw {
-        type: "traced";
+        "type": "traced";
     }
 }

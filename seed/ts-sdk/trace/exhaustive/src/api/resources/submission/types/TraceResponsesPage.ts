@@ -9,6 +9,6 @@ export interface TraceResponsesPage {
      * If present, use this to load subseqent pages.
      * The offset is the id of the next trace response to load.
      */
-    offset?: number;
-    traceResponses: SeedTrace.TraceResponse[];
+    "offset"?: number;
+    "traceResponses": SeedTrace.TraceResponse[];
 }

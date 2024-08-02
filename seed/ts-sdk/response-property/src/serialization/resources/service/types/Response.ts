@@ -9,16 +9,12 @@ import { Movie } from "./Movie";
 import { WithMetadata } from "../../../types/WithMetadata";
 import { WithDocs } from "./WithDocs";
 
-export const Response: core.serialization.ObjectSchema<serializers.Response.Raw, SeedResponseProperty.Response> =
-    core.serialization
-        .object({
-            data: Movie,
-        })
-        .extend(WithMetadata)
-        .extend(WithDocs);
+export const Response: core.serialization.ObjectSchema<serializers.Response.Raw, SeedResponseProperty.Response> = core.serialization.object({
+        "data": Movie
+    }).extend(WithMetadata).extend(WithDocs);
 
 export declare namespace Response {
     interface Raw extends WithMetadata.Raw, WithDocs.Raw {
-        data: Movie.Raw;
+        "data": Movie.Raw;
     }
 }

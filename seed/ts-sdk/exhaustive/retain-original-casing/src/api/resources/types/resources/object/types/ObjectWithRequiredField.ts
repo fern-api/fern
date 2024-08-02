@@ -3,5 +3,5 @@
  */
 
 export interface ObjectWithRequiredField {
-    string: string;
+    "string": string;
 }
