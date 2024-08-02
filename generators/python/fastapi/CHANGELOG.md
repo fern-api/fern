@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.1.1] - 2024-07-31
+## [1.2.0] - 2024-07-31
 
 - Feature: The FastAPI `async_handlers` configuration now accepts a list of string or a boolean so that users
   can turn on async handlers for specific endpoints. For example, to turn on async handlers for a `users.create`
@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
   ```yaml
   - name: fernapi/fern-fastapi-server
-    version: 1.1.1
+    version: 1.2.0
     config:
       async_handlers:
         - users.create
