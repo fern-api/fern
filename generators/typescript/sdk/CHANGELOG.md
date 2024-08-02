@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.38.3] - 2024-08-02
 
-- Fix: Adds async iterable to StreamWrapper implementation for easier use with upstream dependencies.
+- Fix: Adds async iterable to StreamWrapper implementation for easier use with downstream dependencies.
 
 ## [0.38.2] - 2024-08-01
 
