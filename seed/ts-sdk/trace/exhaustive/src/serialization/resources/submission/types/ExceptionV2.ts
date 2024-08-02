@@ -7,28 +7,34 @@ import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 import { ExceptionInfo } from "./ExceptionInfo";
 
-export const ExceptionV2: core.serialization.Schema<serializers.ExceptionV2.Raw, SeedTrace.ExceptionV2> = core.serialization.union("type", {
-        "generic": ExceptionInfo,
-        "timeout": core.serialization.object({})
-    }).transform<SeedTrace.ExceptionV2>({
-        transform: value => {
-            switch (value.type) {
-                case "generic": return SeedTrace.ExceptionV2.generic(value);
-                case "timeout": return SeedTrace.ExceptionV2.timeout();
-                default: return SeedTrace.ExceptionV2._unknown(value);
-            }
-        },
-        untransform: ({ _visit, ...value }) => value as any
-    });
+export const ExceptionV2: core.serialization.Schema<serializers.ExceptionV2.Raw, SeedTrace.ExceptionV2> =
+    core.serialization
+        .union("type", {
+            generic: ExceptionInfo,
+            timeout: core.serialization.object({}),
+        })
+        .transform<SeedTrace.ExceptionV2>({
+            transform: (value) => {
+                switch (value.type) {
+                    case "generic":
+                        return SeedTrace.ExceptionV2.generic(value);
+                    case "timeout":
+                        return SeedTrace.ExceptionV2.timeout();
+                    default:
+                        return SeedTrace.ExceptionV2._unknown(value);
+                }
+            },
+            untransform: ({ _visit, ...value }) => value as any,
+        });
 
 export declare namespace ExceptionV2 {
     type Raw = ExceptionV2.Generic | ExceptionV2.Timeout;
 
     interface Generic extends ExceptionInfo.Raw {
-        "type": "generic";
+        type: "generic";
     }
 
     interface Timeout {
-        "type": "timeout";
+        type: "timeout";
     }
 }

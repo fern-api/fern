@@ -6,12 +6,15 @@ import * as serializers from "../../../../index";
 import * as SeedServerSentEvents from "../../../../../api/index";
 import * as core from "../../../../../core";
 
-export const StreamCompletionRequest: core.serialization.Schema<serializers.StreamCompletionRequest.Raw, SeedServerSentEvents.StreamCompletionRequest> = core.serialization.object({
-        "query": core.serialization.string()
-    });
+export const StreamCompletionRequest: core.serialization.Schema<
+    serializers.StreamCompletionRequest.Raw,
+    SeedServerSentEvents.StreamCompletionRequest
+> = core.serialization.object({
+    query: core.serialization.string(),
+});
 
 export declare namespace StreamCompletionRequest {
     interface Raw {
-        "query": string;
+        query: string;
     }
 }

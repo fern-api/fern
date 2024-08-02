@@ -7,5 +7,5 @@ export const Supplier = {
         } else {
             return supplier;
         }
-    }
+    },
 };

@@ -4,11 +4,10 @@
 
 import * as SeedUnions from "../../../index";
 
-export type UnionWithDiscriminant = 
+export type UnionWithDiscriminant =
     /**
      * This is a Foo field. */
-    | SeedUnions.UnionWithDiscriminant.Foo
-    | SeedUnions.UnionWithDiscriminant.Bar;
+    SeedUnions.UnionWithDiscriminant.Foo | SeedUnions.UnionWithDiscriminant.Bar;
 
 export declare namespace UnionWithDiscriminant {
     interface Foo {

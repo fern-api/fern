@@ -4,7 +4,7 @@
 
 import * as SeedTrace from "../../../index";
 
-export type CodeExecutionUpdate = 
+export type CodeExecutionUpdate =
     /**
      * Statuses if an executor for the session isn't ready (Before RunningResponse). */
     | SeedTrace.CodeExecutionUpdate.BuildingExecutor

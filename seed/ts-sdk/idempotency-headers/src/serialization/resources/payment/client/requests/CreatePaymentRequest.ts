@@ -7,14 +7,17 @@ import * as SeedIdempotencyHeaders from "../../../../../api/index";
 import * as core from "../../../../../core";
 import { Currency } from "../../types/Currency";
 
-export const CreatePaymentRequest: core.serialization.Schema<serializers.CreatePaymentRequest.Raw, SeedIdempotencyHeaders.CreatePaymentRequest> = core.serialization.object({
-        "amount": core.serialization.number(),
-        "currency": Currency
-    });
+export const CreatePaymentRequest: core.serialization.Schema<
+    serializers.CreatePaymentRequest.Raw,
+    SeedIdempotencyHeaders.CreatePaymentRequest
+> = core.serialization.object({
+    amount: core.serialization.number(),
+    currency: Currency,
+});
 
 export declare namespace CreatePaymentRequest {
     interface Raw {
-        "amount": number;
-        "currency": Currency.Raw;
+        amount: number;
+        currency: Currency.Raw;
     }
 }

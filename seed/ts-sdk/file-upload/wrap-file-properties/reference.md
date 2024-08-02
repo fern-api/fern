@@ -1,5 +1,7 @@
 # Reference
+
 ## Service
+
 <details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">post</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
@@ -15,10 +17,10 @@
 ```typescript
 await client.service.post({
     file: fs.createReadStream("/path/to/your/file"),
-    fileList: [fs.createReadStream("/path/to/your/file")]
+    fileList: [fs.createReadStream("/path/to/your/file")],
 });
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -32,21 +34,20 @@ await client.service.post({
 <dl>
 <dd>
 
-**request:** `SeedFileUpload.MyRequest` 
-    
+**request:** `SeedFileUpload.MyRequest`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Service.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -66,10 +67,10 @@ await client.service.post({
 
 ```typescript
 await client.service.justFile({
-    file: fs.createReadStream("/path/to/your/file")
+    file: fs.createReadStream("/path/to/your/file"),
 });
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -83,21 +84,20 @@ await client.service.justFile({
 <dl>
 <dd>
 
-**request:** `SeedFileUpload.JustFileRequet` 
-    
+**request:** `SeedFileUpload.JustFileRequet`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Service.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -122,10 +122,10 @@ await client.service.justFileWithQueryParams({
     integer: 1,
     maybeInteger: 1,
     listOfStrings: "string",
-    optionalListOfStrings: "string"
+    optionalListOfStrings: "string",
 });
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -139,21 +139,20 @@ await client.service.justFileWithQueryParams({
 <dl>
 <dd>
 
-**request:** `SeedFileUpload.JustFileWithQueryParamsRequet` 
-    
+**request:** `SeedFileUpload.JustFileWithQueryParamsRequet`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Service.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>

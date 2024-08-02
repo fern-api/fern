@@ -4,7 +4,7 @@
 
 import * as SeedTrace from "../../../index";
 
-export type TestSubmissionStatus = 
+export type TestSubmissionStatus =
     | SeedTrace.TestSubmissionStatus.Stopped
     | SeedTrace.TestSubmissionStatus.Errored
     | SeedTrace.TestSubmissionStatus.Running
@@ -44,70 +44,91 @@ export declare namespace TestSubmissionStatus {
         errored: (value: SeedTrace.ErrorInfo) => _Result;
         running: (value: SeedTrace.RunningSubmissionState) => _Result;
         testCaseIdToState: (value: Record<string, SeedTrace.SubmissionStatusForTestCase>) => _Result;
-        _other: (value: {
-                type: string;
-            }) => _Result;
+        _other: (value: { type: string }) => _Result;
     }
 }
 
 export const TestSubmissionStatus = {
-        stopped: (): SeedTrace.TestSubmissionStatus.Stopped => {
-            return {
-                type: "stopped",
-                "_visit": function <_Result>(this: SeedTrace.TestSubmissionStatus.Stopped, visitor: SeedTrace.TestSubmissionStatus._Visitor<_Result>) {
-                    return SeedTrace.TestSubmissionStatus._visit(this, visitor);
-                }
-            };
-        },
+    stopped: (): SeedTrace.TestSubmissionStatus.Stopped => {
+        return {
+            type: "stopped",
+            _visit: function <_Result>(
+                this: SeedTrace.TestSubmissionStatus.Stopped,
+                visitor: SeedTrace.TestSubmissionStatus._Visitor<_Result>
+            ) {
+                return SeedTrace.TestSubmissionStatus._visit(this, visitor);
+            },
+        };
+    },
 
-        errored: (value: SeedTrace.ErrorInfo): SeedTrace.TestSubmissionStatus.Errored => {
-            return {
-                value: value,
-                type: "errored",
-                "_visit": function <_Result>(this: SeedTrace.TestSubmissionStatus.Errored, visitor: SeedTrace.TestSubmissionStatus._Visitor<_Result>) {
-                    return SeedTrace.TestSubmissionStatus._visit(this, visitor);
-                }
-            };
-        },
+    errored: (value: SeedTrace.ErrorInfo): SeedTrace.TestSubmissionStatus.Errored => {
+        return {
+            value: value,
+            type: "errored",
+            _visit: function <_Result>(
+                this: SeedTrace.TestSubmissionStatus.Errored,
+                visitor: SeedTrace.TestSubmissionStatus._Visitor<_Result>
+            ) {
+                return SeedTrace.TestSubmissionStatus._visit(this, visitor);
+            },
+        };
+    },
 
-        running: (value: SeedTrace.RunningSubmissionState): SeedTrace.TestSubmissionStatus.Running => {
-            return {
-                value: value,
-                type: "running",
-                "_visit": function <_Result>(this: SeedTrace.TestSubmissionStatus.Running, visitor: SeedTrace.TestSubmissionStatus._Visitor<_Result>) {
-                    return SeedTrace.TestSubmissionStatus._visit(this, visitor);
-                }
-            };
-        },
+    running: (value: SeedTrace.RunningSubmissionState): SeedTrace.TestSubmissionStatus.Running => {
+        return {
+            value: value,
+            type: "running",
+            _visit: function <_Result>(
+                this: SeedTrace.TestSubmissionStatus.Running,
+                visitor: SeedTrace.TestSubmissionStatus._Visitor<_Result>
+            ) {
+                return SeedTrace.TestSubmissionStatus._visit(this, visitor);
+            },
+        };
+    },
 
-        testCaseIdToState: (value: Record<string, SeedTrace.SubmissionStatusForTestCase>): SeedTrace.TestSubmissionStatus.TestCaseIdToState => {
-            return {
-                value: value,
-                type: "testCaseIdToState",
-                "_visit": function <_Result>(this: SeedTrace.TestSubmissionStatus.TestCaseIdToState, visitor: SeedTrace.TestSubmissionStatus._Visitor<_Result>) {
-                    return SeedTrace.TestSubmissionStatus._visit(this, visitor);
-                }
-            };
-        },
+    testCaseIdToState: (
+        value: Record<string, SeedTrace.SubmissionStatusForTestCase>
+    ): SeedTrace.TestSubmissionStatus.TestCaseIdToState => {
+        return {
+            value: value,
+            type: "testCaseIdToState",
+            _visit: function <_Result>(
+                this: SeedTrace.TestSubmissionStatus.TestCaseIdToState,
+                visitor: SeedTrace.TestSubmissionStatus._Visitor<_Result>
+            ) {
+                return SeedTrace.TestSubmissionStatus._visit(this, visitor);
+            },
+        };
+    },
 
-        _unknown: (value: {
-            type: string;
-        }): SeedTrace.TestSubmissionStatus._Unknown => {
-            return {
-                ...(value as any),
-                "_visit": function <_Result>(this: SeedTrace.TestSubmissionStatus._Unknown, visitor: SeedTrace.TestSubmissionStatus._Visitor<_Result>) {
-                    return SeedTrace.TestSubmissionStatus._visit(this, visitor);
-                }
-            };
-        },
+    _unknown: (value: { type: string }): SeedTrace.TestSubmissionStatus._Unknown => {
+        return {
+            ...(value as any),
+            _visit: function <_Result>(
+                this: SeedTrace.TestSubmissionStatus._Unknown,
+                visitor: SeedTrace.TestSubmissionStatus._Visitor<_Result>
+            ) {
+                return SeedTrace.TestSubmissionStatus._visit(this, visitor);
+            },
+        };
+    },
 
-        _visit: <_Result>(value: SeedTrace.TestSubmissionStatus, visitor: SeedTrace.TestSubmissionStatus._Visitor<_Result>): _Result => {
-            switch (value.type) {
-                case "stopped": return visitor.stopped();
-                case "errored": return visitor.errored(value.value);
-                case "running": return visitor.running(value.value);
-                case "testCaseIdToState": return visitor.testCaseIdToState(value.value);
-                default: return visitor._other(value as any);
-            }
-        },
-    } as const;
+    _visit: <_Result>(
+        value: SeedTrace.TestSubmissionStatus,
+        visitor: SeedTrace.TestSubmissionStatus._Visitor<_Result>
+    ): _Result => {
+        switch (value.type) {
+            case "stopped":
+                return visitor.stopped();
+            case "errored":
+                return visitor.errored(value.value);
+            case "running":
+                return visitor.running(value.value);
+            case "testCaseIdToState":
+                return visitor.testCaseIdToState(value.value);
+            default:
+                return visitor._other(value as any);
+        }
+    },
+} as const;

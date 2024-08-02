@@ -5,8 +5,8 @@
 import * as SeedTrace from "../../../index";
 
 export interface ExecutionSessionResponse {
-    "sessionId": string;
-    "executionSessionUrl"?: string;
-    "language": SeedTrace.Language;
-    "status": SeedTrace.ExecutionSessionStatus;
+    sessionId: string;
+    executionSessionUrl?: string;
+    language: SeedTrace.Language;
+    status: SeedTrace.ExecutionSessionStatus;
 }

@@ -4,7 +4,7 @@
 
 import * as SeedTrace from "../../../index";
 
-export type InvalidRequestCause = 
+export type InvalidRequestCause =
     /**
      * The submission request references a submission id that doesn't exist. */
     | SeedTrace.InvalidRequestCause.SubmissionIdNotFound
@@ -39,60 +39,81 @@ export declare namespace InvalidRequestCause {
         submissionIdNotFound: (value: SeedTrace.SubmissionIdNotFound) => _Result;
         customTestCasesUnsupported: (value: SeedTrace.CustomTestCasesUnsupported) => _Result;
         unexpectedLanguage: (value: SeedTrace.UnexpectedLanguageError) => _Result;
-        _other: (value: {
-                type: string;
-            }) => _Result;
+        _other: (value: { type: string }) => _Result;
     }
 }
 
 export const InvalidRequestCause = {
-        submissionIdNotFound: (value: SeedTrace.SubmissionIdNotFound): SeedTrace.InvalidRequestCause.SubmissionIdNotFound => {
-            return {
-                ...value,
-                type: "submissionIdNotFound",
-                "_visit": function <_Result>(this: SeedTrace.InvalidRequestCause.SubmissionIdNotFound, visitor: SeedTrace.InvalidRequestCause._Visitor<_Result>) {
-                    return SeedTrace.InvalidRequestCause._visit(this, visitor);
-                }
-            };
-        },
+    submissionIdNotFound: (
+        value: SeedTrace.SubmissionIdNotFound
+    ): SeedTrace.InvalidRequestCause.SubmissionIdNotFound => {
+        return {
+            ...value,
+            type: "submissionIdNotFound",
+            _visit: function <_Result>(
+                this: SeedTrace.InvalidRequestCause.SubmissionIdNotFound,
+                visitor: SeedTrace.InvalidRequestCause._Visitor<_Result>
+            ) {
+                return SeedTrace.InvalidRequestCause._visit(this, visitor);
+            },
+        };
+    },
 
-        customTestCasesUnsupported: (value: SeedTrace.CustomTestCasesUnsupported): SeedTrace.InvalidRequestCause.CustomTestCasesUnsupported => {
-            return {
-                ...value,
-                type: "customTestCasesUnsupported",
-                "_visit": function <_Result>(this: SeedTrace.InvalidRequestCause.CustomTestCasesUnsupported, visitor: SeedTrace.InvalidRequestCause._Visitor<_Result>) {
-                    return SeedTrace.InvalidRequestCause._visit(this, visitor);
-                }
-            };
-        },
+    customTestCasesUnsupported: (
+        value: SeedTrace.CustomTestCasesUnsupported
+    ): SeedTrace.InvalidRequestCause.CustomTestCasesUnsupported => {
+        return {
+            ...value,
+            type: "customTestCasesUnsupported",
+            _visit: function <_Result>(
+                this: SeedTrace.InvalidRequestCause.CustomTestCasesUnsupported,
+                visitor: SeedTrace.InvalidRequestCause._Visitor<_Result>
+            ) {
+                return SeedTrace.InvalidRequestCause._visit(this, visitor);
+            },
+        };
+    },
 
-        unexpectedLanguage: (value: SeedTrace.UnexpectedLanguageError): SeedTrace.InvalidRequestCause.UnexpectedLanguage => {
-            return {
-                ...value,
-                type: "unexpectedLanguage",
-                "_visit": function <_Result>(this: SeedTrace.InvalidRequestCause.UnexpectedLanguage, visitor: SeedTrace.InvalidRequestCause._Visitor<_Result>) {
-                    return SeedTrace.InvalidRequestCause._visit(this, visitor);
-                }
-            };
-        },
+    unexpectedLanguage: (
+        value: SeedTrace.UnexpectedLanguageError
+    ): SeedTrace.InvalidRequestCause.UnexpectedLanguage => {
+        return {
+            ...value,
+            type: "unexpectedLanguage",
+            _visit: function <_Result>(
+                this: SeedTrace.InvalidRequestCause.UnexpectedLanguage,
+                visitor: SeedTrace.InvalidRequestCause._Visitor<_Result>
+            ) {
+                return SeedTrace.InvalidRequestCause._visit(this, visitor);
+            },
+        };
+    },
 
-        _unknown: (value: {
-            type: string;
-        }): SeedTrace.InvalidRequestCause._Unknown => {
-            return {
-                ...(value as any),
-                "_visit": function <_Result>(this: SeedTrace.InvalidRequestCause._Unknown, visitor: SeedTrace.InvalidRequestCause._Visitor<_Result>) {
-                    return SeedTrace.InvalidRequestCause._visit(this, visitor);
-                }
-            };
-        },
+    _unknown: (value: { type: string }): SeedTrace.InvalidRequestCause._Unknown => {
+        return {
+            ...(value as any),
+            _visit: function <_Result>(
+                this: SeedTrace.InvalidRequestCause._Unknown,
+                visitor: SeedTrace.InvalidRequestCause._Visitor<_Result>
+            ) {
+                return SeedTrace.InvalidRequestCause._visit(this, visitor);
+            },
+        };
+    },
 
-        _visit: <_Result>(value: SeedTrace.InvalidRequestCause, visitor: SeedTrace.InvalidRequestCause._Visitor<_Result>): _Result => {
-            switch (value.type) {
-                case "submissionIdNotFound": return visitor.submissionIdNotFound(value);
-                case "customTestCasesUnsupported": return visitor.customTestCasesUnsupported(value);
-                case "unexpectedLanguage": return visitor.unexpectedLanguage(value);
-                default: return visitor._other(value as any);
-            }
-        },
-    } as const;
+    _visit: <_Result>(
+        value: SeedTrace.InvalidRequestCause,
+        visitor: SeedTrace.InvalidRequestCause._Visitor<_Result>
+    ): _Result => {
+        switch (value.type) {
+            case "submissionIdNotFound":
+                return visitor.submissionIdNotFound(value);
+            case "customTestCasesUnsupported":
+                return visitor.customTestCasesUnsupported(value);
+            case "unexpectedLanguage":
+                return visitor.unexpectedLanguage(value);
+            default:
+                return visitor._other(value as any);
+        }
+    },
+} as const;

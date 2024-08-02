@@ -57,7 +57,7 @@ class Node18FormData implements CrossPlatformFormData {
                 [Symbol.toStringTag]: "File",
                 stream() {
                     return value;
-                }
+                },
             });
         } else {
             this.fd?.append(key, value, fileName);
@@ -69,7 +69,7 @@ class Node18FormData implements CrossPlatformFormData {
         return {
             body: await (await import("stream")).Readable.from(encoder),
             headers: encoder.headers,
-            duplex: "half"
+            duplex: "half",
         };
     }
 }
@@ -124,7 +124,7 @@ class Node16FormData implements CrossPlatformFormData {
     public getRequest(): FormDataRequest<typeof this.fd> {
         return {
             body: this.fd,
-            headers: this.fd ? this.fd.getHeaders() : {}
+            headers: this.fd ? this.fd.getHeaders() : {},
         };
     }
 }
@@ -150,7 +150,7 @@ class WebFormData implements CrossPlatformFormData {
     public getRequest(): FormDataRequest<typeof this.fd> {
         return {
             body: this.fd,
-            headers: {}
+            headers: {},
         };
     }
 }

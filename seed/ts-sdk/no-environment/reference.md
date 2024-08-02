@@ -1,5 +1,7 @@
 # Reference
+
 ## Dummy
+
 <details><summary><code>client.dummy.<a href="/src/api/resources/dummy/client/Client.ts">getDummy</a>() -> string</code></summary>
 <dl>
 <dd>
@@ -14,8 +16,8 @@
 
 ```typescript
 await client.dummy.getDummy();
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -29,13 +31,12 @@ await client.dummy.getDummy();
 <dl>
 <dd>
 
-**requestOptions:** `Dummy.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Dummy.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>

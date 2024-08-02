@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../index";
 
 export interface DoublyLinkedListNodeAndListValue {
-    "nodeId": SeedTrace.NodeId;
-    "fullList": SeedTrace.DoublyLinkedListValue;
+    nodeId: SeedTrace.NodeId;
+    fullList: SeedTrace.DoublyLinkedListValue;
 }

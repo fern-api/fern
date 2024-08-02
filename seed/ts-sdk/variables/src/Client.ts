@@ -22,8 +22,7 @@ export declare namespace SeedVariablesClient {
 }
 
 export class SeedVariablesClient {
-    constructor(protected readonly _options: SeedVariablesClient.Options) {
-    }
+    constructor(protected readonly _options: SeedVariablesClient.Options) {}
 
     protected _service: Service | undefined;
 

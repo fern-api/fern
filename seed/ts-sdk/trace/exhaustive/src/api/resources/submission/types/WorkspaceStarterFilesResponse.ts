@@ -5,5 +5,5 @@
 import * as SeedTrace from "../../../index";
 
 export interface WorkspaceStarterFilesResponse {
-    "files": Record<SeedTrace.Language, SeedTrace.WorkspaceFiles | undefined>;
+    files: Record<SeedTrace.Language, SeedTrace.WorkspaceFiles | undefined>;
 }

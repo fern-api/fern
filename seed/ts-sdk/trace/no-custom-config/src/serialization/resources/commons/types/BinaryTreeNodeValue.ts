@@ -7,18 +7,21 @@ import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 import { NodeId } from "./NodeId";
 
-export const BinaryTreeNodeValue: core.serialization.ObjectSchema<serializers.BinaryTreeNodeValue.Raw, SeedTrace.BinaryTreeNodeValue> = core.serialization.object({
-        "nodeId": NodeId,
-        "val": core.serialization.number(),
-        "right": NodeId.optional(),
-        "left": NodeId.optional()
-    });
+export const BinaryTreeNodeValue: core.serialization.ObjectSchema<
+    serializers.BinaryTreeNodeValue.Raw,
+    SeedTrace.BinaryTreeNodeValue
+> = core.serialization.object({
+    nodeId: NodeId,
+    val: core.serialization.number(),
+    right: NodeId.optional(),
+    left: NodeId.optional(),
+});
 
 export declare namespace BinaryTreeNodeValue {
     interface Raw {
-        "nodeId": NodeId.Raw;
-        "val": number;
-        "right"?: NodeId.Raw | null;
-        "left"?: NodeId.Raw | null;
+        nodeId: NodeId.Raw;
+        val: number;
+        right?: NodeId.Raw | null;
+        left?: NodeId.Raw | null;
     }
 }

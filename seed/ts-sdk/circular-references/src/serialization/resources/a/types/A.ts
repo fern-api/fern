@@ -7,9 +7,10 @@ import * as SeedApi from "../../../../api/index";
 import * as core from "../../../../core";
 import { RootType } from "../../../types/RootType";
 
-export const A: core.serialization.ObjectSchema<serializers.A.Raw, SeedApi.A> = core.serialization.object({}).extend(RootType);
+export const A: core.serialization.ObjectSchema<serializers.A.Raw, SeedApi.A> = core.serialization
+    .object({})
+    .extend(RootType);
 
 export declare namespace A {
-    interface Raw extends RootType.Raw {
-    }
+    interface Raw extends RootType.Raw {}
 }

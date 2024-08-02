@@ -26,8 +26,7 @@ export declare namespace FiddleClient {
 }
 
 export class FiddleClient {
-    constructor(protected readonly _options: FiddleClient.Options) {
-    }
+    constructor(protected readonly _options: FiddleClient.Options) {}
 
     protected _endpoints: Endpoints | undefined;
 

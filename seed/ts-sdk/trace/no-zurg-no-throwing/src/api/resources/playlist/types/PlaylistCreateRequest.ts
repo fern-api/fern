@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../index";
 
 export interface PlaylistCreateRequest {
-    "name": string;
-    "problems": SeedTrace.ProblemId[];
+    name: string;
+    problems: SeedTrace.ProblemId[];
 }

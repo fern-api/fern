@@ -8,7 +8,8 @@ import * as core from "../../core";
 import { Color } from "./Color";
 import { Operand } from "./Operand";
 
-export const ColorOrOperand: core.serialization.Schema<serializers.ColorOrOperand.Raw, SeedEnum.ColorOrOperand> = core.serialization.undiscriminatedUnion([Color, Operand]);
+export const ColorOrOperand: core.serialization.Schema<serializers.ColorOrOperand.Raw, SeedEnum.ColorOrOperand> =
+    core.serialization.undiscriminatedUnion([Color, Operand]);
 
 export declare namespace ColorOrOperand {
     type Raw = Color.Raw | Operand.Raw;

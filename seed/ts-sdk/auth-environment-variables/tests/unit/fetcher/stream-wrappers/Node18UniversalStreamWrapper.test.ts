@@ -37,14 +37,15 @@ describe("Node18UniversalStreamWrapper", () => {
         const rawStream = new ReadableStream({
             start(controller) {
                 controller.enqueue(new TextEncoder().encode("test"));
+                controller.enqueue(new TextEncoder().encode("test"));
                 controller.close();
-            }
+            },
         });
         const stream = new Node18UniversalStreamWrapper(rawStream);
         const dest = new WritableStream({
             write(chunk) {
                 expect(chunk).toEqual(new TextEncoder().encode("test"));
-            }
+            },
         });
 
         stream.pipe(dest);
@@ -54,15 +55,16 @@ describe("Node18UniversalStreamWrapper", () => {
         const rawStream = new ReadableStream({
             start(controller) {
                 controller.enqueue(new TextEncoder().encode("test"));
+                controller.enqueue(new TextEncoder().encode("test"));
                 controller.close();
-            }
+            },
         });
         const stream = new Node18UniversalStreamWrapper(rawStream);
         const dest = new (await import("stream")).Writable({
             write(chunk, encoding, callback) {
                 expect(chunk.toString()).toEqual("test");
                 callback();
-            }
+            },
         });
 
         stream.pipe(dest);
@@ -72,15 +74,16 @@ describe("Node18UniversalStreamWrapper", () => {
         const rawStream = new ReadableStream({
             start(controller) {
                 controller.enqueue(new TextEncoder().encode("test"));
+                controller.enqueue(new TextEncoder().encode("test"));
                 controller.close();
-            }
+            },
         });
         const stream = new Node18UniversalStreamWrapper(rawStream);
         const buffer: Uint8Array[] = [];
         const dest = new WritableStream({
             write(chunk) {
                 buffer.push(chunk);
-            }
+            },
         });
 
         stream.pipe(dest);
@@ -117,28 +120,29 @@ describe("Node18UniversalStreamWrapper", () => {
         const rawStream = new ReadableStream({
             start(controller) {
                 controller.enqueue(new TextEncoder().encode("test"));
+                controller.enqueue(new TextEncoder().encode("test"));
                 controller.close();
-            }
+            },
         });
         const stream = new Node18UniversalStreamWrapper(rawStream);
 
-        const data = await stream.read();
-
-        expect(data).toEqual(new TextEncoder().encode("test"));
+        expect(await stream.read()).toEqual(new TextEncoder().encode("test"));
+        expect(await stream.read()).toEqual(new TextEncoder().encode("test"));
     });
 
     it("should read the stream as text", async () => {
         const rawStream = new ReadableStream({
             start(controller) {
                 controller.enqueue(new TextEncoder().encode("test"));
+                controller.enqueue(new TextEncoder().encode("test"));
                 controller.close();
-            }
+            },
         });
         const stream = new Node18UniversalStreamWrapper(rawStream);
 
         const data = await stream.text();
 
-        expect(data).toEqual("test");
+        expect(data).toEqual("testtest");
     });
 
     it("should read the stream as json", async () => {
@@ -146,12 +150,29 @@ describe("Node18UniversalStreamWrapper", () => {
             start(controller) {
                 controller.enqueue(new TextEncoder().encode(JSON.stringify({ test: "test" })));
                 controller.close();
-            }
+            },
         });
         const stream = new Node18UniversalStreamWrapper(rawStream);
 
         const data = await stream.json();
 
         expect(data).toEqual({ test: "test" });
+    });
+
+    it("should allow use with async iteratable stream", async () => {
+        const rawStream = new ReadableStream({
+            start(controller) {
+                controller.enqueue(new TextEncoder().encode("test"));
+                controller.enqueue(new TextEncoder().encode("test"));
+                controller.close();
+            },
+        });
+        let data = "";
+        const stream = new Node18UniversalStreamWrapper(rawStream);
+        for await (const chunk of stream) {
+            data += new TextDecoder().decode(chunk);
+        }
+
+        expect(data).toEqual("testtest");
     });
 });

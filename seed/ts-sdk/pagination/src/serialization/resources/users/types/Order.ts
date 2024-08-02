@@ -6,7 +6,10 @@ import * as serializers from "../../../index";
 import * as SeedPagination from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const Order: core.serialization.Schema<serializers.Order.Raw, SeedPagination.Order> = core.serialization.enum_(["asc", "desc"]);
+export const Order: core.serialization.Schema<serializers.Order.Raw, SeedPagination.Order> = core.serialization.enum_([
+    "asc",
+    "desc",
+]);
 
 export declare namespace Order {
     type Raw = "asc" | "desc";

@@ -1,5 +1,7 @@
 # Reference
+
 ## Payment
+
 <details><summary><code>client.payment.<a href="/src/api/resources/payment/client/Client.ts">create</a>({ ...params }) -> string</code></summary>
 <dl>
 <dd>
@@ -15,10 +17,10 @@
 ```typescript
 await client.payment.create({
     amount: 1,
-    currency: SeedIdempotencyHeaders.Currency.Usd
+    currency: SeedIdempotencyHeaders.Currency.Usd,
 });
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -32,21 +34,20 @@ await client.payment.create({
 <dl>
 <dd>
 
-**request:** `SeedIdempotencyHeaders.CreatePaymentRequest` 
-    
+**request:** `SeedIdempotencyHeaders.CreatePaymentRequest`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Payment.IdempotentRequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Payment.IdempotentRequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -66,8 +67,8 @@ await client.payment.create({
 
 ```typescript
 await client.payment.delete("string");
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -81,21 +82,20 @@ await client.payment.delete("string");
 <dl>
 <dd>
 
-**paymentId:** `string` 
-    
+**paymentId:** `string`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Payment.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Payment.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>

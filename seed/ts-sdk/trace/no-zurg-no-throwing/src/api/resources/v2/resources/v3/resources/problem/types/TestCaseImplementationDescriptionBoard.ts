@@ -4,7 +4,7 @@
 
 import * as SeedTrace from "../../../../../../../index";
 
-export type TestCaseImplementationDescriptionBoard = 
+export type TestCaseImplementationDescriptionBoard =
     | SeedTrace.v2.v3.TestCaseImplementationDescriptionBoard.Html
     | SeedTrace.v2.v3.TestCaseImplementationDescriptionBoard.ParamId;
 

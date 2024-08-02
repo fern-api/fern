@@ -4,9 +4,7 @@
 
 import * as SeedExhaustive from "../../../../../index";
 
-export type Animal = 
-    | SeedExhaustive.types.Animal.Dog
-    | SeedExhaustive.types.Animal.Cat;
+export type Animal = SeedExhaustive.types.Animal.Dog | SeedExhaustive.types.Animal.Cat;
 
 export declare namespace Animal {
     interface Dog extends SeedExhaustive.types.Dog {

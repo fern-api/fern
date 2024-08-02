@@ -4,7 +4,7 @@
 
 import * as SeedTrace from "../../../index";
 
-export type WorkspaceSubmissionUpdateInfo = 
+export type WorkspaceSubmissionUpdateInfo =
     | SeedTrace.WorkspaceSubmissionUpdateInfo.Running
     | SeedTrace.WorkspaceSubmissionUpdateInfo.Ran
     | SeedTrace.WorkspaceSubmissionUpdateInfo.Stopped

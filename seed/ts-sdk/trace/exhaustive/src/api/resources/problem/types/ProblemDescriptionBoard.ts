@@ -4,7 +4,7 @@
 
 import * as SeedTrace from "../../../index";
 
-export type ProblemDescriptionBoard = 
+export type ProblemDescriptionBoard =
     | SeedTrace.ProblemDescriptionBoard.Html
     | SeedTrace.ProblemDescriptionBoard.Variable
     | SeedTrace.ProblemDescriptionBoard.TestCaseId
@@ -38,60 +38,75 @@ export declare namespace ProblemDescriptionBoard {
         html: (value: string) => _Result;
         variable: (value: SeedTrace.VariableValue) => _Result;
         testCaseId: (value: string) => _Result;
-        _other: (value: {
-                type: string;
-            }) => _Result;
+        _other: (value: { type: string }) => _Result;
     }
 }
 
 export const ProblemDescriptionBoard = {
-        html: (value: string): SeedTrace.ProblemDescriptionBoard.Html => {
-            return {
-                value: value,
-                type: "html",
-                "_visit": function <_Result>(this: SeedTrace.ProblemDescriptionBoard.Html, visitor: SeedTrace.ProblemDescriptionBoard._Visitor<_Result>) {
-                    return SeedTrace.ProblemDescriptionBoard._visit(this, visitor);
-                }
-            };
-        },
+    html: (value: string): SeedTrace.ProblemDescriptionBoard.Html => {
+        return {
+            value: value,
+            type: "html",
+            _visit: function <_Result>(
+                this: SeedTrace.ProblemDescriptionBoard.Html,
+                visitor: SeedTrace.ProblemDescriptionBoard._Visitor<_Result>
+            ) {
+                return SeedTrace.ProblemDescriptionBoard._visit(this, visitor);
+            },
+        };
+    },
 
-        variable: (value: SeedTrace.VariableValue): SeedTrace.ProblemDescriptionBoard.Variable => {
-            return {
-                value: value,
-                type: "variable",
-                "_visit": function <_Result>(this: SeedTrace.ProblemDescriptionBoard.Variable, visitor: SeedTrace.ProblemDescriptionBoard._Visitor<_Result>) {
-                    return SeedTrace.ProblemDescriptionBoard._visit(this, visitor);
-                }
-            };
-        },
+    variable: (value: SeedTrace.VariableValue): SeedTrace.ProblemDescriptionBoard.Variable => {
+        return {
+            value: value,
+            type: "variable",
+            _visit: function <_Result>(
+                this: SeedTrace.ProblemDescriptionBoard.Variable,
+                visitor: SeedTrace.ProblemDescriptionBoard._Visitor<_Result>
+            ) {
+                return SeedTrace.ProblemDescriptionBoard._visit(this, visitor);
+            },
+        };
+    },
 
-        testCaseId: (value: string): SeedTrace.ProblemDescriptionBoard.TestCaseId => {
-            return {
-                value: value,
-                type: "testCaseId",
-                "_visit": function <_Result>(this: SeedTrace.ProblemDescriptionBoard.TestCaseId, visitor: SeedTrace.ProblemDescriptionBoard._Visitor<_Result>) {
-                    return SeedTrace.ProblemDescriptionBoard._visit(this, visitor);
-                }
-            };
-        },
+    testCaseId: (value: string): SeedTrace.ProblemDescriptionBoard.TestCaseId => {
+        return {
+            value: value,
+            type: "testCaseId",
+            _visit: function <_Result>(
+                this: SeedTrace.ProblemDescriptionBoard.TestCaseId,
+                visitor: SeedTrace.ProblemDescriptionBoard._Visitor<_Result>
+            ) {
+                return SeedTrace.ProblemDescriptionBoard._visit(this, visitor);
+            },
+        };
+    },
 
-        _unknown: (value: {
-            type: string;
-        }): SeedTrace.ProblemDescriptionBoard._Unknown => {
-            return {
-                ...(value as any),
-                "_visit": function <_Result>(this: SeedTrace.ProblemDescriptionBoard._Unknown, visitor: SeedTrace.ProblemDescriptionBoard._Visitor<_Result>) {
-                    return SeedTrace.ProblemDescriptionBoard._visit(this, visitor);
-                }
-            };
-        },
+    _unknown: (value: { type: string }): SeedTrace.ProblemDescriptionBoard._Unknown => {
+        return {
+            ...(value as any),
+            _visit: function <_Result>(
+                this: SeedTrace.ProblemDescriptionBoard._Unknown,
+                visitor: SeedTrace.ProblemDescriptionBoard._Visitor<_Result>
+            ) {
+                return SeedTrace.ProblemDescriptionBoard._visit(this, visitor);
+            },
+        };
+    },
 
-        _visit: <_Result>(value: SeedTrace.ProblemDescriptionBoard, visitor: SeedTrace.ProblemDescriptionBoard._Visitor<_Result>): _Result => {
-            switch (value.type) {
-                case "html": return visitor.html(value.value);
-                case "variable": return visitor.variable(value.value);
-                case "testCaseId": return visitor.testCaseId(value.value);
-                default: return visitor._other(value as any);
-            }
-        },
-    } as const;
+    _visit: <_Result>(
+        value: SeedTrace.ProblemDescriptionBoard,
+        visitor: SeedTrace.ProblemDescriptionBoard._Visitor<_Result>
+    ): _Result => {
+        switch (value.type) {
+            case "html":
+                return visitor.html(value.value);
+            case "variable":
+                return visitor.variable(value.value);
+            case "testCaseId":
+                return visitor.testCaseId(value.value);
+            default:
+                return visitor._other(value as any);
+        }
+    },
+} as const;

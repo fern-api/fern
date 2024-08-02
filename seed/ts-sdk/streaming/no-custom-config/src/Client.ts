@@ -21,8 +21,7 @@ export declare namespace SeedStreamingClient {
 }
 
 export class SeedStreamingClient {
-    constructor(protected readonly _options: SeedStreamingClient.Options) {
-    }
+    constructor(protected readonly _options: SeedStreamingClient.Options) {}
 
     protected _dummy: Dummy | undefined;
 

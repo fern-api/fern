@@ -9,25 +9,28 @@ import { BasicCustomFiles } from "./BasicCustomFiles";
 import { Files } from "./Files";
 import { Language } from "../../../../../../commons/types/Language";
 
-export const CustomFiles: core.serialization.Schema<serializers.v2.v3.CustomFiles.Raw, SeedTrace.v2.v3.CustomFiles> = core.serialization.union("type", {
-        "basic": BasicCustomFiles,
-        "custom": core.serialization.object({
-            "value": core.serialization.record(Language, Files.optional())
+export const CustomFiles: core.serialization.Schema<serializers.v2.v3.CustomFiles.Raw, SeedTrace.v2.v3.CustomFiles> =
+    core.serialization
+        .union("type", {
+            basic: BasicCustomFiles,
+            custom: core.serialization.object({
+                value: core.serialization.record(Language, Files.optional()),
+            }),
         })
-    }).transform<SeedTrace.v2.v3.CustomFiles>({
-        transform: value => value,
-        untransform: value => value
-    });
+        .transform<SeedTrace.v2.v3.CustomFiles>({
+            transform: (value) => value,
+            untransform: (value) => value,
+        });
 
 export declare namespace CustomFiles {
     type Raw = CustomFiles.Basic | CustomFiles.Custom;
 
     interface Basic extends BasicCustomFiles.Raw {
-        "type": "basic";
+        type: "basic";
     }
 
     interface Custom {
-        "type": "custom";
-        "value": Record<Language.Raw, Files.Raw | null | undefined>;
+        type: "custom";
+        value: Record<Language.Raw, Files.Raw | null | undefined>;
     }
 }

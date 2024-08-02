@@ -5,16 +5,20 @@
 import * as serializers from "../../../../../index";
 import * as core from "../../../../../../core";
 
-export const Request: core.serialization.Schema<serializers.endpoints.primitive.getAndReturnDatetime.Request.Raw, Date> = core.serialization.date();
+export const Request: core.serialization.Schema<
+    serializers.endpoints.primitive.getAndReturnDatetime.Request.Raw,
+    Date
+> = core.serialization.date();
 
 export declare namespace Request {
     type Raw = string;
 }
 
-export const Response: core.serialization.Schema<serializers.endpoints.primitive.getAndReturnDatetime.Response.Raw, Date> = core.serialization.date();
+export const Response: core.serialization.Schema<
+    serializers.endpoints.primitive.getAndReturnDatetime.Response.Raw,
+    Date
+> = core.serialization.date();
 
 export declare namespace Response {
     type Raw = string;
 }
-
-

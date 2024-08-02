@@ -10,7 +10,7 @@ export class ObjectWithRequiredFieldError extends errors.SeedExhaustiveError {
         super({
             message: "ObjectWithRequiredFieldError",
             statusCode: 400,
-            body: body
+            body: body,
         });
         Object.setPrototypeOf(this, ObjectWithRequiredFieldError.prototype);
     }

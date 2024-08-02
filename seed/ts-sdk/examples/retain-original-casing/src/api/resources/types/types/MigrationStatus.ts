@@ -9,7 +9,7 @@
  * @example
  *     SeedExamples.MigrationStatus.Failed
  */
-export type MigrationStatus = 
+export type MigrationStatus =
     /**
      * The migration is running. */
     | "RUNNING"
@@ -19,7 +19,7 @@ export type MigrationStatus =
     | "FINISHED";
 
 export const MigrationStatus = {
-        Running: "RUNNING",
-        Failed: "FAILED",
-        Finished: "FINISHED"
-    } as const;
+    Running: "RUNNING",
+    Failed: "FAILED",
+    Finished: "FINISHED",
+} as const;

@@ -9,31 +9,37 @@ import { BasicCustomFiles } from "./BasicCustomFiles";
 import { Files } from "./Files";
 import { Language } from "../../../../commons/types/Language";
 
-export const CustomFiles: core.serialization.Schema<serializers.v2.CustomFiles.Raw, SeedTrace.v2.CustomFiles> = core.serialization.union("type", {
-        "basic": BasicCustomFiles,
-        "custom": core.serialization.object({
-            "value": core.serialization.record(Language, Files.optional())
+export const CustomFiles: core.serialization.Schema<serializers.v2.CustomFiles.Raw, SeedTrace.v2.CustomFiles> =
+    core.serialization
+        .union("type", {
+            basic: BasicCustomFiles,
+            custom: core.serialization.object({
+                value: core.serialization.record(Language, Files.optional()),
+            }),
         })
-    }).transform<SeedTrace.v2.CustomFiles>({
-        transform: value => {
-            switch (value.type) {
-                case "basic": return SeedTrace.v2.CustomFiles.basic(value);
-                case "custom": return SeedTrace.v2.CustomFiles.custom(value.value);
-                default: return SeedTrace.v2.CustomFiles._unknown(value);
-            }
-        },
-        untransform: ({ _visit, ...value }) => value as any
-    });
+        .transform<SeedTrace.v2.CustomFiles>({
+            transform: (value) => {
+                switch (value.type) {
+                    case "basic":
+                        return SeedTrace.v2.CustomFiles.basic(value);
+                    case "custom":
+                        return SeedTrace.v2.CustomFiles.custom(value.value);
+                    default:
+                        return SeedTrace.v2.CustomFiles._unknown(value);
+                }
+            },
+            untransform: ({ _visit, ...value }) => value as any,
+        });
 
 export declare namespace CustomFiles {
     type Raw = CustomFiles.Basic | CustomFiles.Custom;
 
     interface Basic extends BasicCustomFiles.Raw {
-        "type": "basic";
+        type: "basic";
     }
 
     interface Custom {
-        "type": "custom";
-        "value": Record<Language.Raw, Files.Raw | null | undefined>;
+        type: "custom";
+        value: Record<Language.Raw, Files.Raw | null | undefined>;
     }
 }

@@ -4,9 +4,7 @@
 
 import * as SeedUnions from "../../../index";
 
-export type Shape = 
-    | SeedUnions.Shape.Circle
-    | SeedUnions.Shape.Square;
+export type Shape = SeedUnions.Shape.Circle | SeedUnions.Shape.Square;
 
 export declare namespace Shape {
     interface Circle extends SeedUnions.Circle, _Base {

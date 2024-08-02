@@ -8,6 +8,4 @@ import * as SeedEnum from "../index";
  * @example
  *     SeedEnum.Color.Red
  */
-export type ColorOrOperand = 
-    | SeedEnum.Color
-    | SeedEnum.Operand;
+export type ColorOrOperand = SeedEnum.Color | SeedEnum.Operand;

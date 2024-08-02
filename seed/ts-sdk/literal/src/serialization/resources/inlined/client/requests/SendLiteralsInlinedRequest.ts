@@ -6,14 +6,17 @@ import * as serializers from "../../../../index";
 import * as SeedLiteral from "../../../../../api/index";
 import * as core from "../../../../../core";
 
-export const SendLiteralsInlinedRequest: core.serialization.Schema<serializers.SendLiteralsInlinedRequest.Raw, SeedLiteral.SendLiteralsInlinedRequest> = core.serialization.object({
-        "query": core.serialization.string(),
-        "temperature": core.serialization.number().optional()
-    });
+export const SendLiteralsInlinedRequest: core.serialization.Schema<
+    serializers.SendLiteralsInlinedRequest.Raw,
+    SeedLiteral.SendLiteralsInlinedRequest
+> = core.serialization.object({
+    query: core.serialization.string(),
+    temperature: core.serialization.number().optional(),
+});
 
 export declare namespace SendLiteralsInlinedRequest {
     interface Raw {
-        "query": string;
-        "temperature"?: number | null;
+        query: string;
+        temperature?: number | null;
     }
 }

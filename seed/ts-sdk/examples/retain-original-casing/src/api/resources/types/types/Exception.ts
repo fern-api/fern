@@ -13,9 +13,7 @@ import * as SeedExamples from "../../../index";
  *         exceptionStacktrace: "<logs>"
  *     }
  */
-export type Exception = 
-    | SeedExamples.Exception.Generic
-    | SeedExamples.Exception.Timeout;
+export type Exception = SeedExamples.Exception.Generic | SeedExamples.Exception.Timeout;
 
 export declare namespace Exception {
     interface Generic extends SeedExamples.ExceptionInfo {
