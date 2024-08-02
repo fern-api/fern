@@ -537,30 +537,11 @@ function filterIntermediateRepresentationForAudiences(
         })
     );
 
+    // remove default environment if not in audience
     const filteredEnvironmentsConfig = intermediateRepresentation.environments;
-    if (filteredEnvironmentsConfig) {
-        switch (filteredEnvironmentsConfig.environments.type) {
-            case "singleBaseUrl": {
-                filteredEnvironmentsConfig.environments.environments =
-                    filteredEnvironmentsConfig.environments.environments.filter((environment) =>
-                        filteredIr.hasEnvironment(environment.id)
-                    );
-                break;
-            }
-            case "multipleBaseUrls": {
-                filteredEnvironmentsConfig.environments.environments =
-                    filteredEnvironmentsConfig.environments.environments.filter((environment) =>
-                        filteredIr.hasEnvironment(environment.id)
-                    );
-                break;
-            }
-        }
-
-        // If default environment does not exist in audience, set to undefined
-        if (filteredEnvironmentsConfig.defaultEnvironment) {
-            if (!filteredIr.hasEnvironment(filteredEnvironmentsConfig.defaultEnvironment)) {
-                filteredEnvironmentsConfig.defaultEnvironment = undefined;
-            }
+    if (filteredEnvironmentsConfig && filteredEnvironmentsConfig.defaultEnvironment) {
+        if (!filteredIr.hasEnvironment(filteredEnvironmentsConfig.defaultEnvironment)) {
+            filteredEnvironmentsConfig.defaultEnvironment = undefined;
         }
     }
 
