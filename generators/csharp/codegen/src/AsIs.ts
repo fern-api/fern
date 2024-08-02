@@ -20,5 +20,6 @@ export enum AsIsFiles {
     HttpMethodExtensions = "HttpMethodExtensions.cs",
     Constants = "Constants.cs",
     DateTimeSerializer = "DateTimeSerializer.cs",
-    JsonConfiguration = "JsonConfiguration.cs"
+    JsonConfiguration = "JsonConfiguration.cs",
+    JsonDiffChecker = "JsonDiffChecker.cs"
 }

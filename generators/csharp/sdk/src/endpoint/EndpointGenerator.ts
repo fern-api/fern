@@ -1,6 +1,14 @@
 import { csharp } from "@fern-api/csharp-codegen";
 import { ExampleGenerator } from "@fern-api/fern-csharp-model";
-import { ExampleEndpointCall, HttpEndpoint, ResponseError, ServiceId } from "@fern-fern/ir-sdk/api";
+import {
+    ExampleEndpointCall,
+    ExampleRequestBody,
+    HttpEndpoint,
+    ResponseError,
+    SdkRequestShape,
+    ServiceId,
+    Subpackage
+} from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { WrappedRequestGenerator } from "../wrapped-request/WrappedRequestGenerator";
 import { RawClient } from "./RawClient";
@@ -22,26 +30,23 @@ const RESPONSE_VARIABLE_NAME = "response";
 const RESPONSE_BODY_VARIABLE_NAME = "responseBody";
 
 export class EndpointGenerator {
-    private context: SdkGeneratorContext;
-    private rawClient: RawClient;
     private exampleGenerator: ExampleGenerator;
-    private serviceId: string;
 
-    public constructor(context: SdkGeneratorContext, rawClient: RawClient, serviceId: string) {
+    public constructor(readonly context: SdkGeneratorContext) {
         this.context = context;
-        this.rawClient = rawClient;
         this.exampleGenerator = new ExampleGenerator(context);
-        this.serviceId = serviceId;
     }
 
     public generate({
         serviceId,
         endpoint,
-        rawClientReference
+        rawClientReference,
+        rawClient
     }: {
         serviceId: ServiceId;
         endpoint: HttpEndpoint;
         rawClientReference: string;
+        rawClient: RawClient;
     }): csharp.Method {
         const { parameters: nonEndpointParameters, pathParameterReferences } = this.getNonEndpointParameters({
             endpoint,
@@ -84,7 +89,7 @@ export class EndpointGenerator {
                 const requestBodyCodeBlock = request?.getRequestBodyCodeBlock();
                 writer.write(`var ${RESPONSE_VARIABLE_NAME} = `);
                 writer.writeNodeStatement(
-                    this.rawClient.makeRequest({
+                    rawClient.makeRequest({
                         baseUrl: this.getBaseURLForEndpoint({ endpoint }),
                         requestType: request?.getRequestType(),
                         clientReference: rawClientReference,
@@ -107,17 +112,32 @@ export class EndpointGenerator {
     public generateEndpointSnippet(
         example: ExampleEndpointCall,
         endpoint: HttpEndpoint,
-        on: csharp.CodeBlock
+        clientVariableName: string,
+        serviceId: ServiceId,
+        subpackage?: Subpackage
     ): csharp.MethodInvocation | undefined {
+        const requestBodyType = endpoint.requestBody?.type;
+        // TODO: implement these
+        if (requestBodyType === "fileUpload" || requestBodyType === "bytes") {
+            return undefined;
+        }
         const args = this.getNonEndpointArguments(example);
-        const endpointRequestSnippet = this.getEndpointRequestSnippet(example, endpoint);
+        const endpointRequestSnippet = this.getEndpointRequestSnippet(example, endpoint, serviceId);
         if (endpointRequestSnippet != null) {
             args.push(endpointRequestSnippet);
         }
+        const finalOn = csharp.codeblock((writer) => {
+            writer.write(`${clientVariableName}.`);
+            if (subpackage != null) {
+                writer.write(subpackage.name.pascalCase.safeName);
+                writer.write(".");
+            }
+            writer.write(this.context.getEndpointMethodName(endpoint));
+        });
         const methodInvocationArgs: csharp.MethodInvocation.Args = {
             method: this.context.getEndpointMethodName(endpoint),
             arguments_: args,
-            on,
+            on: finalOn,
             async: true,
             generics: []
         };
@@ -138,23 +158,53 @@ export class EndpointGenerator {
 
     private getEndpointRequestSnippet(
         exampleEndpointCall: ExampleEndpointCall,
-        endpoint: HttpEndpoint
+        endpoint: HttpEndpoint,
+        serviceId: ServiceId
     ): csharp.CodeBlock | undefined {
         if (exampleEndpointCall.request == null) {
             return undefined;
         }
-        if (endpoint.sdkRequest == null) {
-            throw new Error("Unexpected null sdkRequest");
+        switch (endpoint.sdkRequest?.shape.type) {
+            case "wrapper":
+                return new WrappedRequestGenerator({
+                    wrapper: endpoint.sdkRequest.shape,
+                    context: this.context,
+                    serviceId: serviceId,
+                    endpoint
+                }).doGenerateSnippet(exampleEndpointCall);
+            case "justRequestBody":
+                return this.getJustRequestBodySnippet(exampleEndpointCall.request, endpoint.sdkRequest.shape);
         }
-        if (endpoint.sdkRequest.shape.type !== "wrapper") {
-            return undefined;
+        return undefined;
+    }
+
+    private getJustRequestBodySnippet(
+        exampleRequestBody: ExampleRequestBody,
+        shape: SdkRequestShape.JustRequestBody
+    ): csharp.CodeBlock {
+        if (exampleRequestBody.type === "inlinedRequestBody") {
+            throw new Error("Unexpected inlinedRequestBody"); // should be a wrapped request and already handled
         }
-        return new WrappedRequestGenerator({
-            wrapper: endpoint.sdkRequest.shape,
-            context: this.context,
-            serviceId: this.serviceId,
-            endpoint
-        }).doGenerateSnippet(exampleEndpointCall);
+        return this.exampleGenerator.getSnippetForTypeReference(exampleRequestBody);
+        // switch (exampleRequestBody.type) {
+        //     case "reference":
+        //         return this.exampleGenerator.getSnippetForTypeReference(exampleRequestBody);
+        //     case "inlinedRequestBody": {
+        //         const args: { name: string; assignment: CodeBlock }[] = [];
+        //         for (const property of exampleRequestBody.properties) {
+        //             const value = this.exampleGenerator.getSnippetForTypeReference(property.value);
+        //             args.push({ name: property.name.name.pascalCase.safeName, assignment: value });
+        //         }
+        //         if (shape.value.type === "bytes") {
+        //             throw new Error("Unexpected bytes type");
+        //         }
+        //         const instantiateClass = csharp.instantiateClass({
+        //             classReference: this.classReference,
+        //             arguments_: args
+        //         });
+        //     }
+        //     default:
+        // }
     }
 
     private getEndpointRequest({

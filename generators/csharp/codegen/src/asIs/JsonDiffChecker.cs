@@ -1,7 +1,7 @@
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
-namespace SeedApi.Test.Utils;
+namespace <%= namespace%>;
 
 public static class JsonDiffChecker
 {

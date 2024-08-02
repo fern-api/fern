@@ -20,6 +20,8 @@ export declare namespace Class {
         /* The access level of the C# class */
         access: Access;
         /* Defaults to false */
+        abstract?: boolean;
+        /* Defaults to false */
         sealed?: boolean;
         /* Defaults to false */
         partial?: boolean;
@@ -62,6 +64,7 @@ export class Class extends AstNode {
     public readonly name: string;
     public readonly namespace: string;
     public readonly access: Access;
+    public readonly abstract: boolean;
     public readonly sealed: boolean;
     public readonly partial: boolean;
     public readonly reference: ClassReference;
@@ -83,6 +86,7 @@ export class Class extends AstNode {
         name,
         namespace,
         access,
+        abstract,
         sealed,
         partial,
         parentClassReference,
@@ -97,6 +101,7 @@ export class Class extends AstNode {
         this.name = name;
         this.namespace = namespace;
         this.access = access;
+        this.abstract = abstract ?? false;
         this.sealed = sealed ?? false;
         this.partial = partial ?? false;
         this.isNestedClass = isNestedClass ?? false;
@@ -158,6 +163,9 @@ export class Class extends AstNode {
             writer.writeNewLineIfLastLineNot();
         }
         writer.write(`${this.access}`);
+        if (this.abstract) {
+            writer.write(" abstract");
+        }
         if (this.sealed) {
             writer.write(" sealed");
         }

@@ -1,0 +1,185 @@
+import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { ExampleEndpointCall, HttpEndpoint, ServiceId, Subpackage, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { EndpointGenerator } from "../../endpoint/EndpointGenerator";
+import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
+import { SdkGeneratorContext, WIRE_TEST_FOLDER } from "../../SdkGeneratorContext";
+import TestInput = TestClass.TestInput;
+
+export declare namespace TestClass {
+    interface TestInput {
+        objectInstantiationSnippet: csharp.CodeBlock;
+        json: unknown;
+    }
+}
+
+/*
+file to generate:
+
+[TestFixture]
+public class SampleTest
+{
+    private SeedApiClient _client;
+
+    [SetUp]
+    public void SetUp()
+    {
+        _client = GlobalTestSetup.Client;
+    }
+
+    [TearDown]
+    public void TearDown()
+    {
+        // Reset the WireMock server after each test
+        GlobalTestSetup.Server.Reset();
+    }
+
+    [Test]
+    public void Test_Post_Endpoint()
+    {
+        const string json = """
+            {
+              "title": "Inception",
+              "rating": 8.8
+            }
+            """;
+
+        const string mockResponse = "\"MovieId123\"";
+        GlobalTestSetup
+            .Server.Given(
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/movies/create-movie")
+                    .UsingPost()
+                    .WithBody(json)
+            )
+            .RespondWith(
+                WireMock
+                    .ResponseBuilders.Response.Create()
+                    .WithStatusCode(200)
+                    .WithBody(mockResponse)
+            );
+
+        var response = _client
+            .Imdb.CreateMovieAsync(new CreateMovieRequest { Rating = 8.8, Title = "Inception" })
+            .Result;
+
+        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+    }
+}
+*/
+export class WireTestGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+    private classReference: csharp.ClassReference;
+    private readonly endpointGenerator: EndpointGenerator;
+    private jsonSerializerClassReference: csharp.ClassReference = csharp.classReference({
+        name: "JsonSerializer",
+        namespace: "System.Text.Json"
+    });
+
+    constructor(
+        context: SdkGeneratorContext,
+        private readonly typeDeclaration: TypeDeclaration,
+        private readonly testInputs: ExampleEndpointCall[],
+        private readonly endpoint: HttpEndpoint,
+        private readonly serviceId: ServiceId,
+        private readonly subpackage?: Subpackage
+    ) {
+        super(context);
+        this.classReference = this.context.csharpTypeMapper.convertToClassReference(this.typeDeclaration.name);
+        this.endpointGenerator = new EndpointGenerator(context);
+    }
+
+    protected doGenerate(): CSharpFile {
+        const testClass = csharp.testClass({
+            name: this.getTestClassName(),
+            namespace: this.context.getTestNamespace()
+        });
+        this.testInputs.forEach((testInput, index) => {
+            const methodBody = csharp.codeblock((writer) => {
+                if (testInput.request != null) {
+                    writer.writeLine(`const string requestJson = """`);
+                    writer.writeTextStatement(JSON.stringify(testInput.request, null, 2));
+                    writer.writeLine(`"""`);
+                }
+                writer.newLine();
+                if (testInput.response != null) {
+                    writer.writeLine(`const string mockResponse = """`);
+                    writer.writeTextStatement(JSON.stringify(testInput.response, null, 2));
+                    writer.writeLine(`"""`);
+                }
+                writer.writeLine("var jsonRequest = ");
+                // writer.writeTextStatement(this.convertToCSharpFriendlyJsonString(testInput.json));
+                writer.newLine();
+                writer.write(
+                    `${
+                        this.context.getGlobalTestSetupClassReference().name
+                    }.Server.Given(WireMock.RequestBuilders.Request.Create()`
+                );
+                writer.write(`.WithPath(${testInput.url})`);
+                writer.write(
+                    `.Using${
+                        this.endpoint.method.charAt(0).toUpperCase() + this.endpoint.method.slice(1).toLowerCase()
+                    }()`
+                );
+                if (testInput.request != null) {
+                    writer.write(`.WithBody(requestJson)`);
+                }
+                writer.writeLine(")");
+                if (testInput.response != null) {
+                    writer.writeLine(".RespondWith(WireMock.ResponseBuilders.Response.Create()");
+                    writer.writeLine(".WithStatusCode(200)");
+                    writer.writeTextStatement(".WithBody(mockResponse))");
+                } else {
+                    writer.writeLine(";");
+                }
+
+                const endpointSnippet = this.endpointGenerator.generateEndpointSnippet(
+                    testInput,
+                    this.endpoint,
+                    "_client",
+                    this.serviceId,
+                    this.subpackage
+                );
+                if (endpointSnippet == null) {
+                    throw new Error("Endpoint snippet is null");
+                }
+                writer.write("var response = ");
+                writer.writeNodeStatement(endpointSnippet);
+            });
+            const testNumber = this.testInputs.length > 1 ? `_${index + 1}` : "";
+            testClass.addTestMethod({
+                name: `TestSerialization${testNumber}`,
+                body: methodBody
+            });
+        });
+        return new CSharpFile({
+            clazz: testClass.getClass(),
+            directory: WIRE_TEST_FOLDER
+        });
+    }
+
+    protected getFilepath(): RelativeFilePath {
+        return join(
+            this.context.project.filepaths.getTestFilesDirectory(),
+            WIRE_TEST_FOLDER,
+            RelativeFilePath.of(`${this.getTestClassName()}.cs`)
+        );
+    }
+
+    private getTestClassName(): string {
+        return `${this.classReference.name}Test`;
+    }
+
+    private convertToCSharpFriendlyJsonString(jsonObject: unknown): string {
+        // Convert object to JSON string with indentation
+        let jsonString = JSON.stringify(jsonObject, null, 2);
+
+        // Escape double quotes for C# string
+        jsonString = jsonString.replace(/"/g, '""');
+
+        // Format it as a multi-line C# string
+        return `@"
+${jsonString}
+"`;
+    }
+}

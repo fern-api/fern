@@ -26,7 +26,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
     private wrapper: SdkRequestWrapper;
     private serviceId: ServiceId;
     private endpoint: HttpEndpoint;
-    private snippetHelper: ExampleGenerator;
+    private exampleGenerator: ExampleGenerator;
 
     public constructor({ wrapper, context, serviceId, endpoint }: WrappedRequestGenerator.Args) {
         super(context);
@@ -34,7 +34,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         this.serviceId = serviceId;
         this.classReference = this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName);
         this.endpoint = endpoint;
-        this.snippetHelper = new ExampleGenerator(context);
+        this.exampleGenerator = new ExampleGenerator(context);
     }
 
     protected doGenerate(): CSharpFile {
@@ -158,7 +158,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         });
         const args = orderedFields
             .map(({ name, value }) => {
-                const assignment = this.snippetHelper.getSnippetForTypeReference(value);
+                const assignment = this.exampleGenerator.getSnippetForTypeReference(value);
                 if (assignment === undefined) {
                     return null;
                 }

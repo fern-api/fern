@@ -19,6 +19,7 @@ import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
 const TYPES_FOLDER_NAME = "Types";
 const EXCEPTIONS_FOLDER_NAME = "Exceptions";
+export const WIRE_TEST_FOLDER = RelativeFilePath.of("Wire");
 
 export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCustomConfigSchema> {
     /**
@@ -85,6 +86,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             AsIsFiles.DateTimeSerializer,
             AsIsFiles.JsonConfiguration
         ];
+    }
+
+    public getAsIsTestUtils(): string[] {
+        return [AsIsFiles.JsonDiffChecker];
     }
 
     public getNamespaceForServiceId(serviceId: ServiceId): string {
@@ -174,6 +179,20 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return csharp.classReference({
             name: environmentsClassName,
             namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getGlobalTestSetupClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "GlobalTestSetup",
+            namespace: this.getWireTestNamespace()
+        });
+    }
+
+    public getBaseWireTestClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "BaseWireTest",
+            namespace: this.getWireTestNamespace()
         });
     }
 

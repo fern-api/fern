@@ -39,7 +39,7 @@ public class SampleTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithHeader("X-Fern-Language", "C#")
-                    .WithPath("/movies/create-movie")
+                    .WithPath("/movies/create-movie")`
                     .UsingPost()
                     .WithBody(json)
             )

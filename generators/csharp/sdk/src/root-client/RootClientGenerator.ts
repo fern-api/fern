@@ -48,7 +48,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
     constructor(context: SdkGeneratorContext) {
         super(context);
         this.rawClient = new RawClient(context);
-        this.endpointGenerator = new EndpointGenerator(context, this.rawClient);
+        this.endpointGenerator = new EndpointGenerator(context);
     }
 
     protected getFilepath(): RelativeFilePath {
@@ -92,7 +92,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 const method = this.endpointGenerator.generate({
                     serviceId: rootServiceId,
                     endpoint,
-                    rawClientReference: CLIENT_MEMBER_NAME
+                    rawClientReference: CLIENT_MEMBER_NAME,
+                    rawClient: this.rawClient
                 });
                 class_.addMethod(method);
             }

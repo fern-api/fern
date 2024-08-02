@@ -21,7 +21,6 @@ public class GlobalTestSetup
         );
 
         // Initialize the Client
-        Console.Write(Server.Urls[0]);
         Client = new SeedApiClient("API_KEY", new ClientOptions { BaseUrl = Server.Urls[0] });
     }
 
