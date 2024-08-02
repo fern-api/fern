@@ -136,7 +136,7 @@ export default class Swift {
 
   public static makeInt(): Primative {
     return Swift.makePrimative({ 
-      key: "integer" 
+      key: "integer"
     });
   }
 

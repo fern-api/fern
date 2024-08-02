@@ -3848,7 +3848,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
     "@fern-api/swift-codegen": "workspace:*"
-    "@fern-fern/ir-sdk": ^50
+    "@fern-fern/ir-sdk": ^53.2.0
     "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
@@ -4893,13 +4893,6 @@ __metadata:
   version: 39.0.0
   resolution: "@fern-fern/ir-sdk@npm:39.0.0"
   checksum: 72cf9e729cd47d30092c6c04b847a973c289dbb2b1a7a8f04c874d59afe5d71fb24e99c5440f8663ca23b85d602c601b67c0fe5c0cc5bd6785047e880600c598
-  languageName: node
-  linkType: hard
-
-"@fern-fern/ir-sdk@npm:^50":
-  version: 50.2.0
-  resolution: "@fern-fern/ir-sdk@npm:50.2.0"
-  checksum: 052a039584eb1bfad93f7106ddc3b53603fb059ab0190ca9afaba35f36ea54f13208b8267901b07712dea6aca2e64ab19fde282a7ccb9b6d87e0b5fa3377b550
   languageName: node
   linkType: hard
 

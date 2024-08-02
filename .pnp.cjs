@@ -6928,7 +6928,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/generator-commons", "workspace:generators/commons"],\
             ["@fern-api/swift-codegen", "workspace:generators/swift/codegen"],\
-            ["@fern-fern/ir-sdk", "npm:50.2.0"],\
+            ["@fern-fern/ir-sdk", "npm:53.2.0"],\
             ["@types/jest", "npm:29.5.12"],\
             ["@types/node", "npm:18.7.18"],\
             ["@yarnpkg/esbuild-plugin-pnp", "virtual:b567308d600cc49ad0dcf5ee9f761adc5572b914144f87bbc3284c71fbc29382723507bb61a8e531e29275684fd9c09310bc363ee648e9b47f4ea2c53497d2c8#npm:3.0.0-rc.14"],\
@@ -8033,13 +8033,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@fern-fern-ir-sdk-npm-39.0.0-2b46dd3af9-72cf9e729c.zip/node_modules/@fern-fern/ir-sdk/",\
           "packageDependencies": [\
             ["@fern-fern/ir-sdk", "npm:39.0.0"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:50.2.0", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-ir-sdk-npm-50.2.0-b03356efcf-052a039584.zip/node_modules/@fern-fern/ir-sdk/",\
-          "packageDependencies": [\
-            ["@fern-fern/ir-sdk", "npm:50.2.0"]\
           ],\
           "linkType": "HARD"\
         }],\

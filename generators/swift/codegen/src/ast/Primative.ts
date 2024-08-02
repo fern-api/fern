@@ -15,13 +15,7 @@ NSDecimalNumber = "bigInteger"
 
 */
 
-export type PrimativeKey =
-    | "integer"
-    | "double"
-    | "string"
-    | "boolean"
-    | "long"
-    | "bigInteger";
+export type PrimativeKey = "string" | "boolean" | "integer" | "long" | "uint" | "uint64" | "float" | "double" | "date" | "dateTime" | "uuid" | "base64" | "bigInteger" | undefined;
 
 export declare namespace Primative {
     interface Args {
@@ -42,6 +36,7 @@ export class Primative extends SwiftClass {
         switch (key) {
             case "integer": return "Int";
             case "long": return "Int64";
+            case "uint64": return "Int64";
             case "string": return "String";
             case "boolean": return "Bool";
             case "double": return "Double";

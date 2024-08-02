@@ -1,4 +1,4 @@
-irVersion: v50
+irVersion: v53
 docker: fernapi/fern-swift-model:latest
 dockerCommand: yarn workspace @fern-api/fern-swift-model dockerTagLatest
 language: swift

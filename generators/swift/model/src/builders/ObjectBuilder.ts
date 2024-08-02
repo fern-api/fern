@@ -58,6 +58,11 @@ export default class ObjectBuilder extends CodeBuilder<SwiftFile> {
 
   public build(): SwiftFile {
 
+    // const flattenedProperties = [
+    //   ...this.objectDeclaration.properties,
+    //   ...(this.objectDeclaration.extendedProperties ?? [])
+    // ];
+
     // Destructure values
     const { name, docs } = this.typeDeclaration;
     const { properties } = this.objectDeclaration;
