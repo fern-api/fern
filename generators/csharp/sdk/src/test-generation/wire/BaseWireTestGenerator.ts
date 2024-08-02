@@ -3,23 +3,6 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
 import { SdkGeneratorContext, WIRE_TEST_FOLDER } from "../../SdkGeneratorContext";
 
-/*
-code to generate:
-
-[TestFixture]
-public abstract class BaseWireTest
-{
-    protected static Pinecone Client => GlobalTestSetup.Client;
-    protected static WireMockServer Server => GlobalTestSetup.Server;
-    
-    [TearDown]
-    public void BaseTearDown()
-    {
-        // Reset the WireMock server after each test
-        Server.Reset();
-    }
-}
-*/
 export class BaseWireTestGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     constructor(context: SdkGeneratorContext) {
         super(context);
@@ -28,7 +11,6 @@ export class BaseWireTestGenerator extends FileGenerator<CSharpFile, SdkCustomCo
     public doGenerate(): CSharpFile {
         const class_ = csharp.class_({
             ...this.context.getBaseWireTestClassReference(),
-            partial: false,
             access: "public",
             abstract: true,
             annotations: [
@@ -50,8 +32,7 @@ export class BaseWireTestGenerator extends FileGenerator<CSharpFile, SdkCustomCo
                     })
                 ),
                 get: true,
-                initializer: csharp.codeblock("GlobalTestSetup.Server"),
-                set: true
+                initializer: csharp.codeblock("GlobalTestSetup.Server")
             })
         );
 
@@ -67,8 +48,7 @@ export class BaseWireTestGenerator extends FileGenerator<CSharpFile, SdkCustomCo
                     })
                 ),
                 get: true,
-                initializer: csharp.codeblock("GlobalTestSetup.Client"),
-                set: true
+                initializer: csharp.codeblock("GlobalTestSetup.Client")
             })
         );
 
@@ -78,7 +58,7 @@ export class BaseWireTestGenerator extends FileGenerator<CSharpFile, SdkCustomCo
                 access: "public",
                 body: csharp.codeblock((writer) => {
                     writer.writeLine("// Reset the WireMock server after each test");
-                    writer.writeLine("Server.Reset();;;");
+                    writer.writeLine("Server.Reset();");
                 }),
                 isAsync: false,
                 parameters: [],

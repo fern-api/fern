@@ -216,6 +216,10 @@ export class Class extends AstNode {
         writer.writeLine("{");
 
         writer.indent();
+        this.writeFields({ writer, fields: this.getFieldsByAccess(Access.Protected) });
+        writer.dedent();
+
+        writer.indent();
         this.writeFields({ writer, fields: this.getFieldsByAccess(Access.Private) });
         writer.dedent();
 

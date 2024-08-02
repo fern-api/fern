@@ -4,10 +4,10 @@ import {
     ExampleEndpointCall,
     ExampleRequestBody,
     HttpEndpoint,
+    Name,
     ResponseError,
     SdkRequestShape,
-    ServiceId,
-    Subpackage
+    ServiceId
 } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { WrappedRequestGenerator } from "../wrapped-request/WrappedRequestGenerator";
@@ -114,7 +114,7 @@ export class EndpointGenerator {
         endpoint: HttpEndpoint,
         clientVariableName: string,
         serviceId: ServiceId,
-        subpackage?: Subpackage
+        subclientName?: Name
     ): csharp.MethodInvocation | undefined {
         const requestBodyType = endpoint.requestBody?.type;
         // TODO: implement these
@@ -128,17 +128,15 @@ export class EndpointGenerator {
         }
         const finalOn = csharp.codeblock((writer) => {
             writer.write(`${clientVariableName}.`);
-            if (subpackage != null) {
-                writer.write(subpackage.name.pascalCase.safeName);
-                writer.write(".");
+            if (subclientName != null) {
+                writer.write(subclientName.pascalCase.safeName);
             }
-            writer.write(this.context.getEndpointMethodName(endpoint));
         });
         const methodInvocationArgs: csharp.MethodInvocation.Args = {
             method: this.context.getEndpointMethodName(endpoint),
             arguments_: args,
             on: finalOn,
-            async: true,
+            async: false,
             generics: []
         };
         return new csharp.MethodInvocation(methodInvocationArgs);
@@ -169,7 +167,7 @@ export class EndpointGenerator {
                 return new WrappedRequestGenerator({
                     wrapper: endpoint.sdkRequest.shape,
                     context: this.context,
-                    serviceId: serviceId,
+                    serviceId,
                     endpoint
                 }).doGenerateSnippet(exampleEndpointCall);
             case "justRequestBody":

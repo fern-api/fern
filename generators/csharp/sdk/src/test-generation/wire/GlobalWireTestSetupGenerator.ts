@@ -3,7 +3,11 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
 import { SdkGeneratorContext, WIRE_TEST_FOLDER } from "../../SdkGeneratorContext";
 
-export class GlobalTestSetupGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+export class GlobalWireTestSetupGenerator extends FileGenerator<
+    CSharpFile,
+    SdkCustomConfigSchema,
+    SdkGeneratorContext
+> {
     constructor(context: SdkGeneratorContext) {
         super(context);
     }
