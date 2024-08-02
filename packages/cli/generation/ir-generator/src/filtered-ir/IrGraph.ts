@@ -108,7 +108,7 @@ export class IrGraph {
     public markEnvironmentForAudiences(
         environment: SingleBaseUrlEnvironment | MultipleBaseUrlsEnvironment,
         audiences: string[]
-    ) {
+    ): void {
         if (environment) {
             if (this.hasAudience(audiences)) {
                 this.environmentsNeededForAudience.add(environment.id);
