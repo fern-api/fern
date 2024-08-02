@@ -1,4 +1,3 @@
-from operator import inv
 from typing import Callable, List, Optional, Set
 
 import fern.ir.resources as ir_types
