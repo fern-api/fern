@@ -117,7 +117,7 @@ class ReadmeSnippetBuilder:
 
                 client_instantiation = AST.ClassInstantiation(
                     class_=self._root_client.sync_client.class_reference,
-                    args=[AST.Expression("..."), AST.Expression('timeout=20.0')],
+                    args=[AST.Expression("..."), AST.Expression("timeout=20.0")],
                 )
 
                 def _client_writer(writer: AST.NodeWriter) -> None:
