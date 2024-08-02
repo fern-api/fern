@@ -1,3 +1,4 @@
+from operator import inv
 from typing import Callable, List, Optional, Set
 
 import fern.ir.resources as ir_types
@@ -136,7 +137,16 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
     def get_all_properties_including_extensions(self, type_name: ir_types.TypeId) -> List[ir_types.ObjectProperty]:
         declaration = self.get_declaration_for_type_id(type_name)
         shape = declaration.shape.get_as_union()
-        if shape.type != "object":
+
+        if shape.type == "alias":
+            resolved_type_union = shape.resolved_type.get_as_union()
+            if resolved_type_union.type != "named":
+                raise RuntimeError(
+                    f"Cannot get properties because {declaration.name.name.original_name} is not an object, it's a {shape.type}"
+                )
+            else:
+                return self.get_all_properties_including_extensions(resolved_type_union.name.type_id)
+        elif shape.type != "object":
             raise RuntimeError(
                 f"Cannot get properties because {declaration.name.name.original_name} is not an object, it's a {shape.type}"
             )
