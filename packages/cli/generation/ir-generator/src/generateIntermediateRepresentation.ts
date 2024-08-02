@@ -405,7 +405,7 @@ export async function generateIntermediateRepresentation({
     environments?.environments.environments.forEach((environment) => {
         irGraph.markEnvironmentForAudiences(
             environment,
-            getAudienceForEnvironment(environment.id, workspace.definition.rootApiFile.contents.environments) || []
+            getAudienceForEnvironment(environment.id, workspace.definition.rootApiFile.contents.environments) ?? []
         );
     });
 
