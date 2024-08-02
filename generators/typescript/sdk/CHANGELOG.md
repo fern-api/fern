@@ -5,21 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.38.3] - 2024-08-02
+
+- Fix: Adds async iterable to StreamWrapper implementation for easier use with upstream dependencies.
+
 ## [0.38.2] - 2024-08-01
 
-- Fix: Refactors the `noScripts` feature flag to make sure that no `yarn install` commands 
-  can be accidentally triggered. 
+- Fix: Refactors the `noScripts` feature flag to make sure that no `yarn install` commands
+  can be accidentally triggered.
 
 ## [0.38.1] - 2024-08-01
 
 - Feature: A feature flag called `noScripts` has been introduced to prevent the generator
-  from running any scripts such as `yarn format` or `yarn install`. If any of the scripts 
-  cause errors, toggling this option will allow you to receive the generated code. 
+  from running any scripts such as `yarn format` or `yarn install`. If any of the scripts
+  cause errors, toggling this option will allow you to receive the generated code.
 
   ```
   - name: fernapi/fern-typescript-node-sdk
     version: 0.38.1
-    config: 
+    config:
       noScripts: true
   ```
 
@@ -30,13 +34,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.37.0-rc0] - 2024-07-29
 
-- Feature: The business plan Typescript SDK will now generate wire tests if the feature flag 
-  in the configuration is turned on. 
+- Feature: The business plan Typescript SDK will now generate wire tests if the feature flag
+  in the configuration is turned on.
 
   ```
   - name: fernapi/fern-typescript-node-sdk
     version: 0.37.0-rc0
-    config: 
+    config:
       generateWireTests: true
   ```
 
