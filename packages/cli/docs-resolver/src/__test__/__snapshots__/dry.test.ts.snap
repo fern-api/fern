@@ -1,0 +1,138 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`converts to api reference node 1`] = `
+"# Relative Path
+
+### Snippet
+
+Hello, I'm a snippet.
+
+
+\`\`\`js title="fibonacci.js"
+function fibonacci(num) {
+    let n1 = 0, n2 = 1, nextTerm;
+
+    console.log('Fibonacci Sequence:');
+    for (let i = 1; i <= num; i++) {
+        console.log(n1);
+        nextTerm = n1 + n2;
+        n1 = n2;
+        n2 = nextTerm;
+    }
+}
+
+// Example: Log the first 10 terms of the Fibonacci sequence
+fibonacci(10);
+
+\`\`\`
+
+
+# Relative Path 2
+
+### Snippet
+
+Hello, I'm a snippet.
+
+
+\`\`\`js title="fibonacci.js"
+function fibonacci(num) {
+    let n1 = 0, n2 = 1, nextTerm;
+
+    console.log('Fibonacci Sequence:');
+    for (let i = 1; i <= num; i++) {
+        console.log(n1);
+        nextTerm = n1 + n2;
+        n1 = n2;
+        n2 = nextTerm;
+    }
+}
+
+// Example: Log the first 10 terms of the Fibonacci sequence
+fibonacci(10);
+
+\`\`\`
+
+
+# Relative Path 3
+
+### Snippet
+
+Hello, I'm a snippet.
+
+
+\`\`\`js title="fibonacci.js"
+function fibonacci(num) {
+    let n1 = 0, n2 = 1, nextTerm;
+
+    console.log('Fibonacci Sequence:');
+    for (let i = 1; i <= num; i++) {
+        console.log(n1);
+        nextTerm = n1 + n2;
+        n1 = n2;
+        n2 = nextTerm;
+    }
+}
+
+// Example: Log the first 10 terms of the Fibonacci sequence
+fibonacci(10);
+
+\`\`\`
+
+
+# Absolute Path
+
+### Snippet
+
+Hello, I'm a snippet.
+
+
+\`\`\`js title="fibonacci.js"
+function fibonacci(num) {
+    let n1 = 0, n2 = 1, nextTerm;
+
+    console.log('Fibonacci Sequence:');
+    for (let i = 1; i <= num; i++) {
+        console.log(n1);
+        nextTerm = n1 + n2;
+        n1 = n2;
+        n2 = nextTerm;
+    }
+}
+
+// Example: Log the first 10 terms of the Fibonacci sequence
+fibonacci(10);
+
+\`\`\`
+
+
+# Indented
+
+<div>
+
+    ### Snippet
+    
+    Hello, I'm a snippet.
+    
+    
+    \`\`\`js title="fibonacci.js"
+    function fibonacci(num) {
+        let n1 = 0, n2 = 1, nextTerm;
+    
+        console.log('Fibonacci Sequence:');
+        for (let i = 1; i <= num; i++) {
+            console.log(n1);
+            nextTerm = n1 + n2;
+            n1 = n2;
+            n2 = nextTerm;
+        }
+    }
+    
+    // Example: Log the first 10 terms of the Fibonacci sequence
+    fibonacci(10);
+    
+    \`\`\`
+
+
+</div>
+"
+`;
