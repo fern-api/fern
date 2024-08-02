@@ -1,17 +1,8 @@
-import {
-    ErrorDeclaration,
-    HttpEndpoint,
-    HttpService,
-    MultipleBaseUrlsEnvironment,
-    SingleBaseUrlEnvironment,
-    TypeDeclaration,
-    Webhook
-} from "@fern-api/ir-sdk";
+import { ErrorDeclaration, HttpEndpoint, HttpService, TypeDeclaration, Webhook } from "@fern-api/ir-sdk";
 import { IdGenerator } from "../IdGenerator";
-import { EndpointId, ErrorId, ServiceId, SubpackageId, TypeId, WebhookId } from "./ids";
+import { EndpointId, EnvironmentId, ErrorId, ServiceId, SubpackageId, TypeId, WebhookId } from "./ids";
 
 export interface FilteredIr {
-    hasEnvironment(environment: SingleBaseUrlEnvironment | MultipleBaseUrlsEnvironment): boolean;
     hasType(type: TypeDeclaration): boolean;
     hasTypeId(type: string): boolean;
     hasProperty(type: string, property: string): boolean;
@@ -19,6 +10,7 @@ export interface FilteredIr {
     hasErrorId(type: string): boolean;
     hasService(service: HttpService): boolean;
     hasServiceId(type: string): boolean;
+    hasEnvironment(environment: EnvironmentId): boolean;
     hasEndpoint(endpoint: HttpEndpoint): boolean;
     hasWebhook(webhook: Webhook): boolean;
     hasWebhookPayloadProperty(webhookId: string, property: string): boolean;
@@ -28,7 +20,7 @@ export interface FilteredIr {
 }
 
 export class FilteredIrImpl implements FilteredIr {
-    private environments: Set<SingleBaseUrlEnvironment | MultipleBaseUrlsEnvironment> = new Set();
+    private environments: Set<EnvironmentId> = new Set();
     private types: Set<TypeId> = new Set();
     private properties: Record<TypeId, Set<string> | undefined>;
     private errors: Set<ErrorId> = new Set();
@@ -56,7 +48,7 @@ export class FilteredIrImpl implements FilteredIr {
         types: Set<TypeId>;
         properties: Record<TypeId, Set<string> | undefined>;
         errors: Set<ErrorId>;
-        environments: Set<SingleBaseUrlEnvironment | MultipleBaseUrlsEnvironment>;
+        environments: Set<EnvironmentId>;
         services: Set<ServiceId>;
         queryParameters: Record<EndpointId, Set<string> | undefined>;
         requestProperties: Record<EndpointId, Set<string> | undefined>;
@@ -76,9 +68,6 @@ export class FilteredIrImpl implements FilteredIr {
         this.subpackages = subpackages;
         this.requestProperties = requestProperties;
         this.queryParameters = queryParameters;
-    }
-    public hasEnvironment(environment: SingleBaseUrlEnvironment | MultipleBaseUrlsEnvironment): boolean {
-        return this.environments.has(environment);
     }
 
     public hasTypeId(typeId: string): boolean {
@@ -119,6 +108,10 @@ export class FilteredIrImpl implements FilteredIr {
     public hasService(service: HttpService): boolean {
         const serviceId = IdGenerator.generateServiceId(service.name);
         return this.services.has(serviceId);
+    }
+
+    public hasEnvironment(environment: EnvironmentId): boolean {
+        return this.environments.has(environment);
     }
 
     public hasEndpoint(endpoint: HttpEndpoint): boolean {

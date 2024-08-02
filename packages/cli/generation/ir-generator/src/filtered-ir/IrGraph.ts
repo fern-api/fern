@@ -4,7 +4,6 @@ import {
     ContainerType,
     DeclaredServiceName,
     DeclaredTypeName,
-    EnvironmentsConfig,
     ErrorDeclaration,
     FernFilepath,
     FileUploadRequestProperty,
@@ -12,13 +11,12 @@ import {
     HttpRequestBody,
     HttpResponseBody,
     HttpService,
-    MultipleBaseUrlsEnvironment,
-    SingleBaseUrlEnvironment,
     TypeReference,
     Webhook,
     WebhookPayload
 } from "@fern-api/ir-sdk";
 import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
+import { EnvironmentsConfigWithAudiences } from "../converters/convertEnvironments";
 import { isReferencedWebhookPayloadSchema } from "../converters/convertWebhookGroup";
 import { FernFileContext } from "../FernFileContext";
 import { IdGenerator } from "../IdGenerator";
@@ -28,6 +26,7 @@ import {
     AudienceId,
     EndpointId,
     EndpointNode,
+    EnvironmentId,
     ErrorId,
     ErrorNode,
     InlinedRequestPropertiesNode,
@@ -53,7 +52,7 @@ export class IrGraph {
     private webhooks: Record<WebhookId, WebhookNode> = {};
     private audiences: Audiences;
     private typesReferencedByService: Record<TypeId, Set<ServiceId>> = {};
-    private environmentsNeededForAudience: Set<SingleBaseUrlEnvironment | MultipleBaseUrlsEnvironment> = new Set();
+    private environmentsNeededForAudience: Set<EnvironmentId> = new Set();
     private typesNeededForAudience: Set<TypeId> = new Set();
     private servicesNeededForAudience: Set<ServiceId> = new Set();
     private endpointsNeededForAudience: Set<EndpointId> = new Set();
@@ -64,10 +63,10 @@ export class IrGraph {
         this.audiences = audiencesFromConfig(audiences);
     }
 
-    public addEnvironments(environments: EnvironmentsConfig | undefined): void {
-        if (environments) {
-            environments.environments.environments.forEach((environment) =>
-                this.environmentsNeededForAudience.add(environment)
+    public addEnvironments(environments: EnvironmentsConfigWithAudiences | undefined): void {
+        if (environments != null) {
+            Object.entries(environments.environmentsByAudience).forEach(([environmentId, _environment]) =>
+                this.environmentsNeededForAudience.add(environmentId)
             );
         }
     }

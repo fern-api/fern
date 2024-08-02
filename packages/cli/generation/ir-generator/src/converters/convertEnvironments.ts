@@ -9,6 +9,13 @@ import {
 import { RawSchemas, visitRawEnvironmentDeclaration } from "@fern-api/yaml-schema";
 import { mapValues } from "lodash-es";
 import { CasingsGenerator } from "../casings/CasingsGenerator";
+import { AudienceId } from "../filtered-ir/ids";
+import { getEnvironmentByAudience } from "../utils/getEnvironmentsByAudience";
+
+export interface EnvironmentsConfigWithAudiences {
+    environmentsByAudience: Record<AudienceId, Set<string>>;
+    environmentConfig: EnvironmentsConfig;
+}
 
 export function convertEnvironments({
     rawApiFileSchema: { "default-environment": defaultEnvironment, environments },
@@ -16,7 +23,7 @@ export function convertEnvironments({
 }: {
     rawApiFileSchema: RawSchemas.RootApiFileSchema;
     casingsGenerator: CasingsGenerator;
-}): EnvironmentsConfig | undefined {
+}): EnvironmentsConfigWithAudiences | undefined {
     if (environments == null) {
         return undefined;
     }
@@ -26,19 +33,22 @@ export function convertEnvironments({
     }
 
     return {
-        defaultEnvironment: defaultEnvironment ?? undefined,
-        environments: visitRawEnvironmentDeclaration<Environments>(firstEnvironment, {
-            singleBaseUrl: () =>
-                Environments.singleBaseUrl(convertSingleBaseUrlEnvironments({ environments, casingsGenerator })),
-            multipleBaseUrls: (firstMultipleBaseUrlsEnvironment) =>
-                Environments.multipleBaseUrls(
-                    convertMultipleBaseUrlEnvironments({
-                        baseUrls: Object.keys(firstMultipleBaseUrlsEnvironment.urls),
-                        environments,
-                        casingsGenerator
-                    })
-                )
-        })
+        environmentsByAudience: getEnvironmentByAudience(environments),
+        environmentConfig: {
+            defaultEnvironment: defaultEnvironment ?? undefined,
+            environments: visitRawEnvironmentDeclaration<Environments>(firstEnvironment, {
+                singleBaseUrl: () =>
+                    Environments.singleBaseUrl(convertSingleBaseUrlEnvironments({ environments, casingsGenerator })),
+                multipleBaseUrls: (firstMultipleBaseUrlsEnvironment) =>
+                    Environments.multipleBaseUrls(
+                        convertMultipleBaseUrlEnvironments({
+                            baseUrls: Object.keys(firstMultipleBaseUrlsEnvironment.urls),
+                            environments,
+                            casingsGenerator
+                        })
+                    )
+            })
+        }
     };
 }
 

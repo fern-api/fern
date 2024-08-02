@@ -91,7 +91,7 @@ export async function generateIntermediateRepresentation({
     const exampleResolver = new ExampleResolverImpl(typeResolver);
     const variableResolver = new VariableResolverImpl();
 
-    const environments = convertEnvironments({
+    const convertedEnvironments = convertEnvironments({
         casingsGenerator,
         rawApiFileSchema: workspace.definition.rootApiFile.contents
     });
@@ -131,7 +131,7 @@ export async function generateIntermediateRepresentation({
         errors: {},
         services: {},
         constants: generateFernConstants(casingsGenerator),
-        environments,
+        environments: convertedEnvironments && convertedEnvironments.environmentConfig,
         errorDiscriminationStrategy: convertErrorDiscriminationStrategy(
             workspace.definition.rootApiFile.contents["error-discrimination"],
             rootApiFileContext
@@ -164,7 +164,7 @@ export async function generateIntermediateRepresentation({
         readmeConfig: undefined
     };
 
-    irGraph.addEnvironments(environments);
+    irGraph.addEnvironments(convertedEnvironments);
 
     const packageTreeGenerator = new PackageTreeGenerator();
 
@@ -535,16 +535,23 @@ function filterIntermediateRepresentationForAudiences(
             case "singleBaseUrl": {
                 filteredEnvironmentsConfig.environments.environments =
                     filteredEnvironmentsConfig.environments.environments.filter((environment) =>
-                        filteredIr.hasEnvironment(environment)
+                        filteredIr.hasEnvironment(environment.id)
                     );
                 break;
             }
             case "multipleBaseUrls": {
                 filteredEnvironmentsConfig.environments.environments =
                     filteredEnvironmentsConfig.environments.environments.filter((environment) =>
-                        filteredIr.hasEnvironment(environment)
+                        filteredIr.hasEnvironment(environment.id)
                     );
                 break;
+            }
+        }
+
+        // If default environment does not exist in audience, set to undefined
+        if (filteredEnvironmentsConfig.defaultEnvironment) {
+            if (!filteredIr.hasEnvironment(filteredEnvironmentsConfig.defaultEnvironment)) {
+                filteredEnvironmentsConfig.defaultEnvironment = undefined;
             }
         }
     }
