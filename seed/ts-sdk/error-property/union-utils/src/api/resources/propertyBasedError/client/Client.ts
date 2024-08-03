@@ -24,8 +24,7 @@ export declare namespace PropertyBasedError {
 }
 
 export class PropertyBasedError {
-    constructor(protected readonly _options: PropertyBasedError.Options) {
-    }
+    constructor(protected readonly _options: PropertyBasedError.Options) {}
 
     /**
      * GET request that always throws an error
@@ -46,37 +45,54 @@ export class PropertyBasedError {
                 "X-Fern-SDK-Name": "@fern/error-property",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.propertyBasedError.throwError.Response.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] });
+            return serializers.propertyBasedError.throwError.Response.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
         }
 
         if (_response.error.reason === "status-code") {
             switch ((_response.error.body as any)?.["errorName"]) {
-                case "PropertyBasedErrorTest": throw new SeedErrorProperty.PropertyBasedErrorTest(serializers.PropertyBasedErrorTestBody.parseOrThrow(_response.error.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] }));
-                default: throw new errors.SeedErrorPropertyError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body
-                });
+                case "PropertyBasedErrorTest":
+                    throw new SeedErrorProperty.PropertyBasedErrorTest(
+                        serializers.PropertyBasedErrorTestBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                default:
+                    throw new errors.SeedErrorPropertyError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
             }
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedErrorPropertyError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody
-            });
-            case "timeout": throw new errors.SeedErrorPropertyTimeoutError;
-            case "unknown": throw new errors.SeedErrorPropertyError({
-                message: _response.error.errorMessage
-            });
+            case "non-json":
+                throw new errors.SeedErrorPropertyError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedErrorPropertyTimeoutError();
+            case "unknown":
+                throw new errors.SeedErrorPropertyError({
+                    message: _response.error.errorMessage,
+                });
         }
     }
 }

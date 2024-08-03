@@ -24,8 +24,7 @@ export declare namespace Container {
 }
 
 export class Container {
-    constructor(protected readonly _options: Container.Options) {
-    }
+    constructor(protected readonly _options: Container.Options) {}
 
     /**
      * @param {string[]} request
@@ -34,35 +33,48 @@ export class Container {
      * @example
      *     await client.endpoints.container.getAndReturnListOfPrimitives(["string"])
      */
-    public async getAndReturnListOfPrimitives(request: string[], requestOptions?: Container.RequestOptions): Promise<core.APIResponse<string[], Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error>> {
+    public async getAndReturnListOfPrimitives(
+        request: string[],
+        requestOptions?: Container.RequestOptions
+    ): Promise<core.APIResponse<string[], Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/container/list-of-primitives"),
             method: "POST",
             headers: {
-                "Authorization": await this._getAuthorizationHeader(),
+                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             requestType: "json",
-            body: serializers.endpoints.container.getAndReturnListOfPrimitives.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
+            body: serializers.endpoints.container.getAndReturnListOfPrimitives.Request.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+            }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: serializers.endpoints.container.getAndReturnListOfPrimitives.Response.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] })
+                body: serializers.endpoints.container.getAndReturnListOfPrimitives.Response.parseOrThrow(
+                    _response.body,
+                    {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }
+                ),
             };
         }
 
         return {
             ok: false,
-            error: Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error._unknown(_response.error)
+            error: Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error._unknown(_response.error),
         };
     }
 
@@ -75,35 +87,50 @@ export class Container {
      *             string: "string"
      *         }])
      */
-    public async getAndReturnListOfObjects(request: Fiddle.types.ObjectWithRequiredField[], requestOptions?: Container.RequestOptions): Promise<core.APIResponse<Fiddle.types.ObjectWithRequiredField[], Fiddle.endpoints.container.getAndReturnListOfObjects.Error>> {
+    public async getAndReturnListOfObjects(
+        request: Fiddle.types.ObjectWithRequiredField[],
+        requestOptions?: Container.RequestOptions
+    ): Promise<
+        core.APIResponse<
+            Fiddle.types.ObjectWithRequiredField[],
+            Fiddle.endpoints.container.getAndReturnListOfObjects.Error
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/container/list-of-objects"),
             method: "POST",
             headers: {
-                "Authorization": await this._getAuthorizationHeader(),
+                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             requestType: "json",
-            body: serializers.endpoints.container.getAndReturnListOfObjects.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
+            body: serializers.endpoints.container.getAndReturnListOfObjects.Request.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+            }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: serializers.endpoints.container.getAndReturnListOfObjects.Response.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] })
+                body: serializers.endpoints.container.getAndReturnListOfObjects.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
             };
         }
 
         return {
             ok: false,
-            error: Fiddle.endpoints.container.getAndReturnListOfObjects.Error._unknown(_response.error)
+            error: Fiddle.endpoints.container.getAndReturnListOfObjects.Error._unknown(_response.error),
         };
     }
 
@@ -114,35 +141,48 @@ export class Container {
      * @example
      *     await client.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]))
      */
-    public async getAndReturnSetOfPrimitives(request: Set<string>, requestOptions?: Container.RequestOptions): Promise<core.APIResponse<Set<string>, Fiddle.endpoints.container.getAndReturnSetOfPrimitives.Error>> {
+    public async getAndReturnSetOfPrimitives(
+        request: Set<string>,
+        requestOptions?: Container.RequestOptions
+    ): Promise<core.APIResponse<Set<string>, Fiddle.endpoints.container.getAndReturnSetOfPrimitives.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/container/set-of-primitives"),
             method: "POST",
             headers: {
-                "Authorization": await this._getAuthorizationHeader(),
+                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             requestType: "json",
-            body: serializers.endpoints.container.getAndReturnSetOfPrimitives.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
+            body: serializers.endpoints.container.getAndReturnSetOfPrimitives.Request.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+            }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: serializers.endpoints.container.getAndReturnSetOfPrimitives.Response.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] })
+                body: serializers.endpoints.container.getAndReturnSetOfPrimitives.Response.parseOrThrow(
+                    _response.body,
+                    {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }
+                ),
             };
         }
 
         return {
             ok: false,
-            error: Fiddle.endpoints.container.getAndReturnSetOfPrimitives.Error._unknown(_response.error)
+            error: Fiddle.endpoints.container.getAndReturnSetOfPrimitives.Error._unknown(_response.error),
         };
     }
 
@@ -155,35 +195,50 @@ export class Container {
      *             string: "string"
      *         }]))
      */
-    public async getAndReturnSetOfObjects(request: Fiddle.types.ObjectWithRequiredField[], requestOptions?: Container.RequestOptions): Promise<core.APIResponse<Fiddle.types.ObjectWithRequiredField[], Fiddle.endpoints.container.getAndReturnSetOfObjects.Error>> {
+    public async getAndReturnSetOfObjects(
+        request: Fiddle.types.ObjectWithRequiredField[],
+        requestOptions?: Container.RequestOptions
+    ): Promise<
+        core.APIResponse<
+            Fiddle.types.ObjectWithRequiredField[],
+            Fiddle.endpoints.container.getAndReturnSetOfObjects.Error
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/container/set-of-objects"),
             method: "POST",
             headers: {
-                "Authorization": await this._getAuthorizationHeader(),
+                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             requestType: "json",
-            body: serializers.endpoints.container.getAndReturnSetOfObjects.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
+            body: serializers.endpoints.container.getAndReturnSetOfObjects.Request.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+            }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: serializers.endpoints.container.getAndReturnSetOfObjects.Response.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] })
+                body: serializers.endpoints.container.getAndReturnSetOfObjects.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
             };
         }
 
         return {
             ok: false,
-            error: Fiddle.endpoints.container.getAndReturnSetOfObjects.Error._unknown(_response.error)
+            error: Fiddle.endpoints.container.getAndReturnSetOfObjects.Error._unknown(_response.error),
         };
     }
 
@@ -196,35 +251,45 @@ export class Container {
      *         "string": "string"
      *     })
      */
-    public async getAndReturnMapPrimToPrim(request: Record<string, string>, requestOptions?: Container.RequestOptions): Promise<core.APIResponse<Record<string, string>, Fiddle.endpoints.container.getAndReturnMapPrimToPrim.Error>> {
+    public async getAndReturnMapPrimToPrim(
+        request: Record<string, string>,
+        requestOptions?: Container.RequestOptions
+    ): Promise<core.APIResponse<Record<string, string>, Fiddle.endpoints.container.getAndReturnMapPrimToPrim.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/container/map-prim-to-prim"),
             method: "POST",
             headers: {
-                "Authorization": await this._getAuthorizationHeader(),
+                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             requestType: "json",
-            body: serializers.endpoints.container.getAndReturnMapPrimToPrim.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
+            body: serializers.endpoints.container.getAndReturnMapPrimToPrim.Request.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+            }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: serializers.endpoints.container.getAndReturnMapPrimToPrim.Response.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] })
+                body: serializers.endpoints.container.getAndReturnMapPrimToPrim.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
             };
         }
 
         return {
             ok: false,
-            error: Fiddle.endpoints.container.getAndReturnMapPrimToPrim.Error._unknown(_response.error)
+            error: Fiddle.endpoints.container.getAndReturnMapPrimToPrim.Error._unknown(_response.error),
         };
     }
 
@@ -239,35 +304,53 @@ export class Container {
      *         }
      *     })
      */
-    public async getAndReturnMapOfPrimToObject(request: Record<string, Fiddle.types.ObjectWithRequiredField>, requestOptions?: Container.RequestOptions): Promise<core.APIResponse<Record<string, Fiddle.types.ObjectWithRequiredField>, Fiddle.endpoints.container.getAndReturnMapOfPrimToObject.Error>> {
+    public async getAndReturnMapOfPrimToObject(
+        request: Record<string, Fiddle.types.ObjectWithRequiredField>,
+        requestOptions?: Container.RequestOptions
+    ): Promise<
+        core.APIResponse<
+            Record<string, Fiddle.types.ObjectWithRequiredField>,
+            Fiddle.endpoints.container.getAndReturnMapOfPrimToObject.Error
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/container/map-prim-to-object"),
             method: "POST",
             headers: {
-                "Authorization": await this._getAuthorizationHeader(),
+                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             requestType: "json",
-            body: serializers.endpoints.container.getAndReturnMapOfPrimToObject.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
+            body: serializers.endpoints.container.getAndReturnMapOfPrimToObject.Request.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+            }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: serializers.endpoints.container.getAndReturnMapOfPrimToObject.Response.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] })
+                body: serializers.endpoints.container.getAndReturnMapOfPrimToObject.Response.parseOrThrow(
+                    _response.body,
+                    {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }
+                ),
             };
         }
 
         return {
             ok: false,
-            error: Fiddle.endpoints.container.getAndReturnMapOfPrimToObject.Error._unknown(_response.error)
+            error: Fiddle.endpoints.container.getAndReturnMapOfPrimToObject.Error._unknown(_response.error),
         };
     }
 
@@ -280,35 +363,53 @@ export class Container {
      *         string: "string"
      *     })
      */
-    public async getAndReturnOptional(request?: Fiddle.types.ObjectWithRequiredField, requestOptions?: Container.RequestOptions): Promise<core.APIResponse<Fiddle.types.ObjectWithRequiredField | undefined, Fiddle.endpoints.container.getAndReturnOptional.Error>> {
+    public async getAndReturnOptional(
+        request?: Fiddle.types.ObjectWithRequiredField,
+        requestOptions?: Container.RequestOptions
+    ): Promise<
+        core.APIResponse<
+            Fiddle.types.ObjectWithRequiredField | undefined,
+            Fiddle.endpoints.container.getAndReturnOptional.Error
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/container/opt-objects"),
             method: "POST",
             headers: {
-                "Authorization": await this._getAuthorizationHeader(),
+                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             requestType: "json",
-            body: request != null ? serializers.endpoints.container.getAndReturnOptional.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }) : undefined,
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
+            body:
+                request != null
+                    ? serializers.endpoints.container.getAndReturnOptional.Request.jsonOrThrow(request, {
+                          unrecognizedObjectKeys: "strip",
+                      })
+                    : undefined,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: serializers.endpoints.container.getAndReturnOptional.Response.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] })
+                body: serializers.endpoints.container.getAndReturnOptional.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
             };
         }
 
         return {
             ok: false,
-            error: Fiddle.endpoints.container.getAndReturnOptional.Error._unknown(_response.error)
+            error: Fiddle.endpoints.container.getAndReturnOptional.Error._unknown(_response.error),
         };
     }
 

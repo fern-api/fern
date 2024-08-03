@@ -13,7 +13,7 @@ import * as SeedAudiences from "../../../../index";
  *     }
  */
 export interface FindRequest {
-    "optionalString"?: SeedAudiences.OptionalString;
-    "publicProperty"?: string;
-    "privateProperty"?: number;
+    optionalString?: SeedAudiences.OptionalString;
+    publicProperty?: string;
+    privateProperty?: number;
 }

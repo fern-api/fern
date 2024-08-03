@@ -5,5 +5,5 @@
 import * as SeedTrace from "../../../../../index";
 
 export interface GetFunctionSignatureRequest {
-    "functionSignature": SeedTrace.v2.FunctionSignature;
+    functionSignature: SeedTrace.v2.FunctionSignature;
 }

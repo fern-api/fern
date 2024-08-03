@@ -8,14 +8,17 @@ import * as core from "../../../../core";
 import { ProblemId } from "../../commons/types/ProblemId";
 import { SubmissionId } from "./SubmissionId";
 
-export const CustomTestCasesUnsupported: core.serialization.ObjectSchema<serializers.CustomTestCasesUnsupported.Raw, SeedTrace.CustomTestCasesUnsupported> = core.serialization.object({
-        "problemId": ProblemId,
-        "submissionId": SubmissionId
-    });
+export const CustomTestCasesUnsupported: core.serialization.ObjectSchema<
+    serializers.CustomTestCasesUnsupported.Raw,
+    SeedTrace.CustomTestCasesUnsupported
+> = core.serialization.object({
+    problemId: ProblemId,
+    submissionId: SubmissionId,
+});
 
 export declare namespace CustomTestCasesUnsupported {
     interface Raw {
-        "problemId": ProblemId.Raw;
-        "submissionId": SubmissionId.Raw;
+        problemId: ProblemId.Raw;
+        submissionId: SubmissionId.Raw;
     }
 }

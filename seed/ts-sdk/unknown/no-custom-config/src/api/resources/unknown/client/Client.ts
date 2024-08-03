@@ -22,8 +22,7 @@ export declare namespace Unknown {
 }
 
 export class Unknown {
-    constructor(protected readonly _options: Unknown.Options) {
-    }
+    constructor(protected readonly _options: Unknown.Options) {}
 
     /**
      * @param {unknown} request
@@ -43,35 +42,43 @@ export class Unknown {
                 "X-Fern-SDK-Name": "@fern/unknown",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             requestType: "json",
             body: request,
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.unknown.post.Response.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] });
+            return serializers.unknown.post.Response.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedUnknownAsAnyError({
                 statusCode: _response.error.statusCode,
-                body: _response.error.body
+                body: _response.error.body,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedUnknownAsAnyError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody
-            });
-            case "timeout": throw new errors.SeedUnknownAsAnyTimeoutError;
-            case "unknown": throw new errors.SeedUnknownAsAnyError({
-                message: _response.error.errorMessage
-            });
+            case "non-json":
+                throw new errors.SeedUnknownAsAnyError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedUnknownAsAnyTimeoutError();
+            case "unknown":
+                throw new errors.SeedUnknownAsAnyError({
+                    message: _response.error.errorMessage,
+                });
         }
     }
 }

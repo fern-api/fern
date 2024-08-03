@@ -9,85 +9,99 @@ import { BinaryTreeValue } from "./BinaryTreeValue";
 import { SinglyLinkedListValue } from "./SinglyLinkedListValue";
 import { DoublyLinkedListValue } from "./DoublyLinkedListValue";
 
-export const VariableValue: core.serialization.Schema<serializers.VariableValue.Raw, SeedTrace.VariableValue> = core.serialization.union("type", {
-        "integerValue": core.serialization.object({
-            "value": core.serialization.number()
-        }),
-        "booleanValue": core.serialization.object({
-            "value": core.serialization.boolean()
-        }),
-        "doubleValue": core.serialization.object({
-            "value": core.serialization.number()
-        }),
-        "stringValue": core.serialization.object({
-            "value": core.serialization.string()
-        }),
-        "charValue": core.serialization.object({
-            "value": core.serialization.string()
-        }),
-        "mapValue": core.serialization.lazyObject(() => serializers.MapValue),
-        "listValue": core.serialization.object({
-            "value": core.serialization.list(core.serialization.lazy(() => serializers.VariableValue))
-        }),
-        "binaryTreeValue": BinaryTreeValue,
-        "singlyLinkedListValue": SinglyLinkedListValue,
-        "doublyLinkedListValue": DoublyLinkedListValue,
-        "nullValue": core.serialization.object({})
-    }).transform<SeedTrace.VariableValue>({
-        transform: value => value,
-        untransform: value => value
-    });
+export const VariableValue: core.serialization.Schema<serializers.VariableValue.Raw, SeedTrace.VariableValue> =
+    core.serialization
+        .union("type", {
+            integerValue: core.serialization.object({
+                value: core.serialization.number(),
+            }),
+            booleanValue: core.serialization.object({
+                value: core.serialization.boolean(),
+            }),
+            doubleValue: core.serialization.object({
+                value: core.serialization.number(),
+            }),
+            stringValue: core.serialization.object({
+                value: core.serialization.string(),
+            }),
+            charValue: core.serialization.object({
+                value: core.serialization.string(),
+            }),
+            mapValue: core.serialization.lazyObject(() => serializers.MapValue),
+            listValue: core.serialization.object({
+                value: core.serialization.list(core.serialization.lazy(() => serializers.VariableValue)),
+            }),
+            binaryTreeValue: BinaryTreeValue,
+            singlyLinkedListValue: SinglyLinkedListValue,
+            doublyLinkedListValue: DoublyLinkedListValue,
+            nullValue: core.serialization.object({}),
+        })
+        .transform<SeedTrace.VariableValue>({
+            transform: (value) => value,
+            untransform: (value) => value,
+        });
 
 export declare namespace VariableValue {
-    type Raw = VariableValue.IntegerValue | VariableValue.BooleanValue | VariableValue.DoubleValue | VariableValue.StringValue | VariableValue.CharValue | VariableValue.MapValue | VariableValue.ListValue | VariableValue.BinaryTreeValue | VariableValue.SinglyLinkedListValue | VariableValue.DoublyLinkedListValue | VariableValue.NullValue;
+    type Raw =
+        | VariableValue.IntegerValue
+        | VariableValue.BooleanValue
+        | VariableValue.DoubleValue
+        | VariableValue.StringValue
+        | VariableValue.CharValue
+        | VariableValue.MapValue
+        | VariableValue.ListValue
+        | VariableValue.BinaryTreeValue
+        | VariableValue.SinglyLinkedListValue
+        | VariableValue.DoublyLinkedListValue
+        | VariableValue.NullValue;
 
     interface IntegerValue {
-        "type": "integerValue";
-        "value": number;
+        type: "integerValue";
+        value: number;
     }
 
     interface BooleanValue {
-        "type": "booleanValue";
-        "value": boolean;
+        type: "booleanValue";
+        value: boolean;
     }
 
     interface DoubleValue {
-        "type": "doubleValue";
-        "value": number;
+        type: "doubleValue";
+        value: number;
     }
 
     interface StringValue {
-        "type": "stringValue";
-        "value": string;
+        type: "stringValue";
+        value: string;
     }
 
     interface CharValue {
-        "type": "charValue";
-        "value": string;
+        type: "charValue";
+        value: string;
     }
 
     interface MapValue extends serializers.MapValue.Raw {
-        "type": "mapValue";
+        type: "mapValue";
     }
 
     interface ListValue {
-        "type": "listValue";
-        "value": serializers.VariableValue.Raw[];
+        type: "listValue";
+        value: serializers.VariableValue.Raw[];
     }
 
     interface BinaryTreeValue extends BinaryTreeValue.Raw {
-        "type": "binaryTreeValue";
+        type: "binaryTreeValue";
     }
 
     interface SinglyLinkedListValue extends SinglyLinkedListValue.Raw {
-        "type": "singlyLinkedListValue";
+        type: "singlyLinkedListValue";
     }
 
     interface DoublyLinkedListValue extends DoublyLinkedListValue.Raw {
-        "type": "doublyLinkedListValue";
+        type: "doublyLinkedListValue";
     }
 
     interface NullValue {
-        "type": "nullValue";
+        type: "nullValue";
     }
 }

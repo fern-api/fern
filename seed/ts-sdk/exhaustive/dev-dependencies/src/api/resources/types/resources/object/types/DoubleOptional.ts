@@ -5,5 +5,5 @@
 import * as Fiddle from "../../../../../index";
 
 export interface DoubleOptional {
-    "optionalAlias"?: Fiddle.types.OptionalAlias | undefined;
+    optionalAlias?: Fiddle.types.OptionalAlias | undefined;
 }

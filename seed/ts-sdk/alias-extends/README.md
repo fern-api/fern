@@ -21,7 +21,7 @@ import { SeedAliasExtendsClient } from "@fern/alias-extends";
 const client = new SeedAliasExtendsClient({ environment: "YOUR_BASE_URL" });
 await client.extendedInlineRequestBody({
     child: "string",
-    parent: "string"
+    parent: "string",
 });
 ```
 
@@ -31,7 +31,7 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedAliasExtends } from "@fern/alias-extends"; 
+import { SeedAliasExtends } from "@fern/alias-extends";
 
 const request: SeedAliasExtends.InlinedChildRequest = {
     ...
@@ -67,9 +67,9 @@ retry limit (default: 2).
 
 A request is deemed retriable when any of the following HTTP status codes is returned:
 
-- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
-- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
-- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+-   [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+-   [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+-   [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
 
 Use the `maxRetries` request option to configure this behavior.
 
@@ -106,12 +106,12 @@ controller.abort(); // aborts the request
 The SDK defaults to `node-fetch` but will use the global fetch client if present. The SDK works in the following
 runtimes:
 
-- Node.js 18+
-- Vercel
-- Cloudflare Workers
-- Deno v1.25+
-- Bun 1.0+
-- React Native
+-   Node.js 18+
+-   Vercel
+-   Cloudflare Workers
+-   Deno v1.25+
+-   Bun 1.0+
+-   React Native
 
 ### Customizing Fetch Client
 

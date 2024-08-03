@@ -22,8 +22,7 @@ export declare namespace SeedApiWideBasePathClient {
 }
 
 export class SeedApiWideBasePathClient {
-    constructor(protected readonly _options: SeedApiWideBasePathClient.Options) {
-    }
+    constructor(protected readonly _options: SeedApiWideBasePathClient.Options) {}
 
     protected _service: Service | undefined;
 

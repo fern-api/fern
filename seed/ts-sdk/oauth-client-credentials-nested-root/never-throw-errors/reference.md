@@ -1,5 +1,7 @@
 # Reference
+
 ## Auth
+
 <details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">getToken</a>({ ...params }) -> core.APIResponse<SeedOauthClientCredentials.TokenResponse, SeedOauthClientCredentials.auth.getToken.Error></code></summary>
 <dl>
 <dd>
@@ -16,10 +18,10 @@
 await client.auth.getToken({
     clientId: "string",
     clientSecret: "string",
-    scope: "string"
+    scope: "string",
 });
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -33,21 +35,20 @@ await client.auth.getToken({
 <dl>
 <dd>
 
-**request:** `SeedOauthClientCredentials.auth.GetTokenRequest` 
-    
+**request:** `SeedOauthClientCredentials.auth.GetTokenRequest`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Auth.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Auth.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>

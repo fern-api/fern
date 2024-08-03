@@ -8,12 +8,15 @@ import * as core from "../../../../../../core";
 import { FileInfoV2 } from "./FileInfoV2";
 import { Language } from "../../../../commons/types/Language";
 
-export const GetBasicSolutionFileResponse: core.serialization.ObjectSchema<serializers.v2.GetBasicSolutionFileResponse.Raw, SeedTrace.v2.GetBasicSolutionFileResponse> = core.serialization.object({
-        "solutionFileByLanguage": core.serialization.record(Language, FileInfoV2.optional())
-    });
+export const GetBasicSolutionFileResponse: core.serialization.ObjectSchema<
+    serializers.v2.GetBasicSolutionFileResponse.Raw,
+    SeedTrace.v2.GetBasicSolutionFileResponse
+> = core.serialization.object({
+    solutionFileByLanguage: core.serialization.record(Language, FileInfoV2.optional()),
+});
 
 export declare namespace GetBasicSolutionFileResponse {
     interface Raw {
-        "solutionFileByLanguage": Record<Language.Raw, FileInfoV2.Raw | null | undefined>;
+        solutionFileByLanguage: Record<Language.Raw, FileInfoV2.Raw | null | undefined>;
     }
 }

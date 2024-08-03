@@ -29,8 +29,7 @@ export declare namespace Service {
 }
 
 export class Service {
-    constructor(protected readonly _options: Service.Options) {
-    }
+    constructor(protected readonly _options: Service.Options) {}
 
     /**
      * GET request with custom api key
@@ -51,34 +50,42 @@ export class Service {
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...await this._getCustomAuthorizationHeaders()
+                ...(await this._getCustomAuthorizationHeaders()),
             },
             contentType: "application/json",
             requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.service.getWithApiKey.Response.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] });
+            return serializers.service.getWithApiKey.Response.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedAuthEnvironmentVariablesError({
                 statusCode: _response.error.statusCode,
-                body: _response.error.body
+                body: _response.error.body,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedAuthEnvironmentVariablesError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody
-            });
-            case "timeout": throw new errors.SeedAuthEnvironmentVariablesTimeoutError;
-            case "unknown": throw new errors.SeedAuthEnvironmentVariablesError({
-                message: _response.error.errorMessage
-            });
+            case "non-json":
+                throw new errors.SeedAuthEnvironmentVariablesError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedAuthEnvironmentVariablesTimeoutError();
+            case "unknown":
+                throw new errors.SeedAuthEnvironmentVariablesError({
+                    message: _response.error.errorMessage,
+                });
         }
     }
 
@@ -93,7 +100,10 @@ export class Service {
      *         xEndpointHeader: "string"
      *     })
      */
-    public async getWithHeader(request: SeedAuthEnvironmentVariables.HeaderAuthRequest, requestOptions?: Service.RequestOptions): Promise<string> {
+    public async getWithHeader(
+        request: SeedAuthEnvironmentVariables.HeaderAuthRequest,
+        requestOptions?: Service.RequestOptions
+    ): Promise<string> {
         const { xEndpointHeader } = request;
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "apiKeyInHeader"),
@@ -106,34 +116,42 @@ export class Service {
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "X-Endpoint-Header": xEndpointHeader,
-                ...await this._getCustomAuthorizationHeaders()
+                ...(await this._getCustomAuthorizationHeaders()),
             },
             contentType: "application/json",
             requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.service.getWithHeader.Response.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] });
+            return serializers.service.getWithHeader.Response.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedAuthEnvironmentVariablesError({
                 statusCode: _response.error.statusCode,
-                body: _response.error.body
+                body: _response.error.body,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedAuthEnvironmentVariablesError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody
-            });
-            case "timeout": throw new errors.SeedAuthEnvironmentVariablesTimeoutError;
-            case "unknown": throw new errors.SeedAuthEnvironmentVariablesError({
-                message: _response.error.errorMessage
-            });
+            case "non-json":
+                throw new errors.SeedAuthEnvironmentVariablesError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedAuthEnvironmentVariablesTimeoutError();
+            case "unknown":
+                throw new errors.SeedAuthEnvironmentVariablesError({
+                    message: _response.error.errorMessage,
+                });
         }
     }
 

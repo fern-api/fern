@@ -6,12 +6,15 @@ import * as serializers from "../../../../../index";
 import * as SeedExhaustive from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 
-export const ObjectWithRequiredField: core.serialization.ObjectSchema<serializers.types.ObjectWithRequiredField.Raw, SeedExhaustive.types.ObjectWithRequiredField> = core.serialization.object({
-        "string": core.serialization.string()
-    });
+export const ObjectWithRequiredField: core.serialization.ObjectSchema<
+    serializers.types.ObjectWithRequiredField.Raw,
+    SeedExhaustive.types.ObjectWithRequiredField
+> = core.serialization.object({
+    string: core.serialization.string(),
+});
 
 export declare namespace ObjectWithRequiredField {
     interface Raw {
-        "string": string;
+        string: string;
     }
 }

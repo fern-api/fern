@@ -10,7 +10,7 @@ export class NestedObjectWithRequiredFieldError extends errors.SeedExhaustiveErr
         super({
             message: "NestedObjectWithRequiredFieldError",
             statusCode: 400,
-            body: body
+            body: body,
         });
         Object.setPrototypeOf(this, NestedObjectWithRequiredFieldError.prototype);
     }

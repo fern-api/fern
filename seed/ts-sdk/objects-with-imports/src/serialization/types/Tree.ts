@@ -7,12 +7,13 @@ import * as SeedObjectsWithImports from "../../api/index";
 import * as core from "../../core";
 import { Node } from "./Node";
 
-export const Tree: core.serialization.ObjectSchema<serializers.Tree.Raw, SeedObjectsWithImports.Tree> = core.serialization.object({
-        "nodes": core.serialization.list(Node).optional()
+export const Tree: core.serialization.ObjectSchema<serializers.Tree.Raw, SeedObjectsWithImports.Tree> =
+    core.serialization.object({
+        nodes: core.serialization.list(Node).optional(),
     });
 
 export declare namespace Tree {
     interface Raw {
-        "nodes"?: Node.Raw[] | null;
+        nodes?: Node.Raw[] | null;
     }
 }

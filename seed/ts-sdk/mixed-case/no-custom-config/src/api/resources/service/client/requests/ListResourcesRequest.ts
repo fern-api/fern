@@ -10,6 +10,6 @@
  *     }
  */
 export interface ListResourcesRequest {
-    "pageLimit": number;
-    "beforeDate": string;
+    pageLimit: number;
+    beforeDate: string;
 }

@@ -6,12 +6,15 @@ import * as serializers from "../../../index";
 import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const UpdateProblemResponse: core.serialization.ObjectSchema<serializers.UpdateProblemResponse.Raw, SeedTrace.UpdateProblemResponse> = core.serialization.object({
-        "problemVersion": core.serialization.number()
-    });
+export const UpdateProblemResponse: core.serialization.ObjectSchema<
+    serializers.UpdateProblemResponse.Raw,
+    SeedTrace.UpdateProblemResponse
+> = core.serialization.object({
+    problemVersion: core.serialization.number(),
+});
 
 export declare namespace UpdateProblemResponse {
     interface Raw {
-        "problemVersion": number;
+        problemVersion: number;
     }
 }

@@ -16,9 +16,7 @@ import * as SeedMixedCase from "../../../index";
  *         }
  *     }
  */
-export type Resource = 
-    | SeedMixedCase.Resource.User
-    | SeedMixedCase.Resource.Organization;
+export type Resource = SeedMixedCase.Resource.User | SeedMixedCase.Resource.Organization;
 
 export declare namespace Resource {
     interface User extends SeedMixedCase.User, _Base {

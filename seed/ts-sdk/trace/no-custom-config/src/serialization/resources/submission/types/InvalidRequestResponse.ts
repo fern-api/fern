@@ -8,14 +8,17 @@ import * as core from "../../../../core";
 import { SubmissionRequest } from "./SubmissionRequest";
 import { InvalidRequestCause } from "./InvalidRequestCause";
 
-export const InvalidRequestResponse: core.serialization.ObjectSchema<serializers.InvalidRequestResponse.Raw, SeedTrace.InvalidRequestResponse> = core.serialization.object({
-        "request": SubmissionRequest,
-        "cause": InvalidRequestCause
-    });
+export const InvalidRequestResponse: core.serialization.ObjectSchema<
+    serializers.InvalidRequestResponse.Raw,
+    SeedTrace.InvalidRequestResponse
+> = core.serialization.object({
+    request: SubmissionRequest,
+    cause: InvalidRequestCause,
+});
 
 export declare namespace InvalidRequestResponse {
     interface Raw {
-        "request": SubmissionRequest.Raw;
-        "cause": InvalidRequestCause.Raw;
+        request: SubmissionRequest.Raw;
+        cause: InvalidRequestCause.Raw;
     }
 }

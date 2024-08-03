@@ -6,7 +6,8 @@ import * as serializers from "../../../index";
 import * as SeedUndiscriminatedUnions from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const KeyType: core.serialization.Schema<serializers.KeyType.Raw, SeedUndiscriminatedUnions.KeyType> = core.serialization.enum_(["name", "value"]);
+export const KeyType: core.serialization.Schema<serializers.KeyType.Raw, SeedUndiscriminatedUnions.KeyType> =
+    core.serialization.enum_(["name", "value"]);
 
 export declare namespace KeyType {
     type Raw = "name" | "value";

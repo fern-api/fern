@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../index";
 
 export interface ProblemFiles {
-    "solutionFile": SeedTrace.FileInfo;
-    "readOnlyFiles": SeedTrace.FileInfo[];
+    solutionFile: SeedTrace.FileInfo;
+    readOnlyFiles: SeedTrace.FileInfo[];
 }

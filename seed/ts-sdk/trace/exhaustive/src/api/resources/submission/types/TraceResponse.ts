@@ -5,10 +5,10 @@
 import * as SeedTrace from "../../../index";
 
 export interface TraceResponse {
-    "submissionId": SeedTrace.SubmissionId;
-    "lineNumber": number;
-    "returnValue"?: SeedTrace.DebugVariableValue;
-    "expressionLocation"?: SeedTrace.ExpressionLocation;
-    "stack": SeedTrace.StackInformation;
-    "stdout"?: string;
+    submissionId: SeedTrace.SubmissionId;
+    lineNumber: number;
+    returnValue?: SeedTrace.DebugVariableValue;
+    expressionLocation?: SeedTrace.ExpressionLocation;
+    stack: SeedTrace.StackInformation;
+    stdout?: string;
 }

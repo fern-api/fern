@@ -26,8 +26,7 @@ export declare namespace SeedExhaustiveClient {
 }
 
 export class SeedExhaustiveClient {
-    constructor(protected readonly _options: SeedExhaustiveClient.Options) {
-    }
+    constructor(protected readonly _options: SeedExhaustiveClient.Options) {}
 
     protected _endpoints: Endpoints | undefined;
 

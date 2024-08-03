@@ -8,40 +8,47 @@ import * as core from "../../../../core";
 import { ExceptionInfo } from "./ExceptionInfo";
 import { ExceptionV2 } from "./ExceptionV2";
 
-export const ActualResult: core.serialization.Schema<serializers.ActualResult.Raw, SeedTrace.ActualResult> = core.serialization.union("type", {
-        "value": core.serialization.object({
-            "value": core.serialization.lazy(() => serializers.VariableValue)
-        }),
-        "exception": ExceptionInfo,
-        "exceptionV2": core.serialization.object({
-            "value": ExceptionV2
+export const ActualResult: core.serialization.Schema<serializers.ActualResult.Raw, SeedTrace.ActualResult> =
+    core.serialization
+        .union("type", {
+            value: core.serialization.object({
+                value: core.serialization.lazy(() => serializers.VariableValue),
+            }),
+            exception: ExceptionInfo,
+            exceptionV2: core.serialization.object({
+                value: ExceptionV2,
+            }),
         })
-    }).transform<SeedTrace.ActualResult>({
-        transform: value => {
-            switch (value.type) {
-                case "value": return SeedTrace.ActualResult.value(value.value);
-                case "exception": return SeedTrace.ActualResult.exception(value);
-                case "exceptionV2": return SeedTrace.ActualResult.exceptionV2(value.value);
-                default: return SeedTrace.ActualResult._unknown(value);
-            }
-        },
-        untransform: ({ _visit, ...value }) => value as any
-    });
+        .transform<SeedTrace.ActualResult>({
+            transform: (value) => {
+                switch (value.type) {
+                    case "value":
+                        return SeedTrace.ActualResult.value(value.value);
+                    case "exception":
+                        return SeedTrace.ActualResult.exception(value);
+                    case "exceptionV2":
+                        return SeedTrace.ActualResult.exceptionV2(value.value);
+                    default:
+                        return SeedTrace.ActualResult._unknown(value);
+                }
+            },
+            untransform: ({ _visit, ...value }) => value as any,
+        });
 
 export declare namespace ActualResult {
     type Raw = ActualResult.Value | ActualResult.Exception | ActualResult.ExceptionV2;
 
     interface Value {
-        "type": "value";
-        "value": serializers.VariableValue.Raw;
+        type: "value";
+        value: serializers.VariableValue.Raw;
     }
 
     interface Exception extends ExceptionInfo.Raw {
-        "type": "exception";
+        type: "exception";
     }
 
     interface ExceptionV2 {
-        "type": "exceptionV2";
-        "value": ExceptionV2.Raw;
+        type: "exceptionV2";
+        value: ExceptionV2.Raw;
     }
 }

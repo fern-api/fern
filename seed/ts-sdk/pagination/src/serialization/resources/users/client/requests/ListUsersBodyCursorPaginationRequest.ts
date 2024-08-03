@@ -7,12 +7,15 @@ import * as SeedPagination from "../../../../../api/index";
 import * as core from "../../../../../core";
 import { WithCursor } from "../../types/WithCursor";
 
-export const ListUsersBodyCursorPaginationRequest: core.serialization.Schema<serializers.ListUsersBodyCursorPaginationRequest.Raw, SeedPagination.ListUsersBodyCursorPaginationRequest> = core.serialization.object({
-        "pagination": WithCursor.optional()
-    });
+export const ListUsersBodyCursorPaginationRequest: core.serialization.Schema<
+    serializers.ListUsersBodyCursorPaginationRequest.Raw,
+    SeedPagination.ListUsersBodyCursorPaginationRequest
+> = core.serialization.object({
+    pagination: WithCursor.optional(),
+});
 
 export declare namespace ListUsersBodyCursorPaginationRequest {
     interface Raw {
-        "pagination"?: WithCursor.Raw | null;
+        pagination?: WithCursor.Raw | null;
     }
 }

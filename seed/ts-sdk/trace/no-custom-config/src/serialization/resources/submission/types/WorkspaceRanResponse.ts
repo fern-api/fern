@@ -8,14 +8,17 @@ import * as core from "../../../../core";
 import { SubmissionId } from "./SubmissionId";
 import { WorkspaceRunDetails } from "./WorkspaceRunDetails";
 
-export const WorkspaceRanResponse: core.serialization.ObjectSchema<serializers.WorkspaceRanResponse.Raw, SeedTrace.WorkspaceRanResponse> = core.serialization.object({
-        "submissionId": SubmissionId,
-        "runDetails": WorkspaceRunDetails
-    });
+export const WorkspaceRanResponse: core.serialization.ObjectSchema<
+    serializers.WorkspaceRanResponse.Raw,
+    SeedTrace.WorkspaceRanResponse
+> = core.serialization.object({
+    submissionId: SubmissionId,
+    runDetails: WorkspaceRunDetails,
+});
 
 export declare namespace WorkspaceRanResponse {
     interface Raw {
-        "submissionId": SubmissionId.Raw;
-        "runDetails": WorkspaceRunDetails.Raw;
+        submissionId: SubmissionId.Raw;
+        runDetails: WorkspaceRunDetails.Raw;
     }
 }

@@ -6,7 +6,8 @@ import * as serializers from "../../../index";
 import * as SeedAudiences from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const Imported: core.serialization.Schema<serializers.Imported.Raw, SeedAudiences.Imported> = core.serialization.string();
+export const Imported: core.serialization.Schema<serializers.Imported.Raw, SeedAudiences.Imported> =
+    core.serialization.string();
 
 export declare namespace Imported {
     type Raw = string;

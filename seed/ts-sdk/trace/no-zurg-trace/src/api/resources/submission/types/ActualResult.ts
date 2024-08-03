@@ -4,7 +4,7 @@
 
 import * as SeedTrace from "../../../index";
 
-export type ActualResult = 
+export type ActualResult =
     | SeedTrace.ActualResult.Value
     | SeedTrace.ActualResult.Exception
     | SeedTrace.ActualResult.ExceptionV2;

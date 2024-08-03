@@ -8,16 +8,19 @@ import * as core from "../../../../core";
 import { ExceptionV2 } from "./ExceptionV2";
 import { ExceptionInfo } from "./ExceptionInfo";
 
-export const WorkspaceRunDetails: core.serialization.ObjectSchema<serializers.WorkspaceRunDetails.Raw, SeedTrace.WorkspaceRunDetails> = core.serialization.object({
-        "exceptionV2": ExceptionV2.optional(),
-        "exception": ExceptionInfo.optional(),
-        "stdout": core.serialization.string()
-    });
+export const WorkspaceRunDetails: core.serialization.ObjectSchema<
+    serializers.WorkspaceRunDetails.Raw,
+    SeedTrace.WorkspaceRunDetails
+> = core.serialization.object({
+    exceptionV2: ExceptionV2.optional(),
+    exception: ExceptionInfo.optional(),
+    stdout: core.serialization.string(),
+});
 
 export declare namespace WorkspaceRunDetails {
     interface Raw {
-        "exceptionV2"?: ExceptionV2.Raw | null;
-        "exception"?: ExceptionInfo.Raw | null;
-        "stdout": string;
+        exceptionV2?: ExceptionV2.Raw | null;
+        exception?: ExceptionInfo.Raw | null;
+        stdout: string;
     }
 }

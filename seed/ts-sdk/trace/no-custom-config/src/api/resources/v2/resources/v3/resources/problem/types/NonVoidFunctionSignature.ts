@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../../../../../index";
 
 export interface NonVoidFunctionSignature {
-    "parameters": SeedTrace.v2.v3.Parameter[];
-    "returnType": SeedTrace.VariableType;
+    parameters: SeedTrace.v2.v3.Parameter[];
+    returnType: SeedTrace.VariableType;
 }

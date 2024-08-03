@@ -3,6 +3,6 @@
  */
 
 export interface StuntDouble {
-    "name": string;
-    "actorOrActressId": string;
+    name: string;
+    actorOrActressId: string;
 }

@@ -4,9 +4,7 @@
 
 import * as SeedApi from "../../../index";
 
-export type ContainerValue = 
-    | SeedApi.ContainerValue.List
-    | SeedApi.ContainerValue.Optional;
+export type ContainerValue = SeedApi.ContainerValue.List | SeedApi.ContainerValue.Optional;
 
 export declare namespace ContainerValue {
     interface List {

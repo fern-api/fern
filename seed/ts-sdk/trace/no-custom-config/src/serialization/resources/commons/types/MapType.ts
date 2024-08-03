@@ -6,14 +6,15 @@ import * as serializers from "../../../index";
 import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const MapType: core.serialization.ObjectSchema<serializers.MapType.Raw, SeedTrace.MapType> = core.serialization.object({
-        "keyType": core.serialization.lazy(() => serializers.VariableType),
-        "valueType": core.serialization.lazy(() => serializers.VariableType)
+export const MapType: core.serialization.ObjectSchema<serializers.MapType.Raw, SeedTrace.MapType> =
+    core.serialization.object({
+        keyType: core.serialization.lazy(() => serializers.VariableType),
+        valueType: core.serialization.lazy(() => serializers.VariableType),
     });
 
 export declare namespace MapType {
     interface Raw {
-        "keyType": serializers.VariableType.Raw;
-        "valueType": serializers.VariableType.Raw;
+        keyType: serializers.VariableType.Raw;
+        valueType: serializers.VariableType.Raw;
     }
 }

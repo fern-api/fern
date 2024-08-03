@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../index";
 
 export interface RecordedTestCaseUpdate {
-    "testCaseId": SeedTrace.v2.TestCaseId;
-    "traceResponsesSize": number;
+    testCaseId: SeedTrace.v2.TestCaseId;
+    traceResponsesSize: number;
 }

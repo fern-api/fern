@@ -29,8 +29,7 @@ export declare namespace V2 {
 }
 
 export class V2 {
-    constructor(protected readonly _options: V2.Options = {}) {
-    }
+    constructor(protected readonly _options: V2.Options = {}) {}
 
     /**
      * @param {V2.RequestOptions} requestOptions - Request-specific configuration.
@@ -40,34 +39,37 @@ export class V2 {
      */
     public async test(requestOptions?: V2.RequestOptions): Promise<core.APIResponse<void, SeedTrace.v2.test.Error>> {
         const _response = await core.fetcher({
-            url: await core.Supplier.get(this._options.environment) ?? environments.SeedTraceEnvironment.Prod,
+            url: (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
             method: "GET",
             headers: {
-                "Authorization": await this._getAuthorizationHeader(),
-                "X-Random-Header": await core.Supplier.get(this._options.xRandomHeader) != null ? await core.Supplier.get(this._options.xRandomHeader) : undefined,
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header":
+                    (await core.Supplier.get(this._options.xRandomHeader)) != null
+                        ? await core.Supplier.get(this._options.xRandomHeader)
+                        : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : undefined,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: undefined
+                body: undefined,
             };
         }
 
         return {
             ok: false,
-            error: SeedTrace.v2.test.Error._unknown(_response.error)
+            error: SeedTrace.v2.test.Error._unknown(_response.error),
         };
     }
 

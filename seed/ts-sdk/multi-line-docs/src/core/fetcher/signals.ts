@@ -30,7 +30,7 @@ export function anySignal(...args: AbortSignal[] | [AbortSignal[]]): AbortSignal
         // Listening for signals and removing the listeners
         // when at least one symbol is aborted.
         signal.addEventListener("abort", () => controller.abort((signal as any)?.reason), {
-            signal: controller.signal
+            signal: controller.signal,
         });
     }
 

@@ -6,7 +6,11 @@ import * as serializers from "../index";
 import * as SeedValidation from "../../api/index";
 import * as core from "../../core";
 
-export const Shape: core.serialization.Schema<serializers.Shape.Raw, SeedValidation.Shape> = core.serialization.enum_(["SQUARE", "CIRCLE", "TRIANGLE"]);
+export const Shape: core.serialization.Schema<serializers.Shape.Raw, SeedValidation.Shape> = core.serialization.enum_([
+    "SQUARE",
+    "CIRCLE",
+    "TRIANGLE",
+]);
 
 export declare namespace Shape {
     type Raw = "SQUARE" | "CIRCLE" | "TRIANGLE";

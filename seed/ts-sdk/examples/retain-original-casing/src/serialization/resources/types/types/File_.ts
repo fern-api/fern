@@ -6,14 +6,15 @@ import * as serializers from "../../../index";
 import * as SeedExamples from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const File_: core.serialization.ObjectSchema<serializers.File_.Raw, SeedExamples.File_> = core.serialization.object({
-        "name": core.serialization.string(),
-        "contents": core.serialization.string()
+export const File_: core.serialization.ObjectSchema<serializers.File_.Raw, SeedExamples.File_> =
+    core.serialization.object({
+        name: core.serialization.string(),
+        contents: core.serialization.string(),
     });
 
 export declare namespace File_ {
     interface Raw {
-        "name": string;
-        "contents": string;
+        name: string;
+        contents: string;
     }
 }

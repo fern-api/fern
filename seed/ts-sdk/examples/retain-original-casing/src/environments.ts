@@ -3,8 +3,10 @@
  */
 
 export const SeedExamplesEnvironment = {
-        Production: "https://production.com/api",
-        Staging: "https://staging.com/api",
-    } as const;
+    Production: "https://production.com/api",
+    Staging: "https://staging.com/api",
+} as const;
 
-export type SeedExamplesEnvironment = typeof SeedExamplesEnvironment.Production | typeof SeedExamplesEnvironment.Staging;
+export type SeedExamplesEnvironment =
+    | typeof SeedExamplesEnvironment.Production
+    | typeof SeedExamplesEnvironment.Staging;

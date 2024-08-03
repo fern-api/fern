@@ -6,12 +6,15 @@ import * as serializers from "../../../../index";
 import * as SeedExtraProperties from "../../../../../api/index";
 import * as core from "../../../../../core";
 
-export const CreateUserRequest: core.serialization.Schema<serializers.CreateUserRequest.Raw, SeedExtraProperties.CreateUserRequest> = core.serialization.object({
-        "name": core.serialization.string()
-    });
+export const CreateUserRequest: core.serialization.Schema<
+    serializers.CreateUserRequest.Raw,
+    SeedExtraProperties.CreateUserRequest
+> = core.serialization.object({
+    name: core.serialization.string(),
+});
 
 export declare namespace CreateUserRequest {
     interface Raw {
-        "name": string;
+        name: string;
     }
 }

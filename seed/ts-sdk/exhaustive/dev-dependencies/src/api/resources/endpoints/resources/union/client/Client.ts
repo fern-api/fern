@@ -24,8 +24,7 @@ export declare namespace Union {
 }
 
 export class Union {
-    constructor(protected readonly _options: Union.Options) {
-    }
+    constructor(protected readonly _options: Union.Options) {}
 
     /**
      * @param {Fiddle.types.Animal} request
@@ -37,35 +36,43 @@ export class Union {
      *         likesToWoof: true
      *     }))
      */
-    public async getAndReturnUnion(request: Fiddle.types.Animal, requestOptions?: Union.RequestOptions): Promise<core.APIResponse<Fiddle.types.Animal, Fiddle.endpoints.union.getAndReturnUnion.Error>> {
+    public async getAndReturnUnion(
+        request: Fiddle.types.Animal,
+        requestOptions?: Union.RequestOptions
+    ): Promise<core.APIResponse<Fiddle.types.Animal, Fiddle.endpoints.union.getAndReturnUnion.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/union"),
             method: "POST",
             headers: {
-                "Authorization": await this._getAuthorizationHeader(),
+                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             requestType: "json",
             body: serializers.types.Animal.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: serializers.types.Animal.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] })
+                body: serializers.types.Animal.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
             };
         }
 
         return {
             ok: false,
-            error: Fiddle.endpoints.union.getAndReturnUnion.Error._unknown(_response.error)
+            error: Fiddle.endpoints.union.getAndReturnUnion.Error._unknown(_response.error),
         };
     }
 

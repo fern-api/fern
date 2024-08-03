@@ -6,12 +6,15 @@ import * as serializers from "../../../index";
 import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const GetTraceResponsesPageRequest: core.serialization.ObjectSchema<serializers.GetTraceResponsesPageRequest.Raw, SeedTrace.GetTraceResponsesPageRequest> = core.serialization.object({
-        "offset": core.serialization.number().optional()
-    });
+export const GetTraceResponsesPageRequest: core.serialization.ObjectSchema<
+    serializers.GetTraceResponsesPageRequest.Raw,
+    SeedTrace.GetTraceResponsesPageRequest
+> = core.serialization.object({
+    offset: core.serialization.number().optional(),
+});
 
 export declare namespace GetTraceResponsesPageRequest {
     interface Raw {
-        "offset"?: number | null;
+        offset?: number | null;
     }
 }

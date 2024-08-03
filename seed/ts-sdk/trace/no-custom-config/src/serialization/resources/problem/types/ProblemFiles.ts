@@ -7,14 +7,15 @@ import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 import { FileInfo } from "../../commons/types/FileInfo";
 
-export const ProblemFiles: core.serialization.ObjectSchema<serializers.ProblemFiles.Raw, SeedTrace.ProblemFiles> = core.serialization.object({
-        "solutionFile": FileInfo,
-        "readOnlyFiles": core.serialization.list(FileInfo)
+export const ProblemFiles: core.serialization.ObjectSchema<serializers.ProblemFiles.Raw, SeedTrace.ProblemFiles> =
+    core.serialization.object({
+        solutionFile: FileInfo,
+        readOnlyFiles: core.serialization.list(FileInfo),
     });
 
 export declare namespace ProblemFiles {
     interface Raw {
-        "solutionFile": FileInfo.Raw;
-        "readOnlyFiles": FileInfo.Raw[];
+        solutionFile: FileInfo.Raw;
+        readOnlyFiles: FileInfo.Raw[];
     }
 }

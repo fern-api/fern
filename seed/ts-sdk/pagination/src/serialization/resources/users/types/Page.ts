@@ -7,18 +7,19 @@ import * as SeedPagination from "../../../../api/index";
 import * as core from "../../../../core";
 import { NextPage } from "./NextPage";
 
-export const Page: core.serialization.ObjectSchema<serializers.Page.Raw, SeedPagination.Page> = core.serialization.object({
-        "page": core.serialization.number(),
-        "next": NextPage.optional(),
-        "perPage": core.serialization.property("per_page", core.serialization.number()),
-        "totalPage": core.serialization.property("total_page", core.serialization.number())
+export const Page: core.serialization.ObjectSchema<serializers.Page.Raw, SeedPagination.Page> =
+    core.serialization.object({
+        page: core.serialization.number(),
+        next: NextPage.optional(),
+        perPage: core.serialization.property("per_page", core.serialization.number()),
+        totalPage: core.serialization.property("total_page", core.serialization.number()),
     });
 
 export declare namespace Page {
     interface Raw {
-        "page": number;
-        "next"?: NextPage.Raw | null;
-        "per_page": number;
-        "total_page": number;
+        page: number;
+        next?: NextPage.Raw | null;
+        per_page: number;
+        total_page: number;
     }
 }

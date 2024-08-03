@@ -14,7 +14,7 @@
  *     }
  */
 export interface User {
-    "userName": string;
-    "metadataTags": string[];
-    "extraProperties": Record<string, string>;
+    userName: string;
+    metadataTags: string[];
+    extraProperties: Record<string, string>;
 }
