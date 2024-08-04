@@ -5,8 +5,7 @@
 import * as SeedTrace from "../../../index";
 import * as core from "../../../../core";
 
-export type Error = 
-    | SeedTrace.playlist.createPlaylist.Error._Unknown;
+export type Error = SeedTrace.playlist.createPlaylist.Error._Unknown;
 
 export declare namespace Error {
     interface _Unknown extends _Utils {
@@ -24,19 +23,26 @@ export declare namespace Error {
 }
 
 export const Error = {
-        _unknown: (fetcherError: core.Fetcher.Error): SeedTrace.playlist.createPlaylist.Error._Unknown => {
-            return {
-                errorName: undefined,
-                content: fetcherError,
-                "_visit": function <_Result>(this: SeedTrace.playlist.createPlaylist.Error._Unknown, visitor: SeedTrace.playlist.createPlaylist.Error._Visitor<_Result>) {
-                    return SeedTrace.playlist.createPlaylist.Error._visit(this, visitor);
-                }
-            };
-        },
+    _unknown: (fetcherError: core.Fetcher.Error): SeedTrace.playlist.createPlaylist.Error._Unknown => {
+        return {
+            errorName: undefined,
+            content: fetcherError,
+            _visit: function <_Result>(
+                this: SeedTrace.playlist.createPlaylist.Error._Unknown,
+                visitor: SeedTrace.playlist.createPlaylist.Error._Visitor<_Result>
+            ) {
+                return SeedTrace.playlist.createPlaylist.Error._visit(this, visitor);
+            },
+        };
+    },
 
-        _visit: <_Result>(value: SeedTrace.playlist.createPlaylist.Error, visitor: SeedTrace.playlist.createPlaylist.Error._Visitor<_Result>): _Result => {
-            switch (value.errorName) {
-                default: return visitor._other(value as any);
-            }
-        },
-    } as const;
+    _visit: <_Result>(
+        value: SeedTrace.playlist.createPlaylist.Error,
+        visitor: SeedTrace.playlist.createPlaylist.Error._Visitor<_Result>
+    ): _Result => {
+        switch (value.errorName) {
+            default:
+                return visitor._other(value as any);
+        }
+    },
+} as const;

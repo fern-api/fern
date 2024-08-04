@@ -5,8 +5,8 @@
 import * as SeedTrace from "../../../../../../../index";
 
 export type TestCaseTemplateId = string & {
-        v2_v3_TestCaseTemplateId: void;
-    };
+    v2_v3_TestCaseTemplateId: void;
+};
 
 export function TestCaseTemplateId(value: string): SeedTrace.v2.v3.TestCaseTemplateId {
     return value as unknown as SeedTrace.v2.v3.TestCaseTemplateId;

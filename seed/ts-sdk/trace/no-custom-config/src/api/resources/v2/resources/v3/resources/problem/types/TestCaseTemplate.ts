@@ -5,7 +5,7 @@
 import * as SeedTrace from "../../../../../../../index";
 
 export interface TestCaseTemplate {
-    "templateId": SeedTrace.v2.v3.TestCaseTemplateId;
-    "name": string;
-    "implementation": SeedTrace.v2.v3.TestCaseImplementation;
+    templateId: SeedTrace.v2.v3.TestCaseTemplateId;
+    name: string;
+    implementation: SeedTrace.v2.v3.TestCaseImplementation;
 }

@@ -22,8 +22,7 @@ export declare namespace SeedNoEnvironmentClient {
 }
 
 export class SeedNoEnvironmentClient {
-    constructor(protected readonly _options: SeedNoEnvironmentClient.Options) {
-    }
+    constructor(protected readonly _options: SeedNoEnvironmentClient.Options) {}
 
     protected _dummy: Dummy | undefined;
 

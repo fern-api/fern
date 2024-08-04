@@ -7,12 +7,15 @@ import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 import { SubmissionId } from "./SubmissionId";
 
-export const SubmissionIdNotFound: core.serialization.ObjectSchema<serializers.SubmissionIdNotFound.Raw, SeedTrace.SubmissionIdNotFound> = core.serialization.object({
-        "missingSubmissionId": SubmissionId
-    });
+export const SubmissionIdNotFound: core.serialization.ObjectSchema<
+    serializers.SubmissionIdNotFound.Raw,
+    SeedTrace.SubmissionIdNotFound
+> = core.serialization.object({
+    missingSubmissionId: SubmissionId,
+});
 
 export declare namespace SubmissionIdNotFound {
     interface Raw {
-        "missingSubmissionId": SubmissionId.Raw;
+        missingSubmissionId: SubmissionId.Raw;
     }
 }

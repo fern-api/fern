@@ -5,7 +5,7 @@
 import * as SeedTrace from "../../../index";
 
 export interface GetExecutionSessionStateResponse {
-    "states": Record<string, SeedTrace.ExecutionSessionState>;
-    "numWarmingInstances"?: number;
-    "warmingSessionIds": string[];
+    states: Record<string, SeedTrace.ExecutionSessionState>;
+    numWarmingInstances?: number;
+    warmingSessionIds: string[];
 }

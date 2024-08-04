@@ -6,14 +6,15 @@ import * as serializers from "../../../../../index";
 import * as Fiddle from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 
-export const Dog: core.serialization.ObjectSchema<serializers.types.Dog.Raw, Fiddle.types.Dog> = core.serialization.object({
-        "name": core.serialization.string(),
-        "likesToWoof": core.serialization.boolean()
+export const Dog: core.serialization.ObjectSchema<serializers.types.Dog.Raw, Fiddle.types.Dog> =
+    core.serialization.object({
+        name: core.serialization.string(),
+        likesToWoof: core.serialization.boolean(),
     });
 
 export declare namespace Dog {
     interface Raw {
-        "name": string;
-        "likesToWoof": boolean;
+        name: string;
+        likesToWoof: boolean;
     }
 }

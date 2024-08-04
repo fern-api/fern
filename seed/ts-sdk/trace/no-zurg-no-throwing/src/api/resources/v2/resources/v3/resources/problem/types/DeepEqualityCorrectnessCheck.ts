@@ -5,5 +5,5 @@
 import * as SeedTrace from "../../../../../../../index";
 
 export interface DeepEqualityCorrectnessCheck {
-    "expectedValueParameterId": SeedTrace.v2.v3.ParameterId;
+    expectedValueParameterId: SeedTrace.v2.v3.ParameterId;
 }

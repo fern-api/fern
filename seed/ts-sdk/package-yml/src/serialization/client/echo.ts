@@ -10,5 +10,3 @@ export const Response: core.serialization.Schema<serializers.echo.Response.Raw, 
 export declare namespace Response {
     type Raw = string;
 }
-
-

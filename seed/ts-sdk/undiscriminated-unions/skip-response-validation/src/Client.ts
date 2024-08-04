@@ -21,8 +21,7 @@ export declare namespace SeedUndiscriminatedUnionsClient {
 }
 
 export class SeedUndiscriminatedUnionsClient {
-    constructor(protected readonly _options: SeedUndiscriminatedUnionsClient.Options) {
-    }
+    constructor(protected readonly _options: SeedUndiscriminatedUnionsClient.Options) {}
 
     protected _union: Union | undefined;
 

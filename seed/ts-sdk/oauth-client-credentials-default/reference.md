@@ -1,5 +1,7 @@
 # Reference
+
 ## Auth
+
 <details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">getToken</a>({ ...params }) -> SeedOauthClientCredentialsDefault.TokenResponse</code></summary>
 <dl>
 <dd>
@@ -15,10 +17,10 @@
 ```typescript
 await client.auth.getToken({
     clientId: "string",
-    clientSecret: "string"
+    clientSecret: "string",
 });
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -32,21 +34,20 @@ await client.auth.getToken({
 <dl>
 <dd>
 
-**request:** `SeedOauthClientCredentialsDefault.GetTokenRequest` 
-    
+**request:** `SeedOauthClientCredentialsDefault.GetTokenRequest`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Auth.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Auth.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>

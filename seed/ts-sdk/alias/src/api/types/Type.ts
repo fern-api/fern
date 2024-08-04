@@ -14,6 +14,6 @@ import * as SeedAlias from "../index";
  *     }
  */
 export interface Type {
-    "id": SeedAlias.TypeId;
-    "name": string;
+    id: SeedAlias.TypeId;
+    name: string;
 }

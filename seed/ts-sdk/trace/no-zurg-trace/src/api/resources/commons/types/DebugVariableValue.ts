@@ -4,7 +4,7 @@
 
 import * as SeedTrace from "../../../index";
 
-export type DebugVariableValue = 
+export type DebugVariableValue =
     | SeedTrace.DebugVariableValue.IntegerValue
     | SeedTrace.DebugVariableValue.BooleanValue
     | SeedTrace.DebugVariableValue.DoubleValue

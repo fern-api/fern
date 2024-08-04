@@ -4,7 +4,7 @@
 
 import * as SeedTrace from "../../../../../index";
 
-export type FunctionSignature = 
+export type FunctionSignature =
     | SeedTrace.v2.FunctionSignature.Void
     | SeedTrace.v2.FunctionSignature.NonVoid
     /**

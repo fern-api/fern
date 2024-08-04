@@ -23,6 +23,6 @@ import * as SeedTrace from "../../../../index";
  *     }
  */
 export interface StoreTracedWorkspaceRequest {
-    "workspaceRunDetails": SeedTrace.WorkspaceRunDetails;
-    "traceResponses": SeedTrace.TraceResponse[];
+    workspaceRunDetails: SeedTrace.WorkspaceRunDetails;
+    traceResponses: SeedTrace.TraceResponse[];
 }

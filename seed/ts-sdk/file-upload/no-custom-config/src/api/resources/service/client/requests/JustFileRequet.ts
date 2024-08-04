@@ -6,5 +6,4 @@
  * @example
  *     {}
  */
-export interface JustFileRequet {
-}
+export interface JustFileRequet {}

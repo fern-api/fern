@@ -7,14 +7,15 @@ import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 import { SubmissionId } from "./SubmissionId";
 
-export const StderrResponse: core.serialization.ObjectSchema<serializers.StderrResponse.Raw, SeedTrace.StderrResponse> = core.serialization.object({
-        "submissionId": SubmissionId,
-        "stderr": core.serialization.string()
+export const StderrResponse: core.serialization.ObjectSchema<serializers.StderrResponse.Raw, SeedTrace.StderrResponse> =
+    core.serialization.object({
+        submissionId: SubmissionId,
+        stderr: core.serialization.string(),
     });
 
 export declare namespace StderrResponse {
     interface Raw {
-        "submissionId": SubmissionId.Raw;
-        "stderr": string;
+        submissionId: SubmissionId.Raw;
+        stderr: string;
     }
 }

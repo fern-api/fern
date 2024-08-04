@@ -6,8 +6,8 @@ import * as SeedPagination from "../../../index";
 
 export interface Page {
     /** The current page */
-    "page": number;
-    "next"?: SeedPagination.NextPage;
-    "perPage": number;
-    "totalPage": number;
+    page: number;
+    next?: SeedPagination.NextPage;
+    perPage: number;
+    totalPage: number;
 }

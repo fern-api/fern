@@ -6,12 +6,13 @@ import * as serializers from "../index";
 import * as SeedApi from "../../api/index";
 import * as core from "../../core";
 
-export const RootType: core.serialization.ObjectSchema<serializers.RootType.Raw, SeedApi.RootType> = core.serialization.object({
-        "s": core.serialization.string()
+export const RootType: core.serialization.ObjectSchema<serializers.RootType.Raw, SeedApi.RootType> =
+    core.serialization.object({
+        s: core.serialization.string(),
     });
 
 export declare namespace RootType {
     interface Raw {
-        "s": string;
+        s: string;
     }
 }

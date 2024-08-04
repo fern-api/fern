@@ -3,6 +3,6 @@
  */
 
 export interface StreamedCompletion {
-    "delta": string;
-    "tokens"?: number;
+    delta: string;
+    tokens?: number;
 }

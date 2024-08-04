@@ -6,12 +6,15 @@ import * as serializers from "../../../index";
 import * as SeedUnions from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const GetShapeRequest: core.serialization.ObjectSchema<serializers.GetShapeRequest.Raw, SeedUnions.GetShapeRequest> = core.serialization.object({
-        "id": core.serialization.string()
-    });
+export const GetShapeRequest: core.serialization.ObjectSchema<
+    serializers.GetShapeRequest.Raw,
+    SeedUnions.GetShapeRequest
+> = core.serialization.object({
+    id: core.serialization.string(),
+});
 
 export declare namespace GetShapeRequest {
     interface Raw {
-        "id": string;
+        id: string;
     }
 }

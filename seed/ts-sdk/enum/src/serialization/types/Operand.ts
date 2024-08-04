@@ -6,7 +6,11 @@ import * as serializers from "../index";
 import * as SeedEnum from "../../api/index";
 import * as core from "../../core";
 
-export const Operand: core.serialization.Schema<serializers.Operand.Raw, SeedEnum.Operand> = core.serialization.enum_([">", "=", "less_than"]);
+export const Operand: core.serialization.Schema<serializers.Operand.Raw, SeedEnum.Operand> = core.serialization.enum_([
+    ">",
+    "=",
+    "less_than",
+]);
 
 export declare namespace Operand {
     type Raw = ">" | "=" | "less_than";

@@ -7,12 +7,15 @@ import * as SeedAudiences from "../../../../api/index";
 import * as core from "../../../../core";
 import { Imported } from "../../commons/types/Imported";
 
-export const ImportingType: core.serialization.ObjectSchema<serializers.ImportingType.Raw, SeedAudiences.ImportingType> = core.serialization.object({
-        "imported": Imported
-    });
+export const ImportingType: core.serialization.ObjectSchema<
+    serializers.ImportingType.Raw,
+    SeedAudiences.ImportingType
+> = core.serialization.object({
+    imported: Imported,
+});
 
 export declare namespace ImportingType {
     interface Raw {
-        "imported": Imported.Raw;
+        imported: Imported.Raw;
     }
 }

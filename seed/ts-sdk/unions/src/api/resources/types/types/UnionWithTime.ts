@@ -4,7 +4,7 @@
 
 import * as SeedUnions from "../../../index";
 
-export type UnionWithTime = 
+export type UnionWithTime =
     | SeedUnions.UnionWithTime.Value
     | SeedUnions.UnionWithTime.Date_
     | SeedUnions.UnionWithTime.Datetime;

@@ -4,9 +4,7 @@
 
 import * as SeedUnions from "../../../index";
 
-export type UnionWithUnknown = 
-    | SeedUnions.UnionWithUnknown.Foo
-    | SeedUnions.UnionWithUnknown.Unknown;
+export type UnionWithUnknown = SeedUnions.UnionWithUnknown.Foo | SeedUnions.UnionWithUnknown.Unknown;
 
 export declare namespace UnionWithUnknown {
     interface Foo extends SeedUnions.Foo {

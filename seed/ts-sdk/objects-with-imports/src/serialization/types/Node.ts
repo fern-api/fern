@@ -7,16 +7,17 @@ import * as SeedObjectsWithImports from "../../api/index";
 import * as core from "../../core";
 import { Metadata } from "../resources/commons/resources/metadata/types/Metadata";
 
-export const Node: core.serialization.ObjectSchema<serializers.Node.Raw, SeedObjectsWithImports.Node> = core.serialization.object({
-        "id": core.serialization.string(),
-        "label": core.serialization.string().optional(),
-        "metadata": Metadata.optional()
+export const Node: core.serialization.ObjectSchema<serializers.Node.Raw, SeedObjectsWithImports.Node> =
+    core.serialization.object({
+        id: core.serialization.string(),
+        label: core.serialization.string().optional(),
+        metadata: Metadata.optional(),
     });
 
 export declare namespace Node {
     interface Raw {
-        "id": string;
-        "label"?: string | null;
-        "metadata"?: Metadata.Raw | null;
+        id: string;
+        label?: string | null;
+        metadata?: Metadata.Raw | null;
     }
 }

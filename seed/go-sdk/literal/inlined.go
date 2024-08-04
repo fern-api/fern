@@ -7,10 +7,13 @@ import (
 )
 
 type SendLiteralsInlinedRequest struct {
-	Query       string   `json:"query" url:"-"`
-	Temperature *float64 `json:"temperature,omitempty" url:"-"`
-	prompt      string
-	stream      bool
+	Context        *string             `json:"context,omitempty" url:"-"`
+	Query          string              `json:"query" url:"-"`
+	Temperature    *float64            `json:"temperature,omitempty" url:"-"`
+	AliasedContext SomeAliasedLiteral  `json:"aliasedContext,omitempty" url:"-"`
+	MaybeContext   *SomeAliasedLiteral `json:"maybeContext,omitempty" url:"-"`
+	prompt         string
+	stream         bool
 }
 
 func (s *SendLiteralsInlinedRequest) Prompt() string {
@@ -46,3 +49,5 @@ func (s *SendLiteralsInlinedRequest) MarshalJSON() ([]byte, error) {
 	}
 	return json.Marshal(marshaler)
 }
+
+type SomeAliasedLiteral = string

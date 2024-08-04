@@ -30,8 +30,7 @@ export declare namespace Payment {
 }
 
 export class Payment {
-    constructor(protected readonly _options: Payment.Options) {
-    }
+    constructor(protected readonly _options: Payment.Options) {}
 
     /**
      * @param {SeedIdempotencyHeaders.CreatePaymentRequest} request
@@ -43,47 +42,58 @@ export class Payment {
      *         currency: SeedIdempotencyHeaders.Currency.Usd
      *     })
      */
-    public async create(request: SeedIdempotencyHeaders.CreatePaymentRequest, requestOptions?: Payment.IdempotentRequestOptions): Promise<string> {
+    public async create(
+        request: SeedIdempotencyHeaders.CreatePaymentRequest,
+        requestOptions?: Payment.IdempotentRequestOptions
+    ): Promise<string> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/payment"),
             method: "POST",
             headers: {
-                "Authorization": await this._getAuthorizationHeader(),
+                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/idempotency-headers",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey,
-                "Idempotency-Expiration": requestOptions?.idempotencyExpiration.toString()
+                "Idempotency-Expiration": requestOptions?.idempotencyExpiration.toString(),
             },
             contentType: "application/json",
             requestType: "json",
             body: serializers.CreatePaymentRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.payment.create.Response.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] });
+            return serializers.payment.create.Response.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedIdempotencyHeadersError({
                 statusCode: _response.error.statusCode,
-                body: _response.error.body
+                body: _response.error.body,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedIdempotencyHeadersError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody
-            });
-            case "timeout": throw new errors.SeedIdempotencyHeadersTimeoutError;
-            case "unknown": throw new errors.SeedIdempotencyHeadersError({
-                message: _response.error.errorMessage
-            });
+            case "non-json":
+                throw new errors.SeedIdempotencyHeadersError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedIdempotencyHeadersTimeoutError();
+            case "unknown":
+                throw new errors.SeedIdempotencyHeadersError({
+                    message: _response.error.errorMessage,
+                });
         }
     }
 
@@ -96,21 +106,24 @@ export class Payment {
      */
     public async delete(paymentId: string, requestOptions?: Payment.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/payment/${encodeURIComponent(paymentId)}`),
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/payment/${encodeURIComponent(paymentId)}`
+            ),
             method: "DELETE",
             headers: {
-                "Authorization": await this._getAuthorizationHeader(),
+                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/idempotency-headers",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -119,19 +132,22 @@ export class Payment {
         if (_response.error.reason === "status-code") {
             throw new errors.SeedIdempotencyHeadersError({
                 statusCode: _response.error.statusCode,
-                body: _response.error.body
+                body: _response.error.body,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedIdempotencyHeadersError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody
-            });
-            case "timeout": throw new errors.SeedIdempotencyHeadersTimeoutError;
-            case "unknown": throw new errors.SeedIdempotencyHeadersError({
-                message: _response.error.errorMessage
-            });
+            case "non-json":
+                throw new errors.SeedIdempotencyHeadersError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedIdempotencyHeadersTimeoutError();
+            case "unknown":
+                throw new errors.SeedIdempotencyHeadersError({
+                    message: _response.error.errorMessage,
+                });
         }
     }
 

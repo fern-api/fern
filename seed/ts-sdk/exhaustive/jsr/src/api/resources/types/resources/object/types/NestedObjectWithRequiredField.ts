@@ -5,6 +5,6 @@
 import * as SeedExhaustive from "../../../../../index";
 
 export interface NestedObjectWithRequiredField {
-    "string": string;
-    "nestedObject": SeedExhaustive.types.ObjectWithOptionalField;
+    string: string;
+    nestedObject: SeedExhaustive.types.ObjectWithOptionalField;
 }

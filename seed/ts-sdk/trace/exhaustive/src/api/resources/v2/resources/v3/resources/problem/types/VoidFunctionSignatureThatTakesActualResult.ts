@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../../../../../index";
 
 export interface VoidFunctionSignatureThatTakesActualResult {
-    "parameters": SeedTrace.v2.v3.Parameter[];
-    "actualResultType": SeedTrace.VariableType;
+    parameters: SeedTrace.v2.v3.Parameter[];
+    actualResultType: SeedTrace.VariableType;
 }

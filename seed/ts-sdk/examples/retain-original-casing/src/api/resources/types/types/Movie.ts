@@ -29,14 +29,14 @@ import * as SeedExamples from "../../../index";
  *     }
  */
 export interface Movie {
-    "id": SeedExamples.MovieId;
-    "prequel"?: SeedExamples.MovieId;
-    "title": string;
-    "from": string;
+    id: SeedExamples.MovieId;
+    prequel?: SeedExamples.MovieId;
+    title: string;
+    from: string;
     /** The rating scale is one to five stars */
-    "rating": number;
-    "type": "movie";
-    "tag": SeedExamples.commons.Tag;
-    "book"?: string;
-    "metadata": Record<string, unknown>;
+    rating: number;
+    type: "movie";
+    tag: SeedExamples.commons.Tag;
+    book?: string;
+    metadata: Record<string, unknown>;
 }

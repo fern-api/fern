@@ -4,7 +4,7 @@
 
 import * as SeedTrace from "../../../index";
 
-export type DebugVariableValue = 
+export type DebugVariableValue =
     | SeedTrace.DebugVariableValue.IntegerValue
     | SeedTrace.DebugVariableValue.BooleanValue
     | SeedTrace.DebugVariableValue.DoubleValue
@@ -101,168 +101,229 @@ export declare namespace DebugVariableValue {
         undefinedValue: () => _Result;
         nullValue: () => _Result;
         genericValue: (value: SeedTrace.GenericValue) => _Result;
-        _other: (value: {
-                type: string;
-            }) => _Result;
+        _other: (value: { type: string }) => _Result;
     }
 }
 
 export const DebugVariableValue = {
-        integerValue: (value: number): SeedTrace.DebugVariableValue.IntegerValue => {
-            return {
-                value: value,
-                type: "integerValue",
-                "_visit": function <_Result>(this: SeedTrace.DebugVariableValue.IntegerValue, visitor: SeedTrace.DebugVariableValue._Visitor<_Result>) {
-                    return SeedTrace.DebugVariableValue._visit(this, visitor);
-                }
-            };
-        },
+    integerValue: (value: number): SeedTrace.DebugVariableValue.IntegerValue => {
+        return {
+            value: value,
+            type: "integerValue",
+            _visit: function <_Result>(
+                this: SeedTrace.DebugVariableValue.IntegerValue,
+                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+            ) {
+                return SeedTrace.DebugVariableValue._visit(this, visitor);
+            },
+        };
+    },
 
-        booleanValue: (value: boolean): SeedTrace.DebugVariableValue.BooleanValue => {
-            return {
-                value: value,
-                type: "booleanValue",
-                "_visit": function <_Result>(this: SeedTrace.DebugVariableValue.BooleanValue, visitor: SeedTrace.DebugVariableValue._Visitor<_Result>) {
-                    return SeedTrace.DebugVariableValue._visit(this, visitor);
-                }
-            };
-        },
+    booleanValue: (value: boolean): SeedTrace.DebugVariableValue.BooleanValue => {
+        return {
+            value: value,
+            type: "booleanValue",
+            _visit: function <_Result>(
+                this: SeedTrace.DebugVariableValue.BooleanValue,
+                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+            ) {
+                return SeedTrace.DebugVariableValue._visit(this, visitor);
+            },
+        };
+    },
 
-        doubleValue: (value: number): SeedTrace.DebugVariableValue.DoubleValue => {
-            return {
-                value: value,
-                type: "doubleValue",
-                "_visit": function <_Result>(this: SeedTrace.DebugVariableValue.DoubleValue, visitor: SeedTrace.DebugVariableValue._Visitor<_Result>) {
-                    return SeedTrace.DebugVariableValue._visit(this, visitor);
-                }
-            };
-        },
+    doubleValue: (value: number): SeedTrace.DebugVariableValue.DoubleValue => {
+        return {
+            value: value,
+            type: "doubleValue",
+            _visit: function <_Result>(
+                this: SeedTrace.DebugVariableValue.DoubleValue,
+                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+            ) {
+                return SeedTrace.DebugVariableValue._visit(this, visitor);
+            },
+        };
+    },
 
-        stringValue: (value: string): SeedTrace.DebugVariableValue.StringValue => {
-            return {
-                value: value,
-                type: "stringValue",
-                "_visit": function <_Result>(this: SeedTrace.DebugVariableValue.StringValue, visitor: SeedTrace.DebugVariableValue._Visitor<_Result>) {
-                    return SeedTrace.DebugVariableValue._visit(this, visitor);
-                }
-            };
-        },
+    stringValue: (value: string): SeedTrace.DebugVariableValue.StringValue => {
+        return {
+            value: value,
+            type: "stringValue",
+            _visit: function <_Result>(
+                this: SeedTrace.DebugVariableValue.StringValue,
+                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+            ) {
+                return SeedTrace.DebugVariableValue._visit(this, visitor);
+            },
+        };
+    },
 
-        charValue: (value: string): SeedTrace.DebugVariableValue.CharValue => {
-            return {
-                value: value,
-                type: "charValue",
-                "_visit": function <_Result>(this: SeedTrace.DebugVariableValue.CharValue, visitor: SeedTrace.DebugVariableValue._Visitor<_Result>) {
-                    return SeedTrace.DebugVariableValue._visit(this, visitor);
-                }
-            };
-        },
+    charValue: (value: string): SeedTrace.DebugVariableValue.CharValue => {
+        return {
+            value: value,
+            type: "charValue",
+            _visit: function <_Result>(
+                this: SeedTrace.DebugVariableValue.CharValue,
+                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+            ) {
+                return SeedTrace.DebugVariableValue._visit(this, visitor);
+            },
+        };
+    },
 
-        mapValue: (value: SeedTrace.DebugMapValue): SeedTrace.DebugVariableValue.MapValue => {
-            return {
-                ...value,
-                type: "mapValue",
-                "_visit": function <_Result>(this: SeedTrace.DebugVariableValue.MapValue, visitor: SeedTrace.DebugVariableValue._Visitor<_Result>) {
-                    return SeedTrace.DebugVariableValue._visit(this, visitor);
-                }
-            };
-        },
+    mapValue: (value: SeedTrace.DebugMapValue): SeedTrace.DebugVariableValue.MapValue => {
+        return {
+            ...value,
+            type: "mapValue",
+            _visit: function <_Result>(
+                this: SeedTrace.DebugVariableValue.MapValue,
+                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+            ) {
+                return SeedTrace.DebugVariableValue._visit(this, visitor);
+            },
+        };
+    },
 
-        listValue: (value: SeedTrace.DebugVariableValue[]): SeedTrace.DebugVariableValue.ListValue => {
-            return {
-                value: value,
-                type: "listValue",
-                "_visit": function <_Result>(this: SeedTrace.DebugVariableValue.ListValue, visitor: SeedTrace.DebugVariableValue._Visitor<_Result>) {
-                    return SeedTrace.DebugVariableValue._visit(this, visitor);
-                }
-            };
-        },
+    listValue: (value: SeedTrace.DebugVariableValue[]): SeedTrace.DebugVariableValue.ListValue => {
+        return {
+            value: value,
+            type: "listValue",
+            _visit: function <_Result>(
+                this: SeedTrace.DebugVariableValue.ListValue,
+                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+            ) {
+                return SeedTrace.DebugVariableValue._visit(this, visitor);
+            },
+        };
+    },
 
-        binaryTreeNodeValue: (value: SeedTrace.BinaryTreeNodeAndTreeValue): SeedTrace.DebugVariableValue.BinaryTreeNodeValue => {
-            return {
-                ...value,
-                type: "binaryTreeNodeValue",
-                "_visit": function <_Result>(this: SeedTrace.DebugVariableValue.BinaryTreeNodeValue, visitor: SeedTrace.DebugVariableValue._Visitor<_Result>) {
-                    return SeedTrace.DebugVariableValue._visit(this, visitor);
-                }
-            };
-        },
+    binaryTreeNodeValue: (
+        value: SeedTrace.BinaryTreeNodeAndTreeValue
+    ): SeedTrace.DebugVariableValue.BinaryTreeNodeValue => {
+        return {
+            ...value,
+            type: "binaryTreeNodeValue",
+            _visit: function <_Result>(
+                this: SeedTrace.DebugVariableValue.BinaryTreeNodeValue,
+                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+            ) {
+                return SeedTrace.DebugVariableValue._visit(this, visitor);
+            },
+        };
+    },
 
-        singlyLinkedListNodeValue: (value: SeedTrace.SinglyLinkedListNodeAndListValue): SeedTrace.DebugVariableValue.SinglyLinkedListNodeValue => {
-            return {
-                ...value,
-                type: "singlyLinkedListNodeValue",
-                "_visit": function <_Result>(this: SeedTrace.DebugVariableValue.SinglyLinkedListNodeValue, visitor: SeedTrace.DebugVariableValue._Visitor<_Result>) {
-                    return SeedTrace.DebugVariableValue._visit(this, visitor);
-                }
-            };
-        },
+    singlyLinkedListNodeValue: (
+        value: SeedTrace.SinglyLinkedListNodeAndListValue
+    ): SeedTrace.DebugVariableValue.SinglyLinkedListNodeValue => {
+        return {
+            ...value,
+            type: "singlyLinkedListNodeValue",
+            _visit: function <_Result>(
+                this: SeedTrace.DebugVariableValue.SinglyLinkedListNodeValue,
+                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+            ) {
+                return SeedTrace.DebugVariableValue._visit(this, visitor);
+            },
+        };
+    },
 
-        doublyLinkedListNodeValue: (value: SeedTrace.DoublyLinkedListNodeAndListValue): SeedTrace.DebugVariableValue.DoublyLinkedListNodeValue => {
-            return {
-                ...value,
-                type: "doublyLinkedListNodeValue",
-                "_visit": function <_Result>(this: SeedTrace.DebugVariableValue.DoublyLinkedListNodeValue, visitor: SeedTrace.DebugVariableValue._Visitor<_Result>) {
-                    return SeedTrace.DebugVariableValue._visit(this, visitor);
-                }
-            };
-        },
+    doublyLinkedListNodeValue: (
+        value: SeedTrace.DoublyLinkedListNodeAndListValue
+    ): SeedTrace.DebugVariableValue.DoublyLinkedListNodeValue => {
+        return {
+            ...value,
+            type: "doublyLinkedListNodeValue",
+            _visit: function <_Result>(
+                this: SeedTrace.DebugVariableValue.DoublyLinkedListNodeValue,
+                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+            ) {
+                return SeedTrace.DebugVariableValue._visit(this, visitor);
+            },
+        };
+    },
 
-        undefinedValue: (): SeedTrace.DebugVariableValue.UndefinedValue => {
-            return {
-                type: "undefinedValue",
-                "_visit": function <_Result>(this: SeedTrace.DebugVariableValue.UndefinedValue, visitor: SeedTrace.DebugVariableValue._Visitor<_Result>) {
-                    return SeedTrace.DebugVariableValue._visit(this, visitor);
-                }
-            };
-        },
+    undefinedValue: (): SeedTrace.DebugVariableValue.UndefinedValue => {
+        return {
+            type: "undefinedValue",
+            _visit: function <_Result>(
+                this: SeedTrace.DebugVariableValue.UndefinedValue,
+                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+            ) {
+                return SeedTrace.DebugVariableValue._visit(this, visitor);
+            },
+        };
+    },
 
-        nullValue: (): SeedTrace.DebugVariableValue.NullValue => {
-            return {
-                type: "nullValue",
-                "_visit": function <_Result>(this: SeedTrace.DebugVariableValue.NullValue, visitor: SeedTrace.DebugVariableValue._Visitor<_Result>) {
-                    return SeedTrace.DebugVariableValue._visit(this, visitor);
-                }
-            };
-        },
+    nullValue: (): SeedTrace.DebugVariableValue.NullValue => {
+        return {
+            type: "nullValue",
+            _visit: function <_Result>(
+                this: SeedTrace.DebugVariableValue.NullValue,
+                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+            ) {
+                return SeedTrace.DebugVariableValue._visit(this, visitor);
+            },
+        };
+    },
 
-        genericValue: (value: SeedTrace.GenericValue): SeedTrace.DebugVariableValue.GenericValue => {
-            return {
-                ...value,
-                type: "genericValue",
-                "_visit": function <_Result>(this: SeedTrace.DebugVariableValue.GenericValue, visitor: SeedTrace.DebugVariableValue._Visitor<_Result>) {
-                    return SeedTrace.DebugVariableValue._visit(this, visitor);
-                }
-            };
-        },
+    genericValue: (value: SeedTrace.GenericValue): SeedTrace.DebugVariableValue.GenericValue => {
+        return {
+            ...value,
+            type: "genericValue",
+            _visit: function <_Result>(
+                this: SeedTrace.DebugVariableValue.GenericValue,
+                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+            ) {
+                return SeedTrace.DebugVariableValue._visit(this, visitor);
+            },
+        };
+    },
 
-        _unknown: (value: {
-            type: string;
-        }): SeedTrace.DebugVariableValue._Unknown => {
-            return {
-                ...(value as any),
-                "_visit": function <_Result>(this: SeedTrace.DebugVariableValue._Unknown, visitor: SeedTrace.DebugVariableValue._Visitor<_Result>) {
-                    return SeedTrace.DebugVariableValue._visit(this, visitor);
-                }
-            };
-        },
+    _unknown: (value: { type: string }): SeedTrace.DebugVariableValue._Unknown => {
+        return {
+            ...(value as any),
+            _visit: function <_Result>(
+                this: SeedTrace.DebugVariableValue._Unknown,
+                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+            ) {
+                return SeedTrace.DebugVariableValue._visit(this, visitor);
+            },
+        };
+    },
 
-        _visit: <_Result>(value: SeedTrace.DebugVariableValue, visitor: SeedTrace.DebugVariableValue._Visitor<_Result>): _Result => {
-            switch (value.type) {
-                case "integerValue": return visitor.integerValue(value.value);
-                case "booleanValue": return visitor.booleanValue(value.value);
-                case "doubleValue": return visitor.doubleValue(value.value);
-                case "stringValue": return visitor.stringValue(value.value);
-                case "charValue": return visitor.charValue(value.value);
-                case "mapValue": return visitor.mapValue(value);
-                case "listValue": return visitor.listValue(value.value);
-                case "binaryTreeNodeValue": return visitor.binaryTreeNodeValue(value);
-                case "singlyLinkedListNodeValue": return visitor.singlyLinkedListNodeValue(value);
-                case "doublyLinkedListNodeValue": return visitor.doublyLinkedListNodeValue(value);
-                case "undefinedValue": return visitor.undefinedValue();
-                case "nullValue": return visitor.nullValue();
-                case "genericValue": return visitor.genericValue(value);
-                default: return visitor._other(value as any);
-            }
-        },
-    } as const;
+    _visit: <_Result>(
+        value: SeedTrace.DebugVariableValue,
+        visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+    ): _Result => {
+        switch (value.type) {
+            case "integerValue":
+                return visitor.integerValue(value.value);
+            case "booleanValue":
+                return visitor.booleanValue(value.value);
+            case "doubleValue":
+                return visitor.doubleValue(value.value);
+            case "stringValue":
+                return visitor.stringValue(value.value);
+            case "charValue":
+                return visitor.charValue(value.value);
+            case "mapValue":
+                return visitor.mapValue(value);
+            case "listValue":
+                return visitor.listValue(value.value);
+            case "binaryTreeNodeValue":
+                return visitor.binaryTreeNodeValue(value);
+            case "singlyLinkedListNodeValue":
+                return visitor.singlyLinkedListNodeValue(value);
+            case "doublyLinkedListNodeValue":
+                return visitor.doublyLinkedListNodeValue(value);
+            case "undefinedValue":
+                return visitor.undefinedValue();
+            case "nullValue":
+                return visitor.nullValue();
+            case "genericValue":
+                return visitor.genericValue(value);
+            default:
+                return visitor._other(value as any);
+        }
+    },
+} as const;

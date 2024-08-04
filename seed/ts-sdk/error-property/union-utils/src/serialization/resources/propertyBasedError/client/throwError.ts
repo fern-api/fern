@@ -5,10 +5,9 @@
 import * as serializers from "../../../index";
 import * as core from "../../../../core";
 
-export const Response: core.serialization.Schema<serializers.propertyBasedError.throwError.Response.Raw, string> = core.serialization.string();
+export const Response: core.serialization.Schema<serializers.propertyBasedError.throwError.Response.Raw, string> =
+    core.serialization.string();
 
 export declare namespace Response {
     type Raw = string;
 }
-
-

@@ -5,8 +5,7 @@
 import * as Fiddle from "../../../index";
 import * as core from "../../../../core";
 
-export type Error = 
-    | Fiddle.noReqBody.postWithNoRequestBody.Error._Unknown;
+export type Error = Fiddle.noReqBody.postWithNoRequestBody.Error._Unknown;
 
 export declare namespace Error {
     interface _Unknown extends _Utils {
@@ -24,19 +23,26 @@ export declare namespace Error {
 }
 
 export const Error = {
-        _unknown: (fetcherError: core.Fetcher.Error): Fiddle.noReqBody.postWithNoRequestBody.Error._Unknown => {
-            return {
-                statusCode: undefined,
-                content: fetcherError,
-                "_visit": function <_Result>(this: Fiddle.noReqBody.postWithNoRequestBody.Error._Unknown, visitor: Fiddle.noReqBody.postWithNoRequestBody.Error._Visitor<_Result>) {
-                    return Fiddle.noReqBody.postWithNoRequestBody.Error._visit(this, visitor);
-                }
-            };
-        },
+    _unknown: (fetcherError: core.Fetcher.Error): Fiddle.noReqBody.postWithNoRequestBody.Error._Unknown => {
+        return {
+            statusCode: undefined,
+            content: fetcherError,
+            _visit: function <_Result>(
+                this: Fiddle.noReqBody.postWithNoRequestBody.Error._Unknown,
+                visitor: Fiddle.noReqBody.postWithNoRequestBody.Error._Visitor<_Result>
+            ) {
+                return Fiddle.noReqBody.postWithNoRequestBody.Error._visit(this, visitor);
+            },
+        };
+    },
 
-        _visit: <_Result>(value: Fiddle.noReqBody.postWithNoRequestBody.Error, visitor: Fiddle.noReqBody.postWithNoRequestBody.Error._Visitor<_Result>): _Result => {
-            switch (value.statusCode) {
-                default: return visitor._other(value as any);
-            }
-        },
-    } as const;
+    _visit: <_Result>(
+        value: Fiddle.noReqBody.postWithNoRequestBody.Error,
+        visitor: Fiddle.noReqBody.postWithNoRequestBody.Error._Visitor<_Result>
+    ): _Result => {
+        switch (value.statusCode) {
+            default:
+                return visitor._other(value as any);
+        }
+    },
+} as const;

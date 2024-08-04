@@ -10,28 +10,30 @@ import { User } from "./User";
 import { Organization } from "./Organization";
 
 const _Base = core.serialization.object({
-        "status": ResourceStatus
-    });
-export const Resource: core.serialization.Schema<serializers.Resource.Raw, SeedMixedCase.Resource> = core.serialization.union(core.serialization.discriminant("resourceType", "resource_type"), {
-        "user": User.extend(_Base),
-        "Organization": Organization.extend(_Base)
-    }).transform<SeedMixedCase.Resource>({
-        transform: value => value,
-        untransform: value => value
+    status: ResourceStatus,
+});
+export const Resource: core.serialization.Schema<serializers.Resource.Raw, SeedMixedCase.Resource> = core.serialization
+    .union(core.serialization.discriminant("resourceType", "resource_type"), {
+        user: User.extend(_Base),
+        Organization: Organization.extend(_Base),
+    })
+    .transform<SeedMixedCase.Resource>({
+        transform: (value) => value,
+        untransform: (value) => value,
     });
 
 export declare namespace Resource {
     type Raw = Resource.User | Resource.Organization;
 
     interface User extends _Base, User.Raw {
-        "resource_type": "user";
+        resource_type: "user";
     }
 
     interface Organization extends _Base, Organization.Raw {
-        "resource_type": "Organization";
+        resource_type: "Organization";
     }
 
     interface _Base {
-        "status": ResourceStatus.Raw;
+        status: ResourceStatus.Raw;
     }
 }

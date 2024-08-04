@@ -1,5 +1,7 @@
 # Reference
+
 ## Service
+
 <details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">post</a>(file, fileList, maybeFile, maybeFileList, { ...params }) -> void</code></summary>
 <dl>
 <dd>
@@ -13,9 +15,15 @@
 <dd>
 
 ```typescript
-await client.service.post(fs.createReadStream("/path/to/your/file"), [fs.createReadStream("/path/to/your/file")], fs.createReadStream("/path/to/your/file"), [fs.createReadStream("/path/to/your/file")], {});
-
+await client.service.post(
+    fs.createReadStream("/path/to/your/file"),
+    [fs.createReadStream("/path/to/your/file")],
+    fs.createReadStream("/path/to/your/file"),
+    [fs.createReadStream("/path/to/your/file")],
+    {}
+);
 ```
+
 </dd>
 </dl>
 </dd>
@@ -29,53 +37,52 @@ await client.service.post(fs.createReadStream("/path/to/your/file"), [fs.createR
 <dl>
 <dd>
 
-**file:** `File | fs.ReadStream | Blob` 
-    
+**file:** `File | fs.ReadStream | Blob`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**fileList:** `File[] | fs.ReadStream[] | Blob[]` 
-    
+**fileList:** `File[] | fs.ReadStream[] | Blob[]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**maybeFile:** `File | fs.ReadStream | Blob | undefined` 
-    
+**maybeFile:** `File | fs.ReadStream | Blob | undefined`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**maybeFileList:** `File[] | fs.ReadStream[] | Blob[] | undefined` 
-    
+**maybeFileList:** `File[] | fs.ReadStream[] | Blob[] | undefined`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `SeedFileUpload.MyRequest` 
-    
+**request:** `SeedFileUpload.MyRequest`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Service.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -95,8 +102,8 @@ await client.service.post(fs.createReadStream("/path/to/your/file"), [fs.createR
 
 ```typescript
 await client.service.justFile(fs.createReadStream("/path/to/your/file"));
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -110,21 +117,20 @@ await client.service.justFile(fs.createReadStream("/path/to/your/file"));
 <dl>
 <dd>
 
-**file:** `File | fs.ReadStream | Blob` 
-    
+**file:** `File | fs.ReadStream | Blob`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Service.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -148,10 +154,10 @@ await client.service.justFileWithQueryParams(fs.createReadStream("/path/to/your/
     integer: 1,
     maybeInteger: 1,
     listOfStrings: "string",
-    optionalListOfStrings: "string"
+    optionalListOfStrings: "string",
 });
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -165,29 +171,28 @@ await client.service.justFileWithQueryParams(fs.createReadStream("/path/to/your/
 <dl>
 <dd>
 
-**file:** `File | fs.ReadStream | Blob` 
-    
+**file:** `File | fs.ReadStream | Blob`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `SeedFileUpload.JustFileWithQueryParamsRequet` 
-    
+**request:** `SeedFileUpload.JustFileWithQueryParamsRequet`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Service.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>

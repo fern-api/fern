@@ -76,33 +76,33 @@ function evaluateRuntime(): Runtime {
     if (isBrowser) {
         return {
             type: "browser",
-            version: window.navigator.userAgent
+            version: window.navigator.userAgent,
         };
     }
 
     if (isCloudflare) {
         return {
-            type: "workerd"
+            type: "workerd",
         };
     }
 
     if (isWebWorker) {
         return {
-            type: "web-worker"
+            type: "web-worker",
         };
     }
 
     if (isDeno) {
         return {
             type: "deno",
-            version: Deno.version.deno
+            version: Deno.version.deno,
         };
     }
 
     if (isBun) {
         return {
             type: "bun",
-            version: Bun.version
+            version: Bun.version,
         };
     }
 
@@ -110,17 +110,17 @@ function evaluateRuntime(): Runtime {
         return {
             type: "node",
             version: process.versions.node,
-            parsedVersion: Number(process.versions.node.split(".")[0])
+            parsedVersion: Number(process.versions.node.split(".")[0]),
         };
     }
 
     if (isReactNative) {
         return {
-            type: "react-native"
+            type: "react-native",
         };
     }
 
     return {
-        type: "unknown"
+        type: "unknown",
     };
 }

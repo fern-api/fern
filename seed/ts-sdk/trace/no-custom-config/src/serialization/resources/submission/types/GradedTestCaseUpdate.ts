@@ -8,14 +8,17 @@ import * as core from "../../../../core";
 import { TestCaseId } from "../../v2/resources/problem/types/TestCaseId";
 import { TestCaseGrade } from "./TestCaseGrade";
 
-export const GradedTestCaseUpdate: core.serialization.ObjectSchema<serializers.GradedTestCaseUpdate.Raw, SeedTrace.GradedTestCaseUpdate> = core.serialization.object({
-        "testCaseId": TestCaseId,
-        "grade": TestCaseGrade
-    });
+export const GradedTestCaseUpdate: core.serialization.ObjectSchema<
+    serializers.GradedTestCaseUpdate.Raw,
+    SeedTrace.GradedTestCaseUpdate
+> = core.serialization.object({
+    testCaseId: TestCaseId,
+    grade: TestCaseGrade,
+});
 
 export declare namespace GradedTestCaseUpdate {
     interface Raw {
-        "testCaseId": TestCaseId.Raw;
-        "grade": TestCaseGrade.Raw;
+        testCaseId: TestCaseId.Raw;
+        grade: TestCaseGrade.Raw;
     }
 }

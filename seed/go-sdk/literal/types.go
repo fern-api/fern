@@ -71,3 +71,5 @@ func (s *SendResponse) String() string {
 	}
 	return fmt.Sprintf("%#v", s)
 }
+
+type SomeLiteral = string

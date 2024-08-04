@@ -6,34 +6,39 @@ import * as serializers from "../../../index";
 import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const Test: core.serialization.Schema<serializers.Test.Raw, SeedTrace.Test> = core.serialization.union("type", {
-        "and": core.serialization.object({
-            "value": core.serialization.boolean()
+export const Test: core.serialization.Schema<serializers.Test.Raw, SeedTrace.Test> = core.serialization
+    .union("type", {
+        and: core.serialization.object({
+            value: core.serialization.boolean(),
         }),
-        "or": core.serialization.object({
-            "value": core.serialization.boolean()
-        })
-    }).transform<SeedTrace.Test>({
-        transform: value => {
+        or: core.serialization.object({
+            value: core.serialization.boolean(),
+        }),
+    })
+    .transform<SeedTrace.Test>({
+        transform: (value) => {
             switch (value.type) {
-                case "and": return SeedTrace.Test.and(value.value);
-                case "or": return SeedTrace.Test.or(value.value);
-                default: return SeedTrace.Test._unknown(value);
+                case "and":
+                    return SeedTrace.Test.and(value.value);
+                case "or":
+                    return SeedTrace.Test.or(value.value);
+                default:
+                    return SeedTrace.Test._unknown(value);
             }
         },
-        untransform: ({ _visit, ...value }) => value as any
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace Test {
     type Raw = Test.And | Test.Or;
 
     interface And {
-        "type": "and";
-        "value": boolean;
+        type: "and";
+        value: boolean;
     }
 
     interface Or {
-        "type": "or";
-        "value": boolean;
+        type: "or";
+        value: boolean;
     }
 }

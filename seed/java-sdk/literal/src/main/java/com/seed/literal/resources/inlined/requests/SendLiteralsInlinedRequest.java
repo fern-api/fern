@@ -20,22 +20,41 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SendLiteralsInlinedRequest.Builder.class)
 public final class SendLiteralsInlinedRequest {
+    private final Optional<String> context;
+
     private final String query;
 
     private final Optional<Double> temperature;
 
+    private final String aliasedContext;
+
+    private final Optional<String> maybeContext;
+
     private final Map<String, Object> additionalProperties;
 
     private SendLiteralsInlinedRequest(
-            String query, Optional<Double> temperature, Map<String, Object> additionalProperties) {
+            Optional<String> context,
+            String query,
+            Optional<Double> temperature,
+            String aliasedContext,
+            Optional<String> maybeContext,
+            Map<String, Object> additionalProperties) {
+        this.context = context;
         this.query = query;
         this.temperature = temperature;
+        this.aliasedContext = aliasedContext;
+        this.maybeContext = maybeContext;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("prompt")
     public String getPrompt() {
         return "You are a helpful assistant";
+    }
+
+    @JsonProperty("context")
+    public Optional<String> getContext() {
+        return context;
     }
 
     @JsonProperty("query")
@@ -53,6 +72,16 @@ public final class SendLiteralsInlinedRequest {
         return false;
     }
 
+    @JsonProperty("aliasedContext")
+    public String getAliasedContext() {
+        return aliasedContext;
+    }
+
+    @JsonProperty("maybeContext")
+    public Optional<String> getMaybeContext() {
+        return maybeContext;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -65,12 +94,16 @@ public final class SendLiteralsInlinedRequest {
     }
 
     private boolean equalTo(SendLiteralsInlinedRequest other) {
-        return query.equals(other.query) && temperature.equals(other.temperature);
+        return context.equals(other.context)
+                && query.equals(other.query)
+                && temperature.equals(other.temperature)
+                && aliasedContext.equals(other.aliasedContext)
+                && maybeContext.equals(other.maybeContext);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.query, this.temperature);
+        return Objects.hash(this.context, this.query, this.temperature, this.aliasedContext, this.maybeContext);
     }
 
     @java.lang.Override
@@ -83,24 +116,42 @@ public final class SendLiteralsInlinedRequest {
     }
 
     public interface QueryStage {
-        _FinalStage query(String query);
+        AliasedContextStage query(String query);
 
         Builder from(SendLiteralsInlinedRequest other);
+    }
+
+    public interface AliasedContextStage {
+        _FinalStage aliasedContext(String aliasedContext);
     }
 
     public interface _FinalStage {
         SendLiteralsInlinedRequest build();
 
+        _FinalStage context(Optional<String> context);
+
+        _FinalStage context(String context);
+
         _FinalStage temperature(Optional<Double> temperature);
 
         _FinalStage temperature(Double temperature);
+
+        _FinalStage maybeContext(Optional<String> maybeContext);
+
+        _FinalStage maybeContext(String maybeContext);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements QueryStage, _FinalStage {
+    public static final class Builder implements QueryStage, AliasedContextStage, _FinalStage {
         private String query;
 
+        private String aliasedContext;
+
+        private Optional<String> maybeContext = Optional.empty();
+
         private Optional<Double> temperature = Optional.empty();
+
+        private Optional<String> context = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -109,15 +160,38 @@ public final class SendLiteralsInlinedRequest {
 
         @java.lang.Override
         public Builder from(SendLiteralsInlinedRequest other) {
+            context(other.getContext());
             query(other.getQuery());
             temperature(other.getTemperature());
+            aliasedContext(other.getAliasedContext());
+            maybeContext(other.getMaybeContext());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("query")
-        public _FinalStage query(String query) {
+        public AliasedContextStage query(String query) {
             this.query = query;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("aliasedContext")
+        public _FinalStage aliasedContext(String aliasedContext) {
+            this.aliasedContext = aliasedContext;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage maybeContext(String maybeContext) {
+            this.maybeContext = Optional.ofNullable(maybeContext);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "maybeContext", nulls = Nulls.SKIP)
+        public _FinalStage maybeContext(Optional<String> maybeContext) {
+            this.maybeContext = maybeContext;
             return this;
         }
 
@@ -135,8 +209,22 @@ public final class SendLiteralsInlinedRequest {
         }
 
         @java.lang.Override
+        public _FinalStage context(String context) {
+            this.context = Optional.ofNullable(context);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "context", nulls = Nulls.SKIP)
+        public _FinalStage context(Optional<String> context) {
+            this.context = context;
+            return this;
+        }
+
+        @java.lang.Override
         public SendLiteralsInlinedRequest build() {
-            return new SendLiteralsInlinedRequest(query, temperature, additionalProperties);
+            return new SendLiteralsInlinedRequest(
+                    context, query, temperature, aliasedContext, maybeContext, additionalProperties);
         }
     }
 }

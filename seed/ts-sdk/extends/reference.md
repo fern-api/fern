@@ -1,4 +1,5 @@
 # Reference
+
 <details><summary><code>client.<a href="/src/Client.ts">extendedInlineRequestBody</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
@@ -15,10 +16,10 @@
 await client.extendedInlineRequestBody({
     unique: "string",
     name: "string",
-    docs: "string"
+    docs: "string",
 });
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -32,24 +33,23 @@ await client.extendedInlineRequestBody({
 <dl>
 <dd>
 
-**request:** `SeedExtends.Inlined` 
-    
+**request:** `SeedExtends.Inlined`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `SeedExtendsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `SeedExtendsClient.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
 </details>
 
-## 
+##

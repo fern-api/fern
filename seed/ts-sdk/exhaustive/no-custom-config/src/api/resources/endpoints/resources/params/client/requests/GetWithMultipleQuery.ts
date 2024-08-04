@@ -10,6 +10,6 @@
  *     }
  */
 export interface GetWithMultipleQuery {
-    "query": string | string[];
-    "numer": number | number[];
+    query: string | string[];
+    numer: number | number[];
 }
