@@ -254,7 +254,7 @@ export class TemplateGenerator {
             const memberTemplate = this.getTemplateFromTypeReference({
                 typeReference: member.type,
                 name: undefined,
-                location,
+                location: FdrSnippetTemplate.PayloadLocation.Relative,
                 wireOrOriginalName: undefined,
                 nameBreadcrumbs: undefined,
                 indentationLevel: childIndentationLevel,

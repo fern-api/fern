@@ -83,7 +83,7 @@
                                             "blue": "\"blue\""
                                         },
                                         "templateInput": {
-                                            "location": "BODY",
+                                            "location": "RELATIVE",
                                             "path": null
                                         },
                                         "type": "enum"
@@ -104,7 +104,7 @@
                                             "less_than": "\"less_than\""
                                         },
                                         "templateInput": {
-                                            "location": "BODY",
+                                            "location": "RELATIVE",
                                             "path": null
                                         },
                                         "type": "enum"
@@ -139,7 +139,7 @@
                                             "blue": "\"blue\""
                                         },
                                         "templateInput": {
-                                            "location": "BODY",
+                                            "location": "RELATIVE",
                                             "path": null
                                         },
                                         "type": "enum"
@@ -160,7 +160,7 @@
                                             "less_than": "\"less_than\""
                                         },
                                         "templateInput": {
-                                            "location": "BODY",
+                                            "location": "RELATIVE",
                                             "path": null
                                         },
                                         "type": "enum"
@@ -254,7 +254,7 @@
                                                 "blue": "\"blue\""
                                             },
                                             "templateInput": {
-                                                "location": "BODY",
+                                                "location": "RELATIVE",
                                                 "path": null
                                             },
                                             "type": "enum"
@@ -275,7 +275,7 @@
                                                 "less_than": "\"less_than\""
                                             },
                                             "templateInput": {
-                                                "location": "BODY",
+                                                "location": "RELATIVE",
                                                 "path": null
                                             },
                                             "type": "enum"
@@ -310,7 +310,7 @@
                                                 "blue": "\"blue\""
                                             },
                                             "templateInput": {
-                                                "location": "BODY",
+                                                "location": "RELATIVE",
                                                 "path": null
                                             },
                                             "type": "enum"
@@ -331,7 +331,7 @@
                                                 "less_than": "\"less_than\""
                                             },
                                             "templateInput": {
-                                                "location": "BODY",
+                                                "location": "RELATIVE",
                                                 "path": null
                                             },
                                             "type": "enum"
@@ -437,7 +437,7 @@
                                             "blue": "\"blue\""
                                         },
                                         "templateInput": {
-                                            "location": "PATH",
+                                            "location": "RELATIVE",
                                             "path": null
                                         },
                                         "type": "enum"
@@ -458,7 +458,7 @@
                                             "less_than": "\"less_than\""
                                         },
                                         "templateInput": {
-                                            "location": "PATH",
+                                            "location": "RELATIVE",
                                             "path": null
                                         },
                                         "type": "enum"
@@ -493,7 +493,7 @@
                                             "blue": "\"blue\""
                                         },
                                         "templateInput": {
-                                            "location": "PATH",
+                                            "location": "RELATIVE",
                                             "path": null
                                         },
                                         "type": "enum"
@@ -514,7 +514,7 @@
                                             "less_than": "\"less_than\""
                                         },
                                         "templateInput": {
-                                            "location": "PATH",
+                                            "location": "RELATIVE",
                                             "path": null
                                         },
                                         "type": "enum"
@@ -608,7 +608,7 @@
                                                 "blue": "\"blue\""
                                             },
                                             "templateInput": {
-                                                "location": "PATH",
+                                                "location": "RELATIVE",
                                                 "path": null
                                             },
                                             "type": "enum"
@@ -629,7 +629,7 @@
                                                 "less_than": "\"less_than\""
                                             },
                                             "templateInput": {
-                                                "location": "PATH",
+                                                "location": "RELATIVE",
                                                 "path": null
                                             },
                                             "type": "enum"
@@ -664,7 +664,7 @@
                                                 "blue": "\"blue\""
                                             },
                                             "templateInput": {
-                                                "location": "PATH",
+                                                "location": "RELATIVE",
                                                 "path": null
                                             },
                                             "type": "enum"
@@ -685,7 +685,7 @@
                                                 "less_than": "\"less_than\""
                                             },
                                             "templateInput": {
-                                                "location": "PATH",
+                                                "location": "RELATIVE",
                                                 "path": null
                                             },
                                             "type": "enum"
@@ -791,7 +791,7 @@
                                             "blue": "\"blue\""
                                         },
                                         "templateInput": {
-                                            "location": "QUERY",
+                                            "location": "RELATIVE",
                                             "path": null
                                         },
                                         "type": "enum"
@@ -812,7 +812,7 @@
                                             "less_than": "\"less_than\""
                                         },
                                         "templateInput": {
-                                            "location": "QUERY",
+                                            "location": "RELATIVE",
                                             "path": null
                                         },
                                         "type": "enum"
@@ -847,7 +847,7 @@
                                             "blue": "\"blue\""
                                         },
                                         "templateInput": {
-                                            "location": "QUERY",
+                                            "location": "RELATIVE",
                                             "path": null
                                         },
                                         "type": "enum"
@@ -868,7 +868,7 @@
                                             "less_than": "\"less_than\""
                                         },
                                         "templateInput": {
-                                            "location": "QUERY",
+                                            "location": "RELATIVE",
                                             "path": null
                                         },
                                         "type": "enum"
@@ -962,7 +962,7 @@
                                                 "blue": "\"blue\""
                                             },
                                             "templateInput": {
-                                                "location": "QUERY",
+                                                "location": "RELATIVE",
                                                 "path": null
                                             },
                                             "type": "enum"
@@ -983,7 +983,7 @@
                                                 "less_than": "\"less_than\""
                                             },
                                             "templateInput": {
-                                                "location": "QUERY",
+                                                "location": "RELATIVE",
                                                 "path": null
                                             },
                                             "type": "enum"
@@ -1018,7 +1018,7 @@
                                                 "blue": "\"blue\""
                                             },
                                             "templateInput": {
-                                                "location": "QUERY",
+                                                "location": "RELATIVE",
                                                 "path": null
                                             },
                                             "type": "enum"
@@ -1039,7 +1039,7 @@
                                                 "less_than": "\"less_than\""
                                             },
                                             "templateInput": {
-                                                "location": "QUERY",
+                                                "location": "RELATIVE",
                                                 "path": null
                                             },
                                             "type": "enum"
@@ -1145,7 +1145,7 @@
                                             "blue": "\"blue\""
                                         },
                                         "templateInput": {
-                                            "location": "QUERY",
+                                            "location": "RELATIVE",
                                             "path": null
                                         },
                                         "type": "enum"
@@ -1166,7 +1166,7 @@
                                             "less_than": "\"less_than\""
                                         },
                                         "templateInput": {
-                                            "location": "QUERY",
+                                            "location": "RELATIVE",
                                             "path": null
                                         },
                                         "type": "enum"
@@ -1201,7 +1201,7 @@
                                             "blue": "\"blue\""
                                         },
                                         "templateInput": {
-                                            "location": "QUERY",
+                                            "location": "RELATIVE",
                                             "path": null
                                         },
                                         "type": "enum"
@@ -1222,7 +1222,7 @@
                                             "less_than": "\"less_than\""
                                         },
                                         "templateInput": {
-                                            "location": "QUERY",
+                                            "location": "RELATIVE",
                                             "path": null
                                         },
                                         "type": "enum"
@@ -1316,7 +1316,7 @@
                                                 "blue": "\"blue\""
                                             },
                                             "templateInput": {
-                                                "location": "QUERY",
+                                                "location": "RELATIVE",
                                                 "path": null
                                             },
                                             "type": "enum"
@@ -1337,7 +1337,7 @@
                                                 "less_than": "\"less_than\""
                                             },
                                             "templateInput": {
-                                                "location": "QUERY",
+                                                "location": "RELATIVE",
                                                 "path": null
                                             },
                                             "type": "enum"
@@ -1372,7 +1372,7 @@
                                                 "blue": "\"blue\""
                                             },
                                             "templateInput": {
-                                                "location": "QUERY",
+                                                "location": "RELATIVE",
                                                 "path": null
                                             },
                                             "type": "enum"
@@ -1393,7 +1393,7 @@
                                                 "less_than": "\"less_than\""
                                             },
                                             "templateInput": {
-                                                "location": "QUERY",
+                                                "location": "RELATIVE",
                                                 "path": null
                                             },
                                             "type": "enum"

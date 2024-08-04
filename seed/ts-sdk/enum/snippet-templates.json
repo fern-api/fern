@@ -110,7 +110,7 @@
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
-                                                        "location": "BODY",
+                                                        "location": "RELATIVE",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -131,7 +131,7 @@
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
-                                                        "location": "BODY",
+                                                        "location": "RELATIVE",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -167,7 +167,7 @@
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
-                                                        "location": "BODY",
+                                                        "location": "RELATIVE",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -188,7 +188,7 @@
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
-                                                        "location": "BODY",
+                                                        "location": "RELATIVE",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -330,7 +330,7 @@
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
-                                                        "location": "PATH",
+                                                        "location": "RELATIVE",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -351,7 +351,7 @@
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
-                                                        "location": "PATH",
+                                                        "location": "RELATIVE",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -387,7 +387,7 @@
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
-                                                        "location": "PATH",
+                                                        "location": "RELATIVE",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -408,7 +408,7 @@
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
-                                                        "location": "PATH",
+                                                        "location": "RELATIVE",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -550,7 +550,7 @@
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
-                                                        "location": "QUERY",
+                                                        "location": "RELATIVE",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -571,7 +571,7 @@
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
-                                                        "location": "QUERY",
+                                                        "location": "RELATIVE",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -607,7 +607,7 @@
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
-                                                        "location": "QUERY",
+                                                        "location": "RELATIVE",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -628,7 +628,7 @@
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
-                                                        "location": "QUERY",
+                                                        "location": "RELATIVE",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -770,7 +770,7 @@
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
-                                                        "location": "QUERY",
+                                                        "location": "RELATIVE",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -791,7 +791,7 @@
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
-                                                        "location": "QUERY",
+                                                        "location": "RELATIVE",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -827,7 +827,7 @@
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
-                                                        "location": "QUERY",
+                                                        "location": "RELATIVE",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -848,7 +848,7 @@
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
-                                                        "location": "QUERY",
+                                                        "location": "RELATIVE",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"

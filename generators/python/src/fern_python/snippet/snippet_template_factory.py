@@ -662,7 +662,7 @@ class SnippetTemplateFactory:
             member_template = self.get_type_reference_template(
                 type_=member.type,
                 name=None,
-                location=location,
+                location="RELATIVE",
                 wire_or_original_name=None,
                 name_breadcrumbs=None,
                 indentation_level=indentation_level,
