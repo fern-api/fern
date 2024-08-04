@@ -196,7 +196,8 @@
                                 }
                             ],
                             "templateInput": {
-                                "location": "RELATIVE"
+                                "location": "BODY",
+                                "path": null
                             },
                             "type": "union_v2"
                         }
@@ -394,7 +395,8 @@
                                     }
                                 ],
                                 "templateInput": {
-                                    "location": "RELATIVE"
+                                    "location": "BODY",
+                                    "path": null
                                 },
                                 "type": "union_v2"
                             }

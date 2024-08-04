@@ -84,7 +84,7 @@
                                         },
                                         "templateInput": {
                                             "location": "BODY",
-                                            "path": "operandOrColor"
+                                            "path": null
                                         },
                                         "type": "enum"
                                     }
@@ -105,14 +105,15 @@
                                         },
                                         "templateInput": {
                                             "location": "BODY",
-                                            "path": "operandOrColor"
+                                            "path": null
                                         },
                                         "type": "enum"
                                     }
                                 }
                             ],
                             "templateInput": {
-                                "location": "RELATIVE"
+                                "location": "BODY",
+                                "path": "operandOrColor"
                             },
                             "type": "union_v2"
                         }
@@ -139,7 +140,7 @@
                                         },
                                         "templateInput": {
                                             "location": "BODY",
-                                            "path": "maybeOperandOrColor"
+                                            "path": null
                                         },
                                         "type": "enum"
                                     }
@@ -160,14 +161,15 @@
                                         },
                                         "templateInput": {
                                             "location": "BODY",
-                                            "path": "maybeOperandOrColor"
+                                            "path": null
                                         },
                                         "type": "enum"
                                     }
                                 }
                             ],
                             "templateInput": {
-                                "location": "RELATIVE"
+                                "location": "BODY",
+                                "path": "maybeOperandOrColor"
                             },
                             "type": "union_v2"
                         }
@@ -253,7 +255,7 @@
                                             },
                                             "templateInput": {
                                                 "location": "BODY",
-                                                "path": "operandOrColor"
+                                                "path": null
                                             },
                                             "type": "enum"
                                         }
@@ -274,14 +276,15 @@
                                             },
                                             "templateInput": {
                                                 "location": "BODY",
-                                                "path": "operandOrColor"
+                                                "path": null
                                             },
                                             "type": "enum"
                                         }
                                     }
                                 ],
                                 "templateInput": {
-                                    "location": "RELATIVE"
+                                    "location": "BODY",
+                                    "path": "operandOrColor"
                                 },
                                 "type": "union_v2"
                             }
@@ -308,7 +311,7 @@
                                             },
                                             "templateInput": {
                                                 "location": "BODY",
-                                                "path": "maybeOperandOrColor"
+                                                "path": null
                                             },
                                             "type": "enum"
                                         }
@@ -329,14 +332,15 @@
                                             },
                                             "templateInput": {
                                                 "location": "BODY",
-                                                "path": "maybeOperandOrColor"
+                                                "path": null
                                             },
                                             "type": "enum"
                                         }
                                     }
                                 ],
                                 "templateInput": {
-                                    "location": "RELATIVE"
+                                    "location": "BODY",
+                                    "path": "maybeOperandOrColor"
                                 },
                                 "type": "union_v2"
                             }
@@ -434,7 +438,7 @@
                                         },
                                         "templateInput": {
                                             "location": "PATH",
-                                            "path": "operandOrColor"
+                                            "path": null
                                         },
                                         "type": "enum"
                                     }
@@ -455,14 +459,15 @@
                                         },
                                         "templateInput": {
                                             "location": "PATH",
-                                            "path": "operandOrColor"
+                                            "path": null
                                         },
                                         "type": "enum"
                                     }
                                 }
                             ],
                             "templateInput": {
-                                "location": "RELATIVE"
+                                "location": "PATH",
+                                "path": "operandOrColor"
                             },
                             "type": "union_v2"
                         }
@@ -489,7 +494,7 @@
                                         },
                                         "templateInput": {
                                             "location": "PATH",
-                                            "path": "maybeOperandOrColor"
+                                            "path": null
                                         },
                                         "type": "enum"
                                     }
@@ -510,14 +515,15 @@
                                         },
                                         "templateInput": {
                                             "location": "PATH",
-                                            "path": "maybeOperandOrColor"
+                                            "path": null
                                         },
                                         "type": "enum"
                                     }
                                 }
                             ],
                             "templateInput": {
-                                "location": "RELATIVE"
+                                "location": "PATH",
+                                "path": "maybeOperandOrColor"
                             },
                             "type": "union_v2"
                         }
@@ -603,7 +609,7 @@
                                             },
                                             "templateInput": {
                                                 "location": "PATH",
-                                                "path": "operandOrColor"
+                                                "path": null
                                             },
                                             "type": "enum"
                                         }
@@ -624,14 +630,15 @@
                                             },
                                             "templateInput": {
                                                 "location": "PATH",
-                                                "path": "operandOrColor"
+                                                "path": null
                                             },
                                             "type": "enum"
                                         }
                                     }
                                 ],
                                 "templateInput": {
-                                    "location": "RELATIVE"
+                                    "location": "PATH",
+                                    "path": "operandOrColor"
                                 },
                                 "type": "union_v2"
                             }
@@ -658,7 +665,7 @@
                                             },
                                             "templateInput": {
                                                 "location": "PATH",
-                                                "path": "maybeOperandOrColor"
+                                                "path": null
                                             },
                                             "type": "enum"
                                         }
@@ -679,14 +686,15 @@
                                             },
                                             "templateInput": {
                                                 "location": "PATH",
-                                                "path": "maybeOperandOrColor"
+                                                "path": null
                                             },
                                             "type": "enum"
                                         }
                                     }
                                 ],
                                 "templateInput": {
-                                    "location": "RELATIVE"
+                                    "location": "PATH",
+                                    "path": "maybeOperandOrColor"
                                 },
                                 "type": "union_v2"
                             }
@@ -784,7 +792,7 @@
                                         },
                                         "templateInput": {
                                             "location": "QUERY",
-                                            "path": "operandOrColor"
+                                            "path": null
                                         },
                                         "type": "enum"
                                     }
@@ -805,14 +813,15 @@
                                         },
                                         "templateInput": {
                                             "location": "QUERY",
-                                            "path": "operandOrColor"
+                                            "path": null
                                         },
                                         "type": "enum"
                                     }
                                 }
                             ],
                             "templateInput": {
-                                "location": "RELATIVE"
+                                "location": "QUERY",
+                                "path": "operandOrColor"
                             },
                             "type": "union_v2"
                         }
@@ -839,7 +848,7 @@
                                         },
                                         "templateInput": {
                                             "location": "QUERY",
-                                            "path": "maybeOperandOrColor"
+                                            "path": null
                                         },
                                         "type": "enum"
                                     }
@@ -860,14 +869,15 @@
                                         },
                                         "templateInput": {
                                             "location": "QUERY",
-                                            "path": "maybeOperandOrColor"
+                                            "path": null
                                         },
                                         "type": "enum"
                                     }
                                 }
                             ],
                             "templateInput": {
-                                "location": "RELATIVE"
+                                "location": "QUERY",
+                                "path": "maybeOperandOrColor"
                             },
                             "type": "union_v2"
                         }
@@ -953,7 +963,7 @@
                                             },
                                             "templateInput": {
                                                 "location": "QUERY",
-                                                "path": "operandOrColor"
+                                                "path": null
                                             },
                                             "type": "enum"
                                         }
@@ -974,14 +984,15 @@
                                             },
                                             "templateInput": {
                                                 "location": "QUERY",
-                                                "path": "operandOrColor"
+                                                "path": null
                                             },
                                             "type": "enum"
                                         }
                                     }
                                 ],
                                 "templateInput": {
-                                    "location": "RELATIVE"
+                                    "location": "QUERY",
+                                    "path": "operandOrColor"
                                 },
                                 "type": "union_v2"
                             }
@@ -1008,7 +1019,7 @@
                                             },
                                             "templateInput": {
                                                 "location": "QUERY",
-                                                "path": "maybeOperandOrColor"
+                                                "path": null
                                             },
                                             "type": "enum"
                                         }
@@ -1029,14 +1040,15 @@
                                             },
                                             "templateInput": {
                                                 "location": "QUERY",
-                                                "path": "maybeOperandOrColor"
+                                                "path": null
                                             },
                                             "type": "enum"
                                         }
                                     }
                                 ],
                                 "templateInput": {
-                                    "location": "RELATIVE"
+                                    "location": "QUERY",
+                                    "path": "maybeOperandOrColor"
                                 },
                                 "type": "union_v2"
                             }
@@ -1134,7 +1146,7 @@
                                         },
                                         "templateInput": {
                                             "location": "QUERY",
-                                            "path": "operandOrColor"
+                                            "path": null
                                         },
                                         "type": "enum"
                                     }
@@ -1155,14 +1167,15 @@
                                         },
                                         "templateInput": {
                                             "location": "QUERY",
-                                            "path": "operandOrColor"
+                                            "path": null
                                         },
                                         "type": "enum"
                                     }
                                 }
                             ],
                             "templateInput": {
-                                "location": "RELATIVE"
+                                "location": "QUERY",
+                                "path": "operandOrColor"
                             },
                             "type": "union_v2"
                         }
@@ -1189,7 +1202,7 @@
                                         },
                                         "templateInput": {
                                             "location": "QUERY",
-                                            "path": "maybeOperandOrColor"
+                                            "path": null
                                         },
                                         "type": "enum"
                                     }
@@ -1210,14 +1223,15 @@
                                         },
                                         "templateInput": {
                                             "location": "QUERY",
-                                            "path": "maybeOperandOrColor"
+                                            "path": null
                                         },
                                         "type": "enum"
                                     }
                                 }
                             ],
                             "templateInput": {
-                                "location": "RELATIVE"
+                                "location": "QUERY",
+                                "path": "maybeOperandOrColor"
                             },
                             "type": "union_v2"
                         }
@@ -1303,7 +1317,7 @@
                                             },
                                             "templateInput": {
                                                 "location": "QUERY",
-                                                "path": "operandOrColor"
+                                                "path": null
                                             },
                                             "type": "enum"
                                         }
@@ -1324,14 +1338,15 @@
                                             },
                                             "templateInput": {
                                                 "location": "QUERY",
-                                                "path": "operandOrColor"
+                                                "path": null
                                             },
                                             "type": "enum"
                                         }
                                     }
                                 ],
                                 "templateInput": {
-                                    "location": "RELATIVE"
+                                    "location": "QUERY",
+                                    "path": "operandOrColor"
                                 },
                                 "type": "union_v2"
                             }
@@ -1358,7 +1373,7 @@
                                             },
                                             "templateInput": {
                                                 "location": "QUERY",
-                                                "path": "maybeOperandOrColor"
+                                                "path": null
                                             },
                                             "type": "enum"
                                         }
@@ -1379,14 +1394,15 @@
                                             },
                                             "templateInput": {
                                                 "location": "QUERY",
-                                                "path": "maybeOperandOrColor"
+                                                "path": null
                                             },
                                             "type": "enum"
                                         }
                                     }
                                 ],
                                 "templateInput": {
-                                    "location": "RELATIVE"
+                                    "location": "QUERY",
+                                    "path": "maybeOperandOrColor"
                                 },
                                 "type": "union_v2"
                             }

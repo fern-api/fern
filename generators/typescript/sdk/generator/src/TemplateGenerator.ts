@@ -255,8 +255,8 @@ export class TemplateGenerator {
                 typeReference: member.type,
                 name: undefined,
                 location,
-                wireOrOriginalName,
-                nameBreadcrumbs,
+                wireOrOriginalName: undefined,
+                nameBreadcrumbs: undefined,
                 indentationLevel: childIndentationLevel,
                 isObjectInlined: true
             });
@@ -418,7 +418,7 @@ export class TemplateGenerator {
                 wireOrOriginalName: prop.name.wireValue,
                 nameBreadcrumbs: childBreadcrumbs,
                 indentationLevel: childIndentationLevel,
-                isObjectInlined
+                isObjectInlined: false
             });
 
             if (propInput != null) {
@@ -540,7 +540,7 @@ export class TemplateGenerator {
                     wireOrOriginalName: undefined,
                     nameBreadcrumbs: undefined,
                     indentationLevel: childIndentationLevel,
-                    isObjectInlined
+                    isObjectInlined: false
                 });
                 return innerTemplate != null
                     ? FdrSnippetTemplate.Template.iterable({
@@ -567,7 +567,7 @@ export class TemplateGenerator {
                     wireOrOriginalName: undefined,
                     nameBreadcrumbs: undefined,
                     indentationLevel: childIndentationLevel,
-                    isObjectInlined
+                    isObjectInlined: false
                 });
 
                 return innerTemplate != null
@@ -595,7 +595,7 @@ export class TemplateGenerator {
                     wireOrOriginalName: undefined,
                     nameBreadcrumbs: undefined,
                     indentationLevel: childIndentationLevel,
-                    isObjectInlined
+                    isObjectInlined: false
                 });
                 const valueTemplate = this.getTemplateFromTypeReference({
                     typeReference: kvType.valueType,
@@ -604,7 +604,7 @@ export class TemplateGenerator {
                     wireOrOriginalName: undefined,
                     nameBreadcrumbs: undefined,
                     indentationLevel: childIndentationLevel,
-                    isObjectInlined
+                    isObjectInlined: false
                 });
 
                 return keyTemplate != null && valueTemplate != null

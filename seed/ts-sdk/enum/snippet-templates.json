@@ -111,7 +111,6 @@
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
                                                         "location": "BODY",
-                                                        "path": "operandOrColor",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -133,7 +132,6 @@
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
                                                         "location": "BODY",
-                                                        "path": "operandOrColor",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -170,7 +168,6 @@
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
                                                         "location": "BODY",
-                                                        "path": "maybeOperandOrColor",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -192,7 +189,6 @@
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
                                                         "location": "BODY",
-                                                        "path": "maybeOperandOrColor",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -335,7 +331,6 @@
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
                                                         "location": "PATH",
-                                                        "path": "operandOrColor",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -357,7 +352,6 @@
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
                                                         "location": "PATH",
-                                                        "path": "operandOrColor",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -394,7 +388,6 @@
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
                                                         "location": "PATH",
-                                                        "path": "maybeOperandOrColor",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -416,7 +409,6 @@
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
                                                         "location": "PATH",
-                                                        "path": "maybeOperandOrColor",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -559,7 +551,6 @@
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
                                                         "location": "QUERY",
-                                                        "path": "operandOrColor",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -581,7 +572,6 @@
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
                                                         "location": "QUERY",
-                                                        "path": "operandOrColor",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -618,7 +608,6 @@
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
                                                         "location": "QUERY",
-                                                        "path": "maybeOperandOrColor",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -640,7 +629,6 @@
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
                                                         "location": "QUERY",
-                                                        "path": "maybeOperandOrColor",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -783,7 +771,6 @@
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
                                                         "location": "QUERY",
-                                                        "path": "operandOrColor",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -805,7 +792,6 @@
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
                                                         "location": "QUERY",
-                                                        "path": "operandOrColor",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -842,7 +828,6 @@
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
                                                         "location": "QUERY",
-                                                        "path": "maybeOperandOrColor",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
@@ -864,7 +849,6 @@
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
                                                         "location": "QUERY",
-                                                        "path": "maybeOperandOrColor",
                                                         "type": "payload"
                                                     },
                                                     "type": "enum"
