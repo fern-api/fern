@@ -328,11 +328,11 @@ class SnippetTemplateFactory:
                 indentation_level=indentation_level,
                 is_function_parameter=is_function_parameter,
             )
-        
+
         if include_literal_templates and container_union.type == "literal":
             literal_value = container_union.literal.visit(
                 string=lambda s: f'"{s}"',
-                boolean=lambda b: f'{b}',
+                boolean=lambda b: f"{b}",
             )
             template_string = f"{self._get_name_value_separator(name=name, is_function_parameter=is_function_parameter)}{literal_value}"
             return Template.factory.generic(
@@ -716,7 +716,7 @@ class SnippetTemplateFactory:
                     name_breadcrumbs=name_breadcrumbs,
                     indentation_level=indentation_level,
                     is_function_parameter=is_function_parameter,
-                    include_literal_templates=include_literal_templates
+                    include_literal_templates=include_literal_templates,
                 ),
                 enum=lambda etd: self._get_enum_template(
                     type_name=cast(ir_types.DeclaredTypeName, type_name),
@@ -797,7 +797,7 @@ class SnippetTemplateFactory:
                 name_breadcrumbs=name_breadcrumbs,
                 indentation_level=indentation_level,
                 is_function_parameter=is_function_parameter,
-                include_literal_templates=include_literal_templates
+                include_literal_templates=include_literal_templates,
             ),
             named=lambda type_name: self._get_named_template(
                 type_name=type_name,
@@ -807,7 +807,7 @@ class SnippetTemplateFactory:
                 name_breadcrumbs=name_breadcrumbs,
                 indentation_level=indentation_level,
                 is_function_parameter=is_function_parameter,
-                include_literal_templates=include_literal_templates
+                include_literal_templates=include_literal_templates,
             ),
         )
 
