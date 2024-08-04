@@ -226,13 +226,13 @@ reference = "fern-prod"
 
 [[package]]
 name = "fern-fern-generator-exec-sdk"
-version = "0.82.4"
+version = "0.82.5"
 description = ""
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "fern_fern_generator_exec_sdk-0.82.4-py3-none-any.whl", hash = "sha256:437a64f3a2312b0b33ac9f8e63152213663ac21a959d0880bfe3563c53ee784f"},
-    {file = "fern_fern_generator_exec_sdk-0.82.4.tar.gz", hash = "sha256:3a1486d7da99952915b40cd38b1e2afa3558eb0e55ea1840d20b88a2338371a1"},
+    {file = "fern_fern_generator_exec_sdk-0.82.5-py3-none-any.whl", hash = "sha256:a99899b74019c668eb5fc064f8b72765d1f92c2614917783fb8592f55faed148"},
+    {file = "fern_fern_generator_exec_sdk-0.82.5.tar.gz", hash = "sha256:dd8f0848e1524ecf15fc591739b9221e65d8d7737af8ddfb01cb10adb2121213"},
 ]
 
 [package.dependencies]
@@ -1040,4 +1040,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "479ba9c7e6e866bbee95e99433388d7ec723936d0a232d3fdaa408e7e373b7b6"
+content-hash = "02972cef8eb36dd0b3aa148856d3908e53f7aace0f02a063778ad525199e6b27"
