@@ -68,7 +68,7 @@ class ReferenceResolverImpl(ReferenceResolver):
                     import_ = dataclasses.replace(
                         import_,
                         alias=construct_import_alias_for_collision(original_reference.import_),
-                    ) # type: ignore 
+                    )  # type: ignore
                     # see https://github.com/python/mypy/pull/15962 for the mypy issue
 
                 self._original_import_to_resolved_import[original_reference.import_] = ResolvedImport(

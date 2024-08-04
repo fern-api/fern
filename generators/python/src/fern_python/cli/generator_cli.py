@@ -1,5 +1,4 @@
 import sys
-import time
 
 import fern.ir.resources as ir_types
 from fern.generator_exec.config import GeneratorConfig

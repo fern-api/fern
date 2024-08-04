@@ -579,7 +579,9 @@ class SnippetTemplateFactory:
         return type_reference.visit(
             container=lambda container: container.visit(
                 list_=lambda list_contents: FdrApiV1Read.TypeReference.factory.list_(
-                    FdrApiV1Read.ListType(item_type=self._convert_ir_type_reference_to_fdr_type_reference(list_contents))
+                    FdrApiV1Read.ListType(
+                        item_type=self._convert_ir_type_reference_to_fdr_type_reference(list_contents)
+                    )
                 ),
                 set_=lambda set_contents: FdrApiV1Read.TypeReference.factory.set_(
                     FdrApiV1Read.SetType(item_type=self._convert_ir_type_reference_to_fdr_type_reference(set_contents))
