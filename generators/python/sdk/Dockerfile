@@ -31,3 +31,11 @@ COPY ./src ./src
 RUN poetry install
 
 ENTRYPOINT ["python", "-m", "src.fern_python.generators.sdk.cli"]
+
+## NOTE: Uncomment the below to generate a flame graph for the python generator. 
+##       To visualize the flamegraph you can run: 
+##         - poetry add snakeviz
+##         - poetry run snakeviz output.prof
+## 
+## RUN mkdir -p /fern/output
+## ENTRYPOINT ["python", "-m", "cProfile", "-o", "/fern/output/output.prof", "/src/fern_python/generators/sdk/cli.py"]
