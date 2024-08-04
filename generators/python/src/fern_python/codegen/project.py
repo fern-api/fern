@@ -39,7 +39,7 @@ class Project:
         filepath: str,
         relative_path_to_project: str,
         python_version: str = "^3.8",
-        project_config: ProjectConfig = None,
+        project_config: Optional[ProjectConfig] = None,
         should_format_files: bool,
         sorted_modules: Optional[Sequence[str]] = None,
         flat_layout: bool = False,

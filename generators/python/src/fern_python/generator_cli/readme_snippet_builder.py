@@ -289,7 +289,7 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
         return None
 
     def _get_feature_key(self, feature_id: generatorcli.feature.FeatureId) -> ir_types.FeatureId:
-        return ir_types.FeatureId.from_str(self._snake_to_camel_case(feature_id))
+        return self._snake_to_camel_case(feature_id)
 
     def _get_default_endpoint_id(
         self,
@@ -321,7 +321,7 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
         if default_endpoint.id.identifier_override is None:
             raise RuntimeError("Internal error; all endpoints must define an endpoint id to generate README.md")
 
-        return ir_types.EndpointId.from_str(default_endpoint.id.identifier_override)
+        return default_endpoint.id.identifier_override
 
     def _build_endpoints(
         self, ir: ir_types.IntermediateRepresentation
@@ -332,7 +332,7 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
         self, snippets: generator_exec.Snippets
     ) -> Dict[ir_types.EndpointId, generator_exec.PythonEndpointSnippet]:
         return {
-            ir_types.EndpointId.from_str(endpoint.id.identifier_override): self._get_python_endpoint_snippet(endpoint)
+            endpoint.id.identifier_override: self._get_python_endpoint_snippet(endpoint)
             for endpoint in snippets.endpoints
             if endpoint.id.identifier_override is not None
         }

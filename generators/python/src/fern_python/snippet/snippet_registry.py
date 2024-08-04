@@ -27,7 +27,7 @@ class SnippetRegistry:
 
         types: Dict[generator_exec.TypeId, str] = {}
         for typeId, expr in self._snippets.items():
-            types[generator_exec.TypeId(typeId.get_as_str())] = self._expression_to_snippet_str(expr)
+            types[generator_exec.TypeId(typeId)] = self._expression_to_snippet_str(expr)
 
         endpoints: List[generator_exec.Endpoint] = []
         for endpointId, sync_endpoint_expressions in self._sync_client_endpoint_snippets.items():
@@ -102,7 +102,7 @@ class SnippetRegistry:
         return generator_exec.EndpointIdentifier(
             path=generator_exec.EndpointPath(self._full_path_for_endpoint(endpoint)),
             method=self._ir_method_to_generator_exec_method(endpoint.method),
-            identifier_override=endpoint.id.get_as_str(),
+            identifier_override=endpoint.id,
         )
 
     def _full_path_for_endpoint(

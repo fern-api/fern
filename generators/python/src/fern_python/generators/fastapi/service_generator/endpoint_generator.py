@@ -300,7 +300,7 @@ class EndpointGenerator:
 
             writer.write_line(f"{return_statement} {self._get_reference_to_method_on_cls()}(*args, **kwargs)")
 
-        errors = self._endpoint.errors.get_as_list()
+        errors = self._endpoint.errors
         if len(errors) > 0:
             writer.write("except ")
             if len(errors) > 1:

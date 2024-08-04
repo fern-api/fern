@@ -59,7 +59,7 @@ class SourceFileImpl(SourceFile):
         module_path: AST.ModulePath,
         reference_resolver: ReferenceResolverImpl,
         dependency_manager: DependencyManager,
-        completion_listener: Callable[[SourceFileImpl], None] = None,
+        completion_listener: Optional[Callable[[SourceFileImpl], None]] = None,
         should_format: bool,
         should_format_as_snippet: bool = False,
         should_include_header: bool = True,
@@ -136,7 +136,7 @@ class SourceFileImpl(SourceFile):
             def add_class_declaration(
                 class_reference_self,
                 declaration: AST.ClassDeclaration,
-                should_export: bool = None,
+                should_export: Optional[bool] = None,
             ) -> LocalClassReference:
                 return LocalClassReferenceImpl(
                     qualified_name_excluding_import=(

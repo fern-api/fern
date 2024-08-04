@@ -182,18 +182,19 @@ wasmer-compiler-cranelift = ">=1.0.0"
 
 [[package]]
 name = "fern-fern-fdr-sdk"
-version = "0.0.5525"
+version = "0.98.20"
 description = ""
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "fern_fern_fdr_sdk-0.0.5525-py3-none-any.whl", hash = "sha256:97603ad56595e6a42f4955501d3d1157de55e0bad9a787812ea6f9dee9caba8b"},
-    {file = "fern_fern_fdr_sdk-0.0.5525.tar.gz", hash = "sha256:7955d1460b02a74a3f60bd59a00b681f9243d01aa0edb78049c753abfe78aa8e"},
+    {file = "fern_fern_fdr_sdk-0.98.20-py3-none-any.whl", hash = "sha256:2348ff35ca4521ba67a27a2bc78117f64572ac9abe8e77512d656d1b68e35cd9"},
+    {file = "fern_fern_fdr_sdk-0.98.20.tar.gz", hash = "sha256:beabbae5509aa9e123c1bc3a87206b8271a3c5c74cb22b4c57ec9cf7d35c6da3"},
 ]
 
 [package.dependencies]
 httpx = ">=0.21.2"
 pydantic = ">=1.9.2"
+pydantic-core = ">=2.18.2,<3.0.0"
 typing_extensions = ">=4.0.0"
 
 [package.source]
@@ -203,18 +204,19 @@ reference = "fern-prod"
 
 [[package]]
 name = "fern-fern-generator-cli-sdk"
-version = "0.0.39"
+version = "0.0.59"
 description = ""
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "fern_fern_generator_cli_sdk-0.0.39-py3-none-any.whl", hash = "sha256:aabed89c60074651bab3fe914e4e15d1f7a740bb43ea0a9b755ef874e4a5f6a8"},
-    {file = "fern_fern_generator_cli_sdk-0.0.39.tar.gz", hash = "sha256:54126788f052f61d11f03557eef79a8afd1accf604bbd968af6ca0b1b4728d89"},
+    {file = "fern_fern_generator_cli_sdk-0.0.59-py3-none-any.whl", hash = "sha256:daddbc4b48585f0ad0bd3251b6f045e74fbcb83bcdfdd7b9b01b7df03ab29763"},
+    {file = "fern_fern_generator_cli_sdk-0.0.59.tar.gz", hash = "sha256:7d88692519432a4f551e1125b2ca70cdb539a7d43177f2e018cb492a01b716bd"},
 ]
 
 [package.dependencies]
 httpx = ">=0.21.2"
 pydantic = ">=1.9.2"
+pydantic-core = ">=2.18.2,<3.0.0"
 typing_extensions = ">=4.0.0"
 
 [package.source]
@@ -1038,4 +1040,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "0f272c6057eed0d672f709996191cd383960567634adb70d4a1fca3fd46d32d7"
+content-hash = "479ba9c7e6e866bbee95e99433388d7ec723936d0a232d3fdaa408e7e373b7b6"
