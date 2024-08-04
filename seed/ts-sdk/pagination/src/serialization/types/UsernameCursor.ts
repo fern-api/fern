@@ -7,12 +7,15 @@ import * as SeedPagination from "../../api/index";
 import * as core from "../../core";
 import { UsernamePage } from "./UsernamePage";
 
-export const UsernameCursor: core.serialization.ObjectSchema<serializers.UsernameCursor.Raw, SeedPagination.UsernameCursor> = core.serialization.object({
-        "cursor": UsernamePage
-    });
+export const UsernameCursor: core.serialization.ObjectSchema<
+    serializers.UsernameCursor.Raw,
+    SeedPagination.UsernameCursor
+> = core.serialization.object({
+    cursor: UsernamePage,
+});
 
 export declare namespace UsernameCursor {
     interface Raw {
-        "cursor": UsernamePage.Raw;
+        cursor: UsernamePage.Raw;
     }
 }

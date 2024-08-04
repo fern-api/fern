@@ -25,8 +25,7 @@ export declare namespace Service {
 }
 
 export class Service {
-    constructor(protected readonly _options: Service.Options) {
-    }
+    constructor(protected readonly _options: Service.Options) {}
 
     /**
      * @param {File | fs.ReadStream | Blob} file
@@ -39,7 +38,14 @@ export class Service {
      * @example
      *     await client.service.post(fs.createReadStream("/path/to/your/file"), [fs.createReadStream("/path/to/your/file")], fs.createReadStream("/path/to/your/file"), [fs.createReadStream("/path/to/your/file")], {})
      */
-    public async post(file: File | fs.ReadStream | Blob, fileList: File[] | fs.ReadStream[] | Blob[], maybeFile: File | fs.ReadStream | Blob | undefined, maybeFileList: File[] | fs.ReadStream[] | Blob[] | undefined, request: SeedFileUpload.MyRequest, requestOptions?: Service.RequestOptions): Promise<void> {
+    public async post(
+        file: File | fs.ReadStream | Blob,
+        fileList: File[] | fs.ReadStream[] | Blob[],
+        maybeFile: File | fs.ReadStream | Blob | undefined,
+        maybeFileList: File[] | fs.ReadStream[] | Blob[] | undefined,
+        request: SeedFileUpload.MyRequest,
+        requestOptions?: Service.RequestOptions
+    ): Promise<void> {
         const _request = await core.newFormData();
         if (request.maybeString != null) {
             await _request.append("maybeString", request.maybeString);
@@ -85,14 +91,14 @@ export class Service {
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...(_maybeEncodedRequest.headers)
+                ..._maybeEncodedRequest.headers,
             },
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
             body: _maybeEncodedRequest.body,
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -101,19 +107,22 @@ export class Service {
         if (_response.error.reason === "status-code") {
             throw new errors.SeedFileUploadError({
                 statusCode: _response.error.statusCode,
-                body: _response.error.body
+                body: _response.error.body,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedFileUploadError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody
-            });
-            case "timeout": throw new errors.SeedFileUploadTimeoutError;
-            case "unknown": throw new errors.SeedFileUploadError({
-                message: _response.error.errorMessage
-            });
+            case "non-json":
+                throw new errors.SeedFileUploadError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedFileUploadTimeoutError();
+            case "unknown":
+                throw new errors.SeedFileUploadError({
+                    message: _response.error.errorMessage,
+                });
         }
     }
 
@@ -137,14 +146,14 @@ export class Service {
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...(_maybeEncodedRequest.headers)
+                ..._maybeEncodedRequest.headers,
             },
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
             body: _maybeEncodedRequest.body,
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -153,19 +162,22 @@ export class Service {
         if (_response.error.reason === "status-code") {
             throw new errors.SeedFileUploadError({
                 statusCode: _response.error.statusCode,
-                body: _response.error.body
+                body: _response.error.body,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedFileUploadError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody
-            });
-            case "timeout": throw new errors.SeedFileUploadTimeoutError;
-            case "unknown": throw new errors.SeedFileUploadError({
-                message: _response.error.errorMessage
-            });
+            case "non-json":
+                throw new errors.SeedFileUploadError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedFileUploadTimeoutError();
+            case "unknown":
+                throw new errors.SeedFileUploadError({
+                    message: _response.error.errorMessage,
+                });
         }
     }
 
@@ -183,7 +195,11 @@ export class Service {
      *         optionalListOfStrings: "string"
      *     })
      */
-    public async justFileWithQueryParams(file: File | fs.ReadStream | Blob, request: SeedFileUpload.JustFileWithQueryParamsRequet, requestOptions?: Service.RequestOptions): Promise<void> {
+    public async justFileWithQueryParams(
+        file: File | fs.ReadStream | Blob,
+        request: SeedFileUpload.JustFileWithQueryParamsRequet,
+        requestOptions?: Service.RequestOptions
+    ): Promise<void> {
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (request.maybeString != null) {
             _queryParams["maybeString"] = request.maybeString;
@@ -195,17 +211,15 @@ export class Service {
         }
 
         if (Array.isArray(request.listOfStrings)) {
-            _queryParams["listOfStrings"] = request.listOfStrings.map(item => item);
-        }
-        else {
+            _queryParams["listOfStrings"] = request.listOfStrings.map((item) => item);
+        } else {
             _queryParams["listOfStrings"] = request.listOfStrings;
         }
 
         if (request.optionalListOfStrings != null) {
             if (Array.isArray(request.optionalListOfStrings)) {
-                _queryParams["optionalListOfStrings"] = request.optionalListOfStrings.map(item => item);
-            }
-            else {
+                _queryParams["optionalListOfStrings"] = request.optionalListOfStrings.map((item) => item);
+            } else {
                 _queryParams["optionalListOfStrings"] = request.optionalListOfStrings;
             }
         }
@@ -222,15 +236,15 @@ export class Service {
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...(_maybeEncodedRequest.headers)
+                ..._maybeEncodedRequest.headers,
             },
             queryParameters: _queryParams,
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
             body: _maybeEncodedRequest.body,
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -239,19 +253,22 @@ export class Service {
         if (_response.error.reason === "status-code") {
             throw new errors.SeedFileUploadError({
                 statusCode: _response.error.statusCode,
-                body: _response.error.body
+                body: _response.error.body,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedFileUploadError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody
-            });
-            case "timeout": throw new errors.SeedFileUploadTimeoutError;
-            case "unknown": throw new errors.SeedFileUploadError({
-                message: _response.error.errorMessage
-            });
+            case "non-json":
+                throw new errors.SeedFileUploadError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedFileUploadTimeoutError();
+            case "unknown":
+                throw new errors.SeedFileUploadError({
+                    message: _response.error.errorMessage,
+                });
         }
     }
 }

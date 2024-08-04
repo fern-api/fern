@@ -24,8 +24,7 @@ export declare namespace File_ {
 }
 
 export class File_ {
-    constructor(protected readonly _options: File_.Options) {
-    }
+    constructor(protected readonly _options: File_.Options) {}
 
     protected _notification: Notification | undefined;
 

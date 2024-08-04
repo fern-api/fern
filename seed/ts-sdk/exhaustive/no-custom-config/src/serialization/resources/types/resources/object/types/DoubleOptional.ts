@@ -7,12 +7,15 @@ import * as SeedExhaustive from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { OptionalAlias } from "./OptionalAlias";
 
-export const DoubleOptional: core.serialization.ObjectSchema<serializers.types.DoubleOptional.Raw, SeedExhaustive.types.DoubleOptional> = core.serialization.object({
-        "optionalAlias": OptionalAlias.optional()
-    });
+export const DoubleOptional: core.serialization.ObjectSchema<
+    serializers.types.DoubleOptional.Raw,
+    SeedExhaustive.types.DoubleOptional
+> = core.serialization.object({
+    optionalAlias: OptionalAlias.optional(),
+});
 
 export declare namespace DoubleOptional {
     interface Raw {
-        "optionalAlias"?: (OptionalAlias.Raw | undefined) | null;
+        optionalAlias?: (OptionalAlias.Raw | undefined) | null;
     }
 }

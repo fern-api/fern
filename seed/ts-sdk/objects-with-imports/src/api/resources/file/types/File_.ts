@@ -20,7 +20,7 @@ import * as SeedObjectsWithImports from "../../../index";
  *     }
  */
 export interface File_ {
-    "name": string;
-    "contents": string;
-    "info": SeedObjectsWithImports.FileInfo;
+    name: string;
+    contents: string;
+    info: SeedObjectsWithImports.FileInfo;
 }

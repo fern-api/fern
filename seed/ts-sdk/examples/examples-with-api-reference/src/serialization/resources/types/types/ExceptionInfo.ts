@@ -6,16 +6,17 @@ import * as serializers from "../../../index";
 import * as SeedExamples from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const ExceptionInfo: core.serialization.ObjectSchema<serializers.ExceptionInfo.Raw, SeedExamples.ExceptionInfo> = core.serialization.object({
-        "exceptionType": core.serialization.string(),
-        "exceptionMessage": core.serialization.string(),
-        "exceptionStacktrace": core.serialization.string()
+export const ExceptionInfo: core.serialization.ObjectSchema<serializers.ExceptionInfo.Raw, SeedExamples.ExceptionInfo> =
+    core.serialization.object({
+        exceptionType: core.serialization.string(),
+        exceptionMessage: core.serialization.string(),
+        exceptionStacktrace: core.serialization.string(),
     });
 
 export declare namespace ExceptionInfo {
     interface Raw {
-        "exceptionType": string;
-        "exceptionMessage": string;
-        "exceptionStacktrace": string;
+        exceptionType: string;
+        exceptionMessage: string;
+        exceptionStacktrace: string;
     }
 }

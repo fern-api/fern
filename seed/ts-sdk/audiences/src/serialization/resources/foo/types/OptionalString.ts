@@ -6,7 +6,8 @@ import * as serializers from "../../../index";
 import * as SeedAudiences from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const OptionalString: core.serialization.Schema<serializers.OptionalString.Raw, SeedAudiences.OptionalString> = core.serialization.string().optional();
+export const OptionalString: core.serialization.Schema<serializers.OptionalString.Raw, SeedAudiences.OptionalString> =
+    core.serialization.string().optional();
 
 export declare namespace OptionalString {
     type Raw = string | null | undefined;

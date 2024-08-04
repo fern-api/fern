@@ -9,18 +9,21 @@ import { SubmissionId } from "./SubmissionId";
 import { Language } from "../../commons/types/Language";
 import { SubmissionFileInfo } from "./SubmissionFileInfo";
 
-export const WorkspaceSubmitRequest: core.serialization.ObjectSchema<serializers.WorkspaceSubmitRequest.Raw, SeedTrace.WorkspaceSubmitRequest> = core.serialization.object({
-        "submissionId": SubmissionId,
-        "language": Language,
-        "submissionFiles": core.serialization.list(SubmissionFileInfo),
-        "userId": core.serialization.string().optional()
-    });
+export const WorkspaceSubmitRequest: core.serialization.ObjectSchema<
+    serializers.WorkspaceSubmitRequest.Raw,
+    SeedTrace.WorkspaceSubmitRequest
+> = core.serialization.object({
+    submissionId: SubmissionId,
+    language: Language,
+    submissionFiles: core.serialization.list(SubmissionFileInfo),
+    userId: core.serialization.string().optional(),
+});
 
 export declare namespace WorkspaceSubmitRequest {
     interface Raw {
-        "submissionId": SubmissionId.Raw;
-        "language": Language.Raw;
-        "submissionFiles": SubmissionFileInfo.Raw[];
-        "userId"?: string | null;
+        submissionId: SubmissionId.Raw;
+        language: Language.Raw;
+        submissionFiles: SubmissionFileInfo.Raw[];
+        userId?: string | null;
     }
 }

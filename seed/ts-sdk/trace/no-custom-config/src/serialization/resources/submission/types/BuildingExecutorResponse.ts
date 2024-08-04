@@ -8,14 +8,17 @@ import * as core from "../../../../core";
 import { SubmissionId } from "./SubmissionId";
 import { ExecutionSessionStatus } from "./ExecutionSessionStatus";
 
-export const BuildingExecutorResponse: core.serialization.ObjectSchema<serializers.BuildingExecutorResponse.Raw, SeedTrace.BuildingExecutorResponse> = core.serialization.object({
-        "submissionId": SubmissionId,
-        "status": ExecutionSessionStatus
-    });
+export const BuildingExecutorResponse: core.serialization.ObjectSchema<
+    serializers.BuildingExecutorResponse.Raw,
+    SeedTrace.BuildingExecutorResponse
+> = core.serialization.object({
+    submissionId: SubmissionId,
+    status: ExecutionSessionStatus,
+});
 
 export declare namespace BuildingExecutorResponse {
     interface Raw {
-        "submissionId": SubmissionId.Raw;
-        "status": ExecutionSessionStatus.Raw;
+        submissionId: SubmissionId.Raw;
+        status: ExecutionSessionStatus.Raw;
     }
 }

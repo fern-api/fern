@@ -7,10 +7,11 @@ import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 import { ProblemId } from "../../commons/types/ProblemId";
 
-export const Request: core.serialization.Schema<serializers.homepage.setHomepageProblems.Request.Raw, SeedTrace.ProblemId[]> = core.serialization.list(ProblemId);
+export const Request: core.serialization.Schema<
+    serializers.homepage.setHomepageProblems.Request.Raw,
+    SeedTrace.ProblemId[]
+> = core.serialization.list(ProblemId);
 
 export declare namespace Request {
     type Raw = ProblemId.Raw[];
 }
-
-

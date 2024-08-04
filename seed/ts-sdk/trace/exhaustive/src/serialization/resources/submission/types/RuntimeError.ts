@@ -6,12 +6,13 @@ import * as serializers from "../../../index";
 import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const RuntimeError: core.serialization.ObjectSchema<serializers.RuntimeError.Raw, SeedTrace.RuntimeError> = core.serialization.object({
-        "message": core.serialization.string()
+export const RuntimeError: core.serialization.ObjectSchema<serializers.RuntimeError.Raw, SeedTrace.RuntimeError> =
+    core.serialization.object({
+        message: core.serialization.string(),
     });
 
 export declare namespace RuntimeError {
     interface Raw {
-        "message": string;
+        message: string;
     }
 }

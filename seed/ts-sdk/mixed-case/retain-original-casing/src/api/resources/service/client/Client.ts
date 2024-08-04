@@ -24,8 +24,7 @@ export declare namespace Service {
 }
 
 export class Service {
-    constructor(protected readonly _options: Service.Options) {
-    }
+    constructor(protected readonly _options: Service.Options) {}
 
     /**
      * @param {string} ResourceID
@@ -34,43 +33,57 @@ export class Service {
      * @example
      *     await client.service.getResource("rsc-xyz")
      */
-    public async getResource(ResourceID: string, requestOptions?: Service.RequestOptions): Promise<SeedMixedCase.Resource> {
+    public async getResource(
+        ResourceID: string,
+        requestOptions?: Service.RequestOptions
+    ): Promise<SeedMixedCase.Resource> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/resource/${encodeURIComponent(ResourceID)}`),
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/resource/${encodeURIComponent(ResourceID)}`
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/mixed-case",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Resource.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] });
+            return serializers.Resource.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedMixedCaseError({
                 statusCode: _response.error.statusCode,
-                body: _response.error.body
+                body: _response.error.body,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedMixedCaseError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody
-            });
-            case "timeout": throw new errors.SeedMixedCaseTimeoutError;
-            case "unknown": throw new errors.SeedMixedCaseError({
-                message: _response.error.errorMessage
-            });
+            case "non-json":
+                throw new errors.SeedMixedCaseError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedMixedCaseTimeoutError();
+            case "unknown":
+                throw new errors.SeedMixedCaseError({
+                    message: _response.error.errorMessage,
+                });
         }
     }
 
@@ -84,8 +97,11 @@ export class Service {
      *         beforeDate: "2023-01-01"
      *     })
      */
-    public async listResources(request: SeedMixedCase.ListResourcesRequest, requestOptions?: Service.RequestOptions): Promise<SeedMixedCase.Resource[]> {
-        const { "page_limit": pageLimit, beforeDate } = request;
+    public async listResources(
+        request: SeedMixedCase.ListResourcesRequest,
+        requestOptions?: Service.RequestOptions
+    ): Promise<SeedMixedCase.Resource[]> {
+        const { page_limit: pageLimit, beforeDate } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         _queryParams["page_limit"] = pageLimit.toString();
         _queryParams["beforeDate"] = beforeDate;
@@ -97,35 +113,43 @@ export class Service {
                 "X-Fern-SDK-Name": "@fern/mixed-case",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
             requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.service.listResources.Response.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] });
+            return serializers.service.listResources.Response.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedMixedCaseError({
                 statusCode: _response.error.statusCode,
-                body: _response.error.body
+                body: _response.error.body,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedMixedCaseError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody
-            });
-            case "timeout": throw new errors.SeedMixedCaseTimeoutError;
-            case "unknown": throw new errors.SeedMixedCaseError({
-                message: _response.error.errorMessage
-            });
+            case "non-json":
+                throw new errors.SeedMixedCaseError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedMixedCaseTimeoutError();
+            case "unknown":
+                throw new errors.SeedMixedCaseError({
+                    message: _response.error.errorMessage,
+                });
         }
     }
 }

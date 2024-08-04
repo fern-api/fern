@@ -6,12 +6,15 @@ import * as serializers from "../../../index";
 import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const LangServerRequest: core.serialization.ObjectSchema<serializers.LangServerRequest.Raw, SeedTrace.LangServerRequest> = core.serialization.object({
-        "request": core.serialization.unknown()
-    });
+export const LangServerRequest: core.serialization.ObjectSchema<
+    serializers.LangServerRequest.Raw,
+    SeedTrace.LangServerRequest
+> = core.serialization.object({
+    request: core.serialization.unknown(),
+});
 
 export declare namespace LangServerRequest {
     interface Raw {
-        "request"?: unknown;
+        request?: unknown;
     }
 }

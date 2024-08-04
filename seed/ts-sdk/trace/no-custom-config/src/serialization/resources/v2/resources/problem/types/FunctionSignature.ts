@@ -9,27 +9,32 @@ import { VoidFunctionSignature } from "./VoidFunctionSignature";
 import { NonVoidFunctionSignature } from "./NonVoidFunctionSignature";
 import { VoidFunctionSignatureThatTakesActualResult } from "./VoidFunctionSignatureThatTakesActualResult";
 
-export const FunctionSignature: core.serialization.Schema<serializers.v2.FunctionSignature.Raw, SeedTrace.v2.FunctionSignature> = core.serialization.union("type", {
-        "void": VoidFunctionSignature,
-        "nonVoid": NonVoidFunctionSignature,
-        "voidThatTakesActualResult": VoidFunctionSignatureThatTakesActualResult
-    }).transform<SeedTrace.v2.FunctionSignature>({
-        transform: value => value,
-        untransform: value => value
+export const FunctionSignature: core.serialization.Schema<
+    serializers.v2.FunctionSignature.Raw,
+    SeedTrace.v2.FunctionSignature
+> = core.serialization
+    .union("type", {
+        void: VoidFunctionSignature,
+        nonVoid: NonVoidFunctionSignature,
+        voidThatTakesActualResult: VoidFunctionSignatureThatTakesActualResult,
+    })
+    .transform<SeedTrace.v2.FunctionSignature>({
+        transform: (value) => value,
+        untransform: (value) => value,
     });
 
 export declare namespace FunctionSignature {
     type Raw = FunctionSignature.Void | FunctionSignature.NonVoid | FunctionSignature.VoidThatTakesActualResult;
 
     interface Void extends VoidFunctionSignature.Raw {
-        "type": "void";
+        type: "void";
     }
 
     interface NonVoid extends NonVoidFunctionSignature.Raw {
-        "type": "nonVoid";
+        type: "nonVoid";
     }
 
     interface VoidThatTakesActualResult extends VoidFunctionSignatureThatTakesActualResult.Raw {
-        "type": "voidThatTakesActualResult";
+        type: "voidThatTakesActualResult";
     }
 }

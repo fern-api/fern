@@ -12,7 +12,7 @@ export function set<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Set
             if (parsedList.ok) {
                 return {
                     ok: true,
-                    value: new Set(parsedList.value)
+                    value: new Set(parsedList.value),
                 };
             } else {
                 return parsedList;
@@ -25,19 +25,19 @@ export function set<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Set
                     errors: [
                         {
                             path: opts?.breadcrumbsPrefix ?? [],
-                            message: getErrorMessageForIncorrectType(parsed, "Set")
-                        }
-                    ]
+                            message: getErrorMessageForIncorrectType(parsed, "Set"),
+                        },
+                    ],
                 };
             }
             const jsonList = listSchema.json([...parsed], opts);
             return jsonList;
         },
-        getType: () => SchemaType.SET
+        getType: () => SchemaType.SET,
     };
 
     return {
         ...maybeSkipValidation(baseSchema),
-        ...getSchemaUtils(baseSchema)
+        ...getSchemaUtils(baseSchema),
     };
 }

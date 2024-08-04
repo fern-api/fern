@@ -4,8 +4,7 @@
 
 import * as SeedUnions from "../../../index";
 
-export type UnionWithLiteral = 
-    | SeedUnions.UnionWithLiteral.Fern;
+export type UnionWithLiteral = SeedUnions.UnionWithLiteral.Fern;
 
 export declare namespace UnionWithLiteral {
     interface Fern extends _Base {

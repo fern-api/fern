@@ -4,9 +4,7 @@
 
 import * as SeedTrace from "../../../../../index";
 
-export type CustomFiles = 
-    | SeedTrace.v2.CustomFiles.Basic
-    | SeedTrace.v2.CustomFiles.Custom;
+export type CustomFiles = SeedTrace.v2.CustomFiles.Basic | SeedTrace.v2.CustomFiles.Custom;
 
 export declare namespace CustomFiles {
     interface Basic extends SeedTrace.v2.BasicCustomFiles {

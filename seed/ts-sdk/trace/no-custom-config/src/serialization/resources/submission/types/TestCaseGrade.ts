@@ -8,22 +8,25 @@ import * as core from "../../../../core";
 import { TestCaseHiddenGrade } from "./TestCaseHiddenGrade";
 import { TestCaseNonHiddenGrade } from "./TestCaseNonHiddenGrade";
 
-export const TestCaseGrade: core.serialization.Schema<serializers.TestCaseGrade.Raw, SeedTrace.TestCaseGrade> = core.serialization.union("type", {
-        "hidden": TestCaseHiddenGrade,
-        "nonHidden": TestCaseNonHiddenGrade
-    }).transform<SeedTrace.TestCaseGrade>({
-        transform: value => value,
-        untransform: value => value
-    });
+export const TestCaseGrade: core.serialization.Schema<serializers.TestCaseGrade.Raw, SeedTrace.TestCaseGrade> =
+    core.serialization
+        .union("type", {
+            hidden: TestCaseHiddenGrade,
+            nonHidden: TestCaseNonHiddenGrade,
+        })
+        .transform<SeedTrace.TestCaseGrade>({
+            transform: (value) => value,
+            untransform: (value) => value,
+        });
 
 export declare namespace TestCaseGrade {
     type Raw = TestCaseGrade.Hidden | TestCaseGrade.NonHidden;
 
     interface Hidden extends TestCaseHiddenGrade.Raw {
-        "type": "hidden";
+        type: "hidden";
     }
 
     interface NonHidden extends TestCaseNonHiddenGrade.Raw {
-        "type": "nonHidden";
+        type: "nonHidden";
     }
 }

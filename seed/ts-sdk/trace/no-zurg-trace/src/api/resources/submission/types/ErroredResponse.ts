@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../index";
 
 export interface ErroredResponse {
-    "submissionId": SeedTrace.SubmissionId;
-    "errorInfo": SeedTrace.ErrorInfo;
+    submissionId: SeedTrace.SubmissionId;
+    errorInfo: SeedTrace.ErrorInfo;
 }

@@ -5,7 +5,7 @@
 import * as SeedTrace from "../../../index";
 import * as core from "../../../../core";
 
-export type Error = 
+export type Error =
     | SeedTrace.playlist.updatePlaylist.Error.PlaylistIdNotFoundError
     | SeedTrace.playlist.updatePlaylist.Error._Unknown;
 
@@ -27,24 +27,31 @@ export declare namespace Error {
 }
 
 export const Error = {
-        playlistIdNotFoundError: (value: SeedTrace.PlaylistIdNotFoundErrorBody): SeedTrace.playlist.updatePlaylist.Error.PlaylistIdNotFoundError => {
-            return {
-                content: value,
-                errorName: "PlaylistIdNotFoundError"
-            };
-        },
+    playlistIdNotFoundError: (
+        value: SeedTrace.PlaylistIdNotFoundErrorBody
+    ): SeedTrace.playlist.updatePlaylist.Error.PlaylistIdNotFoundError => {
+        return {
+            content: value,
+            errorName: "PlaylistIdNotFoundError",
+        };
+    },
 
-        _unknown: (fetcherError: core.Fetcher.Error): SeedTrace.playlist.updatePlaylist.Error._Unknown => {
-            return {
-                errorName: undefined,
-                content: fetcherError
-            };
-        },
+    _unknown: (fetcherError: core.Fetcher.Error): SeedTrace.playlist.updatePlaylist.Error._Unknown => {
+        return {
+            errorName: undefined,
+            content: fetcherError,
+        };
+    },
 
-        _visit: <_Result>(value: SeedTrace.playlist.updatePlaylist.Error, visitor: SeedTrace.playlist.updatePlaylist.Error._Visitor<_Result>): _Result => {
-            switch (value.errorName) {
-                case "PlaylistIdNotFoundError": return visitor.playlistIdNotFoundError(value.content);
-                default: return visitor._other(value as any);
-            }
-        },
-    } as const;
+    _visit: <_Result>(
+        value: SeedTrace.playlist.updatePlaylist.Error,
+        visitor: SeedTrace.playlist.updatePlaylist.Error._Visitor<_Result>
+    ): _Result => {
+        switch (value.errorName) {
+            case "PlaylistIdNotFoundError":
+                return visitor.playlistIdNotFoundError(value.content);
+            default:
+                return visitor._other(value as any);
+        }
+    },
+} as const;

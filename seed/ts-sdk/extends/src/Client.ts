@@ -24,8 +24,7 @@ export declare namespace SeedExtendsClient {
 }
 
 export class SeedExtendsClient {
-    constructor(protected readonly _options: SeedExtendsClient.Options) {
-    }
+    constructor(protected readonly _options: SeedExtendsClient.Options) {}
 
     /**
      * @param {SeedExtends.Inlined} request
@@ -38,7 +37,10 @@ export class SeedExtendsClient {
      *         docs: "string"
      *     })
      */
-    public async extendedInlineRequestBody(request: SeedExtends.Inlined, requestOptions?: SeedExtendsClient.RequestOptions): Promise<void> {
+    public async extendedInlineRequestBody(
+        request: SeedExtends.Inlined,
+        requestOptions?: SeedExtendsClient.RequestOptions
+    ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/extends/extended-inline-request-body"),
             method: "POST",
@@ -47,14 +49,14 @@ export class SeedExtendsClient {
                 "X-Fern-SDK-Name": "@fern/extends",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             requestType: "json",
             body: serializers.Inlined.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -63,19 +65,22 @@ export class SeedExtendsClient {
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExtendsError({
                 statusCode: _response.error.statusCode,
-                body: _response.error.body
+                body: _response.error.body,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedExtendsError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody
-            });
-            case "timeout": throw new errors.SeedExtendsTimeoutError;
-            case "unknown": throw new errors.SeedExtendsError({
-                message: _response.error.errorMessage
-            });
+            case "non-json":
+                throw new errors.SeedExtendsError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedExtendsTimeoutError();
+            case "unknown":
+                throw new errors.SeedExtendsError({
+                    message: _response.error.errorMessage,
+                });
         }
     }
 }

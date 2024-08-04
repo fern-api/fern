@@ -6,16 +6,19 @@ import * as serializers from "../../../index";
 import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const GenericCreateProblemError: core.serialization.ObjectSchema<serializers.GenericCreateProblemError.Raw, SeedTrace.GenericCreateProblemError> = core.serialization.object({
-        "message": core.serialization.string(),
-        "type": core.serialization.string(),
-        "stacktrace": core.serialization.string()
-    });
+export const GenericCreateProblemError: core.serialization.ObjectSchema<
+    serializers.GenericCreateProblemError.Raw,
+    SeedTrace.GenericCreateProblemError
+> = core.serialization.object({
+    message: core.serialization.string(),
+    type: core.serialization.string(),
+    stacktrace: core.serialization.string(),
+});
 
 export declare namespace GenericCreateProblemError {
     interface Raw {
-        "message": string;
-        "type": string;
-        "stacktrace": string;
+        message: string;
+        type: string;
+        stacktrace: string;
     }
 }

@@ -23,8 +23,7 @@ export declare namespace SeedSingleUrlEnvironmentNoDefaultClient {
 }
 
 export class SeedSingleUrlEnvironmentNoDefaultClient {
-    constructor(protected readonly _options: SeedSingleUrlEnvironmentNoDefaultClient.Options) {
-    }
+    constructor(protected readonly _options: SeedSingleUrlEnvironmentNoDefaultClient.Options) {}
 
     protected _dummy: Dummy | undefined;
 

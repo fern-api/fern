@@ -9,20 +9,23 @@ import { SubmissionId } from "./SubmissionId";
 import { LightweightStackframeInformation } from "./LightweightStackframeInformation";
 import { TracedFile } from "./TracedFile";
 
-export const RecordingResponseNotification: core.serialization.ObjectSchema<serializers.RecordingResponseNotification.Raw, SeedTrace.RecordingResponseNotification> = core.serialization.object({
-        "submissionId": SubmissionId,
-        "testCaseId": core.serialization.string().optional(),
-        "lineNumber": core.serialization.number(),
-        "lightweightStackInfo": LightweightStackframeInformation,
-        "tracedFile": TracedFile.optional()
-    });
+export const RecordingResponseNotification: core.serialization.ObjectSchema<
+    serializers.RecordingResponseNotification.Raw,
+    SeedTrace.RecordingResponseNotification
+> = core.serialization.object({
+    submissionId: SubmissionId,
+    testCaseId: core.serialization.string().optional(),
+    lineNumber: core.serialization.number(),
+    lightweightStackInfo: LightweightStackframeInformation,
+    tracedFile: TracedFile.optional(),
+});
 
 export declare namespace RecordingResponseNotification {
     interface Raw {
-        "submissionId": SubmissionId.Raw;
-        "testCaseId"?: string | null;
-        "lineNumber": number;
-        "lightweightStackInfo": LightweightStackframeInformation.Raw;
-        "tracedFile"?: TracedFile.Raw | null;
+        submissionId: SubmissionId.Raw;
+        testCaseId?: string | null;
+        lineNumber: number;
+        lightweightStackInfo: LightweightStackframeInformation.Raw;
+        tracedFile?: TracedFile.Raw | null;
     }
 }

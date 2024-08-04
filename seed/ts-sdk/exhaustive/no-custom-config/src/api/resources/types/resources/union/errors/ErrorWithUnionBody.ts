@@ -10,7 +10,7 @@ export class ErrorWithUnionBody extends errors.SeedExhaustiveError {
         super({
             message: "ErrorWithUnionBody",
             statusCode: 400,
-            body: body
+            body: body,
         });
         Object.setPrototypeOf(this, ErrorWithUnionBody.prototype);
     }

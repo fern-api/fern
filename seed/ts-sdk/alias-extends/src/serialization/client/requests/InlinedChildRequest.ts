@@ -7,12 +7,17 @@ import * as SeedAliasExtends from "../../../api/index";
 import * as core from "../../../core";
 import { AliasType } from "../../types/AliasType";
 
-export const InlinedChildRequest: core.serialization.Schema<serializers.InlinedChildRequest.Raw, SeedAliasExtends.InlinedChildRequest> = core.serialization.object({
-        "child": core.serialization.string()
-    }).extend(AliasType);
+export const InlinedChildRequest: core.serialization.Schema<
+    serializers.InlinedChildRequest.Raw,
+    SeedAliasExtends.InlinedChildRequest
+> = core.serialization
+    .object({
+        child: core.serialization.string(),
+    })
+    .extend(AliasType);
 
 export declare namespace InlinedChildRequest {
     interface Raw extends AliasType.Raw {
-        "child": string;
+        child: string;
     }
 }

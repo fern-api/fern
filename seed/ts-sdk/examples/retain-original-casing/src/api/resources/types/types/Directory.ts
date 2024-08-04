@@ -22,7 +22,7 @@ import * as SeedExamples from "../../../index";
  *     }
  */
 export interface Directory {
-    "name": string;
-    "files"?: SeedExamples.File_[];
-    "directories"?: SeedExamples.Directory[];
+    name: string;
+    files?: SeedExamples.File_[];
+    directories?: SeedExamples.Directory[];
 }

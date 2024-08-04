@@ -25,5 +25,5 @@ import * as SeedExamples from "../../../index";
  *     }
  */
 export interface ExtendedMovie extends SeedExamples.Movie {
-    "cast": string[];
+    cast: string[];
 }

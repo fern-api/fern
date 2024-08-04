@@ -5,8 +5,7 @@
 import * as SeedOauthClientCredentials from "../../../index";
 import * as core from "../../../../core";
 
-export type Error = 
-    | SeedOauthClientCredentials.auth.getToken.Error._Unknown;
+export type Error = SeedOauthClientCredentials.auth.getToken.Error._Unknown;
 
 export declare namespace Error {
     interface _Unknown extends _Utils {
@@ -24,19 +23,26 @@ export declare namespace Error {
 }
 
 export const Error = {
-        _unknown: (fetcherError: core.Fetcher.Error): SeedOauthClientCredentials.auth.getToken.Error._Unknown => {
-            return {
-                statusCode: undefined,
-                content: fetcherError,
-                "_visit": function <_Result>(this: SeedOauthClientCredentials.auth.getToken.Error._Unknown, visitor: SeedOauthClientCredentials.auth.getToken.Error._Visitor<_Result>) {
-                    return SeedOauthClientCredentials.auth.getToken.Error._visit(this, visitor);
-                }
-            };
-        },
+    _unknown: (fetcherError: core.Fetcher.Error): SeedOauthClientCredentials.auth.getToken.Error._Unknown => {
+        return {
+            statusCode: undefined,
+            content: fetcherError,
+            _visit: function <_Result>(
+                this: SeedOauthClientCredentials.auth.getToken.Error._Unknown,
+                visitor: SeedOauthClientCredentials.auth.getToken.Error._Visitor<_Result>
+            ) {
+                return SeedOauthClientCredentials.auth.getToken.Error._visit(this, visitor);
+            },
+        };
+    },
 
-        _visit: <_Result>(value: SeedOauthClientCredentials.auth.getToken.Error, visitor: SeedOauthClientCredentials.auth.getToken.Error._Visitor<_Result>): _Result => {
-            switch (value.statusCode) {
-                default: return visitor._other(value as any);
-            }
-        },
-    } as const;
+    _visit: <_Result>(
+        value: SeedOauthClientCredentials.auth.getToken.Error,
+        visitor: SeedOauthClientCredentials.auth.getToken.Error._Visitor<_Result>
+    ): _Result => {
+        switch (value.statusCode) {
+            default:
+                return visitor._other(value as any);
+        }
+    },
+} as const;

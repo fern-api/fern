@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../index";
 
 export interface KeyValuePair {
-    "key": SeedTrace.VariableValue;
-    "value": SeedTrace.VariableValue;
+    key: SeedTrace.VariableValue;
+    value: SeedTrace.VariableValue;
 }

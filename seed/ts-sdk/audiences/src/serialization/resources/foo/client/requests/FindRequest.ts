@@ -6,14 +6,17 @@ import * as serializers from "../../../../index";
 import * as SeedAudiences from "../../../../../api/index";
 import * as core from "../../../../../core";
 
-export const FindRequest: core.serialization.Schema<serializers.FindRequest.Raw, Omit<SeedAudiences.FindRequest, "optionalString">> = core.serialization.object({
-        "publicProperty": core.serialization.string().optional(),
-        "privateProperty": core.serialization.number().optional()
-    });
+export const FindRequest: core.serialization.Schema<
+    serializers.FindRequest.Raw,
+    Omit<SeedAudiences.FindRequest, "optionalString">
+> = core.serialization.object({
+    publicProperty: core.serialization.string().optional(),
+    privateProperty: core.serialization.number().optional(),
+});
 
 export declare namespace FindRequest {
     interface Raw {
-        "publicProperty"?: string | null;
-        "privateProperty"?: number | null;
+        publicProperty?: string | null;
+        privateProperty?: number | null;
     }
 }

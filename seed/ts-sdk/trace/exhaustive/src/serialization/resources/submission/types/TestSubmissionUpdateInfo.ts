@@ -10,58 +10,76 @@ import { ErrorInfo } from "./ErrorInfo";
 import { GradedTestCaseUpdate } from "./GradedTestCaseUpdate";
 import { RecordedTestCaseUpdate } from "./RecordedTestCaseUpdate";
 
-export const TestSubmissionUpdateInfo: core.serialization.Schema<serializers.TestSubmissionUpdateInfo.Raw, SeedTrace.TestSubmissionUpdateInfo> = core.serialization.union("type", {
-        "running": core.serialization.object({
-            "value": RunningSubmissionState
+export const TestSubmissionUpdateInfo: core.serialization.Schema<
+    serializers.TestSubmissionUpdateInfo.Raw,
+    SeedTrace.TestSubmissionUpdateInfo
+> = core.serialization
+    .union("type", {
+        running: core.serialization.object({
+            value: RunningSubmissionState,
         }),
-        "stopped": core.serialization.object({}),
-        "errored": core.serialization.object({
-            "value": ErrorInfo
+        stopped: core.serialization.object({}),
+        errored: core.serialization.object({
+            value: ErrorInfo,
         }),
-        "gradedTestCase": GradedTestCaseUpdate,
-        "recordedTestCase": RecordedTestCaseUpdate,
-        "finished": core.serialization.object({})
-    }).transform<SeedTrace.TestSubmissionUpdateInfo>({
-        transform: value => {
+        gradedTestCase: GradedTestCaseUpdate,
+        recordedTestCase: RecordedTestCaseUpdate,
+        finished: core.serialization.object({}),
+    })
+    .transform<SeedTrace.TestSubmissionUpdateInfo>({
+        transform: (value) => {
             switch (value.type) {
-                case "running": return SeedTrace.TestSubmissionUpdateInfo.running(value.value);
-                case "stopped": return SeedTrace.TestSubmissionUpdateInfo.stopped();
-                case "errored": return SeedTrace.TestSubmissionUpdateInfo.errored(value.value);
-                case "gradedTestCase": return SeedTrace.TestSubmissionUpdateInfo.gradedTestCase(value);
-                case "recordedTestCase": return SeedTrace.TestSubmissionUpdateInfo.recordedTestCase(value);
-                case "finished": return SeedTrace.TestSubmissionUpdateInfo.finished();
-                default: return SeedTrace.TestSubmissionUpdateInfo._unknown(value);
+                case "running":
+                    return SeedTrace.TestSubmissionUpdateInfo.running(value.value);
+                case "stopped":
+                    return SeedTrace.TestSubmissionUpdateInfo.stopped();
+                case "errored":
+                    return SeedTrace.TestSubmissionUpdateInfo.errored(value.value);
+                case "gradedTestCase":
+                    return SeedTrace.TestSubmissionUpdateInfo.gradedTestCase(value);
+                case "recordedTestCase":
+                    return SeedTrace.TestSubmissionUpdateInfo.recordedTestCase(value);
+                case "finished":
+                    return SeedTrace.TestSubmissionUpdateInfo.finished();
+                default:
+                    return SeedTrace.TestSubmissionUpdateInfo._unknown(value);
             }
         },
-        untransform: ({ _visit, ...value }) => value as any
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace TestSubmissionUpdateInfo {
-    type Raw = TestSubmissionUpdateInfo.Running | TestSubmissionUpdateInfo.Stopped | TestSubmissionUpdateInfo.Errored | TestSubmissionUpdateInfo.GradedTestCase | TestSubmissionUpdateInfo.RecordedTestCase | TestSubmissionUpdateInfo.Finished;
+    type Raw =
+        | TestSubmissionUpdateInfo.Running
+        | TestSubmissionUpdateInfo.Stopped
+        | TestSubmissionUpdateInfo.Errored
+        | TestSubmissionUpdateInfo.GradedTestCase
+        | TestSubmissionUpdateInfo.RecordedTestCase
+        | TestSubmissionUpdateInfo.Finished;
 
     interface Running {
-        "type": "running";
-        "value": RunningSubmissionState.Raw;
+        type: "running";
+        value: RunningSubmissionState.Raw;
     }
 
     interface Stopped {
-        "type": "stopped";
+        type: "stopped";
     }
 
     interface Errored {
-        "type": "errored";
-        "value": ErrorInfo.Raw;
+        type: "errored";
+        value: ErrorInfo.Raw;
     }
 
     interface GradedTestCase extends GradedTestCaseUpdate.Raw {
-        "type": "gradedTestCase";
+        type: "gradedTestCase";
     }
 
     interface RecordedTestCase extends RecordedTestCaseUpdate.Raw {
-        "type": "recordedTestCase";
+        type: "recordedTestCase";
     }
 
     interface Finished {
-        "type": "finished";
+        type: "finished";
     }
 }

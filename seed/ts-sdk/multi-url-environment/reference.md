@@ -1,5 +1,7 @@
 # Reference
+
 ## Ec2
+
 <details><summary><code>client.ec2.<a href="/src/api/resources/ec2/client/Client.ts">bootInstance</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
@@ -14,10 +16,10 @@
 
 ```typescript
 await client.ec2.bootInstance({
-    size: "string"
+    size: "string",
 });
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -31,27 +33,27 @@ await client.ec2.bootInstance({
 <dl>
 <dd>
 
-**request:** `SeedMultiUrlEnvironment.BootInstanceRequest` 
-    
+**request:** `SeedMultiUrlEnvironment.BootInstanceRequest`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Ec2.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Ec2.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
 </details>
 
 ## S3
+
 <details><summary><code>client.s3.<a href="/src/api/resources/s3/client/Client.ts">getPresignedUrl</a>({ ...params }) -> string</code></summary>
 <dl>
 <dd>
@@ -66,10 +68,10 @@ await client.ec2.bootInstance({
 
 ```typescript
 await client.s3.getPresignedUrl({
-    s3Key: "string"
+    s3Key: "string",
 });
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -83,21 +85,20 @@ await client.s3.getPresignedUrl({
 <dl>
 <dd>
 
-**request:** `SeedMultiUrlEnvironment.GetPresignedUrlRequest` 
-    
+**request:** `SeedMultiUrlEnvironment.GetPresignedUrlRequest`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `S3.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `S3.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>

@@ -3,5 +3,5 @@
  */
 
 export interface WithCursor {
-    "cursor"?: string;
+    cursor?: string;
 }

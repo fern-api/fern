@@ -8,14 +8,17 @@ import * as core from "../../../../../core";
 import { TestCaseResultWithStdout } from "../../../submission/types/TestCaseResultWithStdout";
 import { TraceResponse } from "../../../submission/types/TraceResponse";
 
-export const StoreTracedTestCaseRequest: core.serialization.Schema<serializers.StoreTracedTestCaseRequest.Raw, SeedTrace.StoreTracedTestCaseRequest> = core.serialization.object({
-        "result": TestCaseResultWithStdout,
-        "traceResponses": core.serialization.list(TraceResponse)
-    });
+export const StoreTracedTestCaseRequest: core.serialization.Schema<
+    serializers.StoreTracedTestCaseRequest.Raw,
+    SeedTrace.StoreTracedTestCaseRequest
+> = core.serialization.object({
+    result: TestCaseResultWithStdout,
+    traceResponses: core.serialization.list(TraceResponse),
+});
 
 export declare namespace StoreTracedTestCaseRequest {
     interface Raw {
-        "result": TestCaseResultWithStdout.Raw;
-        "traceResponses": TraceResponse.Raw[];
+        result: TestCaseResultWithStdout.Raw;
+        traceResponses: TraceResponse.Raw[];
     }
 }

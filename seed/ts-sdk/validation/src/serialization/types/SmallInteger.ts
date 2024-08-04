@@ -6,7 +6,8 @@ import * as serializers from "../index";
 import * as SeedValidation from "../../api/index";
 import * as core from "../../core";
 
-export const SmallInteger: core.serialization.Schema<serializers.SmallInteger.Raw, SeedValidation.SmallInteger> = core.serialization.number();
+export const SmallInteger: core.serialization.Schema<serializers.SmallInteger.Raw, SeedValidation.SmallInteger> =
+    core.serialization.number();
 
 export declare namespace SmallInteger {
     type Raw = number;

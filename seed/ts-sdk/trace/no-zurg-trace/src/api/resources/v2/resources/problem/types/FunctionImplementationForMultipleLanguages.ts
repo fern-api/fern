@@ -5,5 +5,5 @@
 import * as SeedTrace from "../../../../../index";
 
 export interface FunctionImplementationForMultipleLanguages {
-    "codeByLanguage": Record<SeedTrace.Language, SeedTrace.v2.FunctionImplementation | undefined>;
+    codeByLanguage: Record<SeedTrace.Language, SeedTrace.v2.FunctionImplementation | undefined>;
 }

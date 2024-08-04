@@ -4,7 +4,7 @@
 
 import * as SeedTrace from "../../../../../../../index";
 
-export type TestCaseFunction = 
+export type TestCaseFunction =
     | SeedTrace.v2.v3.TestCaseFunction.WithActualResult
     | SeedTrace.v2.v3.TestCaseFunction.Custom;
 

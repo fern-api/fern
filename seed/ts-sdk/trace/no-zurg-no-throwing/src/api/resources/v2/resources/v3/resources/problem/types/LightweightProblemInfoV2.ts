@@ -5,8 +5,8 @@
 import * as SeedTrace from "../../../../../../../index";
 
 export interface LightweightProblemInfoV2 {
-    "problemId": SeedTrace.ProblemId;
-    "problemName": string;
-    "problemVersion": number;
-    "variableTypes": SeedTrace.VariableType[];
+    problemId: SeedTrace.ProblemId;
+    problemName: string;
+    problemVersion: number;
+    variableTypes: SeedTrace.VariableType[];
 }

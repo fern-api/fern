@@ -5,5 +5,5 @@
 import * as SeedAudiences from "../../../index";
 
 export interface ImportingType {
-    "imported": SeedAudiences.Imported;
+    imported: SeedAudiences.Imported;
 }

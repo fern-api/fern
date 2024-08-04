@@ -21,8 +21,7 @@ export declare namespace SeedErrorPropertyClient {
 }
 
 export class SeedErrorPropertyClient {
-    constructor(protected readonly _options: SeedErrorPropertyClient.Options) {
-    }
+    constructor(protected readonly _options: SeedErrorPropertyClient.Options) {}
 
     protected _propertyBasedError: PropertyBasedError | undefined;
 

@@ -24,7 +24,7 @@ import * as SeedObjectsWithImports from "../../../../../index";
  *     }
  */
 export interface Directory {
-    "name": string;
-    "files"?: SeedObjectsWithImports.File_[];
-    "directories"?: SeedObjectsWithImports.file.Directory[];
+    name: string;
+    files?: SeedObjectsWithImports.File_[];
+    directories?: SeedObjectsWithImports.file.Directory[];
 }
