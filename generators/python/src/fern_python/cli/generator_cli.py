@@ -1,8 +1,9 @@
 import sys
+import time
 
 import fern.ir.resources as ir_types
-from fern.generator_exec.resources.config import GeneratorConfig
-from fern.generator_exec.resources.logging import (
+from fern.generator_exec.config import GeneratorConfig
+from fern.generator_exec.logging import (
     ErrorExitStatusUpdate,
     ExitStatusUpdate,
     GeneratorUpdate,
@@ -28,7 +29,12 @@ class GeneratorCli:
         config = GeneratorConfig.parse_file(self.path_to_config_json)
         generator_exec_wrapper = GeneratorExecWrapper(generator_config=config)
         try:
+            print("Parsing IR")
+            start_time = time.time()
             ir = ir_types.IntermediateRepresentation.parse_file(config.ir_filepath)
+            end_time = time.time()
+            elapsed_time = end_time - start_time
+            print(f"Elapsed time for parsing IR: {elapsed_time:.2f} seconds")
 
             generator_exec_wrapper.send_update(
                 GeneratorUpdate.factory.init_v_2(

@@ -23,7 +23,7 @@ from fdr import (
     UnionTemplateV2,
     VersionedSnippetTemplate,
 )
-from fern.generator_exec.resources import GeneratorUpdate, LogLevel, LogUpdate
+from fern.generator_exec import GeneratorUpdate, LogLevel, LogUpdate
 
 from fern_python.codegen import AST
 from fern_python.codegen.imports_manager import ImportsManager

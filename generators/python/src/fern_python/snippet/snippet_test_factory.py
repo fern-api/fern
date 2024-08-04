@@ -455,7 +455,7 @@ class SnippetTestFactory:
                 )
             ):
                 continue
-            endpoint_name = endpoint.name.get_as_name().snake_case.safe_name
+            endpoint_name = endpoint.name.snake_case.safe_name
 
             examples = [ex.example for ex in endpoint.user_specified_examples if ex.example is not None]
             if len(endpoint.user_specified_examples) == 0:

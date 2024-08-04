@@ -1,7 +1,7 @@
 import re
 from typing import Dict, List, Optional
 
-import fern.generator_exec.resources as generator_exec
+import fern.generator_exec as generator_exec
 import fern.ir.resources as ir_types
 from typing_extensions import assert_never
 

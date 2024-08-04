@@ -7,7 +7,7 @@ from pathlib import Path
 from types import TracebackType
 from typing import List, Optional, Sequence, Set, Type
 
-from fern.generator_exec.resources import GithubOutputMode, LicenseConfig, PypiMetadata
+from fern.generator_exec import GithubOutputMode, LicenseConfig, PypiMetadata
 from isort import file
 
 from fern_python.codegen import AST

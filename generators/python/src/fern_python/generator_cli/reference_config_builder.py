@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-import fern.generator_exec.resources as generator_exec
+import fern.generator_exec as generator_exec
 import fern.ir.resources as ir_types
 import generatorcli
 

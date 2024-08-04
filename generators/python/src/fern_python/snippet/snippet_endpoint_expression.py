@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-import fern.generator_exec.resources as generator_exec
+import fern.generator_exec as generator_exec
 
 from fern_python.codegen import AST
 
