@@ -10,53 +10,65 @@ import { WorkspaceRunDetails } from "./WorkspaceRunDetails";
 import { WorkspaceTracedUpdate } from "./WorkspaceTracedUpdate";
 import { ErrorInfo } from "./ErrorInfo";
 
-export const WorkspaceSubmissionUpdateInfo: core.serialization.Schema<serializers.WorkspaceSubmissionUpdateInfo.Raw, SeedTrace.WorkspaceSubmissionUpdateInfo> = core.serialization.union("type", {
-        "running": core.serialization.object({
-            "value": RunningSubmissionState
+export const WorkspaceSubmissionUpdateInfo: core.serialization.Schema<
+    serializers.WorkspaceSubmissionUpdateInfo.Raw,
+    SeedTrace.WorkspaceSubmissionUpdateInfo
+> = core.serialization
+    .union("type", {
+        running: core.serialization.object({
+            value: RunningSubmissionState,
         }),
-        "ran": WorkspaceRunDetails,
-        "stopped": core.serialization.object({}),
-        "traced": core.serialization.object({}),
-        "tracedV2": WorkspaceTracedUpdate,
-        "errored": core.serialization.object({
-            "value": ErrorInfo
+        ran: WorkspaceRunDetails,
+        stopped: core.serialization.object({}),
+        traced: core.serialization.object({}),
+        tracedV2: WorkspaceTracedUpdate,
+        errored: core.serialization.object({
+            value: ErrorInfo,
         }),
-        "finished": core.serialization.object({})
-    }).transform<SeedTrace.WorkspaceSubmissionUpdateInfo>({
-        transform: value => value,
-        untransform: value => value
+        finished: core.serialization.object({}),
+    })
+    .transform<SeedTrace.WorkspaceSubmissionUpdateInfo>({
+        transform: (value) => value,
+        untransform: (value) => value,
     });
 
 export declare namespace WorkspaceSubmissionUpdateInfo {
-    type Raw = WorkspaceSubmissionUpdateInfo.Running | WorkspaceSubmissionUpdateInfo.Ran | WorkspaceSubmissionUpdateInfo.Stopped | WorkspaceSubmissionUpdateInfo.Traced | WorkspaceSubmissionUpdateInfo.TracedV2 | WorkspaceSubmissionUpdateInfo.Errored | WorkspaceSubmissionUpdateInfo.Finished;
+    type Raw =
+        | WorkspaceSubmissionUpdateInfo.Running
+        | WorkspaceSubmissionUpdateInfo.Ran
+        | WorkspaceSubmissionUpdateInfo.Stopped
+        | WorkspaceSubmissionUpdateInfo.Traced
+        | WorkspaceSubmissionUpdateInfo.TracedV2
+        | WorkspaceSubmissionUpdateInfo.Errored
+        | WorkspaceSubmissionUpdateInfo.Finished;
 
     interface Running {
-        "type": "running";
-        "value": RunningSubmissionState.Raw;
+        type: "running";
+        value: RunningSubmissionState.Raw;
     }
 
     interface Ran extends WorkspaceRunDetails.Raw {
-        "type": "ran";
+        type: "ran";
     }
 
     interface Stopped {
-        "type": "stopped";
+        type: "stopped";
     }
 
     interface Traced {
-        "type": "traced";
+        type: "traced";
     }
 
     interface TracedV2 extends WorkspaceTracedUpdate.Raw {
-        "type": "tracedV2";
+        type: "tracedV2";
     }
 
     interface Errored {
-        "type": "errored";
-        "value": ErrorInfo.Raw;
+        type: "errored";
+        value: ErrorInfo.Raw;
     }
 
     interface Finished {
-        "type": "finished";
+        type: "finished";
     }
 }

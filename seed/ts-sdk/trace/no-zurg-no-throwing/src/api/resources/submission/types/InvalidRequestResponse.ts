@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../index";
 
 export interface InvalidRequestResponse {
-    "request": SeedTrace.SubmissionRequest;
-    "cause": SeedTrace.InvalidRequestCause;
+    request: SeedTrace.SubmissionRequest;
+    cause: SeedTrace.InvalidRequestCause;
 }

@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../index";
 
 export interface VariableTypeAndName {
-    "variableType": SeedTrace.VariableType;
-    "name": string;
+    variableType: SeedTrace.VariableType;
+    name: string;
 }

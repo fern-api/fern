@@ -21,8 +21,7 @@ export declare namespace SeedFileUploadClient {
 }
 
 export class SeedFileUploadClient {
-    constructor(protected readonly _options: SeedFileUploadClient.Options) {
-    }
+    constructor(protected readonly _options: SeedFileUploadClient.Options) {}
 
     protected _service: Service | undefined;
 

@@ -16,8 +16,8 @@ import * as SeedTrace from "../../../../index";
  *     }
  */
 export interface GetDefaultStarterFilesRequest {
-    "inputParams": SeedTrace.VariableTypeAndName[];
-    "outputType": SeedTrace.VariableType;
+    inputParams: SeedTrace.VariableTypeAndName[];
+    outputType: SeedTrace.VariableType;
     /**
      * The name of the `method` that the student has to complete.
      * The method name cannot include the following characters:
@@ -27,5 +27,5 @@ export interface GetDefaultStarterFilesRequest {
      *   - Period `.`
      *
      */
-    "methodName": string;
+    methodName: string;
 }

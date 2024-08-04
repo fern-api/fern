@@ -20,6 +20,6 @@ import * as SeedExamples from "../../../index";
  *     }
  */
 export interface Response {
-    "response"?: unknown;
-    "identifiers": SeedExamples.Identifier[];
+    response?: unknown;
+    identifiers: SeedExamples.Identifier[];
 }

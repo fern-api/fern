@@ -5,5 +5,5 @@
 import * as SeedTrace from "../../../../../../../index";
 
 export interface GetGeneratedTestCaseTemplateFileRequest {
-    "template": SeedTrace.v2.v3.TestCaseTemplate;
+    template: SeedTrace.v2.v3.TestCaseTemplate;
 }

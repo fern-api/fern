@@ -5,5 +5,5 @@
 import * as SeedResponseProperty from "../../../index";
 
 export interface Response extends SeedResponseProperty.WithMetadata, SeedResponseProperty.WithDocs {
-    "data": SeedResponseProperty.Movie;
+    data: SeedResponseProperty.Movie;
 }

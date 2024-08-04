@@ -38,13 +38,13 @@ describe("UndiciStreamWrapper", () => {
             start(controller) {
                 controller.enqueue(new TextEncoder().encode("test"));
                 controller.close();
-            }
+            },
         });
         const stream = new UndiciStreamWrapper(rawStream);
         const dest = new WritableStream({
             write(chunk) {
                 expect(chunk).toEqual(new TextEncoder().encode("test"));
-            }
+            },
         });
 
         stream.pipe(dest);
@@ -57,7 +57,7 @@ describe("UndiciStreamWrapper", () => {
         const dest = new WritableStream({
             write(chunk) {
                 buffer.push(chunk);
-            }
+            },
         });
         stream.pipe(dest);
         stream.unpipe(dest);
@@ -95,7 +95,7 @@ describe("UndiciStreamWrapper", () => {
             start(controller) {
                 controller.enqueue(new TextEncoder().encode("test"));
                 controller.close();
-            }
+            },
         });
         const stream = new UndiciStreamWrapper(rawStream);
 
@@ -109,7 +109,7 @@ describe("UndiciStreamWrapper", () => {
             start(controller) {
                 controller.enqueue(new TextEncoder().encode("test"));
                 controller.close();
-            }
+            },
         });
         const stream = new UndiciStreamWrapper(rawStream);
 
@@ -123,7 +123,7 @@ describe("UndiciStreamWrapper", () => {
             start(controller) {
                 controller.enqueue(new TextEncoder().encode(JSON.stringify({ test: "test" })));
                 controller.close();
-            }
+            },
         });
         const stream = new UndiciStreamWrapper(rawStream);
 

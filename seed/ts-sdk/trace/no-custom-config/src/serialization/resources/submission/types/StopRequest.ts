@@ -7,12 +7,13 @@ import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 import { SubmissionId } from "./SubmissionId";
 
-export const StopRequest: core.serialization.ObjectSchema<serializers.StopRequest.Raw, SeedTrace.StopRequest> = core.serialization.object({
-        "submissionId": SubmissionId
+export const StopRequest: core.serialization.ObjectSchema<serializers.StopRequest.Raw, SeedTrace.StopRequest> =
+    core.serialization.object({
+        submissionId: SubmissionId,
     });
 
 export declare namespace StopRequest {
     interface Raw {
-        "submissionId": SubmissionId.Raw;
+        submissionId: SubmissionId.Raw;
     }
 }

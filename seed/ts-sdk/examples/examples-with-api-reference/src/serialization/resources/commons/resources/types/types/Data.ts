@@ -6,28 +6,31 @@ import * as serializers from "../../../../../index";
 import * as SeedExamples from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 
-export const Data: core.serialization.Schema<serializers.commons.Data.Raw, SeedExamples.commons.Data> = core.serialization.union("type", {
-        "string": core.serialization.object({
-            "value": core.serialization.string()
-        }),
-        "base64": core.serialization.object({
-            "value": core.serialization.string()
+export const Data: core.serialization.Schema<serializers.commons.Data.Raw, SeedExamples.commons.Data> =
+    core.serialization
+        .union("type", {
+            string: core.serialization.object({
+                value: core.serialization.string(),
+            }),
+            base64: core.serialization.object({
+                value: core.serialization.string(),
+            }),
         })
-    }).transform<SeedExamples.commons.Data>({
-        transform: value => value,
-        untransform: value => value
-    });
+        .transform<SeedExamples.commons.Data>({
+            transform: (value) => value,
+            untransform: (value) => value,
+        });
 
 export declare namespace Data {
     type Raw = Data.String | Data.Base64;
 
     interface String {
-        "type": "string";
-        "value": string;
+        type: "string";
+        value: string;
     }
 
     interface Base64 {
-        "type": "base64";
-        "value": string;
+        type: "base64";
+        value: string;
     }
 }

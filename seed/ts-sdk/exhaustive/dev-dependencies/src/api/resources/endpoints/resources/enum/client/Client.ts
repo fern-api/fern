@@ -24,8 +24,7 @@ export declare namespace Enum {
 }
 
 export class Enum {
-    constructor(protected readonly _options: Enum.Options) {
-    }
+    constructor(protected readonly _options: Enum.Options) {}
 
     /**
      * @param {Fiddle.types.WeatherReport} request
@@ -34,35 +33,43 @@ export class Enum {
      * @example
      *     await client.endpoints.enum.getAndReturnEnum(Fiddle.types.WeatherReport.Sunny)
      */
-    public async getAndReturnEnum(request: Fiddle.types.WeatherReport, requestOptions?: Enum.RequestOptions): Promise<core.APIResponse<Fiddle.types.WeatherReport, Fiddle.endpoints.enum_.getAndReturnEnum.Error>> {
+    public async getAndReturnEnum(
+        request: Fiddle.types.WeatherReport,
+        requestOptions?: Enum.RequestOptions
+    ): Promise<core.APIResponse<Fiddle.types.WeatherReport, Fiddle.endpoints.enum_.getAndReturnEnum.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/enum"),
             method: "POST",
             headers: {
-                "Authorization": await this._getAuthorizationHeader(),
+                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             requestType: "json",
             body: serializers.types.WeatherReport.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: serializers.types.WeatherReport.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] })
+                body: serializers.types.WeatherReport.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
             };
         }
 
         return {
             ok: false,
-            error: Fiddle.endpoints.enum_.getAndReturnEnum.Error._unknown(_response.error)
+            error: Fiddle.endpoints.enum_.getAndReturnEnum.Error._unknown(_response.error),
         };
     }
 

@@ -5,8 +5,8 @@
 import * as SeedPagination from "../../../index";
 
 export interface ListUsersPaginationResponse {
-    "page"?: SeedPagination.Page;
+    page?: SeedPagination.Page;
     /** The totall number of /users */
-    "totalCount": number;
-    "data": SeedPagination.User[];
+    totalCount: number;
+    data: SeedPagination.User[];
 }

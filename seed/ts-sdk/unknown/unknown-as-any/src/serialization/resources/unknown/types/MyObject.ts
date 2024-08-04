@@ -6,12 +6,13 @@ import * as serializers from "../../../index";
 import * as SeedUnknownAsAny from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const MyObject: core.serialization.ObjectSchema<serializers.MyObject.Raw, SeedUnknownAsAny.MyObject> = core.serialization.object({
-        "unknown": core.serialization.any()
+export const MyObject: core.serialization.ObjectSchema<serializers.MyObject.Raw, SeedUnknownAsAny.MyObject> =
+    core.serialization.object({
+        unknown: core.serialization.any(),
     });
 
 export declare namespace MyObject {
     interface Raw {
-        "unknown"?: any;
+        unknown?: any;
     }
 }

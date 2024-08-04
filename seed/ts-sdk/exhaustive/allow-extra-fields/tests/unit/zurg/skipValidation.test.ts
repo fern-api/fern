@@ -12,17 +12,17 @@ describe("skipValidation", () => {
             camelCase: property("snake_case", string()),
             numberProperty: number(),
             requiredProperty: boolean(),
-            anyPrimitive: undiscriminatedUnion([string(), number(), boolean()])
+            anyPrimitive: undiscriminatedUnion([string(), number(), boolean()]),
         });
 
         const parsed = await schema.parse(
             {
                 snake_case: "hello",
                 numberProperty: "oops",
-                anyPrimitive: true
+                anyPrimitive: true,
             },
             {
-                skipValidation: true
+                skipValidation: true,
             }
         );
 
@@ -31,13 +31,13 @@ describe("skipValidation", () => {
             value: {
                 camelCase: "hello",
                 numberProperty: "oops",
-                anyPrimitive: true
-            }
+                anyPrimitive: true,
+            },
         });
 
         expect(warningLogs).toEqual([
             `Failed to validate.
-  - numberProperty: Expected number. Received "oops".`
+  - numberProperty: Expected number. Received "oops".`,
         ]);
 
         console.warn = originalConsoleWarn;

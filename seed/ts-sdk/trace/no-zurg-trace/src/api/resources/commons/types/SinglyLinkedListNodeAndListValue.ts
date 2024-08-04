@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../index";
 
 export interface SinglyLinkedListNodeAndListValue {
-    "nodeId": SeedTrace.NodeId;
-    "fullList": SeedTrace.SinglyLinkedListValue;
+    nodeId: SeedTrace.NodeId;
+    fullList: SeedTrace.SinglyLinkedListValue;
 }

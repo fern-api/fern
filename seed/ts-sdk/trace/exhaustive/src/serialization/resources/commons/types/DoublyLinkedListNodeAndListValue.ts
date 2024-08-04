@@ -8,14 +8,17 @@ import * as core from "../../../../core";
 import { NodeId } from "./NodeId";
 import { DoublyLinkedListValue } from "./DoublyLinkedListValue";
 
-export const DoublyLinkedListNodeAndListValue: core.serialization.ObjectSchema<serializers.DoublyLinkedListNodeAndListValue.Raw, SeedTrace.DoublyLinkedListNodeAndListValue> = core.serialization.object({
-        "nodeId": NodeId,
-        "fullList": DoublyLinkedListValue
-    });
+export const DoublyLinkedListNodeAndListValue: core.serialization.ObjectSchema<
+    serializers.DoublyLinkedListNodeAndListValue.Raw,
+    SeedTrace.DoublyLinkedListNodeAndListValue
+> = core.serialization.object({
+    nodeId: NodeId,
+    fullList: DoublyLinkedListValue,
+});
 
 export declare namespace DoublyLinkedListNodeAndListValue {
     interface Raw {
-        "nodeId": NodeId.Raw;
-        "fullList": DoublyLinkedListValue.Raw;
+        nodeId: NodeId.Raw;
+        fullList: DoublyLinkedListValue.Raw;
     }
 }

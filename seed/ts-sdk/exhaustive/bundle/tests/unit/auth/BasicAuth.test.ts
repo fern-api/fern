@@ -6,7 +6,7 @@ describe("BasicAuth", () => {
             expect(
                 BasicAuth.toAuthorizationHeader({
                     username: "username",
-                    password: "password"
+                    password: "password",
                 })
             ).toBe("Basic dXNlcm5hbWU6cGFzc3dvcmQ=");
         });
@@ -15,7 +15,7 @@ describe("BasicAuth", () => {
         it("correctly parses header", () => {
             expect(BasicAuth.fromAuthorizationHeader("Basic dXNlcm5hbWU6cGFzc3dvcmQ=")).toEqual({
                 username: "username",
-                password: "password"
+                password: "password",
             });
         });
     });

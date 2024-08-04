@@ -5,5 +5,5 @@
 import * as SeedTrace from "../../../index";
 
 export interface GetDefaultStarterFilesResponse {
-    "files": Record<SeedTrace.Language, SeedTrace.ProblemFiles | undefined>;
+    files: Record<SeedTrace.Language, SeedTrace.ProblemFiles | undefined>;
 }

@@ -5,5 +5,5 @@
 import * as SeedTrace from "../../../index";
 
 export interface SubmissionIdNotFound {
-    "missingSubmissionId": SeedTrace.SubmissionId;
+    missingSubmissionId: SeedTrace.SubmissionId;
 }

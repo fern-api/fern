@@ -28,8 +28,7 @@ export declare namespace Endpoints {
 }
 
 export class Endpoints {
-    constructor(protected readonly _options: Endpoints.Options) {
-    }
+    constructor(protected readonly _options: Endpoints.Options) {}
 
     protected _container: Container | undefined;
 

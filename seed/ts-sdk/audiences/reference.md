@@ -1,5 +1,7 @@
 # Reference
+
 ## FolderA Service
+
 <details><summary><code>client.folderA.service.<a href="/src/api/resources/folderA/resources/service/client/Client.ts">getDirectThread</a>() -> SeedAudiences.Response</code></summary>
 <dl>
 <dd>
@@ -14,8 +16,8 @@
 
 ```typescript
 await client.folderA.service.getDirectThread();
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -29,19 +31,19 @@ await client.folderA.service.getDirectThread();
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Service.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Foo
+
 <details><summary><code>client.foo.<a href="/src/api/resources/foo/client/Client.ts">find</a>({ ...params }) -> SeedAudiences.ImportingType</code></summary>
 <dl>
 <dd>
@@ -58,10 +60,10 @@ await client.folderA.service.getDirectThread();
 await client.foo.find({
     optionalString: "string",
     publicProperty: "string",
-    privateProperty: 1
+    privateProperty: 1,
 });
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -75,21 +77,20 @@ await client.foo.find({
 <dl>
 <dd>
 
-**request:** `SeedAudiences.FindRequest` 
-    
+**request:** `SeedAudiences.FindRequest`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Foo.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Foo.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>

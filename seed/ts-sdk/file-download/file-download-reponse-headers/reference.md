@@ -1,5 +1,7 @@
 # Reference
+
 ## Service
+
 <details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">downloadFile</a>() -> {
     data: stream.Readable;
     contentLengthInBytes?: number;
@@ -18,8 +20,8 @@
 
 ```typescript
 await client.service.downloadFile();
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -33,13 +35,12 @@ await client.service.downloadFile();
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Service.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>

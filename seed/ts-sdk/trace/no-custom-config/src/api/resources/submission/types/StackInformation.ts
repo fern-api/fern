@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../index";
 
 export interface StackInformation {
-    "numStackFrames": number;
-    "topStackFrame"?: SeedTrace.StackFrame;
+    numStackFrames: number;
+    topStackFrame?: SeedTrace.StackFrame;
 }

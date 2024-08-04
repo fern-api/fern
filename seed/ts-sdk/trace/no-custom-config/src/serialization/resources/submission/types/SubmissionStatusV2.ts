@@ -8,22 +8,27 @@ import * as core from "../../../../core";
 import { TestSubmissionStatusV2 } from "./TestSubmissionStatusV2";
 import { WorkspaceSubmissionStatusV2 } from "./WorkspaceSubmissionStatusV2";
 
-export const SubmissionStatusV2: core.serialization.Schema<serializers.SubmissionStatusV2.Raw, SeedTrace.SubmissionStatusV2> = core.serialization.union("type", {
-        "test": TestSubmissionStatusV2,
-        "workspace": WorkspaceSubmissionStatusV2
-    }).transform<SeedTrace.SubmissionStatusV2>({
-        transform: value => value,
-        untransform: value => value
+export const SubmissionStatusV2: core.serialization.Schema<
+    serializers.SubmissionStatusV2.Raw,
+    SeedTrace.SubmissionStatusV2
+> = core.serialization
+    .union("type", {
+        test: TestSubmissionStatusV2,
+        workspace: WorkspaceSubmissionStatusV2,
+    })
+    .transform<SeedTrace.SubmissionStatusV2>({
+        transform: (value) => value,
+        untransform: (value) => value,
     });
 
 export declare namespace SubmissionStatusV2 {
     type Raw = SubmissionStatusV2.Test | SubmissionStatusV2.Workspace;
 
     interface Test extends TestSubmissionStatusV2.Raw {
-        "type": "test";
+        type: "test";
     }
 
     interface Workspace extends WorkspaceSubmissionStatusV2.Raw {
-        "type": "workspace";
+        type: "workspace";
     }
 }

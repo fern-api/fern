@@ -6,7 +6,10 @@ import * as serializers from "../../../../../index";
 import * as SeedExhaustive from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 
-export const WeatherReport: core.serialization.Schema<serializers.types.WeatherReport.Raw, SeedExhaustive.types.WeatherReport> = core.serialization.enum_(["SUNNY", "CLOUDY", "RAINING", "SNOWING"]);
+export const WeatherReport: core.serialization.Schema<
+    serializers.types.WeatherReport.Raw,
+    SeedExhaustive.types.WeatherReport
+> = core.serialization.enum_(["SUNNY", "CLOUDY", "RAINING", "SNOWING"]);
 
 export declare namespace WeatherReport {
     type Raw = "SUNNY" | "CLOUDY" | "RAINING" | "SNOWING";

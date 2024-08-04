@@ -6,14 +6,17 @@ import * as serializers from "../../../index";
 import * as SeedServerSentEvents from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const StreamedCompletion: core.serialization.ObjectSchema<serializers.StreamedCompletion.Raw, SeedServerSentEvents.StreamedCompletion> = core.serialization.object({
-        "delta": core.serialization.string(),
-        "tokens": core.serialization.number().optional()
-    });
+export const StreamedCompletion: core.serialization.ObjectSchema<
+    serializers.StreamedCompletion.Raw,
+    SeedServerSentEvents.StreamedCompletion
+> = core.serialization.object({
+    delta: core.serialization.string(),
+    tokens: core.serialization.number().optional(),
+});
 
 export declare namespace StreamedCompletion {
     interface Raw {
-        "delta": string;
-        "tokens"?: number | null;
+        delta: string;
+        tokens?: number | null;
     }
 }

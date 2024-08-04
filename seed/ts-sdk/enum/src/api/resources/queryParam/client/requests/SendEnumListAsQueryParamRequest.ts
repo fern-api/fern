@@ -14,8 +14,8 @@ import * as SeedEnum from "../../../../index";
  *     }
  */
 export interface SendEnumListAsQueryParamRequest {
-    "operand": SeedEnum.Operand | SeedEnum.Operand[];
-    "maybeOperand"?: SeedEnum.Operand | SeedEnum.Operand[];
-    "operandOrColor": SeedEnum.ColorOrOperand | SeedEnum.ColorOrOperand[];
-    "maybeOperandOrColor"?: SeedEnum.ColorOrOperand | SeedEnum.ColorOrOperand[];
+    operand: SeedEnum.Operand | SeedEnum.Operand[];
+    maybeOperand?: SeedEnum.Operand | SeedEnum.Operand[];
+    operandOrColor: SeedEnum.ColorOrOperand | SeedEnum.ColorOrOperand[];
+    maybeOperandOrColor?: SeedEnum.ColorOrOperand | SeedEnum.ColorOrOperand[];
 }

@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../index";
 
 export interface WorkspaceRanResponse {
-    "submissionId": SeedTrace.SubmissionId;
-    "runDetails": SeedTrace.WorkspaceRunDetails;
+    submissionId: SeedTrace.SubmissionId;
+    runDetails: SeedTrace.WorkspaceRunDetails;
 }

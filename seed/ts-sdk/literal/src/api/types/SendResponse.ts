@@ -3,7 +3,7 @@
  */
 
 export interface SendResponse {
-    "message": string;
-    "status": number;
-    "success": true;
+    message: string;
+    status: number;
+    success: true;
 }

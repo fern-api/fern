@@ -7,9 +7,7 @@ import * as SeedUnions from "../../../index";
 /**
  * This is a simple union.
  */
-export type Union = 
-    | SeedUnions.Union.Foo
-    | SeedUnions.Union.Bar;
+export type Union = SeedUnions.Union.Foo | SeedUnions.Union.Bar;
 
 export declare namespace Union {
     interface Foo {

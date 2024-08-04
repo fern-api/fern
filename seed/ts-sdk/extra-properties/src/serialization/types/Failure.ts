@@ -6,12 +6,13 @@ import * as serializers from "../index";
 import * as SeedExtraProperties from "../../api/index";
 import * as core from "../../core";
 
-export const Failure: core.serialization.ObjectSchema<serializers.Failure.Raw, SeedExtraProperties.Failure> = core.serialization.object({
-        "status": core.serialization.stringLiteral("failure")
+export const Failure: core.serialization.ObjectSchema<serializers.Failure.Raw, SeedExtraProperties.Failure> =
+    core.serialization.object({
+        status: core.serialization.stringLiteral("failure"),
     });
 
 export declare namespace Failure {
     interface Raw {
-        "status": "failure";
+        status: "failure";
     }
 }

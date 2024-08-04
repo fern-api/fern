@@ -13,30 +13,33 @@ import { GeneratedFiles } from "./GeneratedFiles";
 import { TestCaseTemplate } from "./TestCaseTemplate";
 import { TestCaseV2 } from "./TestCaseV2";
 
-export const ProblemInfoV2: core.serialization.ObjectSchema<serializers.v2.v3.ProblemInfoV2.Raw, SeedTrace.v2.v3.ProblemInfoV2> = core.serialization.object({
-        "problemId": ProblemId,
-        "problemDescription": ProblemDescription,
-        "problemName": core.serialization.string(),
-        "problemVersion": core.serialization.number(),
-        "supportedLanguages": core.serialization.set(Language),
-        "customFiles": CustomFiles,
-        "generatedFiles": GeneratedFiles,
-        "customTestCaseTemplates": core.serialization.list(TestCaseTemplate),
-        "testcases": core.serialization.list(TestCaseV2),
-        "isPublic": core.serialization.boolean()
-    });
+export const ProblemInfoV2: core.serialization.ObjectSchema<
+    serializers.v2.v3.ProblemInfoV2.Raw,
+    SeedTrace.v2.v3.ProblemInfoV2
+> = core.serialization.object({
+    problemId: ProblemId,
+    problemDescription: ProblemDescription,
+    problemName: core.serialization.string(),
+    problemVersion: core.serialization.number(),
+    supportedLanguages: core.serialization.set(Language),
+    customFiles: CustomFiles,
+    generatedFiles: GeneratedFiles,
+    customTestCaseTemplates: core.serialization.list(TestCaseTemplate),
+    testcases: core.serialization.list(TestCaseV2),
+    isPublic: core.serialization.boolean(),
+});
 
 export declare namespace ProblemInfoV2 {
     interface Raw {
-        "problemId": ProblemId.Raw;
-        "problemDescription": ProblemDescription.Raw;
-        "problemName": string;
-        "problemVersion": number;
-        "supportedLanguages": Language.Raw[];
-        "customFiles": CustomFiles.Raw;
-        "generatedFiles": GeneratedFiles.Raw;
-        "customTestCaseTemplates": TestCaseTemplate.Raw[];
-        "testcases": TestCaseV2.Raw[];
-        "isPublic": boolean;
+        problemId: ProblemId.Raw;
+        problemDescription: ProblemDescription.Raw;
+        problemName: string;
+        problemVersion: number;
+        supportedLanguages: Language.Raw[];
+        customFiles: CustomFiles.Raw;
+        generatedFiles: GeneratedFiles.Raw;
+        customTestCaseTemplates: TestCaseTemplate.Raw[];
+        testcases: TestCaseV2.Raw[];
+        isPublic: boolean;
     }
 }

@@ -1,4 +1,13 @@
-import { boolean, discriminant, list, number, object, string, stringLiteral, union } from "../../../src/core/schemas/builders";
+import {
+    boolean,
+    discriminant,
+    list,
+    number,
+    object,
+    string,
+    stringLiteral,
+    union,
+} from "../../../src/core/schemas/builders";
 import { booleanLiteral } from "../../../src/core/schemas/builders/literals/booleanLiteral";
 import { property } from "../../../src/core/schemas/builders/object/property";
 import { itSchema } from "./utils/itSchema";
@@ -15,13 +24,13 @@ describe("Schema", () => {
                     object({
                         animal: union(discriminant("type", "_type"), {
                             dog: object({ value: boolean() }),
-                            cat: object({ value: property("raw_cat", number()) })
-                        })
+                            cat: object({ value: property("raw_cat", number()) }),
+                        }),
                     })
                 )
             ),
             d: property("raw_d", boolean()),
-            e: booleanLiteral(true)
+            e: booleanLiteral(true),
         }),
         {
             raw: {
@@ -31,18 +40,18 @@ describe("Schema", () => {
                     {
                         animal: {
                             _type: "dog",
-                            value: true
-                        }
+                            value: true,
+                        },
                     },
                     {
                         animal: {
                             _type: "cat",
-                            raw_cat: 42
-                        }
-                    }
+                            raw_cat: 42,
+                        },
+                    },
                 ],
                 raw_d: false,
-                e: true
+                e: true,
             },
             parsed: {
                 a: "hello",
@@ -51,19 +60,19 @@ describe("Schema", () => {
                     {
                         animal: {
                             type: "dog",
-                            value: true
-                        }
+                            value: true,
+                        },
                     },
                     {
                         animal: {
                             type: "cat",
-                            value: 42
-                        }
-                    }
+                            value: 42,
+                        },
+                    },
                 ],
                 d: false,
-                e: true
-            }
+                e: true,
+            },
         }
     );
 });

@@ -5,9 +5,9 @@
 import * as SeedLiteral from "../../../index";
 
 export interface SendRequest {
-    "prompt": "You are a helpful assistant";
-    "query": string;
-    "stream": false;
-    "context": SeedLiteral.SomeLiteral;
-    "maybeContext"?: SeedLiteral.SomeLiteral;
+    prompt: "You are a helpful assistant";
+    query: string;
+    stream: false;
+    context: SeedLiteral.SomeLiteral;
+    maybeContext?: SeedLiteral.SomeLiteral;
 }

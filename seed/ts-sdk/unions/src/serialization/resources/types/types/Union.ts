@@ -8,28 +8,30 @@ import * as core from "../../../../core";
 import { Foo } from "./Foo";
 import { Bar } from "./Bar";
 
-export const Union: core.serialization.Schema<serializers.Union.Raw, SeedUnions.Union> = core.serialization.union("type", {
-        "foo": core.serialization.object({
-            "foo": Foo
+export const Union: core.serialization.Schema<serializers.Union.Raw, SeedUnions.Union> = core.serialization
+    .union("type", {
+        foo: core.serialization.object({
+            foo: Foo,
         }),
-        "bar": core.serialization.object({
-            "bar": Bar
-        })
-    }).transform<SeedUnions.Union>({
-        transform: value => value,
-        untransform: value => value
+        bar: core.serialization.object({
+            bar: Bar,
+        }),
+    })
+    .transform<SeedUnions.Union>({
+        transform: (value) => value,
+        untransform: (value) => value,
     });
 
 export declare namespace Union {
     type Raw = Union.Foo | Union.Bar;
 
     interface Foo {
-        "type": "foo";
-        "foo": Foo.Raw;
+        type: "foo";
+        foo: Foo.Raw;
     }
 
     interface Bar {
-        "type": "bar";
-        "bar": Bar.Raw;
+        type: "bar";
+        bar: Bar.Raw;
     }
 }

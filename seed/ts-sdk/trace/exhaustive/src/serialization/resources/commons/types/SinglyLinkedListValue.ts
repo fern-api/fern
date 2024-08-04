@@ -8,14 +8,17 @@ import * as core from "../../../../core";
 import { NodeId } from "./NodeId";
 import { SinglyLinkedListNodeValue } from "./SinglyLinkedListNodeValue";
 
-export const SinglyLinkedListValue: core.serialization.ObjectSchema<serializers.SinglyLinkedListValue.Raw, SeedTrace.SinglyLinkedListValue> = core.serialization.object({
-        "head": NodeId.optional(),
-        "nodes": core.serialization.record(NodeId, SinglyLinkedListNodeValue)
-    });
+export const SinglyLinkedListValue: core.serialization.ObjectSchema<
+    serializers.SinglyLinkedListValue.Raw,
+    SeedTrace.SinglyLinkedListValue
+> = core.serialization.object({
+    head: NodeId.optional(),
+    nodes: core.serialization.record(NodeId, SinglyLinkedListNodeValue),
+});
 
 export declare namespace SinglyLinkedListValue {
     interface Raw {
-        "head"?: NodeId.Raw | null;
-        "nodes": Record<NodeId.Raw, SinglyLinkedListNodeValue.Raw>;
+        head?: NodeId.Raw | null;
+        nodes: Record<NodeId.Raw, SinglyLinkedListNodeValue.Raw>;
     }
 }

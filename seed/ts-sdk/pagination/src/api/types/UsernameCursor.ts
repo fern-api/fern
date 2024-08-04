@@ -5,5 +5,5 @@
 import * as SeedPagination from "../index";
 
 export interface UsernameCursor {
-    "cursor": SeedPagination.UsernamePage;
+    cursor: SeedPagination.UsernamePage;
 }

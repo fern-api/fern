@@ -15,8 +15,8 @@ import * as SeedLiteral from "../../../../index";
  *     }
  */
 export interface SendLiteralsInlinedRequest {
-    "context"?: "You're super wise";
-    "query": string;
-    "temperature"?: number;
-    "maybeContext"?: SeedLiteral.SomeAliasedLiteral;
+    context?: "You're super wise";
+    query: string;
+    temperature?: number;
+    maybeContext?: SeedLiteral.SomeAliasedLiteral;
 }

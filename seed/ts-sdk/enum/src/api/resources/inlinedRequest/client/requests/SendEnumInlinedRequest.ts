@@ -12,8 +12,8 @@ import * as SeedEnum from "../../../../index";
  *     }
  */
 export interface SendEnumInlinedRequest {
-    "operand": SeedEnum.Operand;
-    "maybeOperand"?: SeedEnum.Operand;
-    "operandOrColor": SeedEnum.ColorOrOperand;
-    "maybeOperandOrColor"?: SeedEnum.ColorOrOperand;
+    operand: SeedEnum.Operand;
+    maybeOperand?: SeedEnum.Operand;
+    operandOrColor: SeedEnum.ColorOrOperand;
+    maybeOperandOrColor?: SeedEnum.ColorOrOperand;
 }

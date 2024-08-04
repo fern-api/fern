@@ -11,9 +11,7 @@ import * as SeedExamples from "../../../../../index";
  *         value: "data"
  *     }
  */
-export type Data = 
-    | SeedExamples.commons.Data.String
-    | SeedExamples.commons.Data.Base64;
+export type Data = SeedExamples.commons.Data.String | SeedExamples.commons.Data.Base64;
 
 export declare namespace Data {
     interface String {

@@ -1,5 +1,7 @@
 # Reference
+
 ## Unknown
+
 <details><summary><code>client.unknown.<a href="/src/api/resources/unknown/client/Client.ts">post</a>({ ...params }) -> unknown[]</code></summary>
 <dl>
 <dd>
@@ -14,10 +16,10 @@
 
 ```typescript
 await client.unknown.post({
-    "key": "value"
+    key: "value",
 });
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -31,21 +33,20 @@ await client.unknown.post({
 <dl>
 <dd>
 
-**request:** `unknown` 
-    
+**request:** `unknown`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Unknown.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Unknown.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>

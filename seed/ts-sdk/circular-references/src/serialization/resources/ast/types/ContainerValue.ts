@@ -6,28 +6,31 @@ import * as serializers from "../../../index";
 import * as SeedApi from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const ContainerValue: core.serialization.Schema<serializers.ContainerValue.Raw, SeedApi.ContainerValue> = core.serialization.union("type", {
-        "list": core.serialization.object({
-            "value": core.serialization.list(core.serialization.lazy(() => serializers.FieldValue))
-        }),
-        "optional": core.serialization.object({
-            "value": core.serialization.lazy(() => serializers.FieldValue).optional()
+export const ContainerValue: core.serialization.Schema<serializers.ContainerValue.Raw, SeedApi.ContainerValue> =
+    core.serialization
+        .union("type", {
+            list: core.serialization.object({
+                value: core.serialization.list(core.serialization.lazy(() => serializers.FieldValue)),
+            }),
+            optional: core.serialization.object({
+                value: core.serialization.lazy(() => serializers.FieldValue).optional(),
+            }),
         })
-    }).transform<SeedApi.ContainerValue>({
-        transform: value => value,
-        untransform: value => value
-    });
+        .transform<SeedApi.ContainerValue>({
+            transform: (value) => value,
+            untransform: (value) => value,
+        });
 
 export declare namespace ContainerValue {
     type Raw = ContainerValue.List | ContainerValue.Optional;
 
     interface List {
-        "type": "list";
-        "value": serializers.FieldValue.Raw[];
+        type: "list";
+        value: serializers.FieldValue.Raw[];
     }
 
     interface Optional {
-        "type": "optional";
-        "value"?: serializers.FieldValue.Raw | null;
+        type: "optional";
+        value?: serializers.FieldValue.Raw | null;
     }
 }

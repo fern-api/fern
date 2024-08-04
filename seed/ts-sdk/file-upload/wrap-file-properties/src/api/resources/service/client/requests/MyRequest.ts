@@ -13,13 +13,13 @@ import * as SeedFileUpload from "../../../../index";
  *     }
  */
 export interface MyRequest {
-    "maybeString"?: string;
-    "integer": number;
+    maybeString?: string;
+    integer: number;
     file: File | fs.ReadStream | Blob;
     fileList: File[] | fs.ReadStream[] | Blob[];
     maybeFile?: File | fs.ReadStream | Blob | undefined;
     maybeFileList?: File[] | fs.ReadStream[] | Blob[] | undefined;
-    "maybeInteger"?: number;
-    "optionalListOfStrings"?: string[];
-    "listOfObjects": SeedFileUpload.MyObject[];
+    maybeInteger?: number;
+    optionalListOfStrings?: string[];
+    listOfObjects: SeedFileUpload.MyObject[];
 }

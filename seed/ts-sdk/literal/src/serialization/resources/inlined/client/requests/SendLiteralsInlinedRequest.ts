@@ -7,18 +7,21 @@ import * as SeedLiteral from "../../../../../api/index";
 import * as core from "../../../../../core";
 import { SomeAliasedLiteral } from "../../types/SomeAliasedLiteral";
 
-export const SendLiteralsInlinedRequest: core.serialization.Schema<serializers.SendLiteralsInlinedRequest.Raw, SeedLiteral.SendLiteralsInlinedRequest> = core.serialization.object({
-        "context": core.serialization.stringLiteral("You're super wise").optional(),
-        "query": core.serialization.string(),
-        "temperature": core.serialization.number().optional(),
-        "maybeContext": SomeAliasedLiteral.optional()
-    });
+export const SendLiteralsInlinedRequest: core.serialization.Schema<
+    serializers.SendLiteralsInlinedRequest.Raw,
+    SeedLiteral.SendLiteralsInlinedRequest
+> = core.serialization.object({
+    context: core.serialization.stringLiteral("You're super wise").optional(),
+    query: core.serialization.string(),
+    temperature: core.serialization.number().optional(),
+    maybeContext: SomeAliasedLiteral.optional(),
+});
 
 export declare namespace SendLiteralsInlinedRequest {
     interface Raw {
-        "context"?: "You're super wise" | null;
-        "query": string;
-        "temperature"?: number | null;
-        "maybeContext"?: SomeAliasedLiteral.Raw | null;
+        context?: "You're super wise" | null;
+        query: string;
+        temperature?: number | null;
+        maybeContext?: SomeAliasedLiteral.Raw | null;
     }
 }

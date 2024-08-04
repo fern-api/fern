@@ -5,5 +5,5 @@
 import * as SeedTrace from "../../../index";
 
 export interface StoppedResponse {
-    "submissionId": SeedTrace.SubmissionId;
+    submissionId: SeedTrace.SubmissionId;
 }

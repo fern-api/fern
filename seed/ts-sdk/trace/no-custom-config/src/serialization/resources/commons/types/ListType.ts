@@ -6,14 +6,15 @@ import * as serializers from "../../../index";
 import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const ListType: core.serialization.ObjectSchema<serializers.ListType.Raw, SeedTrace.ListType> = core.serialization.object({
-        "valueType": core.serialization.lazy(() => serializers.VariableType),
-        "isFixedLength": core.serialization.boolean().optional()
+export const ListType: core.serialization.ObjectSchema<serializers.ListType.Raw, SeedTrace.ListType> =
+    core.serialization.object({
+        valueType: core.serialization.lazy(() => serializers.VariableType),
+        isFixedLength: core.serialization.boolean().optional(),
     });
 
 export declare namespace ListType {
     interface Raw {
-        "valueType": serializers.VariableType.Raw;
-        "isFixedLength"?: boolean | null;
+        valueType: serializers.VariableType.Raw;
+        isFixedLength?: boolean | null;
     }
 }

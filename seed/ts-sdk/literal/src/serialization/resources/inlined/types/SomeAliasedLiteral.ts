@@ -6,7 +6,10 @@ import * as serializers from "../../../index";
 import * as SeedLiteral from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const SomeAliasedLiteral: core.serialization.Schema<serializers.SomeAliasedLiteral.Raw, SeedLiteral.SomeAliasedLiteral> = core.serialization.stringLiteral("You're super wise");
+export const SomeAliasedLiteral: core.serialization.Schema<
+    serializers.SomeAliasedLiteral.Raw,
+    SeedLiteral.SomeAliasedLiteral
+> = core.serialization.stringLiteral("You're super wise");
 
 export declare namespace SomeAliasedLiteral {
     type Raw = "You're super wise";

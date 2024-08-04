@@ -17,9 +17,7 @@ import * as SeedExamples from "../../../index";
  *         value: true
  *     }
  */
-export type Test = 
-    | SeedExamples.Test.And
-    | SeedExamples.Test.Or;
+export type Test = SeedExamples.Test.And | SeedExamples.Test.Or;
 
 export declare namespace Test {
     interface And {
