@@ -22,12 +22,12 @@ import {
     LiteralClassReference,
     Parameter,
     Property,
+    SerializableObject,
     StringClassReference,
     Variable,
     VariableType,
     VoidClassReference
 } from "@fern-api/ruby-codegen";
-import { InternalFields } from "@fern-api/ruby-codegen/src/ast/abstractions/SerializableObject";
 import {
     BytesRequest,
     ExampleEndpointCall,
@@ -275,7 +275,9 @@ export class EndpointGenerator {
         });
 
         // Remove reserved properties from the function signature
-        this.bodyAsProperties = this.bodyAsProperties.filter((prop) => !InternalFields.includes(prop.name));
+        this.bodyAsProperties = this.bodyAsProperties.filter(
+            (prop) => !SerializableObject.INTERNAL_FIELDS.includes(prop.name)
+        );
 
         this.streamProcessingBlock = this.isStreamingResponse()
             ? new Parameter({
