@@ -1,0 +1,396 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/danielburke/Documents/Fern/fern/seed/csharp-sdk/csharp-wire-testing/extra-dependencies/src/SeedApi.Test/SeedApi.Test.csproj": {}
+  },
+  "projects": {
+    "/Users/danielburke/Documents/Fern/fern/seed/csharp-sdk/csharp-wire-testing/extra-dependencies/src/SeedApi.Test/SeedApi.Test.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/danielburke/Documents/Fern/fern/seed/csharp-sdk/csharp-wire-testing/extra-dependencies/src/SeedApi.Test/SeedApi.Test.csproj",
+        "projectName": "SeedApi.Test",
+        "projectPath": "/Users/danielburke/Documents/Fern/fern/seed/csharp-sdk/csharp-wire-testing/extra-dependencies/src/SeedApi.Test/SeedApi.Test.csproj",
+        "packagesPath": "/Users/danielburke/.nuget/packages/",
+        "outputPath": "/Users/danielburke/Documents/Fern/fern/seed/csharp-sdk/csharp-wire-testing/extra-dependencies/src/SeedApi.Test/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/danielburke/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "/Users/danielburke/Documents/Fern/misc/LocalNuGetFeed": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/danielburke/Documents/Fern/fern/seed/csharp-sdk/csharp-wire-testing/extra-dependencies/src/SeedApi/SeedApi.csproj": {
+                "projectPath": "/Users/danielburke/Documents/Fern/fern/seed/csharp-sdk/csharp-wire-testing/extra-dependencies/src/SeedApi/SeedApi.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.5.0, )"
+            },
+            "NUnit": {
+              "target": "Package",
+              "version": "[3.13.3, )"
+            },
+            "NUnit.Analyzers": {
+              "target": "Package",
+              "version": "[3.6.1, )"
+            },
+            "NUnit3TestAdapter": {
+              "target": "Package",
+              "version": "[4.4.2, )"
+            },
+            "coverlet.collector": {
+              "target": "Package",
+              "version": "[3.2.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.302/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/danielburke/Documents/Fern/fern/seed/csharp-sdk/csharp-wire-testing/extra-dependencies/src/SeedApi/SeedApi.csproj": {
+      "version": "0.0.1",
+      "restore": {
+        "projectUniqueName": "/Users/danielburke/Documents/Fern/fern/seed/csharp-sdk/csharp-wire-testing/extra-dependencies/src/SeedApi/SeedApi.csproj",
+        "projectName": "SeedApi",
+        "projectPath": "/Users/danielburke/Documents/Fern/fern/seed/csharp-sdk/csharp-wire-testing/extra-dependencies/src/SeedApi/SeedApi.csproj",
+        "packagesPath": "/Users/danielburke/.nuget/packages/",
+        "outputPath": "/Users/danielburke/Documents/Fern/fern/seed/csharp-sdk/csharp-wire-testing/extra-dependencies/src/SeedApi/obj/",
+        "projectStyle": "PackageReference",
+        "crossTargeting": true,
+        "configFilePaths": [
+          "/Users/danielburke/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net462",
+          "net6.0",
+          "net7.0",
+          "net8.0",
+          "netstandard2.0"
+        ],
+        "sources": {
+          "/Users/danielburke/Documents/Fern/misc/LocalNuGetFeed": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          },
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          },
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          },
+          "net462": {
+            "targetAlias": "net462",
+            "projectReferences": {}
+          },
+          "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Moq": {
+              "target": "Package",
+              "version": "[4.20.70, )"
+            },
+            "Moq.Contrib.HttpClient": {
+              "target": "Package",
+              "version": "[1.4.0, )"
+            },
+            "OneOf": {
+              "target": "Package",
+              "version": "[3.0.263, )"
+            },
+            "OneOf.Extended": {
+              "target": "Package",
+              "version": "[3.0.263, )"
+            },
+            "PolySharp": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.14.1, )"
+            },
+            "System.Text.Json": {
+              "target": "Package",
+              "version": "[8.0.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[6.0.31, 6.0.31]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[6.0.31, 6.0.31]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.302/RuntimeIdentifierGraph.json"
+        },
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Moq": {
+              "target": "Package",
+              "version": "[4.20.70, )"
+            },
+            "Moq.Contrib.HttpClient": {
+              "target": "Package",
+              "version": "[1.4.0, )"
+            },
+            "OneOf": {
+              "target": "Package",
+              "version": "[3.0.263, )"
+            },
+            "OneOf.Extended": {
+              "target": "Package",
+              "version": "[3.0.263, )"
+            },
+            "PolySharp": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.14.1, )"
+            },
+            "System.Text.Json": {
+              "target": "Package",
+              "version": "[8.0.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[7.0.20, 7.0.20]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[7.0.20, 7.0.20]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.302/RuntimeIdentifierGraph.json"
+        },
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Moq": {
+              "target": "Package",
+              "version": "[4.20.70, )"
+            },
+            "Moq.Contrib.HttpClient": {
+              "target": "Package",
+              "version": "[1.4.0, )"
+            },
+            "OneOf": {
+              "target": "Package",
+              "version": "[3.0.263, )"
+            },
+            "OneOf.Extended": {
+              "target": "Package",
+              "version": "[3.0.263, )"
+            },
+            "System.Text.Json": {
+              "target": "Package",
+              "version": "[8.0.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.302/PortableRuntimeIdentifierGraph.json"
+        },
+        "net462": {
+          "targetAlias": "net462",
+          "dependencies": {
+            "Microsoft.NETFramework.ReferenceAssemblies": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.3, )",
+              "autoReferenced": true
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.20.70, )"
+            },
+            "Moq.Contrib.HttpClient": {
+              "target": "Package",
+              "version": "[1.4.0, )"
+            },
+            "OneOf": {
+              "target": "Package",
+              "version": "[3.0.263, )"
+            },
+            "OneOf.Extended": {
+              "target": "Package",
+              "version": "[3.0.263, )"
+            },
+            "PolySharp": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.14.1, )"
+            },
+            "Portable.System.DateTimeOnly": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "System.Text.Json": {
+              "target": "Package",
+              "version": "[8.0.4, )"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.302/RuntimeIdentifierGraph.json"
+        },
+        "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
+          "dependencies": {
+            "Moq": {
+              "target": "Package",
+              "version": "[4.20.70, )"
+            },
+            "Moq.Contrib.HttpClient": {
+              "target": "Package",
+              "version": "[1.4.0, )"
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            },
+            "OneOf": {
+              "target": "Package",
+              "version": "[3.0.263, )"
+            },
+            "OneOf.Extended": {
+              "target": "Package",
+              "version": "[3.0.263, )"
+            },
+            "PolySharp": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.14.1, )"
+            },
+            "Portable.System.DateTimeOnly": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "System.Text.Json": {
+              "target": "Package",
+              "version": "[8.0.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.302/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
