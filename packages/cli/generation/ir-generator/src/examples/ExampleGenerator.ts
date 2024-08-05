@@ -277,7 +277,7 @@ export class ExampleGenerator {
                 .map((pathPart) => pathParameterStringsByName[pathPart.pathParameter] + pathPart.tail)
                 .join("");
         return {
-            // not sure why fullPath sometimes doesn't start with a slash
+            // not sure why this sometimes doesn't start with a slash
             url: url.startsWith("/") ? url : `/${url}`,
             ...exampleWithoutUrl
         };
