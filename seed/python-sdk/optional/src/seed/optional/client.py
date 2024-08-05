@@ -19,13 +19,13 @@ class OptionalClient:
     def send_optional_body(
         self,
         *,
-        request: typing.Optional[typing.Dict[str, typing.Any]] = None,
+        request: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
         request_options: typing.Optional[RequestOptions] = None
     ) -> str:
         """
         Parameters
         ----------
-        request : typing.Optional[typing.Dict[str, typing.Any]]
+        request : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -65,13 +65,13 @@ class AsyncOptionalClient:
     async def send_optional_body(
         self,
         *,
-        request: typing.Optional[typing.Dict[str, typing.Any]] = None,
+        request: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
         request_options: typing.Optional[RequestOptions] = None
     ) -> str:
         """
         Parameters
         ----------
-        request : typing.Optional[typing.Dict[str, typing.Any]]
+        request : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

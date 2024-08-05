@@ -24,7 +24,7 @@ class AbstractNoAuthService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def post_with_no_auth(self, *, body: typing.Any) -> bool:
+    def post_with_no_auth(self, *, body: typing.Optional[typing.Any] = None) -> bool:
         """
         POST request with no auth
         """

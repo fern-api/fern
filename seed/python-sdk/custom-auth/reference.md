@@ -112,7 +112,7 @@ client.custom_auth.post_with_custom_auth(
 <dl>
 <dd>
 
-**request:** `typing.Any` 
+**request:** `typing.Optional[typing.Any]` 
     
 </dd>
 </dl>
