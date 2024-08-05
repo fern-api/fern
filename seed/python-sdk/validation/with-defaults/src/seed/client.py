@@ -65,7 +65,7 @@ class SeedValidation:
     def create(
         self,
         *,
-        decimal: float = 1,
+        decimal: float = 1.1,
         even: int = 42,
         name: str = "fern",
         shape: Shape,
@@ -121,7 +121,7 @@ class SeedValidation:
     def get(
         self,
         *,
-        decimal: float = 1,
+        decimal: float = 1.1,
         even: int = 42,
         name: str = "fern",
         request_options: typing.Optional[RequestOptions] = None
@@ -216,7 +216,7 @@ class AsyncSeedValidation:
     async def create(
         self,
         *,
-        decimal: float = 1,
+        decimal: float = 1.1,
         even: int = 42,
         name: str = "fern",
         shape: Shape,
@@ -280,7 +280,7 @@ class AsyncSeedValidation:
     async def get(
         self,
         *,
-        decimal: float = 1,
+        decimal: float = 1.1,
         even: int = 42,
         name: str = "fern",
         request_options: typing.Optional[RequestOptions] = None

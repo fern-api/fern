@@ -477,7 +477,7 @@ class ClientWrapperGenerator:
                     ),
                     header_key=header_auth_scheme.name.wire_value,
                     header_prefix=header_auth_scheme.prefix,
-                    environment_variable=header_auth_scheme.header_env_var.get_as_str()
+                    environment_variable=header_auth_scheme.header_env_var
                     if header_auth_scheme.header_env_var is not None
                     else None,
                 )
@@ -516,7 +516,7 @@ class ClientWrapperGenerator:
                     ),
                     header_key=ClientWrapperGenerator.AUTHORIZATION_HEADER,
                     header_prefix=ClientWrapperGenerator.BEARER_AUTH_PREFIX,
-                    environment_variable=bearer_auth_scheme.token_env_var.get_as_str()
+                    environment_variable=bearer_auth_scheme.token_env_var
                     if bearer_auth_scheme.token_env_var is not None
                     else None,
                     template=TemplateGenerator.string_template(
@@ -564,7 +564,7 @@ class ClientWrapperGenerator:
                         )
                     ),
                 ),
-                environment_variable=basic_auth_scheme.username_env_var.get_as_str()
+                environment_variable=basic_auth_scheme.username_env_var
                 if basic_auth_scheme.username_env_var is not None
                 else None,
                 is_basic=True,
@@ -610,7 +610,7 @@ class ClientWrapperGenerator:
                     ),
                 ),
                 is_basic=True,
-                environment_variable=basic_auth_scheme.password_env_var.get_as_str()
+                environment_variable=basic_auth_scheme.password_env_var
                 if basic_auth_scheme.password_env_var is not None
                 else None,
                 template=TemplateGenerator.string_template(

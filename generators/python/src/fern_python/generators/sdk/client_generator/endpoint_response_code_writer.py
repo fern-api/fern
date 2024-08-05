@@ -254,7 +254,7 @@ class EndpointResponseCodeWriter:
                     else f"{EndpointResponseCodeWriter.RESPONSE_VARIABLE}.read()"
                 )
 
-            for error in self._errors.get_as_list():
+            for error in self._errors:
                 error_declaration = self._context.ir.errors[error.error.error_id]
 
                 writer.write_line(
@@ -329,12 +329,12 @@ class EndpointResponseCodeWriter:
         if self._response is None or self._response.body is None:
             self._try_deserialize_json_response(writer=writer, response_handler=None)
 
-        if len(self._errors.get_as_list()) > 0:
+        if len(self._errors) > 0:
             writer.write_line(
                 f'if "{strategy.discriminant.wire_value}" in {EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE}:'
             )
             with writer.indent():
-                for error in self._errors.get_as_list():
+                for error in self._errors:
                     error_declaration = self._context.ir.errors[error.error.error_id]
 
                     writer.write_line(

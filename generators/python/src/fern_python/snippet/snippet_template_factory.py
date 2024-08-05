@@ -23,7 +23,7 @@ from fdr import (
     UnionTemplateV2,
     VersionedSnippetTemplate,
 )
-from fern.generator_exec.resources import GeneratorUpdate, LogLevel, LogUpdate
+from fern.generator_exec import GeneratorUpdate, LogLevel, LogUpdate
 
 from fern_python.codegen import AST
 from fern_python.codegen.imports_manager import ImportsManager
@@ -155,10 +155,10 @@ class SnippetTemplateFactory:
         return Template.factory.generic(
             GenericTemplate(
                 imports=[imports] if imports is not None else [],
-                isOptional=True,
-                templateString=instantiation,
-                templateInputs=client_template_inputs,
-                inputDelimiter=",",
+                is_optional=True,
+                template_string=instantiation,
+                template_inputs=client_template_inputs,
+                input_delimiter=",",
             )
         )
 
@@ -228,7 +228,7 @@ class SnippetTemplateFactory:
 
         container_union = container.get_as_union()
         if container_union.type == "list":
-            innerTr = container_union.list
+            innerTr = container_union.list_
             inner_template = self.get_type_reference_template(
                 type_=innerTr,
                 name=None,
@@ -256,7 +256,7 @@ class SnippetTemplateFactory:
             )
 
         if container_union.type == "set":
-            innerTr = container_union.set
+            innerTr = container_union.set_
             inner_template = self.get_type_reference_template(
                 type_=innerTr,
                 name=None,
@@ -467,21 +467,21 @@ class SnippetTemplateFactory:
             if snippet_template is not None:
                 imports, snippet_template_str = self._expression_to_snippet_str_and_imports(snippet_template)
 
+                input = self.get_type_reference_template_input(
+                    type_=sut_shape.type,
+                    name=name,
+                    location=location,
+                    wire_or_original_name=sut_shape.name.wire_value,
+                    name_breadcrumbs=child_breadcrumbs,
+                    is_function_parameter=False,
+                )
+
                 return Template.factory.generic(
                     GenericTemplate(
                         imports=[imports] if imports is not None else [],
                         is_optional=True,
                         template_string=get_template_string(snippet_template_str),
-                        template_inputs=[
-                            self.get_type_reference_template_input(
-                                type_=sut_shape.type,
-                                name=name,
-                                location=location,
-                                wire_or_original_name=sut_shape.name.wire_value,
-                                name_breadcrumbs=child_breadcrumbs,
-                                is_function_parameter=False,
-                            )
-                        ],
+                        template_inputs=[input] if input is not None else [],
                     )
                 )
             return None
@@ -601,20 +601,22 @@ class SnippetTemplateFactory:
         return type_reference.visit(
             container=lambda container: container.visit(
                 list_=lambda list_contents: FdrApiV1Read.TypeReference.factory.list_(
-                    FdrApiV1Read.ListType(itemType=self._convert_ir_type_reference_to_fdr_type_reference(list_contents))
+                    FdrApiV1Read.ListType(
+                        item_type=self._convert_ir_type_reference_to_fdr_type_reference(list_contents)
+                    )
                 ),
                 set_=lambda set_contents: FdrApiV1Read.TypeReference.factory.set_(
-                    FdrApiV1Read.SetType(itemType=self._convert_ir_type_reference_to_fdr_type_reference(set_contents))
+                    FdrApiV1Read.SetType(item_type=self._convert_ir_type_reference_to_fdr_type_reference(set_contents))
                 ),
                 map_=lambda map_contents: FdrApiV1Read.TypeReference.factory.map_(
                     FdrApiV1Read.MapType(
-                        keyType=self._convert_ir_type_reference_to_fdr_type_reference(map_contents.key_type),
-                        valueType=self._convert_ir_type_reference_to_fdr_type_reference(map_contents.value_type),
+                        key_type=self._convert_ir_type_reference_to_fdr_type_reference(map_contents.key_type),
+                        value_type=self._convert_ir_type_reference_to_fdr_type_reference(map_contents.value_type),
                     )
                 ),
                 optional=lambda optional_value: FdrApiV1Read.TypeReference.factory.optional(
                     FdrApiV1Read.OptionalType(
-                        itemType=self._convert_ir_type_reference_to_fdr_type_reference(optional_value)
+                        item_type=self._convert_ir_type_reference_to_fdr_type_reference(optional_value)
                     )
                 ),
                 literal=lambda literal_value: FdrApiV1Read.TypeReference.factory.literal(
@@ -625,7 +627,7 @@ class SnippetTemplateFactory:
                 ),
             ),
             named=lambda named: FdrApiV1Read.TypeReference.factory.id(
-                FdrApiV1Read.TypeReferenceId(value=named.type_id.get_as_str())
+                FdrApiV1Read.TypeReferenceId(value=named.type_id)
             ),
             primitive=lambda primitive: FdrApiV1Read.TypeReference.factory.primitive(
                 primitive.v_1.visit(
@@ -851,7 +853,7 @@ class SnippetTemplateFactory:
         return EndpointIdentifier(
             path=EndpointPath(self._full_path_for_endpoint(endpoint)),
             method=self._ir_method_to_fdr_method(endpoint.method),
-            identifierOverride=endpoint.id.get_as_str(),
+            identifier_override=endpoint.id,
         )
 
     def _full_path_for_endpoint(

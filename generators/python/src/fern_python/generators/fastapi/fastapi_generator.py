@@ -1,7 +1,7 @@
 from typing import Literal, Tuple
 
 import fern.ir.resources as ir_types
-from fern.generator_exec.resources import GeneratorConfig
+from fern.generator_exec import GeneratorConfig
 
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import Project

@@ -69,7 +69,7 @@ class EndpointGenerator:
 
     def get_endpoint_dot_delimited_path(self) -> str:
         service_path = [part.original_name for part in self._service.name.fern_filepath.all_parts]
-        endpoint = self._endpoint.name.get_as_name().original_name
+        endpoint = self._endpoint.name.original_name
         return f"{'.'.join(service_path)}.{endpoint}"
 
     def is_async(self) -> bool:
@@ -280,7 +280,7 @@ class EndpointGenerator:
         )
 
     def _get_method_name(self) -> str:
-        return self._endpoint.name.get_as_name().snake_case.safe_name
+        return self._endpoint.name.snake_case.safe_name
 
     def _get_reference_to_method_on_cls(self) -> str:
         return f"cls.{self._get_method_name()}"
@@ -300,7 +300,7 @@ class EndpointGenerator:
 
             writer.write_line(f"{return_statement} {self._get_reference_to_method_on_cls()}(*args, **kwargs)")
 
-        errors = self._endpoint.errors.get_as_list()
+        errors = self._endpoint.errors
         if len(errors) > 0:
             writer.write("except ")
             if len(errors) > 1:

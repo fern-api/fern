@@ -415,7 +415,7 @@ class OAuthTokenProviderGenerator:
             return AST.FunctionInvocation(
                 function_definition=AST.Reference(
                     qualified_name_excluding_import=(
-                        f"self.{self._get_auth_client_member_name()}.{token_endpoint.name.get_as_name().snake_case.safe_name}",
+                        f"self.{self._get_auth_client_member_name()}.{token_endpoint.name.snake_case.safe_name}",
                     ),
                 ),
                 kwargs=kwargs,
@@ -433,7 +433,7 @@ class OAuthTokenProviderGenerator:
         return AST.FunctionInvocation(
             function_definition=AST.Reference(
                 qualified_name_excluding_import=(
-                    f"self.{self._get_refresh_client_member_name()}.{refresh_token_endpoint.name.get_as_name().snake_case.safe_name}",
+                    f"self.{self._get_refresh_client_member_name()}.{refresh_token_endpoint.name.snake_case.safe_name}",
                 ),
             ),
             kwargs=kwargs,

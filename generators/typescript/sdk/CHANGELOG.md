@@ -5,10 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.38.3] - 2024-08-04
+## [0.38.4] - 2024-08-04
 
 - Fix: Literal templates are generated if they are union members
 - Fix: Snippet templates no longer try to inline objects within containers
+
+## [0.38.3] - 2024-08-02
+
+- Fix: Adds async iterable to StreamWrapper implementation for easier use with downstream dependencies.
 
 ## [0.38.2] - 2024-08-01
 

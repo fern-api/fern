@@ -12,8 +12,8 @@ class TemplateGenerator:
         return Template.factory.generic(
             GenericTemplate(
                 imports=[],
-                isOptional=is_optional,
-                templateString=f"{template_string_prefix}={TEMPLATE_SENTINEL}",
-                templateInputs=inputs,
+                is_optional=is_optional,
+                template_string=f"{template_string_prefix}={TEMPLATE_SENTINEL}",
+                template_inputs=inputs,
             )
         )
