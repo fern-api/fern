@@ -1,13 +1,14 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 imports:
-  types: types.yml
-  errors: errors.yml
   auth: auth.yml
-  http: http.yml
+  commons: commons.yml
   constants: constants.yml
   environment: environment.yml
-  commons: commons.yml
+  errors: errors.yml
+  http: http.yml
+  proto: proto.yml
+  types: types.yml
   variables: variables.yml
   webhooks: webhooks.yml
   websocket: websocket.yml
