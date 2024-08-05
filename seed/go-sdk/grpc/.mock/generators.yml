@@ -3,11 +3,10 @@
 # TODO: Add support for Protobuf API definitions.
 #
 # A single Protobuf root must be configured, along
-# with a list of .proto definitions that define APIs
+# with one or more .proto definitions that define APIs
 # (i.e. via a `service` declaration).
 #
-# proto:
-#   path: proto
-
 # api:
-#   - path: proto/user/v1/user.proto
+#   - grpc:
+#       root: proto
+#       target: proto/user/v1/user.proto

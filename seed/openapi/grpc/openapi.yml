@@ -114,8 +114,8 @@ components:
       title: CreateUserResponse
       type: object
       properties:
-        userId:
-          type: string
+        user:
+          $ref: '#/components/schemas/User'
       required:
-        - userId
+        - user
   securitySchemes: {}

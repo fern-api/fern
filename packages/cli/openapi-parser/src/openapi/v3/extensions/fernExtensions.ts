@@ -411,39 +411,28 @@ export const FernOpenAPIExtension = {
     FERN_VERSION: "x-fern-version",
 
     /**
-     * Allows users to specify the Protobuf source information associated with each type.
-     *
-     * If specified on the document node, the Protobuf source information applies to _all_ types
-     * (unless overridden on the individual type node). This is useful for APIs that define their
-     * entire Protobuf API in a single file.
-     *
-     * x-fern-protobuf:
-     *   file: user/v1/user_service.proto
-     *   package-name: user.v1;
-     *   options:
-     *     csharp:
-     *       namespace: User.V1
-     *
-     * If specified on a type node, the Protobuf source information can also customize
-     * the Protobuf source type name.
+     * Allows users to specify the encoding of the type. For example, suppose you need to configure
+     * Protobuf-encoding details like the following:
      *
      * User:
      *  properties:
      *    username:
      *      type: string
-     *  x-fern-protobuf:
-     *    name: User
+     *  x-fern-encoding:
+     *    proto:
+     *      type: user.v1.User
      */
-    PROTOBUF: "x-fern-protobuf",
+    ENCODING: "x-fern-encoding",
 
     /**
      * Allows users to configure gRPC services. This must be specified on individual service
      * declarations.
      *
-     * x-fern-grpc:
-     *   service-name: UserService
+     * x-fern-transport:
+     *   grpc:
+     *     file: user/v1/user.proto
      */
-    GRPC: "x-fern-grpc"
+    TRANSPORT: "x-fern-transport"
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;

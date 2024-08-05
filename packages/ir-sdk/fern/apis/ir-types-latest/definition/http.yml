@@ -17,14 +17,15 @@ types:
       endpoints: list<HttpEndpoint>
       headers: list<HttpHeader>
       pathParameters: list<PathParameter>
-      transport: optional<HttpTransport>
+      encoding: optional<types.Encoding>
+      transport: optional<Transport>
   DeclaredServiceName:
     properties:
       fernFilepath: commons.FernFilepath
 
-  HttpTransport:
+  Transport:
     union:
-      rest: {}
+      http: {}
       grpc: GrpcTransport
 
   GrpcTransport:
@@ -166,7 +167,6 @@ types:
     properties:
       wrapperName: commons.Name
       bodyKey: commons.Name
-      proto: optional<proto.ProtobufSourceType>
 
   HttpResponse:
     properties:

@@ -61,6 +61,9 @@ export async function updateApiSpec({
                     apis = [generatorConfig.api];
                 }
                 for (const api of apis) {
+                    if (generatorsYml.isRawProtobufAPIDefinitionSchema(api)) {
+                        continue;
+                    }
                     if (typeof api !== "string" && api.origin != null) {
                         cliContext.logger.info(`Origin found, fetching spec from ${api.origin}`);
                         await fetchAndWriteFile(

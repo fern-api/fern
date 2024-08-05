@@ -170,7 +170,6 @@ export async function generateIntermediateRepresentation({
 
         await visitObject(file.definitionFile, {
             imports: noop,
-            proto: noop,
             docs: (docs) => {
                 if (docs != null) {
                     packageTreeGenerator.addDocs(file.fernFilepath, docs);

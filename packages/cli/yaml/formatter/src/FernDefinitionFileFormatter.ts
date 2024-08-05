@@ -125,7 +125,6 @@ export class FernDefinitionFileFormatter {
                 case "errors":
                 case "webhooks":
                 case "channel":
-                case "proto":
                     return castedKey;
                 default:
                     assertNeverNoThrow(castedKey);
@@ -168,11 +167,6 @@ export class FernDefinitionFileFormatter {
             case "channel":
                 if (indent === 1) {
                     return "channel";
-                }
-                return undefined;
-            case "proto":
-                if (indent === 1) {
-                    return "proto";
                 }
                 return undefined;
             default:

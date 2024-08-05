@@ -51,7 +51,7 @@ export async function visitHttpService({
             }
         },
         idempotent: noop,
-        grpc: noop
+        transport: noop
     });
 }
 

@@ -1,15 +1,9 @@
-proto:
-  file: user/v1/user.proto
-  package-name: user.v1
-  options:
-    csharp:
-      namespace: User.V1
-
 types:
   Metadata:
     type: map<string, optional<MetadataValue>>
-    proto:
-      isStruct: true
+    encoding:
+      proto:
+        type: google.protobuf.Struct
 
   MetadataValue:
     discriminated: false
@@ -18,8 +12,9 @@ types:
       - string
       - boolean
       - list<MetadataValue>
-    proto:
-      isStructValue: true
+    encoding:
+      proto:
+        type: google.protobuf.Value
 
   User:
     properties:
@@ -32,13 +27,14 @@ types:
 
   CreateUserResponse:
     properties:
-      userId: string
+      user: User
 
 service:
   auth: false
   base-path: /
-  grpc:
-    service-name: UserService
+  transport:
+    grpc:
+      file: user/v1/user.proto
   endpoints:
     createUser:
       method: POST

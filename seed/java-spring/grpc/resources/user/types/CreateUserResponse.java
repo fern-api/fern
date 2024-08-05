@@ -19,15 +19,15 @@ import java.util.Objects;
     builder = CreateUserResponse.Builder.class
 )
 public final class CreateUserResponse {
-  private final String userId;
+  private final User user;
 
-  private CreateUserResponse(String userId) {
-    this.userId = userId;
+  private CreateUserResponse(User user) {
+    this.user = user;
   }
 
-  @JsonProperty("userId")
-  public String getUserId() {
-    return userId;
+  @JsonProperty("user")
+  public User getUser() {
+    return user;
   }
 
   @java.lang.Override
@@ -37,12 +37,12 @@ public final class CreateUserResponse {
   }
 
   private boolean equalTo(CreateUserResponse other) {
-    return userId.equals(other.userId);
+    return user.equals(other.user);
   }
 
   @java.lang.Override
   public int hashCode() {
-    return Objects.hash(this.userId);
+    return Objects.hash(this.user);
   }
 
   @java.lang.Override
@@ -50,12 +50,12 @@ public final class CreateUserResponse {
     return ObjectMappers.stringify(this);
   }
 
-  public static UserIdStage builder() {
+  public static UserStage builder() {
     return new Builder();
   }
 
-  public interface UserIdStage {
-    _FinalStage userId(String userId);
+  public interface UserStage {
+    _FinalStage user(User user);
 
     Builder from(CreateUserResponse other);
   }
@@ -67,28 +67,28 @@ public final class CreateUserResponse {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements UserIdStage, _FinalStage {
-    private String userId;
+  public static final class Builder implements UserStage, _FinalStage {
+    private User user;
 
     private Builder() {
     }
 
     @java.lang.Override
     public Builder from(CreateUserResponse other) {
-      userId(other.getUserId());
+      user(other.getUser());
       return this;
     }
 
     @java.lang.Override
-    @JsonSetter("userId")
-    public _FinalStage userId(String userId) {
-      this.userId = userId;
+    @JsonSetter("user")
+    public _FinalStage user(User user) {
+      this.user = user;
       return this;
     }
 
     @java.lang.Override
     public CreateUserResponse build() {
-      return new CreateUserResponse(userId);
+      return new CreateUserResponse(user);
     }
   }
 }

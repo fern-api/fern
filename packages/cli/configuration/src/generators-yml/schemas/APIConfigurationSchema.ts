@@ -6,13 +6,8 @@ import { z } from "zod";
  *
  * @example
  * api: asyncapi.yml
- *
- * @example
- * api: ../../proto/user/v1/user.proto
  */
-export const APIDefinitionPathSchema = z
-    .string()
-    .describe("Path to the OpenAPI, AsyncAPI, Protobuf or Fern Definition");
+export const APIDefinitionPathSchema = z.string().describe("Path to the OpenAPI, AsyncAPI or Fern Definition");
 
 export const APIDefinitionSettingsSchema = z.object({
     "use-title": z
@@ -37,10 +32,6 @@ export type APIDefinitionSettingsSchema = z.infer<typeof APIDefinitionSettingsSc
  * api:
  *  path: asyncapi.yml
  *  overrides: overrides.yml
- *
- * @example
- * api:
- *  path: ../../proto/user/v1/user.proto
  */
 export const APIDefintionWithOverridesSchema = z.object({
     path: APIDefinitionPathSchema,
@@ -57,16 +48,51 @@ export const APIDefintionWithOverridesSchema = z.object({
 /**
  * @example
  * api:
+ *  proto:
+ *    root: proto
+ *    target: proto/user/v1/user.proto
+ */
+export const ProtobufDefinitionSchema = z.strictObject({
+    root: z.string().describe("The path to the `.proto` directroy root (e.g. `proto`)."),
+    target: z
+        .string()
+        .describe("The path to the target `.proto` file that defines the API (e.g. `proto/user/v1/user.proto`).")
+});
+
+export type ProtobufDefinitionSchema = z.infer<typeof ProtobufDefinitionSchema>;
+
+/**
+ * @example
+ * api:
+ *  proto:
+ *    root: proto
+ *    target: proto/user/v1/user.proto
+ */
+export const ProtobufAPIDefinitionSchema = z.strictObject({
+    proto: ProtobufDefinitionSchema
+});
+
+export type ProtobufAPIDefinitionSchema = z.infer<typeof ProtobufAPIDefinitionSchema>;
+
+/**
+ * @example
+ * api:
  *  - path: openapi.yml
  *    overrides: overrides.yml
  *  - openapi.yml
+ *  - proto:
+ *      root: proto
+ *      target: proto/user/v1/user.proto
  */
-export const APIDefinitionList = z.array(z.union([APIDefinitionPathSchema, APIDefintionWithOverridesSchema]));
+export const APIDefinitionList = z.array(
+    z.union([APIDefinitionPathSchema, APIDefintionWithOverridesSchema, ProtobufAPIDefinitionSchema])
+);
 
 export const APIConfigurationSchema = z.union([
     APIDefinitionPathSchema,
     APIDefintionWithOverridesSchema,
-    APIDefinitionList
+    APIDefinitionList,
+    ProtobufAPIDefinitionSchema
 ]);
 
 export type APIConfigurationSchema = z.infer<typeof APIConfigurationSchema>;

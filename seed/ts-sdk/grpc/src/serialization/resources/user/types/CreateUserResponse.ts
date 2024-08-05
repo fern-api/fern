@@ -5,16 +5,17 @@
 import * as serializers from "../../../index";
 import * as SeedApi from "../../../../api/index";
 import * as core from "../../../../core";
+import { User } from "./User";
 
 export const CreateUserResponse: core.serialization.ObjectSchema<
     serializers.CreateUserResponse.Raw,
     SeedApi.CreateUserResponse
 > = core.serialization.object({
-    userId: core.serialization.string(),
+    user: User,
 });
 
 export declare namespace CreateUserResponse {
     interface Raw {
-        userId: string;
+        user: User.Raw;
     }
 }

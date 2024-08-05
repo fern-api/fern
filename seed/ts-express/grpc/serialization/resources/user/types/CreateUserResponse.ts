@@ -10,11 +10,11 @@ export const CreateUserResponse: core.serialization.ObjectSchema<
     serializers.CreateUserResponse.Raw,
     SeedApi.CreateUserResponse
 > = core.serialization.object({
-    userId: core.serialization.string(),
+    user: core.serialization.lazyObject(() => serializers.User),
 });
 
 export declare namespace CreateUserResponse {
     interface Raw {
-        userId: string;
+        user: serializers.User.Raw;
     }
 }

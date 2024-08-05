@@ -1,10 +1,11 @@
 import { z } from "zod";
-import { ProtobufSourceFileSchema } from "./ProtobufSourceFileSchema";
 
-export const GrpcSchema = ProtobufSourceFileSchema.extend(
-    z.strictObject({
-        "service-name": z.string().describe("The name of the gRPC service.")
-    }).shape
-);
+export const GrpcSchema = z.strictObject({
+    file: z
+        .string()
+        .describe(
+            "The relative path of the `.proto` source file that defines the gRPC service (e.g. user/v1/user.proto)"
+        )
+});
 
 export type GrpcSchema = z.infer<typeof GrpcSchema>;
