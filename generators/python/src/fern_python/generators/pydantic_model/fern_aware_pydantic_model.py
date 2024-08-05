@@ -81,7 +81,8 @@ class FernAwarePydanticModel:
             frozen=custom_config.frozen,
             orm_mode=custom_config.orm_mode,
             smart_union=custom_config.smart_union,
-            pydantic_base_model=pydantic_base_model_override or self._context.core_utilities.get_unchecked_pydantic_base_model(),
+            pydantic_base_model=pydantic_base_model_override
+            or self._context.core_utilities.get_unchecked_pydantic_base_model(),
             require_optional_fields=custom_config.require_optional_fields,
             is_pydantic_v2=self._context.core_utilities.get_is_pydantic_v2(),
             universal_field_validator=self._context.core_utilities.universal_field_validator,
