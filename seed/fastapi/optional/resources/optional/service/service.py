@@ -23,7 +23,7 @@ class AbstractOptionalService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def send_optional_body(self, *, body: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None) -> str:
+    def send_optional_body(self, *, body: typing.Optional[typing.Dict[str, typing.Any]] = None) -> str:
         ...
 
     """

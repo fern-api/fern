@@ -29,7 +29,7 @@ class AbstractFolderServiceService(AbstractFernService):
         ...
 
     @abc.abstractmethod
-    def unknown_request(self, *, body: typing.Optional[typing.Any] = None) -> None:
+    def unknown_request(self, *, body: typing.Any) -> None:
         ...
 
     """
