@@ -44,7 +44,7 @@ class PydanticV1CustomRootTypeValidatorGenerator(ValidatorGenerator):
             ".".join(
                 (
                     *self._reference_to_validators_class,
-                    CustomRootTypeValidatorGenerator._VALIDATOR_CLASS_VALIDATORS_CLASS_VAR,
+                    PydanticV1CustomRootTypeValidatorGenerator._VALIDATOR_CLASS_VALIDATORS_CLASS_VAR,
                 )
             )
             + ":"
@@ -71,20 +71,20 @@ class PydanticV1CustomRootTypeValidatorGenerator(ValidatorGenerator):
         validator_type = AST.TypeHint.callable([self._root_type], self._root_type)
         validators_class.add_class_var(
             AST.VariableDeclaration(
-                name=CustomRootTypeValidatorGenerator._VALIDATOR_CLASS_VALIDATORS_CLASS_VAR,
+                name=PydanticV1CustomRootTypeValidatorGenerator._VALIDATOR_CLASS_VALIDATORS_CLASS_VAR,
                 type_hint=AST.TypeHint.class_var(AST.TypeHint.list(validator_type)),
                 initializer=AST.Expression("[]"),
             )
         )
         validators_class.add_method(
             declaration=AST.FunctionDeclaration(
-                name=CustomRootTypeValidatorGenerator._DECORATOR_FUNCTION_NAME,
+                name=PydanticV1CustomRootTypeValidatorGenerator._DECORATOR_FUNCTION_NAME,
                 signature=AST.FunctionSignature(
                     parameters=[AST.FunctionParameter(name=VALIDATOR_PARAMETER, type_hint=validator_type)],
                     return_type=AST.TypeHint.none(),
                 ),
                 body=AST.CodeWriter(
-                    f"cls.{CustomRootTypeValidatorGenerator._VALIDATOR_CLASS_VALIDATORS_CLASS_VAR}"
+                    f"cls.{PydanticV1CustomRootTypeValidatorGenerator._VALIDATOR_CLASS_VALIDATORS_CLASS_VAR}"
                     + f".append({VALIDATOR_PARAMETER})"
                 ),
             ),
@@ -94,7 +94,7 @@ class PydanticV1CustomRootTypeValidatorGenerator(ValidatorGenerator):
     def write_example_for_docstring(self, writer: AST.NodeWriter) -> None:
 
         reference_to_decorator = ".".join(
-            (*self._reference_to_validators_class, CustomRootTypeValidatorGenerator._DECORATOR_FUNCTION_NAME)
+            (*self._reference_to_validators_class, PydanticV1CustomRootTypeValidatorGenerator._DECORATOR_FUNCTION_NAME)
         )
 
         with writer.indent():

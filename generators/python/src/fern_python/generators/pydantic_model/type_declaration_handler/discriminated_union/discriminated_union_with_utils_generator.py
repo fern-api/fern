@@ -1,7 +1,6 @@
 from typing import List, Optional, Set
 
 import fern.ir.resources as ir_types
-from fern_python.generators.pydantic_model.type_declaration_handler.type_utilities import declared_type_name_to_named_type
 from typing_extensions import Never
 
 from fern_python.codegen import AST, LocalClassReference, SourceFile
@@ -9,6 +8,9 @@ from fern_python.codegen.ast.nodes.declarations.class_.class_declaration import 
     ClassDeclaration,
 )
 from fern_python.external_dependencies import Pydantic
+from fern_python.generators.pydantic_model.type_declaration_handler.type_utilities import (
+    declared_type_name_to_named_type,
+)
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
 
 from ....context import PydanticGeneratorContext
@@ -231,7 +233,9 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                             name=BUILDER_ARGUMENT_NAME,
                                             type_hint=self._context.get_type_hint_for_type_reference(
                                                 ir_types.TypeReference.factory.named(
-                                                    declared_type_name_to_named_type(declared_type_name=declared_type_name)
+                                                    declared_type_name_to_named_type(
+                                                        declared_type_name=declared_type_name
+                                                    )
                                                 )
                                             ),
                                         )

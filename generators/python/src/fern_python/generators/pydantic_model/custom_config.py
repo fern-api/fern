@@ -1,4 +1,5 @@
 from typing import Literal, Optional
+
 from typing_extensions import Self
 
 import pydantic
@@ -16,15 +17,18 @@ class BasePydanticModelCustomConfig(pydantic.BaseModel):
 
     wrapped_aliases: bool = False
 
-    @pydantic.model_validator(mode='after')
+    @pydantic.model_validator(mode="after")
     def check_wrapped_aliases_v1_only(self) -> Self:
         version_compat = self.version
         use_wrapped_aliases = self.wrapped_aliases
 
         if use_wrapped_aliases and version_compat != PydanticVersionCompatibility.V1:
-            raise ValueError("Wrapped aliases are only supported in Pydantic V1, please update your `version` field to be 'v1' to continue using wrapped aliases.")
+            raise ValueError(
+                "Wrapped aliases are only supported in Pydantic V1, please update your `version` field to be 'v1' to continue using wrapped aliases."
+            )
 
         return self
+
 
 class PydanticModelCustomConfig(BasePydanticModelCustomConfig):
     include_validators: bool = False

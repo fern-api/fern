@@ -173,6 +173,9 @@ scripts:
 allowedFailures: 
   # This is the only one that should always fail
   - exhaustive:additional_init_exports
+  # This should only succeed in Pydantic V1 tests
+  - exhaustive:pydantic-v1-wrapped
+
   # TODO(FER-1837): Address this list
   - response-property
   - websocket

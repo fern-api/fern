@@ -11,7 +11,11 @@ from fern_python.pydantic_codegen import PydanticField, PydanticModel
 
 from ..context import PydanticGeneratorContext
 from .custom_config import PydanticModelCustomConfig
-from .validators import PydanticValidatorsGenerator, ValidatorsGenerator, PydanticV1CustomRootTypeValidatorsGenerator
+from .validators import (
+    PydanticV1CustomRootTypeValidatorsGenerator,
+    PydanticValidatorsGenerator,
+    ValidatorsGenerator,
+)
 
 
 class FernAwarePydanticModel:
@@ -189,7 +193,6 @@ class FernAwarePydanticModel:
         decorator: Optional[AST.ClassMethodDecorator] = None,
     ) -> AST.FunctionDeclaration:
         return self._pydantic_model.add_method(declaration=declaration, decorator=decorator)
-    
 
     def set_root_type_v1_only(
         self,
@@ -202,7 +205,6 @@ class FernAwarePydanticModel:
             annotation=annotation,
             is_forward_ref=is_forward_ref,
         )
-
 
     def set_root_type_unsafe_v1_only(
         self, root_type: AST.TypeHint, annotation: Optional[AST.Expression] = None, is_forward_ref: bool = False

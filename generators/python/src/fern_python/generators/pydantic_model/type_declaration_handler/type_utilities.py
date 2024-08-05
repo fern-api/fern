@@ -1,5 +1,6 @@
 import fern.ir.resources as ir_types
 
+
 def declared_type_name_to_named_type(declared_type_name: ir_types.DeclaredTypeName) -> ir_types.NamedType:
     return ir_types.NamedType(
         type_id=declared_type_name.type_id,
