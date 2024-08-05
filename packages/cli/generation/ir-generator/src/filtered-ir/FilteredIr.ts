@@ -10,7 +10,7 @@ export interface FilteredIr {
     hasErrorId(type: string): boolean;
     hasService(service: HttpService): boolean;
     hasServiceId(type: string): boolean;
-    hasEnvironment(environment: EnvironmentId): boolean;
+    hasEnvironmentId(environmentId: EnvironmentId): boolean;
     hasEndpoint(endpoint: HttpEndpoint): boolean;
     hasWebhook(webhook: Webhook): boolean;
     hasWebhookPayloadProperty(webhookId: string, property: string): boolean;
@@ -110,8 +110,8 @@ export class FilteredIrImpl implements FilteredIr {
         return this.services.has(serviceId);
     }
 
-    public hasEnvironment(environment: EnvironmentId): boolean {
-        return this.environments.has(environment);
+    public hasEnvironmentId(environmentId: EnvironmentId): boolean {
+        return this.environments.has(environmentId);
     }
 
     public hasEndpoint(endpoint: HttpEndpoint): boolean {

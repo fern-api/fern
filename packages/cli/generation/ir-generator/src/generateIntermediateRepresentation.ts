@@ -543,14 +543,14 @@ function filterIntermediateRepresentationForAudiences(
             case "singleBaseUrl": {
                 filteredEnvironmentsConfig.environments.environments =
                     filteredEnvironmentsConfig.environments.environments.filter((environment) =>
-                        filteredIr.hasEnvironment(environment.id)
+                        filteredIr.hasEnvironmentId(environment.id)
                     );
                 break;
             }
             case "multipleBaseUrls": {
                 filteredEnvironmentsConfig.environments.environments =
                     filteredEnvironmentsConfig.environments.environments.filter((environment) =>
-                        filteredIr.hasEnvironment(environment.id)
+                        filteredIr.hasEnvironmentId(environment.id)
                     );
                 break;
             }
@@ -558,7 +558,7 @@ function filterIntermediateRepresentationForAudiences(
 
         // If default environment does not exist in audience, set to undefined
         if (filteredEnvironmentsConfig.defaultEnvironment) {
-            if (!filteredIr.hasEnvironment(filteredEnvironmentsConfig.defaultEnvironment)) {
+            if (!filteredIr.hasEnvironmentId(filteredEnvironmentsConfig.defaultEnvironment)) {
                 filteredEnvironmentsConfig.defaultEnvironment = undefined;
             }
         }
