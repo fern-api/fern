@@ -41,7 +41,7 @@ export class WireTestGenerator extends FileGenerator<CSharpFile, SdkCustomConfig
             const methodBody = csharp.codeblock((writer) => {
                 if (testInput.request != null) {
                     writer.writeLine('const string requestJson = """');
-                    writer.writeLine(JSON.stringify(testInput.request.jsonExample, null, 2));
+                    writer.writeLine(JSON.stringify(testInput.request.jsonExample, null, 2), true);
                     writer.writeTextStatement('"""');
                 }
                 writer.newLine();
@@ -59,7 +59,7 @@ export class WireTestGenerator extends FileGenerator<CSharpFile, SdkCustomConfig
                 writer.newLine();
 
                 writer.write("Server.Given(WireMock.RequestBuilders.Request.Create()");
-                writer.write(`.WithPath("${testInput.url}")`);
+                writer.write(`.WithPath("${this.endpoint.fullPath}/${testInput.url}")`);
                 writer.write(
                     `.Using${
                         this.endpoint.method.charAt(0).toUpperCase() + this.endpoint.method.slice(1).toLowerCase()

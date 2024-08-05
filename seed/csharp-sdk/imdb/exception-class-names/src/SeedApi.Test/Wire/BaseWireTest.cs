@@ -1,22 +1,36 @@
 using NUnit.Framework;
 using SeedApi;
+using SeedApi.Core;
+using WireMock.Logging;
 using WireMock.Server;
+using WireMock.Settings;
 
 #nullable enable
 
 namespace SeedApi.Test.Wire;
 
-[TestFixture]
-public abstract class BaseWireTest
+[SetUpFixture]
+public class BaseWireTest
 {
-    protected static WireMockServer Server => GlobalTestSetup.Server;
+    protected static WireMockServer Server { get; set; } = null!;
 
-    protected static SeedApiClient Client => GlobalTestSetup.Client;
+    protected static SeedApiClient Client { get; set; } = null!;
 
-    [TearDown]
-    public void BaseTearDown()
+    [OneTimeSetUp]
+    public void GlobalSetup()
     {
-        // Reset the WireMock server after each test
-        Server.Reset();
+        // Start the WireMock server
+        Server = WireMockServer.Start(
+            new WireMockServerSettings { Logger = new WireMockConsoleLogger() }
+        );
+
+        // Initialize the Client
+        Client = new SeedApiClient("API_KEY", new ClientOptions { BaseUrl = Server.Urls[0] });
+    }
+
+    [OneTimeTearDown]
+    public void GlobalTeardown()
+    {
+        Server.Stop();
     }
 }

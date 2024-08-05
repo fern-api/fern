@@ -11,11 +11,11 @@ export class BaseWireTestGenerator extends FileGenerator<CSharpFile, SdkCustomCo
     public doGenerate(): CSharpFile {
         const class_ = csharp.class_({
             ...this.context.getBaseWireTestClassReference(),
+            partial: false,
             access: "public",
-            abstract: true,
             annotations: [
                 csharp.annotation({
-                    reference: csharp.classReference({ name: "TestFixture", namespace: "NUnit.Framework" })
+                    reference: csharp.classReference({ name: "SetUpFixture", namespace: "NUnit.Framework" })
                 })
             ]
         });
@@ -32,7 +32,8 @@ export class BaseWireTestGenerator extends FileGenerator<CSharpFile, SdkCustomCo
                     })
                 ),
                 get: true,
-                initializer: csharp.codeblock("GlobalTestSetup.Server")
+                initializer: csharp.codeblock("null!"),
+                set: true
             })
         );
 
@@ -48,23 +49,61 @@ export class BaseWireTestGenerator extends FileGenerator<CSharpFile, SdkCustomCo
                     })
                 ),
                 get: true,
-                initializer: csharp.codeblock("GlobalTestSetup.Client")
+                initializer: csharp.codeblock("null!"),
+                set: true
             })
         );
 
         class_.addMethod(
             csharp.method({
-                name: "BaseTearDown",
+                name: "GlobalSetup",
                 access: "public",
                 body: csharp.codeblock((writer) => {
-                    writer.writeLine("// Reset the WireMock server after each test");
-                    writer.writeLine("Server.Reset();");
+                    writer.writeLine("// Start the WireMock server");
+                    writer.write("Server = WireMockServer.Start(new ");
+                    writer.writeNode(
+                        csharp.classReference({
+                            name: "WireMockServerSettings",
+                            namespace: "WireMock.Settings"
+                        })
+                    );
+                    writer.write(" { Logger = new ");
+                    writer.writeNode(
+                        csharp.classReference({
+                            name: "WireMockConsoleLogger",
+                            namespace: "WireMock.Logging"
+                        })
+                    );
+                    writer.writeTextStatement("() })");
+                    writer.newLine();
+
+                    writer.writeLine("// Initialize the Client");
+                    writer.writeLine(`Client = new ${this.context.getRootClientClassName()}("API_KEY", new `);
+                    writer.writeNode(this.context.getClientOptionsClassReference());
+                    writer.write(" { BaseUrl = Server.Urls[0] });");
                 }),
                 isAsync: false,
                 parameters: [],
                 annotations: [
                     csharp.annotation({
-                        reference: csharp.classReference({ name: "TearDown", namespace: "NUnit.Framework" })
+                        reference: csharp.classReference({ name: "OneTimeSetUp", namespace: "NUnit.Framework" })
+                    })
+                ]
+            })
+        );
+
+        class_.addMethod(
+            csharp.method({
+                name: "GlobalTeardown",
+                access: "public",
+                body: csharp.codeblock((writer) => {
+                    writer.writeLine("Server.Stop();");
+                }),
+                isAsync: false,
+                parameters: [],
+                annotations: [
+                    csharp.annotation({
+                        reference: csharp.classReference({ name: "OneTimeTearDown", namespace: "NUnit.Framework" })
                     })
                 ]
             })

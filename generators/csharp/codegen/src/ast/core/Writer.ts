@@ -31,13 +31,13 @@ export class Writer {
         this.namespace = namespace;
     }
 
-    public write(text: string): void {
+    public write(text: string, isYeah = false): void {
         const textEndsInNewline = text.length > 0 && text.endsWith("\n");
         // temporarily remove the trailing newline, since we don't want to add the indent prefix after it
         const textWithoutNewline = textEndsInNewline ? text.substring(0, text.length - 1) : text;
 
         const indent = this.getIndentString();
-        let indentedText = textWithoutNewline.replace("\n", `\n${indent}`);
+        let indentedText = textWithoutNewline.replaceAll("\n", `\n${indent}`);
         if (this.isAtStartOfLine()) {
             indentedText = indent + indentedText;
         }
@@ -96,8 +96,8 @@ export class Writer {
     }
 
     /* Only writes a newline if last line in the buffer is not a newline */
-    public writeLine(text = ""): void {
-        this.write(text);
+    public writeLine(text = "", isYeah = false): void {
+        this.write(text, isYeah);
         this.writeNewLineIfLastLineNot();
     }
 

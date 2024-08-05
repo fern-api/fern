@@ -28,7 +28,7 @@ public class CreateMovieTest : BaseWireTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/create-movie")
+                    .WithPath("undefined//create-movie")
                     .UsingPost()
                     .WithBody(requestJson)
             )

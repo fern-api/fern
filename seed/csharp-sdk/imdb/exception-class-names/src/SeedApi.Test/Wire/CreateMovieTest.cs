@@ -1,7 +1,7 @@
 using NUnit.Framework;
-using SeedApi.Test.Wire;
-using SeedApi.Test.Utils;
 using SeedApi.Core;
+using SeedApi.Test.Utils;
+using SeedApi.Test.Wire;
 
 #nullable enable
 
@@ -11,27 +11,37 @@ namespace SeedApi.Test;
 public class CreateMovieTest : BaseWireTest
 {
     [Test]
-    public void WireTest() {
+    public void WireTest()
+    {
         const string requestJson = """
-        {
-          "title": "string",
-  "rating": 1.1
-}
-        """;
+            {
+              "title": "string",
+              "rating": 1.1
+            }
+            """;
 
         const string mockResponse = """
-        "string"
-        """;
+            "string"
+            """;
 
-        Server.Given(WireMock.RequestBuilders.Request.Create().WithPath("/create-movie").UsingPost().WithBody(requestJson))
-        .RespondWith(WireMock.ResponseBuilders.Response.Create()
-        .WithStatusCode(200)
-        .WithBody(mockResponse));
-        var response = Client.Imdb.CreateMovieAsync(new CreateMovieRequest{ 
-                Title = "string", Rating = 1.1
-            }).Result;
+        Server
+            .Given(
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("undefined//create-movie")
+                    .UsingPost()
+                    .WithBody(requestJson)
+            )
+            .RespondWith(
+                WireMock
+                    .ResponseBuilders.Response.Create()
+                    .WithStatusCode(200)
+                    .WithBody(mockResponse)
+            );
+        var response = Client
+            .Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "string", Rating = 1.1 })
+            .Result;
 
         JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
     }
-
 }

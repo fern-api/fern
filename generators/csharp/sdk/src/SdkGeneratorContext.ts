@@ -182,13 +182,6 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         });
     }
 
-    public getGlobalTestSetupClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: "GlobalTestSetup",
-            namespace: this.getWireTestNamespace()
-        });
-    }
-
     public getBaseWireTestClassReference(): csharp.ClassReference {
         return csharp.classReference({
             name: "BaseWireTest",

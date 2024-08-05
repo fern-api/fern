@@ -126,7 +126,7 @@ export class EndpointGenerator {
         if (endpointRequestSnippet != null) {
             args.push(endpointRequestSnippet);
         }
-        const finalOn = csharp.codeblock((writer) => {
+        const on = csharp.codeblock((writer) => {
             writer.write(`${clientVariableName}.`);
             if (subclientName != null) {
                 writer.write(subclientName.pascalCase.safeName);
@@ -135,7 +135,7 @@ export class EndpointGenerator {
         const methodInvocationArgs: csharp.MethodInvocation.Args = {
             method: this.context.getEndpointMethodName(endpoint),
             arguments_: args,
-            on: finalOn,
+            on,
             async: false,
             generics: []
         };

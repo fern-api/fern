@@ -2,13 +2,11 @@ import { CSharpFile } from "@fern-api/csharp-codegen";
 import { ExampleEndpointCall } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { BaseWireTestGenerator } from "./test-generation/wire/BaseWireTestGenerator";
-import { GlobalWireTestSetupGenerator } from "./test-generation/wire/GlobalWireTestSetupGenerator";
 import { WireTestGenerator } from "./test-generation/wire/WireTestGenerator";
 
 export function generateSdkTests({ context }: { context: SdkGeneratorContext }): CSharpFile[] {
     const files: CSharpFile[] = [];
     // wire tests
-    files.push(new GlobalWireTestSetupGenerator(context).generate());
     files.push(new BaseWireTestGenerator(context).generate());
     for (const [serviceId, service] of Object.entries(context.ir.services)) {
         for (const endpoint of service.endpoints) {
