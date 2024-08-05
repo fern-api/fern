@@ -5,10 +5,9 @@
 import * as serializers from "../../../index";
 import * as core from "../../../../core";
 
-export const Response: core.serialization.Schema<serializers.basicAuth.postWithBasicAuth.Response.Raw, boolean> = core.serialization.boolean();
+export const Response: core.serialization.Schema<serializers.basicAuth.postWithBasicAuth.Response.Raw, boolean> =
+    core.serialization.boolean();
 
 export declare namespace Response {
     type Raw = boolean;
 }
-
-

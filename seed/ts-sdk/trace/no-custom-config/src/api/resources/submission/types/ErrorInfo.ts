@@ -4,7 +4,7 @@
 
 import * as SeedTrace from "../../../index";
 
-export type ErrorInfo = 
+export type ErrorInfo =
     | SeedTrace.ErrorInfo.CompileError
     /**
      * If the submission cannot be executed and throws a runtime error before getting to any of the testcases.

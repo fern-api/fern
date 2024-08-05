@@ -6,5 +6,5 @@ import * as SeedPagination from "../../../index";
 
 export interface ListUsersExtendedResponse extends SeedPagination.UserPage {
     /** The totall number of /users */
-    "totalCount": number;
+    totalCount: number;
 }

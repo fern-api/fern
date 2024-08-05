@@ -11,9 +11,7 @@ import * as SeedExamples from "../../../index";
  *         value: "<head>...</head>"
  *     }
  */
-export type Metadata = 
-    | SeedExamples.Metadata.Html
-    | SeedExamples.Metadata.Markdown;
+export type Metadata = SeedExamples.Metadata.Html | SeedExamples.Metadata.Markdown;
 
 export declare namespace Metadata {
     interface Html extends _Base {

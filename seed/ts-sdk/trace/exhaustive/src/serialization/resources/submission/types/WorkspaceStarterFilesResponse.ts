@@ -8,12 +8,15 @@ import * as core from "../../../../core";
 import { WorkspaceFiles } from "./WorkspaceFiles";
 import { Language } from "../../commons/types/Language";
 
-export const WorkspaceStarterFilesResponse: core.serialization.ObjectSchema<serializers.WorkspaceStarterFilesResponse.Raw, SeedTrace.WorkspaceStarterFilesResponse> = core.serialization.object({
-        "files": core.serialization.record(Language, WorkspaceFiles.optional())
-    });
+export const WorkspaceStarterFilesResponse: core.serialization.ObjectSchema<
+    serializers.WorkspaceStarterFilesResponse.Raw,
+    SeedTrace.WorkspaceStarterFilesResponse
+> = core.serialization.object({
+    files: core.serialization.record(Language, WorkspaceFiles.optional()),
+});
 
 export declare namespace WorkspaceStarterFilesResponse {
     interface Raw {
-        "files": Record<Language.Raw, WorkspaceFiles.Raw | null | undefined>;
+        files: Record<Language.Raw, WorkspaceFiles.Raw | null | undefined>;
     }
 }

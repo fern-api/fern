@@ -21,8 +21,7 @@ export declare namespace SeedObjectsWithImportsClient {
 }
 
 export class SeedObjectsWithImportsClient {
-    constructor(protected readonly _options: SeedObjectsWithImportsClient.Options) {
-    }
+    constructor(protected readonly _options: SeedObjectsWithImportsClient.Options) {}
 
     protected _optional: Optional | undefined;
 

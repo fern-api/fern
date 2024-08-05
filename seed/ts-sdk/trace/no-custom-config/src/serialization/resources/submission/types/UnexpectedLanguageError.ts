@@ -7,14 +7,17 @@ import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 import { Language } from "../../commons/types/Language";
 
-export const UnexpectedLanguageError: core.serialization.ObjectSchema<serializers.UnexpectedLanguageError.Raw, SeedTrace.UnexpectedLanguageError> = core.serialization.object({
-        "expectedLanguage": Language,
-        "actualLanguage": Language
-    });
+export const UnexpectedLanguageError: core.serialization.ObjectSchema<
+    serializers.UnexpectedLanguageError.Raw,
+    SeedTrace.UnexpectedLanguageError
+> = core.serialization.object({
+    expectedLanguage: Language,
+    actualLanguage: Language,
+});
 
 export declare namespace UnexpectedLanguageError {
     interface Raw {
-        "expectedLanguage": Language.Raw;
-        "actualLanguage": Language.Raw;
+        expectedLanguage: Language.Raw;
+        actualLanguage: Language.Raw;
     }
 }

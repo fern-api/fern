@@ -23,8 +23,7 @@ export declare namespace Notification {
 }
 
 export class Notification {
-    constructor(protected readonly _options: Notification.Options) {
-    }
+    constructor(protected readonly _options: Notification.Options) {}
 
     protected _service: Service | undefined;
 

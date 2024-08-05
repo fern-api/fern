@@ -8,14 +8,17 @@ import * as core from "../../../../../../../../core";
 import { TestCaseImplementationDescription } from "./TestCaseImplementationDescription";
 import { TestCaseFunction } from "./TestCaseFunction";
 
-export const TestCaseImplementation: core.serialization.ObjectSchema<serializers.v2.v3.TestCaseImplementation.Raw, SeedTrace.v2.v3.TestCaseImplementation> = core.serialization.object({
-        "description": TestCaseImplementationDescription,
-        "function": TestCaseFunction
-    });
+export const TestCaseImplementation: core.serialization.ObjectSchema<
+    serializers.v2.v3.TestCaseImplementation.Raw,
+    SeedTrace.v2.v3.TestCaseImplementation
+> = core.serialization.object({
+    description: TestCaseImplementationDescription,
+    function: TestCaseFunction,
+});
 
 export declare namespace TestCaseImplementation {
     interface Raw {
-        "description": TestCaseImplementationDescription.Raw;
-        "function": TestCaseFunction.Raw;
+        description: TestCaseImplementationDescription.Raw;
+        function: TestCaseFunction.Raw;
     }
 }

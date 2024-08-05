@@ -5,7 +5,7 @@
 import * as SeedTrace from "../../../index";
 
 export interface TestCaseResult {
-    "expectedResult": SeedTrace.VariableValue;
-    "actualResult": SeedTrace.ActualResult;
-    "passed": boolean;
+    expectedResult: SeedTrace.VariableValue;
+    actualResult: SeedTrace.ActualResult;
+    passed: boolean;
 }

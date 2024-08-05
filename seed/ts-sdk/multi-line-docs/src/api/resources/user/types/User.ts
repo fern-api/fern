@@ -9,7 +9,7 @@
  * - getUser
  */
 export interface User {
-    "id": string;
+    id: string;
     /**
      * The user's name. This name is unique to each user. A few examples are included below:
      *
@@ -17,7 +17,7 @@ export interface User {
      * - Bob
      * - Charlie
      */
-    "name": string;
+    name: string;
     /** The user's age. */
-    "age"?: number;
+    age?: number;
 }

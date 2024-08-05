@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../index";
 
 export interface BuildingExecutorResponse {
-    "submissionId": SeedTrace.SubmissionId;
-    "status": SeedTrace.ExecutionSessionStatus;
+    submissionId: SeedTrace.SubmissionId;
+    status: SeedTrace.ExecutionSessionStatus;
 }

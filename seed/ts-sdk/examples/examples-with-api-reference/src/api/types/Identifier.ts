@@ -5,7 +5,7 @@
 import * as SeedExamples from "../index";
 
 export interface Identifier {
-    "type": SeedExamples.Type;
-    "value": string;
-    "label": string;
+    type: SeedExamples.Type;
+    value: string;
+    label: string;
 }

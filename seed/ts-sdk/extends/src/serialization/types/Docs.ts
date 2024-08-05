@@ -7,11 +7,11 @@ import * as SeedExtends from "../../api/index";
 import * as core from "../../core";
 
 export const Docs: core.serialization.ObjectSchema<serializers.Docs.Raw, SeedExtends.Docs> = core.serialization.object({
-        "docs": core.serialization.string()
-    });
+    docs: core.serialization.string(),
+});
 
 export declare namespace Docs {
     interface Raw {
-        "docs": string;
+        docs: string;
     }
 }

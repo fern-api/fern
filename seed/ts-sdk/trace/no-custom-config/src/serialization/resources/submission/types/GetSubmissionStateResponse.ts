@@ -8,18 +8,21 @@ import * as core from "../../../../core";
 import { Language } from "../../commons/types/Language";
 import { SubmissionTypeState } from "./SubmissionTypeState";
 
-export const GetSubmissionStateResponse: core.serialization.ObjectSchema<serializers.GetSubmissionStateResponse.Raw, SeedTrace.GetSubmissionStateResponse> = core.serialization.object({
-        "timeSubmitted": core.serialization.date().optional(),
-        "submission": core.serialization.string(),
-        "language": Language,
-        "submissionTypeState": SubmissionTypeState
-    });
+export const GetSubmissionStateResponse: core.serialization.ObjectSchema<
+    serializers.GetSubmissionStateResponse.Raw,
+    SeedTrace.GetSubmissionStateResponse
+> = core.serialization.object({
+    timeSubmitted: core.serialization.date().optional(),
+    submission: core.serialization.string(),
+    language: Language,
+    submissionTypeState: SubmissionTypeState,
+});
 
 export declare namespace GetSubmissionStateResponse {
     interface Raw {
-        "timeSubmitted"?: string | null;
-        "submission": string;
-        "language": Language.Raw;
-        "submissionTypeState": SubmissionTypeState.Raw;
+        timeSubmitted?: string | null;
+        submission: string;
+        language: Language.Raw;
+        submissionTypeState: SubmissionTypeState.Raw;
     }
 }

@@ -3,5 +3,5 @@
  */
 
 export interface Circle {
-    "radius": number;
+    radius: number;
 }

@@ -5,10 +5,9 @@
 import * as serializers from "../../../index";
 import * as core from "../../../../core";
 
-export const Request: core.serialization.Schema<serializers.service.getOptionalMovieDocs.Request.Raw, string> = core.serialization.string();
+export const Request: core.serialization.Schema<serializers.service.getOptionalMovieDocs.Request.Raw, string> =
+    core.serialization.string();
 
 export declare namespace Request {
     type Raw = string;
 }
-
-

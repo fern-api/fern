@@ -6,16 +6,17 @@ import * as serializers from "../../../index";
 import * as SeedExamples from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const Moment: core.serialization.ObjectSchema<serializers.Moment.Raw, SeedExamples.Moment> = core.serialization.object({
-        "id": core.serialization.string(),
-        "date": core.serialization.string(),
-        "datetime": core.serialization.date()
+export const Moment: core.serialization.ObjectSchema<serializers.Moment.Raw, SeedExamples.Moment> =
+    core.serialization.object({
+        id: core.serialization.string(),
+        date: core.serialization.string(),
+        datetime: core.serialization.date(),
     });
 
 export declare namespace Moment {
     interface Raw {
-        "id": string;
-        "date": string;
-        "datetime": string;
+        id: string;
+        date: string;
+        datetime: string;
     }
 }

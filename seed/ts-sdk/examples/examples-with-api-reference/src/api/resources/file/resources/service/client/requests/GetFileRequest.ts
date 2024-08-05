@@ -9,5 +9,5 @@
  *     }
  */
 export interface GetFileRequest {
-    "xFileApiVersion": string;
+    xFileApiVersion: string;
 }

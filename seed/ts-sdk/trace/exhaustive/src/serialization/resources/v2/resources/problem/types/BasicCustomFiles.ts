@@ -10,18 +10,21 @@ import { Files } from "./Files";
 import { Language } from "../../../../commons/types/Language";
 import { BasicTestCaseTemplate } from "./BasicTestCaseTemplate";
 
-export const BasicCustomFiles: core.serialization.ObjectSchema<serializers.v2.BasicCustomFiles.Raw, SeedTrace.v2.BasicCustomFiles> = core.serialization.object({
-        "methodName": core.serialization.string(),
-        "signature": NonVoidFunctionSignature,
-        "additionalFiles": core.serialization.record(Language, Files.optional()),
-        "basicTestCaseTemplate": BasicTestCaseTemplate
-    });
+export const BasicCustomFiles: core.serialization.ObjectSchema<
+    serializers.v2.BasicCustomFiles.Raw,
+    SeedTrace.v2.BasicCustomFiles
+> = core.serialization.object({
+    methodName: core.serialization.string(),
+    signature: NonVoidFunctionSignature,
+    additionalFiles: core.serialization.record(Language, Files.optional()),
+    basicTestCaseTemplate: BasicTestCaseTemplate,
+});
 
 export declare namespace BasicCustomFiles {
     interface Raw {
-        "methodName": string;
-        "signature": NonVoidFunctionSignature.Raw;
-        "additionalFiles": Record<Language.Raw, Files.Raw | null | undefined>;
-        "basicTestCaseTemplate": BasicTestCaseTemplate.Raw;
+        methodName: string;
+        signature: NonVoidFunctionSignature.Raw;
+        additionalFiles: Record<Language.Raw, Files.Raw | null | undefined>;
+        basicTestCaseTemplate: BasicTestCaseTemplate.Raw;
     }
 }

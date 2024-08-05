@@ -31,7 +31,7 @@ describe("Test createRequestUrl", () => {
         const queryParams = {
             simple: "value",
             array: ["x", "y"],
-            object: { key: "value" }
+            object: { key: "value" },
         };
         expect(createRequestUrl(baseUrl, queryParams)).toBe(
             "https://api.example.com?simple=value&array=x&array=y&object%5Bkey%5D=value"

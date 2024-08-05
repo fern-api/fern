@@ -5,8 +5,8 @@
 import * as SeedTrace from "../../../index";
 
 export interface DoublyLinkedListNodeValue {
-    "nodeId": SeedTrace.NodeId;
-    "val": number;
-    "next"?: SeedTrace.NodeId;
-    "prev"?: SeedTrace.NodeId;
+    nodeId: SeedTrace.NodeId;
+    val: number;
+    next?: SeedTrace.NodeId;
+    prev?: SeedTrace.NodeId;
 }

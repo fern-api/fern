@@ -8,14 +8,17 @@ import * as core from "../../../../core";
 import { SubmissionId } from "./SubmissionId";
 import { RunningSubmissionState } from "./RunningSubmissionState";
 
-export const RunningResponse: core.serialization.ObjectSchema<serializers.RunningResponse.Raw, SeedTrace.RunningResponse> = core.serialization.object({
-        "submissionId": SubmissionId,
-        "state": RunningSubmissionState
-    });
+export const RunningResponse: core.serialization.ObjectSchema<
+    serializers.RunningResponse.Raw,
+    SeedTrace.RunningResponse
+> = core.serialization.object({
+    submissionId: SubmissionId,
+    state: RunningSubmissionState,
+});
 
 export declare namespace RunningResponse {
     interface Raw {
-        "submissionId": SubmissionId.Raw;
-        "state": RunningSubmissionState.Raw;
+        submissionId: SubmissionId.Raw;
+        state: RunningSubmissionState.Raw;
     }
 }

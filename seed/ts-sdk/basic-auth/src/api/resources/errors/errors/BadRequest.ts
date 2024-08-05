@@ -8,7 +8,7 @@ export class BadRequest extends errors.SeedBasicAuthError {
     constructor() {
         super({
             message: "BadRequest",
-            statusCode: 400
+            statusCode: 400,
         });
         Object.setPrototypeOf(this, BadRequest.prototype);
     }

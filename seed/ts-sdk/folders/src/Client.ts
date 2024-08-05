@@ -23,8 +23,7 @@ export declare namespace SeedApiClient {
 }
 
 export class SeedApiClient {
-    constructor(protected readonly _options: SeedApiClient.Options) {
-    }
+    constructor(protected readonly _options: SeedApiClient.Options) {}
 
     /**
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -41,13 +40,13 @@ export class SeedApiClient {
                 "X-Fern-SDK-Name": "@fern/folders",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -56,19 +55,22 @@ export class SeedApiClient {
         if (_response.error.reason === "status-code") {
             throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
-                body: _response.error.body
+                body: _response.error.body,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedApiError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody
-            });
-            case "timeout": throw new errors.SeedApiTimeoutError;
-            case "unknown": throw new errors.SeedApiError({
-                message: _response.error.errorMessage
-            });
+            case "non-json":
+                throw new errors.SeedApiError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedApiTimeoutError();
+            case "unknown":
+                throw new errors.SeedApiError({
+                    message: _response.error.errorMessage,
+                });
         }
     }
 

@@ -23,8 +23,7 @@ export declare namespace Health {
 }
 
 export class Health {
-    constructor(protected readonly _options: Health.Options) {
-    }
+    constructor(protected readonly _options: Health.Options) {}
 
     protected _service: Service | undefined;
 

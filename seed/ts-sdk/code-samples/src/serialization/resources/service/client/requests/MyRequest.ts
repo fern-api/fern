@@ -6,12 +6,13 @@ import * as serializers from "../../../../index";
 import * as SeedCodeSamples from "../../../../../api/index";
 import * as core from "../../../../../core";
 
-export const MyRequest: core.serialization.Schema<serializers.MyRequest.Raw, SeedCodeSamples.MyRequest> = core.serialization.object({
-        "numEvents": core.serialization.property("num_events", core.serialization.number())
+export const MyRequest: core.serialization.Schema<serializers.MyRequest.Raw, SeedCodeSamples.MyRequest> =
+    core.serialization.object({
+        numEvents: core.serialization.property("num_events", core.serialization.number()),
     });
 
 export declare namespace MyRequest {
     interface Raw {
-        "num_events": number;
+        num_events: number;
     }
 }

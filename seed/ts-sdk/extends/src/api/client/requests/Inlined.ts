@@ -13,5 +13,5 @@ import * as SeedExtends from "../../index";
  *     }
  */
 export interface Inlined extends SeedExtends.ExampleType {
-    "unique": string;
+    unique: string;
 }

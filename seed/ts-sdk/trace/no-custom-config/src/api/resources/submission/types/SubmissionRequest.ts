@@ -4,7 +4,7 @@
 
 import * as SeedTrace from "../../../index";
 
-export type SubmissionRequest = 
+export type SubmissionRequest =
     | SeedTrace.SubmissionRequest.InitializeProblemRequest
     | SeedTrace.SubmissionRequest.InitializeWorkspaceRequest
     | SeedTrace.SubmissionRequest.SubmitV2

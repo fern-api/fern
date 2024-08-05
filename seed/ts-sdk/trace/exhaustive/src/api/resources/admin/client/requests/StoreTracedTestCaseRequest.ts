@@ -22,6 +22,6 @@ import * as SeedTrace from "../../../../index";
  *     }
  */
 export interface StoreTracedTestCaseRequest {
-    "result": SeedTrace.TestCaseResultWithStdout;
-    "traceResponses": SeedTrace.TraceResponse[];
+    result: SeedTrace.TestCaseResultWithStdout;
+    traceResponses: SeedTrace.TraceResponse[];
 }

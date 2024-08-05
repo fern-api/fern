@@ -7,12 +7,13 @@ import * as SeedExamples from "../../../../api/index";
 import * as core from "../../../../core";
 import { Type } from "../../../types/Type";
 
-export const ResponseType: core.serialization.ObjectSchema<serializers.ResponseType.Raw, SeedExamples.ResponseType> = core.serialization.object({
-        "type": Type
+export const ResponseType: core.serialization.ObjectSchema<serializers.ResponseType.Raw, SeedExamples.ResponseType> =
+    core.serialization.object({
+        type: Type,
     });
 
 export declare namespace ResponseType {
     interface Raw {
-        "type": Type.Raw;
+        type: Type.Raw;
     }
 }

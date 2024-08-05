@@ -11,7 +11,7 @@
  *     }
  */
 export interface GetMetadataRequest {
-    "shallow"?: boolean;
-    "tag"?: string | string[];
-    "xApiVersion": string;
+    shallow?: boolean;
+    tag?: string | string[];
+    xApiVersion: string;
 }

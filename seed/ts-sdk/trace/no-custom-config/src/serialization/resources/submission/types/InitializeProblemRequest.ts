@@ -7,14 +7,17 @@ import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 import { ProblemId } from "../../commons/types/ProblemId";
 
-export const InitializeProblemRequest: core.serialization.ObjectSchema<serializers.InitializeProblemRequest.Raw, SeedTrace.InitializeProblemRequest> = core.serialization.object({
-        "problemId": ProblemId,
-        "problemVersion": core.serialization.number().optional()
-    });
+export const InitializeProblemRequest: core.serialization.ObjectSchema<
+    serializers.InitializeProblemRequest.Raw,
+    SeedTrace.InitializeProblemRequest
+> = core.serialization.object({
+    problemId: ProblemId,
+    problemVersion: core.serialization.number().optional(),
+});
 
 export declare namespace InitializeProblemRequest {
     interface Raw {
-        "problemId": ProblemId.Raw;
-        "problemVersion"?: number | null;
+        problemId: ProblemId.Raw;
+        problemVersion?: number | null;
     }
 }

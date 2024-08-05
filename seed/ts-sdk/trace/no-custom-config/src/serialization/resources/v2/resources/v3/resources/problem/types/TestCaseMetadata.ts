@@ -7,16 +7,19 @@ import * as SeedTrace from "../../../../../../../../api/index";
 import * as core from "../../../../../../../../core";
 import { TestCaseId } from "./TestCaseId";
 
-export const TestCaseMetadata: core.serialization.ObjectSchema<serializers.v2.v3.TestCaseMetadata.Raw, SeedTrace.v2.v3.TestCaseMetadata> = core.serialization.object({
-        "id": TestCaseId,
-        "name": core.serialization.string(),
-        "hidden": core.serialization.boolean()
-    });
+export const TestCaseMetadata: core.serialization.ObjectSchema<
+    serializers.v2.v3.TestCaseMetadata.Raw,
+    SeedTrace.v2.v3.TestCaseMetadata
+> = core.serialization.object({
+    id: TestCaseId,
+    name: core.serialization.string(),
+    hidden: core.serialization.boolean(),
+});
 
 export declare namespace TestCaseMetadata {
     interface Raw {
-        "id": TestCaseId.Raw;
-        "name": string;
-        "hidden": boolean;
+        id: TestCaseId.Raw;
+        name: string;
+        hidden: boolean;
     }
 }

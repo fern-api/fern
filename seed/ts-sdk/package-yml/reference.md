@@ -1,4 +1,5 @@
 # Reference
+
 <details><summary><code>client.<a href="/src/Client.ts">echo</a>({ ...params }) -> string</code></summary>
 <dl>
 <dd>
@@ -14,10 +15,10 @@
 ```typescript
 await client.echo({
     name: "Hello world!",
-    size: 20
+    size: 20,
 });
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -31,28 +32,29 @@ await client.echo({
 <dl>
 <dd>
 
-**request:** `SeedPackageYml.EchoRequest` 
-    
+**request:** `SeedPackageYml.EchoRequest`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `SeedPackageYmlClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `SeedPackageYmlClient.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
 </details>
 
-## 
+##
+
 ## Service
+
 <details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">nop</a>(nestedId) -> void</code></summary>
 <dl>
 <dd>
@@ -67,8 +69,8 @@ await client.echo({
 
 ```typescript
 await client.service.nop("id-219xca8");
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -82,21 +84,20 @@ await client.service.nop("id-219xca8");
 <dl>
 <dd>
 
-**nestedId:** `string` 
-    
+**nestedId:** `string`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Service.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>

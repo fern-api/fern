@@ -6,14 +6,17 @@ import * as serializers from "../../../index";
 import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const VariableTypeAndName: core.serialization.ObjectSchema<serializers.VariableTypeAndName.Raw, SeedTrace.VariableTypeAndName> = core.serialization.object({
-        "variableType": core.serialization.lazy(() => serializers.VariableType),
-        "name": core.serialization.string()
-    });
+export const VariableTypeAndName: core.serialization.ObjectSchema<
+    serializers.VariableTypeAndName.Raw,
+    SeedTrace.VariableTypeAndName
+> = core.serialization.object({
+    variableType: core.serialization.lazy(() => serializers.VariableType),
+    name: core.serialization.string(),
+});
 
 export declare namespace VariableTypeAndName {
     interface Raw {
-        "variableType": serializers.VariableType.Raw;
-        "name": string;
+        variableType: serializers.VariableType.Raw;
+        name: string;
     }
 }

@@ -6,8 +6,24 @@ import * as serializers from "../../../index";
 import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const ExecutionSessionStatus: core.serialization.Schema<serializers.ExecutionSessionStatus.Raw, SeedTrace.ExecutionSessionStatus> = core.serialization.enum_(["CREATING_CONTAINER", "PROVISIONING_CONTAINER", "PENDING_CONTAINER", "RUNNING_CONTAINER", "LIVE_CONTAINER", "FAILED_TO_LAUNCH"]);
+export const ExecutionSessionStatus: core.serialization.Schema<
+    serializers.ExecutionSessionStatus.Raw,
+    SeedTrace.ExecutionSessionStatus
+> = core.serialization.enum_([
+    "CREATING_CONTAINER",
+    "PROVISIONING_CONTAINER",
+    "PENDING_CONTAINER",
+    "RUNNING_CONTAINER",
+    "LIVE_CONTAINER",
+    "FAILED_TO_LAUNCH",
+]);
 
 export declare namespace ExecutionSessionStatus {
-    type Raw = "CREATING_CONTAINER" | "PROVISIONING_CONTAINER" | "PENDING_CONTAINER" | "RUNNING_CONTAINER" | "LIVE_CONTAINER" | "FAILED_TO_LAUNCH";
+    type Raw =
+        | "CREATING_CONTAINER"
+        | "PROVISIONING_CONTAINER"
+        | "PENDING_CONTAINER"
+        | "RUNNING_CONTAINER"
+        | "LIVE_CONTAINER"
+        | "FAILED_TO_LAUNCH";
 }

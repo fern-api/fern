@@ -22,8 +22,7 @@ export declare namespace Service {
 }
 
 export class Service {
-    constructor(protected readonly _options: Service.Options) {
-    }
+    constructor(protected readonly _options: Service.Options) {}
 
     /**
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
@@ -40,14 +39,14 @@ export class Service {
                 "X-Fern-SDK-Name": "@fern/plain-text",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             requestType: "json",
             responseType: "text",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as string;
@@ -56,19 +55,22 @@ export class Service {
         if (_response.error.reason === "status-code") {
             throw new errors.SeedPlainTextError({
                 statusCode: _response.error.statusCode,
-                body: _response.error.body
+                body: _response.error.body,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedPlainTextError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody
-            });
-            case "timeout": throw new errors.SeedPlainTextTimeoutError;
-            case "unknown": throw new errors.SeedPlainTextError({
-                message: _response.error.errorMessage
-            });
+            case "non-json":
+                throw new errors.SeedPlainTextError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedPlainTextTimeoutError();
+            case "unknown":
+                throw new errors.SeedPlainTextError({
+                    message: _response.error.errorMessage,
+                });
         }
     }
 }

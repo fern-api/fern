@@ -9,7 +9,7 @@ export class NotFoundError extends errors.SeedApiError {
         super({
             message: "NotFoundError",
             statusCode: 404,
-            body: body
+            body: body,
         });
         Object.setPrototypeOf(this, NotFoundError.prototype);
     }
