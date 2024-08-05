@@ -7,14 +7,17 @@ import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 import { TraceResponseV2 } from "./TraceResponseV2";
 
-export const TraceResponsesPageV2: core.serialization.ObjectSchema<serializers.TraceResponsesPageV2.Raw, SeedTrace.TraceResponsesPageV2> = core.serialization.object({
-        "offset": core.serialization.number().optional(),
-        "traceResponses": core.serialization.list(TraceResponseV2)
-    });
+export const TraceResponsesPageV2: core.serialization.ObjectSchema<
+    serializers.TraceResponsesPageV2.Raw,
+    SeedTrace.TraceResponsesPageV2
+> = core.serialization.object({
+    offset: core.serialization.number().optional(),
+    traceResponses: core.serialization.list(TraceResponseV2),
+});
 
 export declare namespace TraceResponsesPageV2 {
     interface Raw {
-        "offset"?: number | null;
-        "traceResponses": TraceResponseV2.Raw[];
+        offset?: number | null;
+        traceResponses: TraceResponseV2.Raw[];
     }
 }

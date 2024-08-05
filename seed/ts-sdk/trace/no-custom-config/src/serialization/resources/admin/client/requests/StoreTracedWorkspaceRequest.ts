@@ -8,14 +8,17 @@ import * as core from "../../../../../core";
 import { WorkspaceRunDetails } from "../../../submission/types/WorkspaceRunDetails";
 import { TraceResponse } from "../../../submission/types/TraceResponse";
 
-export const StoreTracedWorkspaceRequest: core.serialization.Schema<serializers.StoreTracedWorkspaceRequest.Raw, SeedTrace.StoreTracedWorkspaceRequest> = core.serialization.object({
-        "workspaceRunDetails": WorkspaceRunDetails,
-        "traceResponses": core.serialization.list(TraceResponse)
-    });
+export const StoreTracedWorkspaceRequest: core.serialization.Schema<
+    serializers.StoreTracedWorkspaceRequest.Raw,
+    SeedTrace.StoreTracedWorkspaceRequest
+> = core.serialization.object({
+    workspaceRunDetails: WorkspaceRunDetails,
+    traceResponses: core.serialization.list(TraceResponse),
+});
 
 export declare namespace StoreTracedWorkspaceRequest {
     interface Raw {
-        "workspaceRunDetails": WorkspaceRunDetails.Raw;
-        "traceResponses": TraceResponse.Raw[];
+        workspaceRunDetails: WorkspaceRunDetails.Raw;
+        traceResponses: TraceResponse.Raw[];
     }
 }

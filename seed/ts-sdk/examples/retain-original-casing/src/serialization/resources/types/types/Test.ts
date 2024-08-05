@@ -6,28 +6,30 @@ import * as serializers from "../../../index";
 import * as SeedExamples from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const Test: core.serialization.Schema<serializers.Test.Raw, SeedExamples.Test> = core.serialization.union("type", {
-        "and": core.serialization.object({
-            "value": core.serialization.boolean()
+export const Test: core.serialization.Schema<serializers.Test.Raw, SeedExamples.Test> = core.serialization
+    .union("type", {
+        and: core.serialization.object({
+            value: core.serialization.boolean(),
         }),
-        "or": core.serialization.object({
-            "value": core.serialization.boolean()
-        })
-    }).transform<SeedExamples.Test>({
-        transform: value => value,
-        untransform: value => value
+        or: core.serialization.object({
+            value: core.serialization.boolean(),
+        }),
+    })
+    .transform<SeedExamples.Test>({
+        transform: (value) => value,
+        untransform: (value) => value,
     });
 
 export declare namespace Test {
     type Raw = Test.And | Test.Or;
 
     interface And {
-        "type": "and";
-        "value": boolean;
+        type: "and";
+        value: boolean;
     }
 
     interface Or {
-        "type": "or";
-        "value": boolean;
+        type: "or";
+        value: boolean;
     }
 }

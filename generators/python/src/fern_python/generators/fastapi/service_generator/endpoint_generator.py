@@ -36,6 +36,8 @@ class EndpointGenerator:
 
         self._custom_config = FastAPICustomConfig.parse_obj(self._context.generator_config.custom_config or {})
 
+        self._is_async = self.is_async()
+
         self._parameters: List[EndpointParameter] = []
         if endpoint.request_body is not None:
             self._parameters.append(
@@ -65,6 +67,17 @@ class EndpointGenerator:
         if endpoint.auth:
             self._parameters.append(AuthEndpointParameter(context=context))
 
+    def get_endpoint_dot_delimited_path(self) -> str:
+        service_path = [part.original_name for part in self._service.name.fern_filepath.all_parts]
+        endpoint = self._endpoint.name.original_name
+        return f"{'.'.join(service_path)}.{endpoint}"
+
+    def is_async(self) -> bool:
+        if isinstance(self._custom_config.async_handlers, bool):
+            return self._custom_config.async_handlers
+        else:
+            return self.get_endpoint_dot_delimited_path() in self._custom_config.async_handlers
+
     def add_abstract_method_to_class(self, class_declaration: AST.ClassDeclaration) -> None:
         class_declaration.add_abstract_method(
             name=self._get_method_name(),
@@ -73,7 +86,7 @@ class EndpointGenerator:
                 return_type=self._get_return_type(),
             ),
             docstring=AST.Docstring(self._endpoint.docs) if self._endpoint.docs is not None else None,
-            is_async=self._custom_config.async_handlers,
+            is_async=self._is_async,
         )
 
     def _get_return_type(self) -> AST.TypeHint:
@@ -147,7 +160,7 @@ class EndpointGenerator:
                             args=[AST.Expression(method_on_cls)],
                         )
                     ],
-                    is_async=self._custom_config.async_handlers,
+                    is_async=self._is_async,
                 )
             )
             writer.write_line()
@@ -267,7 +280,7 @@ class EndpointGenerator:
         )
 
     def _get_method_name(self) -> str:
-        return self._endpoint.name.get_as_name().snake_case.safe_name
+        return self._endpoint.name.snake_case.safe_name
 
     def _get_reference_to_method_on_cls(self) -> str:
         return f"cls.{self._get_method_name()}"
@@ -283,11 +296,11 @@ class EndpointGenerator:
 
         writer.write_line("try:")
         with writer.indent():
-            return_statement = "return await" if self._custom_config.async_handlers else "return"
+            return_statement = "return await" if self._is_async else "return"
 
             writer.write_line(f"{return_statement} {self._get_reference_to_method_on_cls()}(*args, **kwargs)")
 
-        errors = self._endpoint.errors.get_as_list()
+        errors = self._endpoint.errors
         if len(errors) > 0:
             writer.write("except ")
             if len(errors) > 1:

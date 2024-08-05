@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from typing import Callable, List, Optional, Set
 
 import fern.ir.resources as ir_types
-from fern.generator_exec.resources import GeneratorConfig
+from fern.generator_exec import GeneratorConfig
 
 from fern_python.codegen import AST, Filepath
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
@@ -112,4 +112,10 @@ class PydanticGeneratorContext(ABC):
     def maybe_get_type_ids_for_type_reference(
         self, type_reference: ir_types.TypeReference
     ) -> Optional[List[ir_types.TypeId]]:
+        ...
+
+    @abstractmethod
+    def unwrap_example_type_reference(
+        self, example_type_reference: ir_types.ExampleTypeReference
+    ) -> ir_types.ExampleTypeReference:
         ...

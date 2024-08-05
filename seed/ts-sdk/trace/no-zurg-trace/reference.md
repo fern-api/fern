@@ -1,5 +1,7 @@
 # Reference
+
 ## V2
+
 <details><summary><code>client.v2.<a href="/src/api/resources/v2/client/Client.ts">test</a>() -> void</code></summary>
 <dl>
 <dd>
@@ -14,8 +16,8 @@
 
 ```typescript
 await client.v2.test();
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -29,19 +31,19 @@ await client.v2.test();
 <dl>
 <dd>
 
-**requestOptions:** `V2.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `V2.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Admin
+
 <details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">updateTestSubmissionStatus</a>(submissionId, { ...params }) -> void</code></summary>
 <dl>
 <dd>
@@ -56,10 +58,10 @@ await client.v2.test();
 
 ```typescript
 await client.admin.updateTestSubmissionStatus("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
-    type: "stopped"
+    type: "stopped",
 });
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -73,29 +75,28 @@ await client.admin.updateTestSubmissionStatus("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ff
 <dl>
 <dd>
 
-**submissionId:** `SeedTrace.SubmissionId` 
-    
+**submissionId:** `SeedTrace.SubmissionId`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `SeedTrace.TestSubmissionStatus` 
-    
+**request:** `SeedTrace.TestSubmissionStatus`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Admin.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Admin.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -118,11 +119,11 @@ await client.admin.sendTestSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc3
     updateTime: new Date("2024-01-15T09:30:00.000Z"),
     updateInfo: {
         type: "running",
-        value: SeedTrace.RunningSubmissionState.QueueingSubmission
-    }
+        value: SeedTrace.RunningSubmissionState.QueueingSubmission,
+    },
 });
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -136,29 +137,28 @@ await client.admin.sendTestSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc3
 <dl>
 <dd>
 
-**submissionId:** `SeedTrace.SubmissionId` 
-    
+**submissionId:** `SeedTrace.SubmissionId`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `SeedTrace.TestSubmissionUpdate` 
-    
+**request:** `SeedTrace.TestSubmissionUpdate`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Admin.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Admin.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -178,10 +178,10 @@ await client.admin.sendTestSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc3
 
 ```typescript
 await client.admin.updateWorkspaceSubmissionStatus("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
-    type: "stopped"
+    type: "stopped",
 });
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -195,29 +195,28 @@ await client.admin.updateWorkspaceSubmissionStatus("d5e9c84f-c2b2-4bf4-b4b0-7ffd
 <dl>
 <dd>
 
-**submissionId:** `SeedTrace.SubmissionId` 
-    
+**submissionId:** `SeedTrace.SubmissionId`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `SeedTrace.WorkspaceSubmissionStatus` 
-    
+**request:** `SeedTrace.WorkspaceSubmissionStatus`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Admin.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Admin.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -240,11 +239,11 @@ await client.admin.sendWorkspaceSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a
     updateTime: new Date("2024-01-15T09:30:00.000Z"),
     updateInfo: {
         type: "running",
-        value: SeedTrace.RunningSubmissionState.QueueingSubmission
-    }
+        value: SeedTrace.RunningSubmissionState.QueueingSubmission,
+    },
 });
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -258,29 +257,28 @@ await client.admin.sendWorkspaceSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a
 <dl>
 <dd>
 
-**submissionId:** `SeedTrace.SubmissionId` 
-    
+**submissionId:** `SeedTrace.SubmissionId`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `SeedTrace.WorkspaceSubmissionUpdate` 
-    
+**request:** `SeedTrace.WorkspaceSubmissionUpdate`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Admin.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Admin.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -302,22 +300,24 @@ await client.admin.sendWorkspaceSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a
 await client.admin.storeTracedTestCase("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "string", {
     result: {
         result: {},
-        stdout: "string"
+        stdout: "string",
     },
-    traceResponses: [{
+    traceResponses: [
+        {
             submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             lineNumber: 1,
             returnValue: {
                 type: "integerValue",
-                value: 1
+                value: 1,
             },
             expressionLocation: {},
             stack: {},
-            stdout: "string"
-        }]
+            stdout: "string",
+        },
+    ],
 });
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -331,37 +331,36 @@ await client.admin.storeTracedTestCase("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "
 <dl>
 <dd>
 
-**submissionId:** `SeedTrace.SubmissionId` 
-    
+**submissionId:** `SeedTrace.SubmissionId`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**testCaseId:** `string` 
-    
+**testCaseId:** `string`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `SeedTrace.StoreTracedTestCaseRequest` 
-    
+**request:** `SeedTrace.StoreTracedTestCaseRequest`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Admin.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Admin.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -380,20 +379,22 @@ await client.admin.storeTracedTestCase("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "
 <dd>
 
 ```typescript
-await client.admin.storeTracedTestCaseV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "string", [{
+await client.admin.storeTracedTestCaseV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "string", [
+    {
         submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         lineNumber: 1,
         file: {},
         returnValue: {
             type: "integerValue",
-            value: 1
+            value: 1,
         },
         expressionLocation: {},
         stack: {},
-        stdout: "string"
-    }]);
-
+        stdout: "string",
+    },
+]);
 ```
+
 </dd>
 </dl>
 </dd>
@@ -407,37 +408,36 @@ await client.admin.storeTracedTestCaseV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 <dl>
 <dd>
 
-**submissionId:** `SeedTrace.SubmissionId` 
-    
+**submissionId:** `SeedTrace.SubmissionId`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**testCaseId:** `SeedTrace.TestCaseId` 
-    
+**testCaseId:** `SeedTrace.TestCaseId`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `SeedTrace.TraceResponseV2[]` 
-    
+**request:** `SeedTrace.TraceResponseV2[]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Admin.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Admin.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -459,25 +459,27 @@ await client.admin.storeTracedTestCaseV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 await client.admin.storeTracedWorkspace("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
     workspaceRunDetails: {
         exceptionV2: {
-            type: "generic"
+            type: "generic",
         },
         exception: {},
-        stdout: "string"
+        stdout: "string",
     },
-    traceResponses: [{
+    traceResponses: [
+        {
             submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             lineNumber: 1,
             returnValue: {
                 type: "integerValue",
-                value: 1
+                value: 1,
             },
             expressionLocation: {},
             stack: {},
-            stdout: "string"
-        }]
+            stdout: "string",
+        },
+    ],
 });
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -491,29 +493,28 @@ await client.admin.storeTracedWorkspace("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", 
 <dl>
 <dd>
 
-**submissionId:** `SeedTrace.SubmissionId` 
-    
+**submissionId:** `SeedTrace.SubmissionId`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `SeedTrace.StoreTracedWorkspaceRequest` 
-    
+**request:** `SeedTrace.StoreTracedWorkspaceRequest`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Admin.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Admin.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -532,20 +533,22 @@ await client.admin.storeTracedWorkspace("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", 
 <dd>
 
 ```typescript
-await client.admin.storeTracedWorkspaceV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", [{
+await client.admin.storeTracedWorkspaceV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", [
+    {
         submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         lineNumber: 1,
         file: {},
         returnValue: {
             type: "integerValue",
-            value: 1
+            value: 1,
         },
         expressionLocation: {},
         stack: {},
-        stdout: "string"
-    }]);
-
+        stdout: "string",
+    },
+]);
 ```
+
 </dd>
 </dl>
 </dd>
@@ -559,35 +562,35 @@ await client.admin.storeTracedWorkspaceV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
 <dl>
 <dd>
 
-**submissionId:** `SeedTrace.SubmissionId` 
-    
+**submissionId:** `SeedTrace.SubmissionId`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `SeedTrace.TraceResponseV2[]` 
-    
+**request:** `SeedTrace.TraceResponseV2[]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Admin.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Admin.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Homepage
+
 <details><summary><code>client.homepage.<a href="/src/api/resources/homepage/client/Client.ts">getHomepageProblems</a>() -> SeedTrace.ProblemId[]</code></summary>
 <dl>
 <dd>
@@ -602,8 +605,8 @@ await client.admin.storeTracedWorkspaceV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
 
 ```typescript
 await client.homepage.getHomepageProblems();
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -617,13 +620,12 @@ await client.homepage.getHomepageProblems();
 <dl>
 <dd>
 
-**requestOptions:** `Homepage.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Homepage.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -643,8 +645,8 @@ await client.homepage.getHomepageProblems();
 
 ```typescript
 await client.homepage.setHomepageProblems(["string"]);
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -658,27 +660,27 @@ await client.homepage.setHomepageProblems(["string"]);
 <dl>
 <dd>
 
-**request:** `SeedTrace.ProblemId[]` 
-    
+**request:** `SeedTrace.ProblemId[]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Homepage.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Homepage.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Migration
+
 <details><summary><code>client.migration.<a href="/src/api/resources/migration/client/Client.ts">getAttemptedMigrations</a>({ ...params }) -> SeedTrace.Migration[]</code></summary>
 <dl>
 <dd>
@@ -693,10 +695,10 @@ await client.homepage.setHomepageProblems(["string"]);
 
 ```typescript
 await client.migration.getAttemptedMigrations({
-    "admin-key-header": "string"
+    "admin-key-header": "string",
 });
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -710,27 +712,27 @@ await client.migration.getAttemptedMigrations({
 <dl>
 <dd>
 
-**request:** `SeedTrace.GetAttemptedMigrationsRequest` 
-    
+**request:** `SeedTrace.GetAttemptedMigrationsRequest`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Migration.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Migration.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Playlist
+
 <details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client/Client.ts">createPlaylist</a>(serviceParam, { ...params }) -> SeedTrace.Playlist</code></summary>
 <dl>
 <dd>
@@ -744,6 +746,7 @@ await client.migration.getAttemptedMigrations({
 <dd>
 
 Create a new playlist
+
 </dd>
 </dl>
 </dd>
@@ -763,11 +766,11 @@ await client.playlist.createPlaylist(1, {
     optionalDatetime: new Date("2024-01-15T09:30:00.000Z"),
     body: {
         name: "string",
-        problems: ["string"]
-    }
+        problems: ["string"],
+    },
 });
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -781,29 +784,28 @@ await client.playlist.createPlaylist(1, {
 <dl>
 <dd>
 
-**serviceParam:** `number` 
-    
+**serviceParam:** `number`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `SeedTrace.CreatePlaylistRequest` 
-    
+**request:** `SeedTrace.CreatePlaylistRequest`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Playlist.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Playlist.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -822,6 +824,7 @@ await client.playlist.createPlaylist(1, {
 <dd>
 
 Returns the user's playlists
+
 </dd>
 </dl>
 </dd>
@@ -841,10 +844,10 @@ await client.playlist.getPlaylists(1, {
     otherField: "string",
     multiLineDocs: "string",
     optionalMultipleField: "string",
-    multipleField: "string"
+    multipleField: "string",
 });
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -858,29 +861,28 @@ await client.playlist.getPlaylists(1, {
 <dl>
 <dd>
 
-**serviceParam:** `number` 
-    
+**serviceParam:** `number`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `SeedTrace.GetPlaylistsRequest` 
-    
+**request:** `SeedTrace.GetPlaylistsRequest`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Playlist.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Playlist.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -899,6 +901,7 @@ await client.playlist.getPlaylists(1, {
 <dd>
 
 Returns a playlist
+
 </dd>
 </dl>
 </dd>
@@ -914,8 +917,8 @@ Returns a playlist
 
 ```typescript
 await client.playlist.getPlaylist(1, "string");
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -929,29 +932,28 @@ await client.playlist.getPlaylist(1, "string");
 <dl>
 <dd>
 
-**serviceParam:** `number` 
-    
+**serviceParam:** `number`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**playlistId:** `SeedTrace.PlaylistId` 
-    
+**playlistId:** `SeedTrace.PlaylistId`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Playlist.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Playlist.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -970,6 +972,7 @@ await client.playlist.getPlaylist(1, "string");
 <dd>
 
 Updates a playlist
+
 </dd>
 </dl>
 </dd>
@@ -986,10 +989,10 @@ Updates a playlist
 ```typescript
 await client.playlist.updatePlaylist(1, "string", {
     name: "string",
-    problems: ["string"]
+    problems: ["string"],
 });
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -1003,37 +1006,36 @@ await client.playlist.updatePlaylist(1, "string", {
 <dl>
 <dd>
 
-**serviceParam:** `number` 
-    
+**serviceParam:** `number`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**playlistId:** `SeedTrace.PlaylistId` 
-    
+**playlistId:** `SeedTrace.PlaylistId`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `SeedTrace.UpdatePlaylistRequest` 
-    
+**request:** `SeedTrace.UpdatePlaylistRequest`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Playlist.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Playlist.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -1052,6 +1054,7 @@ await client.playlist.updatePlaylist(1, "string", {
 <dd>
 
 Deletes a playlist
+
 </dd>
 </dl>
 </dd>
@@ -1067,8 +1070,8 @@ Deletes a playlist
 
 ```typescript
 await client.playlist.deletePlaylist(1, "string");
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -1082,35 +1085,35 @@ await client.playlist.deletePlaylist(1, "string");
 <dl>
 <dd>
 
-**serviceParam:** `number` 
-    
+**serviceParam:** `number`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**playlistId:** `SeedTrace.PlaylistId` 
-    
+**playlistId:** `SeedTrace.PlaylistId`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Playlist.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Playlist.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Problem
+
 <details><summary><code>client.problem.<a href="/src/api/resources/problem/client/Client.ts">createProblem</a>({ ...params }) -> SeedTrace.CreateProblemResponse</code></summary>
 <dl>
 <dd>
@@ -1124,6 +1127,7 @@ await client.playlist.deletePlaylist(1, "string");
 <dd>
 
 Creates a problem
+
 </dd>
 </dl>
 </dd>
@@ -1141,49 +1145,59 @@ Creates a problem
 await client.problem.createProblem({
     problemName: "string",
     problemDescription: {
-        boards: [{
+        boards: [
+            {
                 type: "html",
-                value: "string"
-            }]
+                value: "string",
+            },
+        ],
     },
     files: {
         [SeedTrace.Language.Java]: {
             solutionFile: {
                 filename: "string",
-                contents: "string"
+                contents: "string",
             },
-            readOnlyFiles: [{
+            readOnlyFiles: [
+                {
                     filename: "string",
-                    contents: "string"
-                }]
-        }
+                    contents: "string",
+                },
+            ],
+        },
     },
-    inputParams: [{
+    inputParams: [
+        {
             variableType: {
-                type: "integerType"
+                type: "integerType",
             },
-            name: "string"
-        }],
+            name: "string",
+        },
+    ],
     outputType: {
-        type: "integerType"
+        type: "integerType",
     },
-    testcases: [{
+    testcases: [
+        {
             testCase: {
                 id: "string",
-                params: [{
+                params: [
+                    {
                         type: "integerValue",
-                        value: 1
-                    }]
+                        value: 1,
+                    },
+                ],
             },
             expectedResult: {
                 type: "integerValue",
-                value: 1
-            }
-        }],
-    methodName: "string"
+                value: 1,
+            },
+        },
+    ],
+    methodName: "string",
 });
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -1197,21 +1211,20 @@ await client.problem.createProblem({
 <dl>
 <dd>
 
-**request:** `SeedTrace.CreateProblemRequest` 
-    
+**request:** `SeedTrace.CreateProblemRequest`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Problem.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Problem.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -1230,6 +1243,7 @@ await client.problem.createProblem({
 <dd>
 
 Updates a problem
+
 </dd>
 </dl>
 </dd>
@@ -1247,49 +1261,59 @@ Updates a problem
 await client.problem.updateProblem("string", {
     problemName: "string",
     problemDescription: {
-        boards: [{
+        boards: [
+            {
                 type: "html",
-                value: "string"
-            }]
+                value: "string",
+            },
+        ],
     },
     files: {
         [SeedTrace.Language.Java]: {
             solutionFile: {
                 filename: "string",
-                contents: "string"
+                contents: "string",
             },
-            readOnlyFiles: [{
+            readOnlyFiles: [
+                {
                     filename: "string",
-                    contents: "string"
-                }]
-        }
+                    contents: "string",
+                },
+            ],
+        },
     },
-    inputParams: [{
+    inputParams: [
+        {
             variableType: {
-                type: "integerType"
+                type: "integerType",
             },
-            name: "string"
-        }],
+            name: "string",
+        },
+    ],
     outputType: {
-        type: "integerType"
+        type: "integerType",
     },
-    testcases: [{
+    testcases: [
+        {
             testCase: {
                 id: "string",
-                params: [{
+                params: [
+                    {
                         type: "integerValue",
-                        value: 1
-                    }]
+                        value: 1,
+                    },
+                ],
             },
             expectedResult: {
                 type: "integerValue",
-                value: 1
-            }
-        }],
-    methodName: "string"
+                value: 1,
+            },
+        },
+    ],
+    methodName: "string",
 });
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -1303,29 +1327,28 @@ await client.problem.updateProblem("string", {
 <dl>
 <dd>
 
-**problemId:** `SeedTrace.ProblemId` 
-    
+**problemId:** `SeedTrace.ProblemId`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `SeedTrace.CreateProblemRequest` 
-    
+**request:** `SeedTrace.CreateProblemRequest`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Problem.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Problem.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -1344,6 +1367,7 @@ await client.problem.updateProblem("string", {
 <dd>
 
 Soft deletes a problem
+
 </dd>
 </dl>
 </dd>
@@ -1359,8 +1383,8 @@ Soft deletes a problem
 
 ```typescript
 await client.problem.deleteProblem("string");
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -1374,21 +1398,20 @@ await client.problem.deleteProblem("string");
 <dl>
 <dd>
 
-**problemId:** `SeedTrace.ProblemId` 
-    
+**problemId:** `SeedTrace.ProblemId`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Problem.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Problem.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -1407,6 +1430,7 @@ await client.problem.deleteProblem("string");
 <dd>
 
 Returns default starter files for problem
+
 </dd>
 </dl>
 </dd>
@@ -1422,19 +1446,21 @@ Returns default starter files for problem
 
 ```typescript
 await client.problem.getDefaultStarterFiles({
-    inputParams: [{
+    inputParams: [
+        {
             variableType: {
-                type: "integerType"
+                type: "integerType",
             },
-            name: "string"
-        }],
+            name: "string",
+        },
+    ],
     outputType: {
-        type: "integerType"
+        type: "integerType",
     },
-    methodName: "string"
+    methodName: "string",
 });
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -1448,27 +1474,27 @@ await client.problem.getDefaultStarterFiles({
 <dl>
 <dd>
 
-**request:** `SeedTrace.GetDefaultStarterFilesRequest` 
-    
+**request:** `SeedTrace.GetDefaultStarterFilesRequest`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Problem.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Problem.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Submission
+
 <details><summary><code>client.submission.<a href="/src/api/resources/submission/client/Client.ts">createExecutionSession</a>(language) -> SeedTrace.ExecutionSessionResponse</code></summary>
 <dl>
 <dd>
@@ -1482,6 +1508,7 @@ await client.problem.getDefaultStarterFiles({
 <dd>
 
 Returns sessionId and execution server URL for session. Spins up server.
+
 </dd>
 </dl>
 </dd>
@@ -1497,8 +1524,8 @@ Returns sessionId and execution server URL for session. Spins up server.
 
 ```typescript
 await client.submission.createExecutionSession(SeedTrace.Language.Java);
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -1512,21 +1539,20 @@ await client.submission.createExecutionSession(SeedTrace.Language.Java);
 <dl>
 <dd>
 
-**language:** `SeedTrace.Language` 
-    
+**language:** `SeedTrace.Language`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Submission.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Submission.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -1545,6 +1571,7 @@ await client.submission.createExecutionSession(SeedTrace.Language.Java);
 <dd>
 
 Returns execution server URL for session. Returns empty if session isn't registered.
+
 </dd>
 </dl>
 </dd>
@@ -1560,8 +1587,8 @@ Returns execution server URL for session. Returns empty if session isn't registe
 
 ```typescript
 await client.submission.getExecutionSession("string");
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -1575,21 +1602,20 @@ await client.submission.getExecutionSession("string");
 <dl>
 <dd>
 
-**sessionId:** `string` 
-    
+**sessionId:** `string`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Submission.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Submission.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -1608,6 +1634,7 @@ await client.submission.getExecutionSession("string");
 <dd>
 
 Stops execution session.
+
 </dd>
 </dl>
 </dd>
@@ -1623,8 +1650,8 @@ Stops execution session.
 
 ```typescript
 await client.submission.stopExecutionSession("string");
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -1638,21 +1665,20 @@ await client.submission.stopExecutionSession("string");
 <dl>
 <dd>
 
-**sessionId:** `string` 
-    
+**sessionId:** `string`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Submission.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Submission.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -1672,8 +1698,8 @@ await client.submission.stopExecutionSession("string");
 
 ```typescript
 await client.submission.getExecutionSessionsState();
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -1687,19 +1713,19 @@ await client.submission.getExecutionSessionsState();
 <dl>
 <dd>
 
-**requestOptions:** `Submission.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Submission.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Sysprop
+
 <details><summary><code>client.sysprop.<a href="/src/api/resources/sysprop/client/Client.ts">setNumWarmInstances</a>(language, numWarmInstances) -> void</code></summary>
 <dl>
 <dd>
@@ -1714,8 +1740,8 @@ await client.submission.getExecutionSessionsState();
 
 ```typescript
 await client.sysprop.setNumWarmInstances(SeedTrace.Language.Java, 1);
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -1729,29 +1755,28 @@ await client.sysprop.setNumWarmInstances(SeedTrace.Language.Java, 1);
 <dl>
 <dd>
 
-**language:** `SeedTrace.Language` 
-    
+**language:** `SeedTrace.Language`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**numWarmInstances:** `number` 
-    
+**numWarmInstances:** `number`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Sysprop.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Sysprop.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -1771,8 +1796,8 @@ await client.sysprop.setNumWarmInstances(SeedTrace.Language.Java, 1);
 
 ```typescript
 await client.sysprop.getNumWarmInstances();
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -1786,19 +1811,19 @@ await client.sysprop.getNumWarmInstances();
 <dl>
 <dd>
 
-**requestOptions:** `Sysprop.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Sysprop.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
 </details>
 
 ## V2 Problem
+
 <details><summary><code>client.v2.problem.<a href="/src/api/resources/v2/resources/problem/client/Client.ts">getLightweightProblems</a>() -> SeedTrace.LightweightProblemInfoV2[]</code></summary>
 <dl>
 <dd>
@@ -1812,6 +1837,7 @@ await client.sysprop.getNumWarmInstances();
 <dd>
 
 Returns lightweight versions of all problems
+
 </dd>
 </dl>
 </dd>
@@ -1827,8 +1853,8 @@ Returns lightweight versions of all problems
 
 ```typescript
 await client.v2.problem.getLightweightProblems();
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -1842,13 +1868,12 @@ await client.v2.problem.getLightweightProblems();
 <dl>
 <dd>
 
-**requestOptions:** `Problem.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Problem.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -1867,6 +1892,7 @@ await client.v2.problem.getLightweightProblems();
 <dd>
 
 Returns latest versions of all problems
+
 </dd>
 </dl>
 </dd>
@@ -1882,8 +1908,8 @@ Returns latest versions of all problems
 
 ```typescript
 await client.v2.problem.getProblems();
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -1897,13 +1923,12 @@ await client.v2.problem.getProblems();
 <dl>
 <dd>
 
-**requestOptions:** `Problem.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Problem.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -1922,6 +1947,7 @@ await client.v2.problem.getProblems();
 <dd>
 
 Returns latest version of a problem
+
 </dd>
 </dl>
 </dd>
@@ -1937,8 +1963,8 @@ Returns latest version of a problem
 
 ```typescript
 await client.v2.problem.getLatestProblem("string");
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -1952,21 +1978,20 @@ await client.v2.problem.getLatestProblem("string");
 <dl>
 <dd>
 
-**problemId:** `SeedTrace.ProblemId` 
-    
+**problemId:** `SeedTrace.ProblemId`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Problem.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Problem.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -1985,6 +2010,7 @@ await client.v2.problem.getLatestProblem("string");
 <dd>
 
 Returns requested version of a problem
+
 </dd>
 </dl>
 </dd>
@@ -2000,8 +2026,8 @@ Returns requested version of a problem
 
 ```typescript
 await client.v2.problem.getProblemVersion("string", 1);
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -2015,35 +2041,35 @@ await client.v2.problem.getProblemVersion("string", 1);
 <dl>
 <dd>
 
-**problemId:** `SeedTrace.ProblemId` 
-    
+**problemId:** `SeedTrace.ProblemId`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**problemVersion:** `number` 
-    
+**problemVersion:** `number`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Problem.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Problem.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
 </details>
 
 ## V2 V3 Problem
+
 <details><summary><code>client.v2.v3.problem.<a href="/src/api/resources/v2/resources/v3/resources/problem/client/Client.ts">getLightweightProblems</a>() -> SeedTrace.LightweightProblemInfoV2[]</code></summary>
 <dl>
 <dd>
@@ -2057,6 +2083,7 @@ await client.v2.problem.getProblemVersion("string", 1);
 <dd>
 
 Returns lightweight versions of all problems
+
 </dd>
 </dl>
 </dd>
@@ -2072,8 +2099,8 @@ Returns lightweight versions of all problems
 
 ```typescript
 await client.v2.v3.problem.getLightweightProblems();
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -2087,13 +2114,12 @@ await client.v2.v3.problem.getLightweightProblems();
 <dl>
 <dd>
 
-**requestOptions:** `Problem.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Problem.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -2112,6 +2138,7 @@ await client.v2.v3.problem.getLightweightProblems();
 <dd>
 
 Returns latest versions of all problems
+
 </dd>
 </dl>
 </dd>
@@ -2127,8 +2154,8 @@ Returns latest versions of all problems
 
 ```typescript
 await client.v2.v3.problem.getProblems();
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -2142,13 +2169,12 @@ await client.v2.v3.problem.getProblems();
 <dl>
 <dd>
 
-**requestOptions:** `Problem.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Problem.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -2167,6 +2193,7 @@ await client.v2.v3.problem.getProblems();
 <dd>
 
 Returns latest version of a problem
+
 </dd>
 </dl>
 </dd>
@@ -2182,8 +2209,8 @@ Returns latest version of a problem
 
 ```typescript
 await client.v2.v3.problem.getLatestProblem("string");
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -2197,21 +2224,20 @@ await client.v2.v3.problem.getLatestProblem("string");
 <dl>
 <dd>
 
-**problemId:** `SeedTrace.ProblemId` 
-    
+**problemId:** `SeedTrace.ProblemId`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Problem.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Problem.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>
@@ -2230,6 +2256,7 @@ await client.v2.v3.problem.getLatestProblem("string");
 <dd>
 
 Returns requested version of a problem
+
 </dd>
 </dl>
 </dd>
@@ -2245,8 +2272,8 @@ Returns requested version of a problem
 
 ```typescript
 await client.v2.v3.problem.getProblemVersion("string", 1);
-
 ```
+
 </dd>
 </dl>
 </dd>
@@ -2260,29 +2287,28 @@ await client.v2.v3.problem.getProblemVersion("string", 1);
 <dl>
 <dd>
 
-**problemId:** `SeedTrace.ProblemId` 
-    
+**problemId:** `SeedTrace.ProblemId`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**problemVersion:** `number` 
-    
+**problemVersion:** `number`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Problem.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
+**requestOptions:** `Problem.RequestOptions`
 
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>

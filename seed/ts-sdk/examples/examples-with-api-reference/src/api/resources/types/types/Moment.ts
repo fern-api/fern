@@ -11,7 +11,7 @@
  *     }
  */
 export interface Moment {
-    "id": string;
-    "date": string;
-    "datetime": Date;
+    id: string;
+    date: string;
+    datetime: Date;
 }

@@ -38,6 +38,7 @@ jobs:
               - 'packages/seed/**'
               - 'test-definitions/**'
               - 'packages/ir-sdk/fern/apis/**'
+              - 'packages/cli/generation/ir-generator/**'
             ruby: 
               - 'generators/ruby/**'
               - seed/ruby-sdk/seed.yml

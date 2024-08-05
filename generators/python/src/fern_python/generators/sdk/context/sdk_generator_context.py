@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from typing import Dict, Optional
 
 import fern.ir.resources as ir_types
-from fern.generator_exec.resources import GeneratorConfig
+from fern.generator_exec import GeneratorConfig
 
 from fern_python.codegen import AST
 from fern_python.codegen.filepath import Filepath

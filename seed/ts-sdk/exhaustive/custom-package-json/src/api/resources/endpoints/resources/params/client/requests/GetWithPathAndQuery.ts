@@ -9,5 +9,5 @@
  *     }
  */
 export interface GetWithPathAndQuery {
-    "query": string;
+    query: string;
 }

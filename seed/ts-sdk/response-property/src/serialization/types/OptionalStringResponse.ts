@@ -7,7 +7,10 @@ import * as SeedResponseProperty from "../../api/index";
 import * as core from "../../core";
 import { StringResponse } from "./StringResponse";
 
-export const OptionalStringResponse: core.serialization.Schema<serializers.OptionalStringResponse.Raw, SeedResponseProperty.OptionalStringResponse> = StringResponse.optional();
+export const OptionalStringResponse: core.serialization.Schema<
+    serializers.OptionalStringResponse.Raw,
+    SeedResponseProperty.OptionalStringResponse
+> = StringResponse.optional();
 
 export declare namespace OptionalStringResponse {
     type Raw = StringResponse.Raw | null | undefined;

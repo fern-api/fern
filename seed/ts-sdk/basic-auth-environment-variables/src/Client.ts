@@ -23,8 +23,7 @@ export declare namespace SeedBasicAuthEnvironmentVariablesClient {
 }
 
 export class SeedBasicAuthEnvironmentVariablesClient {
-    constructor(protected readonly _options: SeedBasicAuthEnvironmentVariablesClient.Options) {
-    }
+    constructor(protected readonly _options: SeedBasicAuthEnvironmentVariablesClient.Options) {}
 
     protected _basicAuth: BasicAuth | undefined;
 

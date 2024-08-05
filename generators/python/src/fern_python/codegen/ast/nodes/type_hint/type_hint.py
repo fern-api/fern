@@ -20,8 +20,8 @@ class TypeHint(AstNode):
     def __init__(
         self,
         type: Union[ClassReference, GenericTypeVar],
-        type_parameters: Sequence[TypeParameter] = None,
-        arguments: Sequence[Expression] = None,
+        type_parameters: Optional[Sequence[TypeParameter]] = None,
+        arguments: Optional[Sequence[Expression]] = None,
         is_optional: bool = False,
         is_literal: bool = False,
     ):

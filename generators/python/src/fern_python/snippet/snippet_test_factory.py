@@ -319,6 +319,7 @@ class SnippetTestFactory:
         sync_expression: Optional[AST.Expression],
         async_expression: Optional[AST.Expression],
         example_response: Optional[ir_types.ExampleResponse],
+        endpoint: ir_types.HttpEndpoint,
     ) -> AST.CodeWriter:
         expectation_name = "expected_response"
         type_expectation_name = "expected_types"
@@ -364,7 +365,15 @@ class SnippetTestFactory:
                     )
                     writer.write(f"assert ")
                     writer.write_node(sync_expression)
-                    writer.write(f" is None  # type: ignore[func-returns-value]")
+                    if (
+                        endpoint.response is not None
+                        and endpoint.response.body is not None
+                        and endpoint.response.body.get_as_union().type == "text"
+                    ):
+                        # HttpX returns an empty string for text responses that are empty/no content
+                        writer.write(f" == ''  # type: ignore[func-returns-value]")
+                    else:
+                        writer.write(f" is None  # type: ignore[func-returns-value]")
                 if async_expression:
                     writer.write_line("\n\n")
             if async_expression:
@@ -455,7 +464,7 @@ class SnippetTestFactory:
                 )
             ):
                 continue
-            endpoint_name = endpoint.name.get_as_name().snake_case.safe_name
+            endpoint_name = endpoint.name.snake_case.safe_name
 
             examples = [ex.example for ex in endpoint.user_specified_examples if ex.example is not None]
             if len(endpoint.user_specified_examples) == 0:
@@ -515,7 +524,7 @@ class SnippetTestFactory:
                     named_parameters=[],
                     return_type=AST.TypeHint.none(),
                 ),
-                body=self._test_body(sync_snippet, async_snippet, response),
+                body=self._test_body(sync_snippet, async_snippet, response, endpoint),
             )
 
             # At least one endpoint has a snippet, now make the file

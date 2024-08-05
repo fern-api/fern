@@ -89,8 +89,8 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.auth.get_token_with_client_credentials(...,{
-    max_retries=1
+client.auth.get_token_with_client_credentials(..., {
+    "max_retries": 1
 })
 ```
 
@@ -102,12 +102,15 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 from seed import SeedOauthClientCredentialsEnvironmentVariables
 
-client = SeedOauthClientCredentialsEnvironmentVariables(..., { timeout=20.0 }, )
+client = SeedOauthClientCredentialsEnvironmentVariables(
+    ...,
+    timeout=20.0,
+)
 
 
 # Override timeout for a specific method
-client.auth.get_token_with_client_credentials(...,{
-    timeout_in_seconds=1
+client.auth.get_token_with_client_credentials(..., {
+    "timeout_in_seconds": 1
 })
 ```
 
@@ -121,7 +124,7 @@ from seed import SeedOauthClientCredentialsEnvironmentVariables
 
 client = SeedOauthClientCredentialsEnvironmentVariables(
     ...,
-    http_client=httpx.Client(
+    httpx_client=httpx.Client(
         proxies="http://my.test.proxy.example.com",
         transport=httpx.HTTPTransport(local_address="0.0.0.0"),
     ),

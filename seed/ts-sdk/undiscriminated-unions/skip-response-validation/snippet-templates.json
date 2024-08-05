@@ -69,7 +69,7 @@
                                                     "isOptional": true,
                                                     "templateInputs": [
                                                         {
-                                                            "location": "BODY",
+                                                            "location": "RELATIVE",
                                                             "type": "payload"
                                                         }
                                                     ],
@@ -101,7 +101,7 @@
                                                         "type": "generic"
                                                     },
                                                     "templateInput": {
-                                                        "location": "BODY",
+                                                        "location": "RELATIVE",
                                                         "type": "payload"
                                                     },
                                                     "type": "iterable"
@@ -123,7 +123,7 @@
                                                     "isOptional": true,
                                                     "templateInputs": [
                                                         {
-                                                            "location": "BODY",
+                                                            "location": "RELATIVE",
                                                             "type": "payload"
                                                         }
                                                     ],
@@ -155,7 +155,7 @@
                                                         "type": "generic"
                                                     },
                                                     "templateInput": {
-                                                        "location": "BODY",
+                                                        "location": "RELATIVE",
                                                         "type": "payload"
                                                     },
                                                     "type": "iterable"
@@ -200,7 +200,7 @@
                                                         "type": "iterable"
                                                     },
                                                     "templateInput": {
-                                                        "location": "BODY",
+                                                        "location": "RELATIVE",
                                                         "type": "payload"
                                                     },
                                                     "type": "iterable"
@@ -237,7 +237,7 @@
                                                         "type": "generic"
                                                     },
                                                     "templateInput": {
-                                                        "location": "BODY",
+                                                        "location": "RELATIVE",
                                                         "type": "payload"
                                                     },
                                                     "type": "iterable"

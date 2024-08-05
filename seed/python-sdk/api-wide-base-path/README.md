@@ -88,7 +88,7 @@ Use the `max_retries` request option to configure this behavior.
 
 ```python
 client.service.post({
-    max_retries=1
+    "max_retries": 1
 })
 ```
 
@@ -100,12 +100,15 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 from seed import SeedApiWideBasePath
 
-client = SeedApiWideBasePath(..., { timeout=20.0 }, )
+client = SeedApiWideBasePath(
+    ...,
+    timeout=20.0,
+)
 
 
 # Override timeout for a specific method
 client.service.post({
-    timeout_in_seconds=1
+    "timeout_in_seconds": 1
 })
 ```
 
@@ -119,7 +122,7 @@ from seed import SeedApiWideBasePath
 
 client = SeedApiWideBasePath(
     ...,
-    http_client=httpx.Client(
+    httpx_client=httpx.Client(
         proxies="http://my.test.proxy.example.com",
         transport=httpx.HTTPTransport(local_address="0.0.0.0"),
     ),

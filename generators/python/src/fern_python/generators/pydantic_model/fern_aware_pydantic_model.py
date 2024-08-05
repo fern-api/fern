@@ -98,23 +98,8 @@ class FernAwarePydanticModel:
         description: Optional[str] = None,
         default_value: Optional[AST.Expression] = None,
     ) -> PydanticField:
-        union = type_reference.get_as_union()
         if default_value is None:
-            if union.type == "container" and union.container.get_as_union().type == "literal":
-                container = union.container.get_as_union()
-                if container is not None and container.type == "literal":
-                    literal = container.literal.get_as_union()
-                    if literal.type == "string":
-                        default_value = AST.Expression(f'"{literal.string}"')
-                    else:
-                        default_value = AST.Expression(f"{literal.boolean}")
-            else:
-                resolved_tr = type_reference
-                if union.type == "container":
-                    container = union.container.get_as_union()
-                    if container.type == "optional":
-                        resolved_tr = container.optional
-                default_value = self._context.get_initializer_for_type_reference(resolved_tr)
+            default_value = self._context.get_initializer_for_type_reference(type_reference)
 
         field = self._create_pydantic_field(
             name=name,

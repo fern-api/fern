@@ -22,7 +22,7 @@ export class UndiciStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | U
             readable: [],
             close: [],
             pause: [],
-            resume: []
+            resume: [],
         };
         this.paused = false;
         this.resumeCallback = null;
@@ -215,5 +215,25 @@ export class UndiciStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | U
         } catch (error) {
             this._emit("error", error);
         }
+    }
+
+    [Symbol.asyncIterator](): AsyncIterableIterator<ReadFormat> {
+        return {
+            next: async () => {
+                if (this.paused) {
+                    await new Promise((resolve) => {
+                        this.resumeCallback = resolve;
+                    });
+                }
+                const { done, value } = await this.reader.read();
+                if (done) {
+                    return { done: true, value: undefined };
+                }
+                return { done: false, value };
+            },
+            [Symbol.asyncIterator]() {
+                return this;
+            },
+        };
     }
 }

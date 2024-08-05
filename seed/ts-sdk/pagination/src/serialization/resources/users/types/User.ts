@@ -6,14 +6,15 @@ import * as serializers from "../../../index";
 import * as SeedPagination from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedPagination.User> = core.serialization.object({
-        "name": core.serialization.string(),
-        "id": core.serialization.number()
+export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedPagination.User> =
+    core.serialization.object({
+        name: core.serialization.string(),
+        id: core.serialization.number(),
     });
 
 export declare namespace User {
     interface Raw {
-        "name": string;
-        "id": number;
+        name: string;
+        id: number;
     }
 }

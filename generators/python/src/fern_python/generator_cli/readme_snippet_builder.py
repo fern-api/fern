@@ -1,6 +1,6 @@
 from typing import Dict, List, Optional, Union
 
-import fern.generator_exec.resources as generator_exec
+import fern.generator_exec as generator_exec
 import fern.ir.resources as ir_types
 import generatorcli
 
@@ -117,7 +117,7 @@ class ReadmeSnippetBuilder:
 
                 client_instantiation = AST.ClassInstantiation(
                     class_=self._root_client.sync_client.class_reference,
-                    args=[AST.Expression("..."), AST.Expression("{ timeout=20.0 }")],
+                    args=[AST.Expression("..."), AST.Expression("timeout=20.0")],
                 )
 
                 def _client_writer(writer: AST.NodeWriter) -> None:
@@ -133,8 +133,8 @@ class ReadmeSnippetBuilder:
 {client_instantiation_str}
 
 # Override timeout for a specific method
-client.{endpoint.endpoint_package_path}{endpoint.method_name}({"...," if has_parameters else ""}{{
-    timeout_in_seconds=1
+client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_parameters else ""}{{
+    "timeout_in_seconds": 1
 }})
 """
                 )
@@ -187,8 +187,8 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"...," if has_par
             if endpoint is not None:
                 has_parameters = self._endpoint_metadata.has_parameters(endpoint_id)
                 retry_snippets.append(
-                    f"""client.{endpoint.endpoint_package_path}{endpoint.method_name}({"...," if has_parameters else ""}{{
-    max_retries=1
+                    f"""client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_parameters else ""}{{
+    "max_retries": 1
 }})
 """
                 )
@@ -201,7 +201,7 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"...," if has_par
             args=[AST.Expression("...")],
             kwargs=[
                 (
-                    "http_client",
+                    "httpx_client",
                     AST.Expression(
                         AST.ClassInstantiation(
                             class_=HttpX.CLIENT,
@@ -289,7 +289,7 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"...," if has_par
         return None
 
     def _get_feature_key(self, feature_id: generatorcli.feature.FeatureId) -> ir_types.FeatureId:
-        return ir_types.FeatureId.from_str(self._snake_to_camel_case(feature_id))
+        return self._snake_to_camel_case(feature_id)
 
     def _get_default_endpoint_id(
         self,
@@ -321,7 +321,7 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"...," if has_par
         if default_endpoint.id.identifier_override is None:
             raise RuntimeError("Internal error; all endpoints must define an endpoint id to generate README.md")
 
-        return ir_types.EndpointId.from_str(default_endpoint.id.identifier_override)
+        return default_endpoint.id.identifier_override
 
     def _build_endpoints(
         self, ir: ir_types.IntermediateRepresentation
@@ -332,7 +332,7 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"...," if has_par
         self, snippets: generator_exec.Snippets
     ) -> Dict[ir_types.EndpointId, generator_exec.PythonEndpointSnippet]:
         return {
-            ir_types.EndpointId.from_str(endpoint.id.identifier_override): self._get_python_endpoint_snippet(endpoint)
+            endpoint.id.identifier_override: self._get_python_endpoint_snippet(endpoint)
             for endpoint in snippets.endpoints
             if endpoint.id.identifier_override is not None
         }

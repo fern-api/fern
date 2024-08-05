@@ -33,7 +33,7 @@ export const makeRequest = async (
         signal: newSignals,
         credentials: withCredentials ? "include" : undefined,
         // @ts-ignore
-        duplex
+        duplex,
     });
 
     if (timeoutAbortId != null) {

@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../index";
 
 export interface TestCaseResultWithStdout {
-    "result": SeedTrace.TestCaseResult;
-    "stdout": string;
+    result: SeedTrace.TestCaseResult;
+    stdout: string;
 }

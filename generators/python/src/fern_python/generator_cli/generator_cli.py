@@ -4,7 +4,7 @@ import tempfile
 from math import e
 from typing import Dict, List, Optional, Union
 
-import fern.generator_exec.resources as generator_exec
+import fern.generator_exec as generator_exec
 import fern.ir.resources as ir_types
 import generatorcli
 import yaml  # type: ignore

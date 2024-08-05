@@ -77,6 +77,8 @@ client = SeedLiteral(
 )
 client.inlined.send(
     temperature=10.1,
+    context="You're super wise",
+    maybe_context="You're super wise",
     query="What is the weather today",
 )
 
@@ -102,7 +104,23 @@ client.inlined.send(
 <dl>
 <dd>
 
+**context:** `typing.Optional[typing.Literal["You're super wise"]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **temperature:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**maybe_context:** `typing.Optional[SomeAliasedLiteral]` 
     
 </dd>
 </dl>
@@ -264,6 +282,14 @@ client.reference.send(
 <dd>
 
 **query:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**maybe_context:** `typing.Optional[SomeLiteral]` 
     
 </dd>
 </dl>

@@ -20,8 +20,8 @@ class FunctionDeclaration(AstNode):
         name: str,
         signature: FunctionSignature,
         body: CodeWriter,
-        overloads: Sequence[FunctionSignature] = None,
-        decorators: Sequence[AstNode] = None,
+        overloads: Optional[Sequence[FunctionSignature]] = None,
+        decorators: Optional[Sequence[AstNode]] = None,
         docstring: Optional[CodeWriter] = None,
         is_async: Optional[bool] = False,
     ):

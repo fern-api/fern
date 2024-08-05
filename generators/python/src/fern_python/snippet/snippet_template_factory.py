@@ -23,7 +23,7 @@ from fdr import (
     UnionTemplateV2,
     VersionedSnippetTemplate,
 )
-from fern.generator_exec.resources import GeneratorUpdate, LogLevel, LogUpdate
+from fern.generator_exec import GeneratorUpdate, LogLevel, LogUpdate
 
 from fern_python.codegen import AST
 from fern_python.codegen.imports_manager import ImportsManager
@@ -155,10 +155,10 @@ class SnippetTemplateFactory:
         return Template.factory.generic(
             GenericTemplate(
                 imports=[imports] if imports is not None else [],
-                isOptional=True,
-                templateString=instantiation,
-                templateInputs=client_template_inputs,
-                inputDelimiter=",",
+                is_optional=True,
+                template_string=instantiation,
+                template_inputs=client_template_inputs,
+                input_delimiter=",",
             )
         )
 
@@ -222,12 +222,13 @@ class SnippetTemplateFactory:
         name_breadcrumbs: Optional[List[str]],
         is_function_parameter: bool,
         indentation_level: int = 0,
+        include_literal_templates: bool = False,
     ) -> Union[Template, None]:
         child_indentation_level = indentation_level + 1
 
         container_union = container.get_as_union()
         if container_union.type == "list":
-            innerTr = container_union.list
+            innerTr = container_union.list_
             inner_template = self.get_type_reference_template(
                 type_=innerTr,
                 name=None,
@@ -255,7 +256,7 @@ class SnippetTemplateFactory:
             )
 
         if container_union.type == "set":
-            innerTr = container_union.set
+            innerTr = container_union.set_
             inner_template = self.get_type_reference_template(
                 type_=innerTr,
                 name=None,
@@ -326,6 +327,27 @@ class SnippetTemplateFactory:
                 name_breadcrumbs=name_breadcrumbs,
                 indentation_level=indentation_level,
                 is_function_parameter=is_function_parameter,
+            )
+
+        if include_literal_templates and container_union.type == "literal":
+            literal_value = container_union.literal.visit(
+                string=lambda s: f'"{s}"',
+                boolean=lambda b: f"{b}",
+            )
+            template_string = f"{self._get_name_value_separator(name=name, is_function_parameter=is_function_parameter)}{literal_value}"
+            return Template.factory.generic(
+                GenericTemplate(
+                    is_optional=True,
+                    template_string=template_string,
+                    template_inputs=[
+                        TemplateInput.factory.payload(
+                            PayloadInput(
+                                location=location,
+                                path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs),
+                            )
+                        )
+                    ],
+                )
             )
 
         return None
@@ -445,21 +467,21 @@ class SnippetTemplateFactory:
             if snippet_template is not None:
                 imports, snippet_template_str = self._expression_to_snippet_str_and_imports(snippet_template)
 
+                input = self.get_type_reference_template_input(
+                    type_=sut_shape.type,
+                    name=name,
+                    location=location,
+                    wire_or_original_name=sut_shape.name.wire_value,
+                    name_breadcrumbs=child_breadcrumbs,
+                    is_function_parameter=False,
+                )
+
                 return Template.factory.generic(
                     GenericTemplate(
                         imports=[imports] if imports is not None else [],
                         is_optional=True,
                         template_string=get_template_string(snippet_template_str),
-                        template_inputs=[
-                            self.get_type_reference_template_input(
-                                type_=sut_shape.type,
-                                name=name,
-                                location=location,
-                                wire_or_original_name=sut_shape.name.wire_value,
-                                name_breadcrumbs=child_breadcrumbs,
-                                is_function_parameter=False,
-                            )
-                        ],
+                        template_inputs=[input] if input is not None else [],
                     )
                 )
             return None
@@ -579,20 +601,22 @@ class SnippetTemplateFactory:
         return type_reference.visit(
             container=lambda container: container.visit(
                 list_=lambda list_contents: FdrApiV1Read.TypeReference.factory.list_(
-                    FdrApiV1Read.ListType(itemType=self._convert_ir_type_reference_to_fdr_type_reference(list_contents))
+                    FdrApiV1Read.ListType(
+                        item_type=self._convert_ir_type_reference_to_fdr_type_reference(list_contents)
+                    )
                 ),
                 set_=lambda set_contents: FdrApiV1Read.TypeReference.factory.set_(
-                    FdrApiV1Read.SetType(itemType=self._convert_ir_type_reference_to_fdr_type_reference(set_contents))
+                    FdrApiV1Read.SetType(item_type=self._convert_ir_type_reference_to_fdr_type_reference(set_contents))
                 ),
                 map_=lambda map_contents: FdrApiV1Read.TypeReference.factory.map_(
                     FdrApiV1Read.MapType(
-                        keyType=self._convert_ir_type_reference_to_fdr_type_reference(map_contents.key_type),
-                        valueType=self._convert_ir_type_reference_to_fdr_type_reference(map_contents.value_type),
+                        key_type=self._convert_ir_type_reference_to_fdr_type_reference(map_contents.key_type),
+                        value_type=self._convert_ir_type_reference_to_fdr_type_reference(map_contents.value_type),
                     )
                 ),
                 optional=lambda optional_value: FdrApiV1Read.TypeReference.factory.optional(
                     FdrApiV1Read.OptionalType(
-                        itemType=self._convert_ir_type_reference_to_fdr_type_reference(optional_value)
+                        item_type=self._convert_ir_type_reference_to_fdr_type_reference(optional_value)
                     )
                 ),
                 literal=lambda literal_value: FdrApiV1Read.TypeReference.factory.literal(
@@ -603,7 +627,7 @@ class SnippetTemplateFactory:
                 ),
             ),
             named=lambda named: FdrApiV1Read.TypeReference.factory.id(
-                FdrApiV1Read.TypeReferenceId(value=named.type_id.get_as_str())
+                FdrApiV1Read.TypeReferenceId(value=named.type_id)
             ),
             primitive=lambda primitive: FdrApiV1Read.TypeReference.factory.primitive(
                 primitive.v_1.visit(
@@ -640,11 +664,13 @@ class SnippetTemplateFactory:
             member_template = self.get_type_reference_template(
                 type_=member.type,
                 name=None,
-                location=location,
-                wire_or_original_name=wire_or_original_name,
-                name_breadcrumbs=name_breadcrumbs,
+                location="RELATIVE",
+                wire_or_original_name=None,
+                name_breadcrumbs=None,
                 indentation_level=indentation_level,
                 is_function_parameter=False,
+                # Allow creation of literal members
+                include_literal_templates=True,
             )
             if member_template is not None:
                 member_templates.append(
@@ -660,7 +686,10 @@ class SnippetTemplateFactory:
                 is_optional=True,
                 template_string=f"{self._get_name_value_separator(name=name, is_function_parameter=is_function_parameter)}{TEMPLATE_SENTINEL}",
                 members=member_templates,
-                template_input=PayloadInput(location="RELATIVE"),
+                template_input=PayloadInput(
+                    location=location,
+                    path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs),
+                ),
             )
         )
 
@@ -673,6 +702,7 @@ class SnippetTemplateFactory:
         name_breadcrumbs: Optional[List[str]],
         is_function_parameter: bool,
         indentation_level: int = 0,
+        include_literal_templates: bool = False,
     ) -> Union[Template, None]:
         type_declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(
             type_id=type_name.type_id
@@ -688,6 +718,7 @@ class SnippetTemplateFactory:
                     name_breadcrumbs=name_breadcrumbs,
                     indentation_level=indentation_level,
                     is_function_parameter=is_function_parameter,
+                    include_literal_templates=include_literal_templates,
                 ),
                 enum=lambda etd: self._get_enum_template(
                     type_name=cast(ir_types.DeclaredTypeName, type_name),
@@ -738,6 +769,8 @@ class SnippetTemplateFactory:
         name_breadcrumbs: Optional[List[str]],
         is_function_parameter: bool,
         indentation_level: int = 0,
+        # Only used for union members
+        include_literal_templates: bool = False,
     ) -> Union[Template, None]:
         # if type is literal return None, we do not use literals as inputs
         if self._is_type_literal(type_):
@@ -766,6 +799,7 @@ class SnippetTemplateFactory:
                 name_breadcrumbs=name_breadcrumbs,
                 indentation_level=indentation_level,
                 is_function_parameter=is_function_parameter,
+                include_literal_templates=include_literal_templates,
             ),
             named=lambda type_name: self._get_named_template(
                 type_name=type_name,
@@ -775,6 +809,7 @@ class SnippetTemplateFactory:
                 name_breadcrumbs=name_breadcrumbs,
                 indentation_level=indentation_level,
                 is_function_parameter=is_function_parameter,
+                include_literal_templates=include_literal_templates,
             ),
         )
 
@@ -818,7 +853,7 @@ class SnippetTemplateFactory:
         return EndpointIdentifier(
             path=EndpointPath(self._full_path_for_endpoint(endpoint)),
             method=self._ir_method_to_fdr_method(endpoint.method),
-            identifierOverride=endpoint.id.get_as_str(),
+            identifier_override=endpoint.id,
         )
 
     def _full_path_for_endpoint(

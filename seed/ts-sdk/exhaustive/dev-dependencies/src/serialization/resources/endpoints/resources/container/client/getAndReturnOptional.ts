@@ -7,16 +7,20 @@ import * as Fiddle from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { ObjectWithRequiredField } from "../../../../types/resources/object/types/ObjectWithRequiredField";
 
-export const Request: core.serialization.Schema<serializers.endpoints.container.getAndReturnOptional.Request.Raw, Fiddle.types.ObjectWithRequiredField | undefined> = ObjectWithRequiredField.optional();
+export const Request: core.serialization.Schema<
+    serializers.endpoints.container.getAndReturnOptional.Request.Raw,
+    Fiddle.types.ObjectWithRequiredField | undefined
+> = ObjectWithRequiredField.optional();
 
 export declare namespace Request {
     type Raw = ObjectWithRequiredField.Raw | null | undefined;
 }
 
-export const Response: core.serialization.Schema<serializers.endpoints.container.getAndReturnOptional.Response.Raw, Fiddle.types.ObjectWithRequiredField | undefined> = ObjectWithRequiredField.optional();
+export const Response: core.serialization.Schema<
+    serializers.endpoints.container.getAndReturnOptional.Response.Raw,
+    Fiddle.types.ObjectWithRequiredField | undefined
+> = ObjectWithRequiredField.optional();
 
 export declare namespace Response {
     type Raw = ObjectWithRequiredField.Raw | null | undefined;
 }
-
-

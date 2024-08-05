@@ -5,5 +5,5 @@
 import * as SeedExamples from "../../../index";
 
 export interface ResponseType {
-    "type": SeedExamples.Type;
+    type: SeedExamples.Type;
 }

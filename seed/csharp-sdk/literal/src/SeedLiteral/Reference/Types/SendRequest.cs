@@ -14,4 +14,10 @@ public record SendRequest
 
     [JsonPropertyName("stream")]
     public required bool Stream { get; set; }
+
+    [JsonPropertyName("context")]
+    public required string Context { get; set; }
+
+    [JsonPropertyName("maybeContext")]
+    public string? MaybeContext { get; set; }
 }

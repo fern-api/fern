@@ -9,6 +9,7 @@ import { PersistedTypescriptProject } from "./PersistedTypescriptProject";
 
 export declare namespace TypescriptProject {
     export interface Init {
+        runScripts: boolean;
         tsMorphProject: Project;
         extraFiles: Record<string, string>;
         extraDependencies: Record<string, string>;
@@ -33,7 +34,10 @@ export abstract class TypescriptProject {
     protected extraPeerDependencies: Record<string, string>;
     protected extraScripts: Record<string, string>;
 
+    private runScripts: boolean;
+
     constructor({
+        runScripts,
         tsMorphProject,
         extraDependencies,
         extraDevDependencies,
@@ -42,6 +46,7 @@ export abstract class TypescriptProject {
         extraPeerDependencies,
         extraPeerDependenciesMeta
     }: TypescriptProject.Init) {
+        this.runScripts = runScripts;
         this.tsMorphProject = tsMorphProject;
         this.extraDependencies = extraDependencies;
         this.extraDevDependencies = extraDevDependencies;
@@ -67,6 +72,7 @@ export abstract class TypescriptProject {
         await this.writeVolumeToDisk(directoryOnDiskToWriteTo);
 
         return new PersistedTypescriptProject({
+            runScripts: this.runScripts,
             directory: directoryOnDiskToWriteTo,
             srcDirectory: RelativeFilePath.of(TypescriptProject.SRC_DIRECTORY),
             testDirectory: RelativeFilePath.of(TypescriptProject.TEST_DIRECTORY),

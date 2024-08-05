@@ -7,10 +7,11 @@ import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 import { TraceResponseV2 } from "../../submission/types/TraceResponseV2";
 
-export const Request: core.serialization.Schema<serializers.admin.storeTracedWorkspaceV2.Request.Raw, SeedTrace.TraceResponseV2[]> = core.serialization.list(TraceResponseV2);
+export const Request: core.serialization.Schema<
+    serializers.admin.storeTracedWorkspaceV2.Request.Raw,
+    SeedTrace.TraceResponseV2[]
+> = core.serialization.list(TraceResponseV2);
 
 export declare namespace Request {
     type Raw = TraceResponseV2.Raw[];
 }
-
-

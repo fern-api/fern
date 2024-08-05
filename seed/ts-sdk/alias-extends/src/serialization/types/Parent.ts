@@ -6,12 +6,13 @@ import * as serializers from "../index";
 import * as SeedAliasExtends from "../../api/index";
 import * as core from "../../core";
 
-export const Parent: core.serialization.ObjectSchema<serializers.Parent.Raw, SeedAliasExtends.Parent> = core.serialization.object({
-        "parent": core.serialization.string()
+export const Parent: core.serialization.ObjectSchema<serializers.Parent.Raw, SeedAliasExtends.Parent> =
+    core.serialization.object({
+        parent: core.serialization.string(),
     });
 
 export declare namespace Parent {
     interface Raw {
-        "parent": string;
+        parent: string;
     }
 }

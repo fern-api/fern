@@ -87,4 +87,20 @@ export class NodePre18StreamWrapper implements StreamWrapper<Writable, Buffer> {
         const text = await this.text();
         return JSON.parse(text);
     }
+
+    public [Symbol.asyncIterator](): AsyncIterableIterator<Buffer> {
+        const readableStream = this.readableStream;
+        const iterator = readableStream[Symbol.asyncIterator]();
+
+        // Create and return an async iterator that yields buffers
+        return {
+            async next(): Promise<IteratorResult<Buffer>> {
+                const { value, done } = await iterator.next();
+                return { value: value as Buffer, done };
+            },
+            [Symbol.asyncIterator]() {
+                return this;
+            },
+        };
+    }
 }

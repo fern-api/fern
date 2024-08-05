@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2024-08-04
+
+- Internal: The generator has now been upgraded to use Pydantic V2 internally. Note that 
+  there is no change to the generated code, however by leveraging Pydantic V2 you should notice
+  an improvement in `fern generate` times. 
+
+## [1.2.0] - 2024-07-31
+
+- Feature: The FastAPI `async_handlers` configuration now accepts a list of string or a boolean so that users
+  can turn on async handlers for specific endpoints. For example, to turn on async handlers for a `users.create`
+  endpoint, use the configuration below:
+
+  ```yaml
+  - name: fernapi/fern-fastapi-server
+    version: 1.2.0
+    config:
+      async_handlers:
+        - users.create
+  ```
+
 ## [1.1.0-rc0] - 2024-07-31
 
 - Internal: The generator now consumes IRv53.

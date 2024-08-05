@@ -9,5 +9,5 @@
  *     }
  */
 export interface TestRequest {
-    "for": string;
+    for: string;
 }

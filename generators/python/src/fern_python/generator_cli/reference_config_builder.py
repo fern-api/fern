@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-import fern.generator_exec.resources as generator_exec
+import fern.generator_exec as generator_exec
 import fern.ir.resources as ir_types
 import generatorcli
 
@@ -34,7 +34,7 @@ class ReferenceSectionBuilder:
         self, endpoint_metadata: EndpointMetadata, has_parameters: bool
     ) -> generatorcli.reference.MethodInvocationSnippet:
         return generatorcli.reference.MethodInvocationSnippet(
-            snippetParts=[
+            snippet_parts=[
                 generatorcli.reference.LinkedText(text="client."),
                 generatorcli.reference.LinkedText(text=endpoint_metadata.endpoint_package_path),
                 generatorcli.reference.LinkedText(
@@ -149,9 +149,7 @@ class ReferenceConfigBuilder:
         for endpoint_snippet in snippets.endpoints:
             endpoint_snippet_snippet = endpoint_snippet.snippet.get_as_union()
             if endpoint_snippet_snippet.type == "python" and endpoint_snippet.id.identifier_override is not None:
-                self._endpoint_snippets[
-                    ir_types.EndpointId.from_str(endpoint_snippet.id.identifier_override)
-                ] = endpoint_snippet_snippet.sync_client
+                self._endpoint_snippets[endpoint_snippet.id.identifier_override] = endpoint_snippet_snippet.sync_client
 
     def get_root_package_location(self) -> str:
         return self._project.get_relative_source_file_filepath(
@@ -208,7 +206,7 @@ class ReferenceConfigBuilder:
             )
 
         return generatorcli.reference.ReferenceConfig(
-            rootSection=root_reference_section,
+            root_section=root_reference_section,
             sections=self.reference_config_sections,
             language="PYTHON",
         )

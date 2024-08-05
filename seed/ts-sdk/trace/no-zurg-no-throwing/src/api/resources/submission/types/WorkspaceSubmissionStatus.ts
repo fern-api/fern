@@ -4,7 +4,7 @@
 
 import * as SeedTrace from "../../../index";
 
-export type WorkspaceSubmissionStatus = 
+export type WorkspaceSubmissionStatus =
     | SeedTrace.WorkspaceSubmissionStatus.Stopped
     | SeedTrace.WorkspaceSubmissionStatus.Errored
     | SeedTrace.WorkspaceSubmissionStatus.Running

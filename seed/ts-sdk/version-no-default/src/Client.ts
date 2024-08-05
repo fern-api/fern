@@ -25,8 +25,7 @@ export declare namespace SeedVersionClient {
 }
 
 export class SeedVersionClient {
-    constructor(protected readonly _options: SeedVersionClient.Options) {
-    }
+    constructor(protected readonly _options: SeedVersionClient.Options) {}
 
     protected _user: User | undefined;
 

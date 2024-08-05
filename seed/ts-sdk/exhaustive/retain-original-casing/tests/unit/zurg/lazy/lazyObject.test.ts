@@ -11,7 +11,7 @@ describe("lazy", () => {
         lazyObject(() => object({ foo: string() })).extend(object({ bar: number() })),
         {
             foo: "hello",
-            bar: 42
+            bar: 42,
         },
         { title: "returned schema has object utils" }
     );

@@ -123,8 +123,8 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.users.list_with_body_cursor_pagination(...,{
-    max_retries=1
+client.users.list_with_body_cursor_pagination(..., {
+    "max_retries": 1
 })
 ```
 
@@ -136,12 +136,15 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 from seed import SeedPagination
 
-client = SeedPagination(..., { timeout=20.0 }, )
+client = SeedPagination(
+    ...,
+    timeout=20.0,
+)
 
 
 # Override timeout for a specific method
-client.users.list_with_body_cursor_pagination(...,{
-    timeout_in_seconds=1
+client.users.list_with_body_cursor_pagination(..., {
+    "timeout_in_seconds": 1
 })
 ```
 
@@ -155,7 +158,7 @@ from seed import SeedPagination
 
 client = SeedPagination(
     ...,
-    http_client=httpx.Client(
+    httpx_client=httpx.Client(
         proxies="http://my.test.proxy.example.com",
         transport=httpx.HTTPTransport(local_address="0.0.0.0"),
     ),
