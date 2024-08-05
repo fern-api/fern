@@ -32,6 +32,9 @@ function handleWorkspaceParserFailureForFile({
     logger: Logger;
 }): void {
     switch (failure.type) {
+        case WorkspaceLoaderFailureType.MISCONFIGURED_DIRECTORY:
+            logger.error("Misconfigured directory: please make sure you have a generator file with an api path");
+            break;
         case WorkspaceLoaderFailureType.FILE_READ:
             logger.error("Failed to open file: " + relativeFilepath);
             break;
