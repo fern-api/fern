@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../../requests"
+require_relative "types/currency"
 require "json"
 require "async"
 
@@ -15,12 +16,14 @@ module SeedIdempotencyHeadersClient
       @request_client = request_client
     end
 
+    # @param amount [Integer]
+    # @param currency [SeedIdempotencyHeadersClient::Payment::Currency]
     # @param request_options [SeedIdempotencyHeadersClient::IdempotencyRequestOptions]
     # @return [String]
     # @example
     #  idempotency_headers = SeedIdempotencyHeadersClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  idempotency_headers.payment.create
-    def create(request_options: nil)
+    #  idempotency_headers.payment.create(amount: 1, currency: USD)
+    def create(amount:, currency:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
@@ -36,7 +39,7 @@ module SeedIdempotencyHeadersClient
         unless request_options.nil? || request_options&.additional_query_parameters.nil?
           req.params = { **(request_options&.additional_query_parameters || {}) }.compact
         end
-        req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        req.body = { **(request_options&.additional_body_parameters || {}), amount: amount, currency: currency }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/payment"
       end
       JSON.parse(response.body)
@@ -78,12 +81,14 @@ module SeedIdempotencyHeadersClient
       @request_client = request_client
     end
 
+    # @param amount [Integer]
+    # @param currency [SeedIdempotencyHeadersClient::Payment::Currency]
     # @param request_options [SeedIdempotencyHeadersClient::IdempotencyRequestOptions]
     # @return [String]
     # @example
     #  idempotency_headers = SeedIdempotencyHeadersClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  idempotency_headers.payment.create
-    def create(request_options: nil)
+    #  idempotency_headers.payment.create(amount: 1, currency: USD)
+    def create(amount:, currency:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -100,7 +105,11 @@ module SeedIdempotencyHeadersClient
           unless request_options.nil? || request_options&.additional_query_parameters.nil?
             req.params = { **(request_options&.additional_query_parameters || {}) }.compact
           end
-          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          req.body = {
+            **(request_options&.additional_body_parameters || {}),
+            amount: amount,
+            currency: currency
+          }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/payment"
         end
         parsed_json = JSON.parse(response.body)

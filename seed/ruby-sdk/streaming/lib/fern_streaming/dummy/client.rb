@@ -15,12 +15,13 @@ module SeedStreamingClient
       @request_client = request_client
     end
 
+    # @param num_events [Integer]
     # @param request_options [SeedStreamingClient::RequestOptions]
     # @return [SeedStreamingClient::Dummy::StreamResponse]
     # @example
     #  streaming = SeedStreamingClient::Client.new(base_url: "https://api.example.com")
-    #  streaming.dummy.generate
-    def generate(request_options: nil)
+    #  streaming.dummy.generate(num_events: 5)
+    def generate(num_events:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = {
@@ -31,7 +32,11 @@ module SeedStreamingClient
         unless request_options.nil? || request_options&.additional_query_parameters.nil?
           req.params = { **(request_options&.additional_query_parameters || {}) }.compact
         end
-        req.body = { **(request_options&.additional_body_parameters || {}), "stream": false }.compact
+        req.body = {
+          **(request_options&.additional_body_parameters || {}),
+          "stream": false,
+          num_events: num_events
+        }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/generate"
       end
       SeedStreamingClient::Dummy::StreamResponse.from_json(json_object: response.body)
@@ -48,12 +53,13 @@ module SeedStreamingClient
       @request_client = request_client
     end
 
+    # @param num_events [Integer]
     # @param request_options [SeedStreamingClient::RequestOptions]
     # @return [SeedStreamingClient::Dummy::StreamResponse]
     # @example
     #  streaming = SeedStreamingClient::Client.new(base_url: "https://api.example.com")
-    #  streaming.dummy.generate
-    def generate(request_options: nil)
+    #  streaming.dummy.generate(num_events: 5)
+    def generate(num_events:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -65,7 +71,11 @@ module SeedStreamingClient
           unless request_options.nil? || request_options&.additional_query_parameters.nil?
             req.params = { **(request_options&.additional_query_parameters || {}) }.compact
           end
-          req.body = { **(request_options&.additional_body_parameters || {}), "stream": false }.compact
+          req.body = {
+            **(request_options&.additional_body_parameters || {}),
+            "stream": false,
+            num_events: num_events
+          }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/generate"
         end
         SeedStreamingClient::Dummy::StreamResponse.from_json(json_object: response.body)

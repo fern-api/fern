@@ -15,12 +15,19 @@ module SeedOauthClientCredentialsClient
       @request_client = request_client
     end
 
+    # @param client_id [String]
+    # @param client_secret [String]
+    # @param scope [String]
     # @param request_options [SeedOauthClientCredentialsClient::RequestOptions]
     # @return [SeedOauthClientCredentialsClient::Auth::TokenResponse]
     # @example
     #  oauth_client_credentials = SeedOauthClientCredentialsClient::Client.new(base_url: "https://api.example.com")
-    #  oauth_client_credentials.auth.get_token_with_client_credentials
-    def get_token_with_client_credentials(request_options: nil)
+    #  oauth_client_credentials.auth.get_token_with_client_credentials(
+    #    client_id: "string",
+    #    client_secret: "string",
+    #    scope: "string"
+    #  )
+    def get_token_with_client_credentials(client_id:, client_secret:, scope: nil, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
@@ -35,19 +42,31 @@ module SeedOauthClientCredentialsClient
         req.body = {
           **(request_options&.additional_body_parameters || {}),
           "audience": "https://api.example.com",
-          "grant_type": "client_credentials"
+          "grant_type": "client_credentials",
+          client_id: client_id,
+          client_secret: client_secret,
+          scope: scope
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/token"
       end
       SeedOauthClientCredentialsClient::Auth::TokenResponse.from_json(json_object: response.body)
     end
 
+    # @param client_id [String]
+    # @param client_secret [String]
+    # @param refresh_token [String]
+    # @param scope [String]
     # @param request_options [SeedOauthClientCredentialsClient::RequestOptions]
     # @return [SeedOauthClientCredentialsClient::Auth::TokenResponse]
     # @example
     #  oauth_client_credentials = SeedOauthClientCredentialsClient::Client.new(base_url: "https://api.example.com")
-    #  oauth_client_credentials.auth.refresh_token
-    def refresh_token(request_options: nil)
+    #  oauth_client_credentials.auth.refresh_token(
+    #    client_id: "string",
+    #    client_secret: "string",
+    #    refresh_token: "string",
+    #    scope: "string"
+    #  )
+    def refresh_token(client_id:, client_secret:, refresh_token:, scope: nil, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
@@ -62,7 +81,11 @@ module SeedOauthClientCredentialsClient
         req.body = {
           **(request_options&.additional_body_parameters || {}),
           "audience": "https://api.example.com",
-          "grant_type": "refresh_token"
+          "grant_type": "refresh_token",
+          client_id: client_id,
+          client_secret: client_secret,
+          refresh_token: refresh_token,
+          scope: scope
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/token"
       end
@@ -80,12 +103,19 @@ module SeedOauthClientCredentialsClient
       @request_client = request_client
     end
 
+    # @param client_id [String]
+    # @param client_secret [String]
+    # @param scope [String]
     # @param request_options [SeedOauthClientCredentialsClient::RequestOptions]
     # @return [SeedOauthClientCredentialsClient::Auth::TokenResponse]
     # @example
     #  oauth_client_credentials = SeedOauthClientCredentialsClient::Client.new(base_url: "https://api.example.com")
-    #  oauth_client_credentials.auth.get_token_with_client_credentials
-    def get_token_with_client_credentials(request_options: nil)
+    #  oauth_client_credentials.auth.get_token_with_client_credentials(
+    #    client_id: "string",
+    #    client_secret: "string",
+    #    scope: "string"
+    #  )
+    def get_token_with_client_credentials(client_id:, client_secret:, scope: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -101,7 +131,10 @@ module SeedOauthClientCredentialsClient
           req.body = {
             **(request_options&.additional_body_parameters || {}),
             "audience": "https://api.example.com",
-            "grant_type": "client_credentials"
+            "grant_type": "client_credentials",
+            client_id: client_id,
+            client_secret: client_secret,
+            scope: scope
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/token"
         end
@@ -109,12 +142,21 @@ module SeedOauthClientCredentialsClient
       end
     end
 
+    # @param client_id [String]
+    # @param client_secret [String]
+    # @param refresh_token [String]
+    # @param scope [String]
     # @param request_options [SeedOauthClientCredentialsClient::RequestOptions]
     # @return [SeedOauthClientCredentialsClient::Auth::TokenResponse]
     # @example
     #  oauth_client_credentials = SeedOauthClientCredentialsClient::Client.new(base_url: "https://api.example.com")
-    #  oauth_client_credentials.auth.refresh_token
-    def refresh_token(request_options: nil)
+    #  oauth_client_credentials.auth.refresh_token(
+    #    client_id: "string",
+    #    client_secret: "string",
+    #    refresh_token: "string",
+    #    scope: "string"
+    #  )
+    def refresh_token(client_id:, client_secret:, refresh_token:, scope: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -130,7 +172,11 @@ module SeedOauthClientCredentialsClient
           req.body = {
             **(request_options&.additional_body_parameters || {}),
             "audience": "https://api.example.com",
-            "grant_type": "refresh_token"
+            "grant_type": "refresh_token",
+            client_id: client_id,
+            client_secret: client_secret,
+            refresh_token: refresh_token,
+            scope: scope
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/token"
         end
