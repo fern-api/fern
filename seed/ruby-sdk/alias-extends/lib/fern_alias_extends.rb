@@ -17,13 +17,12 @@ module SeedAliasExtendsClient
       )
     end
 
-    # @param child [String]
     # @param request_options [SeedAliasExtendsClient::RequestOptions]
     # @return [Void]
     # @example
     #  alias_extends = SeedAliasExtendsClient::Client.new(base_url: "https://api.example.com")
-    #  alias_extends.extended_inline_request_body(child: "string")
-    def extended_inline_request_body(child:, request_options: nil)
+    #  alias_extends.extended_inline_request_body
+    def extended_inline_request_body(request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = {
@@ -34,7 +33,7 @@ module SeedAliasExtendsClient
         unless request_options.nil? || request_options&.additional_query_parameters.nil?
           req.params = { **(request_options&.additional_query_parameters || {}) }.compact
         end
-        req.body = { **(request_options&.additional_body_parameters || {}), child: child }.compact
+        req.body = { **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/extends/extended-inline-request-body"
       end
     end
@@ -53,13 +52,12 @@ module SeedAliasExtendsClient
       )
     end
 
-    # @param child [String]
     # @param request_options [SeedAliasExtendsClient::RequestOptions]
     # @return [Void]
     # @example
     #  alias_extends = SeedAliasExtendsClient::Client.new(base_url: "https://api.example.com")
-    #  alias_extends.extended_inline_request_body(child: "string")
-    def extended_inline_request_body(child:, request_options: nil)
+    #  alias_extends.extended_inline_request_body
+    def extended_inline_request_body(request_options: nil)
       @async_request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = {
@@ -70,7 +68,7 @@ module SeedAliasExtendsClient
         unless request_options.nil? || request_options&.additional_query_parameters.nil?
           req.params = { **(request_options&.additional_query_parameters || {}) }.compact
         end
-        req.body = { **(request_options&.additional_body_parameters || {}), child: child }.compact
+        req.body = { **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@async_request_client.get_url(request_options: request_options)}/extends/extended-inline-request-body"
       end
     end

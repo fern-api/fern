@@ -34,6 +34,9 @@ export const FieldsetProperty = new Property({
     type: GenericClassReference,
     isOptional: true
 });
+
+export const InternalFields = [AdditionalPropertiesProperty, FieldsetProperty];
+
 export declare namespace SerializableObject {
     export type Init = Omit<Class_.Init, "functions" | "includeInitializer" | "expressions">;
 }

@@ -7,7 +7,7 @@
                 "identifierOverride": "endpoint_service.hello"
             },
             "snippet": {
-                "client": "require \"fern_code_samples\"\n\ncode_samples = SeedCodeSamplesClient::Client.new(base_url: \"https://api.example.com\")\ncode_samples.service.hello(num_events: 5)",
+                "client": "require \"fern_code_samples\"\n\ncode_samples = SeedCodeSamplesClient::Client.new(base_url: \"https://api.example.com\")\ncode_samples.service.hello",
                 "type": "ruby"
             }
         },
@@ -18,7 +18,7 @@
                 "identifierOverride": "endpoint_service.hello"
             },
             "snippet": {
-                "client": "require \"fern_code_samples\"\n\ncode_samples = SeedCodeSamplesClient::Client.new(base_url: \"https://api.example.com\")\ncode_samples.service.hello(num_events: 5)",
+                "client": "require \"fern_code_samples\"\n\ncode_samples = SeedCodeSamplesClient::Client.new(base_url: \"https://api.example.com\")\ncode_samples.service.hello",
                 "type": "ruby"
             }
         }

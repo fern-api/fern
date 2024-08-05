@@ -7,7 +7,7 @@
                 "identifierOverride": "endpoint_service.post"
             },
             "snippet": {
-                "client": "require \"fern_file_upload\"\n\nfile_upload = SeedFileUploadClient::Client.new(base_url: \"https://api.example.com\")\nfile_upload.service.post(\n  file: my_file.txt,\n  file_list: my_file.txt,\n  maybe_file: my_file.txt,\n  maybe_file_list: my_file.txt\n)",
+                "client": "require \"fern_file_upload\"\n\nfile_upload = SeedFileUploadClient::Client.new(base_url: \"https://api.example.com\")\nfile_upload.service.post",
                 "type": "ruby"
             }
         },
@@ -18,7 +18,7 @@
                 "identifierOverride": "endpoint_service.justFile"
             },
             "snippet": {
-                "client": "require \"fern_file_upload\"\n\nfile_upload = SeedFileUploadClient::Client.new(base_url: \"https://api.example.com\")\nfile_upload.service.just_file(file: my_file.txt)",
+                "client": "require \"fern_file_upload\"\n\nfile_upload = SeedFileUploadClient::Client.new(base_url: \"https://api.example.com\")\nfile_upload.service.just_file",
                 "type": "ruby"
             }
         },
@@ -29,7 +29,7 @@
                 "identifierOverride": "endpoint_service.justFileWithQueryParams"
             },
             "snippet": {
-                "client": "require \"fern_file_upload\"\n\nfile_upload = SeedFileUploadClient::Client.new(base_url: \"https://api.example.com\")\nfile_upload.service.just_file_with_query_params(\n  maybe_string: \"string\",\n  integer: 1,\n  maybe_integer: 1,\n  list_of_strings: \"string\",\n  optional_list_of_strings: \"string\",\n  file: my_file.txt\n)",
+                "client": "require \"fern_file_upload\"\n\nfile_upload = SeedFileUploadClient::Client.new(base_url: \"https://api.example.com\")\nfile_upload.service.just_file_with_query_params(\n  maybe_string: \"string\",\n  integer: 1,\n  maybe_integer: 1,\n  list_of_strings: \"string\",\n  optional_list_of_strings: \"string\"\n)",
                 "type": "ruby"
             }
         },
@@ -40,7 +40,7 @@
                 "identifierOverride": "endpoint_service.post"
             },
             "snippet": {
-                "client": "require \"fern_file_upload\"\n\nfile_upload = SeedFileUploadClient::Client.new(base_url: \"https://api.example.com\")\nfile_upload.service.post(\n  file: my_file.txt,\n  file_list: my_file.txt,\n  maybe_file: my_file.txt,\n  maybe_file_list: my_file.txt\n)",
+                "client": "require \"fern_file_upload\"\n\nfile_upload = SeedFileUploadClient::Client.new(base_url: \"https://api.example.com\")\nfile_upload.service.post",
                 "type": "ruby"
             }
         },
@@ -51,7 +51,7 @@
                 "identifierOverride": "endpoint_service.justFile"
             },
             "snippet": {
-                "client": "require \"fern_file_upload\"\n\nfile_upload = SeedFileUploadClient::Client.new(base_url: \"https://api.example.com\")\nfile_upload.service.just_file(file: my_file.txt)",
+                "client": "require \"fern_file_upload\"\n\nfile_upload = SeedFileUploadClient::Client.new(base_url: \"https://api.example.com\")\nfile_upload.service.just_file",
                 "type": "ruby"
             }
         },
@@ -62,7 +62,7 @@
                 "identifierOverride": "endpoint_service.justFileWithQueryParams"
             },
             "snippet": {
-                "client": "require \"fern_file_upload\"\n\nfile_upload = SeedFileUploadClient::Client.new(base_url: \"https://api.example.com\")\nfile_upload.service.just_file_with_query_params(\n  maybe_string: \"string\",\n  integer: 1,\n  maybe_integer: 1,\n  list_of_strings: \"string\",\n  optional_list_of_strings: \"string\",\n  file: my_file.txt\n)",
+                "client": "require \"fern_file_upload\"\n\nfile_upload = SeedFileUploadClient::Client.new(base_url: \"https://api.example.com\")\nfile_upload.service.just_file_with_query_params(\n  maybe_string: \"string\",\n  integer: 1,\n  maybe_integer: 1,\n  list_of_strings: \"string\",\n  optional_list_of_strings: \"string\"\n)",
                 "type": "ruby"
             }
         }

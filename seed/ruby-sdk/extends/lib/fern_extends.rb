@@ -2,7 +2,6 @@
 
 require_relative "types_export"
 require_relative "requests"
-require "ostruct"
 
 module SeedExtendsClient
   class Client
@@ -18,18 +17,12 @@ module SeedExtendsClient
       )
     end
 
-    # @param name [String]
-    # @param docs [String]
-    # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @param _field_set [Object]
-    # @param unique [String]
     # @param request_options [SeedExtendsClient::RequestOptions]
     # @return [Void]
     # @example
     #  extends = SeedExtendsClient::Client.new(base_url: "https://api.example.com")
-    #  extends.extended_inline_request_body(unique: "string")
-    def extended_inline_request_body(name:, docs:, unique:, additional_properties: nil, _field_set: nil,
-                                     request_options: nil)
+    #  extends.extended_inline_request_body
+    def extended_inline_request_body(request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = {
@@ -40,14 +33,7 @@ module SeedExtendsClient
         unless request_options.nil? || request_options&.additional_query_parameters.nil?
           req.params = { **(request_options&.additional_query_parameters || {}) }.compact
         end
-        req.body = {
-          **(request_options&.additional_body_parameters || {}),
-          name: name,
-          docs: docs,
-          additional_properties: additional_properties,
-          _field_set: _field_set,
-          unique: unique
-        }.compact
+        req.body = { **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/extends/extended-inline-request-body"
       end
     end
@@ -66,18 +52,12 @@ module SeedExtendsClient
       )
     end
 
-    # @param name [String]
-    # @param docs [String]
-    # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @param _field_set [Object]
-    # @param unique [String]
     # @param request_options [SeedExtendsClient::RequestOptions]
     # @return [Void]
     # @example
     #  extends = SeedExtendsClient::Client.new(base_url: "https://api.example.com")
-    #  extends.extended_inline_request_body(unique: "string")
-    def extended_inline_request_body(name:, docs:, unique:, additional_properties: nil, _field_set: nil,
-                                     request_options: nil)
+    #  extends.extended_inline_request_body
+    def extended_inline_request_body(request_options: nil)
       @async_request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = {
@@ -88,14 +68,7 @@ module SeedExtendsClient
         unless request_options.nil? || request_options&.additional_query_parameters.nil?
           req.params = { **(request_options&.additional_query_parameters || {}) }.compact
         end
-        req.body = {
-          **(request_options&.additional_body_parameters || {}),
-          name: name,
-          docs: docs,
-          additional_properties: additional_properties,
-          _field_set: _field_set,
-          unique: unique
-        }.compact
+        req.body = { **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@async_request_client.get_url(request_options: request_options)}/extends/extended-inline-request-body"
       end
     end

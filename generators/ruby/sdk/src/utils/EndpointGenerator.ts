@@ -27,6 +27,7 @@ import {
     VariableType,
     VoidClassReference
 } from "@fern-api/ruby-codegen";
+import { InternalFields } from "@fern-api/ruby-codegen/src/ast/abstractions/SerializableObject";
 import {
     BytesRequest,
     ExampleEndpointCall,
@@ -272,6 +273,9 @@ export class EndpointGenerator {
                 throw new Error("Unknown request body type.");
             }
         });
+
+        // Remove reserved properties from the function signature
+        this.bodyAsProperties = this.bodyAsProperties.filter((prop) => !InternalFields.includes(prop));
 
         this.streamProcessingBlock = this.isStreamingResponse()
             ? new Parameter({

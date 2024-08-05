@@ -14,7 +14,6 @@ module SeedMultiUrlEnvironmentClient
       @request_client = request_client
     end
 
-    # @param size [String]
     # @param request_options [SeedMultiUrlEnvironmentClient::RequestOptions]
     # @return [Void]
     # @example
@@ -23,8 +22,8 @@ module SeedMultiUrlEnvironmentClient
     #    environment: SeedMultiUrlEnvironmentClient::Environment::PRODUCTION,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  multi_url_environment.ec_2.boot_instance(size: "string")
-    def boot_instance(size:, request_options: nil)
+    #  multi_url_environment.ec_2.boot_instance
+    def boot_instance(request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
@@ -36,7 +35,7 @@ module SeedMultiUrlEnvironmentClient
         unless request_options.nil? || request_options&.additional_query_parameters.nil?
           req.params = { **(request_options&.additional_query_parameters || {}) }.compact
         end
-        req.body = { **(request_options&.additional_body_parameters || {}), size: size }.compact
+        req.body = { **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(environment: ec2, request_options: request_options)}/ec2/boot"
       end
     end
@@ -52,7 +51,6 @@ module SeedMultiUrlEnvironmentClient
       @request_client = request_client
     end
 
-    # @param size [String]
     # @param request_options [SeedMultiUrlEnvironmentClient::RequestOptions]
     # @return [Void]
     # @example
@@ -61,8 +59,8 @@ module SeedMultiUrlEnvironmentClient
     #    environment: SeedMultiUrlEnvironmentClient::Environment::PRODUCTION,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  multi_url_environment.ec_2.boot_instance(size: "string")
-    def boot_instance(size:, request_options: nil)
+    #  multi_url_environment.ec_2.boot_instance
+    def boot_instance(request_options: nil)
       Async do
         @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -75,7 +73,7 @@ module SeedMultiUrlEnvironmentClient
           unless request_options.nil? || request_options&.additional_query_parameters.nil?
             req.params = { **(request_options&.additional_query_parameters || {}) }.compact
           end
-          req.body = { **(request_options&.additional_body_parameters || {}), size: size }.compact
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(environment: ec2, request_options: request_options)}/ec2/boot"
         end
       end

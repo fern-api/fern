@@ -7,7 +7,7 @@
                 "identifierOverride": "endpoint_inlined-request.send"
             },
             "snippet": {
-                "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.inlined_request.send(operand: GREATER_THAN, operand_or_color: RED)",
+                "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.inlined_request.send",
                 "type": "ruby"
             }
         },
@@ -18,7 +18,7 @@
                 "identifierOverride": "endpoint_inlined-request.send"
             },
             "snippet": {
-                "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.inlined_request.send(operand: GREATER_THAN, operand_or_color: RED)",
+                "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.inlined_request.send",
                 "type": "ruby"
             }
         },

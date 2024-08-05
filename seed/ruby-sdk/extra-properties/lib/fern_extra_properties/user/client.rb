@@ -15,13 +15,12 @@ module SeedExtraPropertiesClient
       @request_client = request_client
     end
 
-    # @param name [String]
     # @param request_options [SeedExtraPropertiesClient::RequestOptions]
     # @return [SeedExtraPropertiesClient::User::User]
     # @example
     #  extra_properties = SeedExtraPropertiesClient::Client.new(base_url: "https://api.example.com")
-    #  extra_properties.user.create_user(name: "string")
-    def create_user(name:, request_options: nil)
+    #  extra_properties.user.create_user
+    def create_user(request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = {
@@ -35,8 +34,7 @@ module SeedExtraPropertiesClient
         req.body = {
           **(request_options&.additional_body_parameters || {}),
           "_type": "CreateUserRequest",
-          "_version": "v1",
-          name: name
+          "_version": "v1"
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/user"
       end
@@ -54,13 +52,12 @@ module SeedExtraPropertiesClient
       @request_client = request_client
     end
 
-    # @param name [String]
     # @param request_options [SeedExtraPropertiesClient::RequestOptions]
     # @return [SeedExtraPropertiesClient::User::User]
     # @example
     #  extra_properties = SeedExtraPropertiesClient::Client.new(base_url: "https://api.example.com")
-    #  extra_properties.user.create_user(name: "string")
-    def create_user(name:, request_options: nil)
+    #  extra_properties.user.create_user
+    def create_user(request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -75,8 +72,7 @@ module SeedExtraPropertiesClient
           req.body = {
             **(request_options&.additional_body_parameters || {}),
             "_type": "CreateUserRequest",
-            "_version": "v1",
-            name: name
+            "_version": "v1"
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/user"
         end

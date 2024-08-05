@@ -18,7 +18,7 @@
                 "identifierOverride": "endpoint_user.createUser"
             },
             "snippet": {
-                "client": "require \"fern_multi_line_docs\"\n\nmulti_line_docs = SeedMultiLineDocsClient::Client.new(base_url: \"https://api.example.com\")\nmulti_line_docs.user.create_user(name: \"string\", age: 1)",
+                "client": "require \"fern_multi_line_docs\"\n\nmulti_line_docs = SeedMultiLineDocsClient::Client.new(base_url: \"https://api.example.com\")\nmulti_line_docs.user.create_user",
                 "type": "ruby"
             }
         },
@@ -40,7 +40,7 @@
                 "identifierOverride": "endpoint_user.createUser"
             },
             "snippet": {
-                "client": "require \"fern_multi_line_docs\"\n\nmulti_line_docs = SeedMultiLineDocsClient::Client.new(base_url: \"https://api.example.com\")\nmulti_line_docs.user.create_user(name: \"string\", age: 1)",
+                "client": "require \"fern_multi_line_docs\"\n\nmulti_line_docs = SeedMultiLineDocsClient::Client.new(base_url: \"https://api.example.com\")\nmulti_line_docs.user.create_user",
                 "type": "ruby"
             }
         }
