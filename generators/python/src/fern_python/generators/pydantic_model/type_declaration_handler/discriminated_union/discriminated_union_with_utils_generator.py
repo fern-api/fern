@@ -1,4 +1,4 @@
-from typing import List, Optional, Set, cast
+from typing import List, Optional, Set
 
 import fern.ir.resources as ir_types
 from typing_extensions import Never
@@ -217,7 +217,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                 type_hint=self._context.get_type_hint_for_type_reference(type_reference=shape.type),
                             )
                         )
-                    
+
                     single_union_properties: ir_types.SingleUnionTypeProperties = single_union_type.shape
 
                     factory_declaration.add_method(
@@ -319,7 +319,9 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                         )
                                     ),
                                     type=external_pydantic_model.get_type_hint_for_type_reference(
-                                        ir_types.TypeReference.factory.named(self._to_named_type(declared_type_name=declared_type_name))
+                                        ir_types.TypeReference.factory.named(
+                                            self._to_named_type(declared_type_name=declared_type_name)
+                                        )
                                     ),
                                 ),
                                 single_property=lambda property: VisitorArgument(
@@ -340,14 +342,13 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                 )
             )
 
-    
     def _to_named_type(self, declared_type_name: ir_types.DeclaredTypeName) -> ir_types.NamedType:
         return ir_types.NamedType(
             type_id=declared_type_name.type_id,
             fern_filepath=declared_type_name.fern_filepath,
-            name=declared_type_name.name
+            name=declared_type_name.name,
         )
-    
+
     def _create_body_writer(
         self,
         single_union_type: ir_types.SingleUnionType,
