@@ -254,11 +254,12 @@ export class TemplateGenerator {
             const memberTemplate = this.getTemplateFromTypeReference({
                 typeReference: member.type,
                 name: undefined,
-                location,
-                wireOrOriginalName,
-                nameBreadcrumbs,
+                location: FdrSnippetTemplate.PayloadLocation.Relative,
+                wireOrOriginalName: undefined,
+                nameBreadcrumbs: undefined,
                 indentationLevel: childIndentationLevel,
-                isObjectInlined: true
+                isObjectInlined: true,
+                includeLiteralTemplates: true
             });
 
             if (memberTemplate != null) {
@@ -418,7 +419,7 @@ export class TemplateGenerator {
                 wireOrOriginalName: prop.name.wireValue,
                 nameBreadcrumbs: childBreadcrumbs,
                 indentationLevel: childIndentationLevel,
-                isObjectInlined
+                isObjectInlined: false
             });
 
             if (propInput != null) {
@@ -445,7 +446,8 @@ export class TemplateGenerator {
         wireOrOriginalName,
         nameBreadcrumbs,
         indentationLevel,
-        isObjectInlined
+        isObjectInlined,
+        includeLiteralTemplates
     }: {
         typeName: DeclaredTypeName;
         name: string | undefined;
@@ -454,6 +456,7 @@ export class TemplateGenerator {
         nameBreadcrumbs: string[] | undefined;
         indentationLevel: number;
         isObjectInlined: boolean;
+        includeLiteralTemplates?: boolean;
     }): FdrSnippetTemplate.Template | undefined {
         const td = this.endpointContext.type.getTypeDeclaration(typeName);
         const generatedType = this.endpointContext.type.getGeneratedType(typeName);
@@ -476,7 +479,8 @@ export class TemplateGenerator {
                     wireOrOriginalName,
                     nameBreadcrumbs,
                     indentationLevel,
-                    isObjectInlined
+                    isObjectInlined,
+                    includeLiteralTemplates
                 }),
             object: (otd) =>
                 this.getObjectTemplate({
@@ -517,7 +521,8 @@ export class TemplateGenerator {
         wireOrOriginalName,
         nameBreadcrumbs,
         indentationLevel,
-        isObjectInlined
+        isObjectInlined,
+        includeLiteralTemplates
     }: {
         containerType: ContainerType;
         name: string | undefined;
@@ -526,6 +531,7 @@ export class TemplateGenerator {
         nameBreadcrumbs: string[] | undefined;
         indentationLevel: number;
         isObjectInlined: boolean;
+        includeLiteralTemplates?: boolean;
     }): FdrSnippetTemplate.Template | undefined {
         const childIndentationLevel = indentationLevel + 1;
         const selfTabs = "\t".repeat(indentationLevel);
@@ -540,7 +546,7 @@ export class TemplateGenerator {
                     wireOrOriginalName: undefined,
                     nameBreadcrumbs: undefined,
                     indentationLevel: childIndentationLevel,
-                    isObjectInlined
+                    isObjectInlined: false
                 });
                 return innerTemplate != null
                     ? FdrSnippetTemplate.Template.iterable({
@@ -567,7 +573,7 @@ export class TemplateGenerator {
                     wireOrOriginalName: undefined,
                     nameBreadcrumbs: undefined,
                     indentationLevel: childIndentationLevel,
-                    isObjectInlined
+                    isObjectInlined: false
                 });
 
                 return innerTemplate != null
@@ -595,7 +601,7 @@ export class TemplateGenerator {
                     wireOrOriginalName: undefined,
                     nameBreadcrumbs: undefined,
                     indentationLevel: childIndentationLevel,
-                    isObjectInlined
+                    isObjectInlined: false
                 });
                 const valueTemplate = this.getTemplateFromTypeReference({
                     typeReference: kvType.valueType,
@@ -604,7 +610,7 @@ export class TemplateGenerator {
                     wireOrOriginalName: undefined,
                     nameBreadcrumbs: undefined,
                     indentationLevel: childIndentationLevel,
-                    isObjectInlined
+                    isObjectInlined: false
                 });
 
                 return keyTemplate != null && valueTemplate != null
@@ -636,7 +642,28 @@ export class TemplateGenerator {
                     indentationLevel,
                     isObjectInlined
                 }),
-            literal: () => undefined,
+            literal: (literal) => {
+                const literalValue = literal._visit<string>({
+                    boolean: (bool) => bool.toString(),
+                    string: (str) => `"${str}"`,
+                    _other: () => {
+                        throw new Error("Unknown literal type: " + literal.type);
+                    }
+                });
+                return includeLiteralTemplates
+                    ? FdrSnippetTemplate.Template.generic({
+                          imports: [],
+                          templateString: name != null ? `${name}: ${literalValue}` : literalValue,
+                          isOptional: true,
+                          templateInputs: [
+                              FdrSnippetTemplate.TemplateInput.payload({
+                                  location,
+                                  path: this.getBreadCrumbPath({ wireOrOriginalName, nameBreadcrumbs })
+                              })
+                          ]
+                      })
+                    : undefined;
+            },
             _other: () => undefined
         });
     }
@@ -648,7 +675,8 @@ export class TemplateGenerator {
         wireOrOriginalName,
         nameBreadcrumbs,
         indentationLevel,
-        isObjectInlined
+        isObjectInlined,
+        includeLiteralTemplates
     }: {
         typeReference: TypeReference;
         name: string | undefined;
@@ -657,11 +685,8 @@ export class TemplateGenerator {
         nameBreadcrumbs: string[] | undefined;
         indentationLevel: number;
         isObjectInlined: boolean;
+        includeLiteralTemplates?: boolean;
     }): FdrSnippetTemplate.Template | undefined {
-        // Do not insert literals into templates
-        if (typeReference.type === "container" && typeReference.container.type === "literal") {
-            return;
-        }
         // TODO: Implement a better way to handle type -> template relation to better handle
         // circular references
         if (indentationLevel > 10) {
@@ -679,7 +704,8 @@ export class TemplateGenerator {
                     wireOrOriginalName,
                     nameBreadcrumbs,
                     indentationLevel,
-                    isObjectInlined
+                    isObjectInlined,
+                    includeLiteralTemplates
                 }),
             named: (typeName) =>
                 this.getNamedTypeTemplate({
@@ -689,7 +715,8 @@ export class TemplateGenerator {
                     wireOrOriginalName,
                     nameBreadcrumbs,
                     indentationLevel,
-                    isObjectInlined
+                    isObjectInlined,
+                    includeLiteralTemplates
                 }),
             _other: () => undefined
         });

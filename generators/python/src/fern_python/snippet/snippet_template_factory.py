@@ -222,6 +222,7 @@ class SnippetTemplateFactory:
         name_breadcrumbs: Optional[List[str]],
         is_function_parameter: bool,
         indentation_level: int = 0,
+        include_literal_templates: bool = False,
     ) -> Union[Template, None]:
         child_indentation_level = indentation_level + 1
 
@@ -326,6 +327,27 @@ class SnippetTemplateFactory:
                 name_breadcrumbs=name_breadcrumbs,
                 indentation_level=indentation_level,
                 is_function_parameter=is_function_parameter,
+            )
+
+        if include_literal_templates and container_union.type == "literal":
+            literal_value = container_union.literal.visit(
+                string=lambda s: f'"{s}"',
+                boolean=lambda b: f"{b}",
+            )
+            template_string = f"{self._get_name_value_separator(name=name, is_function_parameter=is_function_parameter)}{literal_value}"
+            return Template.factory.generic(
+                GenericTemplate(
+                    is_optional=True,
+                    template_string=template_string,
+                    template_inputs=[
+                        TemplateInput.factory.payload(
+                            PayloadInput(
+                                location=location,
+                                path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs),
+                            )
+                        )
+                    ],
+                )
             )
 
         return None
@@ -642,11 +664,13 @@ class SnippetTemplateFactory:
             member_template = self.get_type_reference_template(
                 type_=member.type,
                 name=None,
-                location=location,
-                wire_or_original_name=wire_or_original_name,
-                name_breadcrumbs=name_breadcrumbs,
+                location="RELATIVE",
+                wire_or_original_name=None,
+                name_breadcrumbs=None,
                 indentation_level=indentation_level,
                 is_function_parameter=False,
+                # Allow creation of literal members
+                include_literal_templates=True,
             )
             if member_template is not None:
                 member_templates.append(
@@ -662,7 +686,10 @@ class SnippetTemplateFactory:
                 is_optional=True,
                 template_string=f"{self._get_name_value_separator(name=name, is_function_parameter=is_function_parameter)}{TEMPLATE_SENTINEL}",
                 members=member_templates,
-                template_input=PayloadInput(location="RELATIVE"),
+                template_input=PayloadInput(
+                    location=location,
+                    path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs),
+                ),
             )
         )
 
@@ -675,6 +702,7 @@ class SnippetTemplateFactory:
         name_breadcrumbs: Optional[List[str]],
         is_function_parameter: bool,
         indentation_level: int = 0,
+        include_literal_templates: bool = False,
     ) -> Union[Template, None]:
         type_declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(
             type_id=type_name.type_id
@@ -690,6 +718,7 @@ class SnippetTemplateFactory:
                     name_breadcrumbs=name_breadcrumbs,
                     indentation_level=indentation_level,
                     is_function_parameter=is_function_parameter,
+                    include_literal_templates=include_literal_templates,
                 ),
                 enum=lambda etd: self._get_enum_template(
                     type_name=cast(ir_types.DeclaredTypeName, type_name),
@@ -740,6 +769,8 @@ class SnippetTemplateFactory:
         name_breadcrumbs: Optional[List[str]],
         is_function_parameter: bool,
         indentation_level: int = 0,
+        # Only used for union members
+        include_literal_templates: bool = False,
     ) -> Union[Template, None]:
         # if type is literal return None, we do not use literals as inputs
         if self._is_type_literal(type_):
@@ -768,6 +799,7 @@ class SnippetTemplateFactory:
                 name_breadcrumbs=name_breadcrumbs,
                 indentation_level=indentation_level,
                 is_function_parameter=is_function_parameter,
+                include_literal_templates=include_literal_templates,
             ),
             named=lambda type_name: self._get_named_template(
                 type_name=type_name,
@@ -777,6 +809,7 @@ class SnippetTemplateFactory:
                 name_breadcrumbs=name_breadcrumbs,
                 indentation_level=indentation_level,
                 is_function_parameter=is_function_parameter,
+                include_literal_templates=include_literal_templates,
             ),
         )
 

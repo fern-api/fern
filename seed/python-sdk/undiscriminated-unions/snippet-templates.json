@@ -46,7 +46,7 @@
                                         "templateString": "$FERN_INPUT",
                                         "templateInputs": [
                                             {
-                                                "location": "BODY",
+                                                "location": "RELATIVE",
                                                 "path": null,
                                                 "type": "payload"
                                             }
@@ -83,7 +83,7 @@
                                             "type": "generic"
                                         },
                                         "templateInput": {
-                                            "location": "BODY",
+                                            "location": "RELATIVE",
                                             "path": null
                                         },
                                         "type": "iterable"
@@ -102,7 +102,7 @@
                                         "templateString": "$FERN_INPUT",
                                         "templateInputs": [
                                             {
-                                                "location": "BODY",
+                                                "location": "RELATIVE",
                                                 "path": null,
                                                 "type": "payload"
                                             }
@@ -139,7 +139,7 @@
                                             "type": "generic"
                                         },
                                         "templateInput": {
-                                            "location": "BODY",
+                                            "location": "RELATIVE",
                                             "path": null
                                         },
                                         "type": "iterable"
@@ -188,7 +188,7 @@
                                             "type": "iterable"
                                         },
                                         "templateInput": {
-                                            "location": "BODY",
+                                            "location": "RELATIVE",
                                             "path": null
                                         },
                                         "type": "iterable"
@@ -196,7 +196,8 @@
                                 }
                             ],
                             "templateInput": {
-                                "location": "RELATIVE"
+                                "location": "BODY",
+                                "path": null
                             },
                             "type": "union_v2"
                         }
@@ -244,7 +245,7 @@
                                             "templateString": "$FERN_INPUT",
                                             "templateInputs": [
                                                 {
-                                                    "location": "BODY",
+                                                    "location": "RELATIVE",
                                                     "path": null,
                                                     "type": "payload"
                                                 }
@@ -281,7 +282,7 @@
                                                 "type": "generic"
                                             },
                                             "templateInput": {
-                                                "location": "BODY",
+                                                "location": "RELATIVE",
                                                 "path": null
                                             },
                                             "type": "iterable"
@@ -300,7 +301,7 @@
                                             "templateString": "$FERN_INPUT",
                                             "templateInputs": [
                                                 {
-                                                    "location": "BODY",
+                                                    "location": "RELATIVE",
                                                     "path": null,
                                                     "type": "payload"
                                                 }
@@ -337,7 +338,7 @@
                                                 "type": "generic"
                                             },
                                             "templateInput": {
-                                                "location": "BODY",
+                                                "location": "RELATIVE",
                                                 "path": null
                                             },
                                             "type": "iterable"
@@ -386,7 +387,7 @@
                                                 "type": "iterable"
                                             },
                                             "templateInput": {
-                                                "location": "BODY",
+                                                "location": "RELATIVE",
                                                 "path": null
                                             },
                                             "type": "iterable"
@@ -394,7 +395,8 @@
                                     }
                                 ],
                                 "templateInput": {
-                                    "location": "RELATIVE"
+                                    "location": "BODY",
+                                    "path": null
                                 },
                                 "type": "union_v2"
                             }
