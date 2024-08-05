@@ -5,4 +5,13 @@ from .event_info import EventInfo, EventInfo_Metadata, EventInfo_Tag
 from .metadata import Metadata
 from .tag import Tag
 
-__all__ = ["Data", "Data_Base64", "Data_String", "EventInfo", "EventInfo_Metadata", "EventInfo_Tag", "Metadata", "Tag"]
+__all__ = [
+    "Data",
+    "Data_Base64",
+    "Data_String",
+    "EventInfo",
+    "EventInfo_Metadata",
+    "EventInfo_Tag",
+    "Metadata",
+    "Tag",
+]

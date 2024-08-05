@@ -43,7 +43,8 @@ class FernHTTPExceptionGenerator:
                     name="to_json_response",
                     signature=AST.FunctionSignature(return_type=AST.TypeHint(FastAPI.JSONResponse.REFERENCE)),
                     body=self._create_json_response_body_writer(
-                        error_discrimination_strategy.discriminant, reference_to_body=reference_to_body
+                        error_discrimination_strategy.discriminant,
+                        reference_to_body=reference_to_body,
                     ),
                 )
             )
@@ -63,7 +64,8 @@ class FernHTTPExceptionGenerator:
             signature=AST.FunctionSignature(
                 parameters=[
                     AST.FunctionParameter(
-                        name=self.FernHTTPException.STATUS_CODE_MEMBER, type_hint=AST.TypeHint.int_()
+                        name=self.FernHTTPException.STATUS_CODE_MEMBER,
+                        type_hint=AST.TypeHint.int_(),
                     ),
                     AST.FunctionParameter(
                         name=self.FernHTTPException.NAME_MEMBER,
@@ -88,7 +90,10 @@ class FernHTTPExceptionGenerator:
         writer.write_line(f"self.{self.FernHTTPException.CONTENT_MEMBER} = {self.FernHTTPException.CONTENT_MEMBER}")
 
     def _construct_pydantic_model(
-        self, source_file: SourceFile, error_discriminant: NameAndWireValue, exception_class: LocalClassReference
+        self,
+        source_file: SourceFile,
+        error_discriminant: NameAndWireValue,
+        exception_class: LocalClassReference,
     ) -> AST.ClassReference:
         with PydanticModel(
             source_file=source_file,
@@ -159,7 +164,9 @@ class FernHTTPExceptionGenerator:
         return error_discrimination_strategy.content_property
 
     def _create_json_response_body_writer(
-        self, error_discriminant: NameAndWireValue, reference_to_body: AST.ClassReference
+        self,
+        error_discriminant: NameAndWireValue,
+        reference_to_body: AST.ClassReference,
     ) -> AST.CodeWriter:
         def write_body(writer: AST.NodeWriter) -> None:
             BODY_VARIABLE_NAME = "body"
@@ -181,7 +188,7 @@ class FernHTTPExceptionGenerator:
                     ],
                 )
             )
-            writer.write_line(),
+            (writer.write_line(),)
 
             writer.write(f"{CONTENT_VARIABLE_NAME} = ")
             writer.write_node(FastAPI.jsonable_encoder(AST.Expression(BODY_VARIABLE_NAME), exclude_none=True))
@@ -203,7 +210,8 @@ class FernHTTPExceptionGenerator:
             writer.write(f"{CONTENT_VARIABLE_NAME} = ")
             writer.write_node(
                 FastAPI.jsonable_encoder(
-                    AST.Expression(f"self.{self.FernHTTPException.CONTENT_MEMBER}"), exclude_none=True
+                    AST.Expression(f"self.{self.FernHTTPException.CONTENT_MEMBER}"),
+                    exclude_none=True,
                 )
             )
             writer.write_line()

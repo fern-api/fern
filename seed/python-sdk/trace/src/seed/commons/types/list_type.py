@@ -11,17 +11,27 @@ from ...core.pydantic_utilities import pydantic_v1
 
 class ListType(pydantic_v1.BaseModel):
     value_type: VariableType = pydantic_v1.Field(alias="valueType")
-    is_fixed_length: typing.Optional[bool] = pydantic_v1.Field(alias="isFixedLength", default=None)
+    is_fixed_length: typing.Optional[bool] = pydantic_v1.Field(
+        alias="isFixedLength", default=None
+    )
     """
     Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
     """
 
     def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults: typing.Any = {
+            "by_alias": True,
+            "exclude_unset": True,
+            **kwargs,
+        }
         return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults: typing.Any = {
+            "by_alias": True,
+            "exclude_unset": True,
+            **kwargs,
+        }
         return super().dict(**kwargs_with_defaults)
 
     class Config:

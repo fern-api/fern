@@ -3,8 +3,24 @@
 from seed import AsyncSeedExhaustive, SeedExhaustive
 
 
-async def test_get_with_custom_header(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
+async def test_get_with_custom_header(
+    client: SeedExhaustive, async_client: AsyncSeedExhaustive
+) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert client.req_with_headers.get_with_custom_header(x_test_service_header="string", x_test_endpoint_header="string", request="string") is None  # type: ignore[func-returns-value]
+    assert (
+        client.req_with_headers.get_with_custom_header(
+            x_test_service_header="string",
+            x_test_endpoint_header="string",
+            request="string",
+        )
+        is None
+    )  # type: ignore[func-returns-value]
 
-    assert await async_client.req_with_headers.get_with_custom_header(x_test_service_header="string", x_test_endpoint_header="string", request="string") is None  # type: ignore[func-returns-value]
+    assert (
+        await async_client.req_with_headers.get_with_custom_header(
+            x_test_service_header="string",
+            x_test_endpoint_header="string",
+            request="string",
+        )
+        is None
+    )  # type: ignore[func-returns-value]

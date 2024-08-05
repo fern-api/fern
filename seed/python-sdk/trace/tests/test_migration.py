@@ -5,11 +5,15 @@ from seed.client import AsyncSeedTrace, SeedTrace
 from .utilities import validate_response
 
 
-async def test_get_attempted_migrations(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
+async def test_get_attempted_migrations(
+    client: SeedTrace, async_client: AsyncSeedTrace
+) -> None:
     expected_response = [{"name": "string", "status": "RUNNING"}]
     expected_types = ("list", {0: {"name": None, "status": None}})
     response = client.migration.get_attempted_migrations(admin_key_header="string")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.migration.get_attempted_migrations(admin_key_header="string")
+    async_response = await async_client.migration.get_attempted_migrations(
+        admin_key_header="string"
+    )
     validate_response(async_response, expected_response, expected_types)

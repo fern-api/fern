@@ -18,7 +18,9 @@ class UnionClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Shape:
+    def get(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> Shape:
         """
         Parameters
         ----------
@@ -53,7 +55,9 @@ class UnionClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def update(self, *, request: Shape, request_options: typing.Optional[RequestOptions] = None) -> bool:
+    def update(
+        self, *, request: Shape, request_options: typing.Optional[RequestOptions] = None
+    ) -> bool:
         """
         Parameters
         ----------
@@ -97,7 +101,9 @@ class AsyncUnionClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Shape:
+    async def get(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> Shape:
         """
         Parameters
         ----------
@@ -132,7 +138,9 @@ class AsyncUnionClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def update(self, *, request: Shape, request_options: typing.Optional[RequestOptions] = None) -> bool:
+    async def update(
+        self, *, request: Shape, request_options: typing.Optional[RequestOptions] = None
+    ) -> bool:
         """
         Parameters
         ----------

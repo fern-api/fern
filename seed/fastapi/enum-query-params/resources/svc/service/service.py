@@ -24,8 +24,9 @@ class AbstractSvcService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def test(self, *, some_enum: typing.Optional[typing.List[MyEnum]] = None) -> str:
-        ...
+    def test(
+        self, *, some_enum: typing.Optional[typing.List[MyEnum]] = None
+    ) -> str: ...
 
     """
     Below are internal methods used by Fern to register your implementation.
@@ -40,14 +41,24 @@ class AbstractSvcService(AbstractFernService):
     def __init_test(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.test)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+        for index, (parameter_name, parameter) in enumerate(
+            endpoint_function.parameters.items()
+        ):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "some_enum":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None, alias="some-enum")))
+                new_parameters.append(
+                    parameter.replace(
+                        default=fastapi.Query(default=None, alias="some-enum")
+                    )
+                )
             else:
                 new_parameters.append(parameter)
-        setattr(cls.test, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(
+            cls.test,
+            "__signature__",
+            endpoint_function.replace(parameters=new_parameters),
+        )
 
         @functools.wraps(cls.test)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> str:

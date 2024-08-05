@@ -37,5 +37,7 @@ class ActualResult_ExceptionV2(pydantic_v1.BaseModel):
         smart_union = True
 
 
-ActualResult = typing.Union[ActualResult_Value, ActualResult_Exception, ActualResult_ExceptionV2]
+ActualResult = typing.Union[
+    ActualResult_Value, ActualResult_Exception, ActualResult_ExceptionV2
+]
 from ...commons.types.variable_value import VariableValue  # noqa: E402

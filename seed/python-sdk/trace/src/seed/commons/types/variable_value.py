@@ -132,5 +132,9 @@ VariableValue = typing.Union[
 from .key_value_pair import KeyValuePair  # noqa: E402
 from .map_value import MapValue  # noqa: E402
 
-VariableValue_MapValue.update_forward_refs(KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue)
-VariableValue_ListValue.update_forward_refs(KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue)
+VariableValue_MapValue.update_forward_refs(
+    KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue
+)
+VariableValue_ListValue.update_forward_refs(
+    KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue
+)

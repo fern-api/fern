@@ -10,7 +10,9 @@ class ReservedKeywordEnum(str, enum.Enum):
     IS = "is"
     AS = "as"
 
-    def visit(self, is_: typing.Callable[[], T_Result], as_: typing.Callable[[], T_Result]) -> T_Result:
+    def visit(
+        self, is_: typing.Callable[[], T_Result], as_: typing.Callable[[], T_Result]
+    ) -> T_Result:
         if self is ReservedKeywordEnum.IS:
             return is_()
         if self is ReservedKeywordEnum.AS:

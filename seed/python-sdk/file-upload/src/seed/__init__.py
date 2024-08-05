@@ -5,4 +5,10 @@ from .client import AsyncSeedFileUpload, SeedFileUpload
 from .service import MyObject
 from .version import __version__
 
-__all__ = ["AsyncSeedFileUpload", "MyObject", "SeedFileUpload", "__version__", "service"]
+__all__ = [
+    "AsyncSeedFileUpload",
+    "MyObject",
+    "SeedFileUpload",
+    "__version__",
+    "service",
+]

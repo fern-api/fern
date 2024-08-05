@@ -121,10 +121,14 @@ class EndpointFunctionGenerator:
                     context=self._context,
                 ),
                 file_upload=lambda file_upload_request: FileUploadRequestBodyParameters(
-                    endpoint=self._endpoint, request=file_upload_request, context=self._context
+                    endpoint=self._endpoint,
+                    request=file_upload_request,
+                    context=self._context,
                 ),
                 bytes=lambda bytes_request: BytesRequestBodyParameters(
-                    endpoint=self._endpoint, request=bytes_request, context=self._context
+                    endpoint=self._endpoint,
+                    request=bytes_request,
+                    context=self._context,
                 ),
             )
             if self._endpoint.request_body is not None
@@ -429,7 +433,11 @@ class EndpointFunctionGenerator:
         return AST.CodeWriter(write)
 
     def _get_request_body(
-        self, *, method: str, request_body_parameters: Optional[AbstractRequestBodyParameters], writer: AST.NodeWriter
+        self,
+        *,
+        method: str,
+        request_body_parameters: Optional[AbstractRequestBodyParameters],
+        writer: AST.NodeWriter,
     ) -> Optional[AST.Expression]:
         json_request_body = request_body_parameters.get_json_body() if request_body_parameters is not None else None
 
@@ -449,7 +457,10 @@ class EndpointFunctionGenerator:
         return json_request_body_var
 
     def _get_files(
-        self, *, request_body_parameters: Optional[AbstractRequestBodyParameters], writer: AST.NodeWriter
+        self,
+        *,
+        request_body_parameters: Optional[AbstractRequestBodyParameters],
+        writer: AST.NodeWriter,
     ) -> Optional[AST.Expression]:
         files = (
             request_body_parameters.get_files()
@@ -486,7 +497,9 @@ class EndpointFunctionGenerator:
             )
 
             json_request_body_var = self._get_request_body(
-                method=method, request_body_parameters=request_body_parameters, writer=writer
+                method=method,
+                request_body_parameters=request_body_parameters,
+                writer=writer,
             )
             files = self._get_files(request_body_parameters=request_body_parameters, writer=writer)
 
@@ -546,7 +559,8 @@ class EndpointFunctionGenerator:
                         ),
                     )
                     streaming_request = get_httpx_request(
-                        is_streaming=True, response_code_writer=streaming_response_code_writer
+                        is_streaming=True,
+                        response_code_writer=streaming_response_code_writer,
                     )
 
                     writer.write_node(streaming_request)
@@ -581,7 +595,8 @@ class EndpointFunctionGenerator:
                     ),
                 )
                 non_streaming_request = get_httpx_request(
-                    is_streaming=False, response_code_writer=non_streaming_response_code_writer
+                    is_streaming=False,
+                    response_code_writer=non_streaming_response_code_writer,
                 )
                 writer.write_newline_if_last_line_not()
                 writer.write_line("else:")
@@ -663,7 +678,7 @@ class EndpointFunctionGenerator:
                 # Include a dashed line between the endpoint snippet and the rest of the docs, if any.
                 writer.write_line("Examples")
                 writer.write_line("--------")
-                source_file = SourceFileFactory.create_snippet()
+                source_file = SourceFileFactory.create_snippet(not self._context.custom_config.skip_formatting)
                 source_file.add_expression(snippet)
                 snippet_docstring = source_file.to_str()
                 writer.write(snippet_docstring)
@@ -962,7 +977,9 @@ class EndpointFunctionGenerator:
             ),
             text=lambda _: AST.TypeHint.str_(),
             stream_parameter=lambda stream_param_response: self._get_streaming_parameter_response_body_type(
-                stream_param_response=stream_param_response, is_async=is_async, streaming_parameter=streaming_parameter
+                stream_param_response=stream_param_response,
+                is_async=is_async,
+                streaming_parameter=streaming_parameter,
             ),
         )
 
@@ -985,7 +1002,10 @@ class EndpointFunctionGenerator:
         writer.write_line()
 
     def _write_response_body_type(
-        self, writer: NodeWriter, response: Optional[ir_types.HttpResponse], response_hint: AST.TypeHint
+        self,
+        writer: NodeWriter,
+        response: Optional[ir_types.HttpResponse],
+        response_hint: AST.TypeHint,
     ) -> None:
         if response is not None and response.body:
             response.body.visit(
@@ -1133,9 +1153,19 @@ class EndpointFunctionGenerator:
         for header in ir_headers:
             literal_header_value = self._context.get_literal_header_value(header)
             if literal_header_value is not None and type(literal_header_value) is str:
-                headers.append((header.name.wire_value, AST.Expression(f'"{literal_header_value}"')))
+                headers.append(
+                    (
+                        header.name.wire_value,
+                        AST.Expression(f'"{literal_header_value}"'),
+                    )
+                )
             elif literal_header_value is not None and type(literal_header_value) is bool:
-                headers.append((header.name.wire_value, AST.Expression(f'"{str(literal_header_value).lower()}"')))
+                headers.append(
+                    (
+                        header.name.wire_value,
+                        AST.Expression(f'"{str(literal_header_value).lower()}"'),
+                    )
+                )
             else:
                 headers.append(
                     (
@@ -1178,7 +1208,10 @@ class EndpointFunctionGenerator:
         self, *, endpoint: ir_types.HttpEndpoint, parent_writer: AST.NodeWriter
     ) -> Optional[AST.Expression]:
         query_parameters = [
-            (query_parameter.name.wire_value, self._get_query_parameter_reference(query_parameter))
+            (
+                query_parameter.name.wire_value,
+                self._get_query_parameter_reference(query_parameter),
+            )
             for query_parameter in endpoint.query_parameters
         ]
 
@@ -1230,7 +1263,10 @@ class EndpointFunctionGenerator:
 
     def _is_httpx_primitive_data(self, type_reference: ir_types.TypeReference, *, allow_optional: bool) -> bool:
         return self._does_type_reference_match_primitives(
-            type_reference, expected=HTTPX_PRIMITIVE_DATA_TYPES, allow_optional=allow_optional, allow_enum=True
+            type_reference,
+            expected=HTTPX_PRIMITIVE_DATA_TYPES,
+            allow_optional=allow_optional,
+            allow_enum=True,
         )
 
     def _does_type_reference_match_primitives(
@@ -1296,7 +1332,9 @@ class EndpointFunctionGenerator:
         return self._context.ir.environments is not None
 
     def _get_typehint_for_query_param(
-        self, query_parameter: ir_types.QueryParameter, query_parameter_type_hint: AST.TypeHint
+        self,
+        query_parameter: ir_types.QueryParameter,
+        query_parameter_type_hint: AST.TypeHint,
     ) -> AST.TypeHint:
         value_type = query_parameter.value_type.get_as_union()
         is_optional = value_type.type == "container" and value_type.container.get_as_union().type == "optional"
@@ -1578,7 +1616,11 @@ class EndpointFunctionSnippetGenerator:
     # but if they're optional we don't and so if an example is provided for that we must respect it.
     def _is_query_literal(self, query_parameter_wire_value: str, disqualify_optionals: bool) -> bool:
         param = next(
-            filter(lambda q: q.name.wire_value == query_parameter_wire_value, self.endpoint.query_parameters), None
+            filter(
+                lambda q: q.name.wire_value == query_parameter_wire_value,
+                self.endpoint.query_parameters,
+            ),
+            None,
         )
         if param is not None:
             if disqualify_optionals:
@@ -1590,7 +1632,10 @@ class EndpointFunctionSnippetGenerator:
 
     def _is_path_literal(self, path_parameter_original_name: str, disqualify_optionals: bool) -> bool:
         param = next(
-            filter(lambda p: p.name.original_name == path_parameter_original_name, self.endpoint.all_path_parameters),
+            filter(
+                lambda p: p.name.original_name == path_parameter_original_name,
+                self.endpoint.all_path_parameters,
+            ),
             None,
         )
         if param is not None:
@@ -1602,7 +1647,10 @@ class EndpointFunctionSnippetGenerator:
         return False
 
     def _is_header_literal(self, header_wire_value: str, disqualify_optionals: bool) -> bool:
-        param = next(filter(lambda h: h.name.wire_value == header_wire_value, self.endpoint.headers), None)
+        param = next(
+            filter(lambda h: h.name.wire_value == header_wire_value, self.endpoint.headers),
+            None,
+        )
         if param is not None:
             if disqualify_optionals:
                 # Not a direct literal, return False
@@ -1617,7 +1665,11 @@ class EndpointFunctionSnippetGenerator:
         request_body_union = self.endpoint.request_body.get_as_union()
         if request_body_union.type == "inlinedRequestBody":
             param = next(
-                filter(lambda p: p.name.wire_value == property_wire_value, request_body_union.properties), None
+                filter(
+                    lambda p: p.name.wire_value == property_wire_value,
+                    request_body_union.properties,
+                ),
+                None,
             )
             if param is not None:
                 if disqualify_optionals:
@@ -1654,7 +1706,9 @@ def is_endpoint_path_empty(endpoint: ir_types.HttpEndpoint) -> bool:
     return len(endpoint.full_path.head) == 0 and len(endpoint.full_path.parts) == 0
 
 
-def unwrap_optional_type(type_reference: ir_types.TypeReference) -> ir_types.TypeReference:
+def unwrap_optional_type(
+    type_reference: ir_types.TypeReference,
+) -> ir_types.TypeReference:
     type_as_union = type_reference.get_as_union()
     if type_as_union.type == "container":
         container_as_union = type_as_union.container.get_as_union()

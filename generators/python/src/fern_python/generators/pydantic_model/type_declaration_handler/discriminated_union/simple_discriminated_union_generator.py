@@ -145,7 +145,8 @@ class AbstractSimpleDiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
 
                 single_union_type_references.append(
                     self._generate_same_properties_as_object_member(
-                        class_name=member_class_name, properties=same_properties_as_object_property_fields
+                        class_name=member_class_name,
+                        properties=same_properties_as_object_property_fields,
                     )
                 )
 
@@ -164,7 +165,8 @@ class AbstractSimpleDiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
 
                 single_union_type_references.append(
                     self._generate_no_property_member(
-                        class_name=member_class_name, discriminant_field=no_properties_property_field
+                        class_name=member_class_name,
+                        discriminant_field=no_properties_property_field,
                     )
                 )
 
@@ -260,7 +262,10 @@ class AbstractSimpleDiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
             shape = single_union_type.shape.get_as_union()
             if shape.properties_type == "samePropertiesAsObject":
                 type_ids = list(
-                    map(lambda p: p.value_type, self._context.get_all_properties_including_extensions(shape.type_id))
+                    map(
+                        lambda p: p.value_type,
+                        self._context.get_all_properties_including_extensions(shape.type_id),
+                    )
                 )
 
                 property_references += type_ids
@@ -450,5 +455,7 @@ def get_discriminant_parameter_name(discriminant: ir_types.NameAndWireValue) -> 
     return discriminant.name.snake_case.safe_name
 
 
-def get_field_name_for_single_property(property: ir_types.SingleUnionTypeProperty) -> str:
+def get_field_name_for_single_property(
+    property: ir_types.SingleUnionTypeProperty,
+) -> str:
     return property.name.name.snake_case.safe_name

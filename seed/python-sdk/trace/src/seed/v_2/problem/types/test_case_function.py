@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import typing
 
-from .test_case_with_actual_result_implementation import TestCaseWithActualResultImplementation
+from .test_case_with_actual_result_implementation import (
+    TestCaseWithActualResultImplementation,
+)
 from .void_function_definition import VoidFunctionDefinition
 
 
@@ -28,4 +30,6 @@ class TestCaseFunction_Custom(VoidFunctionDefinition):
         populate_by_name = True
 
 
-TestCaseFunction = typing.Union[TestCaseFunction_WithActualResult, TestCaseFunction_Custom]
+TestCaseFunction = typing.Union[
+    TestCaseFunction_WithActualResult, TestCaseFunction_Custom
+]

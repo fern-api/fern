@@ -12,7 +12,10 @@ FAST_API_MODULE = AST.Module.external(
 
 
 def _export(*name: str) -> AST.ClassReference:
-    return AST.ClassReference(qualified_name_excluding_import=name, import_=AST.ReferenceImport(module=FAST_API_MODULE))
+    return AST.ClassReference(
+        qualified_name_excluding_import=name,
+        import_=AST.ReferenceImport(module=FAST_API_MODULE),
+    )
 
 
 class JSONResponse:
@@ -140,7 +143,10 @@ class FastAPI:
 
     @staticmethod
     def include_router(
-        *, app_variable: str, router: AST.Expression, kwargs: List[Tuple[str, AST.Expression]]
+        *,
+        app_variable: str,
+        router: AST.Expression,
+        kwargs: List[Tuple[str, AST.Expression]],
     ) -> AST.Expression:
         return AST.Expression(
             AST.FunctionInvocation(
@@ -181,9 +187,13 @@ class FastAPI:
             name=exception_handler_name,
             signature=AST.FunctionSignature(
                 parameters=[
-                    AST.FunctionParameter(name=FastAPI.EXCEPTION_HANDLER_REQUEST_ARGUMENT, type_hint=FastAPI.Request),
                     AST.FunctionParameter(
-                        name=FastAPI.EXCEPTION_HANDLER_EXCEPTION_ARGUMENT, type_hint=AST.TypeHint(type=exception_type)
+                        name=FastAPI.EXCEPTION_HANDLER_REQUEST_ARGUMENT,
+                        type_hint=FastAPI.Request,
+                    ),
+                    AST.FunctionParameter(
+                        name=FastAPI.EXCEPTION_HANDLER_EXCEPTION_ARGUMENT,
+                        type_hint=AST.TypeHint(type=exception_type),
                     ),
                 ],
                 return_type=AST.TypeHint(FastAPI.JSONResponse.REFERENCE),

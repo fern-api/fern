@@ -155,7 +155,8 @@ class SdkGenerator(AbstractGenerator):
             )
 
         maybe_oauth_scheme = next(
-            (scheme for scheme in context.ir.auth.schemes if scheme.get_as_union().type == "oauth"), None
+            (scheme for scheme in context.ir.auth.schemes if scheme.get_as_union().type == "oauth"),
+            None,
         )
         oauth_scheme = (
             maybe_oauth_scheme.visit(
@@ -252,49 +253,57 @@ class SdkGenerator(AbstractGenerator):
             context=context,
             endpoint_metadata=endpoint_metadata_collector,
         )
-        snippets = snippet_registry.snippets()
-        if snippets is not None:
-            self._maybe_write_snippets(
-                context=context,
-                snippets=snippets,
-                project=project,
-            )
+        if generator_config.output.mode.get_as_union().type != "downloadFiles":
+            snippets = snippet_registry.snippets()
 
-            try:
-                self._write_readme(
+            if snippets is not None: 
+                self._maybe_write_snippets(
                     context=context,
-                    generator_cli=generator_cli,
-                    snippets=snippets,
-                    project=project,
-                    generated_root_client=generated_root_client,
-                )
-            except Exception:
-                generator_exec_wrapper.send_update(
-                    GeneratorUpdate.factory.log(
-                        LogUpdate(level=LogLevel.DEBUG, message=f"Failed to generate README.md; this is OK")
-                    )
-                )
-
-            try:
-                self._write_reference(
-                    context=context,
-                    generator_cli=generator_cli,
                     snippets=snippets,
                     project=project,
                 )
-            except Exception:
-                generator_exec_wrapper.send_update(
-                    GeneratorUpdate.factory.log(
-                        LogUpdate(level=LogLevel.DEBUG, message=f"Failed to generate reference.md; this is OK")
+
+                try:
+                    self._write_readme(
+                        context=context,
+                        generator_cli=generator_cli,
+                        snippets=snippets,
+                        project=project,
+                        generated_root_client=generated_root_client,
                     )
-                )
+                except Exception:
+                    generator_exec_wrapper.send_update(
+                        GeneratorUpdate.factory.log(
+                            LogUpdate(
+                                level=LogLevel.DEBUG,
+                                message=f"Failed to generate README.md; this is OK",
+                            )
+                        )
+                    )
+
+                try:
+                    self._write_reference(
+                        context=context,
+                        generator_cli=generator_cli,
+                        snippets=snippets,
+                        project=project,
+                    )
+                except Exception:
+                    generator_exec_wrapper.send_update(
+                        GeneratorUpdate.factory.log(
+                            LogUpdate(
+                                level=LogLevel.DEBUG,
+                                message=f"Failed to generate reference.md; this is OK",
+                            )
+                        )
+                    )
 
         context.core_utilities.copy_to_project(project=project)
 
         if not (generator_config.output.mode.get_as_union().type == "downloadFiles"):
             as_is_copier.copy_to_project(project=project)
-
-        snippet_template_source_file = SourceFileFactory.create_snippet()
+        
+        snippet_template_source_file = SourceFileFactory.create_snippet(not context.custom_config.skip_formatting)
         self._maybe_write_snippet_templates(
             context=context,
             snippet_template_factory=SnippetTemplateFactory(
@@ -354,7 +363,9 @@ class SdkGenerator(AbstractGenerator):
     ) -> GeneratedEnvironment:
         filepath = context.get_filepath_for_environments_enum()
         source_file = SourceFileFactory.create(
-            project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
+            project=project,
+            filepath=filepath,
+            generator_exec_wrapper=generator_exec_wrapper,
         )
         generated_environment = environments.generate(source_file=source_file)
         project.write_source_file(source_file=source_file, filepath=filepath)
@@ -372,7 +383,9 @@ class SdkGenerator(AbstractGenerator):
             file=Filepath.FilepathPart(module_name="client_wrapper"),
         )
         source_file = SourceFileFactory.create(
-            project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
+            project=project,
+            filepath=filepath,
+            generator_exec_wrapper=generator_exec_wrapper,
         )
         ClientWrapperGenerator(
             context=context,
@@ -390,7 +403,9 @@ class SdkGenerator(AbstractGenerator):
     ) -> None:
         filepath = context.get_filepath_for_generated_oauth_token_provider()
         source_file = SourceFileFactory.create(
-            project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
+            project=project,
+            filepath=filepath,
+            generator_exec_wrapper=generator_exec_wrapper,
         )
         OAuthTokenProviderGenerator(
             context=context,
@@ -412,7 +427,9 @@ class SdkGenerator(AbstractGenerator):
     ) -> GeneratedRootClient:
         filepath = context.get_filepath_for_generated_root_client()
         source_file = SourceFileFactory.create(
-            project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
+            project=project,
+            filepath=filepath,
+            generator_exec_wrapper=generator_exec_wrapper,
         )
         generated_root_client = RootClientGenerator(
             context=context,
@@ -442,7 +459,9 @@ class SdkGenerator(AbstractGenerator):
     ) -> None:
         filepath = context.get_filepath_for_subpackage_service(subpackage_id)
         source_file = SourceFileFactory.create(
-            project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
+            project=project,
+            filepath=filepath,
+            generator_exec_wrapper=generator_exec_wrapper,
         )
         ClientGenerator(
             context=context,
@@ -465,7 +484,9 @@ class SdkGenerator(AbstractGenerator):
     ) -> None:
         filepath = context.get_filepath_for_error(error.name)
         source_file = SourceFileFactory.create(
-            project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
+            project=project,
+            filepath=filepath,
+            generator_exec_wrapper=generator_exec_wrapper,
         )
         ErrorGenerator(context=context, error=error).generate(source_file=source_file)
         project.write_source_file(source_file=source_file, filepath=filepath)
@@ -529,7 +550,10 @@ __version__ = metadata.version("{project._project_config.package_name}")
                     )
                     generator_exec_wrapper.send_update(
                         GeneratorUpdate.factory.log(
-                            LogUpdate(level=LogLevel.DEBUG, message=f"Uploaded snippet templates to FDR.")
+                            LogUpdate(
+                                level=LogLevel.DEBUG,
+                                message=f"Uploaded snippet templates to FDR.",
+                            )
                         )
                     )
                 except Exception as e:
@@ -546,11 +570,17 @@ __version__ = metadata.version("{project._project_config.package_name}")
                 # Otherwise write them for local
                 project.add_file(
                     context.generator_config.output.snippet_template_filepath,
-                    json.dumps(list(map(lambda template: template.dict(by_alias=True), snippets)), indent=4),
+                    json.dumps(
+                        list(map(lambda template: template.dict(by_alias=True), snippets)),
+                        indent=4,
+                    ),
                 )
                 generator_exec_wrapper.send_update(
                     GeneratorUpdate.factory.log(
-                        LogUpdate(level=LogLevel.DEBUG, message=f"Wrote snippet templates to disk.")
+                        LogUpdate(
+                            level=LogLevel.DEBUG,
+                            message=f"Wrote snippet templates to disk.",
+                        )
                     )
                 )
 
@@ -561,7 +591,10 @@ __version__ = metadata.version("{project._project_config.package_name}")
         project: Project,
     ) -> None:
         if context.generator_config.output.snippet_filepath is not None:
-            project.add_file(context.generator_config.output.snippet_filepath, snippets.json(indent=4))
+            project.add_file(
+                context.generator_config.output.snippet_filepath,
+                snippets.json(indent=4),
+            )
 
     def _write_readme(
         self,

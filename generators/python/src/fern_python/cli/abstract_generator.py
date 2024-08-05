@@ -9,10 +9,12 @@ from fern.generator_exec import GeneratorConfig, PypiMetadata
 from fern.generator_exec.config import (
     GeneratorPublishConfig,
     GithubOutputMode,
+    OutputMode,
     PypiGithubPublishInfo,
 )
 
 from fern_python.codegen.project import Project, ProjectConfig
+from fern_python.external_dependencies.ruff import RUFF_DEPENDENCY
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 
 from .publisher import Publisher
@@ -55,7 +57,6 @@ class AbstractGenerator(ABC):
             if project_config is not None
             else generator_config.organization,
             project_config=project_config,
-            should_format_files=self.should_format_files(generator_config=generator_config),
             sorted_modules=self.get_sorted_modules(),
             flat_layout=self.is_flat_layout(generator_config=generator_config),
             whitelabel=generator_config.whitelabel,
@@ -65,8 +66,13 @@ class AbstractGenerator(ABC):
             license_=generator_config.license,
         ) as project:
             self.run(
-                generator_exec_wrapper=generator_exec_wrapper, ir=ir, generator_config=generator_config, project=project
+                generator_exec_wrapper=generator_exec_wrapper,
+                ir=ir,
+                generator_config=generator_config,
+                project=project,
             )
+
+            project.add_dev_dependency(dependency=RUFF_DEPENDENCY)
 
             generator_config.output.mode.visit(
                 download_files=lambda: None,
@@ -78,18 +84,26 @@ class AbstractGenerator(ABC):
                 publish=lambda x: None,
             )
 
-        generator_config.output.mode.visit(
-            download_files=lambda: None,
-            github=lambda _: self._poetry_install(
-                generator_exec_wrapper=generator_exec_wrapper,
-                generator_config=generator_config,
-            ),
-            publish=lambda publish_config: self._publish(
-                generator_exec_wrapper=generator_exec_wrapper,
-                publish_config=publish_config,
-                generator_config=generator_config,
-            ),
+        publisher = Publisher(
+            should_format=self.should_format_files(generator_config=generator_config),
+            generator_exec_wrapper=generator_exec_wrapper,
+            generator_config=generator_config,
         )
+
+        output_mode: OutputMode = generator_config.output.mode
+        output_mode_union = output_mode.get_as_union()
+
+        if output_mode_union.type == "downloadFiles":
+            publisher._run_command(
+                command=["poetry", "run", "ruff", "format", "/fern/output"],
+                safe_command="poetry run ruff format /fern/output",
+                cwd="/",
+            )
+        elif output_mode_union.type == "github":
+            publisher.run_poetry_install()
+            publisher.run_ruff_format()
+        elif output_mode_union.type == "publish":
+            publisher.publish_package(publish_config=output_mode_union)
 
     def _get_github_publish_config(
         self, generator_config: GeneratorConfig, output_mode: GithubOutputMode
@@ -118,14 +132,19 @@ class AbstractGenerator(ABC):
             else None,
         )
 
-    def _poetry_install(
-        self, *, generator_exec_wrapper: GeneratorExecWrapper, generator_config: GeneratorConfig
+    def _poetry_install_and_format(
+        self,
+        *,
+        generator_exec_wrapper: GeneratorExecWrapper,
+        generator_config: GeneratorConfig,
     ) -> None:
         publisher = Publisher(
+            should_format=self.should_format_files(generator_config=generator_config),
             generator_exec_wrapper=generator_exec_wrapper,
             generator_config=generator_config,
         )
         publisher.run_poetry_install()
+        publisher.run_ruff_format()
 
     def _publish(
         self,
@@ -134,6 +153,7 @@ class AbstractGenerator(ABC):
         generator_config: GeneratorConfig,
     ) -> None:
         publisher = Publisher(
+            should_format=self.should_format_files(generator_config=generator_config),
             generator_exec_wrapper=generator_exec_wrapper,
             generator_config=generator_config,
         )
@@ -150,7 +170,10 @@ __pycache__/
 poetry.toml
 """,
         )
-        project.add_file(".github/workflows/ci.yml", self._get_github_workflow(output_mode, write_unit_tests))
+        project.add_file(
+            ".github/workflows/ci.yml",
+            self._get_github_workflow(output_mode, write_unit_tests),
+        )
         project.add_file("tests/custom/test_client.py", self._get_client_test())
 
     def _get_github_workflow(self, output_mode: GithubOutputMode, write_unit_tests: bool) -> str:

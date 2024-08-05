@@ -37,7 +37,9 @@ class RegisterFileGenerator:
             file=Filepath.FilepathPart(module_name=RegisterFileGenerator._MODULE_NAME),
         )
         source_file = SourceFileFactory.create(
-            project=project, generator_exec_wrapper=generator_exec_wrapper, filepath=filepath
+            project=project,
+            generator_exec_wrapper=generator_exec_wrapper,
+            filepath=filepath,
         )
         source_file.add_declaration(declaration=self._get_register_method(), should_export=False)
         source_file.add_declaration(declaration=self._get_register_service_method(), should_export=False)
@@ -49,7 +51,10 @@ class RegisterFileGenerator:
             name=RegisterFileGenerator._REGISTER_FUNCTION_NAME,
             signature=AST.FunctionSignature(
                 parameters=[
-                    AST.FunctionParameter(name=RegisterFileGenerator._APP_PARAMETER_NAME, type_hint=FastAPI.FastAPI),
+                    AST.FunctionParameter(
+                        name=RegisterFileGenerator._APP_PARAMETER_NAME,
+                        type_hint=FastAPI.FastAPI,
+                    ),
                 ],
                 named_parameters=[
                     service_initializer.get_register_parameter() for service_initializer in self._service_initializers
@@ -103,7 +108,11 @@ class RegisterFileGenerator:
         )
 
     def _write_exception_handler(
-        self, *, writer: AST.NodeWriter, exception_type: AST.ClassReference, handler: AST.Reference
+        self,
+        *,
+        writer: AST.NodeWriter,
+        exception_type: AST.ClassReference,
+        handler: AST.Reference,
     ) -> None:
         writer.write_node(
             FastAPI.add_exception_handler(
@@ -177,7 +186,10 @@ class RegisterFileGenerator:
                                     import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
                                     qualified_name_excluding_import=("path", "join"),
                                 ),
-                                args=[AST.Expression(VALIDATORS_DIRECTORY_VARIABLE), AST.Expression('"**/*.py"')],
+                                args=[
+                                    AST.Expression(VALIDATORS_DIRECTORY_VARIABLE),
+                                    AST.Expression('"**/*.py"'),
+                                ],
                             )
                         )
                     ],

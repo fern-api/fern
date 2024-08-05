@@ -107,16 +107,22 @@ class ReferenceSectionBuilder:
         converted_parameters = [self._convert_parameter(parameter) for parameter in parameters]
         # has_parameters is > 1 since we always stuff in a request_options parameter
         converted_title = self._convert_endpoint_metadata_to_title(
-            endpoint_metadata=endpoint_metadata, has_parameters=len(converted_parameters) > 1
+            endpoint_metadata=endpoint_metadata,
+            has_parameters=len(converted_parameters) > 1,
         )
 
         self.endpoints.append(
             generatorcli.reference.EndpointReference(
-                title=converted_title, description=description, snippet=snippet, parameters=converted_parameters
+                title=converted_title,
+                description=description,
+                snippet=snippet,
+                parameters=converted_parameters,
             )
         )
 
-    def build_root_reference(self) -> generatorcli.reference.RootPackageReferenceSection:
+    def build_root_reference(
+        self,
+    ) -> generatorcli.reference.RootPackageReferenceSection:
         return generatorcli.reference.RootPackageReferenceSection(
             description=self.description,
             endpoints=self.endpoints,
@@ -163,7 +169,9 @@ class ReferenceConfigBuilder:
 
     def build_reference_section(self, service: ir_types.HttpService, package_location: str) -> ReferenceSectionBuilder:
         reference_section = ReferenceSectionBuilder(
-            package_location=package_location, context=self._context, project=self._project
+            package_location=package_location,
+            context=self._context,
+            project=self._project,
         )
 
         for endpoint in service.endpoints:
@@ -195,11 +203,17 @@ class ReferenceConfigBuilder:
 
             package_service = self._ir.services[subpackage.service]
             reference_section = self.build_reference_section(
-                service=package_service, package_location=self.get_package_location(subpackage_id)
+                service=package_service,
+                package_location=self.get_package_location(subpackage_id),
             )
 
             fallback_name = " ".join(
-                list(map(lambda part: part.pascal_case.unsafe_name, package_service.name.fern_filepath.all_parts))
+                list(
+                    map(
+                        lambda part: part.pascal_case.unsafe_name,
+                        package_service.name.fern_filepath.all_parts,
+                    )
+                )
             )
             self.reference_config_sections.append(
                 reference_section.build(title=package_service.display_name or fallback_name)

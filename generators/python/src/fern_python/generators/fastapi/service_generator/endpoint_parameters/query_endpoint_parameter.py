@@ -47,5 +47,7 @@ class QueryEndpointParameter(EndpointParameter):
         return AST.TypeHint.list(convert_to_singular_type(self._context, self._query_parameter.value_type))
 
     @staticmethod
-    def get_variable_name_of_query_parameter(query_parameter: ir_types.QueryParameter) -> str:
+    def get_variable_name_of_query_parameter(
+        query_parameter: ir_types.QueryParameter,
+    ) -> str:
         return query_parameter.name.name.snake_case.safe_name

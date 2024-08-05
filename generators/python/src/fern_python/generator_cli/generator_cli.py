@@ -79,7 +79,12 @@ class GeneratorCli:
         if self._should_write_reference(reference_config):
             reference_config_filepath = self._write_reference_config(reference_config=reference_config)
             return self._run_command(
-                command=[GENERATOR_CLI, "generate-reference", "--config", reference_config_filepath]
+                command=[
+                    GENERATOR_CLI,
+                    "generate-reference",
+                    "--config",
+                    reference_config_filepath,
+                ]
             )
 
         return None

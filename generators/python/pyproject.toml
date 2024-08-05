@@ -24,6 +24,7 @@ flake8 = "^5.0.4"
 isort = "^5.10.1"
 pre-commit = "^2.20.0"
 snapshottest = "^0.6.0"
+ruff = "^0.5.6"
 
 [[tool.poetry.source]]
 name = "fern-prod"

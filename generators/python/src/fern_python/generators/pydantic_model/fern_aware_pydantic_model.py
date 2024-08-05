@@ -165,7 +165,8 @@ class FernAwarePydanticModel:
                 signature=AST.FunctionSignature(
                     parameters=[
                         AST.FunctionParameter(
-                            name=parameter_name, type_hint=self.get_type_hint_for_type_reference(parameter_type)
+                            name=parameter_name,
+                            type_hint=self.get_type_hint_for_type_reference(parameter_type),
                         )
                         for parameter_name, parameter_type in parameters
                     ],

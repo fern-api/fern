@@ -67,7 +67,9 @@ class TypeDeclarationHandler:
             snippet=snippet,
         )
 
-    def _get_typeddict_generator(self) -> Tuple[Optional[AST.Expression], AbstractTypeGenerator]:
+    def _get_typeddict_generator(
+        self,
+    ) -> Tuple[Optional[AST.Expression], AbstractTypeGenerator]:
         docstring = None
         return None, self._declaration.shape.visit(
             alias=lambda alias: TypedDictAliasGenerator(
@@ -126,7 +128,9 @@ class TypeDeclarationHandler:
             ),
         )
 
-    def _get_pydantic_model_generator(self) -> Tuple[Optional[AST.Expression], AbstractTypeGenerator]:
+    def _get_pydantic_model_generator(
+        self,
+    ) -> Tuple[Optional[AST.Expression], AbstractTypeGenerator]:
         snippet, docstring = self._get_snippet_for_type_declaration(self._declaration)
         type_generator = self._declaration.shape.visit(
             alias=lambda alias: PydanticModelAliasGenerator(
@@ -182,7 +186,9 @@ class TypeDeclarationHandler:
         self,
         snippet: Optional[str] = None,
     ) -> Callable[[ir_types.UnionTypeDeclaration], AbstractTypeGenerator]:
-        def get_union_generator(union: ir_types.UnionTypeDeclaration) -> AbstractTypeGenerator:
+        def get_union_generator(
+            union: ir_types.UnionTypeDeclaration,
+        ) -> AbstractTypeGenerator:
             if self._custom_config.include_union_utils:
                 return DiscriminatedUnionWithUtilsGenerator(
                     name=self._declaration.name,

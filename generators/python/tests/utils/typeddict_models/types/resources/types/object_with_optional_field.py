@@ -24,9 +24,13 @@ class ObjectWithOptionalField(UncheckedBaseModel):
     date: typing.Optional[dt.date] = None
     uuid_: typing.Optional[uuid.UUID] = pydantic.Field(alias="uuid", default=None)
     base_64: typing.Optional[str] = pydantic.Field(alias="base64", default=None)
-    list_: typing.Optional[typing.List[str]] = pydantic.Field(alias="list", default=None)
+    list_: typing.Optional[typing.List[str]] = pydantic.Field(
+        alias="list", default=None
+    )
     set_: typing.Optional[typing.Set[str]] = pydantic.Field(alias="set", default=None)
-    map_: typing.Optional[typing.Dict[int, str]] = pydantic.Field(alias="map", default=None)
+    map_: typing.Optional[typing.Dict[int, str]] = pydantic.Field(
+        alias="map", default=None
+    )
     enum: typing.Optional[Color] = None
     union: typing.Optional[Shape] = None
     second_union: typing.Optional[Shape] = None
@@ -34,7 +38,9 @@ class ObjectWithOptionalField(UncheckedBaseModel):
     any: typing.Any
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="allow"
+        )  # type: ignore # Pydantic v2
     else:
 
         class Config:

@@ -15,7 +15,10 @@ class RootValidatorGenerator(ValidatorGenerator):
     _VALIDATOR_PARAMETER_NAME = "validator"
 
     def __init__(
-        self, model: PydanticModel, reference_to_validators_class: Tuple[str, ...], unique_model_name: List[str]
+        self,
+        model: PydanticModel,
+        reference_to_validators_class: Tuple[str, ...],
+        unique_model_name: List[str],
     ):
         super().__init__(model, reference_to_validators_class)
         self._unique_model_name = unique_model_name
@@ -167,7 +170,10 @@ class RootValidatorGenerator(ValidatorGenerator):
 
     def write_example_for_docstring(self, writer: AST.NodeWriter) -> None:
         reference_to_decorator = ".".join(
-            (*self._reference_to_validators_class, RootValidatorGenerator._DECORATOR_FUNCTION_NAME)
+            (
+                *self._reference_to_validators_class,
+                RootValidatorGenerator._DECORATOR_FUNCTION_NAME,
+            )
         )
 
         reference_to_partial = self._model.get_reference_to_partial_class()

@@ -19,13 +19,19 @@ from typing import Any, Callable, Dict, List, Optional, Set, Union
 import pydantic
 
 from .datetime_utils import serialize_datetime
-from .pydantic_utilities import IS_PYDANTIC_V2, encode_by_type, to_jsonable_with_fallback
+from .pydantic_utilities import (
+    IS_PYDANTIC_V2,
+    encode_by_type,
+    to_jsonable_with_fallback,
+)
 
 SetIntStr = Set[Union[int, str]]
 DictIntStrAny = Dict[Union[int, str], Any]
 
 
-def jsonable_encoder(obj: Any, custom_encoder: Optional[Dict[Any, Callable[[Any], Any]]] = None) -> Any:
+def jsonable_encoder(
+    obj: Any, custom_encoder: Optional[Dict[Any, Callable[[Any], Any]]] = None
+) -> Any:
     custom_encoder = custom_encoder or {}
     if custom_encoder:
         if type(obj) in custom_encoder:

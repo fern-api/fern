@@ -14,7 +14,9 @@ from .submission_id import SubmissionId
 class TraceResponse(pydantic_v1.BaseModel):
     submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
     line_number: int = pydantic_v1.Field(alias="lineNumber")
-    return_value: typing.Optional[DebugVariableValue] = pydantic_v1.Field(alias="returnValue", default=None)
+    return_value: typing.Optional[DebugVariableValue] = pydantic_v1.Field(
+        alias="returnValue", default=None
+    )
     expression_location: typing.Optional[ExpressionLocation] = pydantic_v1.Field(
         alias="expressionLocation", default=None
     )
@@ -22,11 +24,19 @@ class TraceResponse(pydantic_v1.BaseModel):
     stdout: typing.Optional[str] = None
 
     def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults: typing.Any = {
+            "by_alias": True,
+            "exclude_unset": True,
+            **kwargs,
+        }
         return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults: typing.Any = {
+            "by_alias": True,
+            "exclude_unset": True,
+            **kwargs,
+        }
         return super().dict(**kwargs_with_defaults)
 
     class Config:
