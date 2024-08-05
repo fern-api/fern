@@ -20,6 +20,8 @@ module SeedLiteralClient
     #   * :prompt (String)
     #   * :query (String)
     #   * :stream (Boolean)
+    #   * :context (SeedLiteralClient::Reference::SOME_LITERAL)
+    #   * :maybe_context (SeedLiteralClient::Reference::SOME_LITERAL)
     # @param request_options [SeedLiteralClient::RequestOptions]
     # @return [SeedLiteralClient::SendResponse]
     # @example
@@ -28,7 +30,7 @@ module SeedLiteralClient
     #    version: "Version",
     #    audit_logging: "AuditLogging"
     #  )
-    #  literal.reference.send(request: { prompt: "You are a helpful assistant", stream: false, query: "What is the weather today" })
+    #  literal.reference.send(request: { prompt: "You are a helpful assistant", stream: false, context: "You're super wise", query: "What is the weather today" })
     def send(request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -66,6 +68,8 @@ module SeedLiteralClient
     #   * :prompt (String)
     #   * :query (String)
     #   * :stream (Boolean)
+    #   * :context (SeedLiteralClient::Reference::SOME_LITERAL)
+    #   * :maybe_context (SeedLiteralClient::Reference::SOME_LITERAL)
     # @param request_options [SeedLiteralClient::RequestOptions]
     # @return [SeedLiteralClient::SendResponse]
     # @example
@@ -74,7 +78,7 @@ module SeedLiteralClient
     #    version: "Version",
     #    audit_logging: "AuditLogging"
     #  )
-    #  literal.reference.send(request: { prompt: "You are a helpful assistant", stream: false, query: "What is the weather today" })
+    #  literal.reference.send(request: { prompt: "You are a helpful assistant", stream: false, context: "You're super wise", query: "What is the weather today" })
     def send(request:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|

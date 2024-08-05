@@ -26,6 +26,10 @@ fixtures:
         pydantic_config:
           extra_fields: allow
       outputFolder: includes-extra-fields
+    - customConfig:
+        async_handlers:
+          - imdb.createMovie
+      outputFolder: async-handlers
 allowedFailures: 
   - bytes
   - file-download

@@ -19,6 +19,11 @@ fixtures:
     - customConfig:
         omitUndefined: true
       outputFolder: omit-undefined
+    - customConfig:
+        noScripts: true
+        extraDependencies:
+          dummmy: "dummy"
+      outputFolder: noScripts
   streaming:
     - customConfig: null
       outputFolder: no-custom-config
@@ -194,3 +199,4 @@ allowedFailures:
   - audiences
   - enum # throws b/c of undiscriminated union examples
   - streaming-parameter
+  - imdb:noScripts

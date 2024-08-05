@@ -245,6 +245,7 @@ export class ExpressGenerator {
         this.exportsManager.writeExportsToProject(this.rootDirectory);
 
         return new SimpleTypescriptProject({
+            runScripts: true,
             npmPackage: this.npmPackage,
             dependencies: this.dependencyManager.getDependencies(),
             tsMorphProject: this.project,

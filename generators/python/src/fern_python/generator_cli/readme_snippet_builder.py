@@ -117,7 +117,7 @@ class ReadmeSnippetBuilder:
 
                 client_instantiation = AST.ClassInstantiation(
                     class_=self._root_client.sync_client.class_reference,
-                    args=[AST.Expression("..."), AST.Expression("{ timeout=20.0 }")],
+                    args=[AST.Expression("..."), AST.Expression("timeout=20.0")],
                 )
 
                 def _client_writer(writer: AST.NodeWriter) -> None:
@@ -133,8 +133,8 @@ class ReadmeSnippetBuilder:
 {client_instantiation_str}
 
 # Override timeout for a specific method
-client.{endpoint.endpoint_package_path}{endpoint.method_name}({"...," if has_parameters else ""}{{
-    timeout_in_seconds=1
+client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_parameters else ""}{{
+    "timeout_in_seconds": 1
 }})
 """
                 )
@@ -187,8 +187,8 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"...," if has_par
             if endpoint is not None:
                 has_parameters = self._endpoint_metadata.has_parameters(endpoint_id)
                 retry_snippets.append(
-                    f"""client.{endpoint.endpoint_package_path}{endpoint.method_name}({"...," if has_parameters else ""}{{
-    max_retries=1
+                    f"""client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_parameters else ""}{{
+    "max_retries": 1
 }})
 """
                 )
@@ -201,7 +201,7 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"...," if has_par
             args=[AST.Expression("...")],
             kwargs=[
                 (
-                    "http_client",
+                    "httpx_client",
                     AST.Expression(
                         AST.ClassInstantiation(
                             class_=HttpX.CLIENT,

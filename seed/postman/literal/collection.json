@@ -154,7 +154,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"temperature\": 10.1,\n    \"prompt\": \"You are a helpful assistant\",\n    \"stream\": false,\n    \"query\": \"What is the weather today\"\n}",
+              "raw": "{\n    \"temperature\": 10.1,\n    \"prompt\": \"You are a helpful assistant\",\n    \"context\": \"You're super wise\",\n    \"aliasedContext\": \"You're super wise\",\n    \"maybeContext\": \"You're super wise\",\n    \"stream\": false,\n    \"query\": \"What is the weather today\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -191,7 +191,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"temperature\": 10.1,\n    \"prompt\": \"You are a helpful assistant\",\n    \"stream\": false,\n    \"query\": \"What is the weather today\"\n}",
+                  "raw": "{\n    \"temperature\": 10.1,\n    \"prompt\": \"You are a helpful assistant\",\n    \"context\": \"You're super wise\",\n    \"aliasedContext\": \"You're super wise\",\n    \"maybeContext\": \"You're super wise\",\n    \"stream\": false,\n    \"query\": \"What is the weather today\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -423,7 +423,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"prompt\": \"You are a helpful assistant\",\n    \"stream\": false,\n    \"query\": \"What is the weather today\"\n}",
+              "raw": "{\n    \"prompt\": \"You are a helpful assistant\",\n    \"stream\": false,\n    \"context\": \"You're super wise\",\n    \"query\": \"What is the weather today\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -460,7 +460,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"prompt\": \"You are a helpful assistant\",\n    \"stream\": false,\n    \"query\": \"What is the weather today\"\n}",
+                  "raw": "{\n    \"prompt\": \"You are a helpful assistant\",\n    \"stream\": false,\n    \"context\": \"You're super wise\",\n    \"query\": \"What is the weather today\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"

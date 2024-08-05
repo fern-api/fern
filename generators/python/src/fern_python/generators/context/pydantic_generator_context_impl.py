@@ -61,13 +61,14 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
     def get_initializer_for_type_reference(
         self,
         type_reference: ir_types.TypeReference,
+        ignore_literals: bool = False,
     ) -> Optional[AST.Expression]:
-        if not self._allow_leveraging_defaults:
-            return None
-
         default_value = None
         union = type_reference.get_as_union()
-        if union.type == "primitive":
+
+        # Only populate primitive defaults if we're allowed to leverage them via config
+        # Otherwise we want to be able to generate defaults for literals, and aliases of literals
+        if union.type == "primitive" and self._allow_leveraging_defaults:
             maybe_v2_scheme = union.primitive.v_2
             if maybe_v2_scheme is not None:
                 default_value = maybe_v2_scheme.visit(
@@ -85,6 +86,30 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                     base_64=lambda _: None,
                     float_=lambda _: None,
                 )
+        elif union.type == "named":
+            type_declaration = self.get_declaration_for_type_id(union.type_id)
+            default_value = type_declaration.shape.visit(
+                alias=lambda a: self.get_initializer_for_type_reference(a.alias_of, ignore_literals=ignore_literals),
+                enum=lambda _: None,
+                object=lambda _: None,
+                union=lambda _: None,
+                undiscriminated_union=lambda _: None,
+            )
+        elif union.type == "container":
+            default_value = union.container.visit(
+                literal=lambda lv: lv.visit(
+                    string=lambda s: AST.Expression(f'"{s}"'),
+                    boolean=lambda b: AST.Expression(f"{b}"),
+                )
+                if not ignore_literals
+                else None,
+                list_=lambda _: None,
+                set_=lambda _: None,
+                # Ignore literal defaults when the wrapping type is optional
+                optional=lambda opt: self.get_initializer_for_type_reference(opt, ignore_literals=True),
+                map_=lambda _: None,
+            )
+
         return default_value
 
     def get_class_reference_for_type_id(
@@ -136,7 +161,16 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
     def get_all_properties_including_extensions(self, type_name: ir_types.TypeId) -> List[ir_types.ObjectProperty]:
         declaration = self.get_declaration_for_type_id(type_name)
         shape = declaration.shape.get_as_union()
-        if shape.type != "object":
+
+        if shape.type == "alias":
+            resolved_type_union = shape.resolved_type.get_as_union()
+            if resolved_type_union.type != "named":
+                raise RuntimeError(
+                    f"Cannot get properties because {declaration.name.name.original_name} is not an object, it's a {shape.type}"
+                )
+            else:
+                return self.get_all_properties_including_extensions(resolved_type_union.name.type_id)
+        elif shape.type != "object":
             raise RuntimeError(
                 f"Cannot get properties because {declaration.name.name.original_name} is not an object, it's a {shape.type}"
             )
@@ -206,4 +240,29 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
             named=lambda nt: [nt.type_id],
             primitive=lambda _: None,
             unknown=lambda: None,
+        )
+
+    # Unwrap optional and alias example references
+    def unwrap_example_type_reference(
+        self, example_type_reference: ir_types.ExampleTypeReference
+    ) -> ir_types.ExampleTypeReference:
+        return example_type_reference.shape.visit(
+            primitive=lambda _: example_type_reference,
+            named=lambda named: named.shape.visit(
+                alias=lambda alias: self.unwrap_example_type_reference(alias.value),
+                enum=lambda _: example_type_reference,
+                object=lambda _: example_type_reference,
+                union=lambda _: example_type_reference,
+                undiscriminated_union=lambda _: example_type_reference,
+            ),
+            container=lambda container: container.visit(
+                list_=lambda _: example_type_reference,
+                set_=lambda _: example_type_reference,
+                optional=lambda optional: self.unwrap_example_type_reference(optional.optional)
+                if optional.optional is not None
+                else example_type_reference,
+                map_=lambda _: example_type_reference,
+                literal=lambda _: example_type_reference,
+            ),
+            unknown=lambda _: example_type_reference,
         )
