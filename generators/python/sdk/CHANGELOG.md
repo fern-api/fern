@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.4.0] - 2024-08-02
+
+- Internal: The SDK generator has now been upgraded to use Pydantic V2 internally. Note that 
+  there is no change to the generated code, however by leveraging Pydantic V2 you should notice
+  an improvement in `fern generate` times. 
+
 ## [3.3.4] - 2024-08-02
 
 - Improvement: Aliased literals are also defaulted within Pydantic models, whereas previously only direct literals were defaulted.

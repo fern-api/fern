@@ -10,11 +10,11 @@ class FunctionSignature(AstNode):
     def __init__(
         self,
         *,
-        parameters: Sequence[FunctionParameter] = None,
+        parameters: Optional[Sequence[FunctionParameter]] = None,
         include_args: bool = False,
-        named_parameters: Sequence[NamedFunctionParameter] = None,
+        named_parameters: Optional[Sequence[NamedFunctionParameter]] = None,
         include_kwargs: bool = False,
-        return_type: TypeHint = None,
+        return_type: Optional[TypeHint] = None,
     ):
         self.parameters = parameters or []
         self.include_args = include_args

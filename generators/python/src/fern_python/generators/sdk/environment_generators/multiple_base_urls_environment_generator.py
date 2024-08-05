@@ -109,7 +109,7 @@ class MultipleBaseUrlsEnvironmentGenerator:
         for environment in environments.environments:
             if environment.id == environment_id:
                 return environment
-        raise RuntimeError("Environment does not exist: " + environment_id.get_as_str())
+        raise RuntimeError("Environment does not exist: " + environment_id)
 
     def _write_constructor_body(self, writer: AST.NodeWriter) -> None:
         for base_url in self._environments.base_urls:
@@ -126,7 +126,7 @@ class MultipleBaseUrlsEnvironmentGenerator:
                     kwargs=[
                         (
                             get_base_url_property_name(base_url),
-                            AST.Expression(f'"{environment.urls[base_url.id].get_as_str()}"'),
+                            AST.Expression(f'"{environment.urls[base_url.id]}"'),
                         )
                         for base_url in self._environments.base_urls
                     ],
@@ -145,4 +145,4 @@ def get_base_url(
     for base_url in environments.base_urls:
         if base_url.id == base_url_id:
             return base_url
-    raise RuntimeError("Base URL does not exist: " + base_url_id.get_as_str())
+    raise RuntimeError("Base URL does not exist: " + base_url_id)

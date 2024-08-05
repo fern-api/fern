@@ -65,14 +65,10 @@ jobs:
 
       - name: Install Dependencies - Pydantic V2
         working-directory: ./generators/python
-        run: |
-          poetry remove fern-fern-generator-exec-sdk
-          poetry add pydantic=^2.8
+        run: | 
+          poetry add pydantic=^2.8.2
           poetry lock
           poetry install
       - name: Unit Test - Pydantic V2
         working-directory: ./generators/python
-        # Run specific tests:
-        #   Some tests pull in dependencies that have older versions of internal SDKs installed, which are
-        #   incompatible with Pydantic V2 outright (specifically the use of __root__ in unions with utils).
-        run: poetry run pytest -sv ./tests/utils/ --ignore ./tests/utils/casing
+        run: poetry run pytest -sv

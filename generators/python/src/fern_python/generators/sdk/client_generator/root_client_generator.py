@@ -455,7 +455,7 @@ class RootClientGenerator:
                                     import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
                                     qualified_name_excluding_import=("getenv",),
                                 ),
-                                args=[AST.Expression(f'"{oauth.client_id_env_var.get_as_str()}"')],
+                                args=[AST.Expression(f'"{oauth.client_id_env_var}"')],
                             )
                         )
                         if oauth.client_id_env_var is not None
@@ -464,7 +464,7 @@ class RootClientGenerator:
                             AST.CodeWriter(
                                 self._get_paramter_validation_writer(
                                     param_name="client_id",
-                                    environment_variable=oauth.client_id_env_var.get_as_str(),
+                                    environment_variable=oauth.client_id_env_var,
                                 )
                             )
                         )
@@ -488,7 +488,7 @@ class RootClientGenerator:
                                     import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
                                     qualified_name_excluding_import=("getenv",),
                                 ),
-                                args=[AST.Expression(f'"{oauth.client_secret_env_var.get_as_str()}"')],
+                                args=[AST.Expression(f'"{oauth.client_secret_env_var}"')],
                             )
                         )
                         if oauth.client_secret_env_var is not None
@@ -497,7 +497,7 @@ class RootClientGenerator:
                             AST.CodeWriter(
                                 self._get_paramter_validation_writer(
                                     param_name="client_secret",
-                                    environment_variable=oauth.client_secret_env_var.get_as_str(),
+                                    environment_variable=oauth.client_secret_env_var,
                                 )
                             )
                         )

@@ -5,8 +5,8 @@ from abc import ABC, abstractmethod
 from typing import Literal, Optional, Sequence, Tuple, cast
 
 import fern.ir.resources as ir_types
-from fern.generator_exec.resources import GeneratorConfig, PypiMetadata
-from fern.generator_exec.resources.config import (
+from fern.generator_exec import GeneratorConfig, PypiMetadata
+from fern.generator_exec.config import (
     GeneratorPublishConfig,
     GithubOutputMode,
     PypiGithubPublishInfo,
