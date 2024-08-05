@@ -52,34 +52,15 @@
                           "additionalProperties": false
                         }
                       },
-                      "proto": {
+                      "encoding": {
                         "type": "object",
                         "properties": {
-                          "name": { "type": "string" },
-                          "isStruct": {
-                            "type": "boolean",
-                            "description": "Denotes whether the source type is a google.protobuf.Struct."
-                          },
-                          "isStructValue": {
-                            "type": "boolean",
-                            "description": "Denotes whether the source type is a google.protobuf.Value."
-                          },
-                          "file": {
-                            "type": "string",
-                            "description": "The relative `.proto` source file path (i.e. how the file is imported between other files)."
-                          },
-                          "package-name": {
-                            "type": "string",
-                            "description": "The package name of the `.proto` file, if any."
-                          },
-                          "options": {
+                          "proto": {
                             "type": "object",
                             "properties": {
-                              "csharp": {
-                                "type": "object",
-                                "properties": { "namespace": { "type": "string" } },
-                                "required": ["namespace"],
-                                "additionalProperties": false
+                              "type": {
+                                "type": "string",
+                                "description": "The name of the Protobuf type (e.g. google.protobuf.Struct)."
                               }
                             },
                             "additionalProperties": false
@@ -163,7 +144,9 @@
                       "examples": {
                         "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples"
                       },
-                      "proto": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/proto" },
+                      "encoding": {
+                        "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/encoding"
+                      },
                       "extensions": { "type": "object", "additionalProperties": {} },
                       "extends": {
                         "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
@@ -192,7 +175,7 @@
                     "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
                   },
                   "examples": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples" },
-                  "proto": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/proto" },
+                  "encoding": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/encoding" },
                   "base-properties": {
                     "type": "object",
                     "additionalProperties": {
@@ -273,7 +256,7 @@
                     "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
                   },
                   "examples": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples" },
-                  "proto": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/proto" },
+                  "encoding": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/encoding" },
                   "type": { "type": "string" },
                   "validation": {
                     "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/validation"
@@ -293,7 +276,7 @@
                     "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
                   },
                   "examples": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples" },
-                  "proto": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/proto" },
+                  "encoding": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/encoding" },
                   "default": { "type": "string" },
                   "enum": {
                     "type": "array",
@@ -342,7 +325,7 @@
                     "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
                   },
                   "examples": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples" },
-                  "proto": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/proto" },
+                  "encoding": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/encoding" },
                   "union": {
                     "type": "array",
                     "items": {
@@ -454,21 +437,18 @@
                 ]
               }
             },
-            "grpc": {
+            "transport": {
               "type": "object",
               "properties": {
-                "file": {
-                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/proto/properties/file"
-                },
-                "package-name": {
-                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/proto/properties/package-name"
-                },
-                "options": {
-                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/proto/properties/options"
-                },
-                "service-name": { "type": "string", "description": "The name of the gRPC service." }
+                "grpc": {
+                  "type": "object",
+                  "properties": {
+                    "service-name": { "type": "string", "description": "The name of the gRPC service." }
+                  },
+                  "required": ["service-name"],
+                  "additionalProperties": false
+                }
               },
-              "required": ["service-name"],
               "additionalProperties": false
             },
             "endpoints": {
@@ -1094,21 +1074,6 @@
             "required": ["status-code"],
             "additionalProperties": false
           }
-        },
-        "proto": {
-          "type": "object",
-          "properties": {
-            "file": {
-              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/proto/properties/file"
-            },
-            "package-name": {
-              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/proto/properties/package-name"
-            },
-            "options": {
-              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/proto/properties/options"
-            }
-          },
-          "additionalProperties": false
         }
       },
       "additionalProperties": false

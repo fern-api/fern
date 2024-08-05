@@ -34,7 +34,7 @@ service:
   base-path: /
   transport:
     grpc:
-      file: user/v1/user.proto
+      service-name: UserService
   endpoints:
     createUser:
       method: POST

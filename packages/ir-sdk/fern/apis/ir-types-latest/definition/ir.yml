@@ -56,6 +56,7 @@ types:
       variables: list<variables.VariableDeclaration>
       serviceTypeReferenceInfo: ServiceTypeReferenceInfo
       readmeConfig: optional<ReadmeConfig>
+      sourceConfig: optional<SourceConfig>
   ReadmeConfig:
     docs: |
       The configuration used to generate a README.md file. If present, the generator
@@ -75,6 +76,16 @@ types:
           If specified, configures the list of endpoints to associate
           with each feature.
         type: optional<map<commons.FeatureId, list<commons.EndpointId>>>
+  SourceConfig:
+    union:
+      proto: ProtoSourceConfig
+  ProtoSourceConfig:
+    properties:
+      protoRootUrl:
+        docs: |
+          The URL containing the `.proto` root directory source. This can be used
+          to pull down the original `.proto` source files during code generation.
+        type: string
   SdkConfig:
     properties:
       isAuthMandatory: boolean

@@ -1,5 +1,7 @@
 export * from "./IntermediateRepresentation";
 export * from "./ReadmeConfig";
+export * from "./SourceConfig";
+export * from "./ProtoSourceConfig";
 export * from "./SdkConfig";
 export * from "./PlatformHeaders";
 export * from "./ApiVersionScheme";

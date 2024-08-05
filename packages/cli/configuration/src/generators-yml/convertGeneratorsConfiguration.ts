@@ -79,7 +79,6 @@ async function parseAPIConfiguration(
     const apiDefinitions: APIDefinitionLocation[] = [];
     if (apiConfiguration != null) {
         if (isRawProtobufAPIDefinitionSchema(apiConfiguration)) {
-            // TODO: Implement the Protobuf mapper.
             return {
                 type: "singleNamespace",
                 definitions: apiDefinitions
@@ -96,7 +95,6 @@ async function parseAPIConfiguration(
         } else if (Array.isArray(apiConfiguration)) {
             for (const definition of apiConfiguration) {
                 if (isRawProtobufAPIDefinitionSchema(definition)) {
-                    // TODO: Implement the Protobuf mapper.
                     continue;
                 }
                 if (typeof definition === "string") {
