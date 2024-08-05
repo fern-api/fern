@@ -53,7 +53,12 @@ class FunctionDeclaration(AstNode):
             self._write(writer, signature=overload, body=None)
         self._write(writer, signature=self.signature, body=self.body)
 
-    def _write(self, writer: NodeWriter, signature: FunctionSignature, body: Optional[CodeWriter]) -> None:
+    def _write(
+        self,
+        writer: NodeWriter,
+        signature: FunctionSignature,
+        body: Optional[CodeWriter],
+    ) -> None:
         if body is None:
             writer.write("@")
             writer.write_reference(OVERLOAD_DECORATOR)

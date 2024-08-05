@@ -25,8 +25,7 @@ class AbstractCompletionsService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def stream(self, *, body: StreamCompletionRequest) -> None:
-        ...
+    def stream(self, *, body: StreamCompletionRequest) -> None: ...
 
     """
     Below are internal methods used by Fern to register your implementation.
@@ -41,14 +40,20 @@ class AbstractCompletionsService(AbstractFernService):
     def __init_stream(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.stream)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+        for index, (parameter_name, parameter) in enumerate(
+            endpoint_function.parameters.items()
+        ):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls.stream, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(
+            cls.stream,
+            "__signature__",
+            endpoint_function.replace(parameters=new_parameters),
+        )
 
         @functools.wraps(cls.stream)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:

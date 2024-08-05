@@ -4,4 +4,10 @@ from .animal import AnimalParams, Animal_CatParams, Animal_DogParams
 from .cat import CatParams
 from .dog import DogParams
 
-__all__ = ["AnimalParams", "Animal_CatParams", "Animal_DogParams", "CatParams", "DogParams"]
+__all__ = [
+    "AnimalParams",
+    "Animal_CatParams",
+    "Animal_DogParams",
+    "CatParams",
+    "DogParams",
+]

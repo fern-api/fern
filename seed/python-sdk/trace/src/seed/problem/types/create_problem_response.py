@@ -27,4 +27,6 @@ class CreateProblemResponse_Error(pydantic_v1.BaseModel):
         smart_union = True
 
 
-CreateProblemResponse = typing.Union[CreateProblemResponse_Success, CreateProblemResponse_Error]
+CreateProblemResponse = typing.Union[
+    CreateProblemResponse_Success, CreateProblemResponse_Error
+]

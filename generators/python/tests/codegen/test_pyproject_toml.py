@@ -7,7 +7,9 @@ from fern_python.codegen.pyproject_toml import PyProjectToml, PyProjectTomlPacka
 
 def test_pyproject_toml_gen(tmpdir: Path) -> None:
     dependency_manager = DependencyManager()
-    dependency_manager.add_dependency(ast.Dependency(name="pydantic", version="^1.10.2"))
+    dependency_manager.add_dependency(
+        ast.Dependency(name="pydantic", version="^1.10.2")
+    )
     pyproject_toml = PyProjectToml(
         name="fern-fern-ir-model",
         version="0.0.0",

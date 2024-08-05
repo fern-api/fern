@@ -35,6 +35,8 @@ class ProblemDescriptionBoard_TestCaseId(pydantic_v1.BaseModel):
 
 
 ProblemDescriptionBoard = typing.Union[
-    ProblemDescriptionBoard_Html, ProblemDescriptionBoard_Variable, ProblemDescriptionBoard_TestCaseId
+    ProblemDescriptionBoard_Html,
+    ProblemDescriptionBoard_Variable,
+    ProblemDescriptionBoard_TestCaseId,
 ]
 from ...commons.types.variable_value import VariableValue  # noqa: E402

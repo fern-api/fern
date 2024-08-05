@@ -27,7 +27,11 @@ class EnumGenerator(AbstractTypeGenerator):
         snippet: Optional[str] = None,
     ):
         super().__init__(
-            context=context, custom_config=custom_config, source_file=source_file, docs=docs, snippet=snippet
+            context=context,
+            custom_config=custom_config,
+            source_file=source_file,
+            docs=docs,
+            snippet=snippet,
         )
         self._use_str_enums = custom_config.use_str_enums
         self._class_name = context.get_class_name_for_type_id(name.type_id, as_request=False)
@@ -40,7 +44,14 @@ class EnumGenerator(AbstractTypeGenerator):
                 AST.TypeAliasDeclaration(
                     type_hint=AST.TypeHint.union(
                         AST.TypeHint.literal(
-                            AST.Expression(", ".join(map(lambda v: f'"{v.name.wire_value}"', self._enum.values)))
+                            AST.Expression(
+                                ", ".join(
+                                    map(
+                                        lambda v: f'"{v.name.wire_value}"',
+                                        self._enum.values,
+                                    )
+                                )
+                            )
                         ),
                         AST.TypeHint.any(),
                     ),

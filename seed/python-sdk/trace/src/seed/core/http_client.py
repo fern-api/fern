@@ -70,7 +70,9 @@ def _retry_timeout(response: httpx.Response, retries: int) -> float:
         return retry_after
 
     # Apply exponential backoff, capped at MAX_RETRY_DELAY_SECONDS.
-    retry_delay = min(INITIAL_RETRY_DELAY_SECONDS * pow(2.0, retries), MAX_RETRY_DELAY_SECONDS)
+    retry_delay = min(
+        INITIAL_RETRY_DELAY_SECONDS * pow(2.0, retries), MAX_RETRY_DELAY_SECONDS
+    )
 
     # Add a randomness / jitter to the retry delay to avoid overwhelming the server with retries.
     timeout = retry_delay * (1 - 0.25 * random())
@@ -89,18 +91,30 @@ class HttpClient:
     # Ensure that the signature of the `request` method is the same as the `httpx.Client.request` method
     @wraps(httpx.Client.request)
     def request(
-        self, *args: typing.Any, max_retries: int = 0, retries: int = 0, **kwargs: typing.Any
+        self,
+        *args: typing.Any,
+        max_retries: int = 0,
+        retries: int = 0,
+        **kwargs: typing.Any,
     ) -> httpx.Response:
         response = self.httpx_client.request(*args, **kwargs)
         if _should_retry(response=response):
             if max_retries > retries:
                 time.sleep(_retry_timeout(response=response, retries=retries))
-                return self.request(max_retries=max_retries, retries=retries + 1, *args, **kwargs)
+                return self.request(
+                    max_retries=max_retries, retries=retries + 1, *args, **kwargs
+                )
         return response
 
     @wraps(httpx.Client.stream)
     @contextmanager
-    def stream(self, *args: typing.Any, max_retries: int = 0, retries: int = 0, **kwargs: typing.Any) -> typing.Any:
+    def stream(
+        self,
+        *args: typing.Any,
+        max_retries: int = 0,
+        retries: int = 0,
+        **kwargs: typing.Any,
+    ) -> typing.Any:
         with self.httpx_client.stream(*args, **kwargs) as stream:
             yield stream
 
@@ -112,19 +126,29 @@ class AsyncHttpClient:
     # Ensure that the signature of the `request` method is the same as the `httpx.Client.request` method
     @wraps(httpx.AsyncClient.request)
     async def request(
-        self, *args: typing.Any, max_retries: int = 0, retries: int = 0, **kwargs: typing.Any
+        self,
+        *args: typing.Any,
+        max_retries: int = 0,
+        retries: int = 0,
+        **kwargs: typing.Any,
     ) -> httpx.Response:
         response = await self.httpx_client.request(*args, **kwargs)
         if _should_retry(response=response):
             if max_retries > retries:
                 await asyncio.sleep(_retry_timeout(response=response, retries=retries))
-                return await self.request(max_retries=max_retries, retries=retries + 1, *args, **kwargs)
+                return await self.request(
+                    max_retries=max_retries, retries=retries + 1, *args, **kwargs
+                )
         return response
 
     @wraps(httpx.AsyncClient.stream)
     @asynccontextmanager
     async def stream(
-        self, *args: typing.Any, max_retries: int = 0, retries: int = 0, **kwargs: typing.Any
+        self,
+        *args: typing.Any,
+        max_retries: int = 0,
+        retries: int = 0,
+        **kwargs: typing.Any,
     ) -> typing.Any:
         async with self.httpx_client.stream(*args, **kwargs) as stream:
             yield stream

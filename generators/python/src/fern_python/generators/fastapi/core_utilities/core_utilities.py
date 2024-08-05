@@ -13,7 +13,10 @@ class FernHTTPException:
     CONTENT_MEMBER = "content"
 
     def __init__(self, filepath: Tuple[Filepath.DirectoryFilepathPart, ...]):
-        self.filepath = Filepath(directories=filepath, file=Filepath.FilepathPart(module_name="fern_http_exception"))
+        self.filepath = Filepath(
+            directories=filepath,
+            file=Filepath.FilepathPart(module_name="fern_http_exception"),
+        )
 
     def get_reference_to(self) -> AST.ClassReference:
         return AST.ClassReference(
@@ -49,7 +52,10 @@ class FernHTTPException:
 class Exceptions:
     def __init__(self, filepath: Tuple[Filepath.DirectoryFilepathPart, ...]):
         self.filepath = filepath + (
-            Filepath.DirectoryFilepathPart(module_name="exceptions", export_strategy=ExportStrategy(export_all=True)),
+            Filepath.DirectoryFilepathPart(
+                module_name="exceptions",
+                export_strategy=ExportStrategy(export_all=True),
+            ),
         )
         self._module_path = tuple(part.module_name for part in self.filepath)
         self.FernHTTPException = FernHTTPException(filepath=self.filepath)
@@ -167,7 +173,11 @@ class CoreUtilities:
                 directories=self.exceptions.filepath,
                 file=Filepath.FilepathPart(module_name="handlers"),
             ),
-            exports={"default_exception_handler", "fern_http_exception_handler", "http_exception_handler"},
+            exports={
+                "default_exception_handler",
+                "fern_http_exception_handler",
+                "http_exception_handler",
+            },
         )
         self._copy_file_to_project(
             project=project,
@@ -180,7 +190,12 @@ class CoreUtilities:
         )
 
     def _copy_file_to_project(
-        self, *, project: Project, relative_filepath_on_disk: str, filepath_in_project: Filepath, exports: Set[str]
+        self,
+        *,
+        project: Project,
+        relative_filepath_on_disk: str,
+        filepath_in_project: Filepath,
+        exports: Set[str],
     ) -> None:
         source = (
             os.path.join(os.path.dirname(__file__), "../../../../../core_utilities/fastapi")
@@ -211,7 +226,8 @@ class CoreUtilities:
                 function_definition=AST.Reference(
                     qualified_name_excluding_import=(),
                     import_=AST.ReferenceImport(
-                        module=AST.Module.local(*self._module_path, "route_args"), named_import="get_route_args"
+                        module=AST.Module.local(*self._module_path, "route_args"),
+                        named_import="get_route_args",
                     ),
                 ),
                 args=[endpoint_method],
@@ -223,7 +239,8 @@ class CoreUtilities:
         return AST.Reference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "datetime_utils"), named_import="serialize_datetime"
+                module=AST.Module.local(*self._module_path, "datetime_utils"),
+                named_import="serialize_datetime",
             ),
         )
 
@@ -231,7 +248,8 @@ class CoreUtilities:
         return AST.ClassReference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._get_bearer_module_path()), named_import="BearerToken"
+                module=AST.Module.local(*self._get_bearer_module_path()),
+                named_import="BearerToken",
             ),
         )
 
@@ -239,7 +257,8 @@ class CoreUtilities:
         return AST.ClassReference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._get_bearer_module_path()), named_import="HTTPBearer"
+                module=AST.Module.local(*self._get_bearer_module_path()),
+                named_import="HTTPBearer",
             ),
         )
 
@@ -271,7 +290,8 @@ class CoreUtilities:
             AST.Reference(
                 qualified_name_excluding_import=(),
                 import_=AST.ReferenceImport(
-                    module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="IS_PYDANTIC_V2"
+                    module=AST.Module.local(*self._module_path, "pydantic_utilities"),
+                    named_import="IS_PYDANTIC_V2",
                 ),
             )
         )

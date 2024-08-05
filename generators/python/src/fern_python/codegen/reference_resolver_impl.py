@@ -34,7 +34,10 @@ class ReferenceResolverImpl(ReferenceResolver):
     def resolve_references(self) -> None:
         self._original_import_to_resolved_import = {}
 
-        for default_name, original_references in self._default_name_to_original_references.items():
+        for (
+            default_name,
+            original_references,
+        ) in self._default_name_to_original_references.items():
             # get the set of all imports that result in this default name.
             # if len(set) > 1, or this default name is the same as a declaration,
             # then there's a collision, so we need to alias the imports.

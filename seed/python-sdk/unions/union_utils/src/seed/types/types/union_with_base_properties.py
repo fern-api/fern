@@ -16,14 +16,20 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def integer(self, value: int) -> UnionWithBaseProperties:
-        return UnionWithBaseProperties(__root__=_UnionWithBaseProperties.Integer(type="integer", value=value))
+        return UnionWithBaseProperties(
+            __root__=_UnionWithBaseProperties.Integer(type="integer", value=value)
+        )
 
     def string(self, value: str) -> UnionWithBaseProperties:
-        return UnionWithBaseProperties(__root__=_UnionWithBaseProperties.String(type="string", value=value))
+        return UnionWithBaseProperties(
+            __root__=_UnionWithBaseProperties.String(type="string", value=value)
+        )
 
     def foo(self, value: types_types_foo_Foo) -> UnionWithBaseProperties:
         return UnionWithBaseProperties(
-            __root__=_UnionWithBaseProperties.Foo(**value.dict(exclude_unset=True), type="foo")
+            __root__=_UnionWithBaseProperties.Foo(
+                **value.dict(exclude_unset=True), type="foo"
+            )
         )
 
 
@@ -32,7 +38,11 @@ class UnionWithBaseProperties(pydantic_v1.BaseModel):
 
     def get_as_union(
         self,
-    ) -> typing.Union[_UnionWithBaseProperties.Integer, _UnionWithBaseProperties.String, _UnionWithBaseProperties.Foo]:
+    ) -> typing.Union[
+        _UnionWithBaseProperties.Integer,
+        _UnionWithBaseProperties.String,
+        _UnionWithBaseProperties.Foo,
+    ]:
         return self.__root__
 
     def visit(
@@ -46,23 +56,44 @@ class UnionWithBaseProperties(pydantic_v1.BaseModel):
         if self.__root__.type == "string":
             return string(self.__root__.value)
         if self.__root__.type == "foo":
-            return foo(types_types_foo_Foo(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
+            return foo(
+                types_types_foo_Foo(
+                    **self.__root__.dict(exclude_unset=True, exclude={"type"})
+                )
+            )
 
     __root__: typing_extensions.Annotated[
-        typing.Union[_UnionWithBaseProperties.Integer, _UnionWithBaseProperties.String, _UnionWithBaseProperties.Foo],
+        typing.Union[
+            _UnionWithBaseProperties.Integer,
+            _UnionWithBaseProperties.String,
+            _UnionWithBaseProperties.Foo,
+        ],
         pydantic_v1.Field(discriminator="type"),
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults: typing.Any = {
+            "by_alias": True,
+            "exclude_unset": True,
+            **kwargs,
+        }
         return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+        kwargs_with_defaults_exclude_unset: typing.Any = {
+            "by_alias": True,
+            "exclude_unset": True,
+            **kwargs,
+        }
+        kwargs_with_defaults_exclude_none: typing.Any = {
+            "by_alias": True,
+            "exclude_none": True,
+            **kwargs,
+        }
 
         return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+            super().dict(**kwargs_with_defaults_exclude_unset),
+            super().dict(**kwargs_with_defaults_exclude_none),
         )
 
     class Config:

@@ -25,15 +25,18 @@ def convert_to_singular_type(context: FastApiGeneratorContext, type: ir_types.Ty
             resolved_type_union = shape_union.resolved_type.get_as_union()
             if resolved_type_union.type == "primitive":
                 return convert_to_singular_type(
-                    context, ir_types.TypeReference.factory.primitive(resolved_type_union.primitive)
+                    context,
+                    ir_types.TypeReference.factory.primitive(resolved_type_union.primitive),
                 )
             elif resolved_type_union.type == "container":
                 return convert_to_singular_type(
-                    context, ir_types.TypeReference.factory.container(resolved_type_union.container)
+                    context,
+                    ir_types.TypeReference.factory.container(resolved_type_union.container),
                 )
             elif resolved_type_union.type == "named":
                 return convert_to_singular_type(
-                    context, ir_types.TypeReference.factory.named(cast(ir_types.NamedType, resolved_type_union.name))
+                    context,
+                    ir_types.TypeReference.factory.named(cast(ir_types.NamedType, resolved_type_union.name)),
                 )
             elif resolved_type_union.type == "unknown":
                 return convert_to_singular_type(context, ir_types.TypeReference.factory.unknown())

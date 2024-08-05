@@ -4,4 +4,9 @@ from . import auth
 from .client import AsyncSeedOauthClientCredentials, SeedOauthClientCredentials
 from .version import __version__
 
-__all__ = ["AsyncSeedOauthClientCredentials", "SeedOauthClientCredentials", "__version__", "auth"]
+__all__ = [
+    "AsyncSeedOauthClientCredentials",
+    "SeedOauthClientCredentials",
+    "__version__",
+    "auth",
+]

@@ -19,7 +19,9 @@ class SecurityFileGenerator:
         self._context = context
 
     @staticmethod
-    def get_reference_to_fern_auth_dependency(context: FastApiGeneratorContext) -> AST.Expression:
+    def get_reference_to_fern_auth_dependency(
+        context: FastApiGeneratorContext,
+    ) -> AST.Expression:
         return FastAPI.Depends(
             AST.Expression(
                 AST.Reference(

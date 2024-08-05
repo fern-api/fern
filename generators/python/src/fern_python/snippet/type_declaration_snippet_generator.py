@@ -9,7 +9,8 @@ EnumSnippetGenerator = Callable[[ir_types.DeclaredTypeName, ir_types.ExampleEnum
 ObjectSnippetGenerator = Callable[[ir_types.DeclaredTypeName, ir_types.ExampleObjectType], AST.Expression]
 DiscriminatedUnionGenerator = Callable[[ir_types.DeclaredTypeName, ir_types.ExampleUnionType], AST.Expression]
 UndiscriminatedUnionGenerator = Callable[
-    [ir_types.DeclaredTypeName, ir_types.ExampleUndiscriminatedUnionType], Optional[AST.Expression]
+    [ir_types.DeclaredTypeName, ir_types.ExampleUndiscriminatedUnionType],
+    Optional[AST.Expression],
 ]
 
 

@@ -12,16 +12,28 @@ from .test_submission_status import TestSubmissionStatus
 
 class TestSubmissionState(pydantic_v1.BaseModel):
     problem_id: ProblemId = pydantic_v1.Field(alias="problemId")
-    default_test_cases: typing.List[TestCase] = pydantic_v1.Field(alias="defaultTestCases")
-    custom_test_cases: typing.List[TestCase] = pydantic_v1.Field(alias="customTestCases")
+    default_test_cases: typing.List[TestCase] = pydantic_v1.Field(
+        alias="defaultTestCases"
+    )
+    custom_test_cases: typing.List[TestCase] = pydantic_v1.Field(
+        alias="customTestCases"
+    )
     status: TestSubmissionStatus
 
     def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults: typing.Any = {
+            "by_alias": True,
+            "exclude_unset": True,
+            **kwargs,
+        }
         return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults: typing.Any = {
+            "by_alias": True,
+            "exclude_unset": True,
+            **kwargs,
+        }
         return super().dict(**kwargs_with_defaults)
 
     class Config:

@@ -5,14 +5,26 @@ from seed.client import AsyncSeedTrace, SeedTrace
 from .utilities import validate_response
 
 
-async def test_set_num_warm_instances(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
+async def test_set_num_warm_instances(
+    client: SeedTrace, async_client: AsyncSeedTrace
+) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert client.sysprop.set_num_warm_instances(language="JAVA", num_warm_instances=1) is None  # type: ignore[func-returns-value]
+    assert (
+        client.sysprop.set_num_warm_instances(language="JAVA", num_warm_instances=1)
+        is None
+    )  # type: ignore[func-returns-value]
 
-    assert await async_client.sysprop.set_num_warm_instances(language="JAVA", num_warm_instances=1) is None  # type: ignore[func-returns-value]
+    assert (
+        await async_client.sysprop.set_num_warm_instances(
+            language="JAVA", num_warm_instances=1
+        )
+        is None
+    )  # type: ignore[func-returns-value]
 
 
-async def test_get_num_warm_instances(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
+async def test_get_num_warm_instances(
+    client: SeedTrace, async_client: AsyncSeedTrace
+) -> None:
     expected_response = {"string": 1}
     expected_types = ("dict", {0: (None, "integer")})
     response = client.sysprop.get_num_warm_instances()

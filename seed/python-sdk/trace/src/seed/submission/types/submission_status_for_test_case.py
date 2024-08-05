@@ -40,5 +40,7 @@ class SubmissionStatusForTestCase_Traced(TracedTestCase):
 
 
 SubmissionStatusForTestCase = typing.Union[
-    SubmissionStatusForTestCase_Graded, SubmissionStatusForTestCase_GradedV2, SubmissionStatusForTestCase_Traced
+    SubmissionStatusForTestCase_Graded,
+    SubmissionStatusForTestCase_GradedV2,
+    SubmissionStatusForTestCase_Traced,
 ]

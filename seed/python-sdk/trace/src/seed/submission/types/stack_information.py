@@ -10,14 +10,24 @@ from .stack_frame import StackFrame
 
 class StackInformation(pydantic_v1.BaseModel):
     num_stack_frames: int = pydantic_v1.Field(alias="numStackFrames")
-    top_stack_frame: typing.Optional[StackFrame] = pydantic_v1.Field(alias="topStackFrame", default=None)
+    top_stack_frame: typing.Optional[StackFrame] = pydantic_v1.Field(
+        alias="topStackFrame", default=None
+    )
 
     def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults: typing.Any = {
+            "by_alias": True,
+            "exclude_unset": True,
+            **kwargs,
+        }
         return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults: typing.Any = {
+            "by_alias": True,
+            "exclude_unset": True,
+            **kwargs,
+        }
         return super().dict(**kwargs_with_defaults)
 
     class Config:

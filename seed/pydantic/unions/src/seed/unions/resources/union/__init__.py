@@ -5,4 +5,11 @@ from .get_shape_request import GetShapeRequest
 from .shape import Shape, Shape_Circle, Shape_Square
 from .square import Square
 
-__all__ = ["Circle", "GetShapeRequest", "Shape", "Shape_Circle", "Shape_Square", "Square"]
+__all__ = [
+    "Circle",
+    "GetShapeRequest",
+    "Shape",
+    "Shape_Circle",
+    "Shape_Square",
+    "Square",
+]

@@ -9,7 +9,9 @@ from seed import AsyncSeedExhaustive, SeedExhaustive
 from ..utilities import validate_response
 
 
-async def test_test_get(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
+async def test_test_get(
+    client: SeedExhaustive, async_client: AsyncSeedExhaustive
+) -> None:
     expected_response: typing.Any = "string"
     expected_types: typing.Any = None
     response = client.endpoints.http_methods.test_get(id="string")
@@ -19,7 +21,9 @@ async def test_test_get(client: SeedExhaustive, async_client: AsyncSeedExhaustiv
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_test_post(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
+async def test_test_post(
+    client: SeedExhaustive, async_client: AsyncSeedExhaustive
+) -> None:
     expected_response: typing.Any = {
         "string": "string",
         "integer": 1,
@@ -53,11 +57,15 @@ async def test_test_post(client: SeedExhaustive, async_client: AsyncSeedExhausti
     response = client.endpoints.http_methods.test_post(string="string")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.endpoints.http_methods.test_post(string="string")
+    async_response = await async_client.endpoints.http_methods.test_post(
+        string="string"
+    )
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_test_put(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
+async def test_test_put(
+    client: SeedExhaustive, async_client: AsyncSeedExhaustive
+) -> None:
     expected_response: typing.Any = {
         "string": "string",
         "integer": 1,
@@ -91,11 +99,15 @@ async def test_test_put(client: SeedExhaustive, async_client: AsyncSeedExhaustiv
     response = client.endpoints.http_methods.test_put(id="string", string="string")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.endpoints.http_methods.test_put(id="string", string="string")
+    async_response = await async_client.endpoints.http_methods.test_put(
+        id="string", string="string"
+    )
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_test_patch(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
+async def test_test_patch(
+    client: SeedExhaustive, async_client: AsyncSeedExhaustive
+) -> None:
     expected_response: typing.Any = {
         "string": "string",
         "integer": 1,
@@ -163,7 +175,9 @@ async def test_test_patch(client: SeedExhaustive, async_client: AsyncSeedExhaust
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_test_delete(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
+async def test_test_delete(
+    client: SeedExhaustive, async_client: AsyncSeedExhaustive
+) -> None:
     expected_response: typing.Any = True
     expected_types: typing.Any = None
     response = client.endpoints.http_methods.test_delete(id="string")

@@ -25,14 +25,14 @@ class SourceFileFactory:
         return project.source_file(filepath=filepath, from_src=from_src)
 
     @staticmethod
-    def create_snippet() -> SourceFile:
+    def create_snippet(should_format: bool = True) -> SourceFile:
         return SourceFileImpl(
             module_path=(),
             reference_resolver=ReferenceResolverImpl(
                 module_path_of_source_file=(),
             ),
             dependency_manager=DependencyManager(),
-            should_format=True,
+            should_format=should_format,
             should_format_as_snippet=True,
             should_include_header=False,
         )

@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.5.0-rc0] = 2024-08-05
+
+- Feature: The generator now uses ruff to format all of the generated code. Additionally, 
+  if `skip_formatting` is turned on then none of the code snippets will be formatted. 
+
 ## [3.4.0] - 2024-08-02
 
 - Internal: The SDK generator has now been upgraded to use Pydantic V2 internally. Note that 

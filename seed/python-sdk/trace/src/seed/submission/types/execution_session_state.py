@@ -10,23 +10,35 @@ from .execution_session_status import ExecutionSessionStatus
 
 
 class ExecutionSessionState(pydantic_v1.BaseModel):
-    last_time_contacted: typing.Optional[str] = pydantic_v1.Field(alias="lastTimeContacted", default=None)
+    last_time_contacted: typing.Optional[str] = pydantic_v1.Field(
+        alias="lastTimeContacted", default=None
+    )
     session_id: str = pydantic_v1.Field(alias="sessionId")
     """
     The auto-generated session id. Formatted as a uuid.
     """
 
     is_warm_instance: bool = pydantic_v1.Field(alias="isWarmInstance")
-    aws_task_id: typing.Optional[str] = pydantic_v1.Field(alias="awsTaskId", default=None)
+    aws_task_id: typing.Optional[str] = pydantic_v1.Field(
+        alias="awsTaskId", default=None
+    )
     language: Language
     status: ExecutionSessionStatus
 
     def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults: typing.Any = {
+            "by_alias": True,
+            "exclude_unset": True,
+            **kwargs,
+        }
         return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults: typing.Any = {
+            "by_alias": True,
+            "exclude_unset": True,
+            **kwargs,
+        }
         return super().dict(**kwargs_with_defaults)
 
     class Config:

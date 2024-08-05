@@ -9,7 +9,9 @@ from .generic_create_problem_error import GenericCreateProblemError
 
 
 class CreateProblemError_Generic(GenericCreateProblemError):
-    error_type: typing.Literal["generic"] = pydantic_v1.Field(alias="_type", default="generic")
+    error_type: typing.Literal["generic"] = pydantic_v1.Field(
+        alias="_type", default="generic"
+    )
 
     class Config:
         frozen = True

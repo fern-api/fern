@@ -8,4 +8,6 @@ from ....core.serialization import FieldMetadata
 
 
 class ObjectWithMapOfMapParams(typing_extensions.TypedDict):
-    map_: typing_extensions.Annotated[typing.Dict[str, typing.Dict[str, str]], FieldMetadata(alias="map")]
+    map_: typing_extensions.Annotated[
+        typing.Dict[str, typing.Dict[str, str]], FieldMetadata(alias="map")
+    ]

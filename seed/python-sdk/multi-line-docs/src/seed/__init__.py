@@ -6,4 +6,11 @@ from .client import AsyncSeedMultiLineDocs, SeedMultiLineDocs
 from .user import User
 from .version import __version__
 
-__all__ = ["AsyncSeedMultiLineDocs", "Operand", "SeedMultiLineDocs", "User", "__version__", "user"]
+__all__ = [
+    "AsyncSeedMultiLineDocs",
+    "Operand",
+    "SeedMultiLineDocs",
+    "User",
+    "__version__",
+    "user",
+]

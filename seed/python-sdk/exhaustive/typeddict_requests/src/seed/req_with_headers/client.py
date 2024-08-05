@@ -21,7 +21,7 @@ class ReqWithHeadersClient:
         x_test_service_header: str,
         x_test_endpoint_header: str,
         request: str,
-        request_options: typing.Optional[RequestOptions] = None
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters
@@ -58,8 +58,12 @@ class ReqWithHeadersClient:
             method="POST",
             json=request,
             headers={
-                "X-TEST-SERVICE-HEADER": str(x_test_service_header) if x_test_service_header is not None else None,
-                "X-TEST-ENDPOINT-HEADER": str(x_test_endpoint_header) if x_test_endpoint_header is not None else None,
+                "X-TEST-SERVICE-HEADER": str(x_test_service_header)
+                if x_test_service_header is not None
+                else None,
+                "X-TEST-ENDPOINT-HEADER": str(x_test_endpoint_header)
+                if x_test_endpoint_header is not None
+                else None,
             },
             request_options=request_options,
             omit=OMIT,
@@ -83,7 +87,7 @@ class AsyncReqWithHeadersClient:
         x_test_service_header: str,
         x_test_endpoint_header: str,
         request: str,
-        request_options: typing.Optional[RequestOptions] = None
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters
@@ -128,8 +132,12 @@ class AsyncReqWithHeadersClient:
             method="POST",
             json=request,
             headers={
-                "X-TEST-SERVICE-HEADER": str(x_test_service_header) if x_test_service_header is not None else None,
-                "X-TEST-ENDPOINT-HEADER": str(x_test_endpoint_header) if x_test_endpoint_header is not None else None,
+                "X-TEST-SERVICE-HEADER": str(x_test_service_header)
+                if x_test_service_header is not None
+                else None,
+                "X-TEST-ENDPOINT-HEADER": str(x_test_endpoint_header)
+                if x_test_endpoint_header is not None
+                else None,
             },
             request_options=request_options,
             omit=OMIT,

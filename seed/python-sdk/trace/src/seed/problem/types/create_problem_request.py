@@ -15,19 +15,31 @@ from .variable_type_and_name import VariableTypeAndName
 
 class CreateProblemRequest(pydantic_v1.BaseModel):
     problem_name: str = pydantic_v1.Field(alias="problemName")
-    problem_description: ProblemDescription = pydantic_v1.Field(alias="problemDescription")
+    problem_description: ProblemDescription = pydantic_v1.Field(
+        alias="problemDescription"
+    )
     files: typing.Dict[Language, ProblemFiles]
-    input_params: typing.List[VariableTypeAndName] = pydantic_v1.Field(alias="inputParams")
+    input_params: typing.List[VariableTypeAndName] = pydantic_v1.Field(
+        alias="inputParams"
+    )
     output_type: VariableType = pydantic_v1.Field(alias="outputType")
     testcases: typing.List[TestCaseWithExpectedResult]
     method_name: str = pydantic_v1.Field(alias="methodName")
 
     def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults: typing.Any = {
+            "by_alias": True,
+            "exclude_unset": True,
+            **kwargs,
+        }
         return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults: typing.Any = {
+            "by_alias": True,
+            "exclude_unset": True,
+            **kwargs,
+        }
         return super().dict(**kwargs_with_defaults)
 
     class Config:

@@ -174,7 +174,9 @@ class FernTypedDict:
 
     @classmethod
     def snippet_from_properties(
-        cls, example_properties: List[SimpleObjectProperty], snippet_writer: SnippetWriter
+        cls,
+        example_properties: List[SimpleObjectProperty],
+        snippet_writer: SnippetWriter,
     ) -> AST.Expression:
         example_dict_pairs: List[ir_types.ExampleKeyValuePair] = []
         for property in example_properties:
@@ -190,7 +192,10 @@ class FernTypedDict:
                 )
             )
         return snippet_writer._get_snippet_for_map(
-            example_dict_pairs, use_typeddict_request=True, as_request=True, in_typeddict=True
+            example_dict_pairs,
+            use_typeddict_request=True,
+            as_request=True,
+            in_typeddict=True,
         )
 
     @classmethod
@@ -215,7 +220,9 @@ class FernTypedDict:
 
     @classmethod
     def can_tr_be_typeddict(
-        cls, tr: ir_types.TypeReference, types: Dict[ir_types.TypeId, ir_types.TypeDeclaration]
+        cls,
+        tr: ir_types.TypeReference,
+        types: Dict[ir_types.TypeId, ir_types.TypeDeclaration],
     ) -> bool:
         return tr.visit(
             named=lambda nt: FernTypedDict.can_be_typeddict(types[nt.type_id].shape, types),
@@ -232,7 +239,11 @@ class FernTypedDict:
         )
 
     @classmethod
-    def can_be_typeddict(cls, type_: ir_types.Type, types: Dict[ir_types.TypeId, ir_types.TypeDeclaration]) -> bool:
+    def can_be_typeddict(
+        cls,
+        type_: ir_types.Type,
+        types: Dict[ir_types.TypeId, ir_types.TypeDeclaration],
+    ) -> bool:
         return type_.visit(
             alias=lambda atd: atd.resolved_type.visit(
                 named=lambda nt: nt.shape.visit(
@@ -260,6 +271,8 @@ class FernTypedDict:
 
     @classmethod
     def can_type_id_be_typeddict(
-        cls, type_id: ir_types.TypeId, types: Dict[ir_types.TypeId, ir_types.TypeDeclaration]
+        cls,
+        type_id: ir_types.TypeId,
+        types: Dict[ir_types.TypeId, ir_types.TypeDeclaration],
     ) -> bool:
         return cls.can_be_typeddict(types[type_id].shape, types)

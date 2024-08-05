@@ -23,5 +23,7 @@ class PathEndpointParameter(EndpointParameter):
         return FastAPI.Path
 
     @staticmethod
-    def get_variable_name_of_path_parameter(path_parameter: ir_types.PathParameter) -> str:
+    def get_variable_name_of_path_parameter(
+        path_parameter: ir_types.PathParameter,
+    ) -> str:
         return path_parameter.name.snake_case.safe_name

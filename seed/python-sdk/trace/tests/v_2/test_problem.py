@@ -5,7 +5,9 @@ from seed.client import AsyncSeedTrace, SeedTrace
 from ..utilities import validate_response
 
 
-async def test_get_lightweight_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
+async def test_get_lightweight_problems(
+    client: SeedTrace, async_client: AsyncSeedTrace
+) -> None:
     expected_response = [
         {
             "problemId": "string",
@@ -37,7 +39,17 @@ async def test_get_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> 
         {
             "problemId": "string",
             "problemDescription": {
-                "boards": [{"0": "s", "1": "t", "2": "r", "3": "i", "4": "n", "5": "g", "type": "html"}]
+                "boards": [
+                    {
+                        "0": "s",
+                        "1": "t",
+                        "2": "r",
+                        "3": "i",
+                        "4": "n",
+                        "5": "g",
+                        "type": "html",
+                    }
+                ]
             },
             "problemName": "string",
             "problemVersion": 1,
@@ -73,11 +85,23 @@ async def test_get_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> 
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_get_latest_problem(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
+async def test_get_latest_problem(
+    client: SeedTrace, async_client: AsyncSeedTrace
+) -> None:
     expected_response = {
         "problemId": "string",
         "problemDescription": {
-            "boards": [{"0": "s", "1": "t", "2": "r", "3": "i", "4": "n", "5": "g", "type": "html"}]
+            "boards": [
+                {
+                    "0": "s",
+                    "1": "t",
+                    "2": "r",
+                    "3": "i",
+                    "4": "n",
+                    "5": "g",
+                    "type": "html",
+                }
+            ]
         },
         "problemName": "string",
         "problemVersion": 1,
@@ -103,15 +127,29 @@ async def test_get_latest_problem(client: SeedTrace, async_client: AsyncSeedTrac
     response = client.v_2.problem.get_latest_problem(problem_id="string")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.v_2.problem.get_latest_problem(problem_id="string")
+    async_response = await async_client.v_2.problem.get_latest_problem(
+        problem_id="string"
+    )
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_get_problem_version(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
+async def test_get_problem_version(
+    client: SeedTrace, async_client: AsyncSeedTrace
+) -> None:
     expected_response = {
         "problemId": "string",
         "problemDescription": {
-            "boards": [{"0": "s", "1": "t", "2": "r", "3": "i", "4": "n", "5": "g", "type": "html"}]
+            "boards": [
+                {
+                    "0": "s",
+                    "1": "t",
+                    "2": "r",
+                    "3": "i",
+                    "4": "n",
+                    "5": "g",
+                    "type": "html",
+                }
+            ]
         },
         "problemName": "string",
         "problemVersion": 1,
@@ -134,8 +172,12 @@ async def test_get_problem_version(client: SeedTrace, async_client: AsyncSeedTra
         "testcases": ("list", {0: {}}),
         "isPublic": None,
     }
-    response = client.v_2.problem.get_problem_version(problem_id="string", problem_version=1)
+    response = client.v_2.problem.get_problem_version(
+        problem_id="string", problem_version=1
+    )
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.v_2.problem.get_problem_version(problem_id="string", problem_version=1)
+    async_response = await async_client.v_2.problem.get_problem_version(
+        problem_id="string", problem_version=1
+    )
     validate_response(async_response, expected_response, expected_types)
