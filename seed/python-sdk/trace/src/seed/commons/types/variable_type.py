@@ -106,9 +106,5 @@ VariableType = typing.Union[
 from .list_type import ListType  # noqa: E402
 from .map_type import MapType  # noqa: E402
 
-VariableType_ListType.update_forward_refs(
-    ListType=ListType, MapType=MapType, VariableType=VariableType
-)
-VariableType_MapType.update_forward_refs(
-    ListType=ListType, MapType=MapType, VariableType=VariableType
-)
+VariableType_ListType.update_forward_refs(ListType=ListType, MapType=MapType, VariableType=VariableType)
+VariableType_MapType.update_forward_refs(ListType=ListType, MapType=MapType, VariableType=VariableType)

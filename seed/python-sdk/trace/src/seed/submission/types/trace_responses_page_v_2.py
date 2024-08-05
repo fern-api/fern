@@ -15,24 +15,14 @@ class TraceResponsesPageV2(pydantic_v1.BaseModel):
     The offset is the id of the next trace response to load.
     """
 
-    trace_responses: typing.List[TraceResponseV2] = pydantic_v1.Field(
-        alias="traceResponses"
-    )
+    trace_responses: typing.List[TraceResponseV2] = pydantic_v1.Field(alias="traceResponses")
 
     def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {
-            "by_alias": True,
-            "exclude_unset": True,
-            **kwargs,
-        }
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults: typing.Any = {
-            "by_alias": True,
-            "exclude_unset": True,
-            **kwargs,
-        }
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
 
     class Config:

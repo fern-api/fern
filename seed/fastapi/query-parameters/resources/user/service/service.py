@@ -36,7 +36,8 @@ class AbstractUserService(AbstractFernService):
         bytes: str,
         optional_string: typing.Optional[str] = None,
         filter: typing.List[str],
-    ) -> User: ...
+    ) -> User:
+        ...
 
     """
     Below are internal methods used by Fern to register your implementation.
@@ -51,48 +52,26 @@ class AbstractUserService(AbstractFernService):
     def __init_get_username(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_username)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "limit":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=...))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Query(default=...)))
             elif parameter_name == "id":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=...))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Query(default=...)))
             elif parameter_name == "date":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=...))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Query(default=...)))
             elif parameter_name == "deadline":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=...))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Query(default=...)))
             elif parameter_name == "bytes":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=...))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Query(default=...)))
             elif parameter_name == "optional_string":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Query(default=None, alias="optionalString")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Query(default=None, alias="optionalString")))
             elif parameter_name == "filter":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=[]))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Query(default=[])))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_username,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_username, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_username)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> User:

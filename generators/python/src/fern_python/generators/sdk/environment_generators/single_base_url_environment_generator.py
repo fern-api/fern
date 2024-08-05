@@ -7,11 +7,7 @@ from .generated_environment import GeneratedEnvironment
 
 
 class SingleBaseUrlEnvironmentGenerator:
-    def __init__(
-        self,
-        context: SdkGeneratorContext,
-        environments: ir_types.SingleBaseUrlEnvironments,
-    ):
+    def __init__(self, context: SdkGeneratorContext, environments: ir_types.SingleBaseUrlEnvironments):
         self._context = context
         self._environments = environments
 

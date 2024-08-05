@@ -138,9 +138,7 @@ class FastApiGenerator(AbstractGenerator):
     ) -> None:
         filepath = context.get_filepath_for_service(service.name)
         service_file = SourceFileFactory.create(
-            project=project,
-            filepath=filepath,
-            generator_exec_wrapper=generator_exec_wrapper,
+            project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
         )
         ServiceGenerator(context=context, service=service).generate(source_file=service_file)
         project.write_source_file(source_file=service_file, filepath=filepath)
@@ -166,8 +164,7 @@ class FastApiGenerator(AbstractGenerator):
                         source_file=inlined_request_source_file,
                     )
                     project.write_source_file(
-                        source_file=inlined_request_source_file,
-                        filepath=inlined_request_filepath,
+                        source_file=inlined_request_source_file, filepath=inlined_request_filepath
                     )
 
     def _generate_error(
@@ -180,9 +177,7 @@ class FastApiGenerator(AbstractGenerator):
     ) -> None:
         filepath = context.get_filepath_for_error(error.name)
         source_file = SourceFileFactory.create(
-            project=project,
-            filepath=filepath,
-            generator_exec_wrapper=generator_exec_wrapper,
+            project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
         )
         ErrorGenerator(context=context, error=error).generate(source_file=source_file)
         project.write_source_file(source_file=source_file, filepath=filepath)

@@ -29,17 +29,16 @@ class AbstractLiteralService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def create_options(
-        self, *, body: CreateOptionsRequest
-    ) -> CreateOptionsResponse: ...
+    def create_options(self, *, body: CreateOptionsRequest) -> CreateOptionsResponse:
+        ...
 
     @abc.abstractmethod
-    def get_options(self, *, body: GetOptionsRequest) -> Options: ...
+    def get_options(self, *, body: GetOptionsRequest) -> Options:
+        ...
 
     @abc.abstractmethod
-    def get_undiscriminated_options(
-        self, *, body: GetUndiscriminatedOptionsRequest
-    ) -> UndiscriminatedOptions: ...
+    def get_undiscriminated_options(self, *, body: GetUndiscriminatedOptionsRequest) -> UndiscriminatedOptions:
+        ...
 
     """
     Below are internal methods used by Fern to register your implementation.
@@ -56,20 +55,14 @@ class AbstractLiteralService(AbstractFernService):
     def __init_create_options(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.create_options)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.create_options,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.create_options, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.create_options)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> CreateOptionsResponse:
@@ -98,20 +91,14 @@ class AbstractLiteralService(AbstractFernService):
     def __init_get_options(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_options)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_options,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_options, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_options)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> Options:
@@ -140,20 +127,14 @@ class AbstractLiteralService(AbstractFernService):
     def __init_get_undiscriminated_options(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_undiscriminated_options)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_undiscriminated_options,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_undiscriminated_options, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_undiscriminated_options)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> UndiscriminatedOptions:

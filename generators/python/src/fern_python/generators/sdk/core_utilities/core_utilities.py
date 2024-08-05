@@ -174,12 +174,7 @@ class CoreUtilities:
             project.add_dependency(PYDANTIC_DEPENDENCY)
 
     def _copy_file_to_project(
-        self,
-        *,
-        project: Project,
-        relative_filepath_on_disk: str,
-        filepath_in_project: Filepath,
-        exports: Set[str],
+        self, *, project: Project, relative_filepath_on_disk: str, filepath_in_project: Filepath, exports: Set[str]
     ) -> None:
         source = (
             os.path.join(os.path.dirname(__file__), "../../../../../core_utilities/sdk")
@@ -209,8 +204,7 @@ class CoreUtilities:
         return AST.ClassReference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "oauth_token_provider"),
-                named_import="OAuthTokenProvider",
+                module=AST.Module.local(*self._module_path, "oauth_token_provider"), named_import="OAuthTokenProvider"
             ),
         )
 
@@ -218,18 +212,14 @@ class CoreUtilities:
         self, *, status_code: Optional[AST.Expression], body: Optional[AST.Expression]
     ) -> AST.AstNode:
         return self._instantiate_api_error(
-            constructor=AST.Expression(self.get_reference_to_api_error()),
-            status_code=status_code,
-            body=body,
+            constructor=AST.Expression(self.get_reference_to_api_error()), status_code=status_code, body=body
         )
 
     def instantiate_api_error_from_subclass(
         self, *, status_code: Optional[AST.Expression], body: Optional[AST.Expression]
     ) -> AST.AstNode:
         return self._instantiate_api_error(
-            constructor=AST.Expression("super().__init__"),
-            status_code=status_code,
-            body=body,
+            constructor=AST.Expression("super().__init__"), status_code=status_code, body=body
         )
 
     def _instantiate_api_error(
@@ -325,8 +315,7 @@ class CoreUtilities:
                 function_definition=AST.Reference(
                     qualified_name_excluding_import=(),
                     import_=AST.ReferenceImport(
-                        module=AST.Module.local(*self._module_path, "datetime_utils"),
-                        named_import="serialize_datetime",
+                        module=AST.Module.local(*self._module_path, "datetime_utils"), named_import="serialize_datetime"
                     ),
                 ),
                 args=[datetime],
@@ -337,8 +326,7 @@ class CoreUtilities:
         return AST.ClassReference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "request_options"),
-                named_import="RequestOptions",
+                module=AST.Module.local(*self._module_path, "request_options"), named_import="RequestOptions"
             ),
         )
 
@@ -357,8 +345,7 @@ class CoreUtilities:
                 function_definition=AST.Reference(
                     qualified_name_excluding_import=("convert_file_dict_to_httpx_tuples",),
                     import_=AST.ReferenceImport(
-                        module=AST.Module.local(*self._module_path_unnamed),
-                        named_import="core",
+                        module=AST.Module.local(*self._module_path_unnamed), named_import="core"
                     ),
                 ),
                 args=[obj],
@@ -397,8 +384,7 @@ class CoreUtilities:
         field_metadata_reference = AST.ClassReference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "serialization"),
-                named_import="FieldMetadata",
+                module=AST.Module.local(*self._module_path, "serialization"), named_import="FieldMetadata"
             ),
         )
 
@@ -408,8 +394,7 @@ class CoreUtilities:
         return AST.Reference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "unchecked_base_model"),
-                named_import="UnionMetadata",
+                module=AST.Module.local(*self._module_path, "unchecked_base_model"), named_import="UnionMetadata"
             ),
         )
 
@@ -430,8 +415,7 @@ class CoreUtilities:
         return AST.Reference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "unchecked_base_model"),
-                named_import="construct_type",
+                module=AST.Module.local(*self._module_path, "unchecked_base_model"), named_import="construct_type"
             ),
         )
 
@@ -443,10 +427,7 @@ class CoreUtilities:
                     value_being_casted=AST.Expression(
                         AST.FunctionInvocation(
                             function_definition=self.get_construct_type(),
-                            kwargs=[
-                                ("type_", AST.Expression(type_of_obj)),
-                                ("object_", obj),
-                            ],
+                            kwargs=[("type_", AST.Expression(type_of_obj)), ("object_", obj)],
                         )
                     ),
                 )
@@ -490,11 +471,7 @@ class CoreUtilities:
         )
 
     def instantiate_paginator(
-        self,
-        is_async: bool,
-        has_next: AST.Expression,
-        items: AST.Expression,
-        get_next: AST.Expression,
+        self, is_async: bool, has_next: AST.Expression, items: AST.Expression, get_next: AST.Expression
     ) -> AST.Expression:
         return AST.Expression(
             AST.ClassInstantiation(
@@ -548,10 +525,7 @@ class CoreUtilities:
                     value_being_casted=AST.Expression(
                         AST.FunctionInvocation(
                             function_definition=self.get_parse_obj_as(),
-                            kwargs=[
-                                ("type_", AST.Expression(type_of_obj)),
-                                ("object_", obj),
-                            ],
+                            kwargs=[("type_", AST.Expression(type_of_obj)), ("object_", obj)],
                         )
                     ),
                 )
@@ -567,8 +541,7 @@ class CoreUtilities:
         return AST.Reference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "pydantic_utilities"),
-                named_import="parse_obj_as",
+                module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="parse_obj_as"
             ),
         )
 
@@ -577,8 +550,7 @@ class CoreUtilities:
             AST.Reference(
                 qualified_name_excluding_import=(),
                 import_=AST.ReferenceImport(
-                    module=AST.Module.local(*self._module_path, "pydantic_utilities"),
-                    named_import="IS_PYDANTIC_V2",
+                    module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="IS_PYDANTIC_V2"
                 ),
             )
         )

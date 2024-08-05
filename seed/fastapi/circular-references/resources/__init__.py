@@ -4,12 +4,4 @@ from . import a, ast
 from .a import A
 from .ast import ContainerValue, FieldValue, ObjectValue, PrimitiveValue
 
-__all__ = [
-    "A",
-    "ContainerValue",
-    "FieldValue",
-    "ObjectValue",
-    "PrimitiveValue",
-    "a",
-    "ast",
-]
+__all__ = ["A", "ContainerValue", "FieldValue", "ObjectValue", "PrimitiveValue", "a", "ast"]

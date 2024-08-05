@@ -3,9 +3,6 @@
 from .core.security.bearer import BearerToken
 import fastapi
 from .core.security.bearer import HTTPBearer
-
 ApiAuth = BearerToken
-
-
 def FernAuth(auth: BearerToken = fastapi.Depends(HTTPBearer)) -> BearerToken:
     return auth

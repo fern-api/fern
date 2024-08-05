@@ -43,9 +43,7 @@ class GeneratorCli:
             )
 
             self.abstract_generator.generate_project(
-                generator_exec_wrapper=generator_exec_wrapper,
-                ir=ir,
-                generator_config=config,
+                generator_exec_wrapper=generator_exec_wrapper, ir=ir, generator_config=config
             )
             generator_exec_wrapper.send_update(
                 GeneratorUpdate.factory.exit_status_update(

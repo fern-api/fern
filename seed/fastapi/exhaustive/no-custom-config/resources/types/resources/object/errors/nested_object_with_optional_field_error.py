@@ -6,6 +6,4 @@ from ..types.nested_object_with_optional_field import NestedObjectWithOptionalFi
 
 class NestedObjectWithOptionalFieldError(FernHTTPException):
     def __init__(self, error: NestedObjectWithOptionalField):
-        super().__init__(
-            status_code=400, name="NestedObjectWithOptionalFieldError", content=error
-        )
+        super().__init__(status_code=400, name="NestedObjectWithOptionalFieldError", content=error)

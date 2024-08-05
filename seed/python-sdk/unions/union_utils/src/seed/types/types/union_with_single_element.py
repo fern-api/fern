@@ -15,9 +15,7 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def foo(self, value: types_types_foo_Foo) -> UnionWithSingleElement:
         return UnionWithSingleElement(
-            __root__=_UnionWithSingleElement.Foo(
-                **value.dict(exclude_unset=True), type="foo"
-            )
+            __root__=_UnionWithSingleElement.Foo(**value.dict(exclude_unset=True), type="foo")
         )
 
 
@@ -29,37 +27,20 @@ class UnionWithSingleElement(pydantic_v1.BaseModel):
 
     def visit(self, foo: typing.Callable[[types_types_foo_Foo], T_Result]) -> T_Result:
         if self.__root__.type == "foo":
-            return foo(
-                types_types_foo_Foo(
-                    **self.__root__.dict(exclude_unset=True, exclude={"type"})
-                )
-            )
+            return foo(types_types_foo_Foo(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
 
     __root__: _UnionWithSingleElement.Foo
 
     def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {
-            "by_alias": True,
-            "exclude_unset": True,
-            **kwargs,
-        }
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {
-            "by_alias": True,
-            "exclude_unset": True,
-            **kwargs,
-        }
-        kwargs_with_defaults_exclude_none: typing.Any = {
-            "by_alias": True,
-            "exclude_none": True,
-            **kwargs,
-        }
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
 
         return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset),
-            super().dict(**kwargs_with_defaults_exclude_none),
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
         )
 
     class Config:

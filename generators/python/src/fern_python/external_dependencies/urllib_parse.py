@@ -5,8 +5,7 @@ URL_LIB_PARSE_MODULE = AST.Module.built_in(("urllib", "parse"))
 
 def _export(*name: str) -> AST.ClassReference:
     return AST.ClassReference(
-        qualified_name_excluding_import=name,
-        import_=AST.ReferenceImport(module=URL_LIB_PARSE_MODULE),
+        qualified_name_excluding_import=name, import_=AST.ReferenceImport(module=URL_LIB_PARSE_MODULE)
     )
 
 

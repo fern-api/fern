@@ -7,11 +7,7 @@ from .generated_environment import GeneratedEnvironment
 
 
 class MultipleBaseUrlsEnvironmentGenerator:
-    def __init__(
-        self,
-        context: SdkGeneratorContext,
-        environments: ir_types.MultipleBaseUrlsEnvironments,
-    ):
+    def __init__(self, context: SdkGeneratorContext, environments: ir_types.MultipleBaseUrlsEnvironments):
         self._context = context
         self._environments = environments
         self.class_name = self._context.get_class_name_of_environments()
@@ -34,8 +30,7 @@ class MultipleBaseUrlsEnvironmentGenerator:
                     name=class_var_name,
                     type_hint=AST.TypeHint(
                         AST.ClassReference(
-                            qualified_name_excluding_import=(self.class_name,),
-                            is_forward_reference=True,
+                            qualified_name_excluding_import=(self.class_name,), is_forward_reference=True
                         )
                     ),
                     docstring=AST.Docstring(environment.docs) if environment.docs is not None else None,
@@ -93,10 +88,7 @@ class MultipleBaseUrlsEnvironmentGenerator:
         return AST.Expression(AST.CodeWriter(write))
 
     def get_reference_to_base_url(
-        self,
-        *,
-        reference_to_environments: AST.Expression,
-        base_url_id: ir_types.EnvironmentBaseUrlId,
+        self, *, reference_to_environments: AST.Expression, base_url_id: ir_types.EnvironmentBaseUrlId
     ) -> AST.Expression:
         def write(writer: AST.NodeWriter) -> None:
             writer.write_node(reference_to_environments)
@@ -148,8 +140,7 @@ def get_base_url_property_name(base_url: ir_types.EnvironmentBaseUrlWithId) -> s
 
 
 def get_base_url(
-    environments: ir_types.MultipleBaseUrlsEnvironments,
-    base_url_id: ir_types.EnvironmentBaseUrlId,
+    environments: ir_types.MultipleBaseUrlsEnvironments, base_url_id: ir_types.EnvironmentBaseUrlId
 ) -> ir_types.EnvironmentBaseUrlWithId:
     for base_url in environments.base_urls:
         if base_url.id == base_url_id:

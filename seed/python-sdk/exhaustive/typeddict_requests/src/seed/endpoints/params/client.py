@@ -17,9 +17,7 @@ class ParamsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_with_path(
-        self, param: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> str:
+    def get_with_path(self, param: str, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         GET with path param
 
@@ -47,26 +45,18 @@ class ParamsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"params/path/{jsonable_encoder(param)}",
-            method="GET",
-            request_options=request_options,
+            f"params/path/{jsonable_encoder(param)}", method="GET", request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    str, parse_obj_as(type_=str, object_=_response.json())
-                )  # type: ignore
+                return typing.cast(str, parse_obj_as(type_=str, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_with_query(
-        self,
-        *,
-        query: str,
-        number: int,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, query: str, number: int, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         GET with query param
@@ -98,10 +88,7 @@ class ParamsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "params",
-            method="GET",
-            params={"query": query, "number": number},
-            request_options=request_options,
+            "params", method="GET", params={"query": query, "number": number}, request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -148,10 +135,7 @@ class ParamsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "params",
-            method="GET",
-            params={"query": query, "numer": numer},
-            request_options=request_options,
+            "params", method="GET", params={"query": query, "numer": numer}, request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -162,11 +146,7 @@ class ParamsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_with_path_and_query(
-        self,
-        param: str,
-        *,
-        query: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, param: str, *, query: str, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         GET with path and query params
@@ -212,11 +192,7 @@ class ParamsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def modify_with_path(
-        self,
-        param: str,
-        *,
-        request: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, param: str, *, request: str, request_options: typing.Optional[RequestOptions] = None
     ) -> str:
         """
         PUT to update with path param
@@ -256,9 +232,7 @@ class ParamsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    str, parse_obj_as(type_=str, object_=_response.json())
-                )  # type: ignore
+                return typing.cast(str, parse_obj_as(type_=str, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -269,9 +243,7 @@ class AsyncParamsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_with_path(
-        self, param: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> str:
+    async def get_with_path(self, param: str, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         GET with path param
 
@@ -307,26 +279,18 @@ class AsyncParamsClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"params/path/{jsonable_encoder(param)}",
-            method="GET",
-            request_options=request_options,
+            f"params/path/{jsonable_encoder(param)}", method="GET", request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    str, parse_obj_as(type_=str, object_=_response.json())
-                )  # type: ignore
+                return typing.cast(str, parse_obj_as(type_=str, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_with_query(
-        self,
-        *,
-        query: str,
-        number: int,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, query: str, number: int, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         GET with query param
@@ -366,10 +330,7 @@ class AsyncParamsClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "params",
-            method="GET",
-            params={"query": query, "number": number},
-            request_options=request_options,
+            "params", method="GET", params={"query": query, "number": number}, request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -424,10 +385,7 @@ class AsyncParamsClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "params",
-            method="GET",
-            params={"query": query, "numer": numer},
-            request_options=request_options,
+            "params", method="GET", params={"query": query, "numer": numer}, request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -438,11 +396,7 @@ class AsyncParamsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_with_path_and_query(
-        self,
-        param: str,
-        *,
-        query: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, param: str, *, query: str, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         GET with path and query params
@@ -496,11 +450,7 @@ class AsyncParamsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def modify_with_path(
-        self,
-        param: str,
-        *,
-        request: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, param: str, *, request: str, request_options: typing.Optional[RequestOptions] = None
     ) -> str:
         """
         PUT to update with path param
@@ -548,9 +498,7 @@ class AsyncParamsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    str, parse_obj_as(type_=str, object_=_response.json())
-                )  # type: ignore
+                return typing.cast(str, parse_obj_as(type_=str, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

@@ -28,6 +28,4 @@ class SubmissionTypeState_Workspace(WorkspaceSubmissionState):
         populate_by_name = True
 
 
-SubmissionTypeState = typing.Union[
-    SubmissionTypeState_Test, SubmissionTypeState_Workspace
-]
+SubmissionTypeState = typing.Union[SubmissionTypeState_Test, SubmissionTypeState_Workspace]

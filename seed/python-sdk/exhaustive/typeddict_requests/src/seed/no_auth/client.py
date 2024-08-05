@@ -19,10 +19,7 @@ class NoAuthClient:
         self._client_wrapper = client_wrapper
 
     def post_with_no_auth(
-        self,
-        *,
-        request: typing.Any,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None
     ) -> bool:
         """
         POST request with no auth
@@ -51,25 +48,14 @@ class NoAuthClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "no-auth",
-            method="POST",
-            json=request,
-            request_options=request_options,
-            omit=OMIT,
+            "no-auth", method="POST", json=request, request_options=request_options, omit=OMIT
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    bool, parse_obj_as(type_=bool, object_=_response.json())
-                )  # type: ignore
+                return typing.cast(bool, parse_obj_as(type_=bool, object_=_response.json()))  # type: ignore
             if _response.status_code == 400:
                 raise BadRequestBody(
-                    typing.cast(
-                        BadObjectRequestInfo,
-                        parse_obj_as(
-                            type_=BadObjectRequestInfo, object_=_response.json()
-                        ),
-                    )  # type: ignore
+                    typing.cast(BadObjectRequestInfo, parse_obj_as(type_=BadObjectRequestInfo, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -82,10 +68,7 @@ class AsyncNoAuthClient:
         self._client_wrapper = client_wrapper
 
     async def post_with_no_auth(
-        self,
-        *,
-        request: typing.Any,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None
     ) -> bool:
         """
         POST request with no auth
@@ -122,25 +105,14 @@ class AsyncNoAuthClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "no-auth",
-            method="POST",
-            json=request,
-            request_options=request_options,
-            omit=OMIT,
+            "no-auth", method="POST", json=request, request_options=request_options, omit=OMIT
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    bool, parse_obj_as(type_=bool, object_=_response.json())
-                )  # type: ignore
+                return typing.cast(bool, parse_obj_as(type_=bool, object_=_response.json()))  # type: ignore
             if _response.status_code == 400:
                 raise BadRequestBody(
-                    typing.cast(
-                        BadObjectRequestInfo,
-                        parse_obj_as(
-                            type_=BadObjectRequestInfo, object_=_response.json()
-                        ),
-                    )  # type: ignore
+                    typing.cast(BadObjectRequestInfo, parse_obj_as(type_=BadObjectRequestInfo, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:

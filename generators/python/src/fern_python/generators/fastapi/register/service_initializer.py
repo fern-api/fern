@@ -6,12 +6,7 @@ from ..context import FastApiGeneratorContext
 
 
 class ServiceInitializer:
-    def __init__(
-        self,
-        service: ir_types.HttpService,
-        context: FastApiGeneratorContext,
-        is_in_development: bool,
-    ):
+    def __init__(self, service: ir_types.HttpService, context: FastApiGeneratorContext, is_in_development: bool):
         self._service = service
         self._context = context
         self.is_in_development = is_in_development

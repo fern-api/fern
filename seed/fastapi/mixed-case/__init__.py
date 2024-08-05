@@ -2,11 +2,4 @@
 
 from .resources import NestedUser, Organization, Resource, ResourceStatus, User, service
 
-__all__ = [
-    "NestedUser",
-    "Organization",
-    "Resource",
-    "ResourceStatus",
-    "User",
-    "service",
-]
+__all__ = ["NestedUser", "Organization", "Resource", "ResourceStatus", "User", "service"]

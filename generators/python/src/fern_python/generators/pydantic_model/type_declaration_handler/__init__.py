@@ -5,9 +5,4 @@ from .type_declaration_snippet_generator_builder import (
     TypeDeclarationSnippetGeneratorBuilder,
 )
 
-__all__ = [
-    "EnumSnippetGenerator",
-    "ObjectProperty",
-    "TypeDeclarationHandler",
-    "TypeDeclarationSnippetGeneratorBuilder",
-]
+__all__ = ["EnumSnippetGenerator", "ObjectProperty", "TypeDeclarationHandler", "TypeDeclarationSnippetGeneratorBuilder"]

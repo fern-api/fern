@@ -52,27 +52,16 @@ class ImportsManager:
         self._has_written_top_imports = True
 
     def write_top_imports_for_statement(
-        self,
-        *,
-        statement_id: StatementId,
-        writer: AST.NodeWriter,
-        reference_resolver: ReferenceResolverImpl,
+        self, *, statement_id: StatementId, writer: AST.NodeWriter, reference_resolver: ReferenceResolverImpl
     ) -> None:
         if not self._has_written_top_imports:
             raise RuntimeError("Top imports haven't been written yet")
 
         # write (and forget) all imports that have no constraints
         written_imports: Set[AST.ReferenceImport] = set()
-        for (
-            import_,
-            statements_that_must_precede_it,
-        ) in self._import_to_statements_that_must_precede_it.items():
+        for import_, statements_that_must_precede_it in self._import_to_statements_that_must_precede_it.items():
             if len(statements_that_must_precede_it) == 0:
-                self._write_import(
-                    import_=import_,
-                    writer=writer,
-                    reference_resolver=reference_resolver,
-                )
+                self._write_import(import_=import_, writer=writer, reference_resolver=reference_resolver)
                 written_imports.add(import_)
             elif statement_id in statements_that_must_precede_it:
                 statements_that_must_precede_it.remove(statement_id)
@@ -81,22 +70,14 @@ class ImportsManager:
 
         # write all the imports that must be un-type checked (e.g. for circular references)
         if len(self._if_type_checking_imports.items()) > 0:
-            self._write_import(
-                import_=TYPING_REFERENCE_IMPORT,
-                writer=writer,
-                reference_resolver=reference_resolver,
-            )
+            self._write_import(import_=TYPING_REFERENCE_IMPORT, writer=writer, reference_resolver=reference_resolver)
             writer.write("if ")
             writer.write_node(AST.TypeHint.type_checking())
             writer.write_line(":")
             with writer.indent():
                 un_type_checked_written_imports: Set[AST.ReferenceImport] = set()
                 for import_, _ in self._if_type_checking_imports.items():
-                    self._write_import(
-                        import_=import_,
-                        writer=writer,
-                        reference_resolver=reference_resolver,
-                    )
+                    self._write_import(import_=import_, writer=writer, reference_resolver=reference_resolver)
                     un_type_checked_written_imports.add(import_)
             for import_ in un_type_checked_written_imports:
                 del self._if_type_checking_imports[import_]
@@ -115,10 +96,7 @@ class ImportsManager:
             self._write_import(import_=import_, writer=writer, reference_resolver=reference_resolver)
 
     def _write_import(
-        self,
-        import_: AST.ReferenceImport,
-        writer: AST.NodeWriter,
-        reference_resolver: ReferenceResolverImpl,
+        self, import_: AST.ReferenceImport, writer: AST.NodeWriter, reference_resolver: ReferenceResolverImpl
     ) -> None:
         resolved_import = reference_resolver.resolve_import(import_)
         if resolved_import.import_ is not None:

@@ -6,9 +6,7 @@ import typing
 
 from .non_void_function_signature import NonVoidFunctionSignature
 from .void_function_signature import VoidFunctionSignature
-from .void_function_signature_that_takes_actual_result import (
-    VoidFunctionSignatureThatTakesActualResult,
-)
+from .void_function_signature_that_takes_actual_result import VoidFunctionSignatureThatTakesActualResult
 
 
 class FunctionSignature_Void(VoidFunctionSignature):
@@ -31,9 +29,7 @@ class FunctionSignature_NonVoid(NonVoidFunctionSignature):
         populate_by_name = True
 
 
-class FunctionSignature_VoidThatTakesActualResult(
-    VoidFunctionSignatureThatTakesActualResult
-):
+class FunctionSignature_VoidThatTakesActualResult(VoidFunctionSignatureThatTakesActualResult):
     type: typing.Literal["voidThatTakesActualResult"] = "voidThatTakesActualResult"
 
     class Config:
@@ -44,7 +40,5 @@ class FunctionSignature_VoidThatTakesActualResult(
 
 
 FunctionSignature = typing.Union[
-    FunctionSignature_Void,
-    FunctionSignature_NonVoid,
-    FunctionSignature_VoidThatTakesActualResult,
+    FunctionSignature_Void, FunctionSignature_NonVoid, FunctionSignature_VoidThatTakesActualResult
 ]

@@ -24,7 +24,8 @@ class AbstractServiceService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def nop(self, *, nested_id: str) -> None: ...
+    def nop(self, *, nested_id: str) -> None:
+        ...
 
     """
     Below are internal methods used by Fern to register your implementation.
@@ -39,20 +40,14 @@ class AbstractServiceService(AbstractFernService):
     def __init_nop(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.nop)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "nested_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.nop,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.nop, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.nop)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:

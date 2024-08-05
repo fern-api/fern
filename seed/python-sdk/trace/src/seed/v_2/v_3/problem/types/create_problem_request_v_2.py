@@ -14,33 +14,19 @@ from .test_case_v_2 import TestCaseV2
 
 class CreateProblemRequestV2(pydantic_v1.BaseModel):
     problem_name: str = pydantic_v1.Field(alias="problemName")
-    problem_description: ProblemDescription = pydantic_v1.Field(
-        alias="problemDescription"
-    )
+    problem_description: ProblemDescription = pydantic_v1.Field(alias="problemDescription")
     custom_files: CustomFiles = pydantic_v1.Field(alias="customFiles")
-    custom_test_case_templates: typing.List[TestCaseTemplate] = pydantic_v1.Field(
-        alias="customTestCaseTemplates"
-    )
+    custom_test_case_templates: typing.List[TestCaseTemplate] = pydantic_v1.Field(alias="customTestCaseTemplates")
     testcases: typing.List[TestCaseV2]
-    supported_languages: typing.Set[Language] = pydantic_v1.Field(
-        alias="supportedLanguages"
-    )
+    supported_languages: typing.Set[Language] = pydantic_v1.Field(alias="supportedLanguages")
     is_public: bool = pydantic_v1.Field(alias="isPublic")
 
     def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {
-            "by_alias": True,
-            "exclude_unset": True,
-            **kwargs,
-        }
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults: typing.Any = {
-            "by_alias": True,
-            "exclude_unset": True,
-            **kwargs,
-        }
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
 
     class Config:

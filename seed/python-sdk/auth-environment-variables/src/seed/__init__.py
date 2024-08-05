@@ -4,9 +4,4 @@ from . import service
 from .client import AsyncSeedAuthEnvironmentVariables, SeedAuthEnvironmentVariables
 from .version import __version__
 
-__all__ = [
-    "AsyncSeedAuthEnvironmentVariables",
-    "SeedAuthEnvironmentVariables",
-    "__version__",
-    "service",
-]
+__all__ = ["AsyncSeedAuthEnvironmentVariables", "SeedAuthEnvironmentVariables", "__version__", "service"]

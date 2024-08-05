@@ -129,9 +129,7 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
     def _get_property_name(self, property: ir_types.InlinedRequestBodyProperty) -> str:
         return property.name.name.snake_case.safe_name
 
-    def _get_all_properties_for_inlined_request_body(
-        self,
-    ) -> List[ir_types.InlinedRequestBodyProperty]:
+    def _get_all_properties_for_inlined_request_body(self) -> List[ir_types.InlinedRequestBodyProperty]:
         if self._type_id is None:
             raise RuntimeError("Request body type is not defined, this should never happen.")
         object_properties = self._context.pydantic_generator_context.get_all_properties_including_extensions(

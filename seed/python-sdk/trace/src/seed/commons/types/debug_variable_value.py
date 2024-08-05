@@ -157,12 +157,8 @@ from .debug_key_value_pairs import DebugKeyValuePairs  # noqa: E402
 from .debug_map_value import DebugMapValue  # noqa: E402
 
 DebugVariableValue_MapValue.update_forward_refs(
-    DebugKeyValuePairs=DebugKeyValuePairs,
-    DebugMapValue=DebugMapValue,
-    DebugVariableValue=DebugVariableValue,
+    DebugKeyValuePairs=DebugKeyValuePairs, DebugMapValue=DebugMapValue, DebugVariableValue=DebugVariableValue
 )
 DebugVariableValue_ListValue.update_forward_refs(
-    DebugKeyValuePairs=DebugKeyValuePairs,
-    DebugMapValue=DebugMapValue,
-    DebugVariableValue=DebugVariableValue,
+    DebugKeyValuePairs=DebugKeyValuePairs, DebugMapValue=DebugMapValue, DebugVariableValue=DebugVariableValue
 )

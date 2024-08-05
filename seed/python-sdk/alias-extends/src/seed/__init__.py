@@ -4,11 +4,4 @@ from .types import AliasType, Child, Parent
 from .client import AsyncSeedAliasExtends, SeedAliasExtends
 from .version import __version__
 
-__all__ = [
-    "AliasType",
-    "AsyncSeedAliasExtends",
-    "Child",
-    "Parent",
-    "SeedAliasExtends",
-    "__version__",
-]
+__all__ = ["AliasType", "AsyncSeedAliasExtends", "Child", "Parent", "SeedAliasExtends", "__version__"]

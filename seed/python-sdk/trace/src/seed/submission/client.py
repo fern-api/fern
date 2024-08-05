@@ -20,10 +20,7 @@ class SubmissionClient:
         self._client_wrapper = client_wrapper
 
     def create_execution_session(
-        self,
-        language: Language,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, language: Language, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ExecutionSessionResponse:
         """
         Returns sessionId and execution server URL for session. Spins up server.
@@ -46,41 +43,27 @@ class SubmissionClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/",
-                f"sessions/create-session/{jsonable_encoder(language)}",
+                f"{self._client_wrapper.get_base_url()}/", f"sessions/create-session/{jsonable_encoder(language)}"
             ),
             params=jsonable_encoder(
-                request_options.get("additional_query_parameters")
-                if request_options is not None
-                else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
-            json=jsonable_encoder(
-                remove_none_from_dict(
-                    request_options.get("additional_body_parameters", {})
-                )
-            )
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
             if request_options is not None
             else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(
-                            request_options.get("additional_headers", {})
-                            if request_options is not None
-                            else {}
-                        ),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
             timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None
-            and request_options.get("timeout_in_seconds") is not None
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get("max_retries")
-            if request_options is not None
-            else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         try:
             _response_json = _response.json()
@@ -91,10 +74,7 @@ class SubmissionClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_execution_session(
-        self,
-        session_id: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, session_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Optional[ExecutionSessionResponse]:
         """
         Returns execution server URL for session. Returns empty if session isn't registered.
@@ -116,51 +96,34 @@ class SubmissionClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/",
-                f"sessions/{jsonable_encoder(session_id)}",
-            ),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"sessions/{jsonable_encoder(session_id)}"),
             params=jsonable_encoder(
-                request_options.get("additional_query_parameters")
-                if request_options is not None
-                else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(
-                            request_options.get("additional_headers", {})
-                            if request_options is not None
-                            else {}
-                        ),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
             timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None
-            and request_options.get("timeout_in_seconds") is not None
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get("max_retries")
-            if request_options is not None
-            else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(
-                typing.Optional[ExecutionSessionResponse], _response_json
-            )  # type: ignore
+            return pydantic_v1.parse_obj_as(typing.Optional[ExecutionSessionResponse], _response_json)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def stop_execution_session(
-        self,
-        session_id: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, session_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Stops execution session.
@@ -183,34 +146,24 @@ class SubmissionClient:
         _response = self._client_wrapper.httpx_client.request(
             "DELETE",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/",
-                f"sessions/stop/{jsonable_encoder(session_id)}",
+                f"{self._client_wrapper.get_base_url()}/", f"sessions/stop/{jsonable_encoder(session_id)}"
             ),
             params=jsonable_encoder(
-                request_options.get("additional_query_parameters")
-                if request_options is not None
-                else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(
-                            request_options.get("additional_headers", {})
-                            if request_options is not None
-                            else {}
-                        ),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
             timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None
-            and request_options.get("timeout_in_seconds") is not None
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get("max_retries")
-            if request_options is not None
-            else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return
@@ -237,44 +190,30 @@ class SubmissionClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/",
-                "sessions/execution-sessions-state",
-            ),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "sessions/execution-sessions-state"),
             params=jsonable_encoder(
-                request_options.get("additional_query_parameters")
-                if request_options is not None
-                else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(
-                            request_options.get("additional_headers", {})
-                            if request_options is not None
-                            else {}
-                        ),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
             timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None
-            and request_options.get("timeout_in_seconds") is not None
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get("max_retries")
-            if request_options is not None
-            else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(
-                GetExecutionSessionStateResponse, _response_json
-            )  # type: ignore
+            return pydantic_v1.parse_obj_as(GetExecutionSessionStateResponse, _response_json)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
@@ -283,10 +222,7 @@ class AsyncSubmissionClient:
         self._client_wrapper = client_wrapper
 
     async def create_execution_session(
-        self,
-        language: Language,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, language: Language, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ExecutionSessionResponse:
         """
         Returns sessionId and execution server URL for session. Spins up server.
@@ -309,41 +245,27 @@ class AsyncSubmissionClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/",
-                f"sessions/create-session/{jsonable_encoder(language)}",
+                f"{self._client_wrapper.get_base_url()}/", f"sessions/create-session/{jsonable_encoder(language)}"
             ),
             params=jsonable_encoder(
-                request_options.get("additional_query_parameters")
-                if request_options is not None
-                else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
-            json=jsonable_encoder(
-                remove_none_from_dict(
-                    request_options.get("additional_body_parameters", {})
-                )
-            )
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
             if request_options is not None
             else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(
-                            request_options.get("additional_headers", {})
-                            if request_options is not None
-                            else {}
-                        ),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
             timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None
-            and request_options.get("timeout_in_seconds") is not None
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get("max_retries")
-            if request_options is not None
-            else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         try:
             _response_json = _response.json()
@@ -354,10 +276,7 @@ class AsyncSubmissionClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_execution_session(
-        self,
-        session_id: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, session_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Optional[ExecutionSessionResponse]:
         """
         Returns execution server URL for session. Returns empty if session isn't registered.
@@ -379,51 +298,34 @@ class AsyncSubmissionClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/",
-                f"sessions/{jsonable_encoder(session_id)}",
-            ),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"sessions/{jsonable_encoder(session_id)}"),
             params=jsonable_encoder(
-                request_options.get("additional_query_parameters")
-                if request_options is not None
-                else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(
-                            request_options.get("additional_headers", {})
-                            if request_options is not None
-                            else {}
-                        ),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
             timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None
-            and request_options.get("timeout_in_seconds") is not None
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get("max_retries")
-            if request_options is not None
-            else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(
-                typing.Optional[ExecutionSessionResponse], _response_json
-            )  # type: ignore
+            return pydantic_v1.parse_obj_as(typing.Optional[ExecutionSessionResponse], _response_json)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def stop_execution_session(
-        self,
-        session_id: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, session_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Stops execution session.
@@ -446,34 +348,24 @@ class AsyncSubmissionClient:
         _response = await self._client_wrapper.httpx_client.request(
             "DELETE",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/",
-                f"sessions/stop/{jsonable_encoder(session_id)}",
+                f"{self._client_wrapper.get_base_url()}/", f"sessions/stop/{jsonable_encoder(session_id)}"
             ),
             params=jsonable_encoder(
-                request_options.get("additional_query_parameters")
-                if request_options is not None
-                else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(
-                            request_options.get("additional_headers", {})
-                            if request_options is not None
-                            else {}
-                        ),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
             timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None
-            and request_options.get("timeout_in_seconds") is not None
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get("max_retries")
-            if request_options is not None
-            else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return
@@ -500,42 +392,28 @@ class AsyncSubmissionClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/",
-                "sessions/execution-sessions-state",
-            ),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "sessions/execution-sessions-state"),
             params=jsonable_encoder(
-                request_options.get("additional_query_parameters")
-                if request_options is not None
-                else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(
-                            request_options.get("additional_headers", {})
-                            if request_options is not None
-                            else {}
-                        ),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
             timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None
-            and request_options.get("timeout_in_seconds") is not None
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get("max_retries")
-            if request_options is not None
-            else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(
-                GetExecutionSessionStateResponse, _response_json
-            )  # type: ignore
+            return pydantic_v1.parse_obj_as(GetExecutionSessionStateResponse, _response_json)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)

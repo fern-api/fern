@@ -43,8 +43,7 @@ class CursorPagination(Paginator):
     def init_get_next(self, *, writer: AST.NodeWriter) -> None:
         writer.write("lambda: ")
         page_parameter_name = self.cursor.page.property.visit(
-            body=lambda b: b.name.name.snake_case.safe_name,
-            query=lambda q: q.name.name.snake_case.safe_name,
+            body=lambda b: b.name.name.snake_case.safe_name, query=lambda q: q.name.name.snake_case.safe_name
         )
         writer.write(f"self.{self._config.endpoint_name}(")
         for parameter in self._config.parameters:

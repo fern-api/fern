@@ -5,11 +5,4 @@ from .client import AsyncSeedUnknownAsAny, SeedUnknownAsAny
 from .unknown import MyAlias, MyObject
 from .version import __version__
 
-__all__ = [
-    "AsyncSeedUnknownAsAny",
-    "MyAlias",
-    "MyObject",
-    "SeedUnknownAsAny",
-    "__version__",
-    "unknown",
-]
+__all__ = ["AsyncSeedUnknownAsAny", "MyAlias", "MyObject", "SeedUnknownAsAny", "__version__", "unknown"]

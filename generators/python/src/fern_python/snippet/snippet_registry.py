@@ -30,10 +30,7 @@ class SnippetRegistry:
             types[generator_exec.TypeId(typeId)] = self._expression_to_snippet_str(expr)
 
         endpoints: List[generator_exec.Endpoint] = []
-        for (
-            endpointId,
-            sync_endpoint_expressions,
-        ) in self._sync_client_endpoint_snippets.items():
+        for endpointId, sync_endpoint_expressions in self._sync_client_endpoint_snippets.items():
             for idx, expression in enumerate(sync_endpoint_expressions):
                 endpoints.append(
                     generator_exec.Endpoint(

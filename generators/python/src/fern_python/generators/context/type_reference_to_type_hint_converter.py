@@ -52,10 +52,7 @@ class TypeReferenceToTypeHintConverter:
     ) -> AST.TypeHint:
         is_primative = self._context.get_declaration_for_type_id(name.type_id).shape.visit(
             alias=lambda alias_td: alias_td.resolved_type.visit(
-                container=lambda c: False,
-                named=lambda n: False,
-                primitive=lambda p: True,
-                unknown=lambda: False,
+                container=lambda c: False, named=lambda n: False, primitive=lambda p: True, unknown=lambda: False
             ),
             enum=lambda enum_td: True,
             object=lambda object_td: False,

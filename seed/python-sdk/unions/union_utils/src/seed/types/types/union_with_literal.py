@@ -13,9 +13,7 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def fern(self, value: typing.Literal["fern"]) -> UnionWithLiteral:
-        return UnionWithLiteral(
-            __root__=_UnionWithLiteral.Fern(type="fern", value=value)
-        )
+        return UnionWithLiteral(__root__=_UnionWithLiteral.Fern(type="fern", value=value))
 
 
 class UnionWithLiteral(pydantic_v1.BaseModel):
@@ -24,37 +22,22 @@ class UnionWithLiteral(pydantic_v1.BaseModel):
     def get_as_union(self) -> _UnionWithLiteral.Fern:
         return self.__root__
 
-    def visit(
-        self, fern: typing.Callable[[typing.Literal["fern"]], T_Result]
-    ) -> T_Result:
+    def visit(self, fern: typing.Callable[[typing.Literal["fern"]], T_Result]) -> T_Result:
         if self.__root__.type == "fern":
             return fern(self.__root__.value)
 
     __root__: _UnionWithLiteral.Fern
 
     def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {
-            "by_alias": True,
-            "exclude_unset": True,
-            **kwargs,
-        }
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {
-            "by_alias": True,
-            "exclude_unset": True,
-            **kwargs,
-        }
-        kwargs_with_defaults_exclude_none: typing.Any = {
-            "by_alias": True,
-            "exclude_none": True,
-            **kwargs,
-        }
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
 
         return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset),
-            super().dict(**kwargs_with_defaults_exclude_none),
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
         )
 
     class Config:

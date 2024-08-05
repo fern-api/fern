@@ -152,9 +152,7 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
             if endpoint is not None:
                 has_parameters = self._endpoint_metadata.has_parameters(endpoint_id)
 
-                def _get_error_writer(
-                    current_endpoint: EndpointMetadata,
-                ) -> AST.CodeWriterFunction:
+                def _get_error_writer(current_endpoint: EndpointMetadata) -> AST.CodeWriterFunction:
                     def _error_writer(writer: AST.NodeWriter) -> None:
                         writer.write_line("try:")
                         with writer.indent():
@@ -208,14 +206,8 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
                         AST.ClassInstantiation(
                             class_=HttpX.CLIENT,
                             kwargs=[
-                                (
-                                    "proxies",
-                                    AST.Expression('"http://my.test.proxy.example.com"'),
-                                ),
-                                (
-                                    "transport",
-                                    AST.Expression('httpx.HTTPTransport(local_address="0.0.0.0")'),
-                                ),
+                                ("proxies", AST.Expression('"http://my.test.proxy.example.com"')),
+                                ("transport", AST.Expression('httpx.HTTPTransport(local_address="0.0.0.0")')),
                             ],
                         )
                     ),
@@ -319,8 +311,7 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
 
         # Prefer POST endpoints because they include better request structures in snippets.
         default_endpoint = next(
-            (endpoint for endpoint in filtered_snippet_endpoints if endpoint.id.method == "POST"),
-            None,
+            (endpoint for endpoint in filtered_snippet_endpoints if endpoint.id.method == "POST"), None
         )
         if default_endpoint is None:
             if len(snippets.endpoints) == 0:

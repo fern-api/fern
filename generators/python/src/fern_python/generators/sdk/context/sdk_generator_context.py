@@ -49,10 +49,7 @@ class SdkGeneratorContext(ABC):
 
         # This should be replaced with `hasPaginatedEndpoints` in the IR, but that's on IR44, not 39, which is what Python's on
         _has_paginated_endpoints = any(
-            map(
-                lambda service: any(map(lambda ep: ep.pagination is not None, service.endpoints)),
-                ir.services.values(),
-            )
+            map(lambda service: any(map(lambda ep: ep.pagination is not None, service.endpoints)), ir.services.values())
         )
         self.core_utilities = CoreUtilities(
             allow_skipping_validation=custom_config.pydantic_config.skip_validation,

@@ -36,10 +36,7 @@ class Module:
 
     @staticmethod
     def external(
-        module_path: ModulePath,
-        *,
-        dependency: Dependency,
-        types_package: Optional[Dependency] = None,
+        module_path: ModulePath, *, dependency: Dependency, types_package: Optional[Dependency] = None
     ) -> Module:
         return Module(path=module_path, source=dependency, types_package=types_package)
 

@@ -69,8 +69,7 @@ class EndpointResponseCodeWriter:
             writer.write(f"{EndpointResponseCodeWriter.EVENT_SOURCE_VARIABLE} = ")
             writer.write_node(
                 AST.ClassInstantiation(
-                    HttpxSSE.EVENT_SOURCE,
-                    [AST.Expression(EndpointResponseCodeWriter.RESPONSE_VARIABLE)],
+                    HttpxSSE.EVENT_SOURCE, [AST.Expression(EndpointResponseCodeWriter.RESPONSE_VARIABLE)]
                 )
             )
             writer.write_newline_if_last_line_not()
@@ -149,11 +148,7 @@ class EndpointResponseCodeWriter:
             return "iter_sse"
 
     def _handle_success_json(
-        self,
-        *,
-        writer: AST.NodeWriter,
-        json_response: ir_types.JsonResponse,
-        use_response_json: bool,
+        self, *, writer: AST.NodeWriter, json_response: ir_types.JsonResponse, use_response_json: bool
     ) -> None:
         pydantic_parse_expression = self._context.core_utilities.get_construct(
             self._get_json_response_body_type(json_response),
@@ -222,9 +217,7 @@ class EndpointResponseCodeWriter:
                 else:
                     self._response.body.visit(
                         json=lambda json_response: self._handle_success_json(
-                            writer=writer,
-                            json_response=json_response,
-                            use_response_json=False,
+                            writer=writer, json_response=json_response, use_response_json=False
                         ),
                         streaming=lambda stream_response: self._handle_success_stream(
                             writer=writer, stream_response=stream_response
@@ -232,15 +225,12 @@ class EndpointResponseCodeWriter:
                         file_download=lambda _: self._handle_success_file_download(writer=writer),
                         text=lambda _: self._handle_success_text(writer=writer),
                         stream_parameter=lambda stream_param_response: self._handle_success_stream(
-                            writer=writer,
-                            stream_response=stream_param_response.stream_response,
+                            writer=writer, stream_response=stream_param_response.stream_response
                         )
                         if self._streaming_parameter == "streaming"
                         else stream_param_response.non_stream_response.visit(
                             json=lambda json_response: self._handle_success_json(
-                                writer=writer,
-                                json_response=json_response,
-                                use_response_json=False,
+                                writer=writer, json_response=json_response, use_response_json=False
                             ),
                             file_download=lambda _: self._handle_success_file_download(writer=writer),
                             text=lambda _: self._handle_success_text(writer=writer),
@@ -316,9 +306,7 @@ class EndpointResponseCodeWriter:
             else:
                 self._response.body.visit(
                     json=lambda json_response: self._handle_success_json(
-                        writer=writer,
-                        json_response=json_response,
-                        use_response_json=True,
+                        writer=writer, json_response=json_response, use_response_json=True
                     ),
                     streaming=lambda stream_response: self._handle_success_stream(
                         writer=writer, stream_response=stream_response
@@ -326,15 +314,12 @@ class EndpointResponseCodeWriter:
                     file_download=lambda _: self._handle_success_file_download(writer=writer),
                     text=lambda _: self._handle_success_text(writer=writer),
                     stream_parameter=lambda stream_param_response: self._handle_success_stream(
-                        writer=writer,
-                        stream_response=stream_param_response.stream_response,
+                        writer=writer, stream_response=stream_param_response.stream_response
                     )
                     if self._streaming_parameter == "streaming"
                     else stream_param_response.non_stream_response.visit(
                         json=lambda json_response: self._handle_success_json(
-                            writer=writer,
-                            json_response=json_response,
-                            use_response_json=False,
+                            writer=writer, json_response=json_response, use_response_json=False
                         ),
                         file_download=lambda _: self._handle_success_file_download(writer=writer),
                         text=lambda _: self._handle_success_text(writer=writer),
@@ -391,10 +376,7 @@ class EndpointResponseCodeWriter:
         )
 
     def _try_deserialize_json_response(
-        self,
-        *,
-        writer: AST.NodeWriter,
-        response_handler: Optional[Callable[[AST.NodeWriter], None]] = None,
+        self, *, writer: AST.NodeWriter, response_handler: Optional[Callable[[AST.NodeWriter], None]] = None
     ) -> None:
         writer.write_line("try:")
         with writer.indent():

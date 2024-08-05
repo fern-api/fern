@@ -140,10 +140,7 @@ class PydanticModel:
         return self._fields
 
     def add_private_instance_field(
-        self,
-        name: str,
-        type_hint: AST.TypeHint,
-        default_factory: Optional[AST.Expression] = None,
+        self, name: str, type_hint: AST.TypeHint, default_factory: Optional[AST.Expression] = None
     ) -> None:
         if not name.startswith("_"):
             raise RuntimeError(
@@ -165,12 +162,7 @@ class PydanticModel:
     def add_statement(self, statement: AST.AstNode) -> None:
         self._class_declaration.add_statement(statement)
 
-    def add_class_var(
-        self,
-        name: str,
-        type_hint: AST.TypeHint,
-        initializer: Optional[AST.Expression] = None,
-    ) -> None:
+    def add_class_var(self, name: str, type_hint: AST.TypeHint, initializer: Optional[AST.Expression] = None) -> None:
         self._class_declaration.add_class_var(
             AST.VariableDeclaration(
                 name=name,
@@ -224,12 +216,7 @@ class PydanticModel:
         )
 
     def add_root_validator(
-        self,
-        *,
-        validator_name: str,
-        body: AST.CodeWriter,
-        should_use_partial_type: bool = False,
-        pre: bool = False,
+        self, *, validator_name: str, body: AST.CodeWriter, should_use_partial_type: bool = False, pre: bool = False
     ) -> None:
         value_type = (
             AST.TypeHint(type=self.get_reference_to_partial_class())
@@ -243,10 +230,7 @@ class PydanticModel:
                 name=validator_name,
                 signature=AST.FunctionSignature(
                     parameters=[
-                        AST.FunctionParameter(
-                            name=PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME,
-                            type_hint=value_type,
-                        )
+                        AST.FunctionParameter(name=PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME, type_hint=value_type)
                     ],
                     return_type=value_type,
                 ),
@@ -293,10 +277,7 @@ class PydanticModel:
 
     def get_reference_to_partial_class(self) -> AST.ClassReference:
         return AST.ClassReference(
-            qualified_name_excluding_import=(
-                self.name,
-                PydanticModel._PARTIAL_CLASS_NAME,
-            ),
+            qualified_name_excluding_import=(self.name, PydanticModel._PARTIAL_CLASS_NAME),
             is_forward_reference=True,
         )
 
@@ -343,13 +324,7 @@ class PydanticModel:
                     function_definition=self._update_forward_ref_function_reference,
                     args=[AST.Expression(self._local_class_reference)],
                     kwargs=sorted(
-                        [
-                            (
-                                get_named_import_or_throw(reference),
-                                AST.Expression(reference),
-                            )
-                            for reference in localns
-                        ],
+                        [(get_named_import_or_throw(reference), AST.Expression(reference)) for reference in localns],
                         # sort by name for consistency
                         key=lambda kwarg: kwarg[0],
                     ),

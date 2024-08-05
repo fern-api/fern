@@ -68,8 +68,7 @@ class ClientWrapperGenerator:
     HTTPX_CLIENT_MEMBER_NAME = "httpx_client"
 
     STRING_OR_SUPPLIER_TYPE_HINT = AST.TypeHint.union(
-        AST.TypeHint.str_(),
-        AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_()),
+        AST.TypeHint.str_(), AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_())
     )
 
     def __init__(
@@ -267,9 +266,7 @@ class ClientWrapperGenerator:
     ) -> CodeWriterFunction:
         has_base_url = get_client_wrapper_url_type(ir=self._context.ir) == ClientWrapperUrlStorage.URL
 
-        def _write_derived_client_wrapper_constructor_body(
-            writer: AST.NodeWriter,
-        ) -> None:
+        def _write_derived_client_wrapper_constructor_body(writer: AST.NodeWriter) -> None:
             writer.write_line(
                 "super().__init__("
                 + ", ".join(

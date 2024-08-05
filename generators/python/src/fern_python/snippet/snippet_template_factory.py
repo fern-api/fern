@@ -100,7 +100,7 @@ class SnippetTemplateFactory:
         self,
         expr: AST.Expression,
     ) -> str:
-        snippet = SourceFileFactory.create_snippet(should_format=(not self._context.custom_config.skip_formatting))
+        snippet = SourceFileFactory.create_snippet()
         snippet.add_expression(expr)
         # For some reason we're appending newlines to snippets, so we need to strip them for tempaltes
         return snippet.to_str().strip()
@@ -109,7 +109,7 @@ class SnippetTemplateFactory:
         self,
         expr: AST.Expression,
     ) -> Tuple[str, str]:
-        snippet = SourceFileFactory.create_snippet(should_format=(not self._context.custom_config.skip_formatting))
+        snippet = SourceFileFactory.create_snippet()
         snippet.add_expression(expr)
         snippet_full = snippet.to_str()
         snippet_without_imports = snippet.to_str(include_imports=False)
@@ -177,9 +177,7 @@ class SnippetTemplateFactory:
         return self._context.get_literal_value(reference=type_reference) is not None
 
     def _get_breadcrumb_path(
-        self,
-        wire_or_original_name: Optional[str],
-        name_breadcrumbs: Optional[List[str]],
+        self, wire_or_original_name: Optional[str], name_breadcrumbs: Optional[List[str]]
     ) -> Union[str, None]:
         if wire_or_original_name is None and name_breadcrumbs is None:
             return None
@@ -248,8 +246,7 @@ class SnippetTemplateFactory:
                         delimiter=f",\n{self.TAB_CHAR * child_indentation_level}",
                         inner_template=inner_template,
                         template_input=PayloadInput(
-                            location=location,
-                            path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs),
+                            location=location, path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs)
                         ),
                     )
                 )
@@ -276,8 +273,7 @@ class SnippetTemplateFactory:
                     delimiter=f",\n{self.TAB_CHAR * child_indentation_level}",
                     inner_template=inner_template,
                     template_input=PayloadInput(
-                        location=location,
-                        path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs),
+                        location=location, path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs)
                     ),
                 )
             ) if inner_template is not None else None
@@ -312,8 +308,7 @@ class SnippetTemplateFactory:
                         key_template=key_template,
                         value_template=value_template,
                         template_input=PayloadInput(
-                            location=location,
-                            path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs),
+                            location=location, path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs)
                         ),
                     )
                 )
@@ -336,9 +331,7 @@ class SnippetTemplateFactory:
         return None
 
     def _convert_enum_value_to_str(
-        self,
-        type_name: ir_types.DeclaredTypeName,
-        enum_value: ir_types.NameAndWireValue,
+        self, type_name: ir_types.DeclaredTypeName, enum_value: ir_types.NameAndWireValue
     ) -> Tuple[str, str]:
         enum_snippet = EnumSnippetGenerator(
             snippet_writer=self._snippet_writer,
@@ -1005,8 +998,7 @@ class SnippetTemplateFactory:
                         endpoint_id=self._endpoint_to_identifier(endpoint),
                         snippet_template=VersionedSnippetTemplate.factory.v_1(
                             SnippetTemplate(
-                                client_instantiation=client_instantiation,
-                                function_invocation=function_template,
+                                client_instantiation=client_instantiation, function_invocation=function_template
                             )
                         ),
                         additional_templates={

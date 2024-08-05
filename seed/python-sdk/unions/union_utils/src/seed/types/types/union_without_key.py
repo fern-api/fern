@@ -17,14 +17,10 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def foo(self, value: types_types_foo_Foo) -> UnionWithoutKey:
-        return UnionWithoutKey(
-            __root__=_UnionWithoutKey.Foo(**value.dict(exclude_unset=True), type="foo")
-        )
+        return UnionWithoutKey(__root__=_UnionWithoutKey.Foo(**value.dict(exclude_unset=True), type="foo"))
 
     def bar(self, value: types_types_bar_Bar) -> UnionWithoutKey:
-        return UnionWithoutKey(
-            __root__=_UnionWithoutKey.Bar(**value.dict(exclude_unset=True), type="bar")
-        )
+        return UnionWithoutKey(__root__=_UnionWithoutKey.Bar(**value.dict(exclude_unset=True), type="bar"))
 
 
 class UnionWithoutKey(pydantic_v1.BaseModel):
@@ -39,46 +35,24 @@ class UnionWithoutKey(pydantic_v1.BaseModel):
         bar: typing.Callable[[types_types_bar_Bar], T_Result],
     ) -> T_Result:
         if self.__root__.type == "foo":
-            return foo(
-                types_types_foo_Foo(
-                    **self.__root__.dict(exclude_unset=True, exclude={"type"})
-                )
-            )
+            return foo(types_types_foo_Foo(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
         if self.__root__.type == "bar":
-            return bar(
-                types_types_bar_Bar(
-                    **self.__root__.dict(exclude_unset=True, exclude={"type"})
-                )
-            )
+            return bar(types_types_bar_Bar(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
 
     __root__: typing_extensions.Annotated[
-        typing.Union[_UnionWithoutKey.Foo, _UnionWithoutKey.Bar],
-        pydantic_v1.Field(discriminator="type"),
+        typing.Union[_UnionWithoutKey.Foo, _UnionWithoutKey.Bar], pydantic_v1.Field(discriminator="type")
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {
-            "by_alias": True,
-            "exclude_unset": True,
-            **kwargs,
-        }
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {
-            "by_alias": True,
-            "exclude_unset": True,
-            **kwargs,
-        }
-        kwargs_with_defaults_exclude_none: typing.Any = {
-            "by_alias": True,
-            "exclude_none": True,
-            **kwargs,
-        }
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
 
         return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset),
-            super().dict(**kwargs_with_defaults_exclude_none),
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
         )
 
     class Config:

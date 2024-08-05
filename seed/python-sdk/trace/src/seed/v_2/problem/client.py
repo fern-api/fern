@@ -38,49 +38,33 @@ class ProblemClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/",
-                "problems-v2/lightweight-problem-info",
-            ),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "problems-v2/lightweight-problem-info"),
             params=jsonable_encoder(
-                request_options.get("additional_query_parameters")
-                if request_options is not None
-                else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(
-                            request_options.get("additional_headers", {})
-                            if request_options is not None
-                            else {}
-                        ),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
             timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None
-            and request_options.get("timeout_in_seconds") is not None
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get("max_retries")
-            if request_options is not None
-            else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(
-                typing.List[LightweightProblemInfoV2], _response_json
-            )  # type: ignore
+            return pydantic_v1.parse_obj_as(typing.List[LightweightProblemInfoV2], _response_json)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_problems(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[ProblemInfoV2]:
+    def get_problems(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[ProblemInfoV2]:
         """
         Returns latest versions of all problems
 
@@ -97,34 +81,23 @@ class ProblemClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", "problems-v2/problem-info"
-            ),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "problems-v2/problem-info"),
             params=jsonable_encoder(
-                request_options.get("additional_query_parameters")
-                if request_options is not None
-                else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(
-                            request_options.get("additional_headers", {})
-                            if request_options is not None
-                            else {}
-                        ),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
             timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None
-            and request_options.get("timeout_in_seconds") is not None
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get("max_retries")
-            if request_options is not None
-            else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         try:
             _response_json = _response.json()
@@ -135,10 +108,7 @@ class ProblemClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_latest_problem(
-        self,
-        problem_id: ProblemId,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, problem_id: ProblemId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ProblemInfoV2:
         """
         Returns latest version of a problem
@@ -161,34 +131,24 @@ class ProblemClient:
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/",
-                f"problems-v2/problem-info/{jsonable_encoder(problem_id)}",
+                f"{self._client_wrapper.get_base_url()}/", f"problems-v2/problem-info/{jsonable_encoder(problem_id)}"
             ),
             params=jsonable_encoder(
-                request_options.get("additional_query_parameters")
-                if request_options is not None
-                else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(
-                            request_options.get("additional_headers", {})
-                            if request_options is not None
-                            else {}
-                        ),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
             timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None
-            and request_options.get("timeout_in_seconds") is not None
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get("max_retries")
-            if request_options is not None
-            else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         try:
             _response_json = _response.json()
@@ -199,11 +159,7 @@ class ProblemClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_problem_version(
-        self,
-        problem_id: ProblemId,
-        problem_version: int,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, problem_id: ProblemId, problem_version: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ProblemInfoV2:
         """
         Returns requested version of a problem
@@ -233,30 +189,21 @@ class ProblemClient:
                 f"problems-v2/problem-info/{jsonable_encoder(problem_id)}/version/{jsonable_encoder(problem_version)}",
             ),
             params=jsonable_encoder(
-                request_options.get("additional_query_parameters")
-                if request_options is not None
-                else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(
-                            request_options.get("additional_headers", {})
-                            if request_options is not None
-                            else {}
-                        ),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
             timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None
-            and request_options.get("timeout_in_seconds") is not None
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get("max_retries")
-            if request_options is not None
-            else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         try:
             _response_json = _response.json()
@@ -290,44 +237,30 @@ class AsyncProblemClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/",
-                "problems-v2/lightweight-problem-info",
-            ),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "problems-v2/lightweight-problem-info"),
             params=jsonable_encoder(
-                request_options.get("additional_query_parameters")
-                if request_options is not None
-                else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(
-                            request_options.get("additional_headers", {})
-                            if request_options is not None
-                            else {}
-                        ),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
             timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None
-            and request_options.get("timeout_in_seconds") is not None
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get("max_retries")
-            if request_options is not None
-            else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(
-                typing.List[LightweightProblemInfoV2], _response_json
-            )  # type: ignore
+            return pydantic_v1.parse_obj_as(typing.List[LightweightProblemInfoV2], _response_json)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_problems(
@@ -349,34 +282,23 @@ class AsyncProblemClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", "problems-v2/problem-info"
-            ),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "problems-v2/problem-info"),
             params=jsonable_encoder(
-                request_options.get("additional_query_parameters")
-                if request_options is not None
-                else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(
-                            request_options.get("additional_headers", {})
-                            if request_options is not None
-                            else {}
-                        ),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
             timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None
-            and request_options.get("timeout_in_seconds") is not None
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get("max_retries")
-            if request_options is not None
-            else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         try:
             _response_json = _response.json()
@@ -387,10 +309,7 @@ class AsyncProblemClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_latest_problem(
-        self,
-        problem_id: ProblemId,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, problem_id: ProblemId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ProblemInfoV2:
         """
         Returns latest version of a problem
@@ -413,34 +332,24 @@ class AsyncProblemClient:
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/",
-                f"problems-v2/problem-info/{jsonable_encoder(problem_id)}",
+                f"{self._client_wrapper.get_base_url()}/", f"problems-v2/problem-info/{jsonable_encoder(problem_id)}"
             ),
             params=jsonable_encoder(
-                request_options.get("additional_query_parameters")
-                if request_options is not None
-                else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(
-                            request_options.get("additional_headers", {})
-                            if request_options is not None
-                            else {}
-                        ),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
             timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None
-            and request_options.get("timeout_in_seconds") is not None
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get("max_retries")
-            if request_options is not None
-            else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         try:
             _response_json = _response.json()
@@ -451,11 +360,7 @@ class AsyncProblemClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_problem_version(
-        self,
-        problem_id: ProblemId,
-        problem_version: int,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, problem_id: ProblemId, problem_version: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ProblemInfoV2:
         """
         Returns requested version of a problem
@@ -485,30 +390,21 @@ class AsyncProblemClient:
                 f"problems-v2/problem-info/{jsonable_encoder(problem_id)}/version/{jsonable_encoder(problem_version)}",
             ),
             params=jsonable_encoder(
-                request_options.get("additional_query_parameters")
-                if request_options is not None
-                else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(
-                            request_options.get("additional_headers", {})
-                            if request_options is not None
-                            else {}
-                        ),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
             timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None
-            and request_options.get("timeout_in_seconds") is not None
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get("max_retries")
-            if request_options is not None
-            else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         try:
             _response_json = _response.json()

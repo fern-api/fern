@@ -91,9 +91,7 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
     def _is_type_literal(self, type_reference: ir_types.TypeReference) -> bool:
         return self._context.get_literal_value(reference=type_reference) is not None
 
-    def _get_all_properties_for_inlined_request_body(
-        self,
-    ) -> List[ir_types.InlinedRequestBodyProperty]:
+    def _get_all_properties_for_inlined_request_body(self) -> List[ir_types.InlinedRequestBodyProperty]:
         properties = self._request_body.properties.copy()
         for extension in self._request_body.extends:
             properties.extend(
