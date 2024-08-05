@@ -19,6 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
           version: "v1" # Other valid options include: "v2" and "both"
   ```
 
+## [3.4.2] - 2024-08-05
+
+- Fix: The Python generator now instantiates `Any` types as `Optional[Any]` to be able to meet some breaks in Pydantic V2.
+
 ## [3.4.1] - 2024-08-04
 
 - Fix: Literal templates are generated if they are union members

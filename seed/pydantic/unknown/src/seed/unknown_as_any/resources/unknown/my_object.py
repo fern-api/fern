@@ -8,7 +8,15 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class MyObject(UniversalBaseModel):
-    unknown: typing.Any
+    """
+    Examples
+    --------
+    from seed.unknown_as_any.resources import MyObject
+
+    MyObject()
+    """
+
+    unknown: typing.Optional[typing.Any] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
