@@ -288,7 +288,7 @@ export class ExampleGenerator {
         examplePathParameters.forEach((examplePathParameter) => {
             const value = examplePathParameter.value.jsonExample;
             const stringValue = typeof value === "string" ? value : JSON.stringify(value);
-            result[examplePathParameter.name.originalName] = stringValue;
+            result[examplePathParameter.name.originalName] = encodeURIComponent(stringValue);
         });
         return result;
     }
