@@ -35,7 +35,7 @@ export const FieldsetProperty = new Property({
     isOptional: true
 });
 
-export const InternalFields = [AdditionalPropertiesProperty, FieldsetProperty];
+export const InternalFields = [AdditionalPropertiesProperty.name, FieldsetProperty.name];
 
 export declare namespace SerializableObject {
     export type Init = Omit<Class_.Init, "functions" | "includeInitializer" | "expressions">;

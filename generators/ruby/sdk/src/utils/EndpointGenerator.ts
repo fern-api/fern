@@ -275,7 +275,7 @@ export class EndpointGenerator {
         });
 
         // Remove reserved properties from the function signature
-        this.bodyAsProperties = this.bodyAsProperties.filter((prop) => !InternalFields.includes(prop));
+        this.bodyAsProperties = this.bodyAsProperties.filter((prop) => !InternalFields.includes(prop.name));
 
         this.streamProcessingBlock = this.isStreamingResponse()
             ? new Parameter({
