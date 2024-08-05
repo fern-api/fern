@@ -46,18 +46,22 @@ export async function loadProject({
         return context.failAndThrow(`Directory "${nameOverride ?? FERN_DIRECTORY}" not found.`);
     }
 
-    const apiWorkspaces = await loadApis({
-        cliName,
-        fernDirectory,
-        cliVersion,
-        context,
-        commandLineApiWorkspace,
-        defaultToAllApiWorkspaces
-    });
+    var apiWorkspaces: APIWorkspace[] | undefined = undefined;
+
+    if (await doesPathExist(join(fernDirectory, RelativeFilePath.of(APIS_DIRECTORY)))) {
+        apiWorkspaces = await loadApis({
+            cliName,
+            fernDirectory,
+            cliVersion,
+            context,
+            commandLineApiWorkspace,
+            defaultToAllApiWorkspaces
+        });
+    }
 
     return {
         config: await fernConfigJson.loadProjectConfig({ directory: fernDirectory, context }),
-        apiWorkspaces,
+        apiWorkspaces: apiWorkspaces ?? [],
         docsWorkspaces: await loadDocsWorkspace({ fernDirectory, context })
     };
 }

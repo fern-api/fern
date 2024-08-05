@@ -38,7 +38,6 @@ export async function loadAPIWorkspace({
 
     if (generatorsConfiguration?.api != null && generatorsConfiguration.api.definitions.length > 0) {
         const specs: Spec[] = [];
-
         for (const definition of generatorsConfiguration.api.definitions) {
             const absoluteFilepath = join(absolutePathToWorkspace, RelativeFilePath.of(definition.path));
             const absoluteFilepathToOverrides =
