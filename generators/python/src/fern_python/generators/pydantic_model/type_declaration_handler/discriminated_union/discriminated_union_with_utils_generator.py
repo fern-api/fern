@@ -1,6 +1,7 @@
 from typing import List, Optional, Set
 
 import fern.ir.resources as ir_types
+from fern_python.generators.pydantic_model.type_declaration_handler.type_utilities import declared_type_name_to_named_type
 from typing_extensions import Never
 
 from fern_python.codegen import AST, LocalClassReference, SourceFile
@@ -230,7 +231,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                             name=BUILDER_ARGUMENT_NAME,
                                             type_hint=self._context.get_type_hint_for_type_reference(
                                                 ir_types.TypeReference.factory.named(
-                                                    self._to_named_type(declared_type_name=declared_type_name)
+                                                    declared_type_name_to_named_type(declared_type_name=declared_type_name)
                                                 )
                                             ),
                                         )
@@ -244,7 +245,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                     no_properties=lambda: None,
                                 ),
                                 return_type=self._context.get_type_hint_for_type_reference(
-                                    ir_types.TypeReference.factory.named(self._to_named_type(self._name))
+                                    ir_types.TypeReference.factory.named(declared_type_name_to_named_type(self._name))
                                 ),
                             ),
                             body=AST.CodeWriter(
@@ -320,7 +321,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                     ),
                                     type=external_pydantic_model.get_type_hint_for_type_reference(
                                         ir_types.TypeReference.factory.named(
-                                            self._to_named_type(declared_type_name=declared_type_name)
+                                            declared_type_name_to_named_type(declared_type_name=declared_type_name)
                                         )
                                     ),
                                 ),
@@ -341,13 +342,6 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     reference_to_current_value=f"unioned_value.{self._get_discriminant_attr_name()}",
                 )
             )
-
-    def _to_named_type(self, declared_type_name: ir_types.DeclaredTypeName) -> ir_types.NamedType:
-        return ir_types.NamedType(
-            type_id=declared_type_name.type_id,
-            fern_filepath=declared_type_name.fern_filepath,
-            name=declared_type_name.name,
-        )
 
     def _create_body_writer(
         self,

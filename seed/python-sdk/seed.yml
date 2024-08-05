@@ -66,6 +66,11 @@ fixtures:
       outputFolder: pydantic-v1
     - customConfig:
         pydantic_config:
+          version: v1
+          wrapped_aliases: True
+      outputFolder: pydantic-v1-wrapped
+    - customConfig:
+        pydantic_config:
           extra_fields: "allow"
       outputFolder: pydantic-extra-fields
     - customConfig:

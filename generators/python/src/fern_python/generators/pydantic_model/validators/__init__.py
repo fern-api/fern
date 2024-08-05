@@ -1,4 +1,5 @@
 from .pydantic_validators_generator import PydanticValidatorsGenerator
 from .validators_generator import ValidatorsGenerator
+from .pydantic_v1_custom_root_type_validators_generator import PydanticV1CustomRootTypeValidatorsGenerator
 
-__all__ = ["ValidatorsGenerator", "PydanticValidatorsGenerator"]
+__all__ = ["ValidatorsGenerator", "PydanticValidatorsGenerator", "PydanticV1CustomRootTypeValidatorsGenerator"]

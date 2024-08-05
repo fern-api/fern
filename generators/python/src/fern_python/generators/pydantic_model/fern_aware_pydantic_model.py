@@ -6,11 +6,12 @@ from typing import List, Optional, Sequence, Tuple, Type
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST, LocalClassReference, SourceFile
+from fern_python.external_dependencies.pydantic import PydanticVersionCompatibility
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
 
 from ..context import PydanticGeneratorContext
 from .custom_config import PydanticModelCustomConfig
-from .validators import PydanticValidatorsGenerator, ValidatorsGenerator
+from .validators import PydanticValidatorsGenerator, ValidatorsGenerator, PydanticV1CustomRootTypeValidatorsGenerator
 
 
 class FernAwarePydanticModel:
@@ -188,6 +189,25 @@ class FernAwarePydanticModel:
         decorator: Optional[AST.ClassMethodDecorator] = None,
     ) -> AST.FunctionDeclaration:
         return self._pydantic_model.add_method(declaration=declaration, decorator=decorator)
+    
+
+    def set_root_type_v1_only(
+        self,
+        root_type: ir_types.TypeReference,
+        annotation: Optional[AST.Expression] = None,
+        is_forward_ref: bool = False,
+    ) -> None:
+        self.set_root_type_unsafe_v1_only(
+            root_type=self.get_type_hint_for_type_reference(root_type),
+            annotation=annotation,
+            is_forward_ref=is_forward_ref,
+        )
+
+
+    def set_root_type_unsafe_v1_only(
+        self, root_type: AST.TypeHint, annotation: Optional[AST.Expression] = None, is_forward_ref: bool = False
+    ) -> None:
+        self._pydantic_model.set_root_type_unsafe_v1_only(root_type=root_type, annotation=annotation)
 
     def add_ghost_reference(self, type_id: ir_types.TypeId) -> None:
         self._pydantic_model.add_ghost_reference(
@@ -203,15 +223,22 @@ class FernAwarePydanticModel:
         self._pydantic_model.finish()
 
     def _get_validators_generator(self) -> ValidatorsGenerator:
-        unique_name = []
-        if self._type_name is not None:
-            unique_name = [path.snake_case.unsafe_name for path in self._type_name.fern_filepath.package_path]
-            unique_name.append(self._type_name.name.snake_case.unsafe_name)
-        return PydanticValidatorsGenerator(
-            model=self._pydantic_model,
-            extended_pydantic_fields=self._get_extended_pydantic_fields(self._extends or []),
-            unique_name=unique_name,
-        )
+        v1_root_type = self._pydantic_model.get_root_type_unsafe_v1_only()
+        if v1_root_type is not None and self._custom_config.version == PydanticVersionCompatibility.V1:
+            return PydanticV1CustomRootTypeValidatorsGenerator(
+                model=self._pydantic_model,
+                root_type=v1_root_type,
+            )
+        else:
+            unique_name = []
+            if self._type_name is not None:
+                unique_name = [path.snake_case.unsafe_name for path in self._type_name.fern_filepath.package_path]
+                unique_name.append(self._type_name.name.snake_case.unsafe_name)
+            return PydanticValidatorsGenerator(
+                model=self._pydantic_model,
+                extended_pydantic_fields=self._get_extended_pydantic_fields(self._extends or []),
+                unique_name=unique_name,
+            )
 
     def _get_extended_pydantic_fields(self, extends: Sequence[ir_types.DeclaredTypeName]) -> List[PydanticField]:
         extended_fields: List[PydanticField] = []
