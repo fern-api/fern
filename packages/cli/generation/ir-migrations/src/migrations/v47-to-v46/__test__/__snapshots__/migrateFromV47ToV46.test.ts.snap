@@ -2080,7 +2080,7 @@ const user = client.users.get(1234);
                 },
               ],
               "exampleType": "generated",
-              "id": "c18ce38a8916dd863c73faf7ca625893b2260874",
+              "id": "43adba1ee3267b4692e26594b99bde39e6595dcf",
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -2377,7 +2377,7 @@ const user = client.users.get(1234);
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "url": "/",
+              "url": "/string",
             },
           ],
           "fullPath": {

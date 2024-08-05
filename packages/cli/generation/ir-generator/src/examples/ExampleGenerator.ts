@@ -278,7 +278,7 @@ export class ExampleGenerator {
                 .join("");
         return {
             // not sure why this sometimes doesn't start with a slash
-            url: url.startsWith("/") ? url : `/${url}`,
+            url: url.startsWith("/") || url === "" ? url : `/${url}`,
             ...exampleWithoutUrl
         };
     }
