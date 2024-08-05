@@ -58,14 +58,14 @@ class CustomAuthClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def post_with_custom_auth(
-        self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None
+        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> bool:
         """
         POST request with custom auth scheme
 
         Parameters
         ----------
-        request : typing.Any
+        request : typing.Optional[typing.Any]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -155,14 +155,14 @@ class AsyncCustomAuthClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def post_with_custom_auth(
-        self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None
+        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> bool:
         """
         POST request with custom auth scheme
 
         Parameters
         ----------
-        request : typing.Any
+        request : typing.Optional[typing.Any]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

@@ -36,7 +36,7 @@ client.unknown.post(
 <dl>
 <dd>
 
-**request:** `typing.Any` 
+**request:** `typing.Optional[typing.Any]` 
     
 </dd>
 </dl>

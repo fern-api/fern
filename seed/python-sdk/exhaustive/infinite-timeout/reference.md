@@ -2609,7 +2609,7 @@ client.no_auth.post_with_no_auth(
 <dl>
 <dd>
 
-**request:** `typing.Any` 
+**request:** `typing.Optional[typing.Any]` 
     
 </dd>
 </dl>

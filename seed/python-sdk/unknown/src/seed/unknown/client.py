@@ -17,19 +17,19 @@ class UnknownClient:
         self._client_wrapper = client_wrapper
 
     def post(
-        self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[typing.Any]:
+        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[typing.Optional[typing.Any]]:
         """
         Parameters
         ----------
-        request : typing.Any
+        request : typing.Optional[typing.Any]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.List[typing.Any]
+        typing.List[typing.Optional[typing.Any]]
 
         Examples
         --------
@@ -47,7 +47,7 @@ class UnknownClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(typing.List[typing.Any], parse_obj_as(type_=typing.List[typing.Any], object_=_response.json()))  # type: ignore
+                return typing.cast(typing.List[typing.Optional[typing.Any]], parse_obj_as(type_=typing.List[typing.Optional[typing.Any]], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -59,19 +59,19 @@ class AsyncUnknownClient:
         self._client_wrapper = client_wrapper
 
     async def post(
-        self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[typing.Any]:
+        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[typing.Optional[typing.Any]]:
         """
         Parameters
         ----------
-        request : typing.Any
+        request : typing.Optional[typing.Any]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.List[typing.Any]
+        typing.List[typing.Optional[typing.Any]]
 
         Examples
         --------
@@ -97,7 +97,7 @@ class AsyncUnknownClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(typing.List[typing.Any], parse_obj_as(type_=typing.List[typing.Any], object_=_response.json()))  # type: ignore
+                return typing.cast(typing.List[typing.Optional[typing.Any]], parse_obj_as(type_=typing.List[typing.Optional[typing.Any]], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
