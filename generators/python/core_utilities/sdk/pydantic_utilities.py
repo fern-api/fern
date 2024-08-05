@@ -52,9 +52,7 @@ T = typing.TypeVar("T")
 Model = typing.TypeVar("Model", bound=pydantic.BaseModel)
 
 
-def deep_union_pydantic_dicts(
-    source: typing.Dict[str, typing.Any], destination: typing.Dict[str, typing.Any]
-) -> None:
+def deep_union_pydantic_dicts(source: typing.Dict[str, typing.Any], destination: typing.Dict[str, typing.Any]) -> None:
     """
     Recursively merge two dictionaries, with the source dictionary taking precedence over the destination dictionary
     This is primarily used to merge dictionaries that are the result of calling `dict()` on Pydantic models with different flags
