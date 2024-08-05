@@ -3601,7 +3601,7 @@ exports[`migrateFromV39ToV38 snapshot 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "url": "/check/",
+              "url": "/check/string",
             },
           ],
           "fullPath": {
