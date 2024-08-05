@@ -65,7 +65,7 @@ jobs:
 
       - name: Install Dependencies - Pydantic V2
         working-directory: ./generators/python
-        run:
+        run: | 
           poetry add pydantic=^2.8.2
           poetry lock
           poetry install
