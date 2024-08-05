@@ -23,7 +23,7 @@ public interface UnknownService {
   List<Object> post(@RequestBody Object body);
 
   @PostMapping(
-      value = "with-object",
+      value = "/with-object",
       produces = "application/json",
       consumes = "application/json"
   )

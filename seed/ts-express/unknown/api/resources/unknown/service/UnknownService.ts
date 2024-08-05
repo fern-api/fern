@@ -78,7 +78,7 @@ export class UnknownService {
                 next(error);
             }
         });
-        this.router.post("with-object", async (req, res, next) => {
+        this.router.post("/with-object", async (req, res, next) => {
             const request = serializers.MyObject.parse(req.body);
             if (request.ok) {
                 req.body = request.value;

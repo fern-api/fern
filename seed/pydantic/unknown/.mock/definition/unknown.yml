@@ -8,7 +8,7 @@ service:
       request: unknown
       response: list<unknown>
     postObject:
-      path: "with-object"
+      path: "/with-object"
       method: POST
       request: MyObject
       response: list<unknown>
