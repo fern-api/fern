@@ -101,9 +101,7 @@ class TypeDeclarationSnippetGeneratorBuilder:
         ).generate_snippet()
 
     def _get_undiscriminated_union_snippet_generator(
-        self,
-        name: ir_types.DeclaredTypeName,
-        example: ir_types.ExampleUndiscriminatedUnionType,
+        self, name: ir_types.DeclaredTypeName, example: ir_types.ExampleUndiscriminatedUnionType
     ) -> Optional[AST.Expression]:
         if self._context.use_typeddict_requests:
             return TypeddictUndiscriminatedUnionSnippetGenerator(

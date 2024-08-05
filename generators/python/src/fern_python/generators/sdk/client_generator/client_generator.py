@@ -129,15 +129,11 @@ class ClientGenerator:
                     for snippet in generated_endpoint_function.snippets or []:
                         if is_async:
                             self._snippet_registry.register_async_client_endpoint_snippet(
-                                endpoint=endpoint,
-                                expr=snippet.snippet,
-                                example_id=snippet.example_id,
+                                endpoint=endpoint, expr=snippet.snippet, example_id=snippet.example_id
                             )
                         else:
                             self._snippet_registry.register_sync_client_endpoint_snippet(
-                                endpoint=endpoint,
-                                expr=snippet.snippet,
-                                example_id=snippet.example_id,
+                                endpoint=endpoint, expr=snippet.snippet, example_id=snippet.example_id
                             )
 
         return class_declaration
@@ -169,10 +165,7 @@ class ClientGenerator:
                 if subpackage.has_endpoints_in_tree:
                     writer.write_node(AST.Expression(f"self.{subpackage.name.snake_case.safe_name} = "))
                     kwargs = [
-                        (
-                            param.constructor_parameter_name,
-                            AST.Expression(f"self.{param.private_member_name}"),
-                        )
+                        (param.constructor_parameter_name, AST.Expression(f"self.{param.private_member_name}"))
                         for param in self._get_constructor_parameters(is_async=is_async)
                     ]
                     writer.write_node(

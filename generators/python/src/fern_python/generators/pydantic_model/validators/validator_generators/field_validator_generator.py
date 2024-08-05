@@ -55,15 +55,7 @@ class FieldValidatorGenerator(ValidatorGenerator):
 
             INDIVIDUAL_VALIDATOR_NAME = "validator"
             writer.write(f"for {INDIVIDUAL_VALIDATOR_NAME} in ")
-            writer.write_line(
-                ".".join(
-                    (
-                        *self._reference_to_validators_class,
-                        self.get_validator_class_var(pre),
-                    )
-                )
-                + ":"
-            )
+            writer.write_line(".".join((*self._reference_to_validators_class, self.get_validator_class_var(pre))) + ":")
 
             with writer.indent():
                 writer.write(f"{field_value_parameter_name} = ")

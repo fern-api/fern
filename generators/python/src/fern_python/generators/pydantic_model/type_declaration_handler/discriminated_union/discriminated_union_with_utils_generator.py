@@ -42,9 +42,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
         self._union = union
 
     def _add_conditional_base_methods(
-        self,
-        base_class: FernAwarePydanticModel,
-        internal_single_union_types: List[LocalClassReference],
+        self, base_class: FernAwarePydanticModel, internal_single_union_types: List[LocalClassReference]
     ) -> None:
         if self._custom_config.skip_validation:
             root_type = AST.TypeHint.annotated(
@@ -310,8 +308,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                     expression=AST.Expression(
                                         AST.FunctionInvocation(
                                             function_definition=self._context.get_class_reference_for_type_id(
-                                                declared_type_name.type_id,
-                                                as_request=False,
+                                                declared_type_name.type_id, as_request=False
                                             ),
                                             args=[
                                                 AST.Expression(
@@ -384,10 +381,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     single_union_type.shape.visit(
                         same_properties_as_object=lambda type_name: [],
                         single_property=lambda property: [
-                            (
-                                get_field_name_for_single_property(property),
-                                AST.Expression(BUILDER_ARGUMENT_NAME),
-                            )
+                            (get_field_name_for_single_property(property), AST.Expression(BUILDER_ARGUMENT_NAME))
                         ],
                         no_properties=lambda: [],
                     )
@@ -398,12 +392,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                 def write_condition_for_root(writer: AST.NodeWriter) -> None:
                     sub_union_instantiation = AST.ClassInstantiation(
                         class_=external_union,
-                        kwargs=[
-                            (
-                                root_str,
-                                AST.Expression(internal_single_union_type_instantiation),
-                            )
-                        ],
+                        kwargs=[(root_str, AST.Expression(internal_single_union_type_instantiation))],
                     )
 
                     writer.write("return ")
@@ -451,7 +440,5 @@ def assert_never(arg: Never) -> Never:
     raise AssertionError("Expected code to be unreachable")
 
 
-def get_field_name_for_single_property(
-    property: ir_types.SingleUnionTypeProperty,
-) -> str:
+def get_field_name_for_single_property(property: ir_types.SingleUnionTypeProperty) -> str:
     return property.name.name.snake_case.safe_name

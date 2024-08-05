@@ -10,24 +10,14 @@ from ...v_2.problem.types.files import Files
 
 
 class WorkspaceStarterFilesResponseV2(pydantic_v1.BaseModel):
-    files_by_language: typing.Dict[Language, Files] = pydantic_v1.Field(
-        alias="filesByLanguage"
-    )
+    files_by_language: typing.Dict[Language, Files] = pydantic_v1.Field(alias="filesByLanguage")
 
     def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {
-            "by_alias": True,
-            "exclude_unset": True,
-            **kwargs,
-        }
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults: typing.Any = {
-            "by_alias": True,
-            "exclude_unset": True,
-            **kwargs,
-        }
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
 
     class Config:

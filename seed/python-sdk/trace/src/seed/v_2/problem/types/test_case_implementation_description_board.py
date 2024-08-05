@@ -27,6 +27,5 @@ class TestCaseImplementationDescriptionBoard_ParamId(pydantic_v1.BaseModel):
 
 
 TestCaseImplementationDescriptionBoard = typing.Union[
-    TestCaseImplementationDescriptionBoard_Html,
-    TestCaseImplementationDescriptionBoard_ParamId,
+    TestCaseImplementationDescriptionBoard_Html, TestCaseImplementationDescriptionBoard_ParamId
 ]

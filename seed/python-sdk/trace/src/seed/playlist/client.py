@@ -77,8 +77,7 @@ class PlaylistClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/",
-                f"v2/playlist/{jsonable_encoder(service_param)}/create",
+                f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{jsonable_encoder(service_param)}/create"
             ),
             params=jsonable_encoder(
                 remove_none_from_dict(
@@ -96,38 +95,24 @@ class PlaylistClient:
                 )
             ),
             json=jsonable_encoder(request)
-            if request_options is None
-            or request_options.get("additional_body_parameters") is None
+            if request_options is None or request_options.get("additional_body_parameters") is None
             else {
                 **jsonable_encoder(request),
-                **(
-                    jsonable_encoder(
-                        remove_none_from_dict(
-                            request_options.get("additional_body_parameters", {})
-                        )
-                    )
-                ),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(
-                            request_options.get("additional_headers", {})
-                            if request_options is not None
-                            else {}
-                        ),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
             timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None
-            and request_options.get("timeout_in_seconds") is not None
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get("max_retries")
-            if request_options is not None
-            else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         try:
             _response_json = _response.json()
@@ -144,9 +129,7 @@ class PlaylistClient:
         limit: typing.Optional[int] = None,
         other_field: str,
         multi_line_docs: str,
-        optional_multiple_field: typing.Optional[
-            typing.Union[str, typing.Sequence[str]]
-        ] = None,
+        optional_multiple_field: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         multiple_field: typing.Union[str, typing.Sequence[str]],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Playlist]:
@@ -186,8 +169,7 @@ class PlaylistClient:
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/",
-                f"v2/playlist/{jsonable_encoder(service_param)}/all",
+                f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{jsonable_encoder(service_param)}/all"
             ),
             params=jsonable_encoder(
                 remove_none_from_dict(
@@ -209,22 +191,15 @@ class PlaylistClient:
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(
-                            request_options.get("additional_headers", {})
-                            if request_options is not None
-                            else {}
-                        ),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
             timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None
-            and request_options.get("timeout_in_seconds") is not None
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get("max_retries")
-            if request_options is not None
-            else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         try:
             _response_json = _response.json()
@@ -235,11 +210,7 @@ class PlaylistClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_playlist(
-        self,
-        service_param: int,
-        playlist_id: PlaylistId,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, service_param: int, playlist_id: PlaylistId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Playlist:
         """
         Returns a playlist
@@ -269,30 +240,21 @@ class PlaylistClient:
                 f"v2/playlist/{jsonable_encoder(service_param)}/{jsonable_encoder(playlist_id)}",
             ),
             params=jsonable_encoder(
-                request_options.get("additional_query_parameters")
-                if request_options is not None
-                else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(
-                            request_options.get("additional_headers", {})
-                            if request_options is not None
-                            else {}
-                        ),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
             timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None
-            and request_options.get("timeout_in_seconds") is not None
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get("max_retries")
-            if request_options is not None
-            else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         try:
             _response_json = _response.json()
@@ -303,9 +265,7 @@ class PlaylistClient:
         if "errorName" in _response_json:
             if _response_json["errorName"] == "PlaylistIdNotFoundError":
                 raise PlaylistIdNotFoundError(
-                    pydantic_v1.parse_obj_as(
-                        PlaylistIdNotFoundErrorBody, _response_json["content"]
-                    )  # type: ignore
+                    pydantic_v1.parse_obj_as(PlaylistIdNotFoundErrorBody, _response_json["content"])  # type: ignore
                 )
             if _response_json["errorName"] == "UnauthorizedError":
                 raise UnauthorizedError()
@@ -354,43 +314,27 @@ class PlaylistClient:
                 f"v2/playlist/{jsonable_encoder(service_param)}/{jsonable_encoder(playlist_id)}",
             ),
             params=jsonable_encoder(
-                request_options.get("additional_query_parameters")
-                if request_options is not None
-                else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             json=jsonable_encoder(request)
-            if request_options is None
-            or request_options.get("additional_body_parameters") is None
+            if request_options is None or request_options.get("additional_body_parameters") is None
             else {
                 **jsonable_encoder(request),
-                **(
-                    jsonable_encoder(
-                        remove_none_from_dict(
-                            request_options.get("additional_body_parameters", {})
-                        )
-                    )
-                ),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(
-                            request_options.get("additional_headers", {})
-                            if request_options is not None
-                            else {}
-                        ),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
             timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None
-            and request_options.get("timeout_in_seconds") is not None
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get("max_retries")
-            if request_options is not None
-            else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         try:
             _response_json = _response.json()
@@ -401,18 +345,12 @@ class PlaylistClient:
         if "errorName" in _response_json:
             if _response_json["errorName"] == "PlaylistIdNotFoundError":
                 raise PlaylistIdNotFoundError(
-                    pydantic_v1.parse_obj_as(
-                        PlaylistIdNotFoundErrorBody, _response_json["content"]
-                    )  # type: ignore
+                    pydantic_v1.parse_obj_as(PlaylistIdNotFoundErrorBody, _response_json["content"])  # type: ignore
                 )
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete_playlist(
-        self,
-        service_param: int,
-        playlist_id: PlaylistId,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, service_param: int, playlist_id: PlaylistId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Deletes a playlist
@@ -442,30 +380,21 @@ class PlaylistClient:
                 f"v2/playlist/{jsonable_encoder(service_param)}/{jsonable_encoder(playlist_id)}",
             ),
             params=jsonable_encoder(
-                request_options.get("additional_query_parameters")
-                if request_options is not None
-                else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(
-                            request_options.get("additional_headers", {})
-                            if request_options is not None
-                            else {}
-                        ),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
             timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None
-            and request_options.get("timeout_in_seconds") is not None
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get("max_retries")
-            if request_options is not None
-            else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return
@@ -529,8 +458,7 @@ class AsyncPlaylistClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/",
-                f"v2/playlist/{jsonable_encoder(service_param)}/create",
+                f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{jsonable_encoder(service_param)}/create"
             ),
             params=jsonable_encoder(
                 remove_none_from_dict(
@@ -548,38 +476,24 @@ class AsyncPlaylistClient:
                 )
             ),
             json=jsonable_encoder(request)
-            if request_options is None
-            or request_options.get("additional_body_parameters") is None
+            if request_options is None or request_options.get("additional_body_parameters") is None
             else {
                 **jsonable_encoder(request),
-                **(
-                    jsonable_encoder(
-                        remove_none_from_dict(
-                            request_options.get("additional_body_parameters", {})
-                        )
-                    )
-                ),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(
-                            request_options.get("additional_headers", {})
-                            if request_options is not None
-                            else {}
-                        ),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
             timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None
-            and request_options.get("timeout_in_seconds") is not None
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get("max_retries")
-            if request_options is not None
-            else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         try:
             _response_json = _response.json()
@@ -596,9 +510,7 @@ class AsyncPlaylistClient:
         limit: typing.Optional[int] = None,
         other_field: str,
         multi_line_docs: str,
-        optional_multiple_field: typing.Optional[
-            typing.Union[str, typing.Sequence[str]]
-        ] = None,
+        optional_multiple_field: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         multiple_field: typing.Union[str, typing.Sequence[str]],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Playlist]:
@@ -638,8 +550,7 @@ class AsyncPlaylistClient:
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/",
-                f"v2/playlist/{jsonable_encoder(service_param)}/all",
+                f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{jsonable_encoder(service_param)}/all"
             ),
             params=jsonable_encoder(
                 remove_none_from_dict(
@@ -661,22 +572,15 @@ class AsyncPlaylistClient:
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(
-                            request_options.get("additional_headers", {})
-                            if request_options is not None
-                            else {}
-                        ),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
             timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None
-            and request_options.get("timeout_in_seconds") is not None
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get("max_retries")
-            if request_options is not None
-            else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         try:
             _response_json = _response.json()
@@ -687,11 +591,7 @@ class AsyncPlaylistClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_playlist(
-        self,
-        service_param: int,
-        playlist_id: PlaylistId,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, service_param: int, playlist_id: PlaylistId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Playlist:
         """
         Returns a playlist
@@ -721,30 +621,21 @@ class AsyncPlaylistClient:
                 f"v2/playlist/{jsonable_encoder(service_param)}/{jsonable_encoder(playlist_id)}",
             ),
             params=jsonable_encoder(
-                request_options.get("additional_query_parameters")
-                if request_options is not None
-                else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(
-                            request_options.get("additional_headers", {})
-                            if request_options is not None
-                            else {}
-                        ),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
             timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None
-            and request_options.get("timeout_in_seconds") is not None
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get("max_retries")
-            if request_options is not None
-            else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         try:
             _response_json = _response.json()
@@ -755,9 +646,7 @@ class AsyncPlaylistClient:
         if "errorName" in _response_json:
             if _response_json["errorName"] == "PlaylistIdNotFoundError":
                 raise PlaylistIdNotFoundError(
-                    pydantic_v1.parse_obj_as(
-                        PlaylistIdNotFoundErrorBody, _response_json["content"]
-                    )  # type: ignore
+                    pydantic_v1.parse_obj_as(PlaylistIdNotFoundErrorBody, _response_json["content"])  # type: ignore
                 )
             if _response_json["errorName"] == "UnauthorizedError":
                 raise UnauthorizedError()
@@ -806,43 +695,27 @@ class AsyncPlaylistClient:
                 f"v2/playlist/{jsonable_encoder(service_param)}/{jsonable_encoder(playlist_id)}",
             ),
             params=jsonable_encoder(
-                request_options.get("additional_query_parameters")
-                if request_options is not None
-                else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             json=jsonable_encoder(request)
-            if request_options is None
-            or request_options.get("additional_body_parameters") is None
+            if request_options is None or request_options.get("additional_body_parameters") is None
             else {
                 **jsonable_encoder(request),
-                **(
-                    jsonable_encoder(
-                        remove_none_from_dict(
-                            request_options.get("additional_body_parameters", {})
-                        )
-                    )
-                ),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(
-                            request_options.get("additional_headers", {})
-                            if request_options is not None
-                            else {}
-                        ),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
             timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None
-            and request_options.get("timeout_in_seconds") is not None
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get("max_retries")
-            if request_options is not None
-            else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         try:
             _response_json = _response.json()
@@ -853,18 +726,12 @@ class AsyncPlaylistClient:
         if "errorName" in _response_json:
             if _response_json["errorName"] == "PlaylistIdNotFoundError":
                 raise PlaylistIdNotFoundError(
-                    pydantic_v1.parse_obj_as(
-                        PlaylistIdNotFoundErrorBody, _response_json["content"]
-                    )  # type: ignore
+                    pydantic_v1.parse_obj_as(PlaylistIdNotFoundErrorBody, _response_json["content"])  # type: ignore
                 )
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete_playlist(
-        self,
-        service_param: int,
-        playlist_id: PlaylistId,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, service_param: int, playlist_id: PlaylistId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Deletes a playlist
@@ -894,30 +761,21 @@ class AsyncPlaylistClient:
                 f"v2/playlist/{jsonable_encoder(service_param)}/{jsonable_encoder(playlist_id)}",
             ),
             params=jsonable_encoder(
-                request_options.get("additional_query_parameters")
-                if request_options is not None
-                else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(
-                            request_options.get("additional_headers", {})
-                            if request_options is not None
-                            else {}
-                        ),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
             timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None
-            and request_options.get("timeout_in_seconds") is not None
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get("max_retries")
-            if request_options is not None
-            else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return

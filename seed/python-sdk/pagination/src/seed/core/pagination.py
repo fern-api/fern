@@ -2,9 +2,8 @@
 
 import typing
 
-from typing_extensions import Self
-
 import pydantic
+from typing_extensions import Self
 
 # Generic to represent the underlying type of the results within a page
 T = typing.TypeVar("T")
@@ -29,9 +28,7 @@ class SyncPage(BasePage[T], typing.Generic[T]):
 
 
 class AsyncPage(BasePage[T], typing.Generic[T]):
-    get_next: typing.Optional[
-        typing.Callable[[], typing.Awaitable[typing.Optional[Self]]]
-    ]
+    get_next: typing.Optional[typing.Callable[[], typing.Awaitable[typing.Optional[Self]]]]
 
 
 # ----------------------------

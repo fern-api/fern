@@ -7,9 +7,7 @@ from seed import AsyncSeedExhaustive, SeedExhaustive
 from .utilities import validate_response
 
 
-async def test_get_with_no_request_body(
-    client: SeedExhaustive, async_client: AsyncSeedExhaustive
-) -> None:
+async def test_get_with_no_request_body(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
     expected_response: typing.Any = {
         "string": "string",
         "integer": 1,
@@ -47,9 +45,7 @@ async def test_get_with_no_request_body(
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_post_with_no_request_body(
-    client: SeedExhaustive, async_client: AsyncSeedExhaustive
-) -> None:
+async def test_post_with_no_request_body(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
     expected_response: typing.Any = "string"
     expected_types: typing.Any = None
     response = client.no_req_body.post_with_no_request_body()

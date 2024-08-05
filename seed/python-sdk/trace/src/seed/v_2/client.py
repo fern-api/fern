@@ -35,30 +35,21 @@ class V2Client:
             "GET",
             self._client_wrapper.get_base_url(),
             params=jsonable_encoder(
-                request_options.get("additional_query_parameters")
-                if request_options is not None
-                else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(
-                            request_options.get("additional_headers", {})
-                            if request_options is not None
-                            else {}
-                        ),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
             timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None
-            and request_options.get("timeout_in_seconds") is not None
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get("max_retries")
-            if request_options is not None
-            else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return
@@ -75,9 +66,7 @@ class AsyncV2Client:
         self.problem = AsyncProblemClient(client_wrapper=self._client_wrapper)
         self.v_3 = AsyncV3Client(client_wrapper=self._client_wrapper)
 
-    async def test(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    async def test(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters:
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
@@ -94,30 +83,21 @@ class AsyncV2Client:
             "GET",
             self._client_wrapper.get_base_url(),
             params=jsonable_encoder(
-                request_options.get("additional_query_parameters")
-                if request_options is not None
-                else None
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        **(
-                            request_options.get("additional_headers", {})
-                            if request_options is not None
-                            else {}
-                        ),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
             timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None
-            and request_options.get("timeout_in_seconds") is not None
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get("max_retries")
-            if request_options is not None
-            else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
             return

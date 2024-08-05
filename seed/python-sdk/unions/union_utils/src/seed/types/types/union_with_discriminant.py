@@ -17,22 +17,16 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def foo(self, value: types_types_foo_Foo) -> UnionWithDiscriminant:
-        return UnionWithDiscriminant(
-            __root__=_UnionWithDiscriminant.Foo(type="foo", foo=value)
-        )
+        return UnionWithDiscriminant(__root__=_UnionWithDiscriminant.Foo(type="foo", foo=value))
 
     def bar(self, value: types_types_bar_Bar) -> UnionWithDiscriminant:
-        return UnionWithDiscriminant(
-            __root__=_UnionWithDiscriminant.Bar(type="bar", bar=value)
-        )
+        return UnionWithDiscriminant(__root__=_UnionWithDiscriminant.Bar(type="bar", bar=value))
 
 
 class UnionWithDiscriminant(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get_as_union(
-        self,
-    ) -> typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar]:
+    def get_as_union(self) -> typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar]:
         return self.__root__
 
     def visit(
@@ -46,33 +40,19 @@ class UnionWithDiscriminant(pydantic_v1.BaseModel):
             return bar(self.__root__.bar)
 
     __root__: typing_extensions.Annotated[
-        typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar],
-        pydantic_v1.Field(discriminator="type"),
+        typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar], pydantic_v1.Field(discriminator="type")
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {
-            "by_alias": True,
-            "exclude_unset": True,
-            **kwargs,
-        }
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {
-            "by_alias": True,
-            "exclude_unset": True,
-            **kwargs,
-        }
-        kwargs_with_defaults_exclude_none: typing.Any = {
-            "by_alias": True,
-            "exclude_none": True,
-            **kwargs,
-        }
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
 
         return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset),
-            super().dict(**kwargs_with_defaults_exclude_none),
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
         )
 
     class Config:

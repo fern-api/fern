@@ -5,10 +5,4 @@ from .client import AsyncSeedIdempotencyHeaders, SeedIdempotencyHeaders
 from .payment import Currency
 from .version import __version__
 
-__all__ = [
-    "AsyncSeedIdempotencyHeaders",
-    "Currency",
-    "SeedIdempotencyHeaders",
-    "__version__",
-    "payment",
-]
+__all__ = ["AsyncSeedIdempotencyHeaders", "Currency", "SeedIdempotencyHeaders", "__version__", "payment"]

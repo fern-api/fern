@@ -5,69 +5,44 @@ from seed.client import AsyncSeedTrace, SeedTrace
 from .utilities import validate_response
 
 
-async def test_create_execution_session(
-    client: SeedTrace, async_client: AsyncSeedTrace
-) -> None:
+async def test_create_execution_session(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
     expected_response = {
         "sessionId": "string",
         "executionSessionUrl": "string",
         "language": "JAVA",
         "status": "CREATING_CONTAINER",
     }
-    expected_types = {
-        "sessionId": None,
-        "executionSessionUrl": None,
-        "language": None,
-        "status": None,
-    }
+    expected_types = {"sessionId": None, "executionSessionUrl": None, "language": None, "status": None}
     response = client.submission.create_execution_session(language="JAVA")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.submission.create_execution_session(
-        language="JAVA"
-    )
+    async_response = await async_client.submission.create_execution_session(language="JAVA")
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_get_execution_session(
-    client: SeedTrace, async_client: AsyncSeedTrace
-) -> None:
+async def test_get_execution_session(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
     expected_response = {
         "sessionId": "string",
         "executionSessionUrl": "string",
         "language": "JAVA",
         "status": "CREATING_CONTAINER",
     }
-    expected_types = {
-        "sessionId": None,
-        "executionSessionUrl": None,
-        "language": None,
-        "status": None,
-    }
+    expected_types = {"sessionId": None, "executionSessionUrl": None, "language": None, "status": None}
     response = client.submission.get_execution_session(session_id="string")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.submission.get_execution_session(
-        session_id="string"
-    )
+    async_response = await async_client.submission.get_execution_session(session_id="string")
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_stop_execution_session(
-    client: SeedTrace, async_client: AsyncSeedTrace
-) -> None:
+async def test_stop_execution_session(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert client.submission.stop_execution_session(session_id="string") is None  # type: ignore[func-returns-value]
 
-    assert (
-        await async_client.submission.stop_execution_session(session_id="string")
-        is None
-    )  # type: ignore[func-returns-value]
+    assert await async_client.submission.stop_execution_session(session_id="string") is None  # type: ignore[func-returns-value]
 
 
-async def test_get_execution_sessions_state(
-    client: SeedTrace, async_client: AsyncSeedTrace
-) -> None:
+async def test_get_execution_sessions_state(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
     expected_response = {
         "states": {
             "string": {

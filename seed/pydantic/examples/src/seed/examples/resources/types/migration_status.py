@@ -2,6 +2,4 @@
 
 import typing
 
-MigrationStatus = typing.Union[
-    typing.Literal["RUNNING", "FAILED", "FINISHED"], typing.Any
-]
+MigrationStatus = typing.Union[typing.Literal["RUNNING", "FAILED", "FINISHED"], typing.Any]

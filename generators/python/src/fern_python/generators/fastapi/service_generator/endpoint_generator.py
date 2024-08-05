@@ -149,9 +149,7 @@ class EndpointGenerator:
                     name=_TRY_EXCEPT_WRAPPER_NAME,
                     body=AST.CodeWriter(self._write_try_except_wrapper_body),
                     signature=AST.FunctionSignature(
-                        include_args=True,
-                        include_kwargs=True,
-                        return_type=self._get_return_type(),
+                        include_args=True, include_kwargs=True, return_type=self._get_return_type()
                     ),
                     decorators=[
                         AST.FunctionInvocation(
@@ -278,12 +276,7 @@ class EndpointGenerator:
             function_definition=AST.Reference(
                 qualified_name_excluding_import=(self._get_reference_to_init_method_on_cls(),),
             ),
-            kwargs=[
-                (
-                    EndpointGenerator._INIT_ENDPOINT_ROUTER_ARG,
-                    reference_to_fastapi_router,
-                )
-            ],
+            kwargs=[(EndpointGenerator._INIT_ENDPOINT_ROUTER_ARG, reference_to_fastapi_router)],
         )
 
     def _get_method_name(self) -> str:
@@ -393,9 +386,7 @@ def raise_file_upload_unsupported() -> Never:
     raise RuntimeError("File upload is not supported")
 
 
-def raise_file_download_unsupported(
-    file_download_response: ir_types.FileDownloadResponse,
-) -> Never:
+def raise_file_download_unsupported(file_download_response: ir_types.FileDownloadResponse) -> Never:
     raise RuntimeError("File download is not supported")
 
 

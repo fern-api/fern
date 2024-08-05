@@ -10,29 +10,17 @@ from .submission_type_state import SubmissionTypeState
 
 
 class GetSubmissionStateResponse(pydantic_v1.BaseModel):
-    time_submitted: typing.Optional[dt.datetime] = pydantic_v1.Field(
-        alias="timeSubmitted", default=None
-    )
+    time_submitted: typing.Optional[dt.datetime] = pydantic_v1.Field(alias="timeSubmitted", default=None)
     submission: str
     language: Language
-    submission_type_state: SubmissionTypeState = pydantic_v1.Field(
-        alias="submissionTypeState"
-    )
+    submission_type_state: SubmissionTypeState = pydantic_v1.Field(alias="submissionTypeState")
 
     def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {
-            "by_alias": True,
-            "exclude_unset": True,
-            **kwargs,
-        }
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults: typing.Any = {
-            "by_alias": True,
-            "exclude_unset": True,
-            **kwargs,
-        }
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
 
     class Config:

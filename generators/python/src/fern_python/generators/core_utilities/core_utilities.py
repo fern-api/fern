@@ -67,12 +67,7 @@ class CoreUtilities:
             )
 
     def _copy_file_to_project(
-        self,
-        *,
-        project: Project,
-        relative_filepath_on_disk: str,
-        filepath_in_project: Filepath,
-        exports: Set[str],
+        self, *, project: Project, relative_filepath_on_disk: str, filepath_in_project: Filepath, exports: Set[str]
     ) -> None:
         source = (
             os.path.join(os.path.dirname(__file__), "../../../../../core_utilities/pydantic")
@@ -90,8 +85,7 @@ class CoreUtilities:
         return AST.Reference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "datetime_utils"),
-                named_import="serialize_datetime",
+                module=AST.Module.local(*self._module_path, "datetime_utils"), named_import="serialize_datetime"
             ),
         )
 
@@ -99,8 +93,7 @@ class CoreUtilities:
         field_metadata_reference = AST.ClassReference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "serialization"),
-                named_import="FieldMetadata",
+                module=AST.Module.local(*self._module_path, "serialization"), named_import="FieldMetadata"
             ),
         )
 
@@ -110,8 +103,7 @@ class CoreUtilities:
         return AST.ClassReference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "unchecked_base_model"),
-                named_import="UnionMetadata",
+                module=AST.Module.local(*self._module_path, "unchecked_base_model"), named_import="UnionMetadata"
             ),
         )
 
@@ -132,8 +124,7 @@ class CoreUtilities:
         return AST.Reference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "unchecked_base_model"),
-                named_import="construct_type",
+                module=AST.Module.local(*self._module_path, "unchecked_base_model"), named_import="construct_type"
             ),
         )
 
@@ -145,10 +136,7 @@ class CoreUtilities:
                     value_being_casted=AST.Expression(
                         AST.FunctionInvocation(
                             function_definition=self.get_construct_type(),
-                            kwargs=[
-                                ("type_", AST.Expression(type_of_obj)),
-                                ("object_", obj),
-                            ],
+                            kwargs=[("type_", AST.Expression(type_of_obj)), ("object_", obj)],
                         )
                     ),
                 )
@@ -200,8 +188,7 @@ class CoreUtilities:
                 function_definition=AST.Reference(
                     qualified_name_excluding_import=(),
                     import_=AST.ReferenceImport(
-                        module=AST.Module.local(*self._module_path, "pydantic_utilities"),
-                        named_import="parse_obj_as",
+                        module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="parse_obj_as"
                     ),
                 ),
                 args=[AST.Expression(type_of_obj), obj],
@@ -213,8 +200,7 @@ class CoreUtilities:
             AST.Reference(
                 qualified_name_excluding_import=(),
                 import_=AST.ReferenceImport(
-                    module=AST.Module.local(*self._module_path, "pydantic_utilities"),
-                    named_import="IS_PYDANTIC_V2",
+                    module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="IS_PYDANTIC_V2"
                 ),
             )
         )
@@ -248,7 +234,6 @@ class CoreUtilities:
         return AST.ClassReference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "pydantic_utilities"),
-                named_import="UniversalRootModel",
+                module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="UniversalRootModel"
             ),
         )

@@ -5,9 +5,7 @@ from __future__ import annotations
 import typing
 
 from .deep_equality_correctness_check import DeepEqualityCorrectnessCheck
-from .void_function_definition_that_takes_actual_result import (
-    VoidFunctionDefinitionThatTakesActualResult,
-)
+from .void_function_definition_that_takes_actual_result import VoidFunctionDefinitionThatTakesActualResult
 
 
 class AssertCorrectnessCheck_DeepEquality(DeepEqualityCorrectnessCheck):
@@ -30,6 +28,4 @@ class AssertCorrectnessCheck_Custom(VoidFunctionDefinitionThatTakesActualResult)
         populate_by_name = True
 
 
-AssertCorrectnessCheck = typing.Union[
-    AssertCorrectnessCheck_DeepEquality, AssertCorrectnessCheck_Custom
-]
+AssertCorrectnessCheck = typing.Union[AssertCorrectnessCheck_DeepEquality, AssertCorrectnessCheck_Custom]

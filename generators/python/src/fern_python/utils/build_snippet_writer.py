@@ -6,10 +6,7 @@ from fern_python.snippet import SnippetWriter
 
 
 def build_snippet_writer(
-    *,
-    context: PydanticGeneratorContext,
-    improved_imports: bool = False,
-    use_str_enums: bool = False,
+    *, context: PydanticGeneratorContext, improved_imports: bool = False, use_str_enums: bool = False
 ) -> SnippetWriter:
     """
     Builds a new SnippetWriter. Using this function is preferred over

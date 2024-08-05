@@ -15,12 +15,7 @@ from .validators_generator import ValidatorsGenerator
 class PydanticValidatorsGenerator(ValidatorsGenerator):
     _DECORATOR_FUNCTION_NAME = "field"
 
-    def __init__(
-        self,
-        model: PydanticModel,
-        extended_pydantic_fields: List[PydanticField],
-        unique_name: List[str],
-    ):
+    def __init__(self, model: PydanticModel, extended_pydantic_fields: List[PydanticField], unique_name: List[str]):
         super().__init__(model=model)
         reference_to_validators_class = self._get_reference_to_validators_class()
 

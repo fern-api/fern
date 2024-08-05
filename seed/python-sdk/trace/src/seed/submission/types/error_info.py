@@ -39,6 +39,4 @@ class ErrorInfo_InternalError(InternalError):
         populate_by_name = True
 
 
-ErrorInfo = typing.Union[
-    ErrorInfo_CompileError, ErrorInfo_RuntimeError, ErrorInfo_InternalError
-]
+ErrorInfo = typing.Union[ErrorInfo_CompileError, ErrorInfo_RuntimeError, ErrorInfo_InternalError]

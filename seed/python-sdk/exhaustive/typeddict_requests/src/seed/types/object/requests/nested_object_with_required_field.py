@@ -8,6 +8,4 @@ from .object_with_optional_field import ObjectWithOptionalFieldParams
 
 class NestedObjectWithRequiredFieldParams(typing_extensions.TypedDict):
     string: str
-    nested_object: typing_extensions.Annotated[
-        ObjectWithOptionalFieldParams, FieldMetadata(alias="NestedObject")
-    ]
+    nested_object: typing_extensions.Annotated[ObjectWithOptionalFieldParams, FieldMetadata(alias="NestedObject")]

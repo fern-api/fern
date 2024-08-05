@@ -5,9 +5,7 @@ import typing
 
 from ....core.datetime_utils import serialize_datetime
 from ....core.pydantic_utilities import pydantic_v1
-from .function_implementation_for_multiple_languages import (
-    FunctionImplementationForMultipleLanguages,
-)
+from .function_implementation_for_multiple_languages import FunctionImplementationForMultipleLanguages
 from .parameter import Parameter
 
 
@@ -16,25 +14,15 @@ class VoidFunctionDefinitionThatTakesActualResult(pydantic_v1.BaseModel):
     The generated signature will include an additional param, actualResult
     """
 
-    additional_parameters: typing.List[Parameter] = pydantic_v1.Field(
-        alias="additionalParameters"
-    )
+    additional_parameters: typing.List[Parameter] = pydantic_v1.Field(alias="additionalParameters")
     code: FunctionImplementationForMultipleLanguages
 
     def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {
-            "by_alias": True,
-            "exclude_unset": True,
-            **kwargs,
-        }
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults: typing.Any = {
-            "by_alias": True,
-            "exclude_unset": True,
-            **kwargs,
-        }
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
 
     class Config:

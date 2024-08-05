@@ -2,10 +2,7 @@
 
 from .errors import BadRequest, UnauthorizedRequest, UnauthorizedRequestErrorBody
 from . import basic_auth, errors
-from .client import (
-    AsyncSeedBasicAuthEnvironmentVariables,
-    SeedBasicAuthEnvironmentVariables,
-)
+from .client import AsyncSeedBasicAuthEnvironmentVariables, SeedBasicAuthEnvironmentVariables
 from .version import __version__
 
 __all__ = [

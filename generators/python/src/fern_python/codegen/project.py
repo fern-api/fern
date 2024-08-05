@@ -40,6 +40,7 @@ class Project:
         relative_path_to_project: str,
         python_version: str = "^3.8",
         project_config: Optional[ProjectConfig] = None,
+        should_format_files: bool,
         sorted_modules: Optional[Sequence[str]] = None,
         flat_layout: bool = False,
         whitelabel: bool = False,
@@ -59,9 +60,10 @@ class Project:
         self._root_filepath = filepath
         self._relative_path_to_project = relative_path_to_project
         self._project_config = project_config
-        self._module_manager = ModuleManager(sorted_modules=sorted_modules)
+        self._module_manager = ModuleManager(should_format=should_format_files, sorted_modules=sorted_modules)
         self._python_version = python_version
         self._dependency_manager = DependencyManager()
+        self._should_format_files = should_format_files
         self._whitelabel = whitelabel
         self._github_output_mode = github_output_mode
         self._pypi_metadata = pypi_metadata
@@ -91,9 +93,7 @@ class Project:
 
         def on_finish(source_file: SourceFileImpl) -> None:
             self._module_manager.register_exports(
-                filepath=filepath,
-                exports=source_file.get_exports() if from_src else set(),
-                from_src=from_src,
+                filepath=filepath, exports=source_file.get_exports() if from_src else set(), from_src=from_src
             )
 
         module = filepath.to_module()
@@ -103,23 +103,18 @@ class Project:
             reference_resolver=ReferenceResolverImpl(
                 module_path_of_source_file=module.path,
             ),
-            should_format=False,
             dependency_manager=self._dependency_manager,
+            should_format=self._should_format_files,
             whitelabel=self._whitelabel,
         )
         return source_file
 
     def write_source_file(
-        self,
-        *,
-        source_file: SourceFile,
-        filepath: Filepath,
-        include_src_root: Optional[bool] = True,
+        self, *, source_file: SourceFile, filepath: Filepath, include_src_root: Optional[bool] = True
     ) -> None:
         source_file.write_to_file(
             filepath=self.get_source_file_filepath(
-                filepath,
-                include_src_root=(include_src_root if include_src_root is not None else True),
+                filepath, include_src_root=(include_src_root if include_src_root is not None else True)
             )
         )
 
@@ -149,7 +144,7 @@ class Project:
         string_replacements: Optional[dict[str, str]] = None,
     ) -> None:
         with open(path_on_disk, "r") as existing_file:
-            writer = WriterImpl(should_format=False)
+            writer = WriterImpl(should_format=self._should_format_files)
             read_file = existing_file.read()
             if string_replacements is not None:
                 for k, v in string_replacements.items():
@@ -158,8 +153,7 @@ class Project:
             writer.write(read_file)
             writer.write_to_file(
                 filepath=self.get_source_file_filepath(
-                    filepath_in_project,
-                    include_src_root=(include_src_root if include_src_root is not None else True),
+                    filepath_in_project, include_src_root=(include_src_root if include_src_root is not None else True)
                 )
             )
         if include_src_root:

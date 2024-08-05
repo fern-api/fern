@@ -93,10 +93,7 @@ class SnippetTestFactory:
         return AST.Expression(AST.CodeWriter(envvar_writer))
 
     def _enviroment(self, generated_environment: MultipleBaseUrlsEnvironmentGenerator) -> AST.ClassInstantiation:
-        args = [
-            AST.Expression(f'"{self.TEST_URL_ENVVAR}"'),
-            AST.Expression('"base_url"'),
-        ]
+        args = [AST.Expression(f'"{self.TEST_URL_ENVVAR}"'), AST.Expression('"base_url"')]
         os_get = AST.Expression(
             AST.FunctionInvocation(
                 function_definition=AST.Reference(
@@ -264,10 +261,7 @@ class SnippetTestFactory:
                     "list",
                     dict(
                         [
-                            (
-                                idx,
-                                self._generate_type_expectations_for_type_reference(ex),
-                            )
+                            (idx, self._generate_type_expectations_for_type_reference(ex))
                             for idx, ex in enumerate(item_type.list_)
                         ]
                     ),
@@ -276,10 +270,7 @@ class SnippetTestFactory:
                     "set",
                     dict(
                         [
-                            (
-                                idx,
-                                self._generate_type_expectations_for_type_reference(ex),
-                            )
+                            (idx, self._generate_type_expectations_for_type_reference(ex))
                             for idx, ex in enumerate(item_type.set_)
                         ]
                     ),
@@ -309,10 +300,7 @@ class SnippetTestFactory:
                 enum=lambda _: None,
                 object=lambda obj: dict(
                     [
-                        (
-                            prop.name.wire_value,
-                            self._generate_type_expectations_for_type_reference(prop.value),
-                        )
+                        (prop.name.wire_value, self._generate_type_expectations_for_type_reference(prop.value))
                         for prop in obj.properties
                     ]
                 ),
@@ -357,11 +345,7 @@ class SnippetTestFactory:
                 maybe_stringify_expectations = f"'{expectations}'" if type(expectations) is str else expectations
 
                 writer.write(f"{type_expectation_name}: ")
-                writer.write_node(
-                    AST.Expression(AST.TypeHint.tuple_(AST.TypeHint.any(), AST.TypeHint.any()))
-                    if isinstance(expectations, Tuple)
-                    else AST.Expression(AST.TypeHint.any())
-                )  # type: ignore
+                writer.write_node(AST.Expression(AST.TypeHint.tuple_(AST.TypeHint.any(), AST.TypeHint.any())) if isinstance(expectations, Tuple) else AST.Expression(AST.TypeHint.any()))  # type: ignore
                 writer.write_line(f" = {maybe_stringify_expectations}")
             if sync_expression:
                 if response_json is not None:
@@ -422,9 +406,7 @@ class SnippetTestFactory:
         return (
             example_response.visit(
                 ok=lambda res: res.visit(
-                    body=lambda body: body if body else None,
-                    stream=lambda _: None,
-                    sse=lambda _: None,
+                    body=lambda body: body if body else None, stream=lambda _: None, sse=lambda _: None
                 ),
                 error=lambda _: None,
             )
@@ -559,10 +541,7 @@ class SnippetTestFactory:
             self._service_test_files[filepath] = source_file
 
     def _function_generator(
-        self,
-        service: ir_types.HttpService,
-        endpoint: ir_types.HttpEndpoint,
-        snippet_writer: SnippetWriter,
+        self, service: ir_types.HttpService, endpoint: ir_types.HttpEndpoint, snippet_writer: SnippetWriter
     ) -> EndpointFunctionGenerator:
         return EndpointFunctionGenerator(
             context=self._context,
@@ -623,11 +602,7 @@ class SnippetTestFactory:
                         named_import="validate_response",
                     ),
                 ),
-                args=[
-                    response_expression,
-                    expected_expression,
-                    expected_types_expression,
-                ],
+                args=[response_expression, expected_expression, expected_types_expression],
             )
         )
 

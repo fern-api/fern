@@ -382,10 +382,7 @@ class OAuthTokenProviderGenerator:
                                 f"token_response.{self._get_response_property_path(property_path)}{property_name}"
                             ),
                         ),
-                        (
-                            "buffer_in_minutes",
-                            AST.Expression(f"self.{self._get_buffer_in_minutes_member_name()}"),
-                        ),
+                        ("buffer_in_minutes", AST.Expression(f"self.{self._get_buffer_in_minutes_member_name()}")),
                     ],
                 ),
             )

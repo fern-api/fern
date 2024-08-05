@@ -54,8 +54,7 @@ class PydanticModelGenerator(AbstractGenerator):
         context = PydanticGeneratorContextImpl(
             ir=ir,
             type_declaration_referencer=TypeDeclarationReferencer(
-                use_typeddict_requests=custom_config.use_typeddict_requests,
-                types=ir.types,
+                use_typeddict_requests=custom_config.use_typeddict_requests, types=ir.types
             ),
             generator_config=generator_config,
             project_module_path=self.get_relative_path_to_project_for_publish(
@@ -69,9 +68,7 @@ class PydanticModelGenerator(AbstractGenerator):
         )
         snippet_registry = SnippetRegistry()
         snippet_writer = self._build_snippet_writer(
-            context=context,
-            improved_imports=False,
-            use_str_enums=custom_config.use_str_enums,
+            context=context, improved_imports=False, use_str_enums=custom_config.use_str_enums
         )
         self.generate_types(
             generator_exec_wrapper=generator_exec_wrapper,
@@ -126,9 +123,7 @@ class PydanticModelGenerator(AbstractGenerator):
         if self._should_generate_typedict(context=context, type_=type.shape):
             typeddict_filepath = context.get_filepath_for_type_id(type_id=type.name.type_id, as_request=True)
             typeddict_source_file = SourceFileFactory.create(
-                project=project,
-                filepath=typeddict_filepath,
-                generator_exec_wrapper=generator_exec_wrapper,
+                project=project, filepath=typeddict_filepath, generator_exec_wrapper=generator_exec_wrapper
             )
 
             typeddict_handler = TypeDeclarationHandler(
@@ -146,9 +141,7 @@ class PydanticModelGenerator(AbstractGenerator):
         # Write the pydantic model
         filepath = context.get_filepath_for_type_id(type_id=type.name.type_id, as_request=False)
         source_file = SourceFileFactory.create(
-            project=project,
-            filepath=filepath,
-            generator_exec_wrapper=generator_exec_wrapper,
+            project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
         )
 
         type_declaration_handler = TypeDeclarationHandler(
@@ -178,10 +171,7 @@ class PydanticModelGenerator(AbstractGenerator):
         return False
 
     def _build_snippet_writer(
-        self,
-        context: PydanticGeneratorContext,
-        improved_imports: bool = False,
-        use_str_enums: bool = False,
+        self, context: PydanticGeneratorContext, improved_imports: bool = False, use_str_enums: bool = False
     ) -> SnippetWriter:
         """
         Note that this function is a copy of the function with the same name in

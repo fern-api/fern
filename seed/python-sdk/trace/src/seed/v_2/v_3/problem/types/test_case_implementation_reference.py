@@ -29,6 +29,5 @@ class TestCaseImplementationReference_Implementation(TestCaseImplementation):
 
 
 TestCaseImplementationReference = typing.Union[
-    TestCaseImplementationReference_TemplateId,
-    TestCaseImplementationReference_Implementation,
+    TestCaseImplementationReference_TemplateId, TestCaseImplementationReference_Implementation
 ]
