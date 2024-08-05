@@ -39,6 +39,13 @@ types:
 
   ProtobufType:
     docs: |
+      A Protobuf type declaration.
+    union:
+      wellKnown: WellKnownProtobufType
+      userDefined: UserDefinedProtobufType
+
+  UserDefinedProtobufType:
+    docs: |
       Defines the information related to the original `.proto` source file
       that defines this type. This is primarily meant to be used to generate
       Protobuf mapper methods, which are used in gRPC-compatbile SDKs.
@@ -75,6 +82,44 @@ types:
           However, its repeated here just in case the naming convention differs, which
           is most relevant for APIs that specify `smart-casing`.
         type: commons.Name
+
+  WellKnownProtobufType:
+    docs: |
+      The set of well-known types supported by Protobuf. These types are often included
+      in the target runtime library, so they usually require special handling.
+
+      The full list of well-known types can be found at https://protobuf.dev/reference/protobuf/google.protobuf
+    union:
+      any: {}
+      api: {}
+      boolValue: {}
+      bytesValue: {}
+      doubleValue: {}
+      duration: {}
+      empty: {}
+      enum: {}
+      enumValue: {}
+      field: {}
+      fieldCardinality: {}
+      fieldKind: {}
+      fieldMask: {}
+      floatValue: {}
+      int32Value: {}
+      int64Value: {}
+      listValue: {}
+      method: {}
+      mixin: {}
+      nullValue: {}
+      option: {}
+      sourceContext: {}
+      stringValue: {}
+      struct: {}
+      syntax: {}
+      timestamp: {}
+      type: {}
+      uint32Value: {}
+      uint64Value: {}
+      value: {}
 
   ProtobufFile:
     properties:
