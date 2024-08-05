@@ -18,6 +18,16 @@ it("audiences", async () => {
     });
 });
 
+it("environments no audiences", async () => {
+    const AUDIENCES_DIR = path.join(__dirname, "fixtures/audiences/fern");
+    await generateAndSnapshotIRFromPath({
+        absolutePathToIr: AbsoluteFilePath.of(IR_DIR),
+        absolutePathToWorkspace: AbsoluteFilePath.of(AUDIENCES_DIR),
+        audiences: { type: "all" },
+        workspaceName: "environmentAudiences"
+    });
+});
+
 it("fhir", async () => {
     const FHIR_DIR = path.join(__dirname, "../../../../../../fern/apis/fhir");
     await generateAndSnapshotIRFromPath({
