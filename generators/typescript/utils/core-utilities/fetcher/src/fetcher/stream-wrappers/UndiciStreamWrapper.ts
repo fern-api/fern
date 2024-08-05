@@ -217,8 +217,8 @@ export class UndiciStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | U
         }
     }
 
-    [Symbol.asyncIterator](): AsyncIterator<ReadFormat> {
-        const iterator: AsyncIterator<ReadFormat> = {
+    [Symbol.asyncIterator](): AsyncIterableIterator<ReadFormat> {
+        return {
             next: async () => {
                 if (this.paused) {
                     await new Promise((resolve) => {
@@ -230,9 +230,10 @@ export class UndiciStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | U
                     return { done: true, value: undefined };
                 }
                 return { done: false, value };
+            },
+            [Symbol.asyncIterator]() {
+                return this;
             }
         };
-
-        return iterator;
     }
 }
