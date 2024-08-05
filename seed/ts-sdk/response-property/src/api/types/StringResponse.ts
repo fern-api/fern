@@ -3,5 +3,5 @@
  */
 
 export interface StringResponse {
-    data: string;
+    "data": string;
 }

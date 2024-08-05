@@ -4,7 +4,8 @@
 
 import * as SeedTrace from "../../../index";
 
-export type CreateProblemError = SeedTrace.CreateProblemError.Generic;
+export type CreateProblemError = 
+    | SeedTrace.CreateProblemError.Generic;
 
 export declare namespace CreateProblemError {
     interface Generic extends SeedTrace.GenericCreateProblemError {

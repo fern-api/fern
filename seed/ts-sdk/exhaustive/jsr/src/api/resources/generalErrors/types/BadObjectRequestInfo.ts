@@ -3,5 +3,5 @@
  */
 
 export interface BadObjectRequestInfo {
-    message: string;
+    "message": string;
 }

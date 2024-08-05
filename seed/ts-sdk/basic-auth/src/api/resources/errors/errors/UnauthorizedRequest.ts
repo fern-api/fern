@@ -10,7 +10,7 @@ export class UnauthorizedRequest extends errors.SeedBasicAuthError {
         super({
             message: "UnauthorizedRequest",
             statusCode: 401,
-            body: body,
+            body: body
         });
         Object.setPrototypeOf(this, UnauthorizedRequest.prototype);
     }

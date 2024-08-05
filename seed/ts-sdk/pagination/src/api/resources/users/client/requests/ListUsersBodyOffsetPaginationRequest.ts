@@ -18,5 +18,5 @@ export interface ListUsersBodyOffsetPaginationRequest {
      * in order to fetch the next page of results.
      *
      */
-    pagination?: SeedPagination.WithPage;
+    "pagination"?: SeedPagination.WithPage;
 }

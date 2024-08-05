@@ -7,25 +7,22 @@ import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 import { ExceptionInfo } from "./ExceptionInfo";
 
-export const ExceptionV2: core.serialization.Schema<serializers.ExceptionV2.Raw, SeedTrace.ExceptionV2> =
-    core.serialization
-        .union("type", {
-            generic: ExceptionInfo,
-            timeout: core.serialization.object({}),
-        })
-        .transform<SeedTrace.ExceptionV2>({
-            transform: (value) => value,
-            untransform: (value) => value,
-        });
+export const ExceptionV2: core.serialization.Schema<serializers.ExceptionV2.Raw, SeedTrace.ExceptionV2> = core.serialization.union("type", {
+        "generic": ExceptionInfo,
+        "timeout": core.serialization.object({})
+    }).transform<SeedTrace.ExceptionV2>({
+        transform: value => value,
+        untransform: value => value
+    });
 
 export declare namespace ExceptionV2 {
     type Raw = ExceptionV2.Generic | ExceptionV2.Timeout;
 
     interface Generic extends ExceptionInfo.Raw {
-        type: "generic";
+        "type": "generic";
     }
 
     interface Timeout {
-        type: "timeout";
+        "type": "timeout";
     }
 }

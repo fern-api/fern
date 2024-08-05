@@ -7,15 +7,14 @@ import * as SeedExamples from "../../../../api/index";
 import * as core from "../../../../core";
 import { Type } from "../../../types/Type";
 
-export const Entity: core.serialization.ObjectSchema<serializers.Entity.Raw, SeedExamples.Entity> =
-    core.serialization.object({
-        type: Type,
-        name: core.serialization.string(),
+export const Entity: core.serialization.ObjectSchema<serializers.Entity.Raw, SeedExamples.Entity> = core.serialization.object({
+        "type": Type,
+        "name": core.serialization.string()
     });
 
 export declare namespace Entity {
     interface Raw {
-        type: Type.Raw;
-        name: string;
+        "type": Type.Raw;
+        "name": string;
     }
 }

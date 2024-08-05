@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../index";
 
 export interface UnexpectedLanguageError {
-    expectedLanguage: SeedTrace.Language;
-    actualLanguage: SeedTrace.Language;
+    "expectedLanguage": SeedTrace.Language;
+    "actualLanguage": SeedTrace.Language;
 }

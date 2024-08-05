@@ -17,7 +17,6 @@ export interface StreamWrapper<WritableStream, ReadFormat> {
     read(): Promise<ReadFormat | undefined>;
     text(): Promise<string>;
     json<T>(): Promise<T>;
-    [Symbol.asyncIterator](): AsyncIterator<ReadFormat>;
 }
 
 export async function chooseStreamWrapper(responseBody: any): Promise<Promise<StreamWrapper<any, any>>> {

@@ -5,6 +5,6 @@
 import * as SeedTrace from "../../../index";
 
 export interface WorkspaceSubmissionUpdate {
-    updateTime: string;
-    updateInfo: SeedTrace.WorkspaceSubmissionUpdateInfo;
+    "updateTime": string;
+    "updateInfo": SeedTrace.WorkspaceSubmissionUpdateInfo;
 }

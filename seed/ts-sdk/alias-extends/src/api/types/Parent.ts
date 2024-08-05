@@ -9,5 +9,5 @@
  *     }
  */
 export interface Parent {
-    parent: string;
+    "parent": string;
 }

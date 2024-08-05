@@ -21,7 +21,8 @@ export declare namespace SeedCodeSamplesClient {
 }
 
 export class SeedCodeSamplesClient {
-    constructor(protected readonly _options: SeedCodeSamplesClient.Options) {}
+    constructor(protected readonly _options: SeedCodeSamplesClient.Options) {
+    }
 
     protected _service: Service | undefined;
 

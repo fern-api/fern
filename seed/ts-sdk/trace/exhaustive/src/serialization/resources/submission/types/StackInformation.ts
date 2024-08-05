@@ -7,17 +7,14 @@ import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 import { StackFrame } from "./StackFrame";
 
-export const StackInformation: core.serialization.ObjectSchema<
-    serializers.StackInformation.Raw,
-    SeedTrace.StackInformation
-> = core.serialization.object({
-    numStackFrames: core.serialization.number(),
-    topStackFrame: StackFrame.optional(),
-});
+export const StackInformation: core.serialization.ObjectSchema<serializers.StackInformation.Raw, SeedTrace.StackInformation> = core.serialization.object({
+        "numStackFrames": core.serialization.number(),
+        "topStackFrame": StackFrame.optional()
+    });
 
 export declare namespace StackInformation {
     interface Raw {
-        numStackFrames: number;
-        topStackFrame?: StackFrame.Raw | null;
+        "numStackFrames": number;
+        "topStackFrame"?: StackFrame.Raw | null;
     }
 }

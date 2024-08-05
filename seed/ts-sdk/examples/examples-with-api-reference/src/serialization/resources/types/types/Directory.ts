@@ -7,17 +7,16 @@ import * as SeedExamples from "../../../../api/index";
 import * as core from "../../../../core";
 import { File_ } from "./File_";
 
-export const Directory: core.serialization.ObjectSchema<serializers.Directory.Raw, SeedExamples.Directory> =
-    core.serialization.object({
-        name: core.serialization.string(),
-        files: core.serialization.list(File_).optional(),
-        directories: core.serialization.list(core.serialization.lazyObject(() => serializers.Directory)).optional(),
+export const Directory: core.serialization.ObjectSchema<serializers.Directory.Raw, SeedExamples.Directory> = core.serialization.object({
+        "name": core.serialization.string(),
+        "files": core.serialization.list(File_).optional(),
+        "directories": core.serialization.list(core.serialization.lazyObject(() => serializers.Directory)).optional()
     });
 
 export declare namespace Directory {
     interface Raw {
-        name: string;
-        files?: File_.Raw[] | null;
-        directories?: serializers.Directory.Raw[] | null;
+        "name": string;
+        "files"?: File_.Raw[] | null;
+        "directories"?: serializers.Directory.Raw[] | null;
     }
 }

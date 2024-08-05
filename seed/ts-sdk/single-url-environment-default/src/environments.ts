@@ -3,10 +3,8 @@
  */
 
 export const SeedSingleUrlEnvironmentDefaultEnvironment = {
-    Production: "https://production.com/api",
-    Staging: "https://staging.com/api",
-} as const;
+        Production: "https://production.com/api",
+        Staging: "https://staging.com/api",
+    } as const;
 
-export type SeedSingleUrlEnvironmentDefaultEnvironment =
-    | typeof SeedSingleUrlEnvironmentDefaultEnvironment.Production
-    | typeof SeedSingleUrlEnvironmentDefaultEnvironment.Staging;
+export type SeedSingleUrlEnvironmentDefaultEnvironment = typeof SeedSingleUrlEnvironmentDefaultEnvironment.Production | typeof SeedSingleUrlEnvironmentDefaultEnvironment.Staging;

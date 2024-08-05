@@ -4,7 +4,9 @@
 
 import * as SeedUnions from "../../../index";
 
-export type UnionWithPrimitive = SeedUnions.UnionWithPrimitive.Integer | SeedUnions.UnionWithPrimitive.String;
+export type UnionWithPrimitive = 
+    | SeedUnions.UnionWithPrimitive.Integer
+    | SeedUnions.UnionWithPrimitive.String;
 
 export declare namespace UnionWithPrimitive {
     interface Integer {

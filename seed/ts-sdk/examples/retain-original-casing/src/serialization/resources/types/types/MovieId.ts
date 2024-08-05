@@ -6,8 +6,7 @@ import * as serializers from "../../../index";
 import * as SeedExamples from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const MovieId: core.serialization.Schema<serializers.MovieId.Raw, SeedExamples.MovieId> =
-    core.serialization.string();
+export const MovieId: core.serialization.Schema<serializers.MovieId.Raw, SeedExamples.MovieId> = core.serialization.string();
 
 export declare namespace MovieId {
     type Raw = string;

@@ -3,6 +3,6 @@
  */
 
 export interface FileInfo {
-    filename: string;
-    contents: string;
+    "filename": string;
+    "contents": string;
 }

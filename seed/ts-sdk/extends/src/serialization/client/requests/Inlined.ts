@@ -7,14 +7,12 @@ import * as SeedExtends from "../../../api/index";
 import * as core from "../../../core";
 import { ExampleType } from "../../types/ExampleType";
 
-export const Inlined: core.serialization.Schema<serializers.Inlined.Raw, SeedExtends.Inlined> = core.serialization
-    .object({
-        unique: core.serialization.string(),
-    })
-    .extend(ExampleType);
+export const Inlined: core.serialization.Schema<serializers.Inlined.Raw, SeedExtends.Inlined> = core.serialization.object({
+        "unique": core.serialization.string()
+    }).extend(ExampleType);
 
 export declare namespace Inlined {
     interface Raw extends ExampleType.Raw {
-        unique: string;
+        "unique": string;
     }
 }

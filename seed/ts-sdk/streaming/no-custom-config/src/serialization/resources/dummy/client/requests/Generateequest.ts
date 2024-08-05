@@ -6,13 +6,12 @@ import * as serializers from "../../../../index";
 import * as SeedStreaming from "../../../../../api/index";
 import * as core from "../../../../../core";
 
-export const Generateequest: core.serialization.Schema<serializers.Generateequest.Raw, SeedStreaming.Generateequest> =
-    core.serialization.object({
-        numEvents: core.serialization.property("num_events", core.serialization.number()),
+export const Generateequest: core.serialization.Schema<serializers.Generateequest.Raw, SeedStreaming.Generateequest> = core.serialization.object({
+        "numEvents": core.serialization.property("num_events", core.serialization.number())
     });
 
 export declare namespace Generateequest {
     interface Raw {
-        num_events: number;
+        "num_events": number;
     }
 }

@@ -7,17 +7,16 @@ import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 import { ActualResult } from "./ActualResult";
 
-export const TestCaseResult: core.serialization.ObjectSchema<serializers.TestCaseResult.Raw, SeedTrace.TestCaseResult> =
-    core.serialization.object({
-        expectedResult: core.serialization.lazy(() => serializers.VariableValue),
-        actualResult: ActualResult,
-        passed: core.serialization.boolean(),
+export const TestCaseResult: core.serialization.ObjectSchema<serializers.TestCaseResult.Raw, SeedTrace.TestCaseResult> = core.serialization.object({
+        "expectedResult": core.serialization.lazy(() => serializers.VariableValue),
+        "actualResult": ActualResult,
+        "passed": core.serialization.boolean()
     });
 
 export declare namespace TestCaseResult {
     interface Raw {
-        expectedResult: serializers.VariableValue.Raw;
-        actualResult: ActualResult.Raw;
-        passed: boolean;
+        "expectedResult": serializers.VariableValue.Raw;
+        "actualResult": ActualResult.Raw;
+        "passed": boolean;
     }
 }

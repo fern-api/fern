@@ -9,5 +9,5 @@
  *     }
  */
 export interface Generateequest {
-    numEvents: number;
+    "numEvents": number;
 }

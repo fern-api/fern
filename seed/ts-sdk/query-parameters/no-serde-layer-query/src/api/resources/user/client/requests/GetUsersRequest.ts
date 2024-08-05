@@ -44,18 +44,18 @@ import * as SeedQueryParameters from "../../../../index";
  *     }
  */
 export interface GetUsersRequest {
-    limit: number;
-    id: string;
-    date: string;
-    deadline: string;
-    bytes: string;
-    user: SeedQueryParameters.User;
-    userList: SeedQueryParameters.User[];
-    optionalDeadline?: string;
-    keyValue: Record<string, string>;
-    optionalString?: string;
-    nestedUser: SeedQueryParameters.NestedUser;
-    optionalUser?: SeedQueryParameters.User;
-    excludeUser: SeedQueryParameters.User | SeedQueryParameters.User[];
-    filter: string | string[];
+    "limit": number;
+    "id": string;
+    "date": string;
+    "deadline": string;
+    "bytes": string;
+    "user": SeedQueryParameters.User;
+    "userList": SeedQueryParameters.User[];
+    "optionalDeadline"?: string;
+    "keyValue": Record<string, string>;
+    "optionalString"?: string;
+    "nestedUser": SeedQueryParameters.NestedUser;
+    "optionalUser"?: SeedQueryParameters.User;
+    "excludeUser": SeedQueryParameters.User | SeedQueryParameters.User[];
+    "filter": string | string[];
 }

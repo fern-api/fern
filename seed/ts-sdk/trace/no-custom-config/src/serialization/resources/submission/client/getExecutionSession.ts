@@ -7,11 +7,10 @@ import * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 import { ExecutionSessionResponse } from "../types/ExecutionSessionResponse";
 
-export const Response: core.serialization.Schema<
-    serializers.submission.getExecutionSession.Response.Raw,
-    SeedTrace.ExecutionSessionResponse | undefined
-> = ExecutionSessionResponse.optional();
+export const Response: core.serialization.Schema<serializers.submission.getExecutionSession.Response.Raw, SeedTrace.ExecutionSessionResponse | undefined> = ExecutionSessionResponse.optional();
 
 export declare namespace Response {
     type Raw = ExecutionSessionResponse.Raw | null | undefined;
 }
+
+

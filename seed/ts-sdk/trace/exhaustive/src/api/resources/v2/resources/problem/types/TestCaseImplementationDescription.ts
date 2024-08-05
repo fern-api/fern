@@ -5,5 +5,5 @@
 import * as SeedTrace from "../../../../../index";
 
 export interface TestCaseImplementationDescription {
-    boards: SeedTrace.v2.TestCaseImplementationDescriptionBoard[];
+    "boards": SeedTrace.v2.TestCaseImplementationDescriptionBoard[];
 }

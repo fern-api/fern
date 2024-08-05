@@ -4,7 +4,7 @@
 
 import * as SeedUnions from "../../../index";
 
-export type UnionWithBaseProperties =
+export type UnionWithBaseProperties = 
     | SeedUnions.UnionWithBaseProperties.Integer
     | SeedUnions.UnionWithBaseProperties.String
     | SeedUnions.UnionWithBaseProperties.Foo;

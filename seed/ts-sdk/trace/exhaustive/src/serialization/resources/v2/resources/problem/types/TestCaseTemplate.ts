@@ -8,19 +8,16 @@ import * as core from "../../../../../../core";
 import { TestCaseTemplateId } from "./TestCaseTemplateId";
 import { TestCaseImplementation } from "./TestCaseImplementation";
 
-export const TestCaseTemplate: core.serialization.ObjectSchema<
-    serializers.v2.TestCaseTemplate.Raw,
-    SeedTrace.v2.TestCaseTemplate
-> = core.serialization.object({
-    templateId: TestCaseTemplateId,
-    name: core.serialization.string(),
-    implementation: TestCaseImplementation,
-});
+export const TestCaseTemplate: core.serialization.ObjectSchema<serializers.v2.TestCaseTemplate.Raw, SeedTrace.v2.TestCaseTemplate> = core.serialization.object({
+        "templateId": TestCaseTemplateId,
+        "name": core.serialization.string(),
+        "implementation": TestCaseImplementation
+    });
 
 export declare namespace TestCaseTemplate {
     interface Raw {
-        templateId: TestCaseTemplateId.Raw;
-        name: string;
-        implementation: TestCaseImplementation.Raw;
+        "templateId": TestCaseTemplateId.Raw;
+        "name": string;
+        "implementation": TestCaseImplementation.Raw;
     }
 }

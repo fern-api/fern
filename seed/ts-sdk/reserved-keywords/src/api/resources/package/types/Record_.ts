@@ -3,6 +3,6 @@
  */
 
 export interface Record_ {
-    foo: Record<string, string>;
+    "foo": Record<string, string>;
     "3D": number;
 }

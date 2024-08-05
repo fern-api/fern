@@ -6,13 +6,10 @@ import * as serializers from "../../../../../../../index";
 import * as SeedTrace from "../../../../../../../../api/index";
 import * as core from "../../../../../../../../core";
 
-export const TestCaseTemplateId: core.serialization.Schema<
-    serializers.v2.v3.TestCaseTemplateId.Raw,
-    SeedTrace.v2.v3.TestCaseTemplateId
-> = core.serialization.string().transform({
-    transform: SeedTrace.v2.v3.TestCaseTemplateId,
-    untransform: (value) => value,
-});
+export const TestCaseTemplateId: core.serialization.Schema<serializers.v2.v3.TestCaseTemplateId.Raw, SeedTrace.v2.v3.TestCaseTemplateId> = core.serialization.string().transform({
+        transform: SeedTrace.v2.v3.TestCaseTemplateId,
+        untransform: value => value
+    });
 
 export declare namespace TestCaseTemplateId {
     type Raw = string;

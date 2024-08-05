@@ -8,25 +8,22 @@ import * as core from "../../../../core";
 import { Language } from "../../commons/types/Language";
 import { ExecutionSessionStatus } from "./ExecutionSessionStatus";
 
-export const ExecutionSessionState: core.serialization.ObjectSchema<
-    serializers.ExecutionSessionState.Raw,
-    SeedTrace.ExecutionSessionState
-> = core.serialization.object({
-    lastTimeContacted: core.serialization.string().optional(),
-    sessionId: core.serialization.string(),
-    isWarmInstance: core.serialization.boolean(),
-    awsTaskId: core.serialization.string().optional(),
-    language: Language,
-    status: ExecutionSessionStatus,
-});
+export const ExecutionSessionState: core.serialization.ObjectSchema<serializers.ExecutionSessionState.Raw, SeedTrace.ExecutionSessionState> = core.serialization.object({
+        "lastTimeContacted": core.serialization.string().optional(),
+        "sessionId": core.serialization.string(),
+        "isWarmInstance": core.serialization.boolean(),
+        "awsTaskId": core.serialization.string().optional(),
+        "language": Language,
+        "status": ExecutionSessionStatus
+    });
 
 export declare namespace ExecutionSessionState {
     interface Raw {
-        lastTimeContacted?: string | null;
-        sessionId: string;
-        isWarmInstance: boolean;
-        awsTaskId?: string | null;
-        language: Language.Raw;
-        status: ExecutionSessionStatus.Raw;
+        "lastTimeContacted"?: string | null;
+        "sessionId": string;
+        "isWarmInstance": boolean;
+        "awsTaskId"?: string | null;
+        "language": Language.Raw;
+        "status": ExecutionSessionStatus.Raw;
     }
 }

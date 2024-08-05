@@ -66,7 +66,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
     const url = createRequestUrl(args.url, args.queryParameters);
     let requestBody: BodyInit | undefined = await getRequestBody({
         body: args.body,
-        type: args.requestType === "json" ? "json" : "other",
+        type: args.requestType === "json" ? "json" : "other"
     });
     const fetchFn = await getFetchFn();
 
@@ -92,7 +92,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
             return {
                 ok: true,
                 body: responseBody as R,
-                headers: response.headers,
+                headers: response.headers
             };
         } else {
             return {
@@ -100,8 +100,8 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 error: {
                     reason: "status-code",
                     statusCode: response.status,
-                    body: responseBody,
-                },
+                    body: responseBody
+                }
             };
         }
     } catch (error) {
@@ -110,23 +110,23 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 ok: false,
                 error: {
                     reason: "unknown",
-                    errorMessage: "The user aborted a request",
-                },
+                    errorMessage: "The user aborted a request"
+                }
             };
         } else if (error instanceof Error && error.name === "AbortError") {
             return {
                 ok: false,
                 error: {
-                    reason: "timeout",
-                },
+                    reason: "timeout"
+                }
             };
         } else if (error instanceof Error) {
             return {
                 ok: false,
                 error: {
                     reason: "unknown",
-                    errorMessage: error.message,
-                },
+                    errorMessage: error.message
+                }
             };
         }
 
@@ -134,8 +134,8 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
             ok: false,
             error: {
                 reason: "unknown",
-                errorMessage: JSON.stringify(error),
-            },
+                errorMessage: JSON.stringify(error)
+            }
         };
     }
 }

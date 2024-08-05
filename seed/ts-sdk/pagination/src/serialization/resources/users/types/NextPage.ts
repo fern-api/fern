@@ -6,15 +6,14 @@ import * as serializers from "../../../index";
 import * as SeedPagination from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const NextPage: core.serialization.ObjectSchema<serializers.NextPage.Raw, SeedPagination.NextPage> =
-    core.serialization.object({
-        page: core.serialization.number(),
-        startingAfter: core.serialization.property("starting_after", core.serialization.string()),
+export const NextPage: core.serialization.ObjectSchema<serializers.NextPage.Raw, SeedPagination.NextPage> = core.serialization.object({
+        "page": core.serialization.number(),
+        "startingAfter": core.serialization.property("starting_after", core.serialization.string())
     });
 
 export declare namespace NextPage {
     interface Raw {
-        page: number;
-        starting_after: string;
+        "page": number;
+        "starting_after": string;
     }
 }

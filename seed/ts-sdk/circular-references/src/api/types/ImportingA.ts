@@ -5,5 +5,5 @@
 import * as SeedApi from "../index";
 
 export interface ImportingA {
-    a?: SeedApi.A;
+    "a"?: SeedApi.A;
 }

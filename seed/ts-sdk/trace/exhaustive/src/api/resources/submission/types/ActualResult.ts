@@ -4,7 +4,7 @@
 
 import * as SeedTrace from "../../../index";
 
-export type ActualResult =
+export type ActualResult = 
     | SeedTrace.ActualResult.Value
     | SeedTrace.ActualResult.Exception
     | SeedTrace.ActualResult.ExceptionV2
@@ -37,72 +37,60 @@ export declare namespace ActualResult {
         value: (value: SeedTrace.VariableValue) => _Result;
         exception: (value: SeedTrace.ExceptionInfo) => _Result;
         exceptionV2: (value: SeedTrace.ExceptionV2) => _Result;
-        _other: (value: { type: string }) => _Result;
+        _other: (value: {
+                type: string;
+            }) => _Result;
     }
 }
 
 export const ActualResult = {
-    value: (value: SeedTrace.VariableValue): SeedTrace.ActualResult.Value => {
-        return {
-            value: value,
-            type: "value",
-            _visit: function <_Result>(
-                this: SeedTrace.ActualResult.Value,
-                visitor: SeedTrace.ActualResult._Visitor<_Result>
-            ) {
-                return SeedTrace.ActualResult._visit(this, visitor);
-            },
-        };
-    },
+        value: (value: SeedTrace.VariableValue): SeedTrace.ActualResult.Value => {
+            return {
+                value: value,
+                type: "value",
+                "_visit": function <_Result>(this: SeedTrace.ActualResult.Value, visitor: SeedTrace.ActualResult._Visitor<_Result>) {
+                    return SeedTrace.ActualResult._visit(this, visitor);
+                }
+            };
+        },
 
-    exception: (value: SeedTrace.ExceptionInfo): SeedTrace.ActualResult.Exception => {
-        return {
-            ...value,
-            type: "exception",
-            _visit: function <_Result>(
-                this: SeedTrace.ActualResult.Exception,
-                visitor: SeedTrace.ActualResult._Visitor<_Result>
-            ) {
-                return SeedTrace.ActualResult._visit(this, visitor);
-            },
-        };
-    },
+        exception: (value: SeedTrace.ExceptionInfo): SeedTrace.ActualResult.Exception => {
+            return {
+                ...value,
+                type: "exception",
+                "_visit": function <_Result>(this: SeedTrace.ActualResult.Exception, visitor: SeedTrace.ActualResult._Visitor<_Result>) {
+                    return SeedTrace.ActualResult._visit(this, visitor);
+                }
+            };
+        },
 
-    exceptionV2: (value: SeedTrace.ExceptionV2): SeedTrace.ActualResult.ExceptionV2 => {
-        return {
-            value: value,
-            type: "exceptionV2",
-            _visit: function <_Result>(
-                this: SeedTrace.ActualResult.ExceptionV2,
-                visitor: SeedTrace.ActualResult._Visitor<_Result>
-            ) {
-                return SeedTrace.ActualResult._visit(this, visitor);
-            },
-        };
-    },
+        exceptionV2: (value: SeedTrace.ExceptionV2): SeedTrace.ActualResult.ExceptionV2 => {
+            return {
+                value: value,
+                type: "exceptionV2",
+                "_visit": function <_Result>(this: SeedTrace.ActualResult.ExceptionV2, visitor: SeedTrace.ActualResult._Visitor<_Result>) {
+                    return SeedTrace.ActualResult._visit(this, visitor);
+                }
+            };
+        },
 
-    _unknown: (value: { type: string }): SeedTrace.ActualResult._Unknown => {
-        return {
-            ...(value as any),
-            _visit: function <_Result>(
-                this: SeedTrace.ActualResult._Unknown,
-                visitor: SeedTrace.ActualResult._Visitor<_Result>
-            ) {
-                return SeedTrace.ActualResult._visit(this, visitor);
-            },
-        };
-    },
+        _unknown: (value: {
+            type: string;
+        }): SeedTrace.ActualResult._Unknown => {
+            return {
+                ...(value as any),
+                "_visit": function <_Result>(this: SeedTrace.ActualResult._Unknown, visitor: SeedTrace.ActualResult._Visitor<_Result>) {
+                    return SeedTrace.ActualResult._visit(this, visitor);
+                }
+            };
+        },
 
-    _visit: <_Result>(value: SeedTrace.ActualResult, visitor: SeedTrace.ActualResult._Visitor<_Result>): _Result => {
-        switch (value.type) {
-            case "value":
-                return visitor.value(value.value);
-            case "exception":
-                return visitor.exception(value);
-            case "exceptionV2":
-                return visitor.exceptionV2(value.value);
-            default:
-                return visitor._other(value as any);
-        }
-    },
-} as const;
+        _visit: <_Result>(value: SeedTrace.ActualResult, visitor: SeedTrace.ActualResult._Visitor<_Result>): _Result => {
+            switch (value.type) {
+                case "value": return visitor.value(value.value);
+                case "exception": return visitor.exception(value);
+                case "exceptionV2": return visitor.exceptionV2(value.value);
+                default: return visitor._other(value as any);
+            }
+        },
+    } as const;

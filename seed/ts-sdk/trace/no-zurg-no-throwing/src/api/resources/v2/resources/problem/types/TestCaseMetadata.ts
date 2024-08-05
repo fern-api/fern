@@ -5,7 +5,7 @@
 import * as SeedTrace from "../../../../../index";
 
 export interface TestCaseMetadata {
-    id: SeedTrace.v2.TestCaseId;
-    name: string;
-    hidden: boolean;
+    "id": SeedTrace.v2.TestCaseId;
+    "name": string;
+    "hidden": boolean;
 }

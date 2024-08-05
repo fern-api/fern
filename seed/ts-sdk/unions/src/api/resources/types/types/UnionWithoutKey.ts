@@ -4,7 +4,7 @@
 
 import * as SeedUnions from "../../../index";
 
-export type UnionWithoutKey =
+export type UnionWithoutKey = 
     | SeedUnions.UnionWithoutKey.Foo
     /**
      * This is a bar field. */

@@ -4,4 +4,5 @@
 
 import * as SeedApi from "../../../index";
 
-export interface A extends SeedApi.RootType {}
+export interface A extends SeedApi.RootType {
+}

@@ -17,4 +17,7 @@ import * as SeedExamples from "../../../index";
  *         id: "actor_456"
  *     }
  */
-export type CastMember = SeedExamples.Actor | SeedExamples.Actress | SeedExamples.StuntDouble;
+export type CastMember = 
+    | SeedExamples.Actor
+    | SeedExamples.Actress
+    | SeedExamples.StuntDouble;
