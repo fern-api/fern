@@ -256,7 +256,7 @@ class SdkGenerator(AbstractGenerator):
         if generator_config.output.mode.get_as_union().type != "downloadFiles":
             snippets = snippet_registry.snippets()
 
-            if snippets is not None: 
+            if snippets is not None:
                 self._maybe_write_snippets(
                     context=context,
                     snippets=snippets,
@@ -302,7 +302,7 @@ class SdkGenerator(AbstractGenerator):
 
         if not (generator_config.output.mode.get_as_union().type == "downloadFiles"):
             as_is_copier.copy_to_project(project=project)
-        
+
         snippet_template_source_file = SourceFileFactory.create_snippet(not context.custom_config.skip_formatting)
         self._maybe_write_snippet_templates(
             context=context,
