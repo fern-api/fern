@@ -52,17 +52,31 @@ T = typing.TypeVar("T")
 Model = typing.TypeVar("Model", bound=pydantic.BaseModel)
 
 
-def deep_union_pydantic_dicts(
-    source: typing.Dict[str, typing.Any], destination: typing.Dict[str, typing.Any]
-) -> typing.Dict[str, typing.Any]:
+def deep_union_pydantic_dicts(source: typing.Dict[str, typing.Any], destination: typing.Dict[str, typing.Any]) -> None:
+    """
+    Recursively merge two dictionaries, with the source dictionary taking precedence over the destination dictionary
+    This is primarily used to merge dictionaries that are the result of calling `dict()` on Pydantic models with different flags
+    enabled (exclude_unset and exclude_none)
+
+    Parameters
+    ----------
+    source : typing.Dict[str, typing.Any]
+        The source dictionary
+    destination : typing.Dict[str, typing.Any]
+        The destination dictionary, this dictionary is modified in place.
+
+    Returns
+    -------
+    None
+        The destination dictionary is instead modified in place.
+    """
     for key, value in source.items():
         if isinstance(value, dict):
-            node = destination.setdefault(key, {})
-            deep_union_pydantic_dicts(value, node)
+            if key not in destination or not isinstance(destination[key], dict):
+                destination[key] = {}
+            deep_union_pydantic_dicts(value, destination[key])
         else:
             destination[key] = value
-
-    return destination
 
 
 def parse_obj_as(type_: typing.Type[T], object_: typing.Any) -> T:
@@ -103,14 +117,17 @@ class UniversalBaseModel(pydantic.BaseModel):
         kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
 
         if IS_PYDANTIC_V2:
-            return deep_union_pydantic_dicts(
-                super().model_dump(**kwargs_with_defaults_exclude_unset),  # type: ignore # Pydantic v2
-                super().model_dump(**kwargs_with_defaults_exclude_none),  # type: ignore # Pydantic v2
-            )
+            unset_excluded = super().model_dump(**kwargs_with_defaults_exclude_unset)  # type: ignore # Pydantic v2
+            none_excluded = super().model_dump(**kwargs_with_defaults_exclude_none)  # type: ignore # Pydantic v2
+            deep_union_pydantic_dicts(unset_excluded, none_excluded)
+
+            return none_excluded
         else:
-            return deep_union_pydantic_dicts(
-                super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-            )
+            unset_excluded = super().dict(**kwargs_with_defaults_exclude_unset)  # type: ignore # Pydantic v1
+            none_excluded = super().dict(**kwargs_with_defaults_exclude_none)  # type: ignore # Pydantic v1
+            deep_union_pydantic_dicts(unset_excluded, none_excluded)
+
+            return none_excluded
 
 
 UniversalRootModel: typing.Type[typing.Any]
@@ -158,7 +175,7 @@ def universal_root_validator(pre: bool = False) -> typing.Callable[[AnyCallable]
             else:
                 wrapped_func = pydantic.root_validator(pre=pre)(func)  # type: ignore # Pydantic v1
 
-            return wrapped_func(*args, **kwargs)
+            return wrapped_func(*args, **kwargs)  # type: ignore # Pydantic v2
 
         return validate
 
@@ -172,7 +189,7 @@ def universal_field_validator(field_name: str, pre: bool = False) -> typing.Call
             if IS_PYDANTIC_V2:
                 wrapped_func = pydantic.field_validator(field_name, mode="before" if pre else "after")(func)  # type: ignore # Pydantic v2
             else:
-                wrapped_func = pydantic.validator(field_name, pre=pre)(func)
+                wrapped_func = pydantic.validator(field_name, pre=pre)(func)  # type: ignore # Pydantic v1
 
             return wrapped_func(*args, **kwargs)
 
