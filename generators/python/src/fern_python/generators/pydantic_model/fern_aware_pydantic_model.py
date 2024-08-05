@@ -48,6 +48,11 @@ class FernAwarePydanticModel:
         snippet: Optional[str] = None,
         include_model_config: Optional[bool] = True,
         force_update_forward_refs: bool = False,
+        # Allow overriding the base model from the unchecked base model, or the typical
+        # pydantic base model to the universal root model if needed. This is used instead
+        # of `base_models` since that field is used for true `extends` declared within
+        # the IR, and used as such when constructing partial classes for validators within FastAPI.
+        pydantic_base_model_override: Optional[AST.ClassReference] = None,
     ):
         self._class_name = class_name
         self._type_name = type_name
@@ -76,7 +81,7 @@ class FernAwarePydanticModel:
             frozen=custom_config.frozen,
             orm_mode=custom_config.orm_mode,
             smart_union=custom_config.smart_union,
-            pydantic_base_model=self._context.core_utilities.get_unchecked_pydantic_base_model(),
+            pydantic_base_model=pydantic_base_model_override or self._context.core_utilities.get_unchecked_pydantic_base_model(),
             require_optional_fields=custom_config.require_optional_fields,
             is_pydantic_v2=self._context.core_utilities.get_is_pydantic_v2(),
             universal_field_validator=self._context.core_utilities.universal_field_validator,

@@ -158,7 +158,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
             source_file=self._source_file,
             docstring=self._docs,
             snippet=self._snippet,
-            base_models=[self._context.core_utilities.get_universal_root_model()],
+            pydantic_base_model_override=self._context.core_utilities.get_universal_root_model(),
             # No reason to have model config overrides on the base model, but
             # also Pydantic V2's RootModel doesn't allow for a lot of the configuration.
             include_model_config=False,

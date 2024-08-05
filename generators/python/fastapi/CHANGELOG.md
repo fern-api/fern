@@ -8,7 +8,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.4.0] - 2024-08-05
 
 - Improvement: The generated server code now respects the pydantic version flag, generating V1 only code and V2 only code if specified. If not, the server is generated as it is today, with compatibility for BOTH Pydantic versions. This cleans up the generated code, and brings back features liked wrapped aliases and custom root validators for V1-only servers.
-
   ```yaml
   generators:
     - name: fernapi/fern-fastapi-server
@@ -16,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         pydantic_config:
           version: "v1" # Other valid options include: "v2" and "both"
   ```
+- Fix: Partial classes created for validation now appropriately ignore the universal root model and only create partials off true extended classes.
 
 ## [1.3.0] - 2024-08-04
 
