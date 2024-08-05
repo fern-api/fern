@@ -8,6 +8,14 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class MyObject(UniversalBaseModel):
+    """
+    Examples
+    --------
+    from seed.unknown import MyObject
+
+    MyObject()
+    """
+
     unknown: typing.Optional[typing.Any] = None
 
     if IS_PYDANTIC_V2:

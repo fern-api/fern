@@ -53,6 +53,41 @@ class UnknownClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def post_object(
+        self, *, unknown: typing.Optional[typing.Any] = OMIT, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[typing.Optional[typing.Any]]:
+        """
+        Parameters
+        ----------
+        unknown : typing.Optional[typing.Any]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[typing.Optional[typing.Any]]
+
+        Examples
+        --------
+        from seed import SeedUnknownAsAny
+
+        client = SeedUnknownAsAny(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.unknown.post_object()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "with-object", method="POST", json={"unknown": unknown}, request_options=request_options, omit=OMIT
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(typing.List[typing.Optional[typing.Any]], parse_obj_as(type_=typing.List[typing.Optional[typing.Any]], object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncUnknownClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -94,6 +129,49 @@ class AsyncUnknownClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="POST", json=request, request_options=request_options, omit=OMIT
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(typing.List[typing.Optional[typing.Any]], parse_obj_as(type_=typing.List[typing.Optional[typing.Any]], object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_object(
+        self, *, unknown: typing.Optional[typing.Any] = OMIT, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[typing.Optional[typing.Any]]:
+        """
+        Parameters
+        ----------
+        unknown : typing.Optional[typing.Any]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[typing.Optional[typing.Any]]
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedUnknownAsAny
+
+        client = AsyncSeedUnknownAsAny(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.unknown.post_object()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "with-object", method="POST", json={"unknown": unknown}, request_options=request_options, omit=OMIT
         )
         try:
             if 200 <= _response.status_code < 300:

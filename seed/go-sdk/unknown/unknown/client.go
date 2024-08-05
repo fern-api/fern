@@ -4,6 +4,7 @@ package unknown
 
 import (
 	context "context"
+	fern "github.com/unknown/fern"
 	core "github.com/unknown/fern/core"
 	option "github.com/unknown/fern/option"
 	http "net/http"
@@ -44,6 +45,42 @@ func (c *Client) Post(
 		baseURL = options.BaseURL
 	}
 	endpointURL := baseURL
+
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+
+	var response []interface{}
+	if err := c.caller.Call(
+		ctx,
+		&core.CallParams{
+			URL:         endpointURL,
+			Method:      http.MethodPost,
+			MaxAttempts: options.MaxAttempts,
+			Headers:     headers,
+			Client:      options.HTTPClient,
+			Request:     request,
+			Response:    &response,
+		},
+	); err != nil {
+		return nil, err
+	}
+	return response, nil
+}
+
+func (c *Client) PostObject(
+	ctx context.Context,
+	request *fern.MyObject,
+	opts ...option.RequestOption,
+) ([]interface{}, error) {
+	options := core.NewRequestOptions(opts...)
+
+	baseURL := ""
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
+	endpointURL := baseURL + "/with-object"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

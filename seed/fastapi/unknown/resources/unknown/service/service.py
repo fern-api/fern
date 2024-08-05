@@ -11,6 +11,7 @@ import fastapi
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
+from ..types.my_object import MyObject
 
 
 class AbstractUnknownService(AbstractFernService):
@@ -26,6 +27,10 @@ class AbstractUnknownService(AbstractFernService):
     def post(self, *, body: typing.Optional[typing.Any] = None) -> typing.Sequence[typing.Optional[typing.Any]]:
         ...
 
+    @abc.abstractmethod
+    def post_object(self, *, body: MyObject) -> typing.Sequence[typing.Optional[typing.Any]]:
+        ...
+
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
@@ -34,6 +39,7 @@ class AbstractUnknownService(AbstractFernService):
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
         cls.__init_post(router=router)
+        cls.__init_post_object(router=router)
 
     @classmethod
     def __init_post(cls, router: fastapi.APIRouter) -> None:
@@ -69,4 +75,40 @@ class AbstractUnknownService(AbstractFernService):
             response_model=typing.Sequence[typing.Optional[typing.Any]],
             description=AbstractUnknownService.post.__doc__,
             **get_route_args(cls.post, default_tag="unknown"),
+        )(wrapper)
+
+    @classmethod
+    def __init_post_object(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.post_object)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "body":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.post_object, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.post_object)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Sequence[typing.Optional[typing.Any]]:
+            try:
+                return cls.post_object(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'post_object' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.post_object.__globals__)
+
+        router.post(
+            path="/with-object",
+            response_model=typing.Sequence[typing.Optional[typing.Any]],
+            description=AbstractUnknownService.post_object.__doc__,
+            **get_route_args(cls.post_object, default_tag="unknown"),
         )(wrapper)
