@@ -8,6 +8,8 @@ const FIXTURES_DIR = path.join(__dirname, "fixtures");
 describe("validate", () => {
     itFixture("simple");
     itFixture("docs");
+    itFixture("no-api");
+    itFixture("no-generator");
 });
 
 function itFixture(fixtureName: string) {

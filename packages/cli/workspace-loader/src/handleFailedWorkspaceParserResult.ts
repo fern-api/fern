@@ -33,7 +33,9 @@ function handleWorkspaceParserFailureForFile({
 }): void {
     switch (failure.type) {
         case WorkspaceLoaderFailureType.MISCONFIGURED_DIRECTORY:
-            logger.error("Misconfigured directory: please make sure you have a generator file with an api path");
+            logger.error(
+                "Misconfigured fern directory: please see the docs at https://buildwithfern.com/learn/api-definition/introduction/what-is-the-fern-folder"
+            );
             break;
         case WorkspaceLoaderFailureType.FILE_READ:
             logger.error("Failed to open file: " + relativeFilepath);
