@@ -1,6 +1,6 @@
 import { ErrorDeclaration, HttpEndpoint, HttpService, TypeDeclaration, Webhook } from "@fern-api/ir-sdk";
 import { IdGenerator } from "../IdGenerator";
-import { EndpointId, ErrorId, ServiceId, SubpackageId, TypeId, WebhookId } from "./ids";
+import { EndpointId, EnvironmentId, ErrorId, ServiceId, SubpackageId, TypeId, WebhookId } from "./ids";
 
 export interface FilteredIr {
     hasType(type: TypeDeclaration): boolean;
@@ -10,6 +10,7 @@ export interface FilteredIr {
     hasErrorId(type: string): boolean;
     hasService(service: HttpService): boolean;
     hasServiceId(type: string): boolean;
+    hasEnvironmentId(environmentId: EnvironmentId): boolean;
     hasEndpoint(endpoint: HttpEndpoint): boolean;
     hasWebhook(webhook: Webhook): boolean;
     hasWebhookPayloadProperty(webhookId: string, property: string): boolean;
@@ -19,6 +20,7 @@ export interface FilteredIr {
 }
 
 export class FilteredIrImpl implements FilteredIr {
+    private environments: Set<EnvironmentId> = new Set();
     private types: Set<TypeId> = new Set();
     private properties: Record<TypeId, Set<string> | undefined>;
     private errors: Set<ErrorId> = new Set();
@@ -32,19 +34,21 @@ export class FilteredIrImpl implements FilteredIr {
 
     public constructor({
         types,
+        properties,
         errors,
+        environments,
         services,
         endpoints,
         webhooks,
         subpackages,
         queryParameters,
         requestProperties,
-        webhookPayloadProperties,
-        properties
+        webhookPayloadProperties
     }: {
         types: Set<TypeId>;
         properties: Record<TypeId, Set<string> | undefined>;
         errors: Set<ErrorId>;
+        environments: Set<EnvironmentId>;
         services: Set<ServiceId>;
         queryParameters: Record<EndpointId, Set<string> | undefined>;
         requestProperties: Record<EndpointId, Set<string> | undefined>;
@@ -53,6 +57,7 @@ export class FilteredIrImpl implements FilteredIr {
         webhookPayloadProperties: Record<WebhookId, Set<string> | undefined>;
         subpackages: Set<SubpackageId>;
     }) {
+        this.environments = environments;
         this.types = types;
         this.properties = properties;
         this.errors = errors;
@@ -103,6 +108,10 @@ export class FilteredIrImpl implements FilteredIr {
     public hasService(service: HttpService): boolean {
         const serviceId = IdGenerator.generateServiceId(service.name);
         return this.services.has(serviceId);
+    }
+
+    public hasEnvironmentId(environmentId: EnvironmentId): boolean {
+        return this.environments.has(environmentId);
     }
 
     public hasEndpoint(endpoint: HttpEndpoint): boolean {

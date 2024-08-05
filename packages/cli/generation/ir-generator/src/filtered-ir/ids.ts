@@ -1,6 +1,7 @@
 import { FernFilepath } from "@fern-api/ir-sdk";
 
 export type AudienceId = string;
+export type EnvironmentId = string;
 export type TypeId = string;
 export type ErrorId = string;
 export type ServiceId = string;
