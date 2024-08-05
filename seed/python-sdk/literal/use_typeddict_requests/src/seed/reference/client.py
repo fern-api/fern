@@ -8,7 +8,6 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..types.send_response import SendResponse
-from .types.some_literal import SomeLiteral
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -18,19 +17,11 @@ class ReferenceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def send(
-        self,
-        *,
-        query: str,
-        maybe_context: typing.Optional[SomeLiteral] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> SendResponse:
+    def send(self, *, query: str, request_options: typing.Optional[RequestOptions] = None) -> SendResponse:
         """
         Parameters
         ----------
         query : str
-
-        maybe_context : typing.Optional[SomeLiteral]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -53,13 +44,7 @@ class ReferenceClient:
         _response = self._client_wrapper.httpx_client.request(
             "reference",
             method="POST",
-            json={
-                "query": query,
-                "maybeContext": maybe_context,
-                "prompt": "You are a helpful assistant",
-                "stream": False,
-                "context": "You're super wise",
-            },
+            json={"query": query, "prompt": "You are a helpful assistant", "stream": False},
             request_options=request_options,
             omit=OMIT,
         )
@@ -76,19 +61,11 @@ class AsyncReferenceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def send(
-        self,
-        *,
-        query: str,
-        maybe_context: typing.Optional[SomeLiteral] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> SendResponse:
+    async def send(self, *, query: str, request_options: typing.Optional[RequestOptions] = None) -> SendResponse:
         """
         Parameters
         ----------
         query : str
-
-        maybe_context : typing.Optional[SomeLiteral]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -119,13 +96,7 @@ class AsyncReferenceClient:
         _response = await self._client_wrapper.httpx_client.request(
             "reference",
             method="POST",
-            json={
-                "query": query,
-                "maybeContext": maybe_context,
-                "prompt": "You are a helpful assistant",
-                "stream": False,
-                "context": "You're super wise",
-            },
+            json={"query": query, "prompt": "You are a helpful assistant", "stream": False},
             request_options=request_options,
             omit=OMIT,
         )

@@ -8,7 +8,6 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..types.send_response import SendResponse
-from .types.some_aliased_literal import SomeAliasedLiteral
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -22,9 +21,7 @@ class InlinedClient:
         self,
         *,
         query: str,
-        context: typing.Optional[typing.Literal["You're super wise"]] = OMIT,
         temperature: typing.Optional[float] = OMIT,
-        maybe_context: typing.Optional[SomeAliasedLiteral] = OMIT,
         request_options: typing.Optional[RequestOptions] = None
     ) -> SendResponse:
         """
@@ -32,11 +29,7 @@ class InlinedClient:
         ----------
         query : str
 
-        context : typing.Optional[typing.Literal["You're super wise"]]
-
         temperature : typing.Optional[float]
-
-        maybe_context : typing.Optional[SomeAliasedLiteral]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -54,23 +47,13 @@ class InlinedClient:
         )
         client.inlined.send(
             temperature=10.1,
-            context="You're super wise",
-            maybe_context="You're super wise",
             query="What is the weather today",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             "inlined",
             method="POST",
-            json={
-                "context": context,
-                "query": query,
-                "temperature": temperature,
-                "maybeContext": maybe_context,
-                "prompt": "You are a helpful assistant",
-                "stream": False,
-                "aliasedContext": "You're super wise",
-            },
+            json={"query": query, "temperature": temperature, "prompt": "You are a helpful assistant", "stream": False},
             request_options=request_options,
             omit=OMIT,
         )
@@ -91,9 +74,7 @@ class AsyncInlinedClient:
         self,
         *,
         query: str,
-        context: typing.Optional[typing.Literal["You're super wise"]] = OMIT,
         temperature: typing.Optional[float] = OMIT,
-        maybe_context: typing.Optional[SomeAliasedLiteral] = OMIT,
         request_options: typing.Optional[RequestOptions] = None
     ) -> SendResponse:
         """
@@ -101,11 +82,7 @@ class AsyncInlinedClient:
         ----------
         query : str
 
-        context : typing.Optional[typing.Literal["You're super wise"]]
-
         temperature : typing.Optional[float]
-
-        maybe_context : typing.Optional[SomeAliasedLiteral]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -128,8 +105,6 @@ class AsyncInlinedClient:
         async def main() -> None:
             await client.inlined.send(
                 temperature=10.1,
-                context="You're super wise",
-                maybe_context="You're super wise",
                 query="What is the weather today",
             )
 
@@ -139,15 +114,7 @@ class AsyncInlinedClient:
         _response = await self._client_wrapper.httpx_client.request(
             "inlined",
             method="POST",
-            json={
-                "context": context,
-                "query": query,
-                "temperature": temperature,
-                "maybeContext": maybe_context,
-                "prompt": "You are a helpful assistant",
-                "stream": False,
-                "aliasedContext": "You're super wise",
-            },
+            json={"query": query, "temperature": temperature, "prompt": "You are a helpful assistant", "stream": False},
             request_options=request_options,
             omit=OMIT,
         )

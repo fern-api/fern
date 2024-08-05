@@ -4,15 +4,8 @@ import typing
 
 import typing_extensions
 
-from ...core.serialization import FieldMetadata
-from ..types.some_literal import SomeLiteral
-
 
 class SendRequestParams(typing_extensions.TypedDict):
     prompt: typing.Literal["You are a helpful assistant"]
     query: str
     stream: typing.Literal[False]
-    context: SomeLiteral
-    maybe_context: typing_extensions.NotRequired[
-        typing_extensions.Annotated[SomeLiteral, FieldMetadata(alias="maybeContext")]
-    ]

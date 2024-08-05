@@ -217,18 +217,20 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                 type_hint=self._context.get_type_hint_for_type_reference(type_reference=shape.type),
                             )
                         )
+                    
+                    single_union_properties: ir_types.SingleUnionTypeProperties = single_union_type.shape
 
                     factory_declaration.add_method(
                         AST.FunctionDeclaration(
                             name=single_union_type.discriminant_value.name.snake_case.safe_name,
                             signature=AST.FunctionSignature(
-                                parameters=single_union_type.shape.visit(
-                                    same_properties_as_object=lambda type_name: [
+                                parameters=single_union_properties.visit(
+                                    same_properties_as_object=lambda declared_type_name: [
                                         AST.FunctionParameter(
                                             name=BUILDER_ARGUMENT_NAME,
                                             type_hint=self._context.get_type_hint_for_type_reference(
                                                 ir_types.TypeReference.factory.named(
-                                                    cast(ir_types.NamedType, type_name)
+                                                    self._to_named_type(declared_type_name=declared_type_name)
                                                 )
                                             ),
                                         )
@@ -242,7 +244,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                     no_properties=lambda: None,
                                 ),
                                 return_type=self._context.get_type_hint_for_type_reference(
-                                    ir_types.TypeReference.factory.named(cast(ir_types.NamedType, self._name))
+                                    ir_types.TypeReference.factory.named(self._to_named_type(self._name))
                                 ),
                             ),
                             body=AST.CodeWriter(
@@ -302,11 +304,11 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                             parameter_name=single_union_type.discriminant_value.name.snake_case.safe_name,
                             expected_value=f'"{single_union_type.discriminant_value.wire_value}"',
                             visitor_argument=single_union_type.shape.visit(
-                                same_properties_as_object=lambda type_name: VisitorArgument(
+                                same_properties_as_object=lambda declared_type_name: VisitorArgument(
                                     expression=AST.Expression(
                                         AST.FunctionInvocation(
                                             function_definition=self._context.get_class_reference_for_type_id(
-                                                type_name.type_id, as_request=False
+                                                declared_type_name.type_id, as_request=False
                                             ),
                                             args=[
                                                 AST.Expression(
@@ -317,7 +319,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                         )
                                     ),
                                     type=external_pydantic_model.get_type_hint_for_type_reference(
-                                        ir_types.TypeReference.factory.named(cast(ir_types.NamedType, type_name))
+                                        ir_types.TypeReference.factory.named(self._to_named_type(declared_type_name=declared_type_name))
                                     ),
                                 ),
                                 single_property=lambda property: VisitorArgument(
@@ -338,6 +340,14 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                 )
             )
 
+    
+    def _to_named_type(self, declared_type_name: ir_types.DeclaredTypeName) -> ir_types.NamedType:
+        return ir_types.NamedType(
+            type_id=declared_type_name.type_id,
+            fern_filepath=declared_type_name.fern_filepath,
+            name=declared_type_name.name
+        )
+    
     def _create_body_writer(
         self,
         single_union_type: ir_types.SingleUnionType,

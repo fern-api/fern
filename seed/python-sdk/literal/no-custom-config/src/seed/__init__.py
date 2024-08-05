@@ -3,8 +3,7 @@
 from .types import SendResponse
 from . import headers, inlined, path, query, reference
 from .client import AsyncSeedLiteral, SeedLiteral
-from .inlined import SomeAliasedLiteral
-from .reference import SendRequest, SomeLiteral
+from .reference import SendRequest
 from .version import __version__
 
 __all__ = [
@@ -12,8 +11,6 @@ __all__ = [
     "SeedLiteral",
     "SendRequest",
     "SendResponse",
-    "SomeAliasedLiteral",
-    "SomeLiteral",
     "__version__",
     "headers",
     "inlined",

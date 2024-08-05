@@ -24,7 +24,7 @@ class Type(UniversalBaseModel):
     )
     """
 
-    decimal: float = 1
+    decimal: float = 1.1
     even: int = 42
     name: str = "fern"
     shape: Shape

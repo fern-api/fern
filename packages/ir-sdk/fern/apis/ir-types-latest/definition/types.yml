@@ -236,7 +236,7 @@ types:
     properties: {}
   DoubleType:
     properties:
-      default: optional<integer>
+      default: optional<double>
       validation: optional<DoubleValidationRules>
   DoubleValidationRules:
     properties:
