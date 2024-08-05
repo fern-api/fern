@@ -1,0 +1,65 @@
+proto:
+  file: user/v1/user.proto
+  package-name: user.v1
+  options:
+    csharp:
+      namespace: User.V1
+
+types:
+  Metadata:
+    type: map<string, optional<MetadataValue>>
+    proto:
+      isStruct: true
+
+  MetadataValue:
+    discriminated: false
+    union:
+      - double
+      - string
+      - boolean
+      - list<MetadataValue>
+    proto:
+      isStructValue: true
+
+  User:
+    properties:
+      id: string
+      username: string
+      email: optional<string>
+      age: optional<uint>
+      weight: optional<float>
+      metadata: optional<Metadata>
+
+  CreateUserResponse:
+    properties:
+      userId: string
+
+service:
+  auth: false
+  base-path: /
+  grpc:
+    service-name: UserService
+  endpoints:
+    createUser:
+      method: POST
+      path: /users
+      request:
+        name: CreateUserRequest
+        body:
+          properties:
+            username: string
+            email: optional<string>
+            age: optional<uint>
+            weight: optional<float>
+      response: CreateUserResponse
+
+    getUser:
+      method: GET
+      path: /users
+      request:
+        name: GetUserRequest
+        query-parameters:
+          username: optional<string>
+          age: optional<uint>
+          weight: optional<float>
+      response: User

@@ -176,8 +176,10 @@ allowedFailures:
   - trace
   - circular-references-advanced
   # Remove the following fixtures soon as a CLI is released with
-  # default enum value support and the latest primitive types.
-  # This causes a 'fern check' issue when 'fern test' is run.
+  # default enum value support, the latest primitive types, and gRPC
+  # configuration. This otherwise causes a 'fern check' issue when
+  # 'fern test' is run.
+  - grpc
   - object
   - validation:no-custom-config
   - validation:with-defaults

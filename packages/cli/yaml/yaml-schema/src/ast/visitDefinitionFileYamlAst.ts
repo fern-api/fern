@@ -34,6 +34,7 @@ export async function visitDefinitionFileYamlAst(
         channel: noop,
         errors: async (errors) => {
             await visitErrorDeclarations({ errorDeclarations: errors, visitor, nodePath: ["errors"] });
-        }
+        },
+        proto: noop
     });
 }

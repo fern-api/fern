@@ -6,8 +6,13 @@ import { z } from "zod";
  *
  * @example
  * api: asyncapi.yml
+ *
+ * @example
+ * api: ../../proto/user/v1/user.proto
  */
-export const APIDefinitionPathSchema = z.string().describe("Path to the OpenAPI, AsyncAPI or Fern Definition");
+export const APIDefinitionPathSchema = z
+    .string()
+    .describe("Path to the OpenAPI, AsyncAPI, Protobuf or Fern Definition");
 
 export const APIDefinitionSettingsSchema = z.object({
     "use-title": z
@@ -32,6 +37,10 @@ export type APIDefinitionSettingsSchema = z.infer<typeof APIDefinitionSettingsSc
  * api:
  *  path: asyncapi.yml
  *  overrides: overrides.yml
+ *
+ * @example
+ * api:
+ *  path: ../../proto/user/v1/user.proto
  */
 export const APIDefintionWithOverridesSchema = z.object({
     path: APIDefinitionPathSchema,

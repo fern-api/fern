@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { DeclarationWithoutDocsSchema } from "./DeclarationSchema";
+import { GrpcSchema } from "./GrpcSchema";
 import { HttpEndpointSchema } from "./HttpEndpointSchema";
 import { HttpHeaderSchema } from "./HttpHeaderSchema";
 import { HttpPathParameterSchema } from "./HttpPathParameterSchema";
@@ -12,6 +13,7 @@ export const HttpServiceSchema = DeclarationWithoutDocsSchema.extend({
     "path-parameters": z.optional(z.record(z.string(), HttpPathParameterSchema)),
     idempotent: z.optional(z.boolean()),
     headers: z.optional(z.record(HttpHeaderSchema)),
+    grpc: z.optional(GrpcSchema),
     endpoints: z.record(HttpEndpointSchema)
 });
 

@@ -16,3 +16,5 @@ local:
   runCommand: node model/dist/bundle.cjs
 allowedFailures:
   - objects-with-imports
+  # TODO: Add support for recursive undiscriminated unions.
+  - grpc

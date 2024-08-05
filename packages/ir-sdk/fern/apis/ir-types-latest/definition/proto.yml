@@ -1,0 +1,121 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+types:
+  ProtobufConfig:
+    properties:
+      files:
+        docs: |
+          The set of `.proto` source files that define the API.
+
+          Note that the source file content is _not_ contained here, but is
+          available in the generated SDK artifact if needed (e.g. C#).
+        type: list<ProtobufSourceFile>
+
+  ProtobufService:
+    docs: |
+      Defines the information related to a Protobuf service declaration. This is
+      primarily meant to be used to instantiate the internal gRPC client used by
+      the SDK.
+
+      For example, consider the following C# snippet which instantiates a
+      `UserService` gRPC client:
+
+      ```csharp
+      using User.Grpc;
+
+      public class RawGrpcClient
+      {
+          public UserService.UserServiceClient UserServiceClient;
+          
+          public RawGrpcClient(...)
+          {
+              GrpcChannel channel = GrpcChannel.ForAddress(...);
+              UserServiceClient = new UserService.UserServiceClient(channel); 
+          }
+      }
+      ```
+    properties:
+      file:
+        docs: |
+          The `.proto` source file that defines this service.
+        type: ProtobufSourceFile
+      name:
+        docs: |
+          The name of the service defined in the `.proto` file (e.g. UserService).
+        type: commons.Name
+
+  ProtobufSourceType:
+    docs: |
+      Defines the information related to the original `.proto` source file
+      that defines this type. This is primarily meant to be used to generate
+      Protobuf mapper methods, which are used in gRPC-compatbile SDKs.
+
+      For example, consider the following Go snippet which requires the
+      `go_package` setting:
+
+      ```go
+      import "github.com/acme/acme-go/proto"
+
+      type GetUserRequest struct {
+        Username string
+        Email    string
+      }
+
+      func (u *GetUserRequest) ToProto() *proto.GetUserRequest {
+        if u == nil {
+          return nil
+        }
+        return &proto.GetUserRequest{
+          Username u.Username,
+          Email:   u.Email,
+        }
+      }
+      ```
+    properties:
+      file:
+        docs: |
+          The `.proto` source file that defines this type.
+        type: ProtobufSourceFile
+      name:
+        docs: |
+          This name is _usually_ equivalent to the associated DeclaredTypeName's name.
+          However, its repeated here just in case the naming convention differs, which
+          is most relevant for APIs that specify `smart-casing`.
+        type: commons.Name
+
+  ProtobufSourceFile:
+    properties:
+      filepath:
+        docs: |
+          The `.proto` source path, relative to the Protobuf root directory.
+          This is how the file is referenced in `import` statements.
+        type: string
+      packageName:
+        docs: |
+          The `.proto` package name. If not specified, a package name was not declared.
+        type: optional<string>
+      options:
+        docs: |
+          Specifies a variety of language-specific options.
+        type: optional<ProtobufFileOptions>
+
+  ProtobufFileOptions:
+    properties:
+      csharp: optional<CsharpProtobufFileOptions>
+
+  CsharpProtobufFileOptions:
+    properties:
+      namespace:
+        docs: |
+          Populated by the `csharp_namespace` file option, e.g.
+
+          ```protobuf
+          option csharp_namespace = Grpc.Health.V1;
+          ```
+
+          This is used to determine what import path is required to reference the
+          associated type(s).
+        type: string

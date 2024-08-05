@@ -55,6 +55,7 @@ types:
       variables: list<variables.VariableDeclaration>
       serviceTypeReferenceInfo: ServiceTypeReferenceInfo
       readmeConfig: optional<ReadmeConfig>
+      protobufConfig: optional<proto.ProtobufConfig>
   ReadmeConfig:
     docs: |
       The configuration used to generate a README.md file. If present, the generator
