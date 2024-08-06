@@ -54,9 +54,7 @@ def convert_and_respect_annotation_metadata(
         inner_type = annotation
 
     clean_type = _remove_annotations(inner_type)
-    if typing_extensions.is_typeddict(clean_type) and isinstance(
-        object_, typing.Mapping
-    ):
+    if typing_extensions.is_typeddict(clean_type) and isinstance(object_, typing.Mapping):
         return _convert_typeddict(object_, clean_type)
 
     if (
@@ -82,8 +80,7 @@ def convert_and_respect_annotation_metadata(
             or (
                 (
                     typing_extensions.get_origin(clean_type) == typing.Sequence
-                    or typing_extensions.get_origin(clean_type)
-                    == collections.abc.Sequence
+                    or typing_extensions.get_origin(clean_type) == collections.abc.Sequence
                     or clean_type == typing.Sequence
                 )
                 and isinstance(object_, typing.Sequence)
@@ -92,9 +89,7 @@ def convert_and_respect_annotation_metadata(
     ):
         inner_type = typing_extensions.get_args(clean_type)[0]
         return [
-            convert_and_respect_annotation_metadata(
-                object_=item, annotation=annotation, inner_type=inner_type
-            )
+            convert_and_respect_annotation_metadata(object_=item, annotation=annotation, inner_type=inner_type)
             for item in object_
         ]
 
@@ -104,9 +99,7 @@ def convert_and_respect_annotation_metadata(
         # of the same name to a different name from another member
         # Or if another member aliases a field of the same name that another member does not.
         for member in typing_extensions.get_args(clean_type):
-            object_ = convert_and_respect_annotation_metadata(
-                object_=object_, annotation=annotation, inner_type=member
-            )
+            object_ = convert_and_respect_annotation_metadata(object_=object_, annotation=annotation, inner_type=member)
         return object_
 
     annotated_type = _get_annotation(annotation)
@@ -118,9 +111,7 @@ def convert_and_respect_annotation_metadata(
     return object_
 
 
-def _convert_typeddict(
-    object_: typing.Mapping[str, object], expected_type: typing.Any
-) -> typing.Mapping[str, object]:
+def _convert_typeddict(object_: typing.Mapping[str, object], expected_type: typing.Any) -> typing.Mapping[str, object]:
     converted_object: typing.Dict[str, object] = {}
     annotations = typing_extensions.get_type_hints(expected_type, include_extras=True)
     for key, value in object_.items():
@@ -128,8 +119,8 @@ def _convert_typeddict(
         if type_ is None:
             converted_object[key] = value
         else:
-            converted_object[_alias_key(key, type_)] = (
-                convert_and_respect_annotation_metadata(object_=value, annotation=type_)
+            converted_object[_alias_key(key, type_)] = convert_and_respect_annotation_metadata(
+                object_=value, annotation=type_
             )
     return converted_object
 

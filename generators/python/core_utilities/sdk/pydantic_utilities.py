@@ -169,7 +169,7 @@ def universal_root_validator(
         @wraps(func)
         def validate(*args: typing.Any, **kwargs: typing.Any) -> AnyCallable:
             if IS_PYDANTIC_V2:
-                wrapped_func = pydantic.model_validator("before" if pre else "after")( # type: ignore # Pydantic v2
+                wrapped_func = pydantic.model_validator("before" if pre else "after")(  # type: ignore # Pydantic v2
                     func
                 )
             else:
@@ -182,16 +182,14 @@ def universal_root_validator(
     return decorator
 
 
-def universal_field_validator(
-    field_name: str, pre: bool = False
-) -> typing.Callable[[AnyCallable], AnyCallable]:
+def universal_field_validator(field_name: str, pre: bool = False) -> typing.Callable[[AnyCallable], AnyCallable]:
     def decorator(func: AnyCallable) -> AnyCallable:
         @wraps(func)
         def validate(*args: typing.Any, **kwargs: typing.Any) -> AnyCallable:
             if IS_PYDANTIC_V2:
-                wrapped_func = pydantic.field_validator(
-                    field_name, mode="before" if pre else "after"
-                )(func)  # type: ignore # Pydantic v2
+                wrapped_func = pydantic.field_validator(field_name, mode="before" if pre else "after")(
+                    func
+                )  # type: ignore # Pydantic v2
             else:
                 wrapped_func = pydantic.validator(field_name, pre=pre)(func)  # type: ignore # Pydantic v1
 
