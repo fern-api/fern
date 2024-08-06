@@ -4684,6 +4684,7 @@ __metadata:
     "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
+    "@types/object-hash": ^3.0.6
     "@types/tar": ^6.1.11
     axios: ^0.28.0
     chalk: ^5.3.0
@@ -4692,6 +4693,7 @@ __metadata:
     jest: ^29.7.0
     js-yaml: ^4.1.0
     lodash-es: ^4.17.21
+    object-hash: ^3.0.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     tar: ^6.2.1
