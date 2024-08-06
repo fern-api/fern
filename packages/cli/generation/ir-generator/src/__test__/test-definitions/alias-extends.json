@@ -125,6 +125,8 @@
             "referencedTypes": [
                 "type_:Parent"
             ],
+            "encoding": null,
+            "source": null,
             "userProvidedExamples": [
                 {
                     "name": {
@@ -336,6 +338,8 @@
                 "extendedProperties": []
             },
             "referencedTypes": [],
+            "encoding": null,
+            "source": null,
             "userProvidedExamples": [
                 {
                     "name": {
@@ -577,6 +581,8 @@
             "referencedTypes": [
                 "type_:Parent"
             ],
+            "encoding": null,
+            "source": null,
             "userProvidedExamples": [
                 {
                     "name": {
@@ -759,6 +765,8 @@
             },
             "headers": [],
             "pathParameters": [],
+            "encoding": null,
+            "transport": null,
             "endpoints": [
                 {
                     "id": "endpoint_.extendedInlineRequestBody",
@@ -1181,6 +1189,7 @@
     "webhookGroups": {},
     "websocketChannels": {},
     "readmeConfig": null,
+    "sourceConfig": null,
     "subpackages": {},
     "rootPackage": {
         "fernFilepath": {

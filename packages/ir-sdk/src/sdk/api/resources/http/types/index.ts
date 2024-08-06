@@ -1,5 +1,7 @@
 export * from "./HttpService";
 export * from "./DeclaredServiceName";
+export * from "./Transport";
+export * from "./GrpcTransport";
 export * from "./HttpEndpoint";
 export * from "./EndpointName";
 export * from "./HttpPath";

@@ -1,3 +1,7 @@
+export * from "./Source";
+export * from "./Encoding";
+export * from "./JsonEncoding";
+export * from "./ProtoEncoding";
 export * from "./TypeDeclaration";
 export * from "./DeclaredTypeName";
 export * from "./Type";
