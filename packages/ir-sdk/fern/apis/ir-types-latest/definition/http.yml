@@ -399,6 +399,20 @@ types:
     properties:
       name: commons.NameAndWireValue
       value: types.ExampleTypeReference
+      shape: optional<ExampleQueryParameterShape>
+
+  ExampleQueryParameterShape:
+    union:
+      single: SingleExampleQueryParameter
+      exploded: ExplodedExampleQueryParameter
+      commaSeparated: CommaSeparatedExampleQueryParameter
+
+  SingleExampleQueryParameter:
+    properties: {}
+  ExplodedExampleQueryParameter:
+    properties: {}
+  CommaSeparatedExampleQueryParameter:
+    properties: {}
 
   ExampleHeader:
     properties:
