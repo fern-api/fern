@@ -19,6 +19,11 @@ fixtures:
         pydantic_config: 
           version: v2
       outputFolder: pydantic-v2
+    - customConfig:
+        include_validators: True
+        pydantic_config:
+          include_union_utils: true
+      outputFolder: include-validators
   imdb:
     - customConfig: null
       outputFolder: no-custom-config
