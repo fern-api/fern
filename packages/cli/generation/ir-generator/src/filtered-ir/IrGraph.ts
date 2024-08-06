@@ -107,10 +107,12 @@ export class IrGraph {
 
     public markEnvironmentForAudiences(
         environment: SingleBaseUrlEnvironment | MultipleBaseUrlsEnvironment,
-        audiences: string[]
+        audiences: string[],
+        // TODO: (rohin) this is brought in for backwards compatibility when no audiences are supplied to environments. Restore this when api/generators bumping.
+        overrideCheck?: boolean
     ): void {
         if (environment) {
-            if (this.hasAudience(audiences)) {
+            if (this.hasAudience(audiences) || overrideCheck) {
                 this.environmentsNeededForAudience.add(environment.id);
             }
         }
