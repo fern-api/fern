@@ -157,7 +157,6 @@ async function validateVersionedDependencyAndGetDefinition({
     settings?: OSSWorkspace.Settings;
 }): Promise<FernDefinition | undefined> {
     const pathToDependency: AbsoluteFilePath = getPathToLocalStorageDependency(dependency);
-    console.log("pathToDependency", pathToDependency);
     const pathToDefinition = join(pathToDependency, RelativeFilePath.of(DEPENDENCIES_FOLDER_NAME));
     const pathToMetadata = join(pathToDependency, RelativeFilePath.of(METADATA_RESPONSE_FILENAME));
 
