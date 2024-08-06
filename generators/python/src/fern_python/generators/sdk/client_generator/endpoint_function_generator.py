@@ -32,7 +32,6 @@ from fern_python.generators.sdk.environment_generators.multiple_base_urls_enviro
     get_base_url_property_name,
 )
 from fern_python.snippet import SnippetWriter
-from fern_python.source_file_factory import SourceFileFactory
 
 from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
 from .generated_root_client import GeneratedRootClient

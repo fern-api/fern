@@ -5,7 +5,6 @@ import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST, SourceFile
 from fern_python.snippet import SnippetWriter
-from fern_python.source_file_factory import SourceFileFactory
 
 from ...context import PydanticGeneratorContext
 from ..custom_config import PydanticModelCustomConfig

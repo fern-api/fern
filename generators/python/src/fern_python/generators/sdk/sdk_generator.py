@@ -30,7 +30,6 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
 from fern_python.snippet import SnippetRegistry, SnippetWriter
 from fern_python.snippet.snippet_template_factory import SnippetTemplateFactory
 from fern_python.snippet.snippet_test_factory import SnippetTestFactory
-from fern_python.source_file_factory import SourceFileFactory
 from fern_python.utils import build_snippet_writer
 
 from .client_generator.client_generator import ClientGenerator

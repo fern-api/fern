@@ -11,7 +11,6 @@ from fern_python.generators.pydantic_model import (
     PydanticModelGenerator,
 )
 from fern_python.snippet import SnippetRegistry
-from fern_python.source_file_factory import SourceFileFactory
 from fern_python.utils import build_snippet_writer
 
 from .auth import SecurityFileGenerator

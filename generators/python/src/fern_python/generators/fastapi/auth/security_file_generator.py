@@ -1,7 +1,6 @@
 from fern_python.codegen import AST, Filepath, Project
 from fern_python.external_dependencies import FastAPI
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
-from fern_python.source_file_factory import SourceFileFactory
 
 from ..context import FastApiGeneratorContext
 from .basic_auth_generator import BasicAuthGenerator

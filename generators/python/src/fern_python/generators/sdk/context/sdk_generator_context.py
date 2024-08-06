@@ -46,7 +46,7 @@ class SdkGeneratorContext(ABC):
             allow_leveraging_defaults=custom_config.pydantic_config.use_provided_defaults,
             use_typeddict_requests=custom_config.pydantic_config.use_typeddict_requests,
             reserved_names={exported_root_client.get_class_name(name=None)},
-            skip_formatting=custom_config.skip_formatting
+            skip_formatting=custom_config.skip_formatting,
         )
 
         # This should be replaced with `hasPaginatedEndpoints` in the IR, but that's on IR44, not 39, which is what Python's on

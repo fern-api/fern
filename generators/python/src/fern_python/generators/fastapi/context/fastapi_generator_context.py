@@ -32,7 +32,7 @@ class FastApiGeneratorContext(ABC):
             allow_leveraging_defaults=False,
             use_typeddict_requests=False,
             use_str_enums=use_str_enums,
-            skip_formatting=custom_config.skip_formatting
+            skip_formatting=custom_config.skip_formatting,
         )
         self.core_utilities = CoreUtilities()
         self.source_file_factory = SourceFileFactory(should_format=not custom_config.skip_formatting)

@@ -12,7 +12,6 @@ from fern_python.generators.sdk.client_generator.endpoint_metadata_collector imp
     ParameterMetadata,
 )
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
-from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 
 
 class ReferenceSectionBuilder:

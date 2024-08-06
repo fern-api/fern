@@ -23,7 +23,7 @@ class PydanticGeneratorContext(ABC):
         allow_skipping_validation: bool,
         use_typeddict_requests: bool,
         use_str_enums: bool,
-        skip_formatting: bool
+        skip_formatting: bool,
     ):
         self.ir = ir
         self.generator_config = generator_config

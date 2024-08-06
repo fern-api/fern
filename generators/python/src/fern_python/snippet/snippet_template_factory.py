@@ -60,7 +60,6 @@ from fern_python.generators.sdk.client_generator.request_body_parameters.referen
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 from fern_python.snippet.snippet_writer import SnippetWriter
 from fern_python.snippet.template_utils import TEMPLATE_SENTINEL
-from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 
 
 class SnippetTemplateFactory:

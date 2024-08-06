@@ -5,7 +5,6 @@ from fern_python.external_dependencies import FastAPI
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.fastapi.custom_config import FastAPICustomConfig
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
-from fern_python.source_file_factory import SourceFileFactory
 
 from ..context import FastApiGeneratorContext
 

@@ -109,7 +109,7 @@ class AbstractGenerator(ABC):
             publisher.run_poetry_install()
             publisher.run_ruff_format()
             publisher.publish_package(publish_config=output_mode_union)
-    
+
     # We're trying not to change the casing more than we need to, so here
     # we're using the same casing as is given but just removing `-` and other special characters as
     # python does not allow `-` in package names. Note pypi should be fine with it

@@ -13,10 +13,9 @@ from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 
 
 class SourceFileFactory:
-
-    def __init__(self, *, should_format: bool): 
+    def __init__(self, *, should_format: bool):
         self._should_format = should_format
-    
+
     def create(
         self,
         *,
@@ -28,7 +27,6 @@ class SourceFileFactory:
         self._log_generating_file_update(filepath=filepath, generator_exec_wrapper=generator_exec_wrapper)
         return project.source_file(filepath=filepath, from_src=from_src)
 
-    
     def create_snippet(self) -> SourceFile:
         return SourceFileImpl(
             module_path=(),
@@ -59,7 +57,6 @@ class SourceFileFactory:
             string_replacements=string_replacements,
         )
 
-    
     def _log_generating_file_update(self, *, filepath: Filepath, generator_exec_wrapper: GeneratorExecWrapper) -> None:
         generator_exec_wrapper.send_update(
             GeneratorUpdate.factory.log(LogUpdate(level=LogLevel.DEBUG, message=f"Generating {filepath}"))

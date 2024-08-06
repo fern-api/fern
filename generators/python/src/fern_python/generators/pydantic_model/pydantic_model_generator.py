@@ -8,7 +8,6 @@ from fern_python.codegen import Project
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model.typeddict import FernTypedDict
 from fern_python.snippet import SnippetRegistry, SnippetWriter
-from fern_python.source_file_factory import SourceFileFactory
 
 from ..context import PydanticGeneratorContext, PydanticGeneratorContextImpl
 from .custom_config import PydanticModelCustomConfig

@@ -18,7 +18,6 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ConstructorParameter,
 )
 from fern_python.snippet import SnippetRegistry, SnippetWriter
-from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from ..environment_generators import (
