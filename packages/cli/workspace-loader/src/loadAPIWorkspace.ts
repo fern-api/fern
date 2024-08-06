@@ -1,5 +1,12 @@
-import { ASYNCAPI_DIRECTORY, DEFINITION_DIRECTORY, generatorsYml, OPENAPI_DIRECTORY } from "@fern-api/configuration";
+import {
+    APIS_DIRECTORY,
+    ASYNCAPI_DIRECTORY,
+    DEFINITION_DIRECTORY,
+    generatorsYml,
+    OPENAPI_DIRECTORY
+} from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { isDirectoryEmpty } from "@fern-api/fs-utils/src/doesPathExist";
 import { TaskContext } from "@fern-api/task-context";
 import { loadAPIChangelog } from "./loadAPIChangelog";
 import { getValidAbsolutePathToAsyncAPIFromFolder } from "./loadAsyncAPIFile";
@@ -146,6 +153,17 @@ export async function loadAPIWorkspace({
         return {
             didSucceed: true,
             workspace: fernWorkspace
+        };
+    }
+
+    if (await isDirectoryEmpty(join(absolutePathToWorkspace, RelativeFilePath.of(APIS_DIRECTORY)))) {
+        return {
+            didSucceed: false,
+            failures: {
+                [RelativeFilePath.of(APIS_DIRECTORY)]: {
+                    type: WorkspaceLoaderFailureType.FILE_MISSING
+                }
+            }
         };
     }
 
