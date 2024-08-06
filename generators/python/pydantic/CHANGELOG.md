@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2024-08-06
+
+- Improvement: expose `package_name` configuration option for pydantic models. This field controls the package from which users will import your client, for example, the following config would allow users to use: `from my_custom_package import Client`
+  ```yaml
+  generators:
+    - name: fernapi/fern-pydantic-model
+      config:
+        package_name: my_custom_package
+  ```
+
 ## [1.3.1] - 2024-08-05
 
 - Fix: The root type for unions with visitors now has it's parent typed correctly. This allows auto-complete to work once again on the union when it's nested within other pydantic models.
