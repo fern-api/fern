@@ -28,6 +28,26 @@ it("environments no audiences", async () => {
     });
 });
 
+it("environments no audiences on environments but all hack", async () => {
+    const AUDIENCES_DIR = path.join(__dirname, "fixtures/audiences/fern-hack-override-environment-audience");
+    await generateAndSnapshotIRFromPath({
+        absolutePathToIr: AbsoluteFilePath.of(IR_DIR),
+        absolutePathToWorkspace: AbsoluteFilePath.of(AUDIENCES_DIR),
+        audiences: { type: "all" },
+        workspaceName: "environmentAudiencesAllHack"
+    });
+});
+
+it("environments no audiences on environments but selected hack", async () => {
+    const AUDIENCES_DIR = path.join(__dirname, "fixtures/audiences/fern-hack-override-environment-audience");
+    await generateAndSnapshotIRFromPath({
+        absolutePathToIr: AbsoluteFilePath.of(IR_DIR),
+        absolutePathToWorkspace: AbsoluteFilePath.of(AUDIENCES_DIR),
+        audiences: { type: "select", audiences: ["external"] },
+        workspaceName: "environmentAudiencesSelectHack"
+    });
+});
+
 it("fhir", async () => {
     const FHIR_DIR = path.join(__dirname, "../../../../../../fern/apis/fhir");
     await generateAndSnapshotIRFromPath({
