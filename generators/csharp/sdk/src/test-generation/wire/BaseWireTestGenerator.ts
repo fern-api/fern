@@ -1,11 +1,14 @@
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { RootClientGenerator } from "../../root-client/RootClientGenerator";
 import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
 import { SdkGeneratorContext, WIRE_TEST_FOLDER } from "../../SdkGeneratorContext";
 
 export class BaseWireTestGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+    private readonly rootClientGenerator: RootClientGenerator;
     constructor(context: SdkGeneratorContext) {
         super(context);
+        this.rootClientGenerator = new RootClientGenerator(context);
     }
 
     public doGenerate(): CSharpFile {
@@ -78,9 +81,8 @@ export class BaseWireTestGenerator extends FileGenerator<CSharpFile, SdkCustomCo
                     writer.newLine();
 
                     writer.writeLine("// Initialize the Client");
-                    writer.writeLine(`Client = new ${this.context.getRootClientClassName()}("API_KEY", new `);
-                    writer.writeNode(this.context.getClientOptionsClassReference());
-                    writer.write(" { BaseUrl = Server.Urls[0] });");
+                    writer.writeLine("Client = ");
+                    writer.writeNodeStatement(this.getClientInstantiation());
                 }),
                 isAsync: false,
                 parameters: [],
@@ -113,6 +115,14 @@ export class BaseWireTestGenerator extends FileGenerator<CSharpFile, SdkCustomCo
             clazz: class_,
             directory: WIRE_TEST_FOLDER
         });
+    }
+
+    private getClientInstantiation(): csharp.ClassInstantiation {
+        const clientOptions = new csharp.ClassInstantiation({
+            classReference: this.context.getClientOptionsClassReference(),
+            arguments_: [{ name: "BaseUrl", assignment: csharp.codeblock("Server.Urls[0]") }]
+        });
+        return this.rootClientGenerator.generateExampleClientInstantiationSnippet(clientOptions);
     }
 
     protected getFilepath(): RelativeFilePath {

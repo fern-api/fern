@@ -31,6 +31,7 @@ export class ClassInstantiation extends AstNode {
     }
 
     public write(writer: Writer): void {
+        writer.addReference(this.classReference);
         const hasNamedArguments =
             this.arguments_.length > 0 && this.arguments_[0] != null && isNamedArgument(this.arguments_[0]);
 

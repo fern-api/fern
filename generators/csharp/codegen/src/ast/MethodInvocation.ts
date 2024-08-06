@@ -8,6 +8,8 @@ export declare namespace MethodInvocation {
     interface Args {
         /* Defaults to false */
         async?: boolean;
+        /* For use on an async function to get the result synchronously */
+        result?: "void" | "value";
         /* The method to invoke */
         method: string;
         /* A map of the field for the class and the value to be assigned to it. */
@@ -25,8 +27,9 @@ export class MethodInvocation extends AstNode {
     private on: CodeBlock | undefined;
     private async: boolean;
     private generics: csharp.Type[];
+    private result?: "void" | "value";
 
-    constructor({ method, arguments_, on, async, generics }: MethodInvocation.Args) {
+    constructor({ method, arguments_, on, async, generics, result }: MethodInvocation.Args) {
         super();
 
         this.method = method;
@@ -34,6 +37,7 @@ export class MethodInvocation extends AstNode {
         this.on = on;
         this.async = async ?? false;
         this.generics = generics ?? [];
+        this.result = result;
     }
 
     public write(writer: Writer): void {
@@ -67,5 +71,10 @@ export class MethodInvocation extends AstNode {
         writer.dedent();
 
         writer.write(")");
+        if (this.result === "value") {
+            writer.write(".Result");
+        } else if (this.result === "void") {
+            writer.write(".GetAwaiter().GetResult()");
+        }
     }
 }

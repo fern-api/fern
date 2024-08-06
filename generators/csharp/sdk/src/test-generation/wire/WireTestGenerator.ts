@@ -1,6 +1,6 @@
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { ExampleEndpointCall, HttpEndpoint, Name, ServiceId } from "@fern-fern/ir-sdk/api";
+import { ExampleEndpointCall, FernFilepath, HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
 import { EndpointGenerator } from "../../endpoint/EndpointGenerator";
 import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
 import { SdkGeneratorContext, WIRE_TEST_FOLDER } from "../../SdkGeneratorContext";
@@ -21,7 +21,7 @@ export class WireTestGenerator extends FileGenerator<CSharpFile, SdkCustomConfig
         private readonly exampleEndpointCalls: ExampleEndpointCall[],
         private readonly endpoint: HttpEndpoint,
         private readonly serviceId: ServiceId,
-        private readonly subclientName?: Name
+        private readonly serviceFilePath: FernFilepath
     ) {
         super(context);
         this.classReference = csharp.classReference({
@@ -37,20 +37,22 @@ export class WireTestGenerator extends FileGenerator<CSharpFile, SdkCustomConfig
             namespace: this.context.getTestNamespace(),
             parentClassReference: this.context.getBaseWireTestClassReference()
         });
-        this.exampleEndpointCalls.forEach((testInput, index) => {
+        this.exampleEndpointCalls.forEach((example, index) => {
             const methodBody = csharp.codeblock((writer) => {
-                if (testInput.request != null) {
+                if (example.request != null) {
                     writer.writeLine('const string requestJson = """');
-                    writer.writeLine(JSON.stringify(testInput.request.jsonExample, null, 2), true);
+                    writer.writeLine(JSON.stringify(example.request.jsonExample, null, 2), true);
                     writer.writeTextStatement('"""');
                 }
                 writer.newLine();
-                if (testInput.response != null) {
-                    if (testInput.response.type !== "ok" || testInput.response.value.type !== "body") {
+                let hasJsonExampleResponse = false;
+                if (example.response != null) {
+                    if (example.response.type !== "ok" || example.response.value.type !== "body") {
                         throw new Error("Unexpected error response type");
                     }
-                    const jsonExampleResponse = testInput.response.value.value?.jsonExample;
+                    const jsonExampleResponse = example.response.value.value?.jsonExample;
                     if (jsonExampleResponse != null) {
+                        hasJsonExampleResponse = true;
                         writer.writeLine('const string mockResponse = """');
                         writer.writeLine(JSON.stringify(jsonExampleResponse, null, 2));
                         writer.writeTextStatement('"""');
@@ -59,50 +61,73 @@ export class WireTestGenerator extends FileGenerator<CSharpFile, SdkCustomConfig
                 writer.newLine();
 
                 writer.write("Server.Given(WireMock.RequestBuilders.Request.Create()");
-                writer.write(`.WithPath("${this.endpoint.fullPath}/${testInput.url}")`);
+                writer.write(`.WithPath("${example.url || "/"}")`);
+
+                // TODO: include examples that aren't strings, need to figure out encoding etc.
+                for (const parameter of example.queryParameters) {
+                    if (typeof parameter.value.jsonExample === "string") {
+                        writer.write(`.WithParam("${parameter.name.wireValue}", "${parameter.value.jsonExample}")`);
+                    }
+                }
+                for (const header of [...example.serviceHeaders, ...example.endpointHeaders]) {
+                    if (typeof header.value.jsonExample === "string") {
+                        writer.write(`.WithHeader("${header.name.wireValue}", "${header.value.jsonExample}")`);
+                    }
+                }
                 writer.write(
                     `.Using${
                         this.endpoint.method.charAt(0).toUpperCase() + this.endpoint.method.slice(1).toLowerCase()
                     }()`
                 );
-                if (testInput.request != null) {
+                if (example.request != null) {
                     writer.write(".WithBody(requestJson)");
                 }
                 writer.writeLine(")");
                 writer.newLine();
-
-                if (testInput.response != null) {
-                    writer.writeLine(".RespondWith(WireMock.ResponseBuilders.Response.Create()");
-                    writer.writeLine(".WithStatusCode(200)");
+                writer.writeLine(".RespondWith(WireMock.ResponseBuilders.Response.Create()");
+                writer.writeLine(".WithStatusCode(200)");
+                if (hasJsonExampleResponse) {
                     writer.writeTextStatement(".WithBody(mockResponse))");
                 } else {
-                    writer.writeLine(";");
+                    writer.writeTextStatement(")");
                 }
+                writer.newLine();
 
-                const endpointSnippet = this.endpointGenerator.generateEndpointSnippet(
-                    testInput,
-                    this.endpoint,
-                    "Client",
-                    this.serviceId,
-                    this.subclientName
-                );
+                const endpointSnippet = this.endpointGenerator.generateEndpointSnippet({
+                    example,
+                    endpoint: this.endpoint,
+                    clientVariableName: "Client",
+                    serviceId: this.serviceId,
+                    serviceFilePath: this.serviceFilePath,
+                    getResult: true
+                });
                 if (endpointSnippet == null) {
                     throw new Error("Endpoint snippet is null");
                 }
-                writer.write("var response = ");
+                if (hasJsonExampleResponse) {
+                    writer.write("var response = ");
+                } else {
+                    writer.write("Assert.DoesNotThrow(() => ");
+                }
                 writer.writeNode(endpointSnippet);
-                writer.writeTextStatement(".Result");
-                writer.newLine();
+                if (!hasJsonExampleResponse) {
+                    writer.write(")");
+                }
+                writer.write(";");
 
-                writer.writeNode(
-                    csharp.classReference({
-                        name: "JsonDiffChecker",
-                        namespace: this.context.getTestUtilsNamespace()
-                    })
-                );
-                writer.write(".AssertJsonEquals(mockResponse, ");
-                writer.writeNode(this.context.getJsonUtilsClassReference());
-                writer.writeTextStatement(".Serialize(response))");
+                if (hasJsonExampleResponse) {
+                    writer.newLine();
+
+                    writer.writeNode(
+                        csharp.classReference({
+                            name: "JsonDiffChecker",
+                            namespace: this.context.getTestUtilsNamespace()
+                        })
+                    );
+                    writer.write(".AssertJsonEquals(mockResponse, ");
+                    writer.writeNode(this.context.getJsonUtilsClassReference());
+                    writer.writeTextStatement(".Serialize(response))");
+                }
             });
             const testNumber = this.exampleEndpointCalls.length > 1 ? `_${index + 1}` : "";
             testClass.addTestMethod({
@@ -126,18 +151,5 @@ export class WireTestGenerator extends FileGenerator<CSharpFile, SdkCustomConfig
 
     private getTestClassName(): string {
         return `${this.classReference.name}Test`;
-    }
-
-    private convertToCSharpFriendlyJsonString(jsonObject: unknown): string {
-        // Convert object to JSON string with indentation
-        let jsonString = JSON.stringify(jsonObject, null, 2);
-
-        // Escape double quotes for C# string
-        jsonString = jsonString.replace(/"/g, '""');
-
-        // Format it as a multi-line C# string
-        return `@"
-${jsonString}
-"`;
     }
 }

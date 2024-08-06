@@ -3,8 +3,8 @@ import { ExampleGenerator } from "@fern-api/fern-csharp-model";
 import {
     ExampleEndpointCall,
     ExampleRequestBody,
+    FernFilepath,
     HttpEndpoint,
-    Name,
     ResponseError,
     SdkRequestShape,
     ServiceId
@@ -87,6 +87,9 @@ export class EndpointGenerator {
                     headerParameterCodeBlock.code.write(writer);
                 }
                 const requestBodyCodeBlock = request?.getRequestBodyCodeBlock();
+                if (requestBodyCodeBlock?.code != null) {
+                    writer.writeNode(requestBodyCodeBlock.code);
+                }
                 writer.write(`var ${RESPONSE_VARIABLE_NAME} = `);
                 writer.writeNodeStatement(
                     rawClient.makeRequest({
@@ -109,13 +112,21 @@ export class EndpointGenerator {
         });
     }
 
-    public generateEndpointSnippet(
-        example: ExampleEndpointCall,
-        endpoint: HttpEndpoint,
-        clientVariableName: string,
-        serviceId: ServiceId,
-        subclientName?: Name
-    ): csharp.MethodInvocation | undefined {
+    public generateEndpointSnippet({
+        example,
+        endpoint,
+        clientVariableName,
+        serviceId,
+        serviceFilePath,
+        getResult = false
+    }: {
+        example: ExampleEndpointCall;
+        endpoint: HttpEndpoint;
+        clientVariableName: string;
+        serviceId: ServiceId;
+        serviceFilePath: FernFilepath;
+        getResult?: boolean;
+    }): csharp.MethodInvocation | undefined {
         const requestBodyType = endpoint.requestBody?.type;
         // TODO: implement these
         if (requestBodyType === "fileUpload" || requestBodyType === "bytes") {
@@ -127,19 +138,20 @@ export class EndpointGenerator {
             args.push(endpointRequestSnippet);
         }
         const on = csharp.codeblock((writer) => {
-            writer.write(`${clientVariableName}.`);
-            if (subclientName != null) {
-                writer.write(subclientName.pascalCase.safeName);
+            writer.write(`${clientVariableName}`);
+            for (const path of serviceFilePath.allParts) {
+                writer.write(`.${path.pascalCase.safeName}`);
             }
         });
-        const methodInvocationArgs: csharp.MethodInvocation.Args = {
+        this.getEndpointReturnType({ endpoint });
+        return new csharp.MethodInvocation({
             method: this.context.getEndpointMethodName(endpoint),
             arguments_: args,
             on,
             async: false,
-            generics: []
-        };
-        return new csharp.MethodInvocation(methodInvocationArgs);
+            generics: [],
+            result: getResult ? (this.getEndpointReturnType({ endpoint }) != null ? "value" : "void") : undefined
+        });
     }
 
     private getBaseURLForEndpoint({ endpoint }: { endpoint: HttpEndpoint }): csharp.CodeBlock {
@@ -159,9 +171,6 @@ export class EndpointGenerator {
         endpoint: HttpEndpoint,
         serviceId: ServiceId
     ): csharp.CodeBlock | undefined {
-        if (exampleEndpointCall.request == null) {
-            return undefined;
-        }
         switch (endpoint.sdkRequest?.shape.type) {
             case "wrapper":
                 return new WrappedRequestGenerator({
@@ -170,8 +179,12 @@ export class EndpointGenerator {
                     serviceId,
                     endpoint
                 }).doGenerateSnippet(exampleEndpointCall);
-            case "justRequestBody":
+            case "justRequestBody": {
+                if (exampleEndpointCall.request == null) {
+                    throw new Error("Unexpected no example request for just request body");
+                }
                 return this.getJustRequestBodySnippet(exampleEndpointCall.request, endpoint.sdkRequest.shape);
+            }
         }
         return undefined;
     }

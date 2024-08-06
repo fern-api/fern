@@ -135,6 +135,13 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return `${this.getComputedClientName()}Client`;
     }
 
+    public getRootClientClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getRootClientClassName(),
+            namespace: this.getNamespace()
+        });
+    }
+
     public getBaseExceptionClassReference(): csharp.ClassReference {
         const maybeOverrideName = this.customConfig["base-exception-class-name"];
         return csharp.classReference({
