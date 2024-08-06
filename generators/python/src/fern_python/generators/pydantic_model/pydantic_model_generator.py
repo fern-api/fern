@@ -37,8 +37,13 @@ class PydanticModelGenerator(AbstractGenerator):
         generator_config: GeneratorConfig,
         ir: ir_types.IntermediateRepresentation,
     ) -> Tuple[str, ...]:
+        custom_config = PydanticModelCustomConfig.parse_obj(generator_config.custom_config or {})
+        if custom_config.package_name is not None:
+            return (custom_config.package_name,)
+        
+        cleaned_org_name = self._clean_organization_name(generator_config.organization)
         return (
-            generator_config.organization,
+            cleaned_org_name,
             ir.api_name.snake_case.safe_name,
         )
 
