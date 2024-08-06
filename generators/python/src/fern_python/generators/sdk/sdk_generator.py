@@ -67,7 +67,7 @@ class SdkGenerator(AbstractGenerator):
         custom_config = SDKCustomConfig.parse_obj(generator_config.custom_config or {})
         if custom_config.package_name is not None:
             return (custom_config.package_name,)
-        
+
         cleaned_org_name = self._clean_organization_name(generator_config.organization)
         return (
             (

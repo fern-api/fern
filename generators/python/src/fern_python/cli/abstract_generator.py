@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 import os
-from abc import ABC, abstractmethod
 import re
+from abc import ABC, abstractmethod
 from typing import Literal, Optional, Sequence, Tuple, cast
 
 import fern.ir.resources as ir_types
@@ -97,7 +97,7 @@ class AbstractGenerator(ABC):
     # python does not allow `-` in package names. Note pypi should be fine with it
     def _clean_organization_name(self, organization: str) -> str:
         # Replace non-alphanumeric characters with underscores
-        return re.sub('[^a-zA-Z0-9]', '_', organization)
+        return re.sub("[^a-zA-Z0-9]", "_", organization)
 
     def _get_github_publish_config(
         self, generator_config: GeneratorConfig, output_mode: GithubOutputMode
