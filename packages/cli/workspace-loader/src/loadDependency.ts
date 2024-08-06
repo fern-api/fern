@@ -1,5 +1,4 @@
 import { dependenciesYml } from "@fern-api/configuration";
-import { VersionedDependency } from "@fern-api/configuration/src/dependencies-yml";
 import { createFiddleService } from "@fern-api/core";
 import { assertNever, noop, visitObject } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -105,7 +104,7 @@ const DEFINITION_FOLDER_NAME = "definition";
 const METADATA_RESPONSE_FILENAME = "metadata.json";
 const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";
 
-function getPathToLocalStorageDependency(dependency: VersionedDependency): AbsoluteFilePath {
+function getPathToLocalStorageDependency(dependency: dependenciesYml.VersionedDependency): AbsoluteFilePath {
     return join(
         AbsoluteFilePath.of(homedir()),
         RelativeFilePath.of(LOCAL_STORAGE_FOLDER),
