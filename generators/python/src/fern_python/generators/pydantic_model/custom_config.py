@@ -37,6 +37,7 @@ class PydanticModelCustomConfig(BasePydanticModelCustomConfig):
     extra_fields: Optional[Literal["allow", "forbid"]] = "allow"
     skip_formatting: bool = False
     include_union_utils: bool = False
+    package_name: Optional[str] = None
     # Skip validation of fields (automatically includes additional fields)
     skip_validation: bool = False
     # Leverage defaults specified in the API specification
@@ -45,3 +46,6 @@ class PydanticModelCustomConfig(BasePydanticModelCustomConfig):
     # Whether or not to generate TypedDicts instead of Pydantic
     # Models for request objects.
     use_typeddict_requests: bool = False
+
+    class Config:
+        extra = pydantic.Extra.forbid
