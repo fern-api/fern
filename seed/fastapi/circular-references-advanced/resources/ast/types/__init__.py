@@ -7,4 +7,11 @@ from .object_field_value import ObjectFieldValue
 from .object_value import ObjectValue
 from .primitive_value import PrimitiveValue
 
-__all__ = ["ContainerValue", "FieldName", "FieldValue", "ObjectFieldValue", "ObjectValue", "PrimitiveValue"]
+__all__ = [
+    "ContainerValue",
+    "FieldName",
+    "FieldValue",
+    "ObjectFieldValue",
+    "ObjectValue",
+    "PrimitiveValue",
+]

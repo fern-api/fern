@@ -2,4 +2,12 @@
 
 from . import container, enum, http_methods, object, params, primitive, union
 
-__all__ = ["container", "enum", "http_methods", "object", "params", "primitive", "union"]
+__all__ = [
+    "container",
+    "enum",
+    "http_methods",
+    "object",
+    "params",
+    "primitive",
+    "union",
+]

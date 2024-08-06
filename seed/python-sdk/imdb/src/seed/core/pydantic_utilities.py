@@ -171,9 +171,9 @@ def universal_root_validator(
         @wraps(func)
         def validate(*args: typing.Any, **kwargs: typing.Any) -> AnyCallable:
             if IS_PYDANTIC_V2:
-                wrapped_func = pydantic.model_validator("before" if pre else "after")(
+                wrapped_func = pydantic.model_validator("before" if pre else "after")(  # type: ignore # Pydantic v2
                     func
-                )  # type: ignore # Pydantic v2
+                )
             else:
                 wrapped_func = pydantic.root_validator(pre=pre)(func)  # type: ignore # Pydantic v1
 

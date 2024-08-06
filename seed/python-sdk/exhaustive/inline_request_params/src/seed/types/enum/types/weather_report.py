@@ -2,4 +2,6 @@
 
 import typing
 
-WeatherReport = typing.Union[typing.Literal["SUNNY", "CLOUDY", "RAINING", "SNOWING"], typing.Any]
+WeatherReport = typing.Union[
+    typing.Literal["SUNNY", "CLOUDY", "RAINING", "SNOWING"], typing.Any
+]

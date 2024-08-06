@@ -5,4 +5,10 @@ from .auth import TokenResponse
 from .client import AsyncSeedOauthClientCredentials, SeedOauthClientCredentials
 from .version import __version__
 
-__all__ = ["AsyncSeedOauthClientCredentials", "SeedOauthClientCredentials", "TokenResponse", "__version__", "auth"]
+__all__ = [
+    "AsyncSeedOauthClientCredentials",
+    "SeedOauthClientCredentials",
+    "TokenResponse",
+    "__version__",
+    "auth",
+]

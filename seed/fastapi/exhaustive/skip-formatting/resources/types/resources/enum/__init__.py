@@ -2,4 +2,5 @@
 
 from .errors import ErrorWithEnumBody
 from .types import WeatherReport
+
 __all__ = ["ErrorWithEnumBody", "WeatherReport"]

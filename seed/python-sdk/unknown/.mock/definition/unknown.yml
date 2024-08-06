@@ -7,17 +7,9 @@ service:
       method: POST
       request: unknown
       response: list<unknown>
-    postObject:
-      path: "/with-object"
-      method: POST
-      request: MyObject
-      response: list<unknown>
 
 types:
   MyAlias: unknown
   MyObject:
     properties:
       unknown: unknown
-    examples: 
-      - name: Example0
-        value: {}
