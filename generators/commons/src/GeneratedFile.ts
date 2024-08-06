@@ -4,13 +4,14 @@ import { join } from "path";
 import { AstNode } from "./AstNode";
 
 export class GeneratedFile {
+
     public name: string;
     public extension: string;
     public outputDirectory: string;
     public contents: AstNode;
 
-    get filename(): string {
-        return `${this.name}.${this.extension}`;
+    get filename(): string { 
+        return `${this.name}.${this.extension}`; 
     }
 
     constructor(fileName: string, fileExtension: string, outputDirectory: string, contents: AstNode) {
@@ -23,7 +24,7 @@ export class GeneratedFile {
     public async generate(): Promise<string> {
         await mkdir(this.outputDirectory, { recursive: true });
         const outputFile = `${this.outputDirectory}/${this.filename}`;
-        await writeFile(outputFile, this.contents.toString());
+        await writeFile(outputFile, this.contents.render());
         return outputFile;
     }
 
@@ -38,4 +39,5 @@ export class GeneratedFile {
             console.error(`Error reading file: ${error}`);
         }
     }
+
 }

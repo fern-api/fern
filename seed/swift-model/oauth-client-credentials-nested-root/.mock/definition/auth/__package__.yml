@@ -1,0 +1,26 @@
+types:
+  TokenResponse:
+    docs: |
+      An OAuth token response.
+    properties:
+      access_token: string
+      expires_in: integer
+      refresh_token: optional<string>
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    getToken:
+      path: /token
+      method: POST
+      request:
+        name: GetTokenRequest
+        body:
+          properties:
+            client_id: string
+            client_secret: string
+            audience: literal<"https://api.example.com">
+            grant_type: literal<"client_credentials">
+            scope: optional<string>
+      response: TokenResponse

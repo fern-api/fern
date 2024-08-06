@@ -7,7 +7,7 @@ describe("LANGUAGE Language", () => {
 
     it("not null", () => {
         const output = LANGUAGE.makeFunction({
-            name: "doSomething"
+            name: "doSomething",
         });
         expect(output).not.toBe(null);
     });

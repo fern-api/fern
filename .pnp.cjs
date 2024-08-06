@@ -60,6 +60,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:generators/swift/codegen"\
       },\
       {\
+        "name": "@fern-api/fern-swift-model",\
+        "reference": "workspace:generators/swift/model"\
+      },\
+      {\
         "name": "@fern-api/template-codegen",\
         "reference": "workspace:generators/template/codegen"\
       },\
@@ -400,6 +404,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/fern-csharp-sdk", ["workspace:generators/csharp/sdk"]],\
       ["@fern-api/fern-ruby-model", ["workspace:generators/ruby/model"]],\
       ["@fern-api/fern-ruby-sdk", ["workspace:generators/ruby/sdk"]],\
+      ["@fern-api/fern-swift-model", ["workspace:generators/swift/model"]],\
       ["@fern-api/fs-utils", ["workspace:packages/commons/fs-utils"]],\
       ["@fern-api/generator-commons", ["workspace:generators/commons"]],\
       ["@fern-api/init", ["workspace:packages/cli/init"]],\
@@ -6915,6 +6920,31 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
+      ["@fern-api/fern-swift-model", [\
+        ["workspace:generators/swift/model", {\
+          "packageLocation": "./generators/swift/model/",\
+          "packageDependencies": [\
+            ["@fern-api/fern-swift-model", "workspace:generators/swift/model"],\
+            ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
+            ["@fern-api/generator-commons", "workspace:generators/commons"],\
+            ["@fern-api/swift-codegen", "workspace:generators/swift/codegen"],\
+            ["@fern-fern/ir-sdk", "npm:53.2.0"],\
+            ["@types/jest", "npm:29.5.12"],\
+            ["@types/node", "npm:18.7.18"],\
+            ["@yarnpkg/esbuild-plugin-pnp", "virtual:b567308d600cc49ad0dcf5ee9f761adc5572b914144f87bbc3284c71fbc29382723507bb61a8e531e29275684fd9c09310bc363ee648e9b47f4ea2c53497d2c8#npm:3.0.0-rc.14"],\
+            ["depcheck", "npm:1.4.6"],\
+            ["env-cmd", "https://github.com/toddbluhm/env-cmd.git#commit=8f35b71651f6a78710308ff38ab30896ea72ee8b"],\
+            ["esbuild", "npm:0.15.7"],\
+            ["eslint", "npm:8.56.0"],\
+            ["jest", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:29.7.0"],\
+            ["organize-imports-cli", "npm:0.10.0"],\
+            ["prettier", "npm:2.7.1"],\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
+            ["zod", "npm:3.22.4"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
       ["@fern-api/fs-utils", [\
         ["workspace:packages/commons/fs-utils", {\
           "packageLocation": "./packages/commons/fs-utils/",\
@@ -7736,7 +7766,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/generator-commons", "workspace:generators/commons"],\
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
             ["@types/jest", "npm:29.5.12"],\
-            ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\

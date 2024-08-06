@@ -1,0 +1,16 @@
+name: oauth-client-credentials-environment-variables
+imports:
+  auth: auth.yml
+
+auth: OAuthScheme
+auth-schemes:
+  OAuthScheme:
+    scheme: oauth
+    type: client-credentials
+    client-id-env: CLIENT_ID
+    client-secret-env: CLIENT_SECRET
+    get-token:
+      endpoint: auth.getTokenWithClientCredentials
+      response-properties: 
+        access-token: $response.access_token
+        expires-in: $response.expires_in

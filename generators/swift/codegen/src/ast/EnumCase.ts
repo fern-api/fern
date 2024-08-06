@@ -4,22 +4,34 @@ import Swift from "..";
 export declare namespace EnumCase {
     interface Args {
         name: string;
-        key?: string;
+        value?: string;
+        comment?: string;
     }
 }
 
 export class EnumCase extends AstNode {
-    public readonly name: string;
-    public readonly key?: string;
 
-    constructor({ name, key }: EnumCase.Args) {
+    public readonly name: string;
+    public readonly value?: string;
+    public readonly comment?: string;
+
+    constructor(args: EnumCase.Args) {
         super(Swift.indentSize);
-        this.name = name;
-        this.key = key;
+        this.name = args.name;
+        this.value = args.value;
+        this.comment = args.comment;
     }
 
     public write(writer: Writer): void {
-        const statement = this.key ? `case ${this.name} = ${this.key}` : `case ${this.name}`;
+
+        if (this.comment) {
+            writer.newLine();
+            writer.writeNode(Swift.makeComment({ comment: this.comment }));
+        }
+
+        const statement = this.value ? `case ${this.name} = ${this.value}` : `case ${this.name}`;
         writer.write(statement);
+
     }
+
 }

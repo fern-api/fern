@@ -10,19 +10,18 @@ export declare namespace Func {
 export class Func extends AstNode {
     public readonly name: string;
 
-    constructor({ name }: Func.Args) {
+    constructor({ 
+        name,
+    }: Func.Args) {
         super(LANGUAGE.indentSize);
         this.name = name;
     }
 
     public write(writer: Writer): void {
-        writer.openBlock(
-            ["function", `${this.name}()`],
-            "{",
-            () => {
-                writer.write('print("Hey there! 🌱")');
-            },
-            "}"
-        );
+
+        writer.openBlock(["function", `${this.name}()`], "{", () => {
+            writer.write("print(\"Hey there! 🌱\")");
+        }, "}");
+
     }
 }

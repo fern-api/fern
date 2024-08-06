@@ -41,13 +41,13 @@ export class Writer {
         callback: () => void,
         closingCharacter: string | undefined = "}"
     ): void {
-        const filteredTitles = titles.filter((title) => title !== undefined).join(" ");
+        const filteredTitles = titles.filter(title => title !== undefined).join(" ");
         if (filteredTitles) {
             this.write(`${filteredTitles} ${openingCharacter ?? ""}`);
         } else {
             this.write(openingCharacter ?? "");
         }
-
+        
         try {
             this.indent(callback);
         } finally {
@@ -72,17 +72,8 @@ export class Writer {
         return this.buffer;
     }
 
-    private calculateIndentationDistance(example: string): number {
-        const trimmedExample = example.trim();
-        if (trimmedExample.length) {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            return example.indexOf(trimmedExample[0]!);
-        }
-
-        return 0;
-    }
-
     private getIndentString(tabSize: number): string {
         return " ".repeat(this.indentLevel * tabSize);
     }
+    
 }
