@@ -14,5 +14,5 @@ public class NestedObjectWithOptionalFieldError(NestedObjectWithOptionalField bo
     /// <summary>
     /// The body of the response that triggered the exception.
     /// </summary>
-    public new NestedObjectWithOptionalField Body { get; } = body;
+    public new NestedObjectWithOptionalField Body => body;
 }

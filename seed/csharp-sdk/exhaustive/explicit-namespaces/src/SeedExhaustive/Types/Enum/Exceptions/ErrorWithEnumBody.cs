@@ -14,5 +14,5 @@ public class ErrorWithEnumBody(WeatherReport body)
     /// <summary>
     /// The body of the response that triggered the exception.
     /// </summary>
-    public new WeatherReport Body { get; } = body;
+    public new WeatherReport Body => body;
 }

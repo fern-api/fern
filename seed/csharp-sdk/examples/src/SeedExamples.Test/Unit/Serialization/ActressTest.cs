@@ -17,10 +17,10 @@ public class ActressTest
         var inputJson =
             @"
         {
-  ""name"": ""Jennifer Lawrence"",
-  ""id"": ""actor_456""
-}
-";
+          ""name"": ""Jennifer Lawrence"",
+          ""id"": ""actor_456""
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {

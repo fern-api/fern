@@ -13,12 +13,12 @@ public class SeedBytesApiException(string message, int statusCode, object body)
     /// <summary>
     /// The error code of the response that triggered the exception.
     /// </summary>
-    public int StatusCode { get; } = statusCode;
+    public int StatusCode => statusCode;
 
     /// <summary>
     /// The body of the response that triggered the exception.
     /// </summary>
-    public object Body { get; } = body;
+    public object Body => body;
 
     public override string ToString()
     {

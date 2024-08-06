@@ -14,5 +14,5 @@ public class PropertyBasedErrorTest(PropertyBasedErrorTestBody body)
     /// <summary>
     /// The body of the response that triggered the exception.
     /// </summary>
-    public new PropertyBasedErrorTestBody Body { get; } = body;
+    public new PropertyBasedErrorTestBody Body => body;
 }

@@ -25,7 +25,7 @@ public class BaseWireTest
         );
 
         // Initialize the Client
-        Client = new SeedApiClient("API_KEY", new ClientOptions { BaseUrl = Server.Urls[0] });
+        Client = new SeedApiClient("TOKEN", new ClientOptions { BaseUrl = Server.Urls[0] });
     }
 
     [OneTimeTearDown]

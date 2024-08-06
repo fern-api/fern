@@ -22,15 +22,15 @@ public class GetMovieTest : BaseWireTest
             """;
 
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/").UsingGet())
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/movies/string").UsingGet())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()
                     .WithStatusCode(200)
                     .WithBody(mockResponse)
             );
-        var response = Client.Imdb.GetMovieAsync("string").Result;
 
+        var response = Client.Imdb.GetMovieAsync("string").Result;
         JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
     }
 }

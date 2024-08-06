@@ -17,13 +17,13 @@ public class MetadataTest
         var inputJson =
             @"
         {
-  ""id"": ""metadata-js8dg24b"",
-  ""data"": {
-    ""foo"": ""bar"",
-    ""baz"": ""qux""
-  }
-}
-";
+          ""id"": ""metadata-js8dg24b"",
+          ""data"": {
+            ""foo"": ""bar"",
+            ""baz"": ""qux""
+          }
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {

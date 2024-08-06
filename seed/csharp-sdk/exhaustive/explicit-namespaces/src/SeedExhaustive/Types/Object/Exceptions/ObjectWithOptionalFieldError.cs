@@ -14,5 +14,5 @@ public class ObjectWithOptionalFieldError(ObjectWithOptionalField body)
     /// <summary>
     /// The body of the response that triggered the exception.
     /// </summary>
-    public new ObjectWithOptionalField Body { get; } = body;
+    public new ObjectWithOptionalField Body => body;
 }

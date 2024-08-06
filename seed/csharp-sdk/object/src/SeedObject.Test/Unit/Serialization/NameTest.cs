@@ -17,10 +17,10 @@ public class NameTest
         var inputJson =
             @"
         {
-  ""id"": ""name-sdfg8ajk"",
-  ""value"": ""name""
-}
-";
+          ""id"": ""name-sdfg8ajk"",
+          ""value"": ""name""
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {

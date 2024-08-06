@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using SeedApi;
 using SeedApi.Core;
 using SeedApi.Test.Utils;
 using SeedApi.Test.Wire;
@@ -28,7 +29,7 @@ public class CreateMovieTest : BaseWireTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("undefined//create-movie")
+                    .WithPath("/movies/create-movie")
                     .UsingPost()
                     .WithBody(requestJson)
             )
@@ -38,10 +39,10 @@ public class CreateMovieTest : BaseWireTest
                     .WithStatusCode(200)
                     .WithBody(mockResponse)
             );
+
         var response = Client
             .Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "string", Rating = 1.1 })
             .Result;
-
         JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
     }
 }

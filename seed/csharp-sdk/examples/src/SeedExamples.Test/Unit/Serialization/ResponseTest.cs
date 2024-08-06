@@ -17,21 +17,21 @@ public class ResponseTest
         var inputJson =
             @"
         {
-  ""response"": ""Initializing..."",
-  ""identifiers"": [
-    {
-      ""type"": ""primitive"",
-      ""value"": ""example"",
-      ""label"": ""Primitive""
-    },
-    {
-      ""type"": ""unknown"",
-      ""value"": ""{}"",
-      ""label"": ""Unknown""
-    }
-  ]
-}
-";
+          ""response"": ""Initializing..."",
+          ""identifiers"": [
+            {
+              ""type"": ""primitive"",
+              ""value"": ""example"",
+              ""label"": ""Primitive""
+            },
+            {
+              ""type"": ""unknown"",
+              ""value"": ""{}"",
+              ""label"": ""Unknown""
+            }
+          ]
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {

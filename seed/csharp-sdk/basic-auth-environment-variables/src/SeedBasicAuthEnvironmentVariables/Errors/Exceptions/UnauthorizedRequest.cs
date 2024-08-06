@@ -14,5 +14,5 @@ public class UnauthorizedRequest(UnauthorizedRequestErrorBody body)
     /// <summary>
     /// The body of the response that triggered the exception.
     /// </summary>
-    public new UnauthorizedRequestErrorBody Body { get; } = body;
+    public new UnauthorizedRequestErrorBody Body => body;
 }
