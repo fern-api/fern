@@ -81,12 +81,18 @@ types:
       sources:
         docs: The raw API definitions that produced the IR.
         type: list<ApiDefinitionSource> 
+  ApiDefinitionSourceId:
+    docs: |
+      Uniquely identifies a specific API definition source. This allows us to clearly identify
+      what source a given type, endpoint, etc was derived from.
+    type: string
   ApiDefinitionSource:
     union:
       proto: ProtoSource
       openapi: {}
   ProtoSource:
     properties:
+      id: ApiDefinitionSourceId
       protoRootUrl:
         docs: |
           The URL containing the `.proto` root directory source. This can be used

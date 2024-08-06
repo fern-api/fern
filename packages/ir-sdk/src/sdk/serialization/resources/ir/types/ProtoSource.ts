@@ -8,11 +8,13 @@ import * as core from "../../../../core";
 
 export const ProtoSource: core.serialization.ObjectSchema<serializers.ProtoSource.Raw, FernIr.ProtoSource> =
     core.serialization.objectWithoutOptionalProperties({
+        id: core.serialization.lazy(async () => (await import("../../..")).ApiDefinitionSourceId),
         protoRootUrl: core.serialization.string(),
     });
 
 export declare namespace ProtoSource {
     interface Raw {
+        id: serializers.ApiDefinitionSourceId.Raw;
         protoRootUrl: string;
     }
 }

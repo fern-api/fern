@@ -1,6 +1,7 @@
 export * from "./IntermediateRepresentation";
 export * from "./ReadmeConfig";
 export * from "./SourceConfig";
+export * from "./ApiDefinitionSourceId";
 export * from "./ApiDefinitionSource";
 export * from "./ProtoSource";
 export * from "./SdkConfig";
