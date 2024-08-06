@@ -34,7 +34,9 @@ Model = typing.TypeVar("Model", bound=pydantic.BaseModel)
 
 class UncheckedBaseModel(UniversalBaseModel):
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="allow"
+        )  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -42,7 +44,9 @@ class UncheckedBaseModel(UniversalBaseModel):
 
     @classmethod
     def model_construct(
-        cls: typing.Type["Model"], _fields_set: typing.Optional[typing.Set[str]] = None, **values: typing.Any
+        cls: typing.Type["Model"],
+        _fields_set: typing.Optional[typing.Set[str]] = None,
+        **values: typing.Any,
     ) -> "Model":
         # Fallback construct function to the specified override below.
         return cls.construct(_fields_set=_fields_set, **values)
@@ -51,7 +55,9 @@ class UncheckedBaseModel(UniversalBaseModel):
     # Implementation taken from: https://github.com/pydantic/pydantic/issues/1168#issuecomment-817742836
     @classmethod
     def construct(
-        cls: typing.Type["Model"], _fields_set: typing.Optional[typing.Set[str]] = None, **values: typing.Any
+        cls: typing.Type["Model"],
+        _fields_set: typing.Optional[typing.Set[str]] = None,
+        **values: typing.Any,
     ) -> "Model":
         m = cls.__new__(cls)
         fields_values = {}
@@ -67,7 +73,9 @@ class UncheckedBaseModel(UniversalBaseModel):
             # you should always use the NAME of the field to for field_values, etc.
             # because that's how the object is constructed from a pydantic perspective
             key = field.alias
-            if key is None or (key not in values and populate_by_name):  # Added this to allow population by field name
+            if key is None or (
+                key not in values and populate_by_name
+            ):  # Added this to allow population by field name
                 key = name
 
             if key in values:
@@ -77,7 +85,9 @@ class UncheckedBaseModel(UniversalBaseModel):
                     type_ = typing.cast(typing.Type, field.outer_type_)  # type: ignore # Pydantic < v1.10.15
 
                 fields_values[name] = (
-                    construct_type(object_=values[key], type_=type_) if type_ is not None else values[key]
+                    construct_type(object_=values[key], type_=type_)
+                    if type_ is not None
+                    else values[key]
                 )
                 _fields_set.add(name)
             else:
@@ -113,14 +123,18 @@ class UncheckedBaseModel(UniversalBaseModel):
         return m
 
 
-def _convert_undiscriminated_union_type(union_type: typing.Type[typing.Any], object_: typing.Any) -> typing.Any:
+def _convert_undiscriminated_union_type(
+    union_type: typing.Type[typing.Any], object_: typing.Any
+) -> typing.Any:
     inner_types = get_args(union_type)
     if typing.Any in inner_types:
         return object_
 
     for inner_type in inner_types:
         try:
-            if inspect.isclass(inner_type) and issubclass(inner_type, pydantic.BaseModel):
+            if inspect.isclass(inner_type) and issubclass(
+                inner_type, pydantic.BaseModel
+            ):
                 # Attempt a validated parse until one works
                 return parse_obj_as(inner_type, object_)
         except Exception:
@@ -134,7 +148,9 @@ def _convert_undiscriminated_union_type(union_type: typing.Type[typing.Any], obj
             continue
 
 
-def _convert_union_type(type_: typing.Type[typing.Any], object_: typing.Any) -> typing.Any:
+def _convert_union_type(
+    type_: typing.Type[typing.Any], object_: typing.Any
+) -> typing.Any:
     base_type = get_origin(type_) or type_
     union_type = type_
     if base_type == typing_extensions.Annotated:
@@ -146,10 +162,15 @@ def _convert_union_type(type_: typing.Type[typing.Any], object_: typing.Any) -> 
                     # Cast to the correct type, based on the discriminant
                     for inner_type in get_args(union_type):
                         try:
-                            objects_discriminant = getattr(object_, metadata.discriminant)
+                            objects_discriminant = getattr(
+                                object_, metadata.discriminant
+                            )
                         except:
                             objects_discriminant = object_[metadata.discriminant]
-                        if inner_type.__fields__[metadata.discriminant].default == objects_discriminant:
+                        if (
+                            inner_type.__fields__[metadata.discriminant].default
+                            == objects_discriminant
+                        ):
                             return construct_type(object_=object_, type_=inner_type)
                 except Exception:
                     # Allow to fall through to our regular union handling
@@ -157,7 +178,9 @@ def _convert_union_type(type_: typing.Type[typing.Any], object_: typing.Any) -> 
     return _convert_undiscriminated_union_type(union_type, object_)
 
 
-def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> typing.Any:
+def construct_type(
+    *, type_: typing.Type[typing.Any], object_: typing.Any
+) -> typing.Any:
     """
     Here we are essentially creating the same `construct` method in spirit as the above, but for all types, not just
     Pydantic models.
@@ -170,7 +193,9 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
     base_type = get_origin(type_) or type_
     is_annotated = base_type == typing_extensions.Annotated
     maybe_annotation_members = get_args(type_)
-    is_annotated_union = is_annotated and is_union(get_origin(maybe_annotation_members[0]))
+    is_annotated_union = is_annotated and is_union(
+        get_origin(maybe_annotation_members[0])
+    )
 
     if base_type == typing.Any:
         return object_
@@ -181,7 +206,9 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
 
         key_type, items_type = get_args(type_)
         d = {
-            construct_type(object_=key, type_=key_type): construct_type(object_=item, type_=items_type)
+            construct_type(object_=key, type_=key_type): construct_type(
+                object_=item, type_=items_type
+            )
             for key, item in object_.items()
         }
         return d
@@ -259,9 +286,12 @@ def _get_is_populate_by_name(model: typing.Type["Model"]) -> bool:
 
 PydanticField = typing.Union[ModelField, pydantic.fields.FieldInfo]
 
+
 # Pydantic V1 swapped the typing of __fields__'s values from ModelField to FieldInfo
 # And so we try to handle both V1 cases, as well as V2 (FieldInfo from model.model_fields)
-def _get_model_fields(model: typing.Type["Model"]) -> typing.Mapping[str, PydanticField]:
+def _get_model_fields(
+    model: typing.Type["Model"],
+) -> typing.Mapping[str, PydanticField]:
     if IS_PYDANTIC_V2:
         return model.model_fields  # type: ignore # Pydantic v2
     else:
