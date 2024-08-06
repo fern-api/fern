@@ -405,10 +405,10 @@ export async function generateIntermediateRepresentation({
     });
 
     // TODO: (rohin) Back compat hack before pushing generator/api upgrade
-    let overrideCheck: boolean;
+    let ignoreAudiences: boolean;
     environments?.environments._visit({
         singleBaseUrl: (value) => {
-            overrideCheck =
+            ignoreAudiences =
                 value.environments.filter((environment) => {
                     return (
                         getAudienceForEnvironment(
@@ -419,7 +419,7 @@ export async function generateIntermediateRepresentation({
                 }).length === 0;
         },
         multipleBaseUrls: (value) => {
-            overrideCheck =
+            ignoreAudiences =
                 value.environments.filter((environment) => {
                     return (
                         getAudienceForEnvironment(
@@ -436,7 +436,7 @@ export async function generateIntermediateRepresentation({
         irGraph.markEnvironmentForAudiences(
             environment,
             getAudienceForEnvironment(environment.id, workspaceDefinitionRootApiFileContents.environments) ?? [],
-            overrideCheck
+            ignoreAudiences
         );
     });
 
