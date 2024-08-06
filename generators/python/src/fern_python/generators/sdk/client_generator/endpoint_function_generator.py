@@ -663,7 +663,9 @@ class EndpointFunctionGenerator:
                 # Include a dashed line between the endpoint snippet and the rest of the docs, if any.
                 writer.write_line("Examples")
                 writer.write_line("--------")
-                source_file = SourceFileFactory.create_snippet(should_format=not self._context.custom_config.skip_formatting)
+                source_file = SourceFileFactory.create_snippet(
+                    should_format=not self._context.custom_config.skip_formatting
+                )
                 source_file.add_expression(snippet)
                 snippet_docstring = source_file.to_str()
                 writer.write(snippet_docstring)

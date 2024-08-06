@@ -342,7 +342,9 @@ class RootClientGenerator:
             )
             environment_docs = f"{RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_DOCS}"
             if default_environment is not None:
-                snippet = SourceFileFactory.create_snippet(should_format=not self._context.custom_config.skip_formatting)
+                snippet = SourceFileFactory.create_snippet(
+                    should_format=not self._context.custom_config.skip_formatting
+                )
 
                 def write_default_environment(writer: AST.NodeWriter) -> None:
                     writer.write("Defaults to ")
@@ -380,7 +382,9 @@ class RootClientGenerator:
             )
             environment_docs = f"{RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_DOCS}"
             if default_environment is not None:
-                snippet = SourceFileFactory.create_snippet(should_format=not self._context.custom_config.skip_formatting)
+                snippet = SourceFileFactory.create_snippet(
+                    should_format=not self._context.custom_config.skip_formatting
+                )
 
                 def write_default_environment(writer: AST.NodeWriter) -> None:
                     writer.write("Defaults to ")

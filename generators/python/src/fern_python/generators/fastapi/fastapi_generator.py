@@ -96,6 +96,7 @@ class FastApiGenerator(AbstractGenerator):
         for service in ir.services.values():
             self._generate_service(
                 context=context,
+                custom_config=custom_config,
                 ir=ir,
                 generator_exec_wrapper=generator_exec_wrapper,
                 service=service,
@@ -139,7 +140,9 @@ class FastApiGenerator(AbstractGenerator):
     ) -> None:
         filepath = context.get_filepath_for_service(service.name)
         service_file = SourceFileFactory.create(
-            project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper, skip_formatting=custom_config.skip_formatting
+            project=project,
+            filepath=filepath,
+            generator_exec_wrapper=generator_exec_wrapper
         )
         ServiceGenerator(context=context, service=service).generate(source_file=service_file)
         project.write_source_file(source_file=service_file, filepath=filepath)

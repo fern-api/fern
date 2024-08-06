@@ -142,7 +142,7 @@ class Project:
         string_replacements: Optional[dict[str, str]] = None,
     ) -> None:
         with open(path_on_disk, "r") as existing_file:
-            writer = WriterImpl(should_format=self._should_format_files)
+            writer = WriterImpl(should_format=False)
             read_file = existing_file.read()
             if string_replacements is not None:
                 for k, v in string_replacements.items():
