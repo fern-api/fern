@@ -111,7 +111,7 @@ class UniversalBaseModel(pydantic.BaseModel):
             )
 
 
-UniversalRootModel: typing.Type[typing.Any]
+UniversalRootModel: typing.Type[pydantic.BaseModel]
 if IS_PYDANTIC_V2:
 
     class V2RootModel(UniversalBaseModel, pydantic.RootModel):  # type: ignore # Pydantic v2

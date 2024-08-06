@@ -2,7 +2,25 @@
 
 imports:
   commons: commons.yml
+  proto: proto.yml
 types:
+  Source:
+    docs: |
+      The original source of the declared type (e.g. a `.proto` file).
+    union:
+      proto: proto.ProtobufType
+
+  Encoding:
+    properties:
+      json: optional<JsonEncoding>
+      proto: optional<ProtoEncoding>
+
+  JsonEncoding:
+    properties: {}
+
+  ProtoEncoding:
+    properties: {}
+      
   TypeDeclaration:
     docs: "A type, which is a name and a shape"
     extends: commons.Declaration
@@ -14,6 +32,8 @@ types:
       referencedTypes:
         docs: All other named types that this type references (directly or indirectly)
         type: set<commons.TypeId>
+      encoding: optional<Encoding>
+      source: optional<Source>
 
   DeclaredTypeName:
     properties:

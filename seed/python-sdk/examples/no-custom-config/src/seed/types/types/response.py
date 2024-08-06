@@ -32,7 +32,7 @@ class Response(UniversalBaseModel):
     )
     """
 
-    response: typing.Any
+    response: typing.Optional[typing.Any] = None
     identifiers: typing.List[Identifier]
 
     if IS_PYDANTIC_V2:

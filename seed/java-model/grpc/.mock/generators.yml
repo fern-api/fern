@@ -1,0 +1,4 @@
+api:
+  - proto:
+      root: proto
+      target: proto/user/v1/user.proto

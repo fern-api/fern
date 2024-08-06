@@ -58,7 +58,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.unknown.post()
+    client.unknown.post(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -81,7 +81,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.unknown.post({
+client.unknown.post(..., {
     "max_retries": 1
 })
 ```
@@ -101,7 +101,7 @@ client = SeedUnknownAsAny(
 
 
 # Override timeout for a specific method
-client.unknown.post({
+client.unknown.post(..., {
     "timeout_in_seconds": 1
 })
 ```

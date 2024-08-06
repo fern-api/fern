@@ -77,6 +77,8 @@ export async function convertHttpService({
                   )
                 : [],
         pathParameters: servicePathParameters,
+        encoding: undefined,
+        transport: undefined,
         endpoints: await Promise.all(
             Object.entries(serviceDefinition.endpoints).map(async ([endpointKey, endpoint]): Promise<HttpEndpoint> => {
                 const endpointPathParameters = await convertPathParameters({

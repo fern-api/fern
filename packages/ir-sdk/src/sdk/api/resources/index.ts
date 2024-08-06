@@ -12,6 +12,8 @@ export * as http from "./http";
 export * from "./http/types";
 export * as ir from "./ir";
 export * from "./ir/types";
+export * as proto from "./proto";
+export * from "./proto/types";
 export * as types from "./types";
 export * from "./types/types";
 export * as variables from "./variables";

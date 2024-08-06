@@ -36,7 +36,7 @@ client.optional.send_optional_body(
 <dl>
 <dd>
 
-**request:** `typing.Optional[typing.Dict[str, typing.Any]]` 
+**request:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` 
     
 </dd>
 </dl>

@@ -269,7 +269,7 @@ client.folder.service.unknown_request(
 <dl>
 <dd>
 
-**request:** `typing.Any` 
+**request:** `typing.Optional[typing.Any]` 
     
 </dd>
 </dl>
