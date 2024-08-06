@@ -61,9 +61,12 @@ function convertSecuritySchemeHelper(securityScheme: OpenAPIV3.SecuritySchemeObj
             tokenEnvVar: undefined
         });
     } else if (securityScheme.type === "oauth2") {
-        return SecurityScheme.oauth({
-            scopesEnum: getScopes(securityScheme)
-        });
+        const scopesEnum = getScopes(securityScheme);
+        if (securityScheme.flows.clientCredentials != null) {
+            // TODO: read in the extensions
+            return;
+        }
+        return SecurityScheme.oauth({ scopesEnum });
     }
     throw new Error(`Failed to convert security scheme ${JSON.stringify(securityScheme)}`);
 }

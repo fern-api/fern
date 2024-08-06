@@ -408,7 +408,89 @@ export const FernOpenAPIExtension = {
      *     - "2.0"
      *     - "Latest"
      */
-    FERN_VERSION: "x-fern-version"
+    FERN_VERSION: "x-fern-version",
+
+    /**
+     * Allows users to specify their oauth scheme.
+     *
+     * x-fern-oauth:
+     *   - flow: clientCredentials
+     *     clientId:
+     *       name: username
+     *       env: MY_CLIENT_ID
+     *     clientSecret:
+     *       name: password
+     *       env: MY_CLIENT_ID
+     *     tokenPrefix: Bearer
+     *     getToken:
+     *       endpoint: GET https://example.com/token
+     *       request:
+     *         clientId: $query.client_id
+     *         clientSecret: $query.client_secret
+     *         scopes: $query.scopes
+     *       response:
+     *         accessToken: $response.access_token
+     *         expiresIn: $response.access_token
+     *         refreshToken: $response.refresh_token
+     *     refreshToken:
+     *       endpoint: GET https://example.com/refresh
+     *       request:
+     *         refreshToken: $query.refresh_token
+     *       response:
+     *         accessToken: $response.access_token
+     *         expiresIn: $response.access_token
+     *         refreshToken: $response.refresh_token
+     *     scopes: ["scope1", "scope2"]
+     */
+    FERN_OAUTH: "x-fern-oauth",
+
+    /**
+     * Allows users to specify their oauth scheme when using OAS's scheme.
+     * This is specifically to enrich the access token endpoint.
+     * Required if the access token URL is specified in the OAuth scheme. (e.g. clientCredentials)
+     *
+     * components:
+     *   securitySchemes:
+     *     oAuthSample:
+     *       type: oauth2
+     *       flows:
+     *         clientCredentials:
+     *         authorizationUrl: https://api.example.com/oauth2/authorize
+     *         x-fern-access-token-endpoint:
+     *           request:
+     *             clientId: $query.client_id
+     *             clientSecret: $query.client_secret
+     *             scopes: $query.scopes
+     *           response:
+     *             accessToken: $response.access_token
+     *             expiresIn: $response.access_token
+     *             refreshToken: $response.refresh_token
+     */
+    FERN_ACCESS_TOKEN_ENDPOINT: "x-fern-access-token-endpoint",
+
+    /**
+     * Allows users to specify their oauth scheme when using OAS's scheme.
+     * This is specifically to enrich the refresh token endpoint.
+     * Required if the refresh token URL is specified in the OAuth scheme.
+     *
+     * components:
+     *   securitySchemes:
+     *     oAuthSample:
+     *       type: oauth2
+     *       flows:
+     *         clientCredentials:
+     *         refreshUrl: https://api.example.com/oauth2/refresh
+     *         x-fern-refresh-token-endpoint:
+     *           request:
+     *             clientId: $query.client_id
+     *             clientSecret: $query.client_secret
+     *             scopes: $query.scopes
+     *           response:
+     *             accessToken: $response.access_token
+     *             expiresIn: $response.access_token
+     *             refreshToken: $response.refresh_token
+     */
+    FERN_REFRESH_TOKEN_ENDPOINT: "x-fern-refresh-token-endpoint"
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;
