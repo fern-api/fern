@@ -2406,6 +2406,7 @@
                 ]
             },
             "referencedTypes": [
+                "type_service:ResourceStatus",
                 "type_service:User",
                 "type_service:Organization"
             ],
