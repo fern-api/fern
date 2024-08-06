@@ -43,13 +43,24 @@ export function getReferencedTypesFromRawDeclaration({
             return types;
         },
         discriminatedUnion: (unionDeclaration) => {
-            return Object.values(unionDeclaration.union).reduce<string[]>((types, singleUnionType) => {
-                const rawType = typeof singleUnionType === "string" ? singleUnionType : singleUnionType.type;
-                if (typeof rawType === "string") {
-                    types.push(rawType);
-                }
-                return types;
-            }, []);
+            const types: string[] = [];
+            if (unionDeclaration["base-properties"] != null) {
+                types.push(
+                    ...Object.values(unionDeclaration["base-properties"]).map((property) =>
+                        typeof property === "string" ? property : property.type
+                    )
+                );
+            }
+            types.push(
+                ...Object.values(unionDeclaration.union).reduce<string[]>((types, singleUnionType) => {
+                    const rawType = typeof singleUnionType === "string" ? singleUnionType : singleUnionType.type;
+                    if (typeof rawType === "string") {
+                        types.push(rawType);
+                    }
+                    return types;
+                }, [])
+            );
+            return types;;
         },
         undiscriminatedUnion: (unionDeclaration) => {
             return Object.values(unionDeclaration.union).reduce<string[]>((types, unionMember) => {
