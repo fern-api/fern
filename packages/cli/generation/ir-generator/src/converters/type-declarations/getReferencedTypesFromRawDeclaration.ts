@@ -60,7 +60,7 @@ export function getReferencedTypesFromRawDeclaration({
                     return types;
                 }, [])
             );
-            return types;;
+            return types;
         },
         undiscriminatedUnion: (unionDeclaration) => {
             return Object.values(unionDeclaration.union).reduce<string[]>((types, unionMember) => {
