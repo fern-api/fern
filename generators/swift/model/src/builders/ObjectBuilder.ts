@@ -58,7 +58,7 @@ export default class ObjectBuilder extends CodeBuilder<SwiftFile> {
 
   public build(): SwiftFile {
 
-    // TODO: Add support for v53 unions
+    // TODO - Swift: Add support for v53 unions
 
     // const flattenedProperties = [
     //   ...this.objectDeclaration.properties,

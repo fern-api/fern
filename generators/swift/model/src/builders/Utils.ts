@@ -19,26 +19,26 @@ export default class Utils {
         return this.getClassForTypeReference(value).toOptional();
       },
       set: (value: TypeReference) => {
-        return Swift.makeClass({ name: `${value.type} :: set TODO` });
+        return Swift.makeClass({ name: `${value.type} :: set TODO` }); // TODO - Swift: Handle sets (aka Swift dictionaries)
       },
       literal: (value: Literal) => {
         return value._visit<SwiftClass>({
           string: (value: string) => {
-            // TODO: Handle enum
+            // TODO: Handle full enum in the future
             return Swift.makeString();
           },
           boolean: (value: boolean) => {
-            // TODO: Handle enum
+            // TODO: Handle full enum in the future
             return Swift.makeBool();
           },
           _other: (value: { type: string; }) => {
-            // TODO: Handle enum
+            // TODO: Handle full enum in the future
             return Swift.makeAny();
           }
         });
       },
       _other: (value: { type: string; }) => {
-        return Swift.makeClass({ name: `${value.type} :: _other TODO` });
+        return Swift.makeClass({ name: `${value.type} :: _other TODO` }); // TODO - Swift: Should this be "Any" instead?
       }
     });
   }

@@ -23,7 +23,7 @@ export default class UndiscriminatedUnionBuilder extends CodeBuilder<SwiftFile |
       comment: docs,
       name: safeName,
       enumCases: Array.from(referencedTypes).map(type => {
-        const title = type.replace("type_:", "");
+        const title = type.replace("type_:", ""); // TODO - Swift: This is not safe. Looking into following CSharp more closely
         return Swift.makeEnumCaseAssociatedValue({
           name: title,
           value: Swift.makeClass({
