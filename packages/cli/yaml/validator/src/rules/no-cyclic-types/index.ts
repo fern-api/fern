@@ -1,1 +1,1 @@
-export { NoCyclicTypes } from "./no-cyclic-types";
+export { NoCyclicTypesRule } from "./no-cyclic-types";

@@ -1,38 +1,45 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
     constructFernFileContext,
+    FernFileContext,
     getAllPropertiesForType,
-    ObjectPropertyWithPath,
+    ResolvedType,
     TypeResolver,
     TypeResolverImpl
 } from "@fern-api/ir-generator";
 import {
-    convertObjectPropertyWithPathToString,
-    ObjectPropertyPath,
+    CASINGS_GENERATOR,
+    ObjectPropertyWithPath,
     TypeName
 } from "@fern-api/ir-generator/src/utils/getAllPropertiesForObject";
-import { FernWorkspace, getDefinitionFile } from "@fern-api/workspace-loader";
-import { isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
+import { FernWorkspace } from "@fern-api/workspace-loader";
+import {
+    isRawDiscriminatedUnionDefinition,
+    isRawObjectDefinition,
+    isRawUndiscriminatedUnionDefinition,
+    RawSchemas
+} from "@fern-api/yaml-schema";
 import { Rule } from "../../Rule";
-import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
+import { getTypeDeclarationNameAsString } from "../../utils/getTypeDeclarationNameAsString";
 
-type CyclicTypes = Record<RelativeFilePath, CyclicType[]>;
-
-interface CyclicType {
-    startingNode: RelativeFilePath;
-    chainWithoutStartingNode: RelativeFilePath[];
+interface ResolvedTypeWithKeys {
+    keys: string[];
+    type: ResolvedType;
 }
 
-export const NoCyclicTypes: Rule = {
-    name: "no-circular-imports",
-    DISABLE_RULE: false,
+declare type TypeOrProperty = ResolvedTypeWithKeys | ObjectPropertyWithPath;
+
+export const NoCyclicTypesRule: Rule = {
+    name: "no-cyclic-types",
+    // DISABLE_RULE: false,
     create: ({ workspace }) => {
         const typeResolver = new TypeResolverImpl(workspace);
         return {
             definitionFile: {
-                extension: (extension, { relativeFilepath, contents }) => {
-                    const resolvedType = typeResolver.resolveNamedType({
-                        referenceToNamedType: extension,
+                typeDeclaration: ({ typeName, declaration }, { relativeFilepath, contents }) => {
+                    const name: string = getTypeDeclarationNameAsString(typeName);
+                    const resolvedType: ResolvedType | undefined = typeResolver.resolveNamedType({
+                        referenceToNamedType: name,
                         file: constructFernFileContext({
                             relativeFilepath,
                             definitionFile: contents,
@@ -46,34 +53,35 @@ export const NoCyclicTypes: Rule = {
                         return [];
                     }
 
-                    // pass on anything that isn't an object
-                    if (resolvedType._type !== "named" || !isRawObjectDefinition(resolvedType.declaration)) {
+                    // pass on anything that isn't a named type
+                    if (resolvedType._type !== "named") {
                         return [];
                     }
 
+                    const seen = new Set<TypeName>();
+                    seen.add(resolvedType.name.name.originalName as TypeName);
+
                     const cyclicType = findCyclicTypes({
+                        originalTypeName: resolvedType.name.name.originalName as TypeName,
                         typeName: resolvedType.name.name.originalName as TypeName,
                         filepathOfDeclaration: relativeFilepath,
                         definitionFile: contents,
                         workspace,
                         typeResolver,
-                        smartCasing: false
+                        smartCasing: false,
+                        seen
                     });
 
-                    if (cyclicType) {
+                    if (cyclicType != null) {
+                        const fullPath = [resolvedType.name.name.originalName, ...cyclicType].join(" -> ");
+
                         return [
                             {
                                 severity: "error",
                                 message:
-                                    cyclicType.path.length === 0
+                                    cyclicType.length === 0
                                         ? "A type cannot reference itself"
-                                        : `Circular type detected: ${[
-                                              cyclicType.name,
-                                              convertObjectPropertyWithPathToString({
-                                                  property: cyclicType
-                                              }),
-                                              cyclicType.name
-                                          ].join(" -> ")}`
+                                        : `Circular type detected: ${fullPath}`
                             }
                         ];
                     }
@@ -85,60 +93,251 @@ export const NoCyclicTypes: Rule = {
     }
 };
 
+// basic DFS to find types that reference themselves
 function findCyclicTypes({
+    originalTypeName,
     typeName,
     filepathOfDeclaration,
     definitionFile,
     workspace,
     typeResolver,
     smartCasing,
-    seen = {}
+    seen
 }: {
+    originalTypeName: TypeName;
     typeName: TypeName;
     filepathOfDeclaration: RelativeFilePath;
     definitionFile: RawSchemas.DefinitionFileSchema;
     workspace: FernWorkspace;
     typeResolver: TypeResolver;
     smartCasing: boolean;
-    path?: ObjectPropertyPath;
-    seen?: Record<RelativeFilePath, Set<TypeName>>;
-}): ObjectPropertyWithPath | null {
-    const properties = getAllPropertiesForType({
-        typeName,
-        filepathOfDeclaration,
+    seen: Set<TypeName>;
+}): string[] | null {
+    const fileContext: FernFileContext = constructFernFileContext({
+        relativeFilepath: filepathOfDeclaration,
         definitionFile,
-        workspace,
-        typeResolver,
-        smartCasing
+        rootApiFile: workspace.definition.rootApiFile.contents,
+        casingsGenerator: CASINGS_GENERATOR
     });
+    const resolvedType: ResolvedType | undefined = typeResolver.resolveType({
+        type: typeName,
+        file: fileContext
+    });
+    if (resolvedType == null) {
+        return null;
+    }
 
-    for (const property of properties) {
-        if (property.resolvedPropertyType._type === "named") {
-            const name: TypeName = property.name as TypeName;
-            const filePath: RelativeFilePath = property.filepathOfDeclaration;
-            const seenAtFilepath = (seen[filepathOfDeclaration] ??= new Set());
-            if (seenAtFilepath.has(name)) {
-                return property;
+    const typeParams = [resolvedType]
+        .flatMap((t: ResolvedType) => {
+            switch (t._type) {
+                case "container":
+                    return unboxContainerTypes(t);
+                case "named":
+                    if (isRawObjectDefinition(t.declaration)) {
+                        return getAllPropertiesForType({
+                            typeName,
+                            filepathOfDeclaration,
+                            definitionFile,
+                            workspace,
+                            typeResolver,
+                            smartCasing
+                        }) as TypeOrProperty[];
+                    }
+                    return unboxUnionTypes(t, fileContext, typeResolver) as TypeOrProperty[];
+                default:
+                    return [];
             }
-            seenAtFilepath.add(name);
-            const definitionFile: RawSchemas.DefinitionFileSchema = getDefinitionFile(
-                workspace,
-                filePath
-            ) as RawSchemas.DefinitionFileSchema;
-            const foundType = findCyclicTypes({
-                typeName: name,
-                filepathOfDeclaration: filePath,
-                definitionFile: definitionFile,
-                workspace,
-                typeResolver,
-                smartCasing,
-                seen
-            });
-            if (foundType) {
-                foundType.path.unshift(...property.path);
-                return foundType;
-            }
+        })
+        .flatMap(getTypeParams);
+
+    for (const type of typeParams) {
+        if (type == null) {
+            continue;
+        }
+
+        if (type.filePath !== filepathOfDeclaration) {
+            continue;
+        }
+
+        // we already check for cyclic imports, so we can skip cross-file checks
+        if (originalTypeName === type.name) {
+            return [...type.keys, type.name as string];
+        }
+
+        if (seen.has(type.name)) {
+            continue;
+        }
+        seen.add(type.name);
+
+        const foundType = findCyclicTypes({
+            originalTypeName,
+            typeName: type.name,
+            filepathOfDeclaration: type.filePath,
+            definitionFile,
+            workspace,
+            typeResolver,
+            smartCasing,
+            seen
+        });
+        if (foundType != null) {
+            foundType.unshift(...type.keys, type.name);
+            return foundType;
         }
     }
     return null;
+}
+
+function unboxUnionTypes(
+    union: ResolvedType.Named,
+    context: FernFileContext,
+    typeResolver: TypeResolver
+): TypeOrProperty[] {
+    if (isRawDiscriminatedUnionDefinition(union.declaration)) {
+        const declaration = union.declaration as RawSchemas.DiscriminatedUnionSchema;
+        const u = declaration.union;
+        const values = Object.values(u);
+        const foundTypes: TypeOrProperty[] = [];
+        values.forEach((value) => {
+            if (typeof value === "string") {
+                const resolvedType = typeResolver.resolveType({ type: value, file: context });
+                if (resolvedType != null) {
+                    if (resolvedType._type === "container") {
+                        const unboxed = unboxContainerTypes(resolvedType, ["union", value]) as TypeOrProperty[];
+                        foundTypes.push(...unboxed);
+                    } else if (resolvedType._type === "named") {
+                        foundTypes.push({
+                            keys: ["union"],
+                            type: resolvedType
+                        });
+                    }
+                }
+            } else if (value.type != null && typeof value.type === "string") {
+                const resolvedType = typeResolver.resolveType({ type: value.type, file: context });
+                if (resolvedType != null) {
+                    if (resolvedType._type === "container") {
+                        const unboxed = unboxContainerTypes(resolvedType, ["union", value.type]) as TypeOrProperty[];
+                        foundTypes.push(...unboxed);
+                    } else if (resolvedType._type === "named") {
+                        foundTypes.push({
+                            keys: ["union"],
+                            type: resolvedType
+                        });
+                    }
+                }
+            }
+        });
+        return foundTypes;
+    }
+    if (isRawUndiscriminatedUnionDefinition(union.declaration)) {
+        const declaration = union.declaration as RawSchemas.UndiscriminatedUnionSchema;
+        return declaration.union
+            .flatMap((singleUnion) => {
+                if (typeof singleUnion === "string") {
+                    const resolvedType = typeResolver.resolveType({
+                        type: singleUnion,
+                        file: context
+                    });
+                    if (resolvedType != null) {
+                        if (resolvedType._type === "container") {
+                            const unboxed = unboxContainerTypes(resolvedType, [
+                                "union",
+                                singleUnion
+                            ]) as TypeOrProperty[];
+                            return unboxed;
+                        }
+                        if (resolvedType._type === "named") {
+                            return {
+                                keys: ["union"],
+                                type: resolvedType
+                            };
+                        }
+                        return [];
+                    }
+                } else if (singleUnion.type != null) {
+                    const resolvedType = typeResolver.resolveType({
+                        type: singleUnion.type,
+                        file: context
+                    });
+                    if (resolvedType != null) {
+                        if (resolvedType._type === "container") {
+                            const unboxed = unboxContainerTypes(resolvedType, [
+                                "union",
+                                singleUnion.type
+                            ]) as TypeOrProperty[];
+                            return unboxed;
+                        }
+                        if (resolvedType._type === "named") {
+                            return {
+                                keys: ["union"],
+                                type: resolvedType
+                            };
+                        }
+                        return [];
+                    }
+                }
+                return null;
+            })
+            .filter((resolvedType) => resolvedType != null) as TypeOrProperty[];
+    }
+    return [];
+}
+
+function unboxContainerTypes(container: ResolvedType, keys: string[] = []): ResolvedTypeWithKeys[] {
+    if (container._type !== "container") {
+        return [];
+    }
+    return [container].flatMap((type) => {
+        const output: ResolvedTypeWithKeys[] = [];
+        switch (type.container._type) {
+            case "literal":
+                return output;
+            case "map":
+                if (type.container.keyType._type === "container") {
+                    output.push(...unboxContainerTypes(type.container.keyType, [...keys, "key"]));
+                } else {
+                    output.push({ keys: [...keys, "key"], type: type.container.keyType as ResolvedType });
+                }
+                if (type.container.valueType._type === "container") {
+                    output.push(...unboxContainerTypes(type.container.valueType, [...keys, "value"]));
+                } else {
+                    output.push({ keys: [...keys, "value"], type: type.container.valueType });
+                }
+                return output;
+            default:
+                if (type.container.itemType._type === "container") {
+                    output.push(...unboxContainerTypes(type, [...keys, "items"]));
+                } else {
+                    output.push({ keys: [...keys, "items"], type: type.container.itemType });
+                }
+        }
+        return output;
+    });
+}
+
+function isObjectPropertyWithPath(typeOrProperty: TypeOrProperty): typeOrProperty is ObjectPropertyWithPath {
+    return (typeOrProperty as ObjectPropertyWithPath).propertyType !== undefined;
+}
+
+function getTypeParams(t: TypeOrProperty): {
+    keys: string[];
+    name: TypeName;
+    type: ResolvedType;
+    filePath: RelativeFilePath;
+} | null {
+    if (isObjectPropertyWithPath(t)) {
+        const property = t as ObjectPropertyWithPath;
+        const name: string = property.name;
+        const propertyType: TypeName = property.propertyType as TypeName;
+        const type = property.resolvedPropertyType;
+        const filePath: RelativeFilePath = property.filepathOfDeclaration;
+        return { keys: [name], name: propertyType, type, filePath };
+    } else {
+        if ((t.type as ResolvedType)._type !== "named") {
+            return null;
+        }
+        const type = t.type as ResolvedType.Named;
+        const name: TypeName = type.name.name.originalName as TypeName;
+        const filePath: RelativeFilePath = type.filepath;
+        return { keys: t.keys, name, type, filePath };
+    }
 }

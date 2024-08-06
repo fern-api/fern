@@ -1,0 +1,4 @@
+types:
+  Node:
+    properties:
+      foo: Map<Node, String>
