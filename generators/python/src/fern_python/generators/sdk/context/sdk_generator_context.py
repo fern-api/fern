@@ -10,6 +10,7 @@ from fern_python.codegen.filepath import Filepath
 from fern_python.generators.sdk.declaration_referencers.root_client_declaration_referencer import (
     RootClientDeclarationReferencer,
 )
+from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 
 from ...context import PydanticGeneratorContextImpl
 from ..core_utilities.core_utilities import CoreUtilities
@@ -45,6 +46,7 @@ class SdkGeneratorContext(ABC):
             allow_leveraging_defaults=custom_config.pydantic_config.use_provided_defaults,
             use_typeddict_requests=custom_config.pydantic_config.use_typeddict_requests,
             reserved_names={exported_root_client.get_class_name(name=None)},
+            skip_formatting=custom_config.skip_formatting
         )
 
         # This should be replaced with `hasPaginatedEndpoints` in the IR, but that's on IR44, not 39, which is what Python's on
@@ -59,6 +61,7 @@ class SdkGeneratorContext(ABC):
             use_typeddict_requests=custom_config.pydantic_config.use_typeddict_requests,
         )
         self.custom_config = custom_config
+        self.source_file_factory = SourceFileFactory(should_format=not custom_config.skip_formatting)
 
     @abstractmethod
     def get_module_path_in_project(self, module_path: AST.ModulePath) -> AST.ModulePath:

@@ -1,5 +1,5 @@
 import subprocess
-from typing import List
+from typing import List, Optional
 
 from fern.generator_exec import logging
 from fern.generator_exec.config import GeneratorConfig, GeneratorPublishConfig
@@ -78,7 +78,7 @@ class Publisher:
         *,
         command: List[str],
         safe_command: str,
-        cwd=None,
+        cwd: Optional[str] = None,
     ) -> None:
         try:
             self._generator_exec_wrapper.send_update(

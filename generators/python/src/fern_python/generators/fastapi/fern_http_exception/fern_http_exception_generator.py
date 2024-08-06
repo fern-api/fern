@@ -19,7 +19,7 @@ class FernHTTPExceptionGenerator:
         self.FernHTTPException = context.core_utilities.exceptions.FernHTTPException
 
     def generate(self, project: Project, generator_exec_wrapper: GeneratorExecWrapper) -> None:
-        source_file = SourceFileFactory.create(
+        source_file = self._context.source_file_factory.create(
             project=project,
             generator_exec_wrapper=generator_exec_wrapper,
             filepath=self.FernHTTPException.filepath,

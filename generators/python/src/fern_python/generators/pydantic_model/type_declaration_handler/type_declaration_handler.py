@@ -223,6 +223,6 @@ class TypeDeclarationHandler:
         )
         if expr is None:
             return None, None
-        snippet = SourceFileFactory.create_snippet(should_format=not self._custom_config.skip_formatting)
+        snippet = self._context.source_file_factory.create_snippet()
         snippet.add_expression(expr)
         return expr, snippet.to_str()

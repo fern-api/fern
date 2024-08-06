@@ -11,11 +11,12 @@ from fern_python.source_file_factory import SourceFileFactory
 
 
 class SnippetRegistry:
-    def __init__(self) -> None:
+    def __init__(self, *, source_file_factory: SourceFileFactory) -> None:
         self._snippets: Dict[ir_types.TypeId, AST.Expression] = {}
         self._endpoint_snippets: Dict[ir_types.EndpointId, AST.Expression] = {}
         self._sync_client_endpoint_snippets: Dict[ir_types.EndpointId, List[EndpointExpression]] = {}
         self._async_client_endpoint_snippets: Dict[ir_types.EndpointId, List[EndpointExpression]] = {}
+        self._source_file_factory = source_file_factory
 
     def snippets(self) -> Optional[generator_exec.Snippets]:
         if (
@@ -141,6 +142,6 @@ class SnippetRegistry:
         self,
         expr: AST.Expression,
     ) -> str:
-        snippet = SourceFileFactory.create_snippet(should_format=True)
+        snippet = self._source_file_factory.create_snippet()
         snippet.add_expression(expr)
         return snippet.to_str()

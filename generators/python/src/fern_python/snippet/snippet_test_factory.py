@@ -171,7 +171,7 @@ class SnippetTestFactory:
             file=Filepath.FilepathPart(module_name="conftest"),
         )
 
-        source_file = SourceFileFactory.create(
+        source_file = self._context.source_file_factory.create(
             project=self._project,
             filepath=utilities_filepath,
             generator_exec_wrapper=self._generator_exec_wrapper,
@@ -528,7 +528,7 @@ class SnippetTestFactory:
             )
 
             # At least one endpoint has a snippet, now make the file
-            source_file = source_file or SourceFileFactory.create(
+            source_file = source_file or self._context.source_file_factory.create(
                 project=self._project,
                 filepath=filepath,
                 generator_exec_wrapper=self._generator_exec_wrapper,

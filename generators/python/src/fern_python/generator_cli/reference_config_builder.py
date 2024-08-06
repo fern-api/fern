@@ -64,7 +64,7 @@ class ReferenceSectionBuilder:
         self,
         expr: AST.Expression,
     ) -> str:
-        snippet = SourceFileFactory.create_snippet(should_format=True)
+        snippet = self.context.source_file_factory.create_snippet()
         snippet.add_expression(expr)
         # For some reason we're appending newlines to snippets, so we need to strip them for tempaltes
         return snippet.to_str(include_imports=False).strip()
