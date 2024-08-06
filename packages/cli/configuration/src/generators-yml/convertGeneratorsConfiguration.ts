@@ -12,6 +12,7 @@ import {
     GeneratorInvocation,
     GeneratorsConfiguration
 } from "./GeneratorsConfiguration";
+import { isRawProtobufAPIDefinitionSchema } from "./isRawProtobufAPIDefinitionSchema";
 import { GeneratorGroupSchema } from "./schemas/GeneratorGroupSchema";
 import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
 import { GeneratorOutputSchema } from "./schemas/GeneratorOutputSchema";
@@ -77,6 +78,12 @@ async function parseAPIConfiguration(
     const apiConfiguration = rawGeneratorsConfiguration.api;
     const apiDefinitions: APIDefinitionLocation[] = [];
     if (apiConfiguration != null) {
+        if (isRawProtobufAPIDefinitionSchema(apiConfiguration)) {
+            return {
+                type: "singleNamespace",
+                definitions: apiDefinitions
+            };
+        }
         if (typeof apiConfiguration === "string") {
             apiDefinitions.push({
                 path: apiConfiguration,
@@ -87,6 +94,9 @@ async function parseAPIConfiguration(
             });
         } else if (Array.isArray(apiConfiguration)) {
             for (const definition of apiConfiguration) {
+                if (isRawProtobufAPIDefinitionSchema(definition)) {
+                    continue;
+                }
                 if (typeof definition === "string") {
                     apiDefinitions.push({
                         path: definition,
