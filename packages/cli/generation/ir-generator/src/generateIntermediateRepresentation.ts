@@ -405,10 +405,9 @@ export async function generateIntermediateRepresentation({
     });
 
     // TODO: (rohin) Back compat hack before pushing generator/api upgrade
-    let ignoreAudiences: boolean;
-    environments?.environments._visit({
+    const ignoreAudiences = environments?.environments._visit<boolean>({
         singleBaseUrl: (value) => {
-            ignoreAudiences =
+            return (
                 value.environments.filter((environment) => {
                     return (
                         getAudienceForEnvironment(
@@ -416,10 +415,11 @@ export async function generateIntermediateRepresentation({
                             workspaceDefinitionRootApiFileContents.environments
                         ) != null
                     );
-                }).length === 0;
+                }).length === 0
+            );
         },
         multipleBaseUrls: (value) => {
-            ignoreAudiences =
+            return (
                 value.environments.filter((environment) => {
                     return (
                         getAudienceForEnvironment(
@@ -427,9 +427,10 @@ export async function generateIntermediateRepresentation({
                             workspaceDefinitionRootApiFileContents.environments
                         ) != null
                     );
-                }).length === 0;
+                }).length === 0
+            );
         },
-        _other: () => {}
+        _other: () => false
     });
 
     environments?.environments.environments.forEach((environment) => {
