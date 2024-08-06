@@ -1,10 +1,13 @@
 import {
     APIS_DIRECTORY,
+    DEFINITION_DIRECTORY,
     fernConfigJson,
     FERN_DIRECTORY,
     generatorsYml,
+    GENERATORS_CONFIGURATION_FILENAME,
     getFernDirectory
 } from "@fern-api/configuration";
+import { ASYNCAPI_DIRECTORY, OPENAPI_DIRECTORY } from "@fern-api/configuration/src/constants";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import {
@@ -46,9 +49,15 @@ export async function loadProject({
         return context.failAndThrow(`Directory "${nameOverride ?? FERN_DIRECTORY}" not found.`);
     }
 
-    var apiWorkspaces: APIWorkspace[] | undefined = undefined;
+    let apiWorkspaces: APIWorkspace[] = [];
 
-    if (await doesPathExist(join(fernDirectory, RelativeFilePath.of(APIS_DIRECTORY)))) {
+    if (
+        (await doesPathExist(join(fernDirectory, RelativeFilePath.of(APIS_DIRECTORY)))) ||
+        doesPathExist(join(fernDirectory, RelativeFilePath.of(DEFINITION_DIRECTORY))) ||
+        doesPathExist(join(fernDirectory, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME))) ||
+        doesPathExist(join(fernDirectory, RelativeFilePath.of(OPENAPI_DIRECTORY))) ||
+        doesPathExist(join(fernDirectory, RelativeFilePath.of(ASYNCAPI_DIRECTORY)))
+    ) {
         apiWorkspaces = await loadApis({
             cliName,
             fernDirectory,
@@ -61,7 +70,7 @@ export async function loadProject({
 
     return {
         config: await fernConfigJson.loadProjectConfig({ directory: fernDirectory, context }),
-        apiWorkspaces: apiWorkspaces ?? [],
+        apiWorkspaces: apiWorkspaces,
         docsWorkspaces: await loadDocsWorkspace({ fernDirectory, context })
     };
 }

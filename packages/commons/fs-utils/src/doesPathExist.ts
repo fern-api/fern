@@ -1,5 +1,5 @@
 import { lstatSync } from "fs";
-import { lstat, readdir } from "fs/promises";
+import { lstat } from "fs/promises";
 import { AbsoluteFilePath } from "./AbsoluteFilePath";
 
 export async function doesPathExist(filepath: AbsoluteFilePath): Promise<boolean> {
@@ -9,11 +9,6 @@ export async function doesPathExist(filepath: AbsoluteFilePath): Promise<boolean
     } catch {
         return false;
     }
-}
-
-export async function isDirectoryEmpty(directoryPath: AbsoluteFilePath): Promise<boolean> {
-    const files = await readdir(directoryPath);
-    return files.length === 0;
 }
 
 export function doesPathExistSync(filepath: AbsoluteFilePath): boolean {
