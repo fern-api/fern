@@ -67,7 +67,7 @@ class ServiceClient:
         from_: str,
         rating: float,
         tag: Tag,
-        metadata: typing.Dict[str, typing.Any],
+        metadata: typing.Dict[str, typing.Optional[typing.Any]],
         prequel: typing.Optional[MovieId] = OMIT,
         book: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -86,7 +86,7 @@ class ServiceClient:
 
         tag : Tag
 
-        metadata : typing.Dict[str, typing.Any]
+        metadata : typing.Dict[str, typing.Optional[typing.Any]]
 
         prequel : typing.Optional[MovieId]
 
@@ -292,7 +292,7 @@ class AsyncServiceClient:
         from_: str,
         rating: float,
         tag: Tag,
-        metadata: typing.Dict[str, typing.Any],
+        metadata: typing.Dict[str, typing.Optional[typing.Any]],
         prequel: typing.Optional[MovieId] = OMIT,
         book: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -311,7 +311,7 @@ class AsyncServiceClient:
 
         tag : Tag
 
-        metadata : typing.Dict[str, typing.Any]
+        metadata : typing.Dict[str, typing.Optional[typing.Any]]
 
         prequel : typing.Optional[MovieId]
 
