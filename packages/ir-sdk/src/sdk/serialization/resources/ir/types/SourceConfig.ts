@@ -6,27 +6,15 @@ import * as serializers from "../../..";
 import * as FernIr from "../../../../api";
 import * as core from "../../../../core";
 
-export const SourceConfig: core.serialization.Schema<serializers.SourceConfig.Raw, FernIr.SourceConfig> =
-    core.serialization
-        .union("type", {
-            proto: core.serialization.lazyObject(async () => (await import("../../..")).ProtoSourceConfig),
-        })
-        .transform<FernIr.SourceConfig>({
-            transform: (value) => {
-                switch (value.type) {
-                    case "proto":
-                        return FernIr.SourceConfig.proto(value);
-                    default:
-                        return value as FernIr.SourceConfig;
-                }
-            },
-            untransform: ({ _visit, ...value }) => value as any,
-        });
+export const SourceConfig: core.serialization.ObjectSchema<serializers.SourceConfig.Raw, FernIr.SourceConfig> =
+    core.serialization.objectWithoutOptionalProperties({
+        sources: core.serialization.list(
+            core.serialization.lazy(async () => (await import("../../..")).ApiDefinitionSource)
+        ),
+    });
 
 export declare namespace SourceConfig {
-    type Raw = SourceConfig.Proto;
-
-    interface Proto extends serializers.ProtoSourceConfig.Raw {
-        type: "proto";
+    interface Raw {
+        sources: serializers.ApiDefinitionSource.Raw[];
     }
 }

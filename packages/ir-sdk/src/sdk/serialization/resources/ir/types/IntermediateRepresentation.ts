@@ -64,7 +64,7 @@ export const IntermediateRepresentation: core.serialization.ObjectSchema<
         async () => (await import("../../..")).ServiceTypeReferenceInfo
     ),
     readmeConfig: core.serialization.lazyObject(async () => (await import("../../..")).ReadmeConfig).optional(),
-    sourceConfig: core.serialization.lazy(async () => (await import("../../..")).SourceConfig).optional(),
+    sourceConfig: core.serialization.lazyObject(async () => (await import("../../..")).SourceConfig).optional(),
 });
 
 export declare namespace IntermediateRepresentation {

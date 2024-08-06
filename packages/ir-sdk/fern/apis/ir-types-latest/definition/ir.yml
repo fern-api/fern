@@ -77,9 +77,15 @@ types:
           with each feature.
         type: optional<map<commons.FeatureId, list<commons.EndpointId>>>
   SourceConfig:
+    properties: 
+      sources:
+        docs: The raw API definitions that produced the IR.
+        type: list<ApiDefinitionSource> 
+  ApiDefinitionSource:
     union:
-      proto: ProtoSourceConfig
-  ProtoSourceConfig:
+      proto: ProtoSource
+      openapi: {}
+  ProtoSource:
     properties:
       protoRootUrl:
         docs: |
