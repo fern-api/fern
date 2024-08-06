@@ -73,14 +73,19 @@ class AbstractSimpleDiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
 
             if shape.properties_type == "singleProperty":
                 self._all_referenced_types.append(shape.type)
-                is_type_circular_reference = self._context.does_type_reference_reference_other_type(shape.type, self._name.type_id)
+                is_type_circular_reference = self._context.does_type_reference_reference_other_type(
+                    shape.type, self._name.type_id
+                )
 
                 single_property_property_fields: List[PydanticField] = [
                     PydanticField(
                         name=shape.name.name.snake_case.safe_name,
                         pascal_case_field_name=shape.name.name.pascal_case.safe_name,
                         json_field_name=shape.name.wire_value,
-                        type_hint=self._context.get_type_hint_for_type_reference(type_reference=shape.type, must_import_after_current_declaration=lambda _: is_type_circular_reference),
+                        type_hint=self._context.get_type_hint_for_type_reference(
+                            type_reference=shape.type,
+                            must_import_after_current_declaration=lambda _: is_type_circular_reference,
+                        ),
                     ),
                     PydanticField(
                         name=get_discriminant_parameter_name(self._union.discriminant),

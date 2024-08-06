@@ -238,7 +238,7 @@ class SnippetTemplateFactory:
                 name_breadcrumbs=None,
                 indentation_level=child_indentation_level,
                 is_function_parameter=False,
-                depth=depth + 1
+                depth=depth + 1,
             )
             return (
                 Template.factory.iterable(
@@ -267,7 +267,7 @@ class SnippetTemplateFactory:
                 name_breadcrumbs=None,
                 indentation_level=child_indentation_level,
                 is_function_parameter=False,
-                depth=depth + 1
+                depth=depth + 1,
             )
             Template.factory.iterable(
                 IterableTemplate(
@@ -291,7 +291,7 @@ class SnippetTemplateFactory:
                 name_breadcrumbs=None,
                 indentation_level=child_indentation_level,
                 is_function_parameter=False,
-                depth=depth + 1
+                depth=depth + 1,
             )
             value_template = self.get_type_reference_template(
                 type_=container_union.value_type,
@@ -301,7 +301,7 @@ class SnippetTemplateFactory:
                 name_breadcrumbs=None,
                 indentation_level=child_indentation_level,
                 is_function_parameter=False,
-                depth=depth + 1
+                depth=depth + 1,
             )
             return (
                 Template.factory.dict(
@@ -332,7 +332,7 @@ class SnippetTemplateFactory:
                 name_breadcrumbs=name_breadcrumbs,
                 indentation_level=indentation_level,
                 is_function_parameter=is_function_parameter,
-                depth=depth
+                depth=depth,
             )
 
         if include_literal_templates and container_union.type == "literal":
@@ -450,7 +450,7 @@ class SnippetTemplateFactory:
                     name_breadcrumbs=child_breadcrumbs,
                     indentation_level=indentation_level,
                     is_function_parameter=False,
-                    depth=depth + 1
+                    depth=depth + 1,
                 )
                 if template_input is not None:
                     template_inputs.append(template_input)
@@ -482,7 +482,7 @@ class SnippetTemplateFactory:
                     wire_or_original_name=sut_shape.name.wire_value,
                     name_breadcrumbs=child_breadcrumbs,
                     is_function_parameter=False,
-                    depth=depth + 1
+                    depth=depth + 1,
                 )
 
                 return Template.factory.generic(
@@ -582,7 +582,7 @@ class SnippetTemplateFactory:
                 name_breadcrumbs=child_breadcrumbs,
                 indentation_level=child_indentation_level,
                 is_function_parameter=False,
-                depth=depth + 1
+                depth=depth + 1,
             )
             if template_input is not None:
                 template_inputs.append(template_input)
@@ -685,7 +685,7 @@ class SnippetTemplateFactory:
                 is_function_parameter=False,
                 # Allow creation of literal members
                 include_literal_templates=True,
-                depth=depth + 1
+                depth=depth + 1,
             )
             if member_template is not None:
                 member_templates.append(
@@ -796,7 +796,7 @@ class SnippetTemplateFactory:
         # Terminate if depth is too deep
         if depth >= self.MAXIMUM_TEMPLATE_DEPTH:
             return None
-        
+
         # if type is literal return None, we do not use literals as inputs
         if self._is_type_literal(type_) and not include_literal_templates:
             return None
@@ -938,7 +938,7 @@ class SnippetTemplateFactory:
                         name_breadcrumbs=None,
                         indentation_level=1,
                         is_function_parameter=True,
-                        depth=0
+                        depth=0,
                     )
                     if ti is not None:
                         top_level_template_inputs.append(ti)
@@ -952,7 +952,7 @@ class SnippetTemplateFactory:
                         name_breadcrumbs=None,
                         indentation_level=1,
                         is_function_parameter=True,
-                        depth=0
+                        depth=0,
                     )
                     if ti is not None:
                         top_level_template_inputs.append(ti)
@@ -966,7 +966,7 @@ class SnippetTemplateFactory:
                         name_breadcrumbs=None,
                         indentation_level=1,
                         is_function_parameter=True,
-                        depth=0
+                        depth=0,
                     )
                     if ti is not None:
                         top_level_template_inputs.append(ti)
@@ -1005,7 +1005,7 @@ class SnippetTemplateFactory:
                                 name_breadcrumbs=None,
                                 indentation_level=1,
                                 is_function_parameter=True,
-                                depth=0
+                                depth=0,
                             )
                             if parameter.raw_type is not None
                             else None
