@@ -430,7 +430,7 @@ export const FernOpenAPIExtension = {
      *
      * x-fern-transport:
      *   grpc:
-     *     file: user/v1/user.proto
+     *     service-name: UserService
      */
     TRANSPORT: "x-fern-transport"
 } as const;
