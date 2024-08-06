@@ -255,6 +255,7 @@ export class DocsDefinitionResolver {
             redirects: this.parsedDocsConfig.redirects,
             integrations: this.parsedDocsConfig.integrations,
             footerLinks: this.parsedDocsConfig.footerLinks,
+            defaultLanguage: this.parsedDocsConfig.defaultLanguage,
 
             // deprecated
             logo: undefined,
