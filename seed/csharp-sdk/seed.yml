@@ -34,4 +34,5 @@ fixtures:
 allowedFailures:
   - objects-with-imports
   - examples
-
+  # TODO: Add support for recursive undiscriminated unions.
+  - grpc

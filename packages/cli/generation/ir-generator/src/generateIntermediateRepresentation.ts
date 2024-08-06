@@ -160,7 +160,8 @@ export async function generateIntermediateRepresentation({
         },
         webhookGroups: {},
         websocketChannels: {},
-        readmeConfig: undefined
+        readmeConfig: undefined,
+        sourceConfig: undefined
     };
 
     const packageTreeGenerator = new PackageTreeGenerator();

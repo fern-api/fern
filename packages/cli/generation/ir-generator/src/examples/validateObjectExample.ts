@@ -50,8 +50,10 @@ export function validateObjectExample({
 
     const allPropertiesByWireKey = keyBy(allPropertiesForObject, (property) => property.wireKey);
 
-    // ensure required properties are present
-    const requiredProperties = allPropertiesForObject.filter((property) => !property.isOptional);
+    // ensure required properties are present, we treat unknown as optional
+    const requiredProperties = allPropertiesForObject.filter(
+        (property) => !property.isOptional && property.resolvedPropertyType._type !== "unknown"
+    );
     for (const requiredProperty of requiredProperties) {
         // dont error on literal properties
         if (

@@ -5,15 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.5.1] - 2024-08-05
+
+- Fix: The root type for unions with visitors now has it's parent typed correctly. This allows auto-complete to work once again on the union when it's nested within other pydantic models.
+
+## [3.5.0] - 2024-08-05
+
+- Improvement: The generated SDK now respects the pydantic version flag, generating V1 only code and V2 only code if specified. If not, the SDK is generated as it is today, with compatibility for BOTH Pydantic versions. This cleans up the generated code, and brings back features liked wrapped aliases for V1-only SDKs.
+
+  Pydantic compatibility can be specified through the config below:
+
+  ```yaml
+  generators:
+    - name: fernapi/fern-python-sdk
+      config:
+        pydantic_config:
+          version: "v1" # Other valid options include: "v2" and "both"
+  ```
+
+## [3.4.2] - 2024-08-05
+
+- Fix: The Python generator now instantiates `Any` types as `Optional[Any]` to be able to meet some breaks in Pydantic V2.
+
 ## [3.4.1] - 2024-08-04
 
 - Fix: Literal templates are generated if they are union members
 
 ## [3.4.0] - 2024-08-02
 
-- Internal: The SDK generator has now been upgraded to use Pydantic V2 internally. Note that 
+- Internal: The SDK generator has now been upgraded to use Pydantic V2 internally. Note that
   there is no change to the generated code, however by leveraging Pydantic V2 you should notice
-  an improvement in `fern generate` times. 
+  an improvement in `fern generate` times.
 
 ## [3.3.4] - 2024-08-02
 

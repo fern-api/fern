@@ -21,6 +21,8 @@ export const HttpService: core.serialization.ObjectSchema<serializers.HttpServic
         pathParameters: core.serialization.list(
             core.serialization.lazyObject(async () => (await import("../../..")).PathParameter)
         ),
+        encoding: core.serialization.lazyObject(async () => (await import("../../..")).Encoding).optional(),
+        transport: core.serialization.lazy(async () => (await import("../../..")).Transport).optional(),
     });
 
 export declare namespace HttpService {
@@ -32,5 +34,7 @@ export declare namespace HttpService {
         endpoints: serializers.HttpEndpoint.Raw[];
         headers: serializers.HttpHeader.Raw[];
         pathParameters: serializers.PathParameter.Raw[];
+        encoding?: serializers.Encoding.Raw | null;
+        transport?: serializers.Transport.Raw | null;
     }
 }

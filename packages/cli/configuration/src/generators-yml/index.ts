@@ -10,12 +10,13 @@ export {
 } from "./GeneratorsConfiguration";
 export { getGeneratorNameOrThrow } from "./getGeneratorName";
 export { getLatestGeneratorVersion } from "./getGeneratorVersions";
+export { isRawProtobufAPIDefinitionSchema } from "./isRawProtobufAPIDefinitionSchema";
 export {
     getPathToGeneratorsConfiguration,
     loadGeneratorsConfiguration,
     loadRawGeneratorsConfiguration
 } from "./loadGeneratorsConfiguration";
-export { type APIConfigurationSchema } from "./schemas/APIConfigurationSchema";
+export { type APIConfigurationSchema, type ProtobufAPIDefinitionSchema } from "./schemas/APIConfigurationSchema";
 export { type GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
 export { type GeneratorPublishMetadataSchema } from "./schemas/GeneratorPublishMetadataSchema";
 export {
