@@ -5,10 +5,10 @@
 import Swift, { SwiftClass, SwiftFile } from "@fern-api/swift-codegen";
 import { AliasTypeDeclaration, EnumTypeDeclaration, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ModelGeneratorContext } from "../ModelGeneratorCli";
-import { CodeBuilder } from "./CodeBuilder";
+import { CodeGenerator } from "./CodeGenerator";
 import Utils from "./Utils";
 
-export default class TypeAliasBuilder extends CodeBuilder<SwiftFile | undefined> {
+export default class TypeAliasBuilder extends CodeGenerator<SwiftFile | undefined> {
 
   constructor(
     context: ModelGeneratorContext,
@@ -17,7 +17,7 @@ export default class TypeAliasBuilder extends CodeBuilder<SwiftFile | undefined>
     super(context, typeDeclaration);
   }
 
-  public build(): SwiftFile | undefined {
+  public generate(): SwiftFile | undefined {
 
     const { shape, docs, name } = this.typeDeclaration;
     const safeName = name.name.pascalCase.safeName;

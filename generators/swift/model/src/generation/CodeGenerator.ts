@@ -1,7 +1,7 @@
 import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ModelGeneratorContext } from "..";
 
-export abstract class CodeBuilder<T> {
+export abstract class CodeGenerator<T> {
 
   protected readonly context: ModelGeneratorContext;
   protected readonly typeDeclaration: TypeDeclaration;
@@ -14,6 +14,6 @@ export abstract class CodeBuilder<T> {
     this.typeDeclaration = typeDeclaration;
   }
 
-  public abstract build(): T;
+  public abstract generate(): T;
 
 }

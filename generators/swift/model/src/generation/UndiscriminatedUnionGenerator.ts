@@ -2,9 +2,9 @@
 import Swift, { AccessLevel, SwiftFile } from "@fern-api/swift-codegen";
 import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ModelGeneratorContext } from "..";
-import { CodeBuilder } from "./CodeBuilder";
+import { CodeGenerator } from "./CodeGenerator";
 
-export default class UndiscriminatedUnionBuilder extends CodeBuilder<SwiftFile | undefined> {
+export default class UndiscriminatedUnionGenerator extends CodeGenerator<SwiftFile | undefined> {
 
   constructor(
     context: ModelGeneratorContext,
@@ -13,7 +13,7 @@ export default class UndiscriminatedUnionBuilder extends CodeBuilder<SwiftFile |
     super(context, typeDeclaration);
   }
 
-  public build(): SwiftFile {
+  public generate(): SwiftFile {
 
     const { docs, name, referencedTypes } = this.typeDeclaration;
     const safeName = name.name.pascalCase.safeName;

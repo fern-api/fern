@@ -5,10 +5,10 @@ import { EnumTypeDeclaration, IntermediateRepresentation, ObjectTypeDeclaration 
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { readFile } from "fs/promises";
 import { z } from "zod";
-import EnumBuilder from "./builders/EnumBuilder";
-import ObjectBuilder from "./builders/ObjectBuilder";
-import TypeAliasBuilder from "./builders/TypeAliasBuilder";
-import UndiscriminatedUnionBuilder from "./builders/UndiscriminatedUnionBuilder";
+import EnumGenerator from "./generation/EnumGenerator";
+import ObjectGenerator from "./generation/ObjectGenerator";
+import TypeAliasBuilder from "./generation/TypeAliasGenerator";
+import UndiscriminatedUnionGenerator from "./generation/UndiscriminatedUnionGenerator";
 
 // Generate Models
 
@@ -20,10 +20,10 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
 
         // Build file for declaration
         const file = typeDeclaration.shape._visit<SwiftFile | undefined>({
-            alias:                            () => new TypeAliasBuilder(context, typeDeclaration).build(),
-            enum:     (etd: EnumTypeDeclaration) => new EnumBuilder(context, typeDeclaration, etd).build(),
-            object: (otd: ObjectTypeDeclaration) => new ObjectBuilder(context, typeDeclaration, otd).build(),
-            undiscriminatedUnion:             () => new UndiscriminatedUnionBuilder(context, typeDeclaration).build(),
+            alias:                            () => new TypeAliasBuilder(context, typeDeclaration).generate(),
+            enum:     (etd: EnumTypeDeclaration) => new EnumGenerator(context, typeDeclaration, etd).generate(),
+            object: (otd: ObjectTypeDeclaration) => new ObjectGenerator(context, typeDeclaration, otd).generate(),
+            undiscriminatedUnion:             () => new UndiscriminatedUnionGenerator(context, typeDeclaration).generate(),
             union: () => undefined,
             _other: () => undefined
         });

@@ -4,10 +4,10 @@
 import Swift, { AccessLevel, EnumCase, Field, SwiftFile, VariableType } from "@fern-api/swift-codegen";
 import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ModelGeneratorContext } from "../ModelGeneratorCli";
-import { CodeBuilder } from "./CodeBuilder";
+import { CodeGenerator } from "./CodeGenerator";
 import Utils from "./Utils";
 
-export default class ObjectBuilder extends CodeBuilder<SwiftFile> {
+export default class ObjectGenerator extends CodeGenerator<SwiftFile> {
 
   private readonly objectDeclaration: ObjectTypeDeclaration;
 
@@ -56,7 +56,7 @@ export default class ObjectBuilder extends CodeBuilder<SwiftFile> {
 
   }
 
-  public build(): SwiftFile {
+  public generate(): SwiftFile {
 
     // TODO - Swift: Add support for v53 unions
 

@@ -4,9 +4,9 @@
 import Swift, { AccessLevel, SwiftFile } from "@fern-api/swift-codegen";
 import { EnumTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ModelGeneratorContext } from "../ModelGeneratorCli";
-import { CodeBuilder } from "./CodeBuilder";
+import { CodeGenerator } from "./CodeGenerator";
 
-export default class EnumBuilder extends CodeBuilder<SwiftFile> {
+export default class EnumGenerator extends CodeGenerator<SwiftFile> {
 
   private readonly enumDeclaration: EnumTypeDeclaration;
 
@@ -19,7 +19,7 @@ export default class EnumBuilder extends CodeBuilder<SwiftFile> {
     this.enumDeclaration = enumDeclaration;
   }
 
-  public build(): SwiftFile {
+  public generate(): SwiftFile {
 
     // Get the file name
     const name = this.typeDeclaration.name.name.pascalCase.safeName;
