@@ -2,17 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 from types import TracebackType
-from typing import (
-    Callable,
-    Iterable,
-    List,
-    Literal,
-    Optional,
-    Sequence,
-    Tuple,
-    Type,
-    Union,
-)
+from typing import Callable, List, Literal, Optional, Sequence, Tuple, Type, Union
 
 from fern_python.codegen import AST, ClassParent, LocalClassReference, SourceFile
 from fern_python.external_dependencies import Pydantic, PydanticVersionCompatibility
@@ -344,17 +334,12 @@ class PydanticModel:
         if self._include_model_config:
             self._class_declaration.add_expression(AST.Expression(AST.CodeWriter(write_extras)))
 
-    def update_forward_refs(self, localns: Iterable[AST.ClassReference] = []) -> None:
+    def update_forward_refs(self) -> None:
         self._source_file.add_footer_expression(
             AST.Expression(
                 AST.FunctionInvocation(
                     function_definition=self._update_forward_ref_function_reference,
                     args=[AST.Expression(self._local_class_reference)],
-                    kwargs=sorted(
-                        [(get_named_import_or_throw(reference), AST.Expression(reference)) for reference in localns],
-                        # sort by name for consistency
-                        key=lambda kwarg: kwarg[0],
-                    ),
                 )
             )
         )

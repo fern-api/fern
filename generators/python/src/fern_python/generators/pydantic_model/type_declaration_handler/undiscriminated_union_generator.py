@@ -1,5 +1,6 @@
 from abc import ABC
-from typing import Optional
+from dataclasses import dataclass
+from typing import List, Optional
 
 import fern.ir.resources as ir_types
 
@@ -12,6 +13,12 @@ from fern_python.snippet.snippet_writer import SnippetWriter
 from ...context import PydanticGeneratorContext
 from ..custom_config import PydanticModelCustomConfig
 from .abc.abstract_type_generator import AbstractTypeGenerator
+
+
+@dataclass(frozen=True)
+class CycleAwareMemberType:
+    is_circular_reference: bool
+    type: ir_types.TypeReference
 
 
 class AbstractUndiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
@@ -34,6 +41,18 @@ class AbstractUndiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
         )
         self._name = name
         self._union = union
+
+        # If the type reference is self-referencing or one of the members creates a circular reference, we need to
+        # string reference the type and hide the import as `if TYPE_CHECKING` if an import is needed.
+        self._members: List[CycleAwareMemberType] = [
+            CycleAwareMemberType(
+                is_circular_reference=self._context.does_type_reference_reference_other_type(
+                    member.type, self._name.type_id
+                ),
+                type=member.type,
+            )
+            for member in self._union.members
+        ]
 
 
 class AbstractUndiscriminatedUnionSnippetGenerator(AbstractTypeSnippetGenerator):

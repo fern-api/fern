@@ -182,7 +182,7 @@ allowedFailures:
   - exhaustive:union-utils
   - extra-properties
   - trace
-  - circular-references-advanced
+
   # Remove the following fixtures soon as a CLI is released with
   # default enum value support and the latest primitive types.
   # This causes a 'fern check' issue when 'fern test' is run.

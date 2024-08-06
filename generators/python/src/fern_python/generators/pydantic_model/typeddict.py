@@ -44,9 +44,18 @@ class FernTypedDict:
         extended_references: Optional[Sequence[ClassReference]] = None,
         class_name: Optional[str] = None,
         docstring: Optional[str] = None,
+        # Since we create new classes for union members, we need to know the original type name
+        # to appropriately detect circular imports.
+        original_type_id: Optional[ir_types.TypeId] = None,
+        # In a similar vein, we create objects for single property union members, which means that
+        # the IR will not immediately contain that type to do an appropriate circular reference check
+        # and so we need to know the container's type id (e.g. the type of the Union) to appropriately detect circular imports.
+        container_type_id: Optional[ir_types.TypeId] = None,
     ):
         self._context = context
         self._type_name = type_name
+        self._original_type_id = original_type_id
+        self._container_type_id = container_type_id
 
         extends_crs = list((extended_references or []))
         extends_crs.extend(
@@ -79,14 +88,22 @@ class FernTypedDict:
         return self._local_class_reference
 
     def _field_type_is_circularly_referened(self, field_types: List[ir_types.TypeId]) -> bool:
+        type_id_to_reference = None
+        if self._type_name is not None:
+            type_id_to_reference = self._type_name.type_id
+        elif self._original_type_id is not None:
+            type_id_to_reference = self._original_type_id
+        elif self._container_type_id is not None:
+            type_id_to_reference = self._container_type_id
+
         return (
             any(
                 [
-                    self._context.does_type_reference_other_type(field_type, self._type_name.type_id)
+                    self._context.does_type_reference_other_type(field_type, type_id_to_reference)
                     for field_type in field_types
                 ]
             )
-            if self._type_name is not None
+            if type_id_to_reference is not None
             else False
         )
 

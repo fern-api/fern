@@ -40,9 +40,12 @@ class TypeddictUndiscriminatedUnionGenerator(AbstractUndiscriminatedUnionGenerat
                 type_hint=AST.TypeHint.union(
                     *(
                         self._context.get_type_hint_for_type_reference(
-                            member.type, in_endpoint=True, for_typeddict=True
+                            member.type,
+                            in_endpoint=True,
+                            for_typeddict=True,
+                            as_if_type_checking_import=member.is_circular_reference,
                         )
-                        for member in self._union.members
+                        for member in self._members
                     )
                 ),
                 name=self._context.get_class_name_for_type_id(self._name.type_id, as_request=True),

@@ -162,7 +162,6 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
             # No reason to have model config overrides on the base model, but
             # also Pydantic V2's RootModel doesn't allow for a lot of the configuration.
             include_model_config=False,
-            force_update_forward_refs=True,
         ) as external_pydantic_model:
             external_pydantic_model.add_class_var_unsafe(
                 name="factory",
@@ -288,12 +287,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                         # file. https://github.com/pydantic/pydantic/issues/4902.
                         # as a workaround, we explicitly pass references to update_forward_refs
                         # so they are in scope
-                        internal_pydantic_model_for_single_union_type.update_forward_refs(
-                            {
-                                self._context.get_class_reference_for_type_id(type_id, as_request=False)
-                                for type_id in forward_refed_types
-                            }
-                        )
+                        internal_pydantic_model_for_single_union_type.update_forward_refs()
 
                         # to avoid issues with circular dependencies, make sure all imports
                         # that reference this type appear after the main (exported) model for the union.

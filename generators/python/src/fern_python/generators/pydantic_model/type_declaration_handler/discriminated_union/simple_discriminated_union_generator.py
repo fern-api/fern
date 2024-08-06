@@ -73,13 +73,14 @@ class AbstractSimpleDiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
 
             if shape.properties_type == "singleProperty":
                 self._all_referenced_types.append(shape.type)
+                is_type_circular_reference = self._context.does_type_reference_reference_other_type(shape.type, self._name.type_id)
 
                 single_property_property_fields: List[PydanticField] = [
                     PydanticField(
                         name=shape.name.name.snake_case.safe_name,
                         pascal_case_field_name=shape.name.name.pascal_case.safe_name,
                         json_field_name=shape.name.wire_value,
-                        type_hint=self._context.get_type_hint_for_type_reference(type_reference=shape.type),
+                        type_hint=self._context.get_type_hint_for_type_reference(type_reference=shape.type, must_import_after_current_declaration=lambda _: is_type_circular_reference),
                     ),
                     PydanticField(
                         name=get_discriminant_parameter_name(self._union.discriminant),
@@ -145,7 +146,9 @@ class AbstractSimpleDiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
 
                 single_union_type_references.append(
                     self._generate_same_properties_as_object_member(
-                        class_name=member_class_name, properties=same_properties_as_object_property_fields
+                        member_type_id=shape.type_id,
+                        class_name=member_class_name,
+                        properties=same_properties_as_object_property_fields,
                     )
                 )
 
@@ -210,7 +213,7 @@ class AbstractSimpleDiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
 
     @abstractmethod
     def _generate_same_properties_as_object_member(
-        self, class_name: str, properties: List[FernAwarePydanticField]
+        self, member_type_id: ir_types.TypeId, class_name: str, properties: List[FernAwarePydanticField]
     ) -> LocalClassReference:
         ...
 

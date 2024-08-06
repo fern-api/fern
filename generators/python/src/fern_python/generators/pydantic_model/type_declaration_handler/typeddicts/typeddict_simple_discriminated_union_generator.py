@@ -93,6 +93,7 @@ class TypeddictSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminatedUnio
             source_file=self._source_file,
             docstring=None,
             should_export=True,
+            container_type_id=self._name.type_id,
         ) as member_typed_dict:
             for field in fern_aware_properties:
                 member_typed_dict.add_field(**vars(field))
@@ -100,7 +101,7 @@ class TypeddictSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminatedUnio
             return member_typed_dict.to_reference()
 
     def _generate_same_properties_as_object_member(
-        self, class_name: str, properties: List[FernAwarePydanticField]
+        self, member_type_id: ir_types.TypeId, class_name: str, properties: List[FernAwarePydanticField]
     ) -> LocalClassReference:
         with FernTypedDict(
             class_name=class_name,
@@ -109,6 +110,7 @@ class TypeddictSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminatedUnio
             source_file=self._source_file,
             docstring=None,
             should_export=True,
+            original_type_id=member_type_id,
         ) as member_typed_dict:
             for field in properties:
                 member_typed_dict.add_field(**vars(field))
