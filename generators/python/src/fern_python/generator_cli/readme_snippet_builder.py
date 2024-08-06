@@ -99,7 +99,7 @@ class ReadmeSnippetBuilder:
         self,
         expr: AST.Expression,
     ) -> str:
-        snippet = SourceFileFactory.create_snippet()
+        snippet = SourceFileFactory.create_snippet(should_format=True)
         snippet.add_expression(expr)
         # For some reason we're appending newlines to snippets, so we need to strip them for tempaltes
         return snippet.to_str()

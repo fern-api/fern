@@ -40,7 +40,6 @@ class Project:
         relative_path_to_project: str,
         python_version: str = "^3.8",
         project_config: Optional[ProjectConfig] = None,
-        should_format_files: bool,
         sorted_modules: Optional[Sequence[str]] = None,
         flat_layout: bool = False,
         whitelabel: bool = False,
@@ -60,10 +59,9 @@ class Project:
         self._root_filepath = filepath
         self._relative_path_to_project = relative_path_to_project
         self._project_config = project_config
-        self._module_manager = ModuleManager(should_format=should_format_files, sorted_modules=sorted_modules)
+        self._module_manager = ModuleManager(sorted_modules=sorted_modules)
         self._python_version = python_version
         self._dependency_manager = DependencyManager()
-        self._should_format_files = should_format_files
         self._whitelabel = whitelabel
         self._github_output_mode = github_output_mode
         self._pypi_metadata = pypi_metadata
@@ -104,7 +102,7 @@ class Project:
                 module_path_of_source_file=module.path,
             ),
             dependency_manager=self._dependency_manager,
-            should_format=self._should_format_files,
+            should_format=False,
             whitelabel=self._whitelabel,
         )
         return source_file

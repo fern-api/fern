@@ -141,6 +141,6 @@ class SnippetRegistry:
         self,
         expr: AST.Expression,
     ) -> str:
-        snippet = SourceFileFactory.create_snippet()
+        snippet = SourceFileFactory.create_snippet(should_format=True)
         snippet.add_expression(expr)
         return snippet.to_str()

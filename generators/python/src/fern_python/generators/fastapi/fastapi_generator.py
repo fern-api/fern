@@ -135,10 +135,11 @@ class FastApiGenerator(AbstractGenerator):
         generator_exec_wrapper: GeneratorExecWrapper,
         service: ir_types.HttpService,
         project: Project,
+        custom_config: FastAPICustomConfig,
     ) -> None:
         filepath = context.get_filepath_for_service(service.name)
         service_file = SourceFileFactory.create(
-            project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
+            project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper, skip_formatting=custom_config.skip_formatting
         )
         ServiceGenerator(context=context, service=service).generate(source_file=service_file)
         project.write_source_file(source_file=service_file, filepath=filepath)

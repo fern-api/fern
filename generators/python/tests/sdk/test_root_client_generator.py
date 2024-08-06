@@ -50,7 +50,7 @@ def test_generated_root_client_builder() -> None:
     )
     generated_root_client = builder.build()
 
-    snippet = SourceFileFactory.create_snippet()
+    snippet = SourceFileFactory.create_snippet(should_format=True)
     snippet.add_expression(generated_root_client.sync_instantiation)
     assert (
         snippet.to_str()

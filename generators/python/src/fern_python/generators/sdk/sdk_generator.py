@@ -246,57 +246,60 @@ class SdkGenerator(AbstractGenerator):
                 project=project,
             )
 
-        generator_cli = GeneratorCli(
-            organization=generator_config.organization,
-            project_config=project._project_config,
-            ir=ir,
-            generator_exec_wrapper=generator_exec_wrapper,
-            context=context,
-            endpoint_metadata=endpoint_metadata_collector,
-        )
-        snippets = snippet_registry.snippets()
-        if snippets is not None:
-            self._maybe_write_snippets(
+        if generator_config.output.mode.get_as_union().type != "downloadFiles":
+
+            generator_cli = GeneratorCli(
+                organization=generator_config.organization,
+                project_config=project._project_config,
+                ir=ir,
+                generator_exec_wrapper=generator_exec_wrapper,
                 context=context,
-                snippets=snippets,
-                project=project,
+                endpoint_metadata=endpoint_metadata_collector,
             )
 
-            try:
-                self._write_readme(
+            snippets = snippet_registry.snippets()
+            if snippets is not None:
+                self._maybe_write_snippets(
                     context=context,
-                    generator_cli=generator_cli,
                     snippets=snippets,
                     project=project,
-                    generated_root_client=generated_root_client,
-                )
-            except Exception:
-                generator_exec_wrapper.send_update(
-                    GeneratorUpdate.factory.log(
-                        LogUpdate(level=LogLevel.DEBUG, message=f"Failed to generate README.md; this is OK")
-                    )
                 )
 
-            try:
-                self._write_reference(
-                    context=context,
-                    generator_cli=generator_cli,
-                    snippets=snippets,
-                    project=project,
-                )
-            except Exception:
-                generator_exec_wrapper.send_update(
-                    GeneratorUpdate.factory.log(
-                        LogUpdate(level=LogLevel.DEBUG, message=f"Failed to generate reference.md; this is OK")
+                try:
+                    self._write_readme(
+                        context=context,
+                        generator_cli=generator_cli,
+                        snippets=snippets,
+                        project=project,
+                        generated_root_client=generated_root_client,
                     )
-                )
+                except Exception:
+                    generator_exec_wrapper.send_update(
+                        GeneratorUpdate.factory.log(
+                            LogUpdate(level=LogLevel.DEBUG, message=f"Failed to generate README.md; this is OK")
+                        )
+                    )
+
+                try:
+                    self._write_reference(
+                        context=context,
+                        generator_cli=generator_cli,
+                        snippets=snippets,
+                        project=project,
+                    )
+                except Exception:
+                    generator_exec_wrapper.send_update(
+                        GeneratorUpdate.factory.log(
+                            LogUpdate(level=LogLevel.DEBUG, message=f"Failed to generate reference.md; this is OK")
+                        )
+                    )
 
         context.core_utilities.copy_to_project(project=project)
 
         if not (generator_config.output.mode.get_as_union().type == "downloadFiles"):
             as_is_copier.copy_to_project(project=project)
 
-        snippet_template_source_file = SourceFileFactory.create_snippet()
+        snippet_template_source_file = SourceFileFactory.create_snippet(should_format=True)
         self._maybe_write_snippet_templates(
             context=context,
             snippet_template_factory=SnippetTemplateFactory(

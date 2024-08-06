@@ -13,11 +13,19 @@ class Publisher:
     def __init__(
         self,
         *,
+        should_format: bool,
         generator_exec_wrapper: GeneratorExecWrapper,
         generator_config: GeneratorConfig,
     ):
+        self._should_format = should_format
         self._generator_exec_wrapper = generator_exec_wrapper
         self._generator_config = generator_config
+
+    def run_ruff_format(self) -> None:
+        self._run_command(
+            command=["poetry", "run", "ruff", "format"],
+            safe_command="poetry run ruff format",
+        )
 
     def run_poetry_install(self) -> None:
         self._run_command(
@@ -30,7 +38,6 @@ class Publisher:
         *,
         publish_config: GeneratorPublishConfig,
     ) -> None:
-        self.run_poetry_install()
         pypi_registry_config = publish_config.registries_v_2.pypi
         self._run_command(
             command=[
@@ -71,6 +78,7 @@ class Publisher:
         *,
         command: List[str],
         safe_command: str,
+        cwd=None,
     ) -> None:
         try:
             self._generator_exec_wrapper.send_update(
@@ -82,7 +90,7 @@ class Publisher:
                 command,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
-                cwd=self._generator_config.output.path,
+                cwd=self._generator_config.output.path if cwd is None else cwd,
                 check=True,
             )
             print(f"Ran command: {' '.join(command)}")
