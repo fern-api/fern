@@ -38,13 +38,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   }
 
   // The following is serialized as `{"admin":{"name":""}, "members":[]}`
-  defaultUserRequest := &CreateUserRequest{
+  emptyValueRequest := &CreateUserRequest{
     Admin:   &User{},
     Members: []*User{},
   }
 
   // The following is serialized as `{"admin":{"name": "john.doe"}, "members":[{"name": "jane.doe"}]}`
-  defaultUserRequest := &CreateUserRequest{
+  simpleRequest := &CreateUserRequest{
     Admin:   &User{
        Name: "john.doe",
     },
