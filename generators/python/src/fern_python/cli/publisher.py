@@ -1,5 +1,5 @@
 import subprocess
-from typing import List, Optional, Dict
+from typing import Dict, List, Optional
 
 from fern.generator_exec import logging
 from fern.generator_exec.config import GeneratorConfig, GeneratorPublishConfig

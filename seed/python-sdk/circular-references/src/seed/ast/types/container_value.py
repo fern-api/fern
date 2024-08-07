@@ -5,8 +5,8 @@ from ...core.pydantic_utilities import UniversalBaseModel
 import typing
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
-from .primitive_value import PrimitiveValue
 from .object_value import ObjectValue
+from .primitive_value import PrimitiveValue
 from ...core.pydantic_utilities import update_forward_refs
 
 

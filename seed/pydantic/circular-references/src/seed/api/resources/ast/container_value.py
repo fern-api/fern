@@ -3,8 +3,8 @@
 from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
 import typing
-from .object_value import ObjectValue
 from .primitive_value import PrimitiveValue
+from .object_value import ObjectValue
 from ...core.pydantic_utilities import update_forward_refs
 
 

@@ -70,14 +70,14 @@ def validate_field(response: typing.Any, json_expectation: typing.Any, type_expe
             json_expectation = {
                 cast_field(
                     key,
-                    contents_expectation.get(idx)[0]
+                    contents_expectation.get(idx)[0]  # type: ignore
                     if contents_expectation.get(idx) is not None
-                    else None,  # type: ignore
+                    else None, 
                 ): cast_field(
                     value,
-                    contents_expectation.get(idx)[1]
+                    contents_expectation.get(idx)[1]  # type: ignore
                     if contents_expectation.get(idx) is not None
-                    else None,  # type: ignore
+                    else None,
                 )
                 for idx, (key, value) in enumerate(json_expectation.items())
             }
