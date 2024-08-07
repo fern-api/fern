@@ -67,7 +67,7 @@ class SnippetTemplateFactory:
     CLIENT_FIXTURE_NAME = "client"
     TEST_URL_ENVVAR = "TESTS_BASE_URL"
 
-    MAXIMUM_TEMPLATE_DEPTH = 20
+    MAXIMUM_TEMPLATE_DEPTH = 10
 
     TAB_CHAR = "\t"
 
@@ -103,7 +103,7 @@ class SnippetTemplateFactory:
         snippet = SourceFileFactory.create_snippet()
         snippet.add_expression(expr)
         # For some reason we're appending newlines to snippets, so we need to strip them for tempaltes
-        return snippet.to_str().strip()
+        return snippet.to_str(should_format_override=False).strip()
 
     def _expression_to_snippet_str_and_imports(
         self,
@@ -111,8 +111,8 @@ class SnippetTemplateFactory:
     ) -> Tuple[str, str]:
         snippet = SourceFileFactory.create_snippet()
         snippet.add_expression(expr)
-        snippet_full = snippet.to_str()
-        snippet_without_imports = snippet.to_str(include_imports=False)
+        snippet_full = snippet.to_str(should_format_override=False)
+        snippet_without_imports = snippet.to_str(should_format_override=False, include_imports=False)
 
         # For some reason we're appending newlines to snippets, so we need to strip them for tempaltes
         return snippet_full.replace(snippet_without_imports, "").strip(), snippet_without_imports.strip()
