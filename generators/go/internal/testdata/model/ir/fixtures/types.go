@@ -13,7 +13,7 @@ import (
 type ApiAuth struct {
 	Docs        *string                `json:"docs,omitempty" url:"docs,omitempty"`
 	Requirement AuthSchemesRequirement `json:"requirement" url:"requirement"`
-	Schemes     []*AuthScheme          `json:"schemes,omitempty" url:"schemes,omitempty"`
+	Schemes     []*AuthScheme          `json:"schemes" url:"schemes"`
 
 	extraProperties map[string]interface{}
 }
@@ -152,8 +152,8 @@ func (a AuthSchemesRequirement) Ptr() *AuthSchemesRequirement {
 
 type BasicAuthScheme struct {
 	Docs     *string `json:"docs,omitempty" url:"docs,omitempty"`
-	Username *Name   `json:"username,omitempty" url:"username,omitempty"`
-	Password *Name   `json:"password,omitempty" url:"password,omitempty"`
+	Username *Name   `json:"username" url:"username"`
+	Password *Name   `json:"password" url:"password"`
 
 	extraProperties map[string]interface{}
 }
@@ -188,7 +188,7 @@ func (b *BasicAuthScheme) String() string {
 
 type BearerAuthScheme struct {
 	Docs  *string `json:"docs,omitempty" url:"docs,omitempty"`
-	Token *Name   `json:"token,omitempty" url:"token,omitempty"`
+	Token *Name   `json:"token" url:"token"`
 
 	extraProperties map[string]interface{}
 }
@@ -223,8 +223,8 @@ func (b *BearerAuthScheme) String() string {
 
 type HeaderAuthScheme struct {
 	Docs      *string           `json:"docs,omitempty" url:"docs,omitempty"`
-	Name      *NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
-	ValueType *TypeReference    `json:"valueType,omitempty" url:"valueType,omitempty"`
+	Name      *NameAndWireValue `json:"name" url:"name"`
+	ValueType *TypeReference    `json:"valueType" url:"valueType"`
 	Prefix    *string           `json:"prefix,omitempty" url:"prefix,omitempty"`
 
 	extraProperties map[string]interface{}
@@ -323,7 +323,7 @@ func (a AvailabilityStatus) Ptr() *AvailabilityStatus {
 
 type Declaration struct {
 	Docs         *string       `json:"docs,omitempty" url:"docs,omitempty"`
-	Availability *Availability `json:"availability,omitempty" url:"availability,omitempty"`
+	Availability *Availability `json:"availability" url:"availability"`
 
 	extraProperties map[string]interface{}
 }
@@ -359,8 +359,8 @@ func (d *Declaration) String() string {
 type ErrorId = string
 
 type FernFilepath struct {
-	AllParts    []*Name `json:"allParts,omitempty" url:"allParts,omitempty"`
-	PackagePath []*Name `json:"packagePath,omitempty" url:"packagePath,omitempty"`
+	AllParts    []*Name `json:"allParts" url:"allParts"`
+	PackagePath []*Name `json:"packagePath" url:"packagePath"`
 	File        *Name   `json:"file,omitempty" url:"file,omitempty"`
 
 	extraProperties map[string]interface{}
@@ -396,10 +396,10 @@ func (f *FernFilepath) String() string {
 
 type Name struct {
 	OriginalName       string               `json:"originalName" url:"originalName"`
-	CamelCase          *SafeAndUnsafeString `json:"camelCase,omitempty" url:"camelCase,omitempty"`
-	PascalCase         *SafeAndUnsafeString `json:"pascalCase,omitempty" url:"pascalCase,omitempty"`
-	SnakeCase          *SafeAndUnsafeString `json:"snakeCase,omitempty" url:"snakeCase,omitempty"`
-	ScreamingSnakeCase *SafeAndUnsafeString `json:"screamingSnakeCase,omitempty" url:"screamingSnakeCase,omitempty"`
+	CamelCase          *SafeAndUnsafeString `json:"camelCase" url:"camelCase"`
+	PascalCase         *SafeAndUnsafeString `json:"pascalCase" url:"pascalCase"`
+	SnakeCase          *SafeAndUnsafeString `json:"snakeCase" url:"snakeCase"`
+	ScreamingSnakeCase *SafeAndUnsafeString `json:"screamingSnakeCase" url:"screamingSnakeCase"`
 
 	extraProperties map[string]interface{}
 }
@@ -434,7 +434,7 @@ func (n *Name) String() string {
 
 type NameAndWireValue struct {
 	WireValue string `json:"wireValue" url:"wireValue"`
-	Name      *Name  `json:"name,omitempty" url:"name,omitempty"`
+	Name      *Name  `json:"name" url:"name"`
 
 	extraProperties map[string]interface{}
 }
@@ -545,7 +545,7 @@ func (w *WithDocs) String() string {
 }
 
 type WithJsonExample struct {
-	JsonExample interface{} `json:"jsonExample,omitempty" url:"jsonExample,omitempty"`
+	JsonExample interface{} `json:"jsonExample" url:"jsonExample"`
 
 	extraProperties map[string]interface{}
 }
@@ -579,7 +579,7 @@ func (w *WithJsonExample) String() string {
 }
 
 type Constants struct {
-	ErrorInstanceIdKey *NameAndWireValue `json:"errorInstanceIdKey,omitempty" url:"errorInstanceIdKey,omitempty"`
+	ErrorInstanceIdKey *NameAndWireValue `json:"errorInstanceIdKey" url:"errorInstanceIdKey"`
 
 	extraProperties map[string]interface{}
 }
@@ -616,7 +616,7 @@ type EnvironmentBaseUrlId = string
 
 type EnvironmentBaseUrlWithId struct {
 	Id   EnvironmentBaseUrlId `json:"id" url:"id"`
-	Name *Name                `json:"name,omitempty" url:"name,omitempty"`
+	Name *Name                `json:"name" url:"name"`
 
 	extraProperties map[string]interface{}
 }
@@ -721,7 +721,7 @@ func (e *Environments) Accept(visitor EnvironmentsVisitor) error {
 
 type EnvironmentsConfig struct {
 	DefaultEnvironment *EnvironmentId `json:"defaultEnvironment,omitempty" url:"defaultEnvironment,omitempty"`
-	Environments       *Environments  `json:"environments,omitempty" url:"environments,omitempty"`
+	Environments       *Environments  `json:"environments" url:"environments"`
 
 	extraProperties map[string]interface{}
 }
@@ -757,8 +757,8 @@ func (e *EnvironmentsConfig) String() string {
 type MultipleBaseUrlsEnvironment struct {
 	Docs *string                                 `json:"docs,omitempty" url:"docs,omitempty"`
 	Id   EnvironmentId                           `json:"id" url:"id"`
-	Name *Name                                   `json:"name,omitempty" url:"name,omitempty"`
-	Urls map[EnvironmentBaseUrlId]EnvironmentUrl `json:"urls,omitempty" url:"urls,omitempty"`
+	Name *Name                                   `json:"name" url:"name"`
+	Urls map[EnvironmentBaseUrlId]EnvironmentUrl `json:"urls" url:"urls"`
 
 	extraProperties map[string]interface{}
 }
@@ -792,8 +792,8 @@ func (m *MultipleBaseUrlsEnvironment) String() string {
 }
 
 type MultipleBaseUrlsEnvironments struct {
-	BaseUrls     []*EnvironmentBaseUrlWithId    `json:"baseUrls,omitempty" url:"baseUrls,omitempty"`
-	Environments []*MultipleBaseUrlsEnvironment `json:"environments,omitempty" url:"environments,omitempty"`
+	BaseUrls     []*EnvironmentBaseUrlWithId    `json:"baseUrls" url:"baseUrls"`
+	Environments []*MultipleBaseUrlsEnvironment `json:"environments" url:"environments"`
 
 	extraProperties map[string]interface{}
 }
@@ -829,7 +829,7 @@ func (m *MultipleBaseUrlsEnvironments) String() string {
 type SingleBaseUrlEnvironment struct {
 	Docs *string        `json:"docs,omitempty" url:"docs,omitempty"`
 	Id   EnvironmentId  `json:"id" url:"id"`
-	Name *Name          `json:"name,omitempty" url:"name,omitempty"`
+	Name *Name          `json:"name" url:"name"`
 	Url  EnvironmentUrl `json:"url" url:"url"`
 
 	extraProperties map[string]interface{}
@@ -864,7 +864,7 @@ func (s *SingleBaseUrlEnvironment) String() string {
 }
 
 type SingleBaseUrlEnvironments struct {
-	Environments []*SingleBaseUrlEnvironment `json:"environments,omitempty" url:"environments,omitempty"`
+	Environments []*SingleBaseUrlEnvironment `json:"environments" url:"environments"`
 
 	extraProperties map[string]interface{}
 }
@@ -899,8 +899,8 @@ func (s *SingleBaseUrlEnvironments) String() string {
 
 type DeclaredErrorName struct {
 	ErrorId      ErrorId       `json:"errorId" url:"errorId"`
-	FernFilepath *FernFilepath `json:"fernFilepath,omitempty" url:"fernFilepath,omitempty"`
-	Name         *Name         `json:"name,omitempty" url:"name,omitempty"`
+	FernFilepath *FernFilepath `json:"fernFilepath" url:"fernFilepath"`
+	Name         *Name         `json:"name" url:"name"`
 
 	extraProperties map[string]interface{}
 }
@@ -935,8 +935,8 @@ func (d *DeclaredErrorName) String() string {
 
 type ErrorDeclaration struct {
 	Docs              *string            `json:"docs,omitempty" url:"docs,omitempty"`
-	Name              *DeclaredErrorName `json:"name,omitempty" url:"name,omitempty"`
-	DiscriminantValue *NameAndWireValue  `json:"discriminantValue,omitempty" url:"discriminantValue,omitempty"`
+	Name              *DeclaredErrorName `json:"name" url:"name"`
+	DiscriminantValue *NameAndWireValue  `json:"discriminantValue" url:"discriminantValue"`
 	Type              *TypeReference     `json:"type,omitempty" url:"type,omitempty"`
 	StatusCode        int                `json:"statusCode" url:"statusCode"`
 
@@ -1045,7 +1045,7 @@ func (e *ErrorDeclarationDiscriminantValue) Accept(visitor ErrorDeclarationDiscr
 }
 
 type DeclaredServiceName struct {
-	FernFilepath *FernFilepath `json:"fernFilepath,omitempty" url:"fernFilepath,omitempty"`
+	FernFilepath *FernFilepath `json:"fernFilepath" url:"fernFilepath"`
 
 	extraProperties map[string]interface{}
 }
@@ -1084,14 +1084,14 @@ type ExampleEndpointCall struct {
 	Docs                   *string                  `json:"docs,omitempty" url:"docs,omitempty"`
 	Name                   *Name                    `json:"name,omitempty" url:"name,omitempty"`
 	Url                    string                   `json:"url" url:"url"`
-	RootPathParameters     []*ExamplePathParameter  `json:"rootPathParameters,omitempty" url:"rootPathParameters,omitempty"`
-	ServicePathParameters  []*ExamplePathParameter  `json:"servicePathParameters,omitempty" url:"servicePathParameters,omitempty"`
-	EndpointPathParameters []*ExamplePathParameter  `json:"endpointPathParameters,omitempty" url:"endpointPathParameters,omitempty"`
-	ServiceHeaders         []*ExampleHeader         `json:"serviceHeaders,omitempty" url:"serviceHeaders,omitempty"`
-	EndpointHeaders        []*ExampleHeader         `json:"endpointHeaders,omitempty" url:"endpointHeaders,omitempty"`
-	QueryParameters        []*ExampleQueryParameter `json:"queryParameters,omitempty" url:"queryParameters,omitempty"`
+	RootPathParameters     []*ExamplePathParameter  `json:"rootPathParameters" url:"rootPathParameters"`
+	ServicePathParameters  []*ExamplePathParameter  `json:"servicePathParameters" url:"servicePathParameters"`
+	EndpointPathParameters []*ExamplePathParameter  `json:"endpointPathParameters" url:"endpointPathParameters"`
+	ServiceHeaders         []*ExampleHeader         `json:"serviceHeaders" url:"serviceHeaders"`
+	EndpointHeaders        []*ExampleHeader         `json:"endpointHeaders" url:"endpointHeaders"`
+	QueryParameters        []*ExampleQueryParameter `json:"queryParameters" url:"queryParameters"`
 	Request                *ExampleRequestBody      `json:"request,omitempty" url:"request,omitempty"`
-	Response               *ExampleResponse         `json:"response,omitempty" url:"response,omitempty"`
+	Response               *ExampleResponse         `json:"response" url:"response"`
 
 	extraProperties map[string]interface{}
 }
@@ -1125,7 +1125,7 @@ func (e *ExampleEndpointCall) String() string {
 }
 
 type ExampleEndpointErrorResponse struct {
-	Error *DeclaredErrorName    `json:"error,omitempty" url:"error,omitempty"`
+	Error *DeclaredErrorName    `json:"error" url:"error"`
 	Body  *ExampleTypeReference `json:"body,omitempty" url:"body,omitempty"`
 
 	extraProperties map[string]interface{}
@@ -1195,7 +1195,7 @@ func (e *ExampleEndpointSuccessResponse) String() string {
 
 type ExampleHeader struct {
 	WireKey string                `json:"wireKey" url:"wireKey"`
-	Value   *ExampleTypeReference `json:"value,omitempty" url:"value,omitempty"`
+	Value   *ExampleTypeReference `json:"value" url:"value"`
 
 	extraProperties map[string]interface{}
 }
@@ -1229,8 +1229,8 @@ func (e *ExampleHeader) String() string {
 }
 
 type ExampleInlinedRequestBody struct {
-	JsonExample interface{}                          `json:"jsonExample,omitempty" url:"jsonExample,omitempty"`
-	Properties  []*ExampleInlinedRequestBodyProperty `json:"properties,omitempty" url:"properties,omitempty"`
+	JsonExample interface{}                          `json:"jsonExample" url:"jsonExample"`
+	Properties  []*ExampleInlinedRequestBodyProperty `json:"properties" url:"properties"`
 
 	extraProperties map[string]interface{}
 }
@@ -1265,7 +1265,7 @@ func (e *ExampleInlinedRequestBody) String() string {
 
 type ExampleInlinedRequestBodyProperty struct {
 	WireKey string                `json:"wireKey" url:"wireKey"`
-	Value   *ExampleTypeReference `json:"value,omitempty" url:"value,omitempty"`
+	Value   *ExampleTypeReference `json:"value" url:"value"`
 	// this property may have been brought in via extension. originalTypeDeclaration
 	// is the name of the type that contains this property
 	OriginalTypeDeclaration *DeclaredTypeName `json:"originalTypeDeclaration,omitempty" url:"originalTypeDeclaration,omitempty"`
@@ -1303,7 +1303,7 @@ func (e *ExampleInlinedRequestBodyProperty) String() string {
 
 type ExamplePathParameter struct {
 	Key   string                `json:"key" url:"key"`
-	Value *ExampleTypeReference `json:"value,omitempty" url:"value,omitempty"`
+	Value *ExampleTypeReference `json:"value" url:"value"`
 
 	extraProperties map[string]interface{}
 }
@@ -1338,7 +1338,7 @@ func (e *ExamplePathParameter) String() string {
 
 type ExampleQueryParameter struct {
 	WireKey string                `json:"wireKey" url:"wireKey"`
-	Value   *ExampleTypeReference `json:"value,omitempty" url:"value,omitempty"`
+	Value   *ExampleTypeReference `json:"value" url:"value"`
 
 	extraProperties map[string]interface{}
 }
@@ -1538,7 +1538,7 @@ func (f *FileDownloadResponse) String() string {
 }
 
 type FileProperty struct {
-	Key        *NameAndWireValue `json:"key,omitempty" url:"key,omitempty"`
+	Key        *NameAndWireValue `json:"key" url:"key"`
 	IsOptional bool              `json:"isOptional" url:"isOptional"`
 
 	extraProperties map[string]interface{}
@@ -1573,8 +1573,8 @@ func (f *FileProperty) String() string {
 }
 
 type FileUploadRequest struct {
-	Name       *Name                        `json:"name,omitempty" url:"name,omitempty"`
-	Properties []*FileUploadRequestProperty `json:"properties,omitempty" url:"properties,omitempty"`
+	Name       *Name                        `json:"name" url:"name"`
+	Properties []*FileUploadRequestProperty `json:"properties" url:"properties"`
 
 	extraProperties map[string]interface{}
 }
@@ -1675,25 +1675,25 @@ func (f *FileUploadRequestProperty) Accept(visitor FileUploadRequestPropertyVisi
 
 type HttpEndpoint struct {
 	Docs              *string                `json:"docs,omitempty" url:"docs,omitempty"`
-	Availability      *Availability          `json:"availability,omitempty" url:"availability,omitempty"`
-	Name              EndpointName           `json:"name,omitempty" url:"name,omitempty"`
+	Availability      *Availability          `json:"availability" url:"availability"`
+	Name              EndpointName           `json:"name" url:"name"`
 	DisplayName       *string                `json:"displayName,omitempty" url:"displayName,omitempty"`
 	Method            HttpMethod             `json:"method" url:"method"`
-	Headers           []*HttpHeader          `json:"headers,omitempty" url:"headers,omitempty"`
+	Headers           []*HttpHeader          `json:"headers" url:"headers"`
 	BaseUrl           *EnvironmentBaseUrlId  `json:"baseUrl,omitempty" url:"baseUrl,omitempty"`
-	Path              *HttpPath              `json:"path,omitempty" url:"path,omitempty"`
-	FullPath          *HttpPath              `json:"fullPath,omitempty" url:"fullPath,omitempty"`
-	PathParameters    []*PathParameter       `json:"pathParameters,omitempty" url:"pathParameters,omitempty"`
-	AllPathParameters []*PathParameter       `json:"allPathParameters,omitempty" url:"allPathParameters,omitempty"`
-	QueryParameters   []*QueryParameter      `json:"queryParameters,omitempty" url:"queryParameters,omitempty"`
+	Path              *HttpPath              `json:"path" url:"path"`
+	FullPath          *HttpPath              `json:"fullPath" url:"fullPath"`
+	PathParameters    []*PathParameter       `json:"pathParameters" url:"pathParameters"`
+	AllPathParameters []*PathParameter       `json:"allPathParameters" url:"allPathParameters"`
+	QueryParameters   []*QueryParameter      `json:"queryParameters" url:"queryParameters"`
 	RequestBody       *HttpRequestBody       `json:"requestBody,omitempty" url:"requestBody,omitempty"`
 	SdkRequest        *SdkRequest            `json:"sdkRequest,omitempty" url:"sdkRequest,omitempty"`
 	Response          *HttpResponse          `json:"response,omitempty" url:"response,omitempty"`
 	StreamingResponse *StreamingResponse     `json:"streamingResponse,omitempty" url:"streamingResponse,omitempty"`
 	SdkResponse       *SdkResponse           `json:"sdkResponse,omitempty" url:"sdkResponse,omitempty"`
-	Errors            ResponseErrors         `json:"errors,omitempty" url:"errors,omitempty"`
+	Errors            ResponseErrors         `json:"errors" url:"errors"`
 	Auth              bool                   `json:"auth" url:"auth"`
-	Examples          []*ExampleEndpointCall `json:"examples,omitempty" url:"examples,omitempty"`
+	Examples          []*ExampleEndpointCall `json:"examples" url:"examples"`
 
 	extraProperties map[string]interface{}
 }
@@ -1728,9 +1728,9 @@ func (h *HttpEndpoint) String() string {
 
 type HttpHeader struct {
 	Docs         *string           `json:"docs,omitempty" url:"docs,omitempty"`
-	Availability *Availability     `json:"availability,omitempty" url:"availability,omitempty"`
-	Name         *NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
-	ValueType    *TypeReference    `json:"valueType,omitempty" url:"valueType,omitempty"`
+	Availability *Availability     `json:"availability" url:"availability"`
+	Name         *NameAndWireValue `json:"name" url:"name"`
+	ValueType    *TypeReference    `json:"valueType" url:"valueType"`
 
 	extraProperties map[string]interface{}
 }
@@ -1796,7 +1796,7 @@ func (h HttpMethod) Ptr() *HttpMethod {
 
 type HttpPath struct {
 	Head  string          `json:"head" url:"head"`
-	Parts []*HttpPathPart `json:"parts,omitempty" url:"parts,omitempty"`
+	Parts []*HttpPathPart `json:"parts" url:"parts"`
 
 	extraProperties map[string]interface{}
 }
@@ -1948,7 +1948,7 @@ func (h *HttpRequestBody) Accept(visitor HttpRequestBodyVisitor) error {
 
 type HttpRequestBodyReference struct {
 	Docs            *string        `json:"docs,omitempty" url:"docs,omitempty"`
-	RequestBodyType *TypeReference `json:"requestBodyType,omitempty" url:"requestBodyType,omitempty"`
+	RequestBodyType *TypeReference `json:"requestBodyType" url:"requestBodyType"`
 
 	extraProperties map[string]interface{}
 }
@@ -2048,13 +2048,13 @@ func (h *HttpResponse) Accept(visitor HttpResponseVisitor) error {
 }
 
 type HttpService struct {
-	Availability   *Availability        `json:"availability,omitempty" url:"availability,omitempty"`
-	Name           *DeclaredServiceName `json:"name,omitempty" url:"name,omitempty"`
+	Availability   *Availability        `json:"availability" url:"availability"`
+	Name           *DeclaredServiceName `json:"name" url:"name"`
 	DisplayName    *string              `json:"displayName,omitempty" url:"displayName,omitempty"`
-	BasePath       *HttpPath            `json:"basePath,omitempty" url:"basePath,omitempty"`
-	Endpoints      []*HttpEndpoint      `json:"endpoints,omitempty" url:"endpoints,omitempty"`
-	Headers        []*HttpHeader        `json:"headers,omitempty" url:"headers,omitempty"`
-	PathParameters []*PathParameter     `json:"pathParameters,omitempty" url:"pathParameters,omitempty"`
+	BasePath       *HttpPath            `json:"basePath" url:"basePath"`
+	Endpoints      []*HttpEndpoint      `json:"endpoints" url:"endpoints"`
+	Headers        []*HttpHeader        `json:"headers" url:"headers"`
+	PathParameters []*PathParameter     `json:"pathParameters" url:"pathParameters"`
 
 	extraProperties map[string]interface{}
 }
@@ -2088,9 +2088,9 @@ func (h *HttpService) String() string {
 }
 
 type InlinedRequestBody struct {
-	Name       *Name                         `json:"name,omitempty" url:"name,omitempty"`
-	Extends    []*DeclaredTypeName           `json:"extends,omitempty" url:"extends,omitempty"`
-	Properties []*InlinedRequestBodyProperty `json:"properties,omitempty" url:"properties,omitempty"`
+	Name       *Name                         `json:"name" url:"name"`
+	Extends    []*DeclaredTypeName           `json:"extends" url:"extends"`
+	Properties []*InlinedRequestBodyProperty `json:"properties" url:"properties"`
 
 	extraProperties map[string]interface{}
 }
@@ -2125,8 +2125,8 @@ func (i *InlinedRequestBody) String() string {
 
 type InlinedRequestBodyProperty struct {
 	Docs      *string           `json:"docs,omitempty" url:"docs,omitempty"`
-	Name      *NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
-	ValueType *TypeReference    `json:"valueType,omitempty" url:"valueType,omitempty"`
+	Name      *NameAndWireValue `json:"name" url:"name"`
+	ValueType *TypeReference    `json:"valueType" url:"valueType"`
 
 	extraProperties map[string]interface{}
 }
@@ -2161,7 +2161,7 @@ func (i *InlinedRequestBodyProperty) String() string {
 
 type JsonResponse struct {
 	Docs             *string        `json:"docs,omitempty" url:"docs,omitempty"`
-	ResponseBodyType *TypeReference `json:"responseBodyType,omitempty" url:"responseBodyType,omitempty"`
+	ResponseBodyType *TypeReference `json:"responseBodyType" url:"responseBodyType"`
 
 	extraProperties map[string]interface{}
 }
@@ -2195,9 +2195,9 @@ func (j *JsonResponse) String() string {
 }
 
 type MaybeStreamingResponse struct {
-	Condition    *StreamCondition   `json:"condition,omitempty" url:"condition,omitempty"`
-	NonStreaming *HttpResponse      `json:"nonStreaming,omitempty" url:"nonStreaming,omitempty"`
-	Streaming    *StreamingResponse `json:"streaming,omitempty" url:"streaming,omitempty"`
+	Condition    *StreamCondition   `json:"condition" url:"condition"`
+	NonStreaming *HttpResponse      `json:"nonStreaming" url:"nonStreaming"`
+	Streaming    *StreamingResponse `json:"streaming" url:"streaming"`
 
 	extraProperties map[string]interface{}
 }
@@ -2232,8 +2232,8 @@ func (m *MaybeStreamingResponse) String() string {
 
 type PathParameter struct {
 	Docs      *string               `json:"docs,omitempty" url:"docs,omitempty"`
-	Name      *Name                 `json:"name,omitempty" url:"name,omitempty"`
-	ValueType *TypeReference        `json:"valueType,omitempty" url:"valueType,omitempty"`
+	Name      *Name                 `json:"name" url:"name"`
+	ValueType *TypeReference        `json:"valueType" url:"valueType"`
 	Location  PathParameterLocation `json:"location" url:"location"`
 	Variable  *VariableId           `json:"variable,omitempty" url:"variable,omitempty"`
 
@@ -2295,9 +2295,9 @@ func (p PathParameterLocation) Ptr() *PathParameterLocation {
 
 type QueryParameter struct {
 	Docs          *string           `json:"docs,omitempty" url:"docs,omitempty"`
-	Availability  *Availability     `json:"availability,omitempty" url:"availability,omitempty"`
-	Name          *NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
-	ValueType     *TypeReference    `json:"valueType,omitempty" url:"valueType,omitempty"`
+	Availability  *Availability     `json:"availability" url:"availability"`
+	Name          *NameAndWireValue `json:"name" url:"name"`
+	ValueType     *TypeReference    `json:"valueType" url:"valueType"`
 	AllowMultiple bool              `json:"allowMultiple" url:"allowMultiple"`
 
 	extraProperties map[string]interface{}
@@ -2333,7 +2333,7 @@ func (q *QueryParameter) String() string {
 
 type ResponseError struct {
 	Docs  *string            `json:"docs,omitempty" url:"docs,omitempty"`
-	Error *DeclaredErrorName `json:"error,omitempty" url:"error,omitempty"`
+	Error *DeclaredErrorName `json:"error" url:"error"`
 
 	extraProperties map[string]interface{}
 }
@@ -2369,8 +2369,8 @@ func (r *ResponseError) String() string {
 type ResponseErrors = []*ResponseError
 
 type SdkRequest struct {
-	RequestParameterName *Name            `json:"requestParameterName,omitempty" url:"requestParameterName,omitempty"`
-	Shape                *SdkRequestShape `json:"shape,omitempty" url:"shape,omitempty"`
+	RequestParameterName *Name            `json:"requestParameterName" url:"requestParameterName"`
+	Shape                *SdkRequestShape `json:"shape" url:"shape"`
 
 	extraProperties map[string]interface{}
 }
@@ -2470,8 +2470,8 @@ func (s *SdkRequestShape) Accept(visitor SdkRequestShapeVisitor) error {
 }
 
 type SdkRequestWrapper struct {
-	WrapperName *Name `json:"wrapperName,omitempty" url:"wrapperName,omitempty"`
-	BodyKey     *Name `json:"bodyKey,omitempty" url:"bodyKey,omitempty"`
+	WrapperName *Name `json:"wrapperName" url:"wrapperName"`
+	BodyKey     *Name `json:"bodyKey" url:"bodyKey"`
 
 	extraProperties map[string]interface{}
 }
@@ -2691,7 +2691,7 @@ func (s *StreamCondition) Accept(visitor StreamConditionVisitor) error {
 }
 
 type StreamingResponse struct {
-	DataEventType *TypeReference `json:"dataEventType,omitempty" url:"dataEventType,omitempty"`
+	DataEventType *TypeReference `json:"dataEventType" url:"dataEventType"`
 	Terminator    *string        `json:"terminator,omitempty" url:"terminator,omitempty"`
 
 	extraProperties map[string]interface{}
@@ -2726,8 +2726,8 @@ func (s *StreamingResponse) String() string {
 }
 
 type ErrorDiscriminationByPropertyStrategy struct {
-	Discriminant    *NameAndWireValue `json:"discriminant,omitempty" url:"discriminant,omitempty"`
-	ContentProperty *NameAndWireValue `json:"contentProperty,omitempty" url:"contentProperty,omitempty"`
+	Discriminant    *NameAndWireValue `json:"discriminant" url:"discriminant"`
+	ContentProperty *NameAndWireValue `json:"contentProperty" url:"contentProperty"`
 
 	extraProperties map[string]interface{}
 }
@@ -2836,26 +2836,26 @@ func (e *ErrorDiscriminationStrategy) Accept(visitor ErrorDiscriminationStrategy
 // Complete representation of the API schema
 type IntermediateRepresentation struct {
 	// This is the human readable unique id for the API.
-	ApiName        *Name    `json:"apiName,omitempty" url:"apiName,omitempty"`
+	ApiName        *Name    `json:"apiName" url:"apiName"`
 	ApiDisplayName *string  `json:"apiDisplayName,omitempty" url:"apiDisplayName,omitempty"`
 	ApiDocs        *string  `json:"apiDocs,omitempty" url:"apiDocs,omitempty"`
-	Auth           *ApiAuth `json:"auth,omitempty" url:"auth,omitempty"`
+	Auth           *ApiAuth `json:"auth" url:"auth"`
 	// API Wide headers that are sent on every request
-	Headers []*HttpHeader `json:"headers,omitempty" url:"headers,omitempty"`
+	Headers []*HttpHeader `json:"headers" url:"headers"`
 	// The types described by this API
-	Types map[TypeId]*TypeDeclaration `json:"types,omitempty" url:"types,omitempty"`
+	Types map[TypeId]*TypeDeclaration `json:"types" url:"types"`
 	// The services exposed by this API
-	Services                    map[ServiceId]*HttpService    `json:"services,omitempty" url:"services,omitempty"`
-	Errors                      map[ErrorId]*ErrorDeclaration `json:"errors,omitempty" url:"errors,omitempty"`
-	Subpackages                 map[SubpackageId]*Subpackage  `json:"subpackages,omitempty" url:"subpackages,omitempty"`
-	RootPackage                 *Package                      `json:"rootPackage,omitempty" url:"rootPackage,omitempty"`
-	Constants                   *Constants                    `json:"constants,omitempty" url:"constants,omitempty"`
+	Services                    map[ServiceId]*HttpService    `json:"services" url:"services"`
+	Errors                      map[ErrorId]*ErrorDeclaration `json:"errors" url:"errors"`
+	Subpackages                 map[SubpackageId]*Subpackage  `json:"subpackages" url:"subpackages"`
+	RootPackage                 *Package                      `json:"rootPackage" url:"rootPackage"`
+	Constants                   *Constants                    `json:"constants" url:"constants"`
 	Environments                *EnvironmentsConfig           `json:"environments,omitempty" url:"environments,omitempty"`
 	BasePath                    *HttpPath                     `json:"basePath,omitempty" url:"basePath,omitempty"`
-	PathParameters              []*PathParameter              `json:"pathParameters,omitempty" url:"pathParameters,omitempty"`
-	ErrorDiscriminationStrategy *ErrorDiscriminationStrategy  `json:"errorDiscriminationStrategy,omitempty" url:"errorDiscriminationStrategy,omitempty"`
-	SdkConfig                   *SdkConfig                    `json:"sdkConfig,omitempty" url:"sdkConfig,omitempty"`
-	Variables                   []*VariableDeclaration        `json:"variables,omitempty" url:"variables,omitempty"`
+	PathParameters              []*PathParameter              `json:"pathParameters" url:"pathParameters"`
+	ErrorDiscriminationStrategy *ErrorDiscriminationStrategy  `json:"errorDiscriminationStrategy" url:"errorDiscriminationStrategy"`
+	SdkConfig                   *SdkConfig                    `json:"sdkConfig" url:"sdkConfig"`
+	Variables                   []*VariableDeclaration        `json:"variables" url:"variables"`
 
 	extraProperties map[string]interface{}
 }
@@ -2890,11 +2890,11 @@ func (i *IntermediateRepresentation) String() string {
 
 type Package struct {
 	Docs               *string        `json:"docs,omitempty" url:"docs,omitempty"`
-	FernFilepath       *FernFilepath  `json:"fernFilepath,omitempty" url:"fernFilepath,omitempty"`
+	FernFilepath       *FernFilepath  `json:"fernFilepath" url:"fernFilepath"`
 	Service            *ServiceId     `json:"service,omitempty" url:"service,omitempty"`
-	Types              []TypeId       `json:"types,omitempty" url:"types,omitempty"`
-	Errors             []ErrorId      `json:"errors,omitempty" url:"errors,omitempty"`
-	Subpackages        []SubpackageId `json:"subpackages,omitempty" url:"subpackages,omitempty"`
+	Types              []TypeId       `json:"types" url:"types"`
+	Errors             []ErrorId      `json:"errors" url:"errors"`
+	Subpackages        []SubpackageId `json:"subpackages" url:"subpackages"`
 	HasEndpointsInTree bool           `json:"hasEndpointsInTree" url:"hasEndpointsInTree"`
 
 	extraProperties map[string]interface{}
@@ -2967,7 +2967,7 @@ func (p *PlatformHeaders) String() string {
 type SdkConfig struct {
 	IsAuthMandatory       bool             `json:"isAuthMandatory" url:"isAuthMandatory"`
 	HasStreamingEndpoints bool             `json:"hasStreamingEndpoints" url:"hasStreamingEndpoints"`
-	PlatformHeaders       *PlatformHeaders `json:"platformHeaders,omitempty" url:"platformHeaders,omitempty"`
+	PlatformHeaders       *PlatformHeaders `json:"platformHeaders" url:"platformHeaders"`
 
 	extraProperties map[string]interface{}
 }
@@ -3002,13 +3002,13 @@ func (s *SdkConfig) String() string {
 
 type Subpackage struct {
 	Docs               *string        `json:"docs,omitempty" url:"docs,omitempty"`
-	FernFilepath       *FernFilepath  `json:"fernFilepath,omitempty" url:"fernFilepath,omitempty"`
+	FernFilepath       *FernFilepath  `json:"fernFilepath" url:"fernFilepath"`
 	Service            *ServiceId     `json:"service,omitempty" url:"service,omitempty"`
-	Types              []TypeId       `json:"types,omitempty" url:"types,omitempty"`
-	Errors             []ErrorId      `json:"errors,omitempty" url:"errors,omitempty"`
-	Subpackages        []SubpackageId `json:"subpackages,omitempty" url:"subpackages,omitempty"`
+	Types              []TypeId       `json:"types" url:"types"`
+	Errors             []ErrorId      `json:"errors" url:"errors"`
+	Subpackages        []SubpackageId `json:"subpackages" url:"subpackages"`
 	HasEndpointsInTree bool           `json:"hasEndpointsInTree" url:"hasEndpointsInTree"`
-	Name               *Name          `json:"name,omitempty" url:"name,omitempty"`
+	Name               *Name          `json:"name" url:"name"`
 
 	extraProperties map[string]interface{}
 }
@@ -3042,8 +3042,8 @@ func (s *Subpackage) String() string {
 }
 
 type AliasTypeDeclaration struct {
-	AliasOf      *TypeReference         `json:"aliasOf,omitempty" url:"aliasOf,omitempty"`
-	ResolvedType *ResolvedTypeReference `json:"resolvedType,omitempty" url:"resolvedType,omitempty"`
+	AliasOf      *TypeReference         `json:"aliasOf" url:"aliasOf"`
+	ResolvedType *ResolvedTypeReference `json:"resolvedType" url:"resolvedType"`
 
 	extraProperties map[string]interface{}
 }
@@ -3116,7 +3116,7 @@ func (c *ContainerType) UnmarshalJSON(data []byte) error {
 	switch unmarshaler.Type {
 	case "list":
 		var valueUnmarshaler struct {
-			List *TypeReference `json:"list,omitempty"`
+			List *TypeReference `json:"list"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -3130,7 +3130,7 @@ func (c *ContainerType) UnmarshalJSON(data []byte) error {
 		c.Map = value
 	case "optional":
 		var valueUnmarshaler struct {
-			Optional *TypeReference `json:"optional,omitempty"`
+			Optional *TypeReference `json:"optional"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -3138,7 +3138,7 @@ func (c *ContainerType) UnmarshalJSON(data []byte) error {
 		c.Optional = valueUnmarshaler.Optional
 	case "set":
 		var valueUnmarshaler struct {
-			Set *TypeReference `json:"set,omitempty"`
+			Set *TypeReference `json:"set"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -3146,7 +3146,7 @@ func (c *ContainerType) UnmarshalJSON(data []byte) error {
 		c.Set = valueUnmarshaler.Set
 	case "literal":
 		var valueUnmarshaler struct {
-			Literal *Literal `json:"literal,omitempty"`
+			Literal *Literal `json:"literal"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -3163,7 +3163,7 @@ func (c ContainerType) MarshalJSON() ([]byte, error) {
 	case "list":
 		var marshaler = struct {
 			Type string         `json:"_type"`
-			List *TypeReference `json:"list,omitempty"`
+			List *TypeReference `json:"list"`
 		}{
 			Type: "list",
 			List: c.List,
@@ -3174,7 +3174,7 @@ func (c ContainerType) MarshalJSON() ([]byte, error) {
 	case "optional":
 		var marshaler = struct {
 			Type     string         `json:"_type"`
-			Optional *TypeReference `json:"optional,omitempty"`
+			Optional *TypeReference `json:"optional"`
 		}{
 			Type:     "optional",
 			Optional: c.Optional,
@@ -3183,7 +3183,7 @@ func (c ContainerType) MarshalJSON() ([]byte, error) {
 	case "set":
 		var marshaler = struct {
 			Type string         `json:"_type"`
-			Set  *TypeReference `json:"set,omitempty"`
+			Set  *TypeReference `json:"set"`
 		}{
 			Type: "set",
 			Set:  c.Set,
@@ -3192,7 +3192,7 @@ func (c ContainerType) MarshalJSON() ([]byte, error) {
 	case "literal":
 		var marshaler = struct {
 			Type    string   `json:"_type"`
-			Literal *Literal `json:"literal,omitempty"`
+			Literal *Literal `json:"literal"`
 		}{
 			Type:    "literal",
 			Literal: c.Literal,
@@ -3228,8 +3228,8 @@ func (c *ContainerType) Accept(visitor ContainerTypeVisitor) error {
 
 type DeclaredTypeName struct {
 	TypeId       TypeId        `json:"typeId" url:"typeId"`
-	FernFilepath *FernFilepath `json:"fernFilepath,omitempty" url:"fernFilepath,omitempty"`
-	Name         *Name         `json:"name,omitempty" url:"name,omitempty"`
+	FernFilepath *FernFilepath `json:"fernFilepath" url:"fernFilepath"`
+	Name         *Name         `json:"name" url:"name"`
 
 	extraProperties map[string]interface{}
 }
@@ -3263,7 +3263,7 @@ func (d *DeclaredTypeName) String() string {
 }
 
 type EnumTypeDeclaration struct {
-	Values []*EnumValue `json:"values,omitempty" url:"values,omitempty"`
+	Values []*EnumValue `json:"values" url:"values"`
 
 	extraProperties map[string]interface{}
 }
@@ -3298,8 +3298,8 @@ func (e *EnumTypeDeclaration) String() string {
 
 type EnumValue struct {
 	Docs         *string           `json:"docs,omitempty" url:"docs,omitempty"`
-	Availability *Availability     `json:"availability,omitempty" url:"availability,omitempty"`
-	Name         *NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
+	Availability *Availability     `json:"availability" url:"availability"`
+	Name         *NameAndWireValue `json:"name" url:"name"`
 
 	extraProperties map[string]interface{}
 }
@@ -3333,7 +3333,7 @@ func (e *EnumValue) String() string {
 }
 
 type ExampleAliasType struct {
-	Value *ExampleTypeReference `json:"value,omitempty" url:"value,omitempty"`
+	Value *ExampleTypeReference `json:"value" url:"value"`
 
 	extraProperties map[string]interface{}
 }
@@ -3401,7 +3401,7 @@ func (e *ExampleContainer) UnmarshalJSON(data []byte) error {
 	switch unmarshaler.Type {
 	case "list":
 		var valueUnmarshaler struct {
-			List []*ExampleTypeReference `json:"list,omitempty"`
+			List []*ExampleTypeReference `json:"list"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -3409,7 +3409,7 @@ func (e *ExampleContainer) UnmarshalJSON(data []byte) error {
 		e.List = valueUnmarshaler.List
 	case "set":
 		var valueUnmarshaler struct {
-			Set []*ExampleTypeReference `json:"set,omitempty"`
+			Set []*ExampleTypeReference `json:"set"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -3425,7 +3425,7 @@ func (e *ExampleContainer) UnmarshalJSON(data []byte) error {
 		e.Optional = valueUnmarshaler.Optional
 	case "map":
 		var valueUnmarshaler struct {
-			Map []*ExampleKeyValuePair `json:"map,omitempty"`
+			Map []*ExampleKeyValuePair `json:"map"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -3442,7 +3442,7 @@ func (e ExampleContainer) MarshalJSON() ([]byte, error) {
 	case "list":
 		var marshaler = struct {
 			Type string                  `json:"type"`
-			List []*ExampleTypeReference `json:"list,omitempty"`
+			List []*ExampleTypeReference `json:"list"`
 		}{
 			Type: "list",
 			List: e.List,
@@ -3451,7 +3451,7 @@ func (e ExampleContainer) MarshalJSON() ([]byte, error) {
 	case "set":
 		var marshaler = struct {
 			Type string                  `json:"type"`
-			Set  []*ExampleTypeReference `json:"set,omitempty"`
+			Set  []*ExampleTypeReference `json:"set"`
 		}{
 			Type: "set",
 			Set:  e.Set,
@@ -3469,7 +3469,7 @@ func (e ExampleContainer) MarshalJSON() ([]byte, error) {
 	case "map":
 		var marshaler = struct {
 			Type string                 `json:"type"`
-			Map  []*ExampleKeyValuePair `json:"map,omitempty"`
+			Map  []*ExampleKeyValuePair `json:"map"`
 		}{
 			Type: "map",
 			Map:  e.Map,
@@ -3535,8 +3535,8 @@ func (e *ExampleEnumType) String() string {
 }
 
 type ExampleKeyValuePair struct {
-	Key   *ExampleTypeReference `json:"key,omitempty" url:"key,omitempty"`
-	Value *ExampleTypeReference `json:"value,omitempty" url:"value,omitempty"`
+	Key   *ExampleTypeReference `json:"key" url:"key"`
+	Value *ExampleTypeReference `json:"value" url:"value"`
 
 	extraProperties map[string]interface{}
 }
@@ -3570,8 +3570,8 @@ func (e *ExampleKeyValuePair) String() string {
 }
 
 type ExampleNamedType struct {
-	TypeName *DeclaredTypeName `json:"typeName,omitempty" url:"typeName,omitempty"`
-	Shape    *ExampleTypeShape `json:"shape,omitempty" url:"shape,omitempty"`
+	TypeName *DeclaredTypeName `json:"typeName" url:"typeName"`
+	Shape    *ExampleTypeShape `json:"shape" url:"shape"`
 
 	extraProperties map[string]interface{}
 }
@@ -3606,10 +3606,10 @@ func (e *ExampleNamedType) String() string {
 
 type ExampleObjectProperty struct {
 	WireKey string                `json:"wireKey" url:"wireKey"`
-	Value   *ExampleTypeReference `json:"value,omitempty" url:"value,omitempty"`
+	Value   *ExampleTypeReference `json:"value" url:"value"`
 	// this property may have been brought in via extension. originalTypeDeclaration
 	// is the name of the type that contains this property
-	OriginalTypeDeclaration *DeclaredTypeName `json:"originalTypeDeclaration,omitempty" url:"originalTypeDeclaration,omitempty"`
+	OriginalTypeDeclaration *DeclaredTypeName `json:"originalTypeDeclaration" url:"originalTypeDeclaration"`
 
 	extraProperties map[string]interface{}
 }
@@ -3643,7 +3643,7 @@ func (e *ExampleObjectProperty) String() string {
 }
 
 type ExampleObjectType struct {
-	Properties []*ExampleObjectProperty `json:"properties,omitempty" url:"properties,omitempty"`
+	Properties []*ExampleObjectProperty `json:"properties" url:"properties"`
 
 	extraProperties map[string]interface{}
 }
@@ -3912,7 +3912,7 @@ func (e *ExamplePrimitive) Accept(visitor ExamplePrimitiveVisitor) error {
 
 type ExampleSingleUnionType struct {
 	WireDiscriminantValue string                            `json:"wireDiscriminantValue" url:"wireDiscriminantValue"`
-	Properties            *ExampleSingleUnionTypeProperties `json:"properties,omitempty" url:"properties,omitempty"`
+	Properties            *ExampleSingleUnionTypeProperties `json:"properties" url:"properties"`
 
 	extraProperties map[string]interface{}
 }
@@ -4035,10 +4035,10 @@ func (e *ExampleSingleUnionTypeProperties) Accept(visitor ExampleSingleUnionType
 }
 
 type ExampleType struct {
-	JsonExample interface{}       `json:"jsonExample,omitempty" url:"jsonExample,omitempty"`
+	JsonExample interface{}       `json:"jsonExample" url:"jsonExample"`
 	Docs        *string           `json:"docs,omitempty" url:"docs,omitempty"`
 	Name        *Name             `json:"name,omitempty" url:"name,omitempty"`
-	Shape       *ExampleTypeShape `json:"shape,omitempty" url:"shape,omitempty"`
+	Shape       *ExampleTypeShape `json:"shape" url:"shape"`
 
 	extraProperties map[string]interface{}
 }
@@ -4072,8 +4072,8 @@ func (e *ExampleType) String() string {
 }
 
 type ExampleTypeReference struct {
-	JsonExample interface{}                `json:"jsonExample,omitempty" url:"jsonExample,omitempty"`
-	Shape       *ExampleTypeReferenceShape `json:"shape,omitempty" url:"shape,omitempty"`
+	JsonExample interface{}                `json:"jsonExample" url:"jsonExample"`
+	Shape       *ExampleTypeReferenceShape `json:"shape" url:"shape"`
 
 	extraProperties map[string]interface{}
 }
@@ -4141,7 +4141,7 @@ func (e *ExampleTypeReferenceShape) UnmarshalJSON(data []byte) error {
 	switch unmarshaler.Type {
 	case "primitive":
 		var valueUnmarshaler struct {
-			Primitive *ExamplePrimitive `json:"primitive,omitempty"`
+			Primitive *ExamplePrimitive `json:"primitive"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -4149,7 +4149,7 @@ func (e *ExampleTypeReferenceShape) UnmarshalJSON(data []byte) error {
 		e.Primitive = valueUnmarshaler.Primitive
 	case "container":
 		var valueUnmarshaler struct {
-			Container *ExampleContainer `json:"container,omitempty"`
+			Container *ExampleContainer `json:"container"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -4157,7 +4157,7 @@ func (e *ExampleTypeReferenceShape) UnmarshalJSON(data []byte) error {
 		e.Container = valueUnmarshaler.Container
 	case "unknown":
 		var valueUnmarshaler struct {
-			Unknown interface{} `json:"unknown,omitempty"`
+			Unknown interface{} `json:"unknown"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -4180,7 +4180,7 @@ func (e ExampleTypeReferenceShape) MarshalJSON() ([]byte, error) {
 	case "primitive":
 		var marshaler = struct {
 			Type      string            `json:"type"`
-			Primitive *ExamplePrimitive `json:"primitive,omitempty"`
+			Primitive *ExamplePrimitive `json:"primitive"`
 		}{
 			Type:      "primitive",
 			Primitive: e.Primitive,
@@ -4189,7 +4189,7 @@ func (e ExampleTypeReferenceShape) MarshalJSON() ([]byte, error) {
 	case "container":
 		var marshaler = struct {
 			Type      string            `json:"type"`
-			Container *ExampleContainer `json:"container,omitempty"`
+			Container *ExampleContainer `json:"container"`
 		}{
 			Type:      "container",
 			Container: e.Container,
@@ -4198,7 +4198,7 @@ func (e ExampleTypeReferenceShape) MarshalJSON() ([]byte, error) {
 	case "unknown":
 		var marshaler = struct {
 			Type    string      `json:"type"`
-			Unknown interface{} `json:"unknown,omitempty"`
+			Unknown interface{} `json:"unknown"`
 		}{
 			Type:    "unknown",
 			Unknown: e.Unknown,
@@ -4389,8 +4389,8 @@ func (l *Literal) Accept(visitor LiteralVisitor) error {
 }
 
 type MapType struct {
-	KeyType   *TypeReference `json:"keyType,omitempty" url:"keyType,omitempty"`
-	ValueType *TypeReference `json:"valueType,omitempty" url:"valueType,omitempty"`
+	KeyType   *TypeReference `json:"keyType" url:"keyType"`
+	ValueType *TypeReference `json:"valueType" url:"valueType"`
 
 	extraProperties map[string]interface{}
 }
@@ -4425,9 +4425,9 @@ func (m *MapType) String() string {
 
 type ObjectProperty struct {
 	Docs         *string           `json:"docs,omitempty" url:"docs,omitempty"`
-	Availability *Availability     `json:"availability,omitempty" url:"availability,omitempty"`
-	Name         *NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
-	ValueType    *TypeReference    `json:"valueType,omitempty" url:"valueType,omitempty"`
+	Availability *Availability     `json:"availability" url:"availability"`
+	Name         *NameAndWireValue `json:"name" url:"name"`
+	ValueType    *TypeReference    `json:"valueType" url:"valueType"`
 
 	extraProperties map[string]interface{}
 }
@@ -4462,8 +4462,8 @@ func (o *ObjectProperty) String() string {
 
 type ObjectTypeDeclaration struct {
 	// A list of other types to inherit from
-	Extends    []*DeclaredTypeName `json:"extends,omitempty" url:"extends,omitempty"`
-	Properties []*ObjectProperty   `json:"properties,omitempty" url:"properties,omitempty"`
+	Extends    []*DeclaredTypeName `json:"extends" url:"extends"`
+	Properties []*ObjectProperty   `json:"properties" url:"properties"`
 
 	extraProperties map[string]interface{}
 }
@@ -4541,7 +4541,7 @@ func (p PrimitiveType) Ptr() *PrimitiveType {
 }
 
 type ResolvedNamedType struct {
-	Name  *DeclaredTypeName `json:"name,omitempty" url:"name,omitempty"`
+	Name  *DeclaredTypeName `json:"name" url:"name"`
 	Shape ShapeType         `json:"shape" url:"shape"`
 
 	extraProperties map[string]interface{}
@@ -4610,7 +4610,7 @@ func (r *ResolvedTypeReference) UnmarshalJSON(data []byte) error {
 	switch unmarshaler.Type {
 	case "container":
 		var valueUnmarshaler struct {
-			Container *ContainerType `json:"container,omitempty"`
+			Container *ContainerType `json:"container"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -4647,7 +4647,7 @@ func (r ResolvedTypeReference) MarshalJSON() ([]byte, error) {
 	case "container":
 		var marshaler = struct {
 			Type      string         `json:"_type"`
-			Container *ContainerType `json:"container,omitempty"`
+			Container *ContainerType `json:"container"`
 		}{
 			Type:      "container",
 			Container: r.Container,
@@ -4728,8 +4728,8 @@ func (s ShapeType) Ptr() *ShapeType {
 
 type SingleUnionType struct {
 	Docs              *string                    `json:"docs,omitempty" url:"docs,omitempty"`
-	DiscriminantValue *NameAndWireValue          `json:"discriminantValue,omitempty" url:"discriminantValue,omitempty"`
-	Shape             *SingleUnionTypeProperties `json:"shape,omitempty" url:"shape,omitempty"`
+	DiscriminantValue *NameAndWireValue          `json:"discriminantValue" url:"discriminantValue"`
+	Shape             *SingleUnionTypeProperties `json:"shape" url:"shape"`
 
 	extraProperties map[string]interface{}
 }
@@ -4852,8 +4852,8 @@ func (s *SingleUnionTypeProperties) Accept(visitor SingleUnionTypePropertiesVisi
 }
 
 type SingleUnionTypeProperty struct {
-	Name *NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
-	Type *TypeReference    `json:"type,omitempty" url:"type,omitempty"`
+	Name *NameAndWireValue `json:"name" url:"name"`
+	Type *TypeReference    `json:"type" url:"type"`
 
 	extraProperties map[string]interface{}
 }
@@ -5003,12 +5003,12 @@ func (t *Type) Accept(visitor TypeVisitor) error {
 // A type, which is a name and a shape
 type TypeDeclaration struct {
 	Docs         *string           `json:"docs,omitempty" url:"docs,omitempty"`
-	Availability *Availability     `json:"availability,omitempty" url:"availability,omitempty"`
-	Name         *DeclaredTypeName `json:"name,omitempty" url:"name,omitempty"`
-	Shape        *Type             `json:"shape,omitempty" url:"shape,omitempty"`
-	Examples     []*ExampleType    `json:"examples,omitempty" url:"examples,omitempty"`
+	Availability *Availability     `json:"availability" url:"availability"`
+	Name         *DeclaredTypeName `json:"name" url:"name"`
+	Shape        *Type             `json:"shape" url:"shape"`
+	Examples     []*ExampleType    `json:"examples" url:"examples"`
 	// All other named types that this type references (directly or indirectly)
-	ReferencedTypes []*DeclaredTypeName `json:"referencedTypes,omitempty" url:"referencedTypes,omitempty"`
+	ReferencedTypes []*DeclaredTypeName `json:"referencedTypes" url:"referencedTypes"`
 
 	extraProperties map[string]interface{}
 }
@@ -5076,7 +5076,7 @@ func (t *TypeReference) UnmarshalJSON(data []byte) error {
 	switch unmarshaler.Type {
 	case "container":
 		var valueUnmarshaler struct {
-			Container *ContainerType `json:"container,omitempty"`
+			Container *ContainerType `json:"container"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -5113,7 +5113,7 @@ func (t TypeReference) MarshalJSON() ([]byte, error) {
 	case "container":
 		var marshaler = struct {
 			Type      string         `json:"_type"`
-			Container *ContainerType `json:"container,omitempty"`
+			Container *ContainerType `json:"container"`
 		}{
 			Type:      "container",
 			Container: t.Container,
@@ -5166,7 +5166,7 @@ func (t *TypeReference) Accept(visitor TypeReferenceVisitor) error {
 
 type UndiscriminatedUnionMember struct {
 	Docs *string        `json:"docs,omitempty" url:"docs,omitempty"`
-	Type *TypeReference `json:"type,omitempty" url:"type,omitempty"`
+	Type *TypeReference `json:"type" url:"type"`
 
 	extraProperties map[string]interface{}
 }
@@ -5200,7 +5200,7 @@ func (u *UndiscriminatedUnionMember) String() string {
 }
 
 type UndiscriminatedUnionTypeDeclaration struct {
-	Members []*UndiscriminatedUnionMember `json:"members,omitempty" url:"members,omitempty"`
+	Members []*UndiscriminatedUnionMember `json:"members" url:"members"`
 
 	extraProperties map[string]interface{}
 }
@@ -5234,11 +5234,11 @@ func (u *UndiscriminatedUnionTypeDeclaration) String() string {
 }
 
 type UnionTypeDeclaration struct {
-	Discriminant *NameAndWireValue `json:"discriminant,omitempty" url:"discriminant,omitempty"`
+	Discriminant *NameAndWireValue `json:"discriminant" url:"discriminant"`
 	// A list of other types to inherit from
-	Extends        []*DeclaredTypeName `json:"extends,omitempty" url:"extends,omitempty"`
-	Types          []*SingleUnionType  `json:"types,omitempty" url:"types,omitempty"`
-	BaseProperties []*ObjectProperty   `json:"baseProperties,omitempty" url:"baseProperties,omitempty"`
+	Extends        []*DeclaredTypeName `json:"extends" url:"extends"`
+	Types          []*SingleUnionType  `json:"types" url:"types"`
+	BaseProperties []*ObjectProperty   `json:"baseProperties" url:"baseProperties"`
 
 	extraProperties map[string]interface{}
 }
@@ -5274,8 +5274,8 @@ func (u *UnionTypeDeclaration) String() string {
 type VariableDeclaration struct {
 	Docs *string        `json:"docs,omitempty" url:"docs,omitempty"`
 	Id   VariableId     `json:"id" url:"id"`
-	Name *Name          `json:"name,omitempty" url:"name,omitempty"`
-	Type *TypeReference `json:"type,omitempty" url:"type,omitempty"`
+	Name *Name          `json:"name" url:"name"`
+	Type *TypeReference `json:"type" url:"type"`
 
 	extraProperties map[string]interface{}
 }

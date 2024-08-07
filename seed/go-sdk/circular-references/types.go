@@ -156,7 +156,7 @@ func (c *ContainerValue) UnmarshalJSON(data []byte) error {
 	switch unmarshaler.Type {
 	case "list":
 		var valueUnmarshaler struct {
-			List []*FieldValue `json:"value,omitempty"`
+			List []*FieldValue `json:"value"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -181,7 +181,7 @@ func (c ContainerValue) MarshalJSON() ([]byte, error) {
 	case "list":
 		var marshaler = struct {
 			Type string        `json:"type"`
-			List []*FieldValue `json:"value,omitempty"`
+			List []*FieldValue `json:"value"`
 		}{
 			Type: "list",
 			List: c.List,
@@ -259,7 +259,7 @@ func (f *FieldValue) UnmarshalJSON(data []byte) error {
 		f.ObjectValue = value
 	case "container_value":
 		var valueUnmarshaler struct {
-			ContainerValue *ContainerValue `json:"value,omitempty"`
+			ContainerValue *ContainerValue `json:"value"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -287,7 +287,7 @@ func (f FieldValue) MarshalJSON() ([]byte, error) {
 	case "container_value":
 		var marshaler = struct {
 			Type           string          `json:"type"`
-			ContainerValue *ContainerValue `json:"value,omitempty"`
+			ContainerValue *ContainerValue `json:"value"`
 		}{
 			Type:           "container_value",
 			ContainerValue: f.ContainerValue,

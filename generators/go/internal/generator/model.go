@@ -1485,23 +1485,10 @@ func tagFormatForType(
 	valueType *ir.TypeReference,
 	types map[ir.TypeId]*ir.TypeDeclaration,
 ) string {
-	if valueType != nil {
-		primitive := valueType.Primitive
-		if valueType.Named != nil {
-			typeDeclaration := types[valueType.Named.TypeId]
-			if typeDeclaration.Shape.Enum != nil {
-				return "%s:%q"
-			}
-			// If the type is an alias, we need to check if it's an alias to a primitive.
-			if typeDeclaration.Shape.Alias != nil {
-				primitive = typeDeclaration.Shape.Alias.AliasOf.Primitive
-			}
-		}
-		if primitive != "" {
-			return "%s:%q"
-		}
+	if isOptionalType(valueType, types) {
+		return `%s:"%s,omitempty"`
 	}
-	return `%s:"%s,omitempty"`
+	return "%s:%q"
 }
 
 func getExtraPropertiesFieldName(extraPropertiesEnabled bool) string {

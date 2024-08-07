@@ -9,7 +9,7 @@ import (
 )
 
 type MyObject struct {
-	Unknown interface{} `json:"unknown,omitempty" url:"unknown,omitempty"`
+	Unknown interface{} `json:"unknown" url:"unknown"`
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage

@@ -12,7 +12,7 @@ import (
 
 type Foo struct {
 	Name string    `json:"name" url:"name"`
-	Bar  *bar.Bar  `json:"bar,omitempty" url:"bar,omitempty"`
+	Bar  *bar.Bar  `json:"bar" url:"bar"`
 	Uuid uuid.UUID `json:"uuid" url:"uuid"`
 
 	extraProperties map[string]interface{}

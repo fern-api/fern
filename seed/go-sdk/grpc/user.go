@@ -22,7 +22,7 @@ type GetUserRequest struct {
 }
 
 type CreateUserResponse struct {
-	User *User `json:"user,omitempty" url:"user,omitempty"`
+	User *User `json:"user" url:"user"`
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage

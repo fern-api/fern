@@ -7,6 +7,58 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
+## [0.23.0 - 2024-08-07]
+
+- Fix: Required properties are not omitted in the type's wire representation.
+  Any required property that is not explicitly set will send the default value
+  for that type. For example,
+
+  ```go
+  type CreateUserRequest struct {
+    Admin   *User   `json:"admin"`
+    Members []*User `json:"members"`
+  }
+
+  type User struct {
+    Name string `json:"name"`
+  }
+  ```
+
+  If the `CreateUserRequest` is constructed without any values, it will send `null`
+  for both fields. If it is instead constructed with the zero value of the underlying
+  type, the empty representation will be sent:
+
+  ```go
+  // The following is serialized as `{"admin": null, "members": null}`
+  nullRequest := &CreateUserRequest{}
+
+  // The following is serialized as `{"admin": null, "members": []}`
+  noMembersRequest := &CreateUserRequest{
+    Members: []*User{},
+  }
+
+  // The following is serialized as `{"admin":{"name":""}, "members":[]}`
+  defaultUserRequest := &CreateUserRequest{
+    Admin:   &User{},
+    Members: []*User{},
+  }
+
+  // The following is serialized as `{"admin":{"name": "john.doe"}, "members":[{"name": "jane.doe"}]}`
+  defaultUserRequest := &CreateUserRequest{
+    Admin:   &User{
+       Name: "john.doe",
+    },
+    Members: []*User{
+      {
+        Name: "jane.doe",
+      },
+    },
+  }
+  ```
+
+  Note that although this is technically a bug fix, this is being released as a new minor version given that
+  it will change the behavior of SDKs that are not properly setting required properties.
+
 ## [0.22.3 - 2024-07-22]
 
 - Fix: Fix an issue where APIs that specify the `property-name` error discrimination strategy would

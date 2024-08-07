@@ -54,9 +54,9 @@ func (s *StringResponse) String() string {
 type OptionalWithDocs = *WithDocs
 
 type Response struct {
-	Metadata map[string]string `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Metadata map[string]string `json:"metadata" url:"metadata"`
 	Docs     string            `json:"docs" url:"docs"`
-	Data     *Movie            `json:"data,omitempty" url:"data,omitempty"`
+	Data     *Movie            `json:"data" url:"data"`
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage

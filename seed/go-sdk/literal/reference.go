@@ -10,7 +10,7 @@ import (
 
 type SendRequest struct {
 	Query        string       `json:"query" url:"query"`
-	Context      SomeLiteral  `json:"context,omitempty" url:"context,omitempty"`
+	Context      SomeLiteral  `json:"context" url:"context"`
 	MaybeContext *SomeLiteral `json:"maybeContext,omitempty" url:"maybeContext,omitempty"`
 	prompt       string
 	stream       bool

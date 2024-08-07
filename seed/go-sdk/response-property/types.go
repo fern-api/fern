@@ -9,7 +9,7 @@ import (
 )
 
 type WithMetadata struct {
-	Metadata map[string]string `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Metadata map[string]string `json:"metadata" url:"metadata"`
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage

@@ -103,7 +103,7 @@ func (u *Union) UnmarshalJSON(data []byte) error {
 	switch unmarshaler.Type {
 	case "foo":
 		var valueUnmarshaler struct {
-			Foo *Foo `json:"foo,omitempty"`
+			Foo *Foo `json:"foo"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -111,7 +111,7 @@ func (u *Union) UnmarshalJSON(data []byte) error {
 		u.Foo = valueUnmarshaler.Foo
 	case "bar":
 		var valueUnmarshaler struct {
-			Bar *Bar `json:"bar,omitempty"`
+			Bar *Bar `json:"bar"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -128,7 +128,7 @@ func (u Union) MarshalJSON() ([]byte, error) {
 	case "foo":
 		var marshaler = struct {
 			Type string `json:"type"`
-			Foo  *Foo   `json:"foo,omitempty"`
+			Foo  *Foo   `json:"foo"`
 		}{
 			Type: "foo",
 			Foo:  u.Foo,
@@ -137,7 +137,7 @@ func (u Union) MarshalJSON() ([]byte, error) {
 	case "bar":
 		var marshaler = struct {
 			Type string `json:"type"`
-			Bar  *Bar   `json:"bar,omitempty"`
+			Bar  *Bar   `json:"bar"`
 		}{
 			Type: "bar",
 			Bar:  u.Bar,
@@ -295,7 +295,7 @@ func (u *UnionWithDiscriminant) UnmarshalJSON(data []byte) error {
 	switch unmarshaler.Type {
 	case "foo":
 		var valueUnmarshaler struct {
-			Foo *Foo `json:"foo,omitempty"`
+			Foo *Foo `json:"foo"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -303,7 +303,7 @@ func (u *UnionWithDiscriminant) UnmarshalJSON(data []byte) error {
 		u.Foo = valueUnmarshaler.Foo
 	case "bar":
 		var valueUnmarshaler struct {
-			Bar *Bar `json:"bar,omitempty"`
+			Bar *Bar `json:"bar"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -320,7 +320,7 @@ func (u UnionWithDiscriminant) MarshalJSON() ([]byte, error) {
 	case "foo":
 		var marshaler = struct {
 			Type string `json:"_type"`
-			Foo  *Foo   `json:"foo,omitempty"`
+			Foo  *Foo   `json:"foo"`
 		}{
 			Type: "foo",
 			Foo:  u.Foo,
@@ -329,7 +329,7 @@ func (u UnionWithDiscriminant) MarshalJSON() ([]byte, error) {
 	case "bar":
 		var marshaler = struct {
 			Type string `json:"_type"`
-			Bar  *Bar   `json:"bar,omitempty"`
+			Bar  *Bar   `json:"bar"`
 		}{
 			Type: "bar",
 			Bar:  u.Bar,
@@ -396,7 +396,7 @@ func (u UnionWithLiteral) MarshalJSON() ([]byte, error) {
 		var marshaler = struct {
 			Type string `json:"type"`
 			Base string `json:"base"`
-			Fern string `json:"value,omitempty"`
+			Fern string `json:"value"`
 		}{
 			Type: "fern",
 			Base: "base",

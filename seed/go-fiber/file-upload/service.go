@@ -21,7 +21,7 @@ type MyRequest struct {
 	Integer               int         `json:"integer" url:"-"`
 	MaybeInteger          *int        `json:"maybeInteger,omitempty" url:"-"`
 	OptionalListOfStrings []string    `json:"optionalListOfStrings,omitempty" url:"-"`
-	ListOfObjects         []*MyObject `json:"listOfObjects,omitempty" url:"-"`
+	ListOfObjects         []*MyObject `json:"listOfObjects" url:"-"`
 }
 
 type MyObject struct {

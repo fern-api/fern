@@ -68,7 +68,7 @@ type ListUsersOffsetStepPaginationRequest struct {
 }
 
 type UsernameCursor struct {
-	Cursor *UsernamePage `json:"cursor,omitempty" url:"cursor,omitempty"`
+	Cursor *UsernamePage `json:"cursor" url:"cursor"`
 
 	extraProperties map[string]interface{}
 }
@@ -102,7 +102,7 @@ func (u *UsernameCursor) String() string {
 }
 
 type ListUsersExtendedResponse struct {
-	Data *UserListContainer `json:"data,omitempty" url:"data,omitempty"`
+	Data *UserListContainer `json:"data" url:"data"`
 	Next *uuid.UUID         `json:"next,omitempty" url:"next,omitempty"`
 	// The totall number of /users
 	TotalCount int `json:"total_count" url:"total_count"`
@@ -142,7 +142,7 @@ type ListUsersPaginationResponse struct {
 	Page *Page `json:"page,omitempty" url:"page,omitempty"`
 	// The totall number of /users
 	TotalCount int     `json:"total_count" url:"total_count"`
-	Data       []*User `json:"data,omitempty" url:"data,omitempty"`
+	Data       []*User `json:"data" url:"data"`
 
 	extraProperties map[string]interface{}
 }
@@ -198,7 +198,7 @@ func (o Order) Ptr() *Order {
 }
 
 type UsernameContainer struct {
-	Results []string `json:"results,omitempty" url:"results,omitempty"`
+	Results []string `json:"results" url:"results"`
 
 	extraProperties map[string]interface{}
 }

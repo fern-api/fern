@@ -10,7 +10,7 @@ import (
 
 type NestedUser struct {
 	Name       string `json:"Name" url:"Name"`
-	NestedUser *User  `json:"NestedUser,omitempty" url:"NestedUser,omitempty"`
+	NestedUser *User  `json:"NestedUser" url:"NestedUser"`
 
 	extraProperties map[string]interface{}
 }
@@ -101,8 +101,8 @@ func (r ResourceStatus) Ptr() *ResourceStatus {
 
 type User struct {
 	UserName        string            `json:"userName" url:"userName"`
-	MetadataTags    []string          `json:"metadata_tags,omitempty" url:"metadata_tags,omitempty"`
-	ExtraProperties map[string]string `json:"EXTRA_PROPERTIES,omitempty" url:"EXTRA_PROPERTIES,omitempty"`
+	MetadataTags    []string          `json:"metadata_tags" url:"metadata_tags"`
+	ExtraProperties map[string]string `json:"EXTRA_PROPERTIES" url:"EXTRA_PROPERTIES"`
 
 	extraProperties map[string]interface{}
 }

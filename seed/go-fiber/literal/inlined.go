@@ -10,7 +10,7 @@ type SendLiteralsInlinedRequest struct {
 	Context        *string             `json:"context,omitempty" url:"-"`
 	Query          string              `json:"query" url:"-"`
 	Temperature    *float64            `json:"temperature,omitempty" url:"-"`
-	AliasedContext SomeAliasedLiteral  `json:"aliasedContext,omitempty" url:"-"`
+	AliasedContext SomeAliasedLiteral  `json:"aliasedContext" url:"-"`
 	MaybeContext   *SomeAliasedLiteral `json:"maybeContext,omitempty" url:"-"`
 	prompt         string
 	stream         bool
