@@ -83,7 +83,6 @@ export abstract class AbstractCsharpGeneratorContext<
                 namespaces.add(baseNamespace.pascalCase.safeName);
             }
         }
-        console.log(`ALL BASE NAMESPACES ${[...namespaces]}`);
         return namespaces;
     }
 
