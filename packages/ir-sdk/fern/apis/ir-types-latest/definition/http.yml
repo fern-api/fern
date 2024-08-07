@@ -403,16 +403,9 @@ types:
 
   ExampleQueryParameterShape:
     union:
-      single: SingleExampleQueryParameter
-      exploded: ExplodedExampleQueryParameter
-      commaSeparated: CommaSeparatedExampleQueryParameter
-
-  SingleExampleQueryParameter:
-    properties: {}
-  ExplodedExampleQueryParameter:
-    properties: {}
-  CommaSeparatedExampleQueryParameter:
-    properties: {}
+      single: {}
+      exploded: {}
+      commaSeparated: {}
 
   ExampleHeader:
     properties:

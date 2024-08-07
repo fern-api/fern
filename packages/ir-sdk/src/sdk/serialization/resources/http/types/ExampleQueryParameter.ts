@@ -12,11 +12,13 @@ export const ExampleQueryParameter: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     name: core.serialization.lazyObject(async () => (await import("../../..")).NameAndWireValue),
     value: core.serialization.lazyObject(async () => (await import("../../..")).ExampleTypeReference),
+    shape: core.serialization.lazy(async () => (await import("../../..")).ExampleQueryParameterShape).optional(),
 });
 
 export declare namespace ExampleQueryParameter {
     interface Raw {
         name: serializers.NameAndWireValue.Raw;
         value: serializers.ExampleTypeReference.Raw;
+        shape?: serializers.ExampleQueryParameterShape.Raw | null;
     }
 }
