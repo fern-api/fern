@@ -4,7 +4,6 @@ import { TaskContext } from "@fern-api/task-context";
 import { loadAPIChangelog } from "./loadAPIChangelog";
 import { getValidAbsolutePathToAsyncAPIFromFolder } from "./loadAsyncAPIFile";
 import { getValidAbsolutePathToOpenAPIFromFolder } from "./loadOpenAPIFile";
-import { ProtobufOpenAPIGenerator } from "./protobuf/ProtobufOpenAPIGenerator";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
 import { APIChangelog, Spec } from "./types/Workspace";
 import { OSSWorkspace } from "./workspaces";
@@ -37,8 +36,6 @@ export async function loadAPIWorkspace({
     const absolutePathToAsyncAPIFolder = join(absolutePathToWorkspace, RelativeFilePath.of(ASYNCAPI_DIRECTORY));
     const asyncApiDirectoryExists = await doesPathExist(absolutePathToAsyncAPIFolder);
 
-    const protobufOpenAPIGenerator = new ProtobufOpenAPIGenerator({ context });
-
     if (generatorsConfiguration?.api != null && generatorsConfiguration.api.definitions.length > 0) {
         const specs: Spec[] = [];
 
@@ -48,11 +45,11 @@ export async function loadAPIWorkspace({
                     ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.overrides))
                     : undefined;
             if (definition.schema.type === "protobuf") {
-                const protoRootAbsoluteFilePath = join(
+                const absoluteFilepathToProtobufRoot = join(
                     absolutePathToWorkspace,
                     RelativeFilePath.of(definition.schema.root)
                 );
-                if (!(await doesPathExist(protoRootAbsoluteFilePath))) {
+                if (!(await doesPathExist(absoluteFilepathToProtobufRoot))) {
                     return {
                         didSucceed: false,
                         failures: {
@@ -62,11 +59,11 @@ export async function loadAPIWorkspace({
                         }
                     };
                 }
-                const protoTargetAbsoluteFilePath = join(
+                const absoluteFilepathToProtobufTarget = join(
                     absolutePathToWorkspace,
                     RelativeFilePath.of(definition.schema.target)
                 );
-                if (!(await doesPathExist(protoTargetAbsoluteFilePath))) {
+                if (!(await doesPathExist(absoluteFilepathToProtobufTarget))) {
                     return {
                         didSucceed: false,
                         failures: {
@@ -76,14 +73,12 @@ export async function loadAPIWorkspace({
                         }
                     };
                 }
-                const openAPIAbsoluteFilePath = await protobufOpenAPIGenerator.generate({
-                    protoRootAbsoluteFilePath,
-                    protoTargetAbsoluteFilePath,
-                    local: definition.schema.localGeneration
-                });
                 specs.push({
-                    absoluteFilepath: openAPIAbsoluteFilePath,
+                    type: "protobuf",
+                    absoluteFilepathToProtobufRoot,
+                    absoluteFilepathToProtobufTarget,
                     absoluteFilepathToOverrides,
+                    generateLocally: definition.schema.localGeneration,
                     settings: {
                         audiences: definition.audiences ?? [],
                         shouldUseTitleAsName: definition.settings?.shouldUseTitleAsName ?? true,
@@ -119,6 +114,7 @@ export async function loadAPIWorkspace({
                 };
             }
             specs.push({
+                type: "openapi",
                 absoluteFilepath,
                 absoluteFilepathToOverrides,
                 settings: {
@@ -152,12 +148,14 @@ export async function loadAPIWorkspace({
         const specs: Spec[] = [];
         if (absolutePathToOpenAPI != null) {
             specs.push({
+                type: "openapi",
                 absoluteFilepath: absolutePathToOpenAPI,
                 absoluteFilepathToOverrides: undefined
             });
         }
         if (absolutePathToAsyncAPI != null) {
             specs.push({
+                type: "openapi",
                 absoluteFilepath: absolutePathToAsyncAPI,
                 absoluteFilepathToOverrides: undefined
             });

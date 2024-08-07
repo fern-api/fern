@@ -26,31 +26,31 @@ export class ProtobufOpenAPIGenerator {
     }
 
     public async generate({
-        protoRootAbsoluteFilePath,
-        protoTargetAbsoluteFilePath,
+        absoluteFilepathToProtobufRoot,
+        absoluteFilepathToProtobufTarget,
         local
     }: {
-        protoRootAbsoluteFilePath: AbsoluteFilePath;
-        protoTargetAbsoluteFilePath: AbsoluteFilePath;
+        absoluteFilepathToProtobufRoot: AbsoluteFilePath;
+        absoluteFilepathToProtobufTarget: AbsoluteFilePath;
         local: boolean;
     }): Promise<AbsoluteFilePath> {
         if (local) {
-            return this.generateLocal({ protoRootAbsoluteFilePath, protoTargetAbsoluteFilePath });
+            return this.generateLocal({ absoluteFilepathToProtobufRoot, absoluteFilepathToProtobufTarget });
         }
         return this.generateRemote();
     }
 
     private async generateLocal({
-        protoRootAbsoluteFilePath,
-        protoTargetAbsoluteFilePath
+        absoluteFilepathToProtobufRoot,
+        absoluteFilepathToProtobufTarget
     }: {
-        protoRootAbsoluteFilePath: AbsoluteFilePath;
-        protoTargetAbsoluteFilePath: AbsoluteFilePath;
+        absoluteFilepathToProtobufRoot: AbsoluteFilePath;
+        absoluteFilepathToProtobufTarget: AbsoluteFilePath;
     }): Promise<AbsoluteFilePath> {
         const protobufGeneratorConfigPath = await this.setupProtobufGeneratorConfig({
-            protoRootAbsoluteFilePath
+            absoluteFilepathToProtobufRoot
         });
-        const protoTargetRelativeFilePath = relative(protoRootAbsoluteFilePath, protoTargetAbsoluteFilePath);
+        const protoTargetRelativeFilePath = relative(absoluteFilepathToProtobufRoot, absoluteFilepathToProtobufTarget);
         return this.doGenerateLocal({
             cwd: protobufGeneratorConfigPath,
             target: protoTargetRelativeFilePath
@@ -58,12 +58,12 @@ export class ProtobufOpenAPIGenerator {
     }
 
     private async setupProtobufGeneratorConfig({
-        protoRootAbsoluteFilePath
+        absoluteFilepathToProtobufRoot
     }: {
-        protoRootAbsoluteFilePath: AbsoluteFilePath;
+        absoluteFilepathToProtobufRoot: AbsoluteFilePath;
     }): Promise<AbsoluteFilePath> {
         const protobufGeneratorConfigPath = AbsoluteFilePath.of((await tmp.dir()).path);
-        await cp(protoRootAbsoluteFilePath, protobufGeneratorConfigPath, { recursive: true });
+        await cp(absoluteFilepathToProtobufRoot, protobufGeneratorConfigPath, { recursive: true });
         await writeFile(
             join(protobufGeneratorConfigPath, RelativeFilePath.of(PROTOBUF_GENERATOR_CONFIG_FILENAME)),
             PROTOBUF_GENERATOR_CONFIG

@@ -3,7 +3,7 @@ import { getEndpointLocation } from "@fern-api/openapi-ir-to-fern";
 import { parse } from "@fern-api/openapi-parser";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
-import { OSSWorkspace } from "@fern-api/workspace-loader";
+import { getAllOpenAPISpecs, OSSWorkspace } from "@fern-api/workspace-loader";
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { CliContext } from "../../cli-context/CliContext";
@@ -58,7 +58,8 @@ async function writeDefinitionForOpenAPIWorkspace({
     includeModels: boolean;
     context: TaskContext;
 }): Promise<void> {
-    for (const spec of workspace.specs) {
+    const specs = await getAllOpenAPISpecs({ context, specs: workspace.specs });
+    for (const spec of specs) {
         const ir = await parse({
             specs: [spec],
             taskContext: context
