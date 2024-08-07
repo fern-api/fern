@@ -1,3 +1,4 @@
+import { RUNTIME } from "../../runtime";
 import { Fetcher, fetcherImpl } from "../Fetcher";
 
 describe("Test fetcherImpl", () => {
@@ -24,6 +25,8 @@ describe("Test fetcherImpl", () => {
     });
 
     it("should handle successful request", async () => {
+        RUNTIME.isTest = true;
+
         const mockArgs: Fetcher.Args = {
             url: "https://httpbin.org/post",
             method: "POST",
@@ -41,7 +44,10 @@ describe("Test fetcherImpl", () => {
 
         const result = await fetcherImpl(mockArgs);
         expect(result.ok).toBe(true);
-        // @ts-expect-error
-        expect(result.body.json).toEqual({ data: "test" });
+        if (result.ok) {
+            expect(result.body).toEqual({ data: "test" });
+        }
+
+        RUNTIME.isTest = false;
     });
 });
