@@ -78,6 +78,9 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
 
@@ -95,6 +98,9 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
 
@@ -112,6 +118,9 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
 
@@ -136,6 +145,9 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
 
@@ -160,6 +172,9 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
 
@@ -184,6 +199,9 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.openapi == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
 
@@ -201,6 +219,9 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.postman == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
 
@@ -218,6 +239,9 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
 
@@ -235,6 +259,9 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
 
@@ -252,6 +279,9 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
 
@@ -269,6 +299,9 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
 
@@ -286,6 +319,9 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
 
@@ -303,6 +339,9 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
 
@@ -320,6 +359,9 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
 
@@ -337,6 +379,9 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
 
@@ -354,6 +399,9 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
 
@@ -371,6 +419,9 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
 
