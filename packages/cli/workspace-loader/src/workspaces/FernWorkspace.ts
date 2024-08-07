@@ -51,6 +51,10 @@ export class FernWorkspace extends AbstractAPIWorkspace<void> {
     public async toFernWorkspace(): Promise<FernWorkspace> {
         return this;
     }
+
+    public getAbsoluteFilepaths(): AbsoluteFilePath[] {
+        return [this.absoluteFilepath];
+    }
 }
 
 export declare namespace LazyFernWorkspace {
@@ -165,5 +169,9 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
         }
 
         return workspace;
+    }
+
+    public getAbsoluteFilepaths(): AbsoluteFilePath[] {
+        return [this.absoluteFilepath];
     }
 }
