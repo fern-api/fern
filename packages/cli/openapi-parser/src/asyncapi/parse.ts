@@ -42,7 +42,10 @@ export function parseAsyncAPI({
     const breadcrumbs: string[] = [];
     if (document.tags?.[0] != null) {
         breadcrumbs.push(document.tags[0].name);
-    } else {
+    } else if (!options.useImprovedMessageNaming) {
+        // In improved naming, we allow you to not have any prefixes here at all
+        // by not specifying tags. Without useImprovedMessageNaming, and no tags,
+        // we do still prefix with "Websocket".
         breadcrumbs.push("websocket");
     }
 
