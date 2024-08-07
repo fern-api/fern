@@ -6,7 +6,8 @@ export {
     GenerationLanguage,
     type GeneratorGroup,
     type GeneratorInvocation,
-    type GeneratorsConfiguration
+    type GeneratorsConfiguration,
+    type ProtoAPIDefinitionSchema
 } from "./GeneratorsConfiguration";
 export { getGeneratorNameOrThrow } from "./getGeneratorName";
 export { getLatestGeneratorVersion } from "./getGeneratorVersions";

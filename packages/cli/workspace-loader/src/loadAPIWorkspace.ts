@@ -4,6 +4,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { loadAPIChangelog } from "./loadAPIChangelog";
 import { getValidAbsolutePathToAsyncAPIFromFolder } from "./loadAsyncAPIFile";
 import { getValidAbsolutePathToOpenAPIFromFolder } from "./loadOpenAPIFile";
+import { ProtobufOpenAPIGenerator } from "./protobuf/ProtobufOpenAPIGenerator";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
 import { APIChangelog, Spec } from "./types/Workspace";
 import { OSSWorkspace } from "./workspaces";
@@ -36,20 +37,42 @@ export async function loadAPIWorkspace({
     const absolutePathToAsyncAPIFolder = join(absolutePathToWorkspace, RelativeFilePath.of(ASYNCAPI_DIRECTORY));
     const asyncApiDirectoryExists = await doesPathExist(absolutePathToAsyncAPIFolder);
 
+    const protobufOpenAPIGenerator = new ProtobufOpenAPIGenerator({
+        context,
+        absolutePathToWorkspace
+    });
+
     if (generatorsConfiguration?.api != null && generatorsConfiguration.api.definitions.length > 0) {
         const specs: Spec[] = [];
 
         for (const definition of generatorsConfiguration.api.definitions) {
-            const absoluteFilepath = join(absolutePathToWorkspace, RelativeFilePath.of(definition.path));
             const absoluteFilepathToOverrides =
                 definition.overrides != null
                     ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.overrides))
                     : undefined;
+            if (definition.schema.type === "protobuf") {
+                const openAPIAbsoluteFilePath = await protobufOpenAPIGenerator.generate({
+                    apiDefinition: definition.schema,
+                    local: definition.schema.localGeneration
+                });
+                specs.push({
+                    absoluteFilepath: openAPIAbsoluteFilePath,
+                    absoluteFilepathToOverrides,
+                    settings: {
+                        audiences: definition.audiences ?? [],
+                        shouldUseTitleAsName: definition.settings?.shouldUseTitleAsName ?? true,
+                        shouldUseUndiscriminatedUnionsWithLiterals:
+                            definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false
+                    }
+                });
+                continue;
+            }
+            const absoluteFilepath = join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.path));
             if (!(await doesPathExist(absoluteFilepath))) {
                 return {
                     didSucceed: false,
                     failures: {
-                        [RelativeFilePath.of(definition.path)]: {
+                        [RelativeFilePath.of(definition.schema.path)]: {
                             type: WorkspaceLoaderFailureType.FILE_MISSING
                         }
                     }

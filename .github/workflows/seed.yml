@@ -78,16 +78,8 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Setup Seed
+        uses: ./.github/workflows/setup-seed.yml
 
       - name: Seed Test
         env:
@@ -103,16 +95,8 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Setup Seed
+        uses: ./.github/workflows/setup-seed.yml
 
       - name: Seed Test
         env:
@@ -128,16 +112,8 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Setup Seed
+        uses: ./.github/workflows/setup-seed.yml
 
       - name: Install Poetry
         uses: snok/install-poetry@v1
@@ -160,16 +136,8 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Setup Seed
+        uses: ./.github/workflows/setup-seed.yml
 
       - name: Install Poetry
         uses: snok/install-poetry@v1
@@ -192,16 +160,8 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Setup Seed
+        uses: ./.github/workflows/setup-seed.yml
 
       - name: Install Poetry
         uses: snok/install-poetry@v1
@@ -224,16 +184,8 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.openapi == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Setup Seed
+        uses: ./.github/workflows/setup-seed.yml
 
       - name: Seed Test
         env:
@@ -249,16 +201,8 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.postman == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Setup Seed
+        uses: ./.github/workflows/setup-seed.yml
 
       - name: Seed Test
         env:
@@ -274,16 +218,8 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Setup Seed
+        uses: ./.github/workflows/setup-seed.yml
 
       - name: Seed Test
         env:
@@ -299,16 +235,8 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Setup Seed
+        uses: ./.github/workflows/setup-seed.yml
 
       - name: Seed Test
         env:
@@ -324,16 +252,8 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Setup Seed
+        uses: ./.github/workflows/setup-seed.yml
 
       - name: Seed Test
         env:
@@ -349,16 +269,8 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Setup Seed
+        uses: ./.github/workflows/setup-seed.yml
 
       - name: Seed Test
         env:
@@ -374,16 +286,8 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Setup Seed
+        uses: ./.github/workflows/setup-seed.yml
 
       - name: Seed Test
         env:
@@ -399,16 +303,8 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Setup Seed
+        uses: ./.github/workflows/setup-seed.yml
 
       - name: Seed Test
         env:
@@ -424,16 +320,8 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Setup Seed
+        uses: ./.github/workflows/setup-seed.yml
 
       - name: Seed Test
         env:
@@ -449,16 +337,8 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Setup Seed
+        uses: ./.github/workflows/setup-seed.yml
 
       - name: Seed Test
         env:
@@ -474,16 +354,8 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Setup Seed
+        uses: ./.github/workflows/setup-seed.yml
 
       - name: Seed Test
         env:
@@ -499,16 +371,8 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Setup Seed
+        uses: ./.github/workflows/setup-seed.yml
 
       - name: Seed Test
         env:
