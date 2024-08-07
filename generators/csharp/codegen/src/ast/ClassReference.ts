@@ -26,8 +26,15 @@ export class ClassReference extends AstNode {
     }
 
     public write(writer: Writer): void {
-        writer.addReference(this);
-        writer.write(`${this.name}`);
+        const namespaceConflict =
+            writer.getAllBaseNamespaces().has(this.name) &&
+            writer.getNamespace()?.startsWith(`${writer.getRootNamespace()}.${this.name}`) !== true;
+        if (namespaceConflict) {
+            writer.write(`${this.namespace}.${this.name}`);
+        } else {
+            writer.addReference(this);
+            writer.write(`${this.name}`);
+        }
         if (this.generics != null && this.generics.length > 0) {
             writer.write("<");
             this.generics.forEach((generic, idx) => {

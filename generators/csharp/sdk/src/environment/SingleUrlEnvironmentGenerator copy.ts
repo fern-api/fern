@@ -44,7 +44,8 @@ export class SingleUrlEnvironmentGenerator extends FileGenerator<
 
         return new CSharpFile({
             clazz: class_,
-            directory: RelativeFilePath.of(this.context.getCoreDirectory())
+            directory: RelativeFilePath.of(this.context.getCoreDirectory()),
+            context: this.context
         });
     }
 

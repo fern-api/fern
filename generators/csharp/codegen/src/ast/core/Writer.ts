@@ -9,7 +9,11 @@ const TAB_SIZE = 4;
 export declare namespace Writer {
     interface Args {
         /* The namespace that is being written to */
-        namespace?: string;
+        namespace: string;
+        /* All base namespaces in the project */
+        allBaseNamespaces: Set<string>;
+        /* The root namespace of the project */
+        rootNamespace: string;
     }
 }
 
@@ -25,10 +29,16 @@ export class Writer {
     /* The current line number */
     private references: Record<Namespace, ClassReference[]> = {};
     /* The namespace that is being written to */
-    private namespace: string | undefined;
+    private namespace: string;
+    /* All base namespaces in the project */
+    private allBaseNamespaces: Set<string>;
+    /* The root namespace of the project */
+    private rootNamespace: string;
 
-    constructor({ namespace }: Writer.Args) {
+    constructor({ namespace, allBaseNamespaces, rootNamespace }: Writer.Args) {
         this.namespace = namespace;
+        this.allBaseNamespaces = allBaseNamespaces;
+        this.rootNamespace = rootNamespace;
     }
 
     public write(text: string): void {
@@ -130,6 +140,18 @@ export class Writer {
         } else {
             this.references[reference.namespace] = [reference];
         }
+    }
+
+    public getAllBaseNamespaces(): Set<string> {
+        return this.allBaseNamespaces;
+    }
+
+    public getRootNamespace(): string {
+        return this.rootNamespace;
+    }
+
+    public getNamespace(): string {
+        return this.namespace;
     }
 
     public toString(): string {

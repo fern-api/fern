@@ -11,8 +11,8 @@ export abstract class AstNode {
     /**
      * Writes the node to a string.
      */
-    public toString(): string {
-        const writer = new Writer({});
+    public toString(namespace: string, allBaseNamespaces: Set<string>, rootNamespace: string): string {
+        const writer = new Writer({ namespace, allBaseNamespaces, rootNamespace });
         this.write(writer);
         return writer.toString();
     }

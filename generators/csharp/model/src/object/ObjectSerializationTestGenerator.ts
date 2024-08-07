@@ -102,7 +102,8 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
         });
         return new CSharpFile({
             clazz: testClass.getClass(),
-            directory: SERIALIZATION_TEST_FOLDER
+            directory: SERIALIZATION_TEST_FOLDER,
+            context: this.context
         });
     }
 

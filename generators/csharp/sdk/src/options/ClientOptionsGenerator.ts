@@ -33,7 +33,8 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
         class_.addField(this.baseOptionsGenerator.getTimeoutField(optionArgs));
         return new CSharpFile({
             clazz: class_,
-            directory: this.context.getCoreDirectory()
+            directory: this.context.getCoreDirectory(),
+            context: this.context
         });
     }
 

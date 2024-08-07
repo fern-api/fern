@@ -1,6 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/generator-commons";
 import {
+    FernFilepath,
     IntermediateRepresentation,
     Name,
     TypeDeclaration,
@@ -73,6 +74,20 @@ export abstract class AbstractCsharpGeneratorContext<
             name: CONSTANTS_CLASS_NAME
         });
     }
+
+    public getAllBaseNamespaces(): Set<string> {
+        const namespaces = new Set<string>();
+        for (const [_, subpackage] of Object.entries(this.ir.subpackages)) {
+            const baseNamespace = this.getBaseNamespaceParts(subpackage.fernFilepath)[0];
+            if (baseNamespace != null) {
+                namespaces.add(baseNamespace.pascalCase.safeName);
+            }
+        }
+        console.log(`ALL BASE NAMESPACES ${[...namespaces]}`);
+        return namespaces;
+    }
+
+    abstract getBaseNamespaceParts(fernFilepath: FernFilepath): Name[];
 
     public getStringEnumSerializerClassReference(): csharp.ClassReference {
         return csharp.classReference({

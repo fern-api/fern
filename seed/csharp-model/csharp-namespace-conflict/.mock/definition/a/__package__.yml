@@ -1,0 +1,22 @@
+types:
+  A:
+    docs: |
+      simple type with just a name. When referenced outside of the namespace A, it's fully qualified name should
+      be used since the classname will match the base namespace.
+    properties:
+      name: string
+    examples:
+      - name: One
+        value:
+          name: foo
+  B:
+    docs: A simple type with just an id. 
+    properties:
+      id:
+        docs: This reference to A should not use it's fully qualified name because it's in the same package as A.
+        type: A
+    examples:
+      - name: One
+        value:
+          id:
+            name: foo
