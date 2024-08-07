@@ -1,4 +1,5 @@
 import { FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration";
+import { isNonNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { convert } from "@fern-api/openapi-ir-to-fern";
 import { parse, ParseOpenAPIOptions } from "@fern-api/openapi-parser";
@@ -120,6 +121,15 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
             definition,
             changelog: this.changelog
         });
+    }
+
+    public getAbsoluteFilepaths(): AbsoluteFilePath[] {
+        return [
+            this.absoluteFilepath,
+            ...this.specs
+                .flatMap((spec) => [spec.absoluteFilepath, spec.absoluteFilepathToOverrides])
+                .filter(isNonNullish)
+        ];
     }
 }
 

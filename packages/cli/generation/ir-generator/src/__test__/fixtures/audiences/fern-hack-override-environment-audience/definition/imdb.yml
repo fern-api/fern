@@ -50,22 +50,12 @@ types:
       rating:
         type: double
         docs: The rating scale out of ten stars
-      cast: list<Cast>
 
   CreateMovieRequest:
     properties:
       title: string
       rating: double
-  
-  Cast: 
-    base-properties: 
-      name: Name
-    union: 
-      actor: {}
-      actress: {}
-  
-  Name: string
-      
+
 errors:
   MovieDoesNotExistError:
     status-code: 404
