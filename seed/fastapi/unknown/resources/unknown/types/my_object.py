@@ -7,6 +7,14 @@ import pydantic
 
 
 class MyObject(UniversalBaseModel):
+    """
+    Examples
+    --------
+    from seed.unknown_as_any.resources.unknown import MyObject
+
+    MyObject()
+    """
+
     unknown: typing.Optional[typing.Any] = None
 
     if IS_PYDANTIC_V2:

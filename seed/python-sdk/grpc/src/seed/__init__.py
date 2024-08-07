@@ -5,4 +5,13 @@ from .client import AsyncSeedApi, SeedApi
 from .user import CreateUserResponse, Metadata, MetadataValue, User
 from .version import __version__
 
-__all__ = ["AsyncSeedApi", "CreateUserResponse", "Metadata", "MetadataValue", "SeedApi", "User", "__version__", "user"]
+__all__ = [
+    "AsyncSeedApi",
+    "CreateUserResponse",
+    "Metadata",
+    "MetadataValue",
+    "SeedApi",
+    "User",
+    "__version__",
+    "user",
+]

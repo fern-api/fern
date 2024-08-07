@@ -3,4 +3,11 @@
 from . import user
 from .user import CreateUserRequest, CreateUserResponse, Metadata, MetadataValue, User
 
-__all__ = ["CreateUserRequest", "CreateUserResponse", "Metadata", "MetadataValue", "User", "user"]
+__all__ = [
+    "CreateUserRequest",
+    "CreateUserResponse",
+    "Metadata",
+    "MetadataValue",
+    "User",
+    "user",
+]
