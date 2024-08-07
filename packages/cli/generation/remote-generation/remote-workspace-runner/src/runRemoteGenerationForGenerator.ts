@@ -1,6 +1,5 @@
 import { FernToken } from "@fern-api/auth";
 import { Audiences, fernConfigJson, generatorsYml } from "@fern-api/configuration";
-import { GeneratorInvocation } from "@fern-api/configuration/src/generators-yml";
 import { createFdrService } from "@fern-api/core";
 import { FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
@@ -118,7 +117,7 @@ async function computeSemanticVersion({
 }: {
     fdr: FdrClient;
     packageName: string | undefined;
-    generatorInvocation: GeneratorInvocation;
+    generatorInvocation: generatorsYml.GeneratorInvocation;
 }): Promise<string | undefined> {
     if (generatorInvocation.language == null) {
         return undefined;
@@ -163,7 +162,11 @@ async function computeSemanticVersion({
     return response.body.version;
 }
 
-function getPackageName({ generatorInvocation }: { generatorInvocation: GeneratorInvocation }): string | undefined {
+function getPackageName({
+    generatorInvocation
+}: {
+    generatorInvocation: generatorsYml.GeneratorInvocation;
+}): string | undefined {
     return generatorInvocation.outputMode._visit<string | undefined>({
         downloadFiles: () => undefined,
         github: (val) =>
