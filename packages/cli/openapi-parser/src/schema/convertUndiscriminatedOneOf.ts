@@ -24,7 +24,8 @@ export function convertUndiscriminatedOneOf({
     wrapAsNullable,
     context,
     subtypes,
-    groupName
+    groupName,
+    subtypePrefixOverrides
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -35,8 +36,9 @@ export function convertUndiscriminatedOneOf({
     context: SchemaParserContext;
     subtypes: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[];
     groupName: SdkGroupName | undefined;
+    subtypePrefixOverrides?: (string | undefined)[];
 }): SchemaWithExample {
-    const subtypePrefixes = getUniqueSubTypeNames({ schemas: subtypes });
+    const derivedSubtypePrefixes = getUniqueSubTypeNames({ schemas: subtypes });
 
     const convertedSubtypes = subtypes.flatMap((schema, index) => {
         if (!isReferenceObject(schema) && schema.enum != null) {
@@ -51,7 +53,11 @@ export function convertUndiscriminatedOneOf({
                 });
             });
         }
-        return [convertSchema(schema, false, context, [...breadcrumbs, subtypePrefixes[index] ?? `${index}`])];
+        let subtypePrefix = derivedSubtypePrefixes[index];
+        if (subtypePrefixOverrides != null && subtypePrefixOverrides[index] != null) {
+            subtypePrefix = subtypePrefixOverrides[index];
+        }
+        return [convertSchema(schema, false, context, [...breadcrumbs, subtypePrefix ?? `${index}`])];
     });
 
     const uniqueSubtypes: SchemaWithExample[] = [];
@@ -279,6 +285,7 @@ function getUniqueSubTypeNames({
         }
         ++i;
     }
+
     return prefixes;
 }
 

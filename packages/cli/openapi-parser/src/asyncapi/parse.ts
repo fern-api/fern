@@ -137,7 +137,8 @@ export function parseAsyncAPI({
                 generatedName: channel.publish.operationId ?? "PublishEvent",
                 event: channel.publish,
                 breadcrumbs,
-                context
+                context,
+                options
             });
         }
 
@@ -147,7 +148,8 @@ export function parseAsyncAPI({
                 generatedName: channel.subscribe.operationId ?? "SubscribeEvent",
                 event: channel.subscribe,
                 breadcrumbs,
-                context
+                context,
+                options
             });
         }
 
@@ -229,22 +231,37 @@ function convertMessageToSchema({
     generatedName,
     event,
     context,
-    breadcrumbs
+    breadcrumbs,
+    options
 }: {
     breadcrumbs: string[];
     generatedName: string;
     event: AsyncAPIV2.PublishEvent | AsyncAPIV2.SubscribeEvent;
     context: AsyncAPIV2ParserContext;
+    options: ParseOpenAPIOptions;
 }): SchemaWithExample | undefined {
     if (event.message.oneOf != null) {
         const subtypes: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[] = [];
+        const prefixes: (string | undefined)[] = [];
         for (const schema of event.message.oneOf) {
             let resolvedSchema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject;
+            let namePrefix: string | undefined;
             if (isReferenceObject(schema)) {
-                resolvedSchema = context.resolveMessageReference(schema).payload;
+                const resolvedMessage = context.resolveMessageReference(schema);
+                if (!isReferenceObject(resolvedMessage.payload) && options.useImprovedMessageNaming) {
+                    namePrefix = resolvedMessage.name;
+                    resolvedSchema = {
+                        ...resolvedMessage.payload,
+                        title: resolvedMessage.name ?? resolvedMessage.payload.title,
+                        description: resolvedMessage.name ?? resolvedMessage.payload.description
+                    };
+                } else {
+                    resolvedSchema = resolvedMessage.payload;
+                }
             } else {
                 resolvedSchema = schema;
             }
+            prefixes.push(namePrefix);
             subtypes.push(resolvedSchema);
         }
         return convertUndiscriminatedOneOf({
@@ -256,7 +273,8 @@ function convertMessageToSchema({
             groupName: undefined,
             wrapAsNullable: false,
             breadcrumbs,
-            context
+            context,
+            subtypePrefixOverrides: options.useImprovedMessageNaming ? prefixes : []
         });
     }
     return undefined;

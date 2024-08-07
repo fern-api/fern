@@ -9,11 +9,14 @@ export interface ParseOpenAPIOptions {
     useTitlesAsName: boolean;
     /* The audiences that the OpenAPI must be filtered down into */
     audiences: string[] | undefined;
+    /* TODO: pick a better name for this flag, and maybe move it to AsyncAPI-only config */
+    useImprovedMessageNaming: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     disableExamples: false,
     discriminatedUnionV2: false,
     useTitlesAsName: true,
+    useImprovedMessageNaming: false,
     audiences: undefined
 };

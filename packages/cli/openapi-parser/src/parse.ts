@@ -99,7 +99,10 @@ export async function parse({
             const parsedAsyncAPI = parseAsyncAPI({
                 document: asyncAPI,
                 taskContext,
-                options: getParseOptions({ specSettings: spec.settings })
+                options: {
+                    ...getParseOptions({ specSettings: spec.settings }),
+                    useImprovedMessageNaming: true
+                }
             });
             if (parsedAsyncAPI.channel != null) {
                 ir.channel.push(parsedAsyncAPI.channel);
@@ -138,7 +141,8 @@ function getParseOptions({
             overrides?.useTitlesAsName ??
             specSettings?.shouldUseTitleAsName ??
             DEFAULT_PARSE_OPENAPI_SETTINGS.useTitlesAsName,
-        audiences: overrides?.audiences ?? specSettings?.audiences ?? DEFAULT_PARSE_OPENAPI_SETTINGS.audiences
+        audiences: overrides?.audiences ?? specSettings?.audiences ?? DEFAULT_PARSE_OPENAPI_SETTINGS.audiences,
+        useImprovedMessageNaming: DEFAULT_PARSE_OPENAPI_SETTINGS.useImprovedMessageNaming
     };
 }
 
