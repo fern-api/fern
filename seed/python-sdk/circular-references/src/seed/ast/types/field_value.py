@@ -37,7 +37,7 @@ class FieldValue_ObjectValue(UniversalBaseModel):
 
 
 class FieldValue_ContainerValue(UniversalBaseModel):
-    value: ContainerValue
+    value: "ContainerValue"
     type: typing.Literal["container_value"] = "container_value"
 
     if IS_PYDANTIC_V2:

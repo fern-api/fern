@@ -1,7 +1,8 @@
 from __future__ import annotations
 
+from operator import is_
 from types import TracebackType
-from typing import List, Optional, Sequence, Tuple, Type
+from typing import List, Optional, Sequence, Set, Tuple, Type
 
 import fern.ir.resources as ir_types
 
@@ -65,13 +66,23 @@ class FernAwarePydanticModel:
         self._source_file = source_file
         self._extends = extends
 
+        self._model_contains_forward_refs = False
+        self._all_referenced_types: Set[ir_types.TypeId] = set()
+
         models_to_extend = [item for item in base_models] if base_models is not None else []
-        # Acknowledge forward refs for extended models as well
         extends_crs = (
-            [self.get_class_reference_for_type_id(extended.type_id) for extended in extends]
+            [context.get_class_reference_for_type_id(extended.type_id, as_request=False) for extended in extends]
             if extends is not None
             else []
         )
+        # Acknowledge forward refs for extended models as well
+        for extended_type in extends:
+            type_id_to_reference = self._type_id_for_forward_ref()
+            if type_id_to_reference is not None and context.do_types_reference_each_other(extended_type.type_id, type_id_to_reference):
+                # While we don't want to string reference the extended model, we still want to rebuild the model
+                self._model_contains_forward_refs = True
+                break
+
         models_to_extend.extend(extends_crs)
         self._pydantic_model = PydanticModel(
             version=self._custom_config.version,
@@ -94,8 +105,6 @@ class FernAwarePydanticModel:
             include_model_config=include_model_config,
             update_forward_ref_function_reference=self._context.core_utilities.get_update_forward_refs(),
         )
-
-        self._model_contains_forward_refs = False
 
     def to_reference(self) -> LocalClassReference:
         return self._pydantic_model.to_reference()
@@ -125,6 +134,12 @@ class FernAwarePydanticModel:
             default_value=default_value,
         )
         self._pydantic_model.add_field(field)
+
+        maybe_field_type_ids = self._context.maybe_get_type_ids_for_type_reference(type_reference)
+        if maybe_field_type_ids is not None:
+            for type_id in maybe_field_type_ids:
+                self._all_referenced_types.add(type_id)
+
         return field
 
     def add_private_instance_field_unsafe(
@@ -158,13 +173,17 @@ class FernAwarePydanticModel:
             as_request=False,
         )
 
-    def _must_import_after_current_declaration(self, type_name: ir_types.DeclaredTypeName) -> bool:
+    def _type_id_for_forward_ref(self) -> Optional[ir_types.TypeId]:
         type_id_to_reference = None
         if self._type_name is not None:
             type_id_to_reference = self._type_name.type_id
         elif self._original_type_id is not None:
             type_id_to_reference = self._original_type_id
 
+        return type_id_to_reference
+
+    def _must_import_after_current_declaration(self, type_name: ir_types.DeclaredTypeName) -> bool:
+        type_id_to_reference = self._type_id_for_forward_ref()
         is_circular_reference = False
         if type_id_to_reference is not None:
             is_circular_reference = self._context.do_types_reference_each_other(type_id_to_reference, type_name.type_id)
@@ -239,6 +258,7 @@ class FernAwarePydanticModel:
             self._get_validators_generator().add_validators()
         if self._model_contains_forward_refs:
             self._pydantic_model.update_forward_refs()
+        
         self._pydantic_model.finish()
 
     def _get_validators_generator(self) -> ValidatorsGenerator:

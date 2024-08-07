@@ -40,7 +40,7 @@ class FernTypedDict:
         source_file: SourceFile,
         type_name: Optional[ir_types.DeclaredTypeName] = None,
         should_export: bool = True,
-        extended_types: Optional[Sequence[ir_types.DeclaredTypeName]] = None,
+        extended_types: Sequence[ir_types.DeclaredTypeName] = [],
         extended_references: Optional[Sequence[ClassReference]] = None,
         class_name: Optional[str] = None,
         docstring: Optional[str] = None,
@@ -60,9 +60,14 @@ class FernTypedDict:
         extends_crs = list((extended_references or []))
         extends_crs.extend(
             [context.get_class_reference_for_type_id(extended.type_id, as_request=True) for extended in extended_types]
-            if extended_types is not None
-            else []
         )
+
+        for extended_type in extended_types:
+            type_id_to_reference = self._type_id_for_forward_ref()
+            if type_id_to_reference is not None and context.do_types_reference_each_other(extended_type.type_id, type_id_to_reference):
+                # While we don't want to string reference the extended model, we still want to rebuild the model
+                self._model_contains_forward_refs = True
+                break
 
         if class_name is None and type_name is None:
             raise ValueError("Either class_name or name must be provided")
@@ -87,7 +92,7 @@ class FernTypedDict:
     def to_reference(self) -> LocalClassReference:
         return self._local_class_reference
 
-    def _field_type_is_circularly_referened(self, field_types: List[ir_types.TypeId]) -> bool:
+    def _type_id_for_forward_ref(self) -> Optional[ir_types.TypeId]:
         type_id_to_reference = None
         if self._type_name is not None:
             type_id_to_reference = self._type_name.type_id
@@ -95,6 +100,11 @@ class FernTypedDict:
             type_id_to_reference = self._original_type_id
         elif self._container_type_id is not None:
             type_id_to_reference = self._container_type_id
+
+        return type_id_to_reference
+
+    def _field_type_is_circularly_referened(self, field_types: List[ir_types.TypeId]) -> bool:
+        type_id_to_reference = self._type_id_for_forward_ref()
 
         return (
             any(
