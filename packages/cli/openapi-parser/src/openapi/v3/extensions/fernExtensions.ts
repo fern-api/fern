@@ -449,6 +449,9 @@ export const FernOpenAPIExtension = {
      * This is specifically to enrich the access token endpoint.
      * Required if the access token URL is specified in the OAuth scheme. (e.g. clientCredentials)
      *
+     * Note: if there are multiple endpoints at this path (ex. different methods), Fern will throw
+     * and `x-fern-oauth` must be specified instead.
+     *
      * components:
      *   securitySchemes:
      *     oAuthSample:
@@ -466,12 +469,15 @@ export const FernOpenAPIExtension = {
      *             expiresIn: $response.access_token
      *             refreshToken: $response.refresh_token
      */
-    FERN_ACCESS_TOKEN_ENDPOINT: "x-fern-access-token-endpoint",
+    FERN_OAUTH_ACCESS_TOKEN_ENDPOINT: "x-fern-access-token-endpoint",
 
     /**
      * Allows users to specify their oauth scheme when using OAS's scheme.
      * This is specifically to enrich the refresh token endpoint.
      * Required if the refresh token URL is specified in the OAuth scheme.
+     *
+     * Note: if there are multiple endpoints at this path (ex. different methods), Fern will throw
+     * and `x-fern-oauth` must be specified instead.
      *
      * components:
      *   securitySchemes:
@@ -490,7 +496,7 @@ export const FernOpenAPIExtension = {
      *             expiresIn: $response.access_token
      *             refreshToken: $response.refresh_token
      */
-    FERN_REFRESH_TOKEN_ENDPOINT: "x-fern-refresh-token-endpoint"
+    FERN_OAUTH_REFRESH_TOKEN_ENDPOINT: "x-fern-refresh-token-endpoint"
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;
