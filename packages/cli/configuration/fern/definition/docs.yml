@@ -4,6 +4,23 @@ docs: |-
   The docs schema is intended to be human-readable and hand-maintained, by using human-friendly undiscriminated unions and optional properties.
 
 types:
+  ProgrammingLanguage:
+    enum:
+      - typescript
+      - javascript
+      - python
+      - java
+      - go
+      - ruby
+      - csharp
+      - nodets
+      - nodejs
+      - dotnet
+      - curl
+      - jvm
+      - ts
+      - js
+      
   DocsConfiguration:
     properties:
       instances: list<DocsInstance>
@@ -21,6 +38,7 @@ types:
       "navbar-links": optional<list<NavbarLink>>
       "footer-links": optional<FooterLinksConfig>
       experimental: optional<ExperimentalConfig>
+      "default-language": optional<ProgrammingLanguage>
 
       # seo
       metadata: optional<MetadataConfig>

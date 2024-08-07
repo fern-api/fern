@@ -15,7 +15,14 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
         const filenameWithoutExtension =
             endpoint.sdkName.groupName.length === 0
                 ? "__package__"
-                : `${endpoint.sdkName.groupName.map((part) => camelCase(part)).join("/")}`;
+                : `${endpoint.sdkName.groupName
+                      .map((part) => {
+                          if (part.includes(" ")) {
+                              return camelCase(part);
+                          }
+                          return part;
+                      })
+                      .join("/")}`;
         const filename = `${filenameWithoutExtension}.yml`;
         // only if the tag lines up with `x-fern-sdk-group-name` do we use it
         const isTagApplicable = filenameWithoutExtension.toLowerCase() === tag?.toLowerCase().replaceAll(" ", "");

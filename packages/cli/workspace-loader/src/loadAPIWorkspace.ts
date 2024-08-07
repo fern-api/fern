@@ -1,4 +1,4 @@
-import { ASYNCAPI_DIRECTORY, generatorsYml, OPENAPI_DIRECTORY } from "@fern-api/configuration";
+import { ASYNCAPI_DIRECTORY, DEFINITION_DIRECTORY, generatorsYml, OPENAPI_DIRECTORY } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { loadAPIChangelog } from "./loadAPIChangelog";
@@ -38,7 +38,6 @@ export async function loadAPIWorkspace({
 
     if (generatorsConfiguration?.api != null && generatorsConfiguration.api.definitions.length > 0) {
         const specs: Spec[] = [];
-
         for (const definition of generatorsConfiguration.api.definitions) {
             const absoluteFilepath = join(absolutePathToWorkspace, RelativeFilePath.of(definition.path));
             const absoluteFilepathToOverrides =
@@ -134,18 +133,28 @@ export async function loadAPIWorkspace({
             })
         };
     }
+    if (await doesPathExist(join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY)))) {
+        const fernWorkspace = new LazyFernWorkspace({
+            absoluteFilepath: absolutePathToWorkspace,
+            generatorsConfiguration,
+            workspaceName,
+            changelog,
+            context,
+            cliVersion
+        });
 
-    const fernWorkspace = new LazyFernWorkspace({
-        absoluteFilepath: absolutePathToWorkspace,
-        generatorsConfiguration,
-        workspaceName,
-        changelog,
-        context,
-        cliVersion
-    });
+        return {
+            didSucceed: true,
+            workspace: fernWorkspace
+        };
+    }
 
     return {
-        didSucceed: true,
-        workspace: fernWorkspace
+        didSucceed: false,
+        failures: {
+            [RelativeFilePath.of(OPENAPI_DIRECTORY)]: {
+                type: WorkspaceLoaderFailureType.MISCONFIGURED_DIRECTORY
+            }
+        }
     };
 }

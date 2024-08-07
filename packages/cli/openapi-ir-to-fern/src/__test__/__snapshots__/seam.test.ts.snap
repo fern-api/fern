@@ -3,7 +3,7 @@
 exports[`seam seam docs 1`] = `
 {
   "definitionFiles": {
-    "accessCodes.yml": {
+    "access_codes.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -831,7 +831,7 @@ exports[`seam seam docs 1`] = `
         },
       },
     },
-    "accessCodes/simulate.yml": {
+    "access_codes/simulate.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -928,7 +928,7 @@ exports[`seam seam docs 1`] = `
         },
       },
     },
-    "accessCodes/unmanaged.yml": {
+    "access_codes/unmanaged.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -1276,7 +1276,7 @@ exports[`seam seam docs 1`] = `
         },
       },
     },
-    "acs/accessGroups.yml": {
+    "acs/access_groups.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -1633,7 +1633,7 @@ exports[`seam seam docs 1`] = `
         },
       },
     },
-    "acs/credentialPools.yml": {
+    "acs/credential_pools.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -1711,7 +1711,7 @@ exports[`seam seam docs 1`] = `
         },
       },
     },
-    "acs/credentialProvisioningAutomations.yml": {
+    "acs/credential_provisioning_automations.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -4017,7 +4017,7 @@ exports[`seam seam docs 1`] = `
         },
       },
     },
-    "actionAttempts.yml": {
+    "action_attempts.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -4148,7 +4148,7 @@ exports[`seam seam docs 1`] = `
         },
       },
     },
-    "clientSessions.yml": {
+    "client_sessions.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -4604,7 +4604,7 @@ exports[`seam seam docs 1`] = `
         },
       },
     },
-    "connectWebviews.yml": {
+    "connect_webviews.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -5001,7 +5001,7 @@ exports[`seam seam docs 1`] = `
         },
       },
     },
-    "connectedAccounts.yml": {
+    "connected_accounts.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -8525,7 +8525,7 @@ exports[`seam seam docs 1`] = `
         },
       },
     },
-    "noiseSensors/noiseThresholds.yml": {
+    "noise_sensors/noise_thresholds.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -8902,7 +8902,7 @@ exports[`seam seam docs 1`] = `
         },
       },
     },
-    "noiseSensors/simulate.yml": {
+    "noise_sensors/simulate.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -10296,7 +10296,7 @@ exports[`seam seam docs 1`] = `
         },
       },
     },
-    "thermostats/climateSettingSchedules.yml": {
+    "thermostats/climate_setting_schedules.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -10700,7 +10700,7 @@ exports[`seam seam docs 1`] = `
         },
       },
     },
-    "userIdentities.yml": {
+    "user_identities.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -11637,7 +11637,7 @@ exports[`seam seam docs 1`] = `
         },
       },
     },
-    "userIdentities/enrollmentAutomations.yml": {
+    "user_identities/enrollment_automations.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -17613,7 +17613,7 @@ exports[`seam seam docs 1`] = `
 exports[`seam seam simple 1`] = `
 {
   "definitionFiles": {
-    "accessCodes.yml": {
+    "access_codes.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -18441,7 +18441,7 @@ exports[`seam seam simple 1`] = `
         },
       },
     },
-    "accessCodes/simulate.yml": {
+    "access_codes/simulate.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -18538,7 +18538,7 @@ exports[`seam seam simple 1`] = `
         },
       },
     },
-    "accessCodes/unmanaged.yml": {
+    "access_codes/unmanaged.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -18886,7 +18886,7 @@ exports[`seam seam simple 1`] = `
         },
       },
     },
-    "acs/accessGroups.yml": {
+    "acs/access_groups.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -19243,7 +19243,7 @@ exports[`seam seam simple 1`] = `
         },
       },
     },
-    "acs/credentialPools.yml": {
+    "acs/credential_pools.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -19321,7 +19321,7 @@ exports[`seam seam simple 1`] = `
         },
       },
     },
-    "acs/credentialProvisioningAutomations.yml": {
+    "acs/credential_provisioning_automations.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -21627,7 +21627,7 @@ exports[`seam seam simple 1`] = `
         },
       },
     },
-    "actionAttempts.yml": {
+    "action_attempts.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -21758,7 +21758,7 @@ exports[`seam seam simple 1`] = `
         },
       },
     },
-    "clientSessions.yml": {
+    "client_sessions.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -22214,7 +22214,7 @@ exports[`seam seam simple 1`] = `
         },
       },
     },
-    "connectWebviews.yml": {
+    "connect_webviews.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -22611,7 +22611,7 @@ exports[`seam seam simple 1`] = `
         },
       },
     },
-    "connectedAccounts.yml": {
+    "connected_accounts.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -26135,7 +26135,7 @@ exports[`seam seam simple 1`] = `
         },
       },
     },
-    "noiseSensors/noiseThresholds.yml": {
+    "noise_sensors/noise_thresholds.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -26512,7 +26512,7 @@ exports[`seam seam simple 1`] = `
         },
       },
     },
-    "noiseSensors/simulate.yml": {
+    "noise_sensors/simulate.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -27906,7 +27906,7 @@ exports[`seam seam simple 1`] = `
         },
       },
     },
-    "thermostats/climateSettingSchedules.yml": {
+    "thermostats/climate_setting_schedules.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -28310,7 +28310,7 @@ exports[`seam seam simple 1`] = `
         },
       },
     },
-    "userIdentities.yml": {
+    "user_identities.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -29247,7 +29247,7 @@ exports[`seam seam simple 1`] = `
         },
       },
     },
-    "userIdentities/enrollmentAutomations.yml": {
+    "user_identities/enrollment_automations.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
