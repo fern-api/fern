@@ -369,7 +369,9 @@ export class DocsDefinitionResolver {
                     keywords: undefined,
                     smartCasing: false,
                     disableExamples: false,
-                    readme: undefined
+                    readme: undefined,
+                    version: undefined,
+                    packageName: undefined,
                 });
                 const apiDefinitionId = await this.registerApi({ ir, snippetsConfig });
                 const api = convertIrToApiDefinition(ir, apiDefinitionId);

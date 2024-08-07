@@ -27,7 +27,9 @@ export async function getIntermediateRepresentation({
         keywords: generatorInvocation.keywords,
         smartCasing: generatorInvocation.smartCasing,
         disableExamples: generatorInvocation.disableExamples,
-        readme: generatorInvocation.readme
+        readme: generatorInvocation.readme,
+        version: undefined,
+        packageName: undefined,
     });
     context.logger.debug("Generated IR");
     const migratedIntermediateRepresentation =

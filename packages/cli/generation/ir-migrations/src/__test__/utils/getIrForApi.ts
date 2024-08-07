@@ -23,6 +23,8 @@ export async function getIrForApi(absolutePathToWorkspace: AbsoluteFilePath): Pr
         keywords: undefined,
         smartCasing: true, // Verify the special casing convention in tests.
         disableExamples: false,
-        readme: undefined
+        readme: undefined,
+        version: undefined,
+        packageName: undefined,
     });
 }

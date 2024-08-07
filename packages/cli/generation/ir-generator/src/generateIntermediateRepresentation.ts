@@ -56,7 +56,9 @@ export async function generateIntermediateRepresentation({
     smartCasing,
     disableExamples,
     audiences,
-    readme
+    readme,
+    packageName,
+    version
 }: {
     fdrApiDefinitionId?: string;
     workspace: FernWorkspace;
@@ -66,6 +68,8 @@ export async function generateIntermediateRepresentation({
     disableExamples: boolean;
     audiences: Audiences;
     readme: generatorsYml.ReadmeSchema | undefined;
+    packageName: string | undefined;
+    version: string | undefined;
 }): Promise<IntermediateRepresentation> {
     const casingsGenerator = constructCasingsGenerator({ generationLanguage, keywords, smartCasing });
 
@@ -452,7 +456,14 @@ export async function generateIntermediateRepresentation({
             platformHeaders: {
                 language: "X-Fern-Language",
                 sdkName: "X-Fern-SDK-Name",
-                sdkVersion: "X-Fern-SDK-Version"
+                sdkVersion: "X-Fern-SDK-Version",
+                userAgent:
+                    version != null && packageName != null
+                        ? {
+                              header: "User-Agent",
+                              value: `${packageName}/${version}`
+                          }
+                        : undefined
             }
         },
         readmeConfig

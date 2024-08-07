@@ -32,6 +32,8 @@ export async function generateIrForFernWorkspace({
         smartCasing,
         disableExamples,
         audiences,
-        readme
+        readme,
+        version: undefined,
+        packageName: undefined,
     });
 }

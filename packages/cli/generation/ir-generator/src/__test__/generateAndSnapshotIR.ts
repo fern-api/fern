@@ -54,7 +54,9 @@ export async function generateAndSnapshotIR({
         keywords: undefined,
         smartCasing: true,
         disableExamples: false,
-        readme: undefined
+        readme: undefined,
+        version: undefined,
+        packageName: undefined,
     });
 
     const intermediateRepresentationJson = await IrSerialization.IntermediateRepresentation.jsonOrThrow(
