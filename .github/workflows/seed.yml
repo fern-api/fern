@@ -80,11 +80,23 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref }}
 
-      - name: Setup Seed
-        uses: ./.github/workflows/setup-seed.yml
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Yarn Install
+        run: yarn install
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi
 
       - name: Seed Test
         env:
@@ -102,11 +114,23 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref }}
 
-      - name: Setup Seed
-        uses: ./.github/workflows/setup-seed.yml
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Yarn Install
+        run: yarn install
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi
 
       - name: Seed Test
         env:
@@ -124,11 +148,23 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref }}
 
-      - name: Setup Seed
-        uses: ./.github/workflows/setup-seed.yml
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Yarn Install
+        run: yarn install
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi
 
       - name: Install Poetry
         uses: snok/install-poetry@v1
@@ -153,11 +189,23 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref }}
 
-      - name: Setup Seed
-        uses: ./.github/workflows/setup-seed.yml
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Yarn Install
+        run: yarn install
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi
 
       - name: Install Poetry
         uses: snok/install-poetry@v1
@@ -182,11 +230,23 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref }}
 
-      - name: Setup Seed
-        uses: ./.github/workflows/setup-seed.yml
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Yarn Install
+        run: yarn install
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi
 
       - name: Install Poetry
         uses: snok/install-poetry@v1
@@ -211,11 +271,23 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref }}
 
-      - name: Setup Seed
-        uses: ./.github/workflows/setup-seed.yml
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Yarn Install
+        run: yarn install
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi
 
       - name: Seed Test
         env:
@@ -233,11 +305,23 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref }}
 
-      - name: Setup Seed
-        uses: ./.github/workflows/setup-seed.yml
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Yarn Install
+        run: yarn install
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi
 
       - name: Seed Test
         env:
@@ -255,11 +339,23 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref }}
 
-      - name: Setup Seed
-        uses: ./.github/workflows/setup-seed.yml
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Yarn Install
+        run: yarn install
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi
 
       - name: Seed Test
         env:
@@ -277,11 +373,23 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref }}
 
-      - name: Setup Seed
-        uses: ./.github/workflows/setup-seed.yml
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Yarn Install
+        run: yarn install
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi
 
       - name: Seed Test
         env:
@@ -299,11 +407,23 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref }}
 
-      - name: Setup Seed
-        uses: ./.github/workflows/setup-seed.yml
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Yarn Install
+        run: yarn install
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi
 
       - name: Seed Test
         env:
@@ -321,11 +441,23 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref }}
 
-      - name: Setup Seed
-        uses: ./.github/workflows/setup-seed.yml
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Yarn Install
+        run: yarn install
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi
 
       - name: Seed Test
         env:
@@ -343,11 +475,23 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref }}
 
-      - name: Setup Seed
-        uses: ./.github/workflows/setup-seed.yml
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Yarn Install
+        run: yarn install
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi
 
       - name: Seed Test
         env:
@@ -365,11 +509,23 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref }}
 
-      - name: Setup Seed
-        uses: ./.github/workflows/setup-seed.yml
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Yarn Install
+        run: yarn install
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi
 
       - name: Seed Test
         env:
@@ -387,11 +543,23 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref }}
 
-      - name: Setup Seed
-        uses: ./.github/workflows/setup-seed.yml
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Yarn Install
+        run: yarn install
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi
 
       - name: Seed Test
         env:
@@ -409,11 +577,23 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref }}
 
-      - name: Setup Seed
-        uses: ./.github/workflows/setup-seed.yml
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Yarn Install
+        run: yarn install
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi
 
       - name: Seed Test
         env:
@@ -431,11 +611,23 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref }}
 
-      - name: Setup Seed
-        uses: ./.github/workflows/setup-seed.yml
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Yarn Install
+        run: yarn install
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi
 
       - name: Seed Test
         env:
@@ -453,11 +645,23 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref }}
 
-      - name: Setup Seed
-        uses: ./.github/workflows/setup-seed.yml
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Yarn Install
+        run: yarn install
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi
 
       - name: Seed Test
         env:
