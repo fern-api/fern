@@ -5,10 +5,10 @@ import {
     ExampleHeader,
     ExampleInlinedRequestBodyProperty,
     ExamplePathParameter,
+    ExampleQueryParameterShape,
     ExampleRequestBody,
     ExampleResponse,
-    Name,
-    SupportedSdkLanguage
+    Name
 } from "@fern-api/ir-sdk";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import {
@@ -99,7 +99,8 @@ export function convertExampleEndpointCall({
                               fileContainingRawTypeReference: file,
                               fileContainingExample: file,
                               workspace
-                          })
+                          }),
+                          shape: getQueryParamaterDeclationShape({ queryParameter: queryParameterDeclaration })
                       };
                   })
                 : [],
@@ -114,6 +115,14 @@ export function convertExampleEndpointCall({
             workspace
         })
     };
+}
+
+function getQueryParamaterDeclationShape({ queryParameter }: { queryParameter: RawSchemas.HttpQueryParameterSchema }) {
+    const isAllowMultiple =
+        typeof queryParameter !== "string" && queryParameter["allow-multiple"] != null
+            ? queryParameter["allow-multiple"]
+            : false;
+    return isAllowMultiple ? ExampleQueryParameterShape.exploded() : ExampleQueryParameterShape.single();
 }
 
 function convertPathParameters({

@@ -55,6 +55,7 @@ export * from "./ExampleCodeSampleSdk";
 export * from "./SupportedSdkLanguage";
 export * from "./ExamplePathParameter";
 export * from "./ExampleQueryParameter";
+export * from "./ExampleQueryParameterShape";
 export * from "./ExampleHeader";
 export * from "./ExampleRequestBody";
 export * from "./ExampleInlinedRequestBody";

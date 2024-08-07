@@ -11,6 +11,7 @@ import {
     ExampleObjectTypeWithTypeId,
     ExamplePathParameter,
     ExamplePrimitive,
+    ExampleQueryParameterShape,
     ExampleRequestBody,
     ExampleResponse,
     ExampleSingleUnionType,
@@ -245,14 +246,15 @@ export class ExampleGenerator {
                         .find((sh) => sh.name === h.name)
                 })
             ),
-            queryParameters: endpoint.queryParameters.map((q) =>
-                this.generateHttpParameterExample({
+            queryParameters: endpoint.queryParameters.map((q) => ({
+                ...this.generateHttpParameterExample({
                     parameter: q,
                     maybeParameterExample: examples
                         .flatMap((example) => example.queryParameters)
                         .find((qp) => qp.name === q.name)
-                })
-            ),
+                }),
+                shape: q.allowMultiple ? ExampleQueryParameterShape.exploded() : ExampleQueryParameterShape.single()
+            })),
             request:
                 endpoint.requestBody !== undefined
                     ? this.generateRequestBodyExample({

@@ -1377,6 +1377,9 @@
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -1411,6 +1414,9 @@
                                                 }
                                             },
                                             "jsonExample": 1
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -1465,6 +1471,9 @@
                                                 }
                                             },
                                             "jsonExample": 1
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -1501,6 +1510,9 @@
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "exploded"
                                         }
                                     },
                                     {
@@ -1557,6 +1569,9 @@
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "exploded"
                                         }
                                     }
                                 ],
@@ -1569,7 +1584,7 @@
                                         "value": null
                                     }
                                 },
-                                "id": "ac2c611c62bae6ad5db764e1395a18321d2d0fc5",
+                                "id": "db2b26cb694191dbc725ec586875406b33c3dc0d",
                                 "docs": null
                             }
                         }
