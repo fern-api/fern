@@ -114,7 +114,9 @@ export async function runPreviewServer({
     // initialize docs definition
     docsDefinition = await reloadDocsDefinition();
 
-    const watcher = new Watcher(absoluteFilePathToFern, {
+    const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilepaths());
+
+    const watcher = new Watcher([absoluteFilePathToFern, ...additionalFilepaths], {
         recursive: true,
         ignoreInitial: true,
         debounce: 1000,
