@@ -127,7 +127,10 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
         return [
             this.absoluteFilepath,
             ...this.specs
-                .flatMap((spec) => [spec.absoluteFilepath, spec.absoluteFilepathToOverrides])
+                .flatMap((spec) => [
+                    spec.type === "protobuf" ? spec.absoluteFilepathToProtobufTarget : spec.absoluteFilepath,
+                    spec.absoluteFilepathToOverrides
+                ])
                 .filter(isNonNullish)
         ];
     }
