@@ -47,6 +47,9 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             dependencyManager.addDependency("@types/node-fetch", "2.6.9", {
                 type: DependencyType.DEV
             });
+            dependencyManager.addDependency("fetch-mock-jest", "^1.5.1", {
+                type: DependencyType.DEV
+            });
         }
     };
     public readonly Fetcher: Fetcher["Fetcher"] = {

@@ -1,0 +1,10 @@
+name: api
+environments:
+  Production: https://www.yoursite.com
+  Staging: https://www.staging.yoursite.com
+error-discrimination:
+  strategy: status-code
+audiences:
+  - external
+  - internal
+  - development
