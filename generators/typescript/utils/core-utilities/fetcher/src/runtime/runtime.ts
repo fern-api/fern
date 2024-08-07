@@ -70,7 +70,6 @@ export interface Runtime {
     type: "browser" | "web-worker" | "deno" | "bun" | "node" | "react-native" | "unknown" | "workerd";
     version?: string;
     parsedVersion?: number;
-    isTest?: boolean;
 }
 
 function evaluateRuntime(): Runtime {

@@ -4,14 +4,6 @@ import { RUNTIME } from "../runtime";
  * Returns a fetch function based on the runtime
  */
 export async function getFetchFn(): Promise<any> {
-    if (RUNTIME.isTest) {
-        return () => ({
-            status: 200,
-            text: async () => JSON.stringify({ data: "test" }),
-            headers: new Headers()
-        });
-    }
-
     // In Node.js 18+ environments, use native fetch
     if (RUNTIME.type === "node" && RUNTIME.parsedVersion != null && RUNTIME.parsedVersion >= 18) {
         return fetch;
