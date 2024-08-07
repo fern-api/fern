@@ -44,9 +44,8 @@ navigation:
         contents:
           - page: What is an API Definition?
             path: ./pages/api-definition/introduction/what-is-an-api-definition.mdx
-          # TODO: Add this in once the docs are complete
-          # - page: What is the Fern Folder?
-          #   path: ./pages/api-definition/introduction/what-is-the-fern-folder.mdx
+          - page: What is the Fern Folder?
+            path: ./pages/api-definition/introduction/what-is-the-fern-folder.mdx
       - section: OpenAPI Specification
         slug: openapi
         contents:
