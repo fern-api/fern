@@ -7,8 +7,6 @@ import typing
 import pydantic
 
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
-from .object_value import ObjectValue
-from .primitive_value import PrimitiveValue
 
 
 class ContainerValue_List(UniversalBaseModel):

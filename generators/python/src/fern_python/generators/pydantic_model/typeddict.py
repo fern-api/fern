@@ -64,7 +64,9 @@ class FernTypedDict:
 
         for extended_type in extended_types:
             type_id_to_reference = self._type_id_for_forward_ref()
-            if type_id_to_reference is not None and context.do_types_reference_each_other(extended_type.type_id, type_id_to_reference):
+            if type_id_to_reference is not None and context.does_type_reference_other_type(
+                type_id=extended_type.type_id, other_type_id=type_id_to_reference
+            ):
                 # While we don't want to string reference the extended model, we still want to rebuild the model
                 self._model_contains_forward_refs = True
                 break
@@ -109,7 +111,7 @@ class FernTypedDict:
         return (
             any(
                 [
-                    self._context.does_type_reference_other_type(field_type, type_id_to_reference)
+                    self._context.does_type_reference_other_type(type_id=field_type, other_type_id=type_id_to_reference)
                     for field_type in field_types
                 ]
             )
