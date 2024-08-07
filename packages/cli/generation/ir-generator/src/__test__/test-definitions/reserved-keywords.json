@@ -573,6 +573,9 @@
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     }
                                 ],
@@ -585,7 +588,7 @@
                                         "value": null
                                     }
                                 },
-                                "id": "d24c9070cbf405f9519af580507e5f44ee6125fc",
+                                "id": "6e5ab08e71b1246d4f73ec22242d868b7ad3f93c",
                                 "docs": null
                             }
                         }

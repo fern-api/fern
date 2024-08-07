@@ -3,19 +3,20 @@ import {
     ExampleContainer,
     ExampleEndpointCall,
     ExampleEndpointSuccessResponse,
+    ExampleHeader,
     ExampleInlinedRequestBodyProperty,
     ExampleKeyValuePair,
     ExampleNamedType,
     ExampleObjectProperty,
     ExamplePathParameter,
+    ExampleQueryParameter,
     ExampleRequestBody,
     ExampleResponse,
     ExampleSingleUnionTypeProperties,
     ExampleType,
     ExampleTypeReference,
     ExampleTypeReferenceShape,
-    ExampleTypeShape,
-    NameAndWireValue
+    ExampleTypeShape
 } from "@fern-api/ir-sdk";
 import { FilteredIr } from "./filtered-ir/FilteredIr";
 
@@ -249,18 +250,36 @@ function filterExamplePathParameters({
         .filter((param): param is ExamplePathParameter => param !== undefined);
 }
 
-interface ExampleHeaderOrQuery {
-    name: NameAndWireValue;
-    value: ExampleTypeReference;
+function filterExampleQueryParameters({
+    filteredIr,
+    queryParameters
+}: {
+    filteredIr: FilteredIr;
+    queryParameters: ExampleQueryParameter[];
+}): ExampleQueryParameter[] {
+    return queryParameters
+        .map((queryParameter) => {
+            const filteredQueryParameter = filterExampleTypeReference({
+                filteredIr,
+                exampleTypeReference: queryParameter.value
+            });
+            return filteredQueryParameter !== undefined
+                ? {
+                      ...queryParameter,
+                      value: filteredQueryParameter
+                  }
+                : undefined;
+        })
+        .filter((queryParameter): queryParameter is ExampleQueryParameter => queryParameter !== undefined);
 }
 
-function filterExampleHeaderOrQuery({
+function filterExampleHeader({
     filteredIr,
     headers
 }: {
     filteredIr: FilteredIr;
-    headers: ExampleHeaderOrQuery[];
-}): ExampleHeaderOrQuery[] {
+    headers: ExampleHeader[];
+}): ExampleHeader[] {
     return headers
         .map((header) => {
             const filteredHeader = filterExampleTypeReference({ filteredIr, exampleTypeReference: header.value });
@@ -271,7 +290,7 @@ function filterExampleHeaderOrQuery({
                   }
                 : undefined;
         })
-        .filter((header): header is ExampleHeaderOrQuery => header !== undefined);
+        .filter((header): header is ExampleHeader => header !== undefined);
 }
 
 function filterExampleRequestBody({
@@ -391,9 +410,9 @@ export function filterEndpointExample({
             filteredIr,
             pathParameters: example.endpointPathParameters
         }),
-        serviceHeaders: filterExampleHeaderOrQuery({ filteredIr, headers: example.serviceHeaders }),
-        endpointHeaders: filterExampleHeaderOrQuery({ filteredIr, headers: example.endpointHeaders }),
-        queryParameters: filterExampleHeaderOrQuery({ filteredIr, headers: example.queryParameters }),
+        serviceHeaders: filterExampleHeader({ filteredIr, headers: example.serviceHeaders }),
+        endpointHeaders: filterExampleHeader({ filteredIr, headers: example.endpointHeaders }),
+        queryParameters: filterExampleQueryParameters({ filteredIr, queryParameters: example.queryParameters }),
         request:
             example.request !== undefined
                 ? filterExampleRequestBody({ filteredIr, requestBody: example.request })

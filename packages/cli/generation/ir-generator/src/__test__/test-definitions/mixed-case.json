@@ -4718,6 +4718,9 @@
                                                 }
                                             },
                                             "jsonExample": 10
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -4752,6 +4755,9 @@
                                                 }
                                             },
                                             "jsonExample": "2023-01-01"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     }
                                 ],
@@ -5456,6 +5462,9 @@
                                                 }
                                             },
                                             "jsonExample": 1
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -5490,6 +5499,9 @@
                                                 }
                                             },
                                             "jsonExample": "2023-01-15"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     }
                                 ],
@@ -6148,7 +6160,7 @@
                                         }
                                     }
                                 },
-                                "id": "ad9ec15d2c892c241c8dc3aad0b27896920b1ac8",
+                                "id": "767c764c168cd0a6ff9119e32c1e1be32b110240",
                                 "docs": null
                             }
                         }

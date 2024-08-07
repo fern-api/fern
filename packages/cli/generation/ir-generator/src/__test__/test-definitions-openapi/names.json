@@ -2072,6 +2072,9 @@
                                                 }
                                             },
                                             "jsonExample": true
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     }
                                 ],
@@ -3193,7 +3196,7 @@
                                         }
                                     }
                                 },
-                                "id": "17cb06f42ef3e907791491949be10e9ad2512b7a",
+                                "id": "09320c04848180ad850ecc354591b55b1b2e07fe",
                                 "docs": null
                             }
                         }

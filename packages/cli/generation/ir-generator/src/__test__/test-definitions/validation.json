@@ -2321,6 +2321,9 @@
                                                 }
                                             },
                                             "jsonExample": 1.1
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -2355,6 +2358,9 @@
                                                 }
                                             },
                                             "jsonExample": 1
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -2391,6 +2397,9 @@
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     }
                                 ],
@@ -2739,7 +2748,7 @@
                                         }
                                     }
                                 },
-                                "id": "079037cc77a3807e86ea63698c2df4d8b23c0a7f",
+                                "id": "73be0de9adb5bb80f170b317d7db24b2058d53f8",
                                 "docs": null
                             }
                         }

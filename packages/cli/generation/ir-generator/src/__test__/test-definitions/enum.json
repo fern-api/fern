@@ -3573,6 +3573,9 @@
                                                 }
                                             },
                                             "jsonExample": ">"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -3692,6 +3695,9 @@
                                                 }
                                             },
                                             "jsonExample": "red"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     }
                                 ],
@@ -3798,6 +3804,9 @@
                                                 }
                                             },
                                             "jsonExample": ">"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -3919,6 +3928,9 @@
                                                 }
                                             },
                                             "jsonExample": ">"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -4038,6 +4050,9 @@
                                                 }
                                             },
                                             "jsonExample": "red"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -4196,6 +4211,9 @@
                                                 }
                                             },
                                             "jsonExample": "red"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     }
                                 ],
@@ -4208,7 +4226,7 @@
                                         "value": null
                                     }
                                 },
-                                "id": "70f3b852799eaab5aa81ca7d5e2990af9e9d526f",
+                                "id": "d7cbff79c8a429333241d9b63b678e1e068509d9",
                                 "docs": null
                             }
                         }
@@ -4656,6 +4674,9 @@
                                                 }
                                             },
                                             "jsonExample": ">"
+                                        },
+                                        "shape": {
+                                            "type": "exploded"
                                         }
                                     },
                                     {
@@ -4777,6 +4798,9 @@
                                                 }
                                             },
                                             "jsonExample": ">"
+                                        },
+                                        "shape": {
+                                            "type": "exploded"
                                         }
                                     },
                                     {
@@ -4896,6 +4920,9 @@
                                                 }
                                             },
                                             "jsonExample": "red"
+                                        },
+                                        "shape": {
+                                            "type": "exploded"
                                         }
                                     },
                                     {
@@ -5054,6 +5081,9 @@
                                                 }
                                             },
                                             "jsonExample": "red"
+                                        },
+                                        "shape": {
+                                            "type": "exploded"
                                         }
                                     }
                                 ],
@@ -5066,7 +5096,7 @@
                                         "value": null
                                     }
                                 },
-                                "id": "ac70095f16bc982cdde9b15553cdc440aae37411",
+                                "id": "88ea4e8d196a4db2803c99039b1feca6ea630ae7",
                                 "docs": null
                             }
                         }

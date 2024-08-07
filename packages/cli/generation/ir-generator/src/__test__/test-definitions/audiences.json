@@ -2605,6 +2605,9 @@
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     }
                                 ],
@@ -2989,7 +2992,7 @@
                                         }
                                     }
                                 },
-                                "id": "862b080e4f18a8df48db67db50d4c9c7333e0544",
+                                "id": "408256cccc9a7f51770d626cd71dda08093fd1ab",
                                 "docs": null
                             }
                         }
