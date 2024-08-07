@@ -88,6 +88,6 @@ export class ProtobufOpenAPIGenerator {
     }
 
     private async generateRemote(): Promise<AbsoluteFilePath> {
-        throw new Error("Remote Protobuf generation is unimplemented.");
+        this.context.failAndThrow("Remote Protobuf generation is unimplemented.");
     }
 }
