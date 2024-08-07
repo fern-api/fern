@@ -37,7 +37,9 @@
     "chardet": "^2.0.0",
     "file-type": "^19.0.0",
     "next-mdx-remote": "^4.4.1",
+    "rehype-katex": "^7.0.0",
     "remark-gfm": "^3.0.1",
+    "remark-math": "^6.0.0",
     "tinycolor2": "^1.6.0",
     "zod": "^3.22.3"
   },
