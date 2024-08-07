@@ -265,8 +265,8 @@ func (u *Union) Accept(visitor UnionVisitor) error {
 type UpdateRequest struct {
 	Tag              string     `json:"-" url:"tag"`
 	Extra            *string    `json:"-" url:"extra,omitempty"`
-	Union            *Union     `json:"union" url:"-"`
-	Filter           *Filter    `json:"filter" url:"-"`
+	Union            *Union     `json:"union,omitempty" url:"-"`
+	Filter           *Filter    `json:"filter,omitempty" url:"-"`
 	OptionalUnion    *Union     `json:"optionalUnion,omitempty" url:"-"`
 	OptionalFilter   *Filter    `json:"optionalFilter,omitempty" url:"-"`
 	OptionalDate     *time.Time `json:"optionalDate,omitempty" url:"-" format:"date"`

@@ -10,7 +10,7 @@ import (
 
 type NestedUser struct {
 	Name string `json:"name" url:"name"`
-	User *User  `json:"user" url:"user"`
+	User *User  `json:"user,omitempty" url:"user,omitempty"`
 
 	extraProperties map[string]interface{}
 }
@@ -45,7 +45,7 @@ func (n *NestedUser) String() string {
 
 type User struct {
 	Name string   `json:"name" url:"name"`
-	Tags []string `json:"tags" url:"tags"`
+	Tags []string `json:"tags,omitempty" url:"tags,omitempty"`
 
 	extraProperties map[string]interface{}
 }

@@ -156,7 +156,7 @@ func (c *ContainerValue) UnmarshalJSON(data []byte) error {
 	switch unmarshaler.Type {
 	case "list":
 		var valueUnmarshaler struct {
-			List []*FieldValue `json:"value"`
+			List []*FieldValue `json:"value,omitempty"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -181,7 +181,7 @@ func (c ContainerValue) MarshalJSON() ([]byte, error) {
 	case "list":
 		var marshaler = struct {
 			Type string        `json:"type"`
-			List []*FieldValue `json:"value"`
+			List []*FieldValue `json:"value,omitempty"`
 		}{
 			Type: "list",
 			List: c.List,
@@ -261,7 +261,7 @@ func (f *FieldValue) UnmarshalJSON(data []byte) error {
 		f.ObjectValue = value
 	case "container_value":
 		var valueUnmarshaler struct {
-			ContainerValue *ContainerValue `json:"value"`
+			ContainerValue *ContainerValue `json:"value,omitempty"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -289,7 +289,7 @@ func (f FieldValue) MarshalJSON() ([]byte, error) {
 	case "container_value":
 		var marshaler = struct {
 			Type           string          `json:"type"`
-			ContainerValue *ContainerValue `json:"value"`
+			ContainerValue *ContainerValue `json:"value,omitempty"`
 		}{
 			Type:           "container_value",
 			ContainerValue: f.ContainerValue,
@@ -320,7 +320,7 @@ func (f *FieldValue) Accept(visitor FieldValueVisitor) error {
 // This type allows us to test a circular reference with a union type (see FieldValue).
 type ObjectFieldValue struct {
 	Name  FieldName   `json:"name" url:"name"`
-	Value *FieldValue `json:"value" url:"value"`
+	Value *FieldValue `json:"value,omitempty" url:"value,omitempty"`
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage

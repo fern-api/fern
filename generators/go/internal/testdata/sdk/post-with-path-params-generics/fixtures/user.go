@@ -238,8 +238,8 @@ func (u *Union) Accept(visitor UnionVisitor) error {
 type UpdateRequest struct {
 	Tag            string                   `json:"-" url:"tag"`
 	Extra          *string                  `json:"-" url:"extra,omitempty"`
-	Union          *Union                   `json:"union" url:"-"`
-	Filter         *Filter                  `json:"filter" url:"-"`
+	Union          *Union                   `json:"union,omitempty" url:"-"`
+	Filter         *Filter                  `json:"filter,omitempty" url:"-"`
 	OptionalUnion  *core.Optional[Union]    `json:"optionalUnion,omitempty" url:"-"`
 	OptionalFilter *core.Optional[Filter]   `json:"optionalFilter,omitempty" url:"-"`
 	OptionalTags   *core.Optional[[]string] `json:"optionalTags,omitempty" url:"-"`

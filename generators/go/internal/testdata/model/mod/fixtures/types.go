@@ -11,7 +11,7 @@ import (
 
 type Foo struct {
 	Name string   `json:"name" url:"name"`
-	Bar  *bar.Bar `json:"bar" url:"bar"`
+	Bar  *bar.Bar `json:"bar,omitempty" url:"bar,omitempty"`
 
 	extraProperties map[string]interface{}
 }

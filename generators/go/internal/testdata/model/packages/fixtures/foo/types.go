@@ -10,7 +10,7 @@ import (
 )
 
 type Foo struct {
-	Foo *fixtures.Foo `json:"foo" url:"foo"`
+	Foo *fixtures.Foo `json:"foo,omitempty" url:"foo,omitempty"`
 
 	extraProperties map[string]interface{}
 }

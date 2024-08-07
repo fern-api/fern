@@ -10,7 +10,7 @@ import (
 )
 
 type UsernameCursor struct {
-	Cursor *UsernamePage `json:"cursor" url:"cursor"`
+	Cursor *UsernamePage `json:"cursor,omitempty" url:"cursor,omitempty"`
 
 	extraProperties map[string]interface{}
 }
@@ -44,7 +44,7 @@ func (u *UsernameCursor) String() string {
 }
 
 type ListUsersExtendedResponse struct {
-	Data *UserListContainer `json:"data" url:"data"`
+	Data *UserListContainer `json:"data,omitempty" url:"data,omitempty"`
 	Next *uuid.UUID         `json:"next,omitempty" url:"next,omitempty"`
 	// The totall number of /users
 	TotalCount int `json:"total_count" url:"total_count"`
@@ -84,7 +84,7 @@ type ListUsersPaginationResponse struct {
 	Page *Page `json:"page,omitempty" url:"page,omitempty"`
 	// The totall number of /users
 	TotalCount int     `json:"total_count" url:"total_count"`
-	Data       []*User `json:"data" url:"data"`
+	Data       []*User `json:"data,omitempty" url:"data,omitempty"`
 
 	extraProperties map[string]interface{}
 }
@@ -140,7 +140,7 @@ func (o Order) Ptr() *Order {
 }
 
 type UsernameContainer struct {
-	Results []string `json:"results" url:"results"`
+	Results []string `json:"results,omitempty" url:"results,omitempty"`
 
 	extraProperties map[string]interface{}
 }

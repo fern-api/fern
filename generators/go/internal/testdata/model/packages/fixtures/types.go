@@ -79,8 +79,8 @@ func (v *Value) String() string {
 
 type Foo struct {
 	Name  string   `json:"name" url:"name"`
-	Value *Value   `json:"value" url:"value"`
-	Bar   *bar.Bar `json:"bar" url:"bar"`
+	Value *Value   `json:"value,omitempty" url:"value,omitempty"`
+	Bar   *bar.Bar `json:"bar,omitempty" url:"bar,omitempty"`
 
 	extraProperties map[string]interface{}
 }
@@ -154,7 +154,7 @@ func (u *Union) UnmarshalJSON(data []byte) error {
 		u.Value = value
 	case "anotherValue":
 		var valueUnmarshaler struct {
-			AnotherValue *Value `json:"anotherValue"`
+			AnotherValue *Value `json:"anotherValue,omitempty"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -168,7 +168,7 @@ func (u *Union) UnmarshalJSON(data []byte) error {
 		u.Bar = value
 	case "anotherBar":
 		var valueUnmarshaler struct {
-			AnotherBar *bar.Bar `json:"anotherBar"`
+			AnotherBar *bar.Bar `json:"anotherBar,omitempty"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -187,7 +187,7 @@ func (u Union) MarshalJSON() ([]byte, error) {
 	case "anotherValue":
 		var marshaler = struct {
 			Type         string `json:"type"`
-			AnotherValue *Value `json:"anotherValue"`
+			AnotherValue *Value `json:"anotherValue,omitempty"`
 		}{
 			Type:         "anotherValue",
 			AnotherValue: u.AnotherValue,
@@ -198,7 +198,7 @@ func (u Union) MarshalJSON() ([]byte, error) {
 	case "anotherBar":
 		var marshaler = struct {
 			Type       string   `json:"type"`
-			AnotherBar *bar.Bar `json:"anotherBar"`
+			AnotherBar *bar.Bar `json:"anotherBar,omitempty"`
 		}{
 			Type:       "anotherBar",
 			AnotherBar: u.AnotherBar,

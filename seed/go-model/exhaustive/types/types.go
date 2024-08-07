@@ -109,7 +109,7 @@ func (n *NestedObjectWithOptionalField) String() string {
 
 type NestedObjectWithRequiredField struct {
 	String       string                   `json:"string" url:"string"`
-	NestedObject *ObjectWithOptionalField `json:"NestedObject" url:"NestedObject"`
+	NestedObject *ObjectWithOptionalField `json:"NestedObject,omitempty" url:"NestedObject,omitempty"`
 
 	extraProperties map[string]interface{}
 }
@@ -143,7 +143,7 @@ func (n *NestedObjectWithRequiredField) String() string {
 }
 
 type ObjectWithMapOfMap struct {
-	Map map[string]map[string]string `json:"map" url:"map"`
+	Map map[string]map[string]string `json:"map,omitempty" url:"map,omitempty"`
 
 	extraProperties map[string]interface{}
 }

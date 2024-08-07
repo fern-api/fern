@@ -23,7 +23,7 @@ type GetUsersRequest struct {
 
 type User struct {
 	Name string   `json:"name" url:"name"`
-	Tags []string `json:"tags" url:"tags"`
+	Tags []string `json:"tags,omitempty" url:"tags,omitempty"`
 
 	extraProperties map[string]interface{}
 }

@@ -20,14 +20,14 @@ type Type struct {
 	Seven     time.Time        `json:"seven" url:"seven" format:"date"`
 	Eight     uuid.UUID        `json:"eight" url:"eight"`
 	Nine      []byte           `json:"nine" url:"nine"`
-	Ten       []int            `json:"ten" url:"ten"`
-	Eleven    []float64        `json:"eleven" url:"eleven"`
-	Twelve    map[string]bool  `json:"twelve" url:"twelve"`
+	Ten       []int            `json:"ten,omitempty" url:"ten,omitempty"`
+	Eleven    []float64        `json:"eleven,omitempty" url:"eleven,omitempty"`
+	Twelve    map[string]bool  `json:"twelve,omitempty" url:"twelve,omitempty"`
 	Thirteen  *int64           `json:"thirteen,omitempty" url:"thirteen,omitempty"`
-	Fourteen  interface{}      `json:"fourteen" url:"fourteen"`
-	Fifteen   [][]int          `json:"fifteen" url:"fifteen"`
-	Sixteen   []map[string]int `json:"sixteen" url:"sixteen"`
-	Seventeen []*uuid.UUID     `json:"seventeen" url:"seventeen"`
+	Fourteen  interface{}      `json:"fourteen,omitempty" url:"fourteen,omitempty"`
+	Fifteen   [][]int          `json:"fifteen,omitempty" url:"fifteen,omitempty"`
+	Sixteen   []map[string]int `json:"sixteen,omitempty" url:"sixteen,omitempty"`
+	Seventeen []*uuid.UUID     `json:"seventeen,omitempty" url:"seventeen,omitempty"`
 	Nineteen  *time.Time       `json:"nineteen,omitempty" url:"nineteen,omitempty"`
 	Twenty    *time.Time       `json:"twenty,omitempty" url:"twenty,omitempty" format:"date"`
 	eighteen  string

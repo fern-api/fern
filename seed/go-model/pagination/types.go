@@ -11,7 +11,7 @@ import (
 
 type UsernamePage struct {
 	After *string  `json:"after,omitempty" url:"after,omitempty"`
-	Data  []string `json:"data" url:"data"`
+	Data  []string `json:"data,omitempty" url:"data,omitempty"`
 
 	extraProperties map[string]interface{}
 }
@@ -153,7 +153,7 @@ func (u *User) String() string {
 }
 
 type UserListContainer struct {
-	Users []*User `json:"users" url:"users"`
+	Users []*User `json:"users,omitempty" url:"users,omitempty"`
 
 	extraProperties map[string]interface{}
 }
@@ -187,7 +187,7 @@ func (u *UserListContainer) String() string {
 }
 
 type UserPage struct {
-	Data *UserListContainer `json:"data" url:"data"`
+	Data *UserListContainer `json:"data,omitempty" url:"data,omitempty"`
 	Next *uuid.UUID         `json:"next,omitempty" url:"next,omitempty"`
 
 	extraProperties map[string]interface{}

@@ -9,7 +9,7 @@ import (
 )
 
 type CreateUserResponse struct {
-	User *User `json:"user" url:"user"`
+	User *User `json:"user,omitempty" url:"user,omitempty"`
 
 	extraProperties map[string]interface{}
 }

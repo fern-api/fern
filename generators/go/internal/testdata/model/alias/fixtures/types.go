@@ -11,7 +11,7 @@ import (
 )
 
 type Bar struct {
-	Foo *Foo `json:"foo" url:"foo"`
+	Foo *Foo `json:"foo,omitempty" url:"foo,omitempty"`
 
 	extraProperties map[string]interface{}
 }
@@ -150,7 +150,7 @@ func (u *Union) UnmarshalJSON(data []byte) error {
 		u.FooAlias = value
 	case "barAlias":
 		var valueUnmarshaler struct {
-			BarAlias BarAlias `json:"barAlias"`
+			BarAlias BarAlias `json:"barAlias,omitempty"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -177,7 +177,7 @@ func (u Union) MarshalJSON() ([]byte, error) {
 	case "barAlias":
 		var marshaler = struct {
 			Type     string   `json:"type"`
-			BarAlias BarAlias `json:"barAlias"`
+			BarAlias BarAlias `json:"barAlias,omitempty"`
 		}{
 			Type:     "barAlias",
 			BarAlias: u.BarAlias,

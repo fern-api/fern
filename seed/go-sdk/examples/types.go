@@ -59,7 +59,7 @@ func (c ComplexType) Ptr() *ComplexType {
 }
 
 type Identifier struct {
-	Type  *Type  `json:"type" url:"type"`
+	Type  *Type  `json:"type,omitempty" url:"type,omitempty"`
 	Value string `json:"value" url:"value"`
 	Label string `json:"label" url:"label"`
 
@@ -350,7 +350,7 @@ func (d *Directory) String() string {
 }
 
 type Entity struct {
-	Type *Type  `json:"type" url:"type"`
+	Type *Type  `json:"type,omitempty" url:"type,omitempty"`
 	Name string `json:"name" url:"name"`
 
 	extraProperties map[string]interface{}
@@ -516,8 +516,8 @@ type ExtendedMovie struct {
 	Rating   float64                `json:"rating" url:"rating"`
 	Tag      commons.Tag            `json:"tag" url:"tag"`
 	Book     *string                `json:"book,omitempty" url:"book,omitempty"`
-	Metadata map[string]interface{} `json:"metadata" url:"metadata"`
-	Cast     []string               `json:"cast" url:"cast"`
+	Metadata map[string]interface{} `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Cast     []string               `json:"cast,omitempty" url:"cast,omitempty"`
 	type_    string
 
 	extraProperties map[string]interface{}
@@ -640,8 +640,8 @@ func NewMetadataFromMarkdown(value string) *Metadata {
 func (m *Metadata) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type  string            `json:"type"`
-		Extra map[string]string `json:"extra"`
-		Tags  []string          `json:"tags"`
+		Extra map[string]string `json:"extra,omitempty"`
+		Tags  []string          `json:"tags,omitempty"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -677,8 +677,8 @@ func (m Metadata) MarshalJSON() ([]byte, error) {
 	case "html":
 		var marshaler = struct {
 			Type  string            `json:"type"`
-			Extra map[string]string `json:"extra"`
-			Tags  []string          `json:"tags"`
+			Extra map[string]string `json:"extra,omitempty"`
+			Tags  []string          `json:"tags,omitempty"`
 			Html  string            `json:"value"`
 		}{
 			Type:  "html",
@@ -690,8 +690,8 @@ func (m Metadata) MarshalJSON() ([]byte, error) {
 	case "markdown":
 		var marshaler = struct {
 			Type     string            `json:"type"`
-			Extra    map[string]string `json:"extra"`
-			Tags     []string          `json:"tags"`
+			Extra    map[string]string `json:"extra,omitempty"`
+			Tags     []string          `json:"tags,omitempty"`
 			Markdown string            `json:"value"`
 		}{
 			Type:     "markdown",
@@ -862,7 +862,7 @@ type Movie struct {
 	Rating   float64                `json:"rating" url:"rating"`
 	Tag      commons.Tag            `json:"tag" url:"tag"`
 	Book     *string                `json:"book,omitempty" url:"book,omitempty"`
-	Metadata map[string]interface{} `json:"metadata" url:"metadata"`
+	Metadata map[string]interface{} `json:"metadata,omitempty" url:"metadata,omitempty"`
 	type_    string
 
 	extraProperties map[string]interface{}
@@ -970,7 +970,7 @@ func (n *Node) String() string {
 }
 
 type Request struct {
-	Request interface{} `json:"request" url:"request"`
+	Request interface{} `json:"request,omitempty" url:"request,omitempty"`
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
@@ -1011,8 +1011,8 @@ func (r *Request) String() string {
 }
 
 type Response struct {
-	Response    interface{}   `json:"response" url:"response"`
-	Identifiers []*Identifier `json:"identifiers" url:"identifiers"`
+	Response    interface{}   `json:"response,omitempty" url:"response,omitempty"`
+	Identifiers []*Identifier `json:"identifiers,omitempty" url:"identifiers,omitempty"`
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
@@ -1053,7 +1053,7 @@ func (r *Response) String() string {
 }
 
 type ResponseType struct {
-	Type *Type `json:"type" url:"type"`
+	Type *Type `json:"type,omitempty" url:"type,omitempty"`
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage

@@ -11,7 +11,7 @@ import (
 
 type Bar struct {
 	// This is a Foo field.
-	Foo *Foo `json:"foo" url:"foo"`
+	Foo *Foo `json:"foo,omitempty" url:"foo,omitempty"`
 
 	extraProperties map[string]interface{}
 }
