@@ -37,10 +37,7 @@ export async function loadAPIWorkspace({
     const absolutePathToAsyncAPIFolder = join(absolutePathToWorkspace, RelativeFilePath.of(ASYNCAPI_DIRECTORY));
     const asyncApiDirectoryExists = await doesPathExist(absolutePathToAsyncAPIFolder);
 
-    const protobufOpenAPIGenerator = new ProtobufOpenAPIGenerator({
-        context,
-        absolutePathToWorkspace
-    });
+    const protobufOpenAPIGenerator = new ProtobufOpenAPIGenerator({ context });
 
     if (generatorsConfiguration?.api != null && generatorsConfiguration.api.definitions.length > 0) {
         const specs: Spec[] = [];
@@ -51,8 +48,37 @@ export async function loadAPIWorkspace({
                     ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.overrides))
                     : undefined;
             if (definition.schema.type === "protobuf") {
+                const protoRootAbsoluteFilePath = join(
+                    absolutePathToWorkspace,
+                    RelativeFilePath.of(definition.schema.root)
+                );
+                if (!(await doesPathExist(protoRootAbsoluteFilePath))) {
+                    return {
+                        didSucceed: false,
+                        failures: {
+                            [RelativeFilePath.of(definition.schema.root)]: {
+                                type: WorkspaceLoaderFailureType.FILE_MISSING
+                            }
+                        }
+                    };
+                }
+                const protoTargetAbsoluteFilePath = join(
+                    absolutePathToWorkspace,
+                    RelativeFilePath.of(definition.schema.target)
+                );
+                if (!(await doesPathExist(protoTargetAbsoluteFilePath))) {
+                    return {
+                        didSucceed: false,
+                        failures: {
+                            [RelativeFilePath.of(definition.schema.target)]: {
+                                type: WorkspaceLoaderFailureType.FILE_MISSING
+                            }
+                        }
+                    };
+                }
                 const openAPIAbsoluteFilePath = await protobufOpenAPIGenerator.generate({
-                    apiDefinition: definition.schema,
+                    protoRootAbsoluteFilePath,
+                    protoTargetAbsoluteFilePath,
                     local: definition.schema.localGeneration
                 });
                 specs.push({

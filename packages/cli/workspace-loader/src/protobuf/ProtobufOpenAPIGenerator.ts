@@ -1,4 +1,3 @@
-import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
@@ -21,42 +20,33 @@ plugins:
 
 export class ProtobufOpenAPIGenerator {
     private context: TaskContext;
-    private absolutePathToWorkspace: AbsoluteFilePath;
 
-    constructor({
-        context,
-        absolutePathToWorkspace
-    }: {
-        context: TaskContext;
-        absolutePathToWorkspace: AbsoluteFilePath;
-    }) {
+    constructor({ context }: { context: TaskContext }) {
         this.context = context;
-        this.absolutePathToWorkspace = absolutePathToWorkspace;
     }
 
     public async generate({
-        apiDefinition,
+        protoRootAbsoluteFilePath,
+        protoTargetAbsoluteFilePath,
         local
     }: {
-        apiDefinition: generatorsYml.ProtoAPIDefinitionSchema;
+        protoRootAbsoluteFilePath: AbsoluteFilePath;
+        protoTargetAbsoluteFilePath: AbsoluteFilePath;
         local: boolean;
     }): Promise<AbsoluteFilePath> {
         if (local) {
-            return this.generateLocal({ apiDefinition });
+            return this.generateLocal({ protoRootAbsoluteFilePath, protoTargetAbsoluteFilePath });
         }
         return this.generateRemote();
     }
 
     private async generateLocal({
-        apiDefinition
+        protoRootAbsoluteFilePath,
+        protoTargetAbsoluteFilePath
     }: {
-        apiDefinition: generatorsYml.ProtoAPIDefinitionSchema;
+        protoRootAbsoluteFilePath: AbsoluteFilePath;
+        protoTargetAbsoluteFilePath: AbsoluteFilePath;
     }): Promise<AbsoluteFilePath> {
-        const protoRootAbsoluteFilePath = join(this.absolutePathToWorkspace, RelativeFilePath.of(apiDefinition.root));
-        const protoTargetAbsoluteFilePath = join(
-            this.absolutePathToWorkspace,
-            RelativeFilePath.of(apiDefinition.target)
-        );
         const protobufGeneratorConfigPath = await this.setupProtobufGeneratorConfig({
             protoRootAbsoluteFilePath
         });
