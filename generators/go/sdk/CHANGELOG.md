@@ -63,9 +63,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   }
   ```
 
-  Note that although this is technically a bug fix, this is being released as a new minor version given that
-  it will change the behavior of SDKs that are not properly setting required properties.
-
 ## [0.22.3 - 2024-07-22]
 
 - Fix: Fix an issue where APIs that specify the `property-name` error discrimination strategy would
