@@ -1,4 +1,7 @@
 types:
   Node:
     properties:
-      foo: Map<Node, String>
+      foo: map<Node, string>
+  AlsoNode:
+    properties:
+      bar: map<string, AlsoNode>

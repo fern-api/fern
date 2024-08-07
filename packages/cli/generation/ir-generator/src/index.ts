@@ -28,8 +28,10 @@ export {
     convertObjectPropertyWithPathToString,
     getAllPropertiesForObject,
     getAllPropertiesForType,
-    type ObjectPropertyWithPath
+    type ObjectPropertyWithPath,
+    type TypePropertyArgs
 } from "./utils/getAllPropertiesForObject";
+export { getPathToNamedChildType, type PathToNamedChildTypeArgs } from "./utils/getPathToNamedChildType";
 export { getResolvedPathOfImportedFile } from "./utils/getResolvedPathOfImportedFile";
 export { parseReferenceToEndpointName, type ReferenceToEndpointName } from "./utils/parseReferenceToEndpointName";
 export { parseReferenceToTypeName, type ReferenceToTypeName } from "./utils/parseReferenceToTypeName";
