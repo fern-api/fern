@@ -96,7 +96,7 @@ jobs:
           go-version: 'stable'
 
       - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
 
       - name: Seed Test
         env:
@@ -130,7 +130,7 @@ jobs:
           go-version: 'stable'
 
       - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
 
       - name: Seed Test
         env:
@@ -164,7 +164,7 @@ jobs:
           go-version: 'stable'
 
       - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
 
       - name: Install Poetry
         uses: snok/install-poetry@v1
@@ -205,7 +205,7 @@ jobs:
           go-version: 'stable'
 
       - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
 
       - name: Install Poetry
         uses: snok/install-poetry@v1
@@ -246,7 +246,7 @@ jobs:
           go-version: 'stable'
 
       - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
 
       - name: Install Poetry
         uses: snok/install-poetry@v1
@@ -287,7 +287,7 @@ jobs:
           go-version: 'stable'
 
       - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
 
       - name: Seed Test
         env:
@@ -321,7 +321,7 @@ jobs:
           go-version: 'stable'
 
       - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
 
       - name: Seed Test
         env:
@@ -355,7 +355,7 @@ jobs:
           go-version: 'stable'
 
       - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
 
       - name: Seed Test
         env:
@@ -389,7 +389,7 @@ jobs:
           go-version: 'stable'
 
       - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
 
       - name: Seed Test
         env:
@@ -423,7 +423,7 @@ jobs:
           go-version: 'stable'
 
       - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
 
       - name: Seed Test
         env:
@@ -457,7 +457,7 @@ jobs:
           go-version: 'stable'
 
       - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
 
       - name: Seed Test
         env:
@@ -491,7 +491,7 @@ jobs:
           go-version: 'stable'
 
       - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
 
       - name: Seed Test
         env:
@@ -525,7 +525,7 @@ jobs:
           go-version: 'stable'
 
       - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
 
       - name: Seed Test
         env:
@@ -559,7 +559,7 @@ jobs:
           go-version: 'stable'
 
       - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
 
       - name: Seed Test
         env:
@@ -593,7 +593,7 @@ jobs:
           go-version: 'stable'
 
       - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
 
       - name: Seed Test
         env:
@@ -627,7 +627,7 @@ jobs:
           go-version: 'stable'
 
       - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
 
       - name: Seed Test
         env:
@@ -661,7 +661,7 @@ jobs:
           go-version: 'stable'
 
       - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
 
       - name: Seed Test
         env:
