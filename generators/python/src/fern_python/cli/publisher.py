@@ -23,11 +23,9 @@ class Publisher:
 
     def run_ruff_format(self) -> None:
         self._run_command(
-            command=["poetry", "run", "ruff", "format"],
+            command=["poetry", "run", "ruff", "format", "--cache-dir", "../.ruffcache"],
             safe_command="poetry run ruff format",
-            env={
-                "RUFF_CACHE_DIR": "~/.cache/ruff"
-            }
+            cwd=None,
         )
 
     def run_poetry_install(self) -> None:
