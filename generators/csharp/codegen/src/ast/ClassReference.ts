@@ -26,10 +26,11 @@ export class ClassReference extends AstNode {
     }
 
     public write(writer: Writer): void {
-        const namespaceConflict =
+        const qualifiedTypeNameRequired =
             writer.getAllBaseNamespaces().has(this.name) &&
-            writer.getNamespace()?.startsWith(`${writer.getRootNamespace()}.${this.name}`) !== true;
-        if (namespaceConflict) {
+            // qualified type name not required if we're in the same base namespace as the conflicting type
+            !writer.getNamespace()?.startsWith(`${writer.getRootNamespace()}.${this.name}`);
+        if (qualifiedTypeNameRequired) {
             writer.write(`${this.namespace}.${this.name}`);
         } else {
             writer.addReference(this);
