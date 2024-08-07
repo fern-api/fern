@@ -50,8 +50,9 @@ type typeVisitor struct {
 	importPath     string
 	writer         *fileWriter
 
-	unionVersion   UnionVersion
-	includeRawJSON bool
+	unionVersion                 UnionVersion
+	includeRawJSON               bool
+	alwaysSendRequiredProperties bool
 }
 
 // Compile-time assertion.
@@ -385,7 +386,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			continue
 		}
 		propertyNames = append(propertyNames, property.Name.Name.PascalCase.UnsafeName)
-		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false), jsonTagForType(property.Name.WireValue, property.ValueType, t.writer.types))
+		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false), jsonTagForType(property.Name.WireValue, property.ValueType, t.writer.types, t.alwaysSendRequiredProperties))
 	}
 	t.writer.P("}")
 	t.writer.P("if err := json.Unmarshal(data, &unmarshaler); err != nil {")
@@ -423,7 +424,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			//  }
 			t.writer.P("var valueUnmarshaler struct {")
 			singleUnionProperty := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath)
-			t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", singleUnionProperty.valueMarshalerGoType, jsonTagForType(unionType.Shape.SingleProperty.Name.WireValue, unionType.Shape.SingleProperty.Type, t.writer.types))
+			t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", singleUnionProperty.valueMarshalerGoType, jsonTagForType(unionType.Shape.SingleProperty.Name.WireValue, unionType.Shape.SingleProperty.Type, t.writer.types, t.alwaysSendRequiredProperties))
 			t.writer.P("}")
 			t.writer.P("if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {")
 			t.writer.P("return err")
@@ -503,14 +504,14 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 				t.writer.types[extend.TypeId].Shape.Object,
 				true,  // includeJSONTags
 				true,  // includeURLTags
-				false, // includeOptionals
+				false, // includeOptionals,
 			)
 		}
 		for _, property := range union.BaseProperties {
 			if property.ValueType.Container != nil && property.ValueType.Container.Literal != nil {
 				continue
 			}
-			t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false), jsonTagForType(property.Name.WireValue, property.ValueType, t.writer.types))
+			t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false), jsonTagForType(property.Name.WireValue, property.ValueType, t.writer.types, t.alwaysSendRequiredProperties))
 		}
 		for _, literal := range literals {
 			t.writer.P(literal.Name.Name.PascalCase.UnsafeName, " ", literalToGoType(literal.Value), " `json:\"", literal.Name.WireValue, "\"`")
@@ -519,7 +520,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		typeName := singleUnionProperty.goType
 		switch unionType.Shape.PropertiesType {
 		case "singleProperty":
-			t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", singleUnionProperty.valueMarshalerGoType, jsonTagForType(unionType.Shape.SingleProperty.Name.WireValue, unionType.Shape.SingleProperty.Type, t.writer.types))
+			t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", singleUnionProperty.valueMarshalerGoType, jsonTagForType(unionType.Shape.SingleProperty.Name.WireValue, unionType.Shape.SingleProperty.Type, t.writer.types, t.alwaysSendRequiredProperties))
 		case "samePropertiesAsObject":
 		case "noProperties":
 			// For no properties, we always include the omitempty tag.
@@ -964,9 +965,9 @@ func (t *typeVisitor) visitObjectProperties(
 		if includeJSONTags {
 			var structTag string
 			if includeURLTags {
-				structTag = fullFieldTagForType(property.Name.WireValue, property.ValueType, t.writer.types)
+				structTag = fullFieldTagForType(property.Name.WireValue, property.ValueType, t.writer.types, t.alwaysSendRequiredProperties)
 			} else {
-				structTag = fullFieldTagForTypeWithIgnoredURL(property.Name.WireValue, property.ValueType, t.writer.types)
+				structTag = fullFieldTagForTypeWithIgnoredURL(property.Name.WireValue, property.ValueType, t.writer.types, t.alwaysSendRequiredProperties)
 			}
 			t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", goType, structTag)
 			continue
@@ -1408,41 +1409,64 @@ func firstLetterToLower(s string) string {
 }
 
 // fullFieldTagForType returns the JSON struct tag and query URL struct tag for the given type.
-func fullFieldTagForType(wireValue string, valueType *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) string {
+func fullFieldTagForType(
+	wireValue string,
+	valueType *ir.TypeReference,
+	types map[ir.TypeId]*ir.TypeDeclaration,
+	alwaysSendRequiredProperties bool,
+) string {
 	return structTagForType(
 		wireValue,
 		valueType,
 		types,
 		[]string{"json", "url"},
 		nil,
+		alwaysSendRequiredProperties,
 	)
 }
 
-func fullFieldTagForTypeWithIgnoredURL(wireValue string, valueType *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) string {
+func fullFieldTagForTypeWithIgnoredURL(
+	wireValue string,
+	valueType *ir.TypeReference,
+	types map[ir.TypeId]*ir.TypeDeclaration,
+	alwaysSendRequiredProperties bool,
+) string {
 	return structTagForType(
 		wireValue,
 		valueType,
 		types,
 		[]string{"json"},
 		[]string{"url"},
+		alwaysSendRequiredProperties,
 	)
 }
 
 // jsonTagForType returns the JSON struct tag for the given type.
-func jsonTagForType(wireValue string, valueType *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) string {
+func jsonTagForType(
+	wireValue string,
+	valueType *ir.TypeReference,
+	types map[ir.TypeId]*ir.TypeDeclaration,
+	alwaysSendRequiredProperties bool,
+) string {
 	return structTagForType(
 		wireValue,
 		valueType,
 		types,
 		[]string{"json"},
 		nil,
+		alwaysSendRequiredProperties,
 	)
 }
 
 // urlTagForType returns the query URL struct tag for the given type. The URL tag
 // requires special handling because we need to always set the JSON tag to '-'.
-func urlTagForType(wireValue string, valueType *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) string {
-	tagFormat := tagFormatForType(valueType, types)
+func urlTagForType(
+	wireValue string,
+	valueType *ir.TypeReference,
+	types map[ir.TypeId]*ir.TypeDeclaration,
+	alwaysSendRequiredProperties bool,
+) string {
+	tagFormat := tagFormatForType(valueType, types, alwaysSendRequiredProperties)
 	structTags := []string{
 		`json:"-"`,
 	}
@@ -1462,8 +1486,9 @@ func structTagForType(
 	types map[ir.TypeId]*ir.TypeDeclaration,
 	tags []string,
 	ignoreTags []string,
+	alwaysSendRequiredProperties bool,
 ) string {
-	tagFormat := tagFormatForType(valueType, types)
+	tagFormat := tagFormatForType(valueType, types, alwaysSendRequiredProperties)
 	var structTags []string
 	for _, tag := range tags {
 		structTags = append(structTags, fmt.Sprintf(tagFormat, tag, wireValue))
@@ -1484,11 +1509,33 @@ func structTagForType(
 func tagFormatForType(
 	valueType *ir.TypeReference,
 	types map[ir.TypeId]*ir.TypeDeclaration,
+	alwaysSendRequiredProperties bool,
 ) string {
-	if isOptionalType(valueType, types) {
-		return `%s:"%s,omitempty"`
+	if alwaysSendRequiredProperties {
+		if isOptionalType(valueType, types) {
+			return `%s:"%s,omitempty"`
+		}
+		return "%s:%q"
 	}
-	return "%s:%q"
+	// The following behavior is the legacy behavior of the SDK, i.e.
+	// we omit values for required objects, lists, and maps.
+	if valueType != nil {
+		primitive := valueType.Primitive
+		if valueType.Named != nil {
+			typeDeclaration := types[valueType.Named.TypeId]
+			if typeDeclaration.Shape.Enum != nil {
+				return "%s:%q"
+			}
+			// If the type is an alias, we need to check if it's an alias to a primitive.
+			if typeDeclaration.Shape.Alias != nil {
+				primitive = typeDeclaration.Shape.Alias.AliasOf.Primitive
+			}
+		}
+		if primitive != "" {
+			return "%s:%q"
+		}
+	}
+	return `%s:"%s,omitempty"`
 }
 
 func getExtraPropertiesFieldName(extraPropertiesEnabled bool) string {

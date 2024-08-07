@@ -51,21 +51,22 @@ var (
 // Config represents the common configuration required from all of
 // the commands (e.g. fern-go-{client,model}).
 type Config struct {
-	DryRun                     bool
-	EnableExplicitNull         bool
-	IncludeLegacyClientOptions bool
-	Whitelabel                 bool
-	Organization               string
-	CoordinatorURL             string
-	CoordinatorTaskID          string
-	Version                    string
-	IrFilepath                 string
-	SnippetFilepath            string
-	ImportPath                 string
-	PackageName                string
-	UnionVersion               string
-	Module                     *generator.ModuleConfig
-	Writer                     *writer.Config
+	DryRun                       bool
+	EnableExplicitNull           bool
+	IncludeLegacyClientOptions   bool
+	Whitelabel                   bool
+	AlwaysSendRequiredProperties bool
+	Organization                 string
+	CoordinatorURL               string
+	CoordinatorTaskID            string
+	Version                      string
+	IrFilepath                   string
+	SnippetFilepath              string
+	ImportPath                   string
+	PackageName                  string
+	UnionVersion                 string
+	Module                       *generator.ModuleConfig
+	Writer                       *writer.Config
 }
 
 // GeneratorFunc is a function that generates files.
@@ -197,21 +198,22 @@ func newConfig(configFilename string) (*Config, error) {
 	}
 
 	return &Config{
-		DryRun:                     config.DryRun,
-		IncludeLegacyClientOptions: customConfig.IncludeLegacyClientOptions,
-		EnableExplicitNull:         customConfig.EnableExplicitNull,
-		Organization:               config.Organization,
-		Whitelabel:                 config.Whitelabel,
-		CoordinatorURL:             coordinatorURL,
-		CoordinatorTaskID:          coordinatorTaskID,
-		Version:                    outputVersionFromGeneratorConfig(config),
-		IrFilepath:                 config.IrFilepath,
-		SnippetFilepath:            snippetFilepath,
-		ImportPath:                 customConfig.ImportPath,
-		PackageName:                customConfig.PackageName,
-		UnionVersion:               customConfig.UnionVersion,
-		Module:                     moduleConfig,
-		Writer:                     writerConfig,
+		DryRun:                       config.DryRun,
+		IncludeLegacyClientOptions:   customConfig.IncludeLegacyClientOptions,
+		EnableExplicitNull:           customConfig.EnableExplicitNull,
+		Organization:                 config.Organization,
+		AlwaysSendRequiredProperties: customConfig.AlwaysSendRequiredProperties,
+		Whitelabel:                   config.Whitelabel,
+		CoordinatorURL:               coordinatorURL,
+		CoordinatorTaskID:            coordinatorTaskID,
+		Version:                      outputVersionFromGeneratorConfig(config),
+		IrFilepath:                   config.IrFilepath,
+		SnippetFilepath:              snippetFilepath,
+		ImportPath:                   customConfig.ImportPath,
+		PackageName:                  customConfig.PackageName,
+		UnionVersion:                 customConfig.UnionVersion,
+		Module:                       moduleConfig,
+		Writer:                       writerConfig,
 	}, nil
 }
 
@@ -250,12 +252,13 @@ func readConfig(configFilename string) (*generatorexec.GeneratorConfig, error) {
 }
 
 type customConfig struct {
-	EnableExplicitNull         bool          `json:"enableExplicitNull,omitempty"`
-	IncludeLegacyClientOptions bool          `json:"includeLegacyClientOptions,omitempty"`
-	ImportPath                 string        `json:"importPath,omitempty"`
-	PackageName                string        `json:"packageName,omitempty"`
-	UnionVersion               string        `json:"union,omitempty"`
-	Module                     *moduleConfig `json:"module,omitempty"`
+	EnableExplicitNull           bool          `json:"enableExplicitNull,omitempty"`
+	IncludeLegacyClientOptions   bool          `json:"includeLegacyClientOptions,omitempty"`
+	AlwaysSendRequiredProperties bool          `json:"alwaysSendRequiredProperties,omitempty"`
+	ImportPath                   string        `json:"importPath,omitempty"`
+	PackageName                  string        `json:"packageName,omitempty"`
+	UnionVersion                 string        `json:"union,omitempty"`
+	Module                       *moduleConfig `json:"module,omitempty"`
 }
 
 type moduleConfig struct {

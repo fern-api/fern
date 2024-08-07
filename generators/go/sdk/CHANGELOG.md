@@ -9,9 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.23.0 - 2024-08-07]
 
-- Fix: Required properties are not omitted in the type's wire representation.
-  Any required property that is not explicitly set will send the default value
-  for that type. For example,
+- Fix: When `alwaysSendRequiredProperties` is enabled, required properties are never omitted in
+  the type's wire representation. Any required property that is not explicitly set will
+  send the default value for that type. For example,
+
+  ```yaml
+  - name: fernapi/fern-go-sdk
+    version: 0.23.0
+    config:
+      alwaysSendRequiredProperties: true
+  ```
 
   ```go
   type CreateUserRequest struct {
@@ -113,7 +120,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.21.3 - 2024-05-17]
 
-- Internal: The generator now uses the latest FDR SDK.
+- Internal: The gnnerator now uses the latest FDR SDK.
 
 ## [0.21.2 - 2024-05-07]
 
