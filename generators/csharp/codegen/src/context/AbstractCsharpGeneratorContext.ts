@@ -31,6 +31,7 @@ export abstract class AbstractCsharpGeneratorContext<
     public readonly project: CsharpProject;
     public readonly csharpTypeMapper: CsharpTypeMapper;
     public publishConfig: FernGeneratorExec.NugetGithubPublishInfo | undefined;
+    private baseNamespacesCache: Set<String> | null = null;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -76,14 +77,17 @@ export abstract class AbstractCsharpGeneratorContext<
     }
 
     public getAllBaseNamespaces(): Set<string> {
-        const namespaces = new Set<string>();
-        for (const [_, subpackage] of Object.entries(this.ir.subpackages)) {
-            const baseNamespace = this.getBaseNamespaceParts(subpackage.fernFilepath)[0];
-            if (baseNamespace != null) {
-                namespaces.add(baseNamespace.pascalCase.safeName);
+        if (this.baseNamespacesCache === null) {
+            const namespaces = new Set<string>();
+            for (const [_, subpackage] of Object.entries(this.ir.subpackages)) {
+                const baseNamespace = this.getBaseNamespaceParts(subpackage.fernFilepath)[0];
+                if (baseNamespace != null) {
+                    namespaces.add(baseNamespace.pascalCase.safeName);
+                }
             }
+            this.baseNamespacesCache = namespaces;
         }
-        return namespaces;
+        return this.baseNamespacesCache as Set<string>;
     }
 
     abstract getBaseNamespaceParts(fernFilepath: FernFilepath): Name[];
