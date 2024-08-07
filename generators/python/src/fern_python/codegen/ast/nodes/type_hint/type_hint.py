@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Optional, Sequence, Union
 
+from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriter
 from fern_python.codegen.ast.nodes.expressions.function_invocation.function_invocation import (
     FunctionInvocation,
 )
@@ -176,12 +177,19 @@ class TypeHint(AstNode):
 
     @staticmethod
     def invoke_cast(type_casted_to: TypeHint, value_being_casted: Expression) -> Expression:
-        return Expression(
-            FunctionInvocation(
-                function_definition=get_reference_to_typing_import("cast"),
-                args=[Expression(type_casted_to), value_being_casted],
-            )
-        )
+        def _write_constructor_body(writer: NodeWriter) -> None:
+            writer.write_reference(get_reference_to_typing_import("cast"))
+            writer.write("(")
+            writer.write_newline_if_last_line_not()
+            with writer.indent(): 
+                Expression(type_casted_to).write(writer=writer)
+                writer.write(",")
+                writer.write_newline_if_last_line_not()
+                value_being_casted.write(writer=writer)
+            writer.write_newline_if_last_line_not()
+            writer.write(")")
+        
+        return Expression(CodeWriter(_write_constructor_body))
 
     @staticmethod
     def callable(parameters: Sequence[TypeHint], return_type: TypeHint) -> TypeHint:

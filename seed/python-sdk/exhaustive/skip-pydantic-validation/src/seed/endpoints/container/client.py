@@ -58,8 +58,11 @@ class ContainerClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[str],
-                    construct_type(type_=typing.List[str], object_=_response.json()),
-                )  # type: ignore
+                    construct_type(
+                        type_=typing.List[str],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -112,10 +115,10 @@ class ContainerClient:
                 return typing.cast(
                     typing.List[ObjectWithRequiredField],
                     construct_type(
-                        type_=typing.List[ObjectWithRequiredField],
+                        type_=typing.List[ObjectWithRequiredField],  # type: ignore
                         object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -162,8 +165,11 @@ class ContainerClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.Set[str],
-                    construct_type(type_=typing.Set[str], object_=_response.json()),
-                )  # type: ignore
+                    construct_type(
+                        type_=typing.Set[str],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -216,10 +222,10 @@ class ContainerClient:
                 return typing.cast(
                     typing.List[ObjectWithRequiredField],
                     construct_type(
-                        type_=typing.List[ObjectWithRequiredField],
+                        type_=typing.List[ObjectWithRequiredField],  # type: ignore
                         object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -267,9 +273,10 @@ class ContainerClient:
                 return typing.cast(
                     typing.Dict[str, str],
                     construct_type(
-                        type_=typing.Dict[str, str], object_=_response.json()
+                        type_=typing.Dict[str, str],  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -322,10 +329,10 @@ class ContainerClient:
                 return typing.cast(
                     typing.Dict[str, ObjectWithRequiredField],
                     construct_type(
-                        type_=typing.Dict[str, ObjectWithRequiredField],
+                        type_=typing.Dict[str, ObjectWithRequiredField],  # type: ignore
                         object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -376,10 +383,10 @@ class ContainerClient:
                 return typing.cast(
                     typing.Optional[ObjectWithRequiredField],
                     construct_type(
-                        type_=typing.Optional[ObjectWithRequiredField],
+                        type_=typing.Optional[ObjectWithRequiredField],  # type: ignore
                         object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -439,8 +446,11 @@ class AsyncContainerClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[str],
-                    construct_type(type_=typing.List[str], object_=_response.json()),
-                )  # type: ignore
+                    construct_type(
+                        type_=typing.List[str],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -501,10 +511,10 @@ class AsyncContainerClient:
                 return typing.cast(
                     typing.List[ObjectWithRequiredField],
                     construct_type(
-                        type_=typing.List[ObjectWithRequiredField],
+                        type_=typing.List[ObjectWithRequiredField],  # type: ignore
                         object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -559,8 +569,11 @@ class AsyncContainerClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.Set[str],
-                    construct_type(type_=typing.Set[str], object_=_response.json()),
-                )  # type: ignore
+                    construct_type(
+                        type_=typing.Set[str],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -621,10 +634,10 @@ class AsyncContainerClient:
                 return typing.cast(
                     typing.List[ObjectWithRequiredField],
                     construct_type(
-                        type_=typing.List[ObjectWithRequiredField],
+                        type_=typing.List[ObjectWithRequiredField],  # type: ignore
                         object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -680,9 +693,10 @@ class AsyncContainerClient:
                 return typing.cast(
                     typing.Dict[str, str],
                     construct_type(
-                        type_=typing.Dict[str, str], object_=_response.json()
+                        type_=typing.Dict[str, str],  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -743,10 +757,10 @@ class AsyncContainerClient:
                 return typing.cast(
                     typing.Dict[str, ObjectWithRequiredField],
                     construct_type(
-                        type_=typing.Dict[str, ObjectWithRequiredField],
+                        type_=typing.Dict[str, ObjectWithRequiredField],  # type: ignore
                         object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -805,10 +819,10 @@ class AsyncContainerClient:
                 return typing.cast(
                     typing.Optional[ObjectWithRequiredField],
                     construct_type(
-                        type_=typing.Optional[ObjectWithRequiredField],
+                        type_=typing.Optional[ObjectWithRequiredField],  # type: ignore
                         object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

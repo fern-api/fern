@@ -57,8 +57,12 @@ class UserClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    User, parse_obj_as(type_=User, object_=_response.json())
-                )  # type: ignore
+                    User,
+                    parse_obj_as(
+                        type_=User,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -117,8 +121,12 @@ class AsyncUserClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    User, parse_obj_as(type_=User, object_=_response.json())
-                )  # type: ignore
+                    User,
+                    parse_obj_as(
+                        type_=User,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

@@ -56,10 +56,10 @@ class UnknownClient:
                 return typing.cast(
                     typing.List[typing.Optional[typing.Any]],
                     parse_obj_as(
-                        type_=typing.List[typing.Optional[typing.Any]],
+                        type_=typing.List[typing.Optional[typing.Any]],  # type: ignore
                         object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -106,10 +106,10 @@ class UnknownClient:
                 return typing.cast(
                     typing.List[typing.Optional[typing.Any]],
                     parse_obj_as(
-                        type_=typing.List[typing.Optional[typing.Any]],
+                        type_=typing.List[typing.Optional[typing.Any]],  # type: ignore
                         object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -168,10 +168,10 @@ class AsyncUnknownClient:
                 return typing.cast(
                     typing.List[typing.Optional[typing.Any]],
                     parse_obj_as(
-                        type_=typing.List[typing.Optional[typing.Any]],
+                        type_=typing.List[typing.Optional[typing.Any]],  # type: ignore
                         object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -226,10 +226,10 @@ class AsyncUnknownClient:
                 return typing.cast(
                     typing.List[typing.Optional[typing.Any]],
                     parse_obj_as(
-                        type_=typing.List[typing.Optional[typing.Any]],
+                        type_=typing.List[typing.Optional[typing.Any]],  # type: ignore
                         object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

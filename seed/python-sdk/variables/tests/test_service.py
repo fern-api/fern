@@ -6,6 +6,12 @@ from seed import AsyncSeedVariables
 
 async def test_post(client: SeedVariables, async_client: AsyncSeedVariables) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert client.service.post(endpoint_param="string") is None  # type: ignore[func-returns-value]
+    assert (
+        client.service.post(endpoint_param="string")  # type: ignore[func-returns-value]
+        is None
+    )
 
-    assert await async_client.service.post(endpoint_param="string") is None  # type: ignore[func-returns-value]
+    assert (
+        await async_client.service.post(endpoint_param="string")  # type: ignore[func-returns-value]
+        is None
+    )

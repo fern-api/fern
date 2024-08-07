@@ -53,8 +53,12 @@ class ServiceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Resource, parse_obj_as(type_=Resource, object_=_response.json())
-                )  # type: ignore
+                    Resource,
+                    parse_obj_as(
+                        type_=Resource,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -110,8 +114,11 @@ class ServiceClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[Resource],
-                    parse_obj_as(type_=typing.List[Resource], object_=_response.json()),
-                )  # type: ignore
+                    parse_obj_as(
+                        type_=typing.List[Resource],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -167,8 +174,12 @@ class AsyncServiceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Resource, parse_obj_as(type_=Resource, object_=_response.json())
-                )  # type: ignore
+                    Resource,
+                    parse_obj_as(
+                        type_=Resource,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -231,8 +242,11 @@ class AsyncServiceClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[Resource],
-                    parse_obj_as(type_=typing.List[Resource], object_=_response.json()),
-                )  # type: ignore
+                    parse_obj_as(
+                        type_=typing.List[Resource],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

@@ -12,9 +12,9 @@ async def test_send(client: SeedEnum, async_client: AsyncSeedEnum) -> None:
             maybe_operand="less_than",
             operand_or_color="red",
             maybe_operand_or_color="red",
-        )
+        )  # type: ignore[func-returns-value]
         is None
-    )  # type: ignore[func-returns-value]
+    )
 
     assert (
         await async_client.path_param.send(
@@ -22,6 +22,6 @@ async def test_send(client: SeedEnum, async_client: AsyncSeedEnum) -> None:
             maybe_operand="less_than",
             operand_or_color="red",
             maybe_operand_or_color="red",
-        )
+        )  # type: ignore[func-returns-value]
         is None
-    )  # type: ignore[func-returns-value]
+    )

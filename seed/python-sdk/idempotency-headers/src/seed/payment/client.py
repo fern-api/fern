@@ -80,8 +80,12 @@ class PaymentClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    uuid.UUID, parse_obj_as(type_=uuid.UUID, object_=_response.json())
-                )  # type: ignore
+                    uuid.UUID,
+                    parse_obj_as(
+                        type_=uuid.UUID,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -204,8 +208,12 @@ class AsyncPaymentClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    uuid.UUID, parse_obj_as(type_=uuid.UUID, object_=_response.json())
-                )  # type: ignore
+                    uuid.UUID,
+                    parse_obj_as(
+                        type_=uuid.UUID,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

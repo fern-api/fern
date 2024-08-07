@@ -13,15 +13,15 @@ async def test_get_with_custom_header(
             x_test_service_header="string",
             x_test_endpoint_header="string",
             request="string",
-        )
+        )  # type: ignore[func-returns-value]
         is None
-    )  # type: ignore[func-returns-value]
+    )
 
     assert (
         await async_client.req_with_headers.get_with_custom_header(
             x_test_service_header="string",
             x_test_endpoint_header="string",
             request="string",
-        )
+        )  # type: ignore[func-returns-value]
         is None
-    )  # type: ignore[func-returns-value]
+    )

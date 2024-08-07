@@ -6,11 +6,15 @@ from seed import AsyncSeedEnum
 
 async def test_send(client: SeedEnum, async_client: AsyncSeedEnum) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert client.query_param.send(operand=">", operand_or_color="red") is None  # type: ignore[func-returns-value]
+    assert (
+        client.query_param.send(operand=">", operand_or_color="red")  # type: ignore[func-returns-value]
+        is None
+    )
 
     assert (
-        await async_client.query_param.send(operand=">", operand_or_color="red") is None
-    )  # type: ignore[func-returns-value]
+        await async_client.query_param.send(operand=">", operand_or_color="red")  # type: ignore[func-returns-value]
+        is None
+    )
 
 
 async def test_send_list(client: SeedEnum, async_client: AsyncSeedEnum) -> None:
@@ -21,9 +25,9 @@ async def test_send_list(client: SeedEnum, async_client: AsyncSeedEnum) -> None:
             maybe_operand=">",
             operand_or_color="red",
             maybe_operand_or_color="red",
-        )
+        )  # type: ignore[func-returns-value]
         is None
-    )  # type: ignore[func-returns-value]
+    )
 
     assert (
         await async_client.query_param.send_list(
@@ -31,6 +35,6 @@ async def test_send_list(client: SeedEnum, async_client: AsyncSeedEnum) -> None:
             maybe_operand=">",
             operand_or_color="red",
             maybe_operand_or_color="red",
-        )
+        )  # type: ignore[func-returns-value]
         is None
-    )  # type: ignore[func-returns-value]
+    )

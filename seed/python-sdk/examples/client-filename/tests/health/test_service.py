@@ -8,9 +8,15 @@ from ..utilities import validate_response
 
 async def test_check(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert client.health.service.check(id="id-2sdx82h") is None  # type: ignore[func-returns-value]
+    assert (
+        client.health.service.check(id="id-2sdx82h")  # type: ignore[func-returns-value]
+        is None
+    )
 
-    assert await async_client.health.service.check(id="id-2sdx82h") is None  # type: ignore[func-returns-value]
+    assert (
+        await async_client.health.service.check(id="id-2sdx82h")  # type: ignore[func-returns-value]
+        is None
+    )
 
 
 async def test_ping(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:

@@ -55,8 +55,12 @@ class HttpMethodsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    str, parse_obj_as(type_=str, object_=_response.json())
-                )  # type: ignore
+                    str,
+                    parse_obj_as(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -103,9 +107,10 @@ class HttpMethodsClient:
                 return typing.cast(
                     ObjectWithOptionalField,
                     parse_obj_as(
-                        type_=ObjectWithOptionalField, object_=_response.json()
+                        type_=ObjectWithOptionalField,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -159,9 +164,10 @@ class HttpMethodsClient:
                 return typing.cast(
                     ObjectWithOptionalField,
                     parse_obj_as(
-                        type_=ObjectWithOptionalField, object_=_response.json()
+                        type_=ObjectWithOptionalField,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -285,9 +291,10 @@ class HttpMethodsClient:
                 return typing.cast(
                     ObjectWithOptionalField,
                     parse_obj_as(
-                        type_=ObjectWithOptionalField, object_=_response.json()
+                        type_=ObjectWithOptionalField,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -328,8 +335,12 @@ class HttpMethodsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    bool, parse_obj_as(type_=bool, object_=_response.json())
-                )  # type: ignore
+                    bool,
+                    parse_obj_as(
+                        type_=bool,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -383,8 +394,12 @@ class AsyncHttpMethodsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    str, parse_obj_as(type_=str, object_=_response.json())
-                )  # type: ignore
+                    str,
+                    parse_obj_as(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -439,9 +454,10 @@ class AsyncHttpMethodsClient:
                 return typing.cast(
                     ObjectWithOptionalField,
                     parse_obj_as(
-                        type_=ObjectWithOptionalField, object_=_response.json()
+                        type_=ObjectWithOptionalField,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -503,9 +519,10 @@ class AsyncHttpMethodsClient:
                 return typing.cast(
                     ObjectWithOptionalField,
                     parse_obj_as(
-                        type_=ObjectWithOptionalField, object_=_response.json()
+                        type_=ObjectWithOptionalField,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -636,9 +653,10 @@ class AsyncHttpMethodsClient:
                 return typing.cast(
                     ObjectWithOptionalField,
                     parse_obj_as(
-                        type_=ObjectWithOptionalField, object_=_response.json()
+                        type_=ObjectWithOptionalField,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -687,8 +705,12 @@ class AsyncHttpMethodsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    bool, parse_obj_as(type_=bool, object_=_response.json())
-                )  # type: ignore
+                    bool,
+                    parse_obj_as(
+                        type_=bool,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

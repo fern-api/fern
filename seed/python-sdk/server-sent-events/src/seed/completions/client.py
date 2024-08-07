@@ -66,10 +66,10 @@ class CompletionsClient:
                             yield typing.cast(
                                 StreamedCompletion,
                                 parse_obj_as(
-                                    type_=StreamedCompletion,
+                                    type_=StreamedCompletion,  # type: ignore
                                     object_=json.loads(_sse.data),
                                 ),
-                            )  # type: ignore
+                            )
                         except:
                             pass
                     return
@@ -139,10 +139,10 @@ class AsyncCompletionsClient:
                             yield typing.cast(
                                 StreamedCompletion,
                                 parse_obj_as(
-                                    type_=StreamedCompletion,
+                                    type_=StreamedCompletion,  # type: ignore
                                     object_=json.loads(_sse.data),
                                 ),
-                            )  # type: ignore
+                            )
                         except:
                             pass
                     return

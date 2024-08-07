@@ -67,11 +67,21 @@ class ServiceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    File, parse_obj_as(type_=File, object_=_response.json())
-                )  # type: ignore
+                    File,
+                    parse_obj_as(
+                        type_=File,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             if _response.status_code == 404:
                 raise NotFoundError(
-                    typing.cast(str, parse_obj_as(type_=str, object_=_response.json()))  # type: ignore
+                    typing.cast(
+                        str,
+                        parse_obj_as(
+                            type_=str,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -142,11 +152,21 @@ class AsyncServiceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    File, parse_obj_as(type_=File, object_=_response.json())
-                )  # type: ignore
+                    File,
+                    parse_obj_as(
+                        type_=File,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             if _response.status_code == 404:
                 raise NotFoundError(
-                    typing.cast(str, parse_obj_as(type_=str, object_=_response.json()))  # type: ignore
+                    typing.cast(
+                        str,
+                        parse_obj_as(
+                            type_=str,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
                 )
             _response_json = _response.json()
         except JSONDecodeError:

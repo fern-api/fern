@@ -8,9 +8,12 @@ async def test_extended_inline_request_body(
     client: SeedAliasExtends, async_client: AsyncSeedAliasExtends
 ) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert client.extended_inline_request_body(child="string", parent="string") is None  # type: ignore[func-returns-value]
+    assert (
+        client.extended_inline_request_body(child="string", parent="string")  # type: ignore[func-returns-value]
+        is None
+    )
 
     assert (
-        await async_client.extended_inline_request_body(child="string", parent="string")
+        await async_client.extended_inline_request_body(child="string", parent="string")  # type: ignore[func-returns-value]
         is None
-    )  # type: ignore[func-returns-value]
+    )

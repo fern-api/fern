@@ -22,12 +22,15 @@ async def test_get_with_query(
     client: SeedExhaustive, async_client: AsyncSeedExhaustive
 ) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert client.endpoints.params.get_with_query(query="string", number=1) is None  # type: ignore[func-returns-value]
+    assert (
+        client.endpoints.params.get_with_query(query="string", number=1)  # type: ignore[func-returns-value]
+        is None
+    )
 
     assert (
-        await async_client.endpoints.params.get_with_query(query="string", number=1)
+        await async_client.endpoints.params.get_with_query(query="string", number=1)  # type: ignore[func-returns-value]
         is None
-    )  # type: ignore[func-returns-value]
+    )
 
 
 async def test_get_with_allow_multiple_query(
@@ -35,16 +38,16 @@ async def test_get_with_allow_multiple_query(
 ) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.endpoints.params.get_with_allow_multiple_query(query="string", numer=1)
+        client.endpoints.params.get_with_allow_multiple_query(query="string", numer=1)  # type: ignore[func-returns-value]
         is None
-    )  # type: ignore[func-returns-value]
+    )
 
     assert (
         await async_client.endpoints.params.get_with_allow_multiple_query(
             query="string", numer=1
-        )
+        )  # type: ignore[func-returns-value]
         is None
-    )  # type: ignore[func-returns-value]
+    )
 
 
 async def test_get_with_path_and_query(
@@ -52,16 +55,16 @@ async def test_get_with_path_and_query(
 ) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.endpoints.params.get_with_path_and_query(param="string", query="string")
+        client.endpoints.params.get_with_path_and_query(param="string", query="string")  # type: ignore[func-returns-value]
         is None
-    )  # type: ignore[func-returns-value]
+    )
 
     assert (
         await async_client.endpoints.params.get_with_path_and_query(
             param="string", query="string"
-        )
+        )  # type: ignore[func-returns-value]
         is None
-    )  # type: ignore[func-returns-value]
+    )
 
 
 async def test_modify_with_path(

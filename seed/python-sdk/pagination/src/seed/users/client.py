@@ -95,9 +95,10 @@ class UsersClient:
                 _parsed_response = typing.cast(
                     ListUsersPaginationResponse,
                     parse_obj_as(
-                        type_=ListUsersPaginationResponse, object_=_response.json()
+                        type_=ListUsersPaginationResponse,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
                 _has_next = False
                 _get_next = None
                 if (
@@ -175,9 +176,10 @@ class UsersClient:
                 _parsed_response = typing.cast(
                     ListUsersPaginationResponse,
                     parse_obj_as(
-                        type_=ListUsersPaginationResponse, object_=_response.json()
+                        type_=ListUsersPaginationResponse,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
                 _has_next = False
                 _get_next = None
                 if (
@@ -265,9 +267,10 @@ class UsersClient:
                 _parsed_response = typing.cast(
                     ListUsersPaginationResponse,
                     parse_obj_as(
-                        type_=ListUsersPaginationResponse, object_=_response.json()
+                        type_=ListUsersPaginationResponse,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
                 _has_next = True
                 _get_next = lambda: self.list_with_offset_pagination(
                     page=page + 1,
@@ -339,9 +342,10 @@ class UsersClient:
                 _parsed_response = typing.cast(
                     ListUsersPaginationResponse,
                     parse_obj_as(
-                        type_=ListUsersPaginationResponse, object_=_response.json()
+                        type_=ListUsersPaginationResponse,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
                 _has_next = True
                 _get_next = lambda: self.list_with_body_offset_pagination(
                     pagination=pagination,
@@ -417,9 +421,10 @@ class UsersClient:
                 _parsed_response = typing.cast(
                     ListUsersPaginationResponse,
                     parse_obj_as(
-                        type_=ListUsersPaginationResponse, object_=_response.json()
+                        type_=ListUsersPaginationResponse,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
                 _has_next = True
                 _get_next = lambda: self.list_with_offset_step_pagination(
                     page=page + 1,
@@ -486,9 +491,10 @@ class UsersClient:
                 _parsed_response = typing.cast(
                     ListUsersExtendedResponse,
                     parse_obj_as(
-                        type_=ListUsersExtendedResponse, object_=_response.json()
+                        type_=ListUsersExtendedResponse,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
                 _parsed_next = _parsed_response.next
                 _has_next = _parsed_next is not None
                 _get_next = lambda: self.list_with_extended_results(
@@ -553,8 +559,11 @@ class UsersClient:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
                     UsernameCursor,
-                    parse_obj_as(type_=UsernameCursor, object_=_response.json()),
-                )  # type: ignore
+                    parse_obj_as(
+                        type_=UsernameCursor,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
                 _has_next = False
                 _get_next = None
                 if _parsed_response.cursor is not None:
@@ -621,8 +630,11 @@ class UsersClient:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
                     UsernameContainer,
-                    parse_obj_as(type_=UsernameContainer, object_=_response.json()),
-                )  # type: ignore
+                    parse_obj_as(
+                        type_=UsernameContainer,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
                 _has_next = True
                 _get_next = lambda: self.list_with_global_config(
                     offset=offset + 1,
@@ -715,9 +727,10 @@ class AsyncUsersClient:
                 _parsed_response = typing.cast(
                     ListUsersPaginationResponse,
                     parse_obj_as(
-                        type_=ListUsersPaginationResponse, object_=_response.json()
+                        type_=ListUsersPaginationResponse,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
                 _has_next = False
                 _get_next = None
                 if (
@@ -803,9 +816,10 @@ class AsyncUsersClient:
                 _parsed_response = typing.cast(
                     ListUsersPaginationResponse,
                     parse_obj_as(
-                        type_=ListUsersPaginationResponse, object_=_response.json()
+                        type_=ListUsersPaginationResponse,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
                 _has_next = False
                 _get_next = None
                 if (
@@ -901,9 +915,10 @@ class AsyncUsersClient:
                 _parsed_response = typing.cast(
                     ListUsersPaginationResponse,
                     parse_obj_as(
-                        type_=ListUsersPaginationResponse, object_=_response.json()
+                        type_=ListUsersPaginationResponse,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
                 _has_next = True
                 _get_next = lambda: self.list_with_offset_pagination(
                     page=page + 1,
@@ -983,9 +998,10 @@ class AsyncUsersClient:
                 _parsed_response = typing.cast(
                     ListUsersPaginationResponse,
                     parse_obj_as(
-                        type_=ListUsersPaginationResponse, object_=_response.json()
+                        type_=ListUsersPaginationResponse,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
                 _has_next = True
                 _get_next = lambda: self.list_with_body_offset_pagination(
                     pagination=pagination,
@@ -1069,9 +1085,10 @@ class AsyncUsersClient:
                 _parsed_response = typing.cast(
                     ListUsersPaginationResponse,
                     parse_obj_as(
-                        type_=ListUsersPaginationResponse, object_=_response.json()
+                        type_=ListUsersPaginationResponse,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
                 _has_next = True
                 _get_next = lambda: self.list_with_offset_step_pagination(
                     page=page + 1,
@@ -1145,9 +1162,10 @@ class AsyncUsersClient:
                 _parsed_response = typing.cast(
                     ListUsersExtendedResponse,
                     parse_obj_as(
-                        type_=ListUsersExtendedResponse, object_=_response.json()
+                        type_=ListUsersExtendedResponse,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
                 _parsed_next = _parsed_response.next
                 _has_next = _parsed_next is not None
                 _get_next = lambda: self.list_with_extended_results(
@@ -1220,8 +1238,11 @@ class AsyncUsersClient:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
                     UsernameCursor,
-                    parse_obj_as(type_=UsernameCursor, object_=_response.json()),
-                )  # type: ignore
+                    parse_obj_as(
+                        type_=UsernameCursor,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
                 _has_next = False
                 _get_next = None
                 if _parsed_response.cursor is not None:
@@ -1296,8 +1317,11 @@ class AsyncUsersClient:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
                     UsernameContainer,
-                    parse_obj_as(type_=UsernameContainer, object_=_response.json()),
-                )  # type: ignore
+                    parse_obj_as(
+                        type_=UsernameContainer,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
                 _has_next = True
                 _get_next = lambda: self.list_with_global_config(
                     offset=offset + 1,

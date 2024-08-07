@@ -69,8 +69,12 @@ class ImdbClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    MovieId, parse_obj_as(type_=MovieId, object_=_response.json())
-                )  # type: ignore
+                    MovieId,
+                    parse_obj_as(
+                        type_=MovieId,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -114,13 +118,21 @@ class ImdbClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Movie, parse_obj_as(type_=Movie, object_=_response.json())
-                )  # type: ignore
+                    Movie,
+                    parse_obj_as(
+                        type_=Movie,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             if _response.status_code == 404:
                 raise MovieDoesNotExistError(
                     typing.cast(
-                        MovieId, parse_obj_as(type_=MovieId, object_=_response.json())
-                    )  # type: ignore
+                        MovieId,
+                        parse_obj_as(
+                            type_=MovieId,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -189,8 +201,12 @@ class AsyncImdbClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    MovieId, parse_obj_as(type_=MovieId, object_=_response.json())
-                )  # type: ignore
+                    MovieId,
+                    parse_obj_as(
+                        type_=MovieId,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -242,13 +258,21 @@ class AsyncImdbClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Movie, parse_obj_as(type_=Movie, object_=_response.json())
-                )  # type: ignore
+                    Movie,
+                    parse_obj_as(
+                        type_=Movie,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             if _response.status_code == 404:
                 raise MovieDoesNotExistError(
                     typing.cast(
-                        MovieId, parse_obj_as(type_=MovieId, object_=_response.json())
-                    )  # type: ignore
+                        MovieId,
+                        parse_obj_as(
+                            type_=MovieId,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
                 )
             _response_json = _response.json()
         except JSONDecodeError:

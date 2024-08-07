@@ -45,8 +45,12 @@ class DummyClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    str, parse_obj_as(type_=str, object_=_response.json())
-                )  # type: ignore
+                    str,
+                    parse_obj_as(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -97,8 +101,12 @@ class AsyncDummyClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    str, parse_obj_as(type_=str, object_=_response.json())
-                )  # type: ignore
+                    str,
+                    parse_obj_as(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

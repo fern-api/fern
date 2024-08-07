@@ -99,17 +99,19 @@ class InlinedRequestsClient:
                 return typing.cast(
                     ObjectWithOptionalField,
                     construct_type(
-                        type_=ObjectWithOptionalField, object_=_response.json()
+                        type_=ObjectWithOptionalField,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             if _response.status_code == 400:
                 raise BadRequestBody(
                     typing.cast(
                         BadObjectRequestInfo,
                         construct_type(
-                            type_=BadObjectRequestInfo, object_=_response.json()
+                            type_=BadObjectRequestInfo,  # type: ignore
+                            object_=_response.json(),
                         ),
-                    )  # type: ignore
+                    )
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -208,17 +210,19 @@ class AsyncInlinedRequestsClient:
                 return typing.cast(
                     ObjectWithOptionalField,
                     construct_type(
-                        type_=ObjectWithOptionalField, object_=_response.json()
+                        type_=ObjectWithOptionalField,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             if _response.status_code == 400:
                 raise BadRequestBody(
                     typing.cast(
                         BadObjectRequestInfo,
                         construct_type(
-                            type_=BadObjectRequestInfo, object_=_response.json()
+                            type_=BadObjectRequestInfo,  # type: ignore
+                            object_=_response.json(),
                         ),
-                    )  # type: ignore
+                    )
                 )
             _response_json = _response.json()
         except JSONDecodeError:

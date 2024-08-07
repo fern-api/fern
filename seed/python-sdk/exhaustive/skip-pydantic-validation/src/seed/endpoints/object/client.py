@@ -142,9 +142,10 @@ class ObjectClient:
                 return typing.cast(
                     ObjectWithOptionalField,
                     construct_type(
-                        type_=ObjectWithOptionalField, object_=_response.json()
+                        type_=ObjectWithOptionalField,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -191,9 +192,10 @@ class ObjectClient:
                 return typing.cast(
                     ObjectWithRequiredField,
                     construct_type(
-                        type_=ObjectWithRequiredField, object_=_response.json()
+                        type_=ObjectWithRequiredField,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -242,8 +244,11 @@ class ObjectClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     ObjectWithMapOfMap,
-                    construct_type(type_=ObjectWithMapOfMap, object_=_response.json()),
-                )  # type: ignore
+                    construct_type(
+                        type_=ObjectWithMapOfMap,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -322,9 +327,10 @@ class ObjectClient:
                 return typing.cast(
                     NestedObjectWithOptionalField,
                     construct_type(
-                        type_=NestedObjectWithOptionalField, object_=_response.json()
+                        type_=NestedObjectWithOptionalField,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -407,9 +413,10 @@ class ObjectClient:
                 return typing.cast(
                     NestedObjectWithRequiredField,
                     construct_type(
-                        type_=NestedObjectWithRequiredField, object_=_response.json()
+                        type_=NestedObjectWithRequiredField,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -489,9 +496,10 @@ class ObjectClient:
                 return typing.cast(
                     NestedObjectWithRequiredField,
                     construct_type(
-                        type_=NestedObjectWithRequiredField, object_=_response.json()
+                        type_=NestedObjectWithRequiredField,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -623,9 +631,10 @@ class AsyncObjectClient:
                 return typing.cast(
                     ObjectWithOptionalField,
                     construct_type(
-                        type_=ObjectWithOptionalField, object_=_response.json()
+                        type_=ObjectWithOptionalField,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -680,9 +689,10 @@ class AsyncObjectClient:
                 return typing.cast(
                     ObjectWithRequiredField,
                     construct_type(
-                        type_=ObjectWithRequiredField, object_=_response.json()
+                        type_=ObjectWithRequiredField,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -739,8 +749,11 @@ class AsyncObjectClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     ObjectWithMapOfMap,
-                    construct_type(type_=ObjectWithMapOfMap, object_=_response.json()),
-                )  # type: ignore
+                    construct_type(
+                        type_=ObjectWithMapOfMap,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -826,9 +839,10 @@ class AsyncObjectClient:
                 return typing.cast(
                     NestedObjectWithOptionalField,
                     construct_type(
-                        type_=NestedObjectWithOptionalField, object_=_response.json()
+                        type_=NestedObjectWithOptionalField,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -918,9 +932,10 @@ class AsyncObjectClient:
                 return typing.cast(
                     NestedObjectWithRequiredField,
                     construct_type(
-                        type_=NestedObjectWithRequiredField, object_=_response.json()
+                        type_=NestedObjectWithRequiredField,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -1007,9 +1022,10 @@ class AsyncObjectClient:
                 return typing.cast(
                     NestedObjectWithRequiredField,
                     construct_type(
-                        type_=NestedObjectWithRequiredField, object_=_response.json()
+                        type_=NestedObjectWithRequiredField,  # type: ignore
+                        object_=_response.json(),
                     ),
-                )  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

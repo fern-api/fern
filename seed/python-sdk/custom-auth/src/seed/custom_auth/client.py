@@ -52,16 +52,21 @@ class CustomAuthClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    bool, parse_obj_as(type_=bool, object_=_response.json())
-                )  # type: ignore
+                    bool,
+                    parse_obj_as(
+                        type_=bool,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             if _response.status_code == 401:
                 raise UnauthorizedRequest(
                     typing.cast(
                         UnauthorizedRequestErrorBody,
                         parse_obj_as(
-                            type_=UnauthorizedRequestErrorBody, object_=_response.json()
+                            type_=UnauthorizedRequestErrorBody,  # type: ignore
+                            object_=_response.json(),
                         ),
-                    )  # type: ignore
+                    )
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -110,16 +115,21 @@ class CustomAuthClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    bool, parse_obj_as(type_=bool, object_=_response.json())
-                )  # type: ignore
+                    bool,
+                    parse_obj_as(
+                        type_=bool,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             if _response.status_code == 401:
                 raise UnauthorizedRequest(
                     typing.cast(
                         UnauthorizedRequestErrorBody,
                         parse_obj_as(
-                            type_=UnauthorizedRequestErrorBody, object_=_response.json()
+                            type_=UnauthorizedRequestErrorBody,  # type: ignore
+                            object_=_response.json(),
                         ),
-                    )  # type: ignore
+                    )
                 )
             if _response.status_code == 400:
                 raise BadRequest()
@@ -174,16 +184,21 @@ class AsyncCustomAuthClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    bool, parse_obj_as(type_=bool, object_=_response.json())
-                )  # type: ignore
+                    bool,
+                    parse_obj_as(
+                        type_=bool,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             if _response.status_code == 401:
                 raise UnauthorizedRequest(
                     typing.cast(
                         UnauthorizedRequestErrorBody,
                         parse_obj_as(
-                            type_=UnauthorizedRequestErrorBody, object_=_response.json()
+                            type_=UnauthorizedRequestErrorBody,  # type: ignore
+                            object_=_response.json(),
                         ),
-                    )  # type: ignore
+                    )
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -240,16 +255,21 @@ class AsyncCustomAuthClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    bool, parse_obj_as(type_=bool, object_=_response.json())
-                )  # type: ignore
+                    bool,
+                    parse_obj_as(
+                        type_=bool,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             if _response.status_code == 401:
                 raise UnauthorizedRequest(
                     typing.cast(
                         UnauthorizedRequestErrorBody,
                         parse_obj_as(
-                            type_=UnauthorizedRequestErrorBody, object_=_response.json()
+                            type_=UnauthorizedRequestErrorBody,  # type: ignore
+                            object_=_response.json(),
                         ),
-                    )  # type: ignore
+                    )
                 )
             if _response.status_code == 400:
                 raise BadRequest()

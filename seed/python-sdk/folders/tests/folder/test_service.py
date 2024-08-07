@@ -6,16 +6,25 @@ from seed import AsyncSeedApi
 
 async def test_endpoint(client: SeedApi, async_client: AsyncSeedApi) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert client.folder.service.endpoint() is None  # type: ignore[func-returns-value]
+    assert (
+        client.folder.service.endpoint()  # type: ignore[func-returns-value]
+        is None
+    )
 
-    assert await async_client.folder.service.endpoint() is None  # type: ignore[func-returns-value]
+    assert (
+        await async_client.folder.service.endpoint()  # type: ignore[func-returns-value]
+        is None
+    )
 
 
 async def test_unknown_request(client: SeedApi, async_client: AsyncSeedApi) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert client.folder.service.unknown_request(request={"key": "value"}) is None  # type: ignore[func-returns-value]
+    assert (
+        client.folder.service.unknown_request(request={"key": "value"})  # type: ignore[func-returns-value]
+        is None
+    )
 
     assert (
-        await async_client.folder.service.unknown_request(request={"key": "value"})
+        await async_client.folder.service.unknown_request(request={"key": "value"})  # type: ignore[func-returns-value]
         is None
-    )  # type: ignore[func-returns-value]
+    )

@@ -61,8 +61,12 @@ class ServiceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Movie, parse_obj_as(type_=Movie, object_=_response.json())
-                )  # type: ignore
+                    Movie,
+                    parse_obj_as(
+                        type_=Movie,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -151,8 +155,12 @@ class ServiceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    MovieId, parse_obj_as(type_=MovieId, object_=_response.json())
-                )  # type: ignore
+                    MovieId,
+                    parse_obj_as(
+                        type_=MovieId,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -214,8 +222,12 @@ class ServiceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Metadata, parse_obj_as(type_=Metadata, object_=_response.json())
-                )  # type: ignore
+                    Metadata,
+                    parse_obj_as(
+                        type_=Metadata,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -253,8 +265,12 @@ class ServiceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Response, parse_obj_as(type_=Response, object_=_response.json())
-                )  # type: ignore
+                    Response,
+                    parse_obj_as(
+                        type_=Response,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -312,8 +328,12 @@ class AsyncServiceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Movie, parse_obj_as(type_=Movie, object_=_response.json())
-                )  # type: ignore
+                    Movie,
+                    parse_obj_as(
+                        type_=Movie,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -410,8 +430,12 @@ class AsyncServiceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    MovieId, parse_obj_as(type_=MovieId, object_=_response.json())
-                )  # type: ignore
+                    MovieId,
+                    parse_obj_as(
+                        type_=MovieId,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -481,8 +505,12 @@ class AsyncServiceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Metadata, parse_obj_as(type_=Metadata, object_=_response.json())
-                )  # type: ignore
+                    Metadata,
+                    parse_obj_as(
+                        type_=Metadata,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -528,8 +556,12 @@ class AsyncServiceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Response, parse_obj_as(type_=Response, object_=_response.json())
-                )  # type: ignore
+                    Response,
+                    parse_obj_as(
+                        type_=Response,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

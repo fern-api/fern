@@ -14,9 +14,9 @@ async def test_post(
             service_param="string",
             resource_param="string",
             endpoint_param=1,
-        )
+        )  # type: ignore[func-returns-value]
         is None
-    )  # type: ignore[func-returns-value]
+    )
 
     assert (
         await async_client.service.post(
@@ -24,6 +24,6 @@ async def test_post(
             service_param="string",
             resource_param="string",
             endpoint_param=1,
-        )
+        )  # type: ignore[func-returns-value]
         is None
-    )  # type: ignore[func-returns-value]
+    )

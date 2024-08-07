@@ -10,9 +10,15 @@ async def test_get_user(
     client: SeedMultiLineDocs, async_client: AsyncSeedMultiLineDocs
 ) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert client.user.get_user(user_id="string") is None  # type: ignore[func-returns-value]
+    assert (
+        client.user.get_user(user_id="string")  # type: ignore[func-returns-value]
+        is None
+    )
 
-    assert await async_client.user.get_user(user_id="string") is None  # type: ignore[func-returns-value]
+    assert (
+        await async_client.user.get_user(user_id="string")  # type: ignore[func-returns-value]
+        is None
+    )
 
 
 async def test_create_user(

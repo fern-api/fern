@@ -68,9 +68,10 @@ class DummyClient:
                             yield typing.cast(
                                 StreamResponse,
                                 construct_type(
-                                    type_=StreamResponse, object_=json.loads(_text)
+                                    type_=StreamResponse,  # type: ignore
+                                    object_=json.loads(_text),
                                 ),
-                            )  # type: ignore
+                            )
                         except:
                             pass
                     return
@@ -123,8 +124,11 @@ class DummyClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     StreamResponse,
-                    construct_type(type_=StreamResponse, object_=_response.json()),
-                )  # type: ignore
+                    construct_type(
+                        type_=StreamResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -193,9 +197,10 @@ class AsyncDummyClient:
                             yield typing.cast(
                                 StreamResponse,
                                 construct_type(
-                                    type_=StreamResponse, object_=json.loads(_text)
+                                    type_=StreamResponse,  # type: ignore
+                                    object_=json.loads(_text),
                                 ),
-                            )  # type: ignore
+                            )
                         except:
                             pass
                     return
@@ -256,8 +261,11 @@ class AsyncDummyClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     StreamResponse,
-                    construct_type(type_=StreamResponse, object_=_response.json()),
-                )  # type: ignore
+                    construct_type(
+                        type_=StreamResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

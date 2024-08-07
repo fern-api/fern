@@ -11,13 +11,13 @@ async def test_extended_inline_request_body(
     assert (
         client.extended_inline_request_body(
             unique="string", name="string", docs="string"
-        )
+        )  # type: ignore[func-returns-value]
         is None
-    )  # type: ignore[func-returns-value]
+    )
 
     assert (
         await async_client.extended_inline_request_body(
             unique="string", name="string", docs="string"
-        )
+        )  # type: ignore[func-returns-value]
         is None
-    )  # type: ignore[func-returns-value]
+    )
