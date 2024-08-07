@@ -80,6 +80,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
@@ -100,6 +102,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
@@ -120,6 +124,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
@@ -147,6 +153,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
@@ -174,6 +182,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
@@ -201,6 +211,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
@@ -221,6 +233,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
@@ -241,6 +255,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
@@ -261,6 +277,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
@@ -281,6 +299,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
@@ -301,6 +321,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
@@ -321,6 +343,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
@@ -341,6 +365,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
@@ -361,6 +387,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
@@ -381,6 +409,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
@@ -401,6 +431,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
@@ -421,6 +453,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
       - name: Setup Seed
         uses: ./.github/workflows/setup-seed.yml
