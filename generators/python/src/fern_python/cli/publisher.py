@@ -1,5 +1,5 @@
 import subprocess
-from typing import List, Optional
+from typing import List, Optional, Dict
 
 from fern.generator_exec import logging
 from fern.generator_exec.config import GeneratorConfig, GeneratorPublishConfig
@@ -25,6 +25,9 @@ class Publisher:
         self._run_command(
             command=["poetry", "run", "ruff", "format"],
             safe_command="poetry run ruff format",
+            env={
+                "RUFF_CACHE_DIR": "~/.cache/ruff"
+            }
         )
 
     def run_poetry_install(self) -> None:
@@ -79,6 +82,7 @@ class Publisher:
         command: List[str],
         safe_command: str,
         cwd: Optional[str] = None,
+        env: Optional[Dict[str, str]] = None,
     ) -> None:
         try:
             self._generator_exec_wrapper.send_update(
@@ -92,6 +96,7 @@ class Publisher:
                 stderr=subprocess.PIPE,
                 cwd=self._generator_config.output.path if cwd is None else cwd,
                 check=True,
+                env=env,
             )
             print(f"Ran command: {' '.join(command)}")
             print(completed_command.stdout)

@@ -180,6 +180,7 @@ class AbstractGenerator(ABC):
 .mypy_cache/
 __pycache__/
 poetry.toml
+.ruff_cache/
 """,
         )
         project.add_file(
