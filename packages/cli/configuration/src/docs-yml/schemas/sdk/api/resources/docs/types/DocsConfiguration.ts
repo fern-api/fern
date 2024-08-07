@@ -16,6 +16,7 @@ export interface DocsConfiguration {
     navbarLinks?: FernDocsConfig.NavbarLink[];
     footerLinks?: FernDocsConfig.FooterLinksConfig;
     experimental?: FernDocsConfig.ExperimentalConfig;
+    defaultLanguage?: FernDocsConfig.ProgrammingLanguage;
     metadata?: FernDocsConfig.MetadataConfig;
     redirects?: FernDocsConfig.RedirectConfig[];
     logo?: FernDocsConfig.LogoConfiguration;

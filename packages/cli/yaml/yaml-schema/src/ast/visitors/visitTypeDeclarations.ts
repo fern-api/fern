@@ -69,7 +69,8 @@ export async function visitTypeDeclaration({
                     availability: noop,
                     audiences: noop,
                     examples: visitExamples,
-                    validation: noop
+                    validation: noop,
+                    encoding: noop
                 });
             }
         },
@@ -117,6 +118,7 @@ export async function visitTypeDeclaration({
                 ["extra-properties"]: noop,
                 availability: noop,
                 audiences: noop,
+                encoding: noop,
                 examples: visitExamples
             });
         },
@@ -157,6 +159,7 @@ export async function visitTypeDeclaration({
                 "base-properties": noop,
                 availability: noop,
                 audiences: noop,
+                encoding: noop,
                 examples: visitExamples
             });
         },
@@ -179,6 +182,7 @@ export async function visitTypeDeclaration({
                 },
                 availability: noop,
                 audiences: noop,
+                encoding: noop,
                 examples: visitExamples
             });
         },
@@ -205,6 +209,7 @@ export async function visitTypeDeclaration({
                 availability: noop,
                 audiences: noop,
                 default: noop,
+                encoding: noop,
                 examples: visitExamples
             });
         }

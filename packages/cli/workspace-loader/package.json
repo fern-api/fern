@@ -42,6 +42,7 @@
     "chalk": "^5.3.0",
     "js-yaml": "^4.1.0",
     "lodash-es": "^4.17.21",
+    "object-hash": "^3.0.0",
     "tar": "^6.2.1",
     "tmp-promise": "^3.0.3",
     "zod": "^3.22.3"
@@ -51,6 +52,7 @@
     "@types/js-yaml": "^4.0.8",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^18.7.18",
+    "@types/object-hash": "^3.0.6",
     "@types/tar": "^6.1.11",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",

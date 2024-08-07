@@ -14,4 +14,6 @@ export interface TypeDeclaration extends FernIr.Declaration {
     userProvidedExamples: FernIr.ExampleType[];
     /** All other named types that this type references (directly or indirectly) */
     referencedTypes: Set<FernIr.TypeId>;
+    encoding: FernIr.Encoding | undefined;
+    source: FernIr.Source | undefined;
 }

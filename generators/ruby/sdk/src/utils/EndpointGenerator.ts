@@ -22,6 +22,7 @@ import {
     LiteralClassReference,
     Parameter,
     Property,
+    SerializableObject,
     StringClassReference,
     Variable,
     VariableType,
@@ -272,6 +273,11 @@ export class EndpointGenerator {
                 throw new Error("Unknown request body type.");
             }
         });
+
+        // Remove reserved properties from the function signature
+        this.bodyAsProperties = this.bodyAsProperties.filter(
+            (prop) => !SerializableObject.INTERNAL_FIELDS.includes(prop.name)
+        );
 
         this.streamProcessingBlock = this.isStreamingResponse()
             ? new Parameter({
