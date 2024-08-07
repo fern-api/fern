@@ -32,12 +32,13 @@ func (f *fileWriter) WriteType(
 	includeRawJSON bool,
 ) error {
 	visitor := &typeVisitor{
-		typeName:       typeDeclaration.Name.Name.PascalCase.UnsafeName,
-		baseImportPath: f.baseImportPath,
-		importPath:     fernFilepathToImportPath(f.baseImportPath, typeDeclaration.Name.FernFilepath),
-		writer:         f,
-		unionVersion:   f.unionVersion,
-		includeRawJSON: includeRawJSON,
+		typeName:                     typeDeclaration.Name.Name.PascalCase.UnsafeName,
+		baseImportPath:               f.baseImportPath,
+		importPath:                   fernFilepathToImportPath(f.baseImportPath, typeDeclaration.Name.FernFilepath),
+		writer:                       f,
+		unionVersion:                 f.unionVersion,
+		alwaysSendRequiredProperties: f.alwaysSendRequiredProperties,
+		includeRawJSON:               includeRawJSON,
 	}
 	f.WriteDocs(typeDeclaration.Docs)
 	return typeDeclaration.Shape.Accept(visitor)
