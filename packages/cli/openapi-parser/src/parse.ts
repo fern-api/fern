@@ -86,7 +86,8 @@ export async function parse({
         securitySchemes: {},
         globalHeaders: [],
         idempotencyHeaders: [],
-        groups: {}
+        groups: {},
+        defaultEnvironment: undefined
     };
 
     for (const spec of specs) {
@@ -233,7 +234,8 @@ function merge(
         groups: {
             ...ir1.groups,
             ...ir2.groups
-        }
+        },
+        defaultEnvironment: undefined
     };
 }
 

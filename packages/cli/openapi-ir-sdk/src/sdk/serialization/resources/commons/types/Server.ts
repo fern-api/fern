@@ -12,6 +12,7 @@ export const Server: core.serialization.ObjectSchema<serializers.Server.Raw, Fer
         name: core.serialization.string().optional(),
         url: core.serialization.string(),
         audiences: core.serialization.list(core.serialization.string()).optional(),
+        environment: core.serialization.string().optional(),
     })
     .extend(WithDescription);
 
@@ -20,5 +21,6 @@ export declare namespace Server {
         name?: string | null;
         url: string;
         audiences?: string[] | null;
+        environment?: string | null;
     }
 }

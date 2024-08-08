@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`x-fern-servers x-fern-servers docs 1`] = `
+{
+  "definitionFiles": {
+    "transcripts.yml": {
+      "types": {
+        "SpeechModel": {
+          "docs": "The speech model to use for the transcription.",
+          "type": "string",
+        },
+      },
+    },
+  },
+  "packageMarkerFile": {},
+  "rootApiFile": {
+    "default-environment": "Production",
+    "display-name": "Test extension \`x-fern-enum\` for enums",
+    "environments": {
+      "Production": {
+        "urls": {
+          "api": "https://api.example.com",
+          "auth": "https://auth.example.com",
+        },
+      },
+      "Sandbox": {
+        "urls": {
+          "api": "https://api-sandbox.example.com",
+          "auth": "https://auth-sandbox.example.com",
+        },
+      },
+    },
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
+
+exports[`x-fern-servers x-fern-servers simple 1`] = `
+{
+  "definitionFiles": {
+    "transcripts.yml": {
+      "types": {
+        "SpeechModel": {
+          "docs": "The speech model to use for the transcription.",
+          "type": "string",
+        },
+      },
+    },
+  },
+  "packageMarkerFile": {},
+  "rootApiFile": {
+    "default-environment": "Production",
+    "display-name": "Test extension \`x-fern-enum\` for enums",
+    "environments": {
+      "Production": {
+        "urls": {
+          "api": "https://api.example.com",
+          "auth": "https://auth.example.com",
+        },
+      },
+      "Sandbox": {
+        "urls": {
+          "api": "https://api-sandbox.example.com",
+          "auth": "https://auth-sandbox.example.com",
+        },
+      },
+    },
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;

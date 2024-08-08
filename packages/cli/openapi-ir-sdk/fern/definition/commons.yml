@@ -118,6 +118,9 @@ types:
         docs: Populated by `X-Server-Name`
       url: string
       audiences: optional<list<string>>
+      environment:
+        type: optional<string>
+        docs: Populated by `X-Server-Environment`
 
   SdkGroupName:
     type: list<string>

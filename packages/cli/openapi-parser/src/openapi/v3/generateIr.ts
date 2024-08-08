@@ -29,7 +29,7 @@ import { isReferenceObject } from "../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "./AbstractOpenAPIV3ParserContext";
 import { convertPathItem, convertPathItemToWebhooks } from "./converters/convertPathItem";
 import { convertSecurityScheme } from "./converters/convertSecurityScheme";
-import { convertServer } from "./converters/convertServer";
+import { convertServer, getDefaultEnvironmentName } from "./converters/convertServer";
 import { ERROR_NAMES } from "./converters/convertToHttpError";
 import { ExampleEndpointFactory } from "./converters/ExampleEndpointFactory";
 import { ConvertedOperation } from "./converters/operation/convertOperation";
@@ -308,6 +308,7 @@ export function generateIr({
             ),
             orderedTagIds: openApi.tags?.map((tag) => tag.name)
         },
+        defaultEnvironment: getDefaultEnvironmentName(context.document),
         endpoints,
         webhooks,
         channel: [],

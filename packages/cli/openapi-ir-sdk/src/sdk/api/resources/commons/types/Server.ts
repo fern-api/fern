@@ -9,4 +9,6 @@ export interface Server extends FernOpenapiIr.WithDescription {
     name: string | undefined;
     url: string;
     audiences: string[] | undefined;
+    /** Populated by `X-Server-Environment` */
+    environment: string | undefined;
 }
