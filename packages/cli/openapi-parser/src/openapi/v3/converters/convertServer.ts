@@ -17,7 +17,7 @@ export function convertServer(server: OpenAPIV3.ServerObject, context: AbstractO
 >>>>>>> c508a0bcfe (improvement: allow specifying multi-environment urls from openapi)
     };
 
-    const maybeFullServerConfig = getFullServerCOnfig(server, context);
+    const maybeFullServerConfig = getFullServerConfig(server, context);
     if (maybeFullServerConfig != null) {
         return {
             ...initServer,
@@ -37,7 +37,7 @@ export function getDefaultEnvironmentName(document: OpenAPIV3.Document): string 
     return getExtension<string>(document, FernOpenAPIExtension.SERVER_DEFAULT_ENVIRONMENT);
 }
 
-function getFullServerCOnfig(
+function getFullServerConfig(
     server: OpenAPIV3.ServerObject,
     context: AbstractOpenAPIV3ParserContext
 ): ServerConfigSchema | undefined {
