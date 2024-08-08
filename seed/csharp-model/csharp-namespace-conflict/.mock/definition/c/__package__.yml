@@ -1,7 +1,0 @@
-types:  
-  B:
-    properties:
-      someProperty: string
-  ReferencingB:
-    properties:
-      bProperty: B

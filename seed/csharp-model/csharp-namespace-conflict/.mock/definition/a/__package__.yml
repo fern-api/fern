@@ -1,9 +1,0 @@
-types:
-  A:
-    properties: {}
-  B:
-    properties: {}
-  TestType:
-    properties:
-      aProperty: A
-      bProperty: B
