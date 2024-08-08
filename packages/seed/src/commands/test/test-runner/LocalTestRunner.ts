@@ -71,7 +71,9 @@ export class LocalTestRunner extends TestRunner {
             },
             context: taskContext,
             irVersionOverride: irVersion,
-            generatorInvocation
+            generatorInvocation,
+            packageName: undefined,
+            version: undefined,
         });
         let generatorConfig = getGeneratorConfig({
             generatorInvocation,

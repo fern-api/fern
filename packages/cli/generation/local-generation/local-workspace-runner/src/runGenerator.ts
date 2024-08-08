@@ -59,7 +59,8 @@ export async function writeFilesToDiskAndRunGenerator({
         generatorInvocation,
         workspaceTempDir,
         context,
-        irVersionOverride
+        irVersionOverride,
+        outputVersionOverride
     });
     context.logger.debug("Wrote IR to: " + absolutePathToIr);
 
@@ -135,7 +136,8 @@ async function writeIrToFile({
     generatorInvocation,
     workspaceTempDir,
     context,
-    irVersionOverride
+    irVersionOverride,
+    outputVersionOverride
 }: {
     workspace: FernWorkspace;
     audiences: Audiences;
@@ -143,13 +145,19 @@ async function writeIrToFile({
     workspaceTempDir: DirectoryResult;
     context: TaskContext;
     irVersionOverride: string | undefined;
+    outputVersionOverride: string | undefined;
 }): Promise<AbsoluteFilePath> {
+    const packageName = generatorsYml.getPackageName({ generatorInvocation });
+    console.log("packageName", packageName);
+    console.log("version", outputVersionOverride);
     const intermediateRepresentation = await getIntermediateRepresentation({
         workspace,
         audiences,
         generatorInvocation,
         context,
-        irVersionOverride
+        irVersionOverride,
+        packageName: generatorsYml.getPackageName({ generatorInvocation }),
+        version: outputVersionOverride
     });
     context.logger.debug("Migrated IR");
     const irFile = await tmp.file({

@@ -43,7 +43,7 @@ export async function runRemoteGenerationForGenerator({
 }): Promise<RemoteTaskHandler.Response | undefined> {
     const fdr = createFdrService({ token: token.value });
 
-    const packageName = getPackageName({ generatorInvocation });
+    const packageName = generatorsYml.getPackageName({ generatorInvocation });
 
     const ir = await generateIntermediateRepresentation({
         workspace,
@@ -160,37 +160,4 @@ async function computeSemanticVersion({
         return undefined;
     }
     return response.body.version;
-}
-
-function getPackageName({
-    generatorInvocation
-}: {
-    generatorInvocation: generatorsYml.GeneratorInvocation;
-}): string | undefined {
-    return generatorInvocation.outputMode._visit<string | undefined>({
-        downloadFiles: () => undefined,
-        github: (val) =>
-            val.publishInfo?._visit<string | undefined>({
-                maven: (val) => val.coordinate,
-                npm: (val) => val.packageName,
-                pypi: (val) => val.packageName,
-                postman: () => undefined,
-                rubygems: (val) => val.packageName,
-                nuget: (val) => val.packageName,
-                _other: () => undefined
-            }),
-        githubV2: (val) =>
-            val.publishInfo?._visit<string | undefined>({
-                maven: (val) => val.coordinate,
-                npm: (val) => val.packageName,
-                pypi: (val) => val.packageName,
-                postman: () => undefined,
-                rubygems: (val) => val.packageName,
-                nuget: (val) => val.packageName,
-                _other: () => undefined
-            }),
-        publish: () => undefined,
-        publishV2: () => undefined,
-        _other: () => undefined
-    });
 }

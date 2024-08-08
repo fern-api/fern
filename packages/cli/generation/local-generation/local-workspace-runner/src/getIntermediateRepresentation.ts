@@ -12,13 +12,17 @@ export async function getIntermediateRepresentation({
     audiences,
     generatorInvocation,
     context,
-    irVersionOverride
+    irVersionOverride,
+    version,
+    packageName,
 }: {
     workspace: FernWorkspace;
     audiences: Audiences;
     generatorInvocation: generatorsYml.GeneratorInvocation;
     context: TaskContext;
     irVersionOverride: string | undefined;
+    version: string | undefined;
+    packageName: string | undefined;
 }): Promise<unknown> {
     const intermediateRepresentation = await generateIntermediateRepresentation({
         workspace,
@@ -28,8 +32,8 @@ export async function getIntermediateRepresentation({
         smartCasing: generatorInvocation.smartCasing,
         disableExamples: generatorInvocation.disableExamples,
         readme: generatorInvocation.readme,
-        version: undefined,
-        packageName: undefined
+        version,
+        packageName,
     });
     context.logger.debug("Generated IR");
     const migratedIntermediateRepresentation =

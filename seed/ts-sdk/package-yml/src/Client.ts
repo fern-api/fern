@@ -52,6 +52,7 @@ export class SeedPackageYmlClient {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/package-yml",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/package-yml/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
