@@ -493,7 +493,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/ir-v39-sdk", "npm:0.0.1"],\
             ["@types/is-ci", "npm:3.0.4"],\
             ["@types/jest", "npm:29.5.12"],\
-            ["@types/lodash-es", "npm:4.17.7"],\
+            ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
             ["@typescript-eslint/eslint-plugin", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:5.30.5"],\
             ["@typescript-eslint/parser", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:6.21.0"],\
@@ -11275,14 +11275,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/lodash", "npm:4.14.182"]\
           ],\
           "linkType": "HARD"\
-        }],\
-        ["npm:4.17.7", {\
-          "packageLocation": "./.yarn/cache/@types-lodash-es-npm-4.17.7-7322f70ff2-4b1f39fd1d.zip/node_modules/@types/lodash-es/",\
-          "packageDependencies": [\
-            ["@types/lodash-es", "npm:4.17.7"],\
-            ["@types/lodash", "npm:4.14.182"]\
-          ],\
-          "linkType": "HARD"\
         }]\
       ]],\
       ["@types/mdast", [\
@@ -17661,7 +17653,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/ir-v39-sdk", "npm:0.0.1"],\
             ["@types/is-ci", "npm:3.0.4"],\
             ["@types/jest", "npm:29.5.12"],\
-            ["@types/lodash-es", "npm:4.17.7"],\
+            ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
             ["@typescript-eslint/eslint-plugin", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:5.30.5"],\
             ["@typescript-eslint/parser", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:6.21.0"],\
