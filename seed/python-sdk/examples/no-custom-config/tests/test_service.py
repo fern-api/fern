@@ -38,9 +38,7 @@ async def test_get_movie(client: SeedExamples, async_client: AsyncSeedExamples) 
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_create_movie(
-    client: SeedExamples, async_client: AsyncSeedExamples
-) -> None:
+async def test_create_movie(client: SeedExamples, async_client: AsyncSeedExamples) -> None:
     expected_response: typing.Any = "movie-c06a4ad7"
     expected_types: typing.Any = None
     response = client.service.create_movie(
@@ -74,9 +72,7 @@ async def test_create_movie(
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_get_metadata(
-    client: SeedExamples, async_client: AsyncSeedExamples
-) -> None:
+async def test_get_metadata(client: SeedExamples, async_client: AsyncSeedExamples) -> None:
     expected_response: typing.Any = {
         "type": "html",
         "extra": {"version": "0.0.1", "tenancy": "test"},
@@ -84,20 +80,14 @@ async def test_get_metadata(
         "value": "<head>...</head>",
     }
     expected_types: typing.Any = "no_validate"
-    response = client.service.get_metadata(
-        x_api_version="0.0.1", shallow=False, tag="development"
-    )
+    response = client.service.get_metadata(x_api_version="0.0.1", shallow=False, tag="development")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.service.get_metadata(
-        x_api_version="0.0.1", shallow=False, tag="development"
-    )
+    async_response = await async_client.service.get_metadata(x_api_version="0.0.1", shallow=False, tag="development")
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_get_response(
-    client: SeedExamples, async_client: AsyncSeedExamples
-) -> None:
+async def test_get_response(client: SeedExamples, async_client: AsyncSeedExamples) -> None:
     expected_response: typing.Any = {
         "response": "Initializing...",
         "identifiers": [
@@ -109,10 +99,7 @@ async def test_get_response(
         "response": None,
         "identifiers": (
             "list",
-            {
-                0: {"type": None, "value": None, "label": None},
-                1: {"type": None, "value": None, "label": None},
-            },
+            {0: {"type": None, "value": None, "label": None}, 1: {"type": None, "value": None, "label": None}},
         ),
     }
     response = client.service.get_response()

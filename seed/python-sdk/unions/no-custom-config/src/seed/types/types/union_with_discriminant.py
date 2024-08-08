@@ -14,9 +14,7 @@ class UnionWithDiscriminant_Foo(UniversalBaseModel):
     type: typing.Literal["foo"] = pydantic.Field(alias="_type", default="foo")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            frozen=True
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -29,9 +27,7 @@ class UnionWithDiscriminant_Bar(UniversalBaseModel):
     type: typing.Literal["bar"] = pydantic.Field(alias="_type", default="bar")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            frozen=True
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -39,6 +35,4 @@ class UnionWithDiscriminant_Bar(UniversalBaseModel):
             smart_union = True
 
 
-UnionWithDiscriminant = typing.Union[
-    UnionWithDiscriminant_Foo, UnionWithDiscriminant_Bar
-]
+UnionWithDiscriminant = typing.Union[UnionWithDiscriminant_Foo, UnionWithDiscriminant_Bar]

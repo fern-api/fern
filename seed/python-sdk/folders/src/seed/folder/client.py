@@ -53,9 +53,7 @@ class AsyncFolderClient:
         self._client_wrapper = client_wrapper
         self.service = AsyncServiceClient(client_wrapper=self._client_wrapper)
 
-    async def foo(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    async def foo(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------

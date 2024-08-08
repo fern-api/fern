@@ -13,9 +13,7 @@ class DummyClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_dummy(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> str:
+    def get_dummy(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters
         ----------
@@ -60,9 +58,7 @@ class AsyncDummyClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_dummy(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> str:
+    async def get_dummy(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters
         ----------

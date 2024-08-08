@@ -6,9 +6,7 @@ import typing
 from .utilities import validate_response
 
 
-async def test_get(
-    client: SeedUndiscriminatedUnions, async_client: AsyncSeedUndiscriminatedUnions
-) -> None:
+async def test_get(client: SeedUndiscriminatedUnions, async_client: AsyncSeedUndiscriminatedUnions) -> None:
     expected_response: typing.Any = "string"
     expected_types: typing.Any = None
     response = client.union.get(request="string")
@@ -18,18 +16,9 @@ async def test_get(
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_get_metadata(
-    client: SeedUndiscriminatedUnions, async_client: AsyncSeedUndiscriminatedUnions
-) -> None:
-    expected_response: typing.Any = {
-        "name": "exampleName",
-        "value": "exampleValue",
-        "default": "exampleDefault",
-    }
-    expected_types: typing.Tuple[typing.Any, typing.Any] = (
-        "dict",
-        {0: (None, None), 1: (None, None), 2: (None, None)},
-    )
+async def test_get_metadata(client: SeedUndiscriminatedUnions, async_client: AsyncSeedUndiscriminatedUnions) -> None:
+    expected_response: typing.Any = {"name": "exampleName", "value": "exampleValue", "default": "exampleDefault"}
+    expected_types: typing.Tuple[typing.Any, typing.Any] = ("dict", {0: (None, None), 1: (None, None), 2: (None, None)})
     response = client.union.get_metadata()
     validate_response(response, expected_response, expected_types)
 

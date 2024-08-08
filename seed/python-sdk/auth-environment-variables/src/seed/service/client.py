@@ -14,9 +14,7 @@ class ServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_with_api_key(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> str:
+    def get_with_api_key(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         GET request with custom api key
 
@@ -97,9 +95,7 @@ class ServiceClient:
             "apiKeyInHeader",
             method="GET",
             headers={
-                "X-Endpoint-Header": str(x_endpoint_header)
-                if x_endpoint_header is not None
-                else None,
+                "X-Endpoint-Header": str(x_endpoint_header) if x_endpoint_header is not None else None,
             },
             request_options=request_options,
         )
@@ -122,9 +118,7 @@ class AsyncServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_with_api_key(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> str:
+    async def get_with_api_key(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         GET request with custom api key
 
@@ -221,9 +215,7 @@ class AsyncServiceClient:
             "apiKeyInHeader",
             method="GET",
             headers={
-                "X-Endpoint-Header": str(x_endpoint_header)
-                if x_endpoint_header is not None
-                else None,
+                "X-Endpoint-Header": str(x_endpoint_header) if x_endpoint_header is not None else None,
             },
             request_options=request_options,
         )

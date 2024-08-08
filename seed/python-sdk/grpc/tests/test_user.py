@@ -27,14 +27,10 @@ async def test_create_user(client: SeedApi, async_client: AsyncSeedApi) -> None:
             "metadata": ("dict", {0: (None, None)}),
         }
     }
-    response = client.user.create_user(
-        username="string", email="string", age=1, weight=1.1
-    )
+    response = client.user.create_user(username="string", email="string", age=1, weight=1.1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.user.create_user(
-        username="string", email="string", age=1, weight=1.1
-    )
+    async_response = await async_client.user.create_user(username="string", email="string", age=1, weight=1.1)
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -58,7 +54,5 @@ async def test_get_user(client: SeedApi, async_client: AsyncSeedApi) -> None:
     response = client.user.get_user(username="string", age=1, weight=1.1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.user.get_user(
-        username="string", age=1, weight=1.1
-    )
+    async_response = await async_client.user.get_user(username="string", age=1, weight=1.1)
     validate_response(async_response, expected_response, expected_types)

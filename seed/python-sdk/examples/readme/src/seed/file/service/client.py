@@ -17,11 +17,7 @@ class ServiceClient:
         self._client_wrapper = client_wrapper
 
     def get_file(
-        self,
-        filename: str,
-        *,
-        x_file_api_version: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, filename: str, *, x_file_api_version: str, request_options: typing.Optional[RequestOptions] = None
     ) -> File:
         """
         This endpoint returns a file by its name.
@@ -58,9 +54,7 @@ class ServiceClient:
             f"file/{jsonable_encoder(filename)}",
             method="GET",
             headers={
-                "X-File-API-Version": str(x_file_api_version)
-                if x_file_api_version is not None
-                else None,
+                "X-File-API-Version": str(x_file_api_version) if x_file_api_version is not None else None,
             },
             request_options=request_options,
         )
@@ -94,11 +88,7 @@ class AsyncServiceClient:
         self._client_wrapper = client_wrapper
 
     async def get_file(
-        self,
-        filename: str,
-        *,
-        x_file_api_version: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, filename: str, *, x_file_api_version: str, request_options: typing.Optional[RequestOptions] = None
     ) -> File:
         """
         This endpoint returns a file by its name.
@@ -143,9 +133,7 @@ class AsyncServiceClient:
             f"file/{jsonable_encoder(filename)}",
             method="GET",
             headers={
-                "X-File-API-Version": str(x_file_api_version)
-                if x_file_api_version is not None
-                else None,
+                "X-File-API-Version": str(x_file_api_version) if x_file_api_version is not None else None,
             },
             request_options=request_options,
         )

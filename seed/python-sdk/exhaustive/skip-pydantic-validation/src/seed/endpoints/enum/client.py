@@ -18,10 +18,7 @@ class EnumClient:
         self._client_wrapper = client_wrapper
 
     def get_and_return_enum(
-        self,
-        *,
-        request: WeatherReport,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, request: WeatherReport, request_options: typing.Optional[RequestOptions] = None
     ) -> WeatherReport:
         """
         Parameters
@@ -74,10 +71,7 @@ class AsyncEnumClient:
         self._client_wrapper = client_wrapper
 
     async def get_and_return_enum(
-        self,
-        *,
-        request: WeatherReport,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, request: WeatherReport, request_options: typing.Optional[RequestOptions] = None
     ) -> WeatherReport:
         """
         Parameters

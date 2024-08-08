@@ -17,9 +17,7 @@ class UserClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def create_user(
-        self, *, name: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> User:
+    def create_user(self, *, name: str, request_options: typing.Optional[RequestOptions] = None) -> User:
         """
         Parameters
         ----------
@@ -73,9 +71,7 @@ class AsyncUserClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def create_user(
-        self, *, name: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> User:
+    async def create_user(self, *, name: str, request_options: typing.Optional[RequestOptions] = None) -> User:
         """
         Parameters
         ----------

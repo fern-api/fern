@@ -10,9 +10,7 @@ from seed.user import NestedUser
 from .utilities import validate_response
 
 
-async def test_get_username(
-    client: SeedQueryParameters, async_client: AsyncSeedQueryParameters
-) -> None:
+async def test_get_username(client: SeedQueryParameters, async_client: AsyncSeedQueryParameters) -> None:
     expected_response: typing.Any = {"name": "string", "tags": ["string"]}
     expected_types: typing.Any = {"name": None, "tags": ("list", {0: None})}
     response = client.user.get_username(
@@ -26,9 +24,7 @@ async def test_get_username(
         optional_deadline=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
         key_value={"string": "string"},
         optional_string="string",
-        nested_user=NestedUser(
-            name="string", user=User(name="string", tags=["string"])
-        ),
+        nested_user=NestedUser(name="string", user=User(name="string", tags=["string"])),
         optional_user=User(name="string", tags=["string"]),
         exclude_user=User(name="string", tags=["string"]),
         filter="string",
@@ -46,9 +42,7 @@ async def test_get_username(
         optional_deadline=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
         key_value={"string": "string"},
         optional_string="string",
-        nested_user=NestedUser(
-            name="string", user=User(name="string", tags=["string"])
-        ),
+        nested_user=NestedUser(name="string", user=User(name="string", tags=["string"])),
         optional_user=User(name="string", tags=["string"]),
         exclude_user=User(name="string", tags=["string"]),
         filter="string",

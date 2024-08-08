@@ -6,9 +6,7 @@ import typing
 from .utilities import validate_response
 
 
-async def test_generate(
-    client: SeedStreaming, async_client: AsyncSeedStreaming
-) -> None:
+async def test_generate(client: SeedStreaming, async_client: AsyncSeedStreaming) -> None:
     expected_response: typing.Any = {"id": "id", "name": "name"}
     expected_types: typing.Any = {"id": None, "name": None}
     response = client.dummy.generate(stream=False, num_events=5)

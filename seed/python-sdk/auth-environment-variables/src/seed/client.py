@@ -51,26 +51,20 @@ class SeedAuthEnvironmentVariables:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
     ):
-        _defaulted_timeout = (
-            timeout if timeout is not None else 60 if httpx_client is None else None
-        )
+        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         if x_another_header is None:
             raise ApiError(
                 body="The client must be instantiated be either passing in x_another_header or setting ANOTHER_ENV_VAR"
             )
         if api_key is None:
-            raise ApiError(
-                body="The client must be instantiated be either passing in api_key or setting FERN_API_KEY"
-            )
+            raise ApiError(body="The client must be instantiated be either passing in api_key or setting FERN_API_KEY")
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
             x_another_header=x_another_header,
             api_key=api_key,
             httpx_client=httpx_client
             if httpx_client is not None
-            else httpx.Client(
-                timeout=_defaulted_timeout, follow_redirects=follow_redirects
-            )
+            else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
             if follow_redirects is not None
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
@@ -119,26 +113,20 @@ class AsyncSeedAuthEnvironmentVariables:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
     ):
-        _defaulted_timeout = (
-            timeout if timeout is not None else 60 if httpx_client is None else None
-        )
+        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         if x_another_header is None:
             raise ApiError(
                 body="The client must be instantiated be either passing in x_another_header or setting ANOTHER_ENV_VAR"
             )
         if api_key is None:
-            raise ApiError(
-                body="The client must be instantiated be either passing in api_key or setting FERN_API_KEY"
-            )
+            raise ApiError(body="The client must be instantiated be either passing in api_key or setting FERN_API_KEY")
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
             x_another_header=x_another_header,
             api_key=api_key,
             httpx_client=httpx_client
             if httpx_client is not None
-            else httpx.AsyncClient(
-                timeout=_defaulted_timeout, follow_redirects=follow_redirects
-            )
+            else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
             if follow_redirects is not None
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,

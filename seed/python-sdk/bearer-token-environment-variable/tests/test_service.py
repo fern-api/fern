@@ -7,8 +7,7 @@ from .utilities import validate_response
 
 
 async def test_get_with_bearer_token(
-    client: SeedBearerTokenEnvironmentVariable,
-    async_client: AsyncSeedBearerTokenEnvironmentVariable,
+    client: SeedBearerTokenEnvironmentVariable, async_client: AsyncSeedBearerTokenEnvironmentVariable
 ) -> None:
     expected_response: typing.Any = "string"
     expected_types: typing.Any = None

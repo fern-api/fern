@@ -5,10 +5,4 @@ from .client import AsyncSeedCodeSamples, SeedCodeSamples
 from .service import MyResponse
 from .version import __version__
 
-__all__ = [
-    "AsyncSeedCodeSamples",
-    "MyResponse",
-    "SeedCodeSamples",
-    "__version__",
-    "service",
-]
+__all__ = ["AsyncSeedCodeSamples", "MyResponse", "SeedCodeSamples", "__version__", "service"]

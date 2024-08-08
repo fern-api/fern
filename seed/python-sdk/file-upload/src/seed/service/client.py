@@ -98,12 +98,7 @@ class ServiceClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def just_file(
-        self,
-        *,
-        file: core.File,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    def just_file(self, *, file: core.File, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
@@ -152,9 +147,7 @@ class ServiceClient:
         file: core.File,
         maybe_string: typing.Optional[str] = None,
         maybe_integer: typing.Optional[int] = None,
-        optional_list_of_strings: typing.Optional[
-            typing.Union[str, typing.Sequence[str]]
-        ] = None,
+        optional_list_of_strings: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -314,12 +307,7 @@ class AsyncServiceClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def just_file(
-        self,
-        *,
-        file: core.File,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    async def just_file(self, *, file: core.File, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
@@ -376,9 +364,7 @@ class AsyncServiceClient:
         file: core.File,
         maybe_string: typing.Optional[str] = None,
         maybe_integer: typing.Optional[int] = None,
-        optional_list_of_strings: typing.Optional[
-            typing.Union[str, typing.Sequence[str]]
-        ] = None,
+        optional_list_of_strings: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """

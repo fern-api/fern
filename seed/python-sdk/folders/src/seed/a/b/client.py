@@ -49,9 +49,7 @@ class AsyncBClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def foo(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    async def foo(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------

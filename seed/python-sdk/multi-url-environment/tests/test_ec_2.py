@@ -4,9 +4,7 @@ from seed import SeedMultiUrlEnvironment
 from seed import AsyncSeedMultiUrlEnvironment
 
 
-async def test_boot_instance(
-    client: SeedMultiUrlEnvironment, async_client: AsyncSeedMultiUrlEnvironment
-) -> None:
+async def test_boot_instance(client: SeedMultiUrlEnvironment, async_client: AsyncSeedMultiUrlEnvironment) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
         client.ec_2.boot_instance(size="string")  # type: ignore[func-returns-value]

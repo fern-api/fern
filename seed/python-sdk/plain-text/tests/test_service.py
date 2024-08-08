@@ -6,9 +6,7 @@ import typing
 from .utilities import validate_response
 
 
-async def test_get_text(
-    client: SeedPlainText, async_client: AsyncSeedPlainText
-) -> None:
+async def test_get_text(client: SeedPlainText, async_client: AsyncSeedPlainText) -> None:
     expected_response: typing.Any = "string"
     expected_types: typing.Any = None
     response = client.service.get_text()

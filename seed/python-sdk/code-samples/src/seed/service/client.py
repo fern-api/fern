@@ -17,12 +17,7 @@ class ServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def hello(
-        self,
-        *,
-        num_events: int,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> MyResponse:
+    def hello(self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None) -> MyResponse:
         """
         Parameters
         ----------
@@ -74,12 +69,7 @@ class AsyncServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def hello(
-        self,
-        *,
-        num_events: int,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> MyResponse:
+    async def hello(self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None) -> MyResponse:
         """
         Parameters
         ----------

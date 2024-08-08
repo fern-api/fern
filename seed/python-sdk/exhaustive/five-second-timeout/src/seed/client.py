@@ -54,30 +54,22 @@ class SeedExhaustive:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
     ):
-        _defaulted_timeout = (
-            timeout if timeout is not None else 5 if httpx_client is None else None
-        )
+        _defaulted_timeout = timeout if timeout is not None else 5 if httpx_client is None else None
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
             token=token,
             httpx_client=httpx_client
             if httpx_client is not None
-            else httpx.Client(
-                timeout=_defaulted_timeout, follow_redirects=follow_redirects
-            )
+            else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
             if follow_redirects is not None
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
         self.endpoints = EndpointsClient(client_wrapper=self._client_wrapper)
-        self.inlined_requests = InlinedRequestsClient(
-            client_wrapper=self._client_wrapper
-        )
+        self.inlined_requests = InlinedRequestsClient(client_wrapper=self._client_wrapper)
         self.no_auth = NoAuthClient(client_wrapper=self._client_wrapper)
         self.no_req_body = NoReqBodyClient(client_wrapper=self._client_wrapper)
-        self.req_with_headers = ReqWithHeadersClient(
-            client_wrapper=self._client_wrapper
-        )
+        self.req_with_headers = ReqWithHeadersClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncSeedExhaustive:
@@ -118,27 +110,19 @@ class AsyncSeedExhaustive:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
     ):
-        _defaulted_timeout = (
-            timeout if timeout is not None else 5 if httpx_client is None else None
-        )
+        _defaulted_timeout = timeout if timeout is not None else 5 if httpx_client is None else None
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
             token=token,
             httpx_client=httpx_client
             if httpx_client is not None
-            else httpx.AsyncClient(
-                timeout=_defaulted_timeout, follow_redirects=follow_redirects
-            )
+            else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
             if follow_redirects is not None
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
         self.endpoints = AsyncEndpointsClient(client_wrapper=self._client_wrapper)
-        self.inlined_requests = AsyncInlinedRequestsClient(
-            client_wrapper=self._client_wrapper
-        )
+        self.inlined_requests = AsyncInlinedRequestsClient(client_wrapper=self._client_wrapper)
         self.no_auth = AsyncNoAuthClient(client_wrapper=self._client_wrapper)
         self.no_req_body = AsyncNoReqBodyClient(client_wrapper=self._client_wrapper)
-        self.req_with_headers = AsyncReqWithHeadersClient(
-            client_wrapper=self._client_wrapper
-        )
+        self.req_with_headers = AsyncReqWithHeadersClient(client_wrapper=self._client_wrapper)

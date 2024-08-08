@@ -15,15 +15,11 @@ class _Factory:
     def foo(self, value: types_types_foo_Foo) -> UnionWithSingleElement:
         if IS_PYDANTIC_V2:
             return UnionWithSingleElement(
-                root=_UnionWithSingleElement.Foo(
-                    **value.dict(exclude_unset=True), type="foo"
-                )
+                root=_UnionWithSingleElement.Foo(**value.dict(exclude_unset=True), type="foo")
             )
         else:
             return UnionWithSingleElement(
-                __root__=_UnionWithSingleElement.Foo(
-                    **value.dict(exclude_unset=True), type="foo"
-                )
+                __root__=_UnionWithSingleElement.Foo(**value.dict(exclude_unset=True), type="foo")
             )
 
 
@@ -44,11 +40,7 @@ class UnionWithSingleElement(UniversalRootModel):
     def visit(self, foo: typing.Callable[[types_types_foo_Foo], T_Result]) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "foo":
-            return foo(
-                types_types_foo_Foo(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
-            )
+            return foo(types_types_foo_Foo(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
 
 
 class _UnionWithSingleElement:
@@ -56,9 +48,7 @@ class _UnionWithSingleElement:
         type: typing.Literal["foo"] = "foo"
 
         if IS_PYDANTIC_V2:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-                frozen=True
-            )  # type: ignore # Pydantic v2
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
         else:
 
             class Config:

@@ -26,9 +26,7 @@ class BaseClientWrapper:
             "X-Fern-SDK-Name": "fern_basic-auth",
             "X-Fern-SDK-Version": "0.0.1",
         }
-        headers["Authorization"] = httpx.BasicAuth(
-            self._get_username(), self._get_password()
-        )._auth_header
+        headers["Authorization"] = httpx.BasicAuth(self._get_username(), self._get_password())._auth_header
         return headers
 
     def _get_username(self) -> str:
@@ -60,9 +58,7 @@ class SyncClientWrapper(BaseClientWrapper):
         timeout: typing.Optional[float] = None,
         httpx_client: httpx.Client,
     ):
-        super().__init__(
-            username=username, password=password, base_url=base_url, timeout=timeout
-        )
+        super().__init__(username=username, password=password, base_url=base_url, timeout=timeout)
         self.httpx_client = HttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers(),
@@ -81,9 +77,7 @@ class AsyncClientWrapper(BaseClientWrapper):
         timeout: typing.Optional[float] = None,
         httpx_client: httpx.AsyncClient,
     ):
-        super().__init__(
-            username=username, password=password, base_url=base_url, timeout=timeout
-        )
+        super().__init__(username=username, password=password, base_url=base_url, timeout=timeout)
         self.httpx_client = AsyncHttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers(),

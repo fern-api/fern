@@ -18,9 +18,7 @@ class _Factory:
         if IS_PYDANTIC_V2:
             return UnionWithTime(root=_UnionWithTime.Value(type="value", value=value))
         else:
-            return UnionWithTime(
-                __root__=_UnionWithTime.Value(type="value", value=value)
-            )
+            return UnionWithTime(__root__=_UnionWithTime.Value(type="value", value=value))
 
     def date(self, value: dt.date) -> UnionWithTime:
         if IS_PYDANTIC_V2:
@@ -30,13 +28,9 @@ class _Factory:
 
     def datetime(self, value: dt.datetime) -> UnionWithTime:
         if IS_PYDANTIC_V2:
-            return UnionWithTime(
-                root=_UnionWithTime.Datetime(type="datetime", value=value)
-            )
+            return UnionWithTime(root=_UnionWithTime.Datetime(type="datetime", value=value))
         else:
-            return UnionWithTime(
-                __root__=_UnionWithTime.Datetime(type="datetime", value=value)
-            )
+            return UnionWithTime(__root__=_UnionWithTime.Datetime(type="datetime", value=value))
 
 
 class UnionWithTime(UniversalRootModel):
@@ -44,31 +38,19 @@ class UnionWithTime(UniversalRootModel):
 
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
-            typing.Union[
-                _UnionWithTime.Value, _UnionWithTime.Date, _UnionWithTime.Datetime
-            ],
+            typing.Union[_UnionWithTime.Value, _UnionWithTime.Date, _UnionWithTime.Datetime],
             pydantic.Field(discriminator="type"),
         ]
 
-        def get_as_union(
-            self,
-        ) -> typing.Union[
-            _UnionWithTime.Value, _UnionWithTime.Date, _UnionWithTime.Datetime
-        ]:
+        def get_as_union(self) -> typing.Union[_UnionWithTime.Value, _UnionWithTime.Date, _UnionWithTime.Datetime]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
-            typing.Union[
-                _UnionWithTime.Value, _UnionWithTime.Date, _UnionWithTime.Datetime
-            ],
+            typing.Union[_UnionWithTime.Value, _UnionWithTime.Date, _UnionWithTime.Datetime],
             pydantic.Field(discriminator="type"),
         ]
 
-        def get_as_union(
-            self,
-        ) -> typing.Union[
-            _UnionWithTime.Value, _UnionWithTime.Date, _UnionWithTime.Datetime
-        ]:
+        def get_as_union(self) -> typing.Union[_UnionWithTime.Value, _UnionWithTime.Date, _UnionWithTime.Datetime]:
             return self.__root__
 
     def visit(
@@ -92,9 +74,7 @@ class _UnionWithTime:
         value: int
 
         if IS_PYDANTIC_V2:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-                frozen=True
-            )  # type: ignore # Pydantic v2
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
         else:
 
             class Config:
@@ -106,9 +86,7 @@ class _UnionWithTime:
         value: dt.date
 
         if IS_PYDANTIC_V2:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-                frozen=True
-            )  # type: ignore # Pydantic v2
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
         else:
 
             class Config:
@@ -120,9 +98,7 @@ class _UnionWithTime:
         value: dt.datetime
 
         if IS_PYDANTIC_V2:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-                frozen=True
-            )  # type: ignore # Pydantic v2
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
         else:
 
             class Config:

@@ -8,20 +8,14 @@ async def test_send(client: SeedEnum, async_client: AsyncSeedEnum) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
         client.path_param.send(
-            operand=">",
-            maybe_operand="less_than",
-            operand_or_color="red",
-            maybe_operand_or_color="red",
+            operand=">", maybe_operand="less_than", operand_or_color="red", maybe_operand_or_color="red"
         )  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
         await async_client.path_param.send(
-            operand=">",
-            maybe_operand="less_than",
-            operand_or_color="red",
-            maybe_operand_or_color="red",
+            operand=">", maybe_operand="less_than", operand_or_color="red", maybe_operand_or_color="red"
         )  # type: ignore[func-returns-value]
         is None
     )

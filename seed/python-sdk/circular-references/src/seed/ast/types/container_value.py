@@ -5,8 +5,8 @@ from ...core.pydantic_utilities import UniversalBaseModel
 import typing
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
-from .object_value import ObjectValue
 from .primitive_value import PrimitiveValue
+from .object_value import ObjectValue
 from ...core.pydantic_utilities import update_forward_refs
 
 
@@ -15,9 +15,7 @@ class ContainerValue_List(UniversalBaseModel):
     type: typing.Literal["list"] = "list"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            frozen=True
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -30,9 +28,7 @@ class ContainerValue_Optional(UniversalBaseModel):
     type: typing.Literal["optional"] = "optional"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            frozen=True
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:

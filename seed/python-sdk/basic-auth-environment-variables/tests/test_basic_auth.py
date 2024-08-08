@@ -7,8 +7,7 @@ from .utilities import validate_response
 
 
 async def test_get_with_basic_auth(
-    client: SeedBasicAuthEnvironmentVariables,
-    async_client: AsyncSeedBasicAuthEnvironmentVariables,
+    client: SeedBasicAuthEnvironmentVariables, async_client: AsyncSeedBasicAuthEnvironmentVariables
 ) -> None:
     expected_response: typing.Any = True
     expected_types: typing.Any = None
@@ -20,15 +19,12 @@ async def test_get_with_basic_auth(
 
 
 async def test_post_with_basic_auth(
-    client: SeedBasicAuthEnvironmentVariables,
-    async_client: AsyncSeedBasicAuthEnvironmentVariables,
+    client: SeedBasicAuthEnvironmentVariables, async_client: AsyncSeedBasicAuthEnvironmentVariables
 ) -> None:
     expected_response: typing.Any = True
     expected_types: typing.Any = None
     response = client.basic_auth.post_with_basic_auth(request={"key": "value"})
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.basic_auth.post_with_basic_auth(
-        request={"key": "value"}
-    )
+    async_response = await async_client.basic_auth.post_with_basic_auth(request={"key": "value"})
     validate_response(async_response, expected_response, expected_types)

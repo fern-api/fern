@@ -6,9 +6,7 @@ import typing
 from .utilities import validate_response
 
 
-async def test_hello(
-    client: SeedCodeSamples, async_client: AsyncSeedCodeSamples
-) -> None:
+async def test_hello(client: SeedCodeSamples, async_client: AsyncSeedCodeSamples) -> None:
     expected_response: typing.Any = {"id": "123", "name": "hello"}
     expected_types: typing.Any = {"id": None, "name": None}
     response = client.service.hello(num_events=5)

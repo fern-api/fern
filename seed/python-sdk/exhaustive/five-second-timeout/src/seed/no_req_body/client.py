@@ -56,9 +56,7 @@ class NoReqBodyClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def post_with_no_request_body(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> str:
+    def post_with_no_request_body(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters
         ----------
@@ -153,9 +151,7 @@ class AsyncNoReqBodyClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def post_with_no_request_body(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> str:
+    async def post_with_no_request_body(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters
         ----------

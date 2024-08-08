@@ -18,9 +18,7 @@ class ServiceClient:
     def upload(
         self,
         *,
-        request: typing.Union[
-            bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]
-        ],
+        request: typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -67,9 +65,7 @@ class AsyncServiceClient:
     async def upload(
         self,
         *,
-        request: typing.Union[
-            bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]
-        ],
+        request: typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """

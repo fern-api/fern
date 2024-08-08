@@ -29,9 +29,7 @@ class SyncPage(BasePage[T], typing.Generic[T]):
 
 
 class AsyncPage(BasePage[T], typing.Generic[T]):
-    get_next: typing.Optional[
-        typing.Callable[[], typing.Awaitable[typing.Optional[Self]]]
-    ]
+    get_next: typing.Optional[typing.Callable[[], typing.Awaitable[typing.Optional[Self]]]]
 
 
 # ----------------------------

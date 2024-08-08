@@ -16,23 +16,15 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def dog(self, value: types_union_types_dog_Dog) -> Animal:
         if IS_PYDANTIC_V2:
-            return Animal(
-                root=_Animal.Dog(**value.dict(exclude_unset=True), animal="dog")
-            )
+            return Animal(root=_Animal.Dog(**value.dict(exclude_unset=True), animal="dog"))
         else:
-            return Animal(
-                __root__=_Animal.Dog(**value.dict(exclude_unset=True), animal="dog")
-            )
+            return Animal(__root__=_Animal.Dog(**value.dict(exclude_unset=True), animal="dog"))
 
     def cat(self, value: types_union_types_cat_Cat) -> Animal:
         if IS_PYDANTIC_V2:
-            return Animal(
-                root=_Animal.Cat(**value.dict(exclude_unset=True), animal="cat")
-            )
+            return Animal(root=_Animal.Cat(**value.dict(exclude_unset=True), animal="cat"))
         else:
-            return Animal(
-                __root__=_Animal.Cat(**value.dict(exclude_unset=True), animal="cat")
-            )
+            return Animal(__root__=_Animal.Cat(**value.dict(exclude_unset=True), animal="cat"))
 
 
 class Animal(UniversalRootModel):
@@ -40,16 +32,14 @@ class Animal(UniversalRootModel):
 
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
-            typing.Union[_Animal.Dog, _Animal.Cat],
-            pydantic.Field(discriminator="animal"),
+            typing.Union[_Animal.Dog, _Animal.Cat], pydantic.Field(discriminator="animal")
         ]
 
         def get_as_union(self) -> typing.Union[_Animal.Dog, _Animal.Cat]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
-            typing.Union[_Animal.Dog, _Animal.Cat],
-            pydantic.Field(discriminator="animal"),
+            typing.Union[_Animal.Dog, _Animal.Cat], pydantic.Field(discriminator="animal")
         ]
 
         def get_as_union(self) -> typing.Union[_Animal.Dog, _Animal.Cat]:
@@ -62,17 +52,9 @@ class Animal(UniversalRootModel):
     ) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.animal == "dog":
-            return dog(
-                types_union_types_dog_Dog(
-                    **unioned_value.dict(exclude_unset=True, exclude={"animal"})
-                )
-            )
+            return dog(types_union_types_dog_Dog(**unioned_value.dict(exclude_unset=True, exclude={"animal"})))
         if unioned_value.animal == "cat":
-            return cat(
-                types_union_types_cat_Cat(
-                    **unioned_value.dict(exclude_unset=True, exclude={"animal"})
-                )
-            )
+            return cat(types_union_types_cat_Cat(**unioned_value.dict(exclude_unset=True, exclude={"animal"})))
 
 
 class _Animal:
@@ -80,9 +62,7 @@ class _Animal:
         animal: typing.Literal["dog"] = "dog"
 
         if IS_PYDANTIC_V2:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-                frozen=True
-            )  # type: ignore # Pydantic v2
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
         else:
 
             class Config:
@@ -93,9 +73,7 @@ class _Animal:
         animal: typing.Literal["cat"] = "cat"
 
         if IS_PYDANTIC_V2:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-                frozen=True
-            )  # type: ignore # Pydantic v2
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
         else:
 
             class Config:

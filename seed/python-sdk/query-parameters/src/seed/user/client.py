@@ -143,9 +143,7 @@ class UserClient:
                 "bytes": jsonable_encoder(bytes),
                 "user": jsonable_encoder(user),
                 "userList": jsonable_encoder(user_list),
-                "optionalDeadline": serialize_datetime(optional_deadline)
-                if optional_deadline is not None
-                else None,
+                "optionalDeadline": serialize_datetime(optional_deadline) if optional_deadline is not None else None,
                 "keyValue": jsonable_encoder(key_value),
                 "optionalString": optional_string,
                 "nestedUser": jsonable_encoder(nested_user),
@@ -305,9 +303,7 @@ class AsyncUserClient:
                 "bytes": jsonable_encoder(bytes),
                 "user": jsonable_encoder(user),
                 "userList": jsonable_encoder(user_list),
-                "optionalDeadline": serialize_datetime(optional_deadline)
-                if optional_deadline is not None
-                else None,
+                "optionalDeadline": serialize_datetime(optional_deadline) if optional_deadline is not None else None,
                 "keyValue": jsonable_encoder(key_value),
                 "optionalString": optional_string,
                 "nestedUser": jsonable_encoder(nested_user),

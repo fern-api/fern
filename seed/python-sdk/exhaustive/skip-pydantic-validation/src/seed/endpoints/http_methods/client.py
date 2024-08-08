@@ -20,9 +20,7 @@ class HttpMethodsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def test_get(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> str:
+    def test_get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters
         ----------
@@ -117,11 +115,7 @@ class HttpMethodsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def test_put(
-        self,
-        id: str,
-        *,
-        string: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, id: str, *, string: str, request_options: typing.Optional[RequestOptions] = None
     ) -> ObjectWithOptionalField:
         """
         Parameters
@@ -300,9 +294,7 @@ class HttpMethodsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def test_delete(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> bool:
+    def test_delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
         Parameters
         ----------
@@ -351,9 +343,7 @@ class AsyncHttpMethodsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def test_get(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> str:
+    async def test_get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters
         ----------
@@ -464,11 +454,7 @@ class AsyncHttpMethodsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def test_put(
-        self,
-        id: str,
-        *,
-        string: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, id: str, *, string: str, request_options: typing.Optional[RequestOptions] = None
     ) -> ObjectWithOptionalField:
         """
         Parameters
@@ -662,9 +648,7 @@ class AsyncHttpMethodsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def test_delete(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> bool:
+    async def test_delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
         Parameters
         ----------

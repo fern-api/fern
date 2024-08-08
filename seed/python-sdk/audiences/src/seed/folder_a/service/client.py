@@ -14,9 +14,7 @@ class ServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_direct_thread(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> Response:
+    def get_direct_thread(self, *, request_options: typing.Optional[RequestOptions] = None) -> Response:
         """
         Parameters
         ----------
@@ -59,9 +57,7 @@ class AsyncServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_direct_thread(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> Response:
+    async def get_direct_thread(self, *, request_options: typing.Optional[RequestOptions] = None) -> Response:
         """
         Parameters
         ----------

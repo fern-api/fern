@@ -17,9 +17,7 @@ class ServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def endpoint(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    def endpoint(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
@@ -53,10 +51,7 @@ class ServiceClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def unknown_request(
-        self,
-        *,
-        request: typing.Optional[typing.Any] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Parameters
@@ -111,9 +106,7 @@ class AsyncServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def endpoint(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    async def endpoint(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
@@ -155,10 +148,7 @@ class AsyncServiceClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def unknown_request(
-        self,
-        *,
-        request: typing.Optional[typing.Any] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Parameters

@@ -15,9 +15,7 @@ class Ec2Client:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def boot_instance(
-        self, *, size: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    def boot_instance(self, *, size: str, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
@@ -64,9 +62,7 @@ class AsyncEc2Client:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def boot_instance(
-        self, *, size: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    async def boot_instance(self, *, size: str, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------

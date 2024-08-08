@@ -7,13 +7,7 @@ from .http_client import AsyncHttpClient
 
 
 class BaseClientWrapper:
-    def __init__(
-        self,
-        *,
-        custom_auth_scheme: str,
-        base_url: str,
-        timeout: typing.Optional[float] = None,
-    ):
+    def __init__(self, *, custom_auth_scheme: str, base_url: str, timeout: typing.Optional[float] = None):
         self.custom_auth_scheme = custom_auth_scheme
         self._base_url = base_url
         self._timeout = timeout
@@ -43,9 +37,7 @@ class SyncClientWrapper(BaseClientWrapper):
         timeout: typing.Optional[float] = None,
         httpx_client: httpx.Client,
     ):
-        super().__init__(
-            custom_auth_scheme=custom_auth_scheme, base_url=base_url, timeout=timeout
-        )
+        super().__init__(custom_auth_scheme=custom_auth_scheme, base_url=base_url, timeout=timeout)
         self.httpx_client = HttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers(),
@@ -63,9 +55,7 @@ class AsyncClientWrapper(BaseClientWrapper):
         timeout: typing.Optional[float] = None,
         httpx_client: httpx.AsyncClient,
     ):
-        super().__init__(
-            custom_auth_scheme=custom_auth_scheme, base_url=base_url, timeout=timeout
-        )
+        super().__init__(custom_auth_scheme=custom_auth_scheme, base_url=base_url, timeout=timeout)
         self.httpx_client = AsyncHttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers(),

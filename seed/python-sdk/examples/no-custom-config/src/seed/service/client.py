@@ -22,12 +22,7 @@ class ServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_movie(
-        self,
-        movie_id: MovieId,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> Movie:
+    def get_movie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> Movie:
         """
         Parameters
         ----------
@@ -213,9 +208,7 @@ class ServiceClient:
                 "tag": tag,
             },
             headers={
-                "X-API-Version": str(x_api_version)
-                if x_api_version is not None
-                else None,
+                "X-API-Version": str(x_api_version) if x_api_version is not None else None,
             },
             request_options=request_options,
         )
@@ -233,9 +226,7 @@ class ServiceClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_response(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> Response:
+    def get_response(self, *, request_options: typing.Optional[RequestOptions] = None) -> Response:
         """
         Parameters
         ----------
@@ -281,12 +272,7 @@ class AsyncServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_movie(
-        self,
-        movie_id: MovieId,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> Movie:
+    async def get_movie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> Movie:
         """
         Parameters
         ----------
@@ -496,9 +482,7 @@ class AsyncServiceClient:
                 "tag": tag,
             },
             headers={
-                "X-API-Version": str(x_api_version)
-                if x_api_version is not None
-                else None,
+                "X-API-Version": str(x_api_version) if x_api_version is not None else None,
             },
             request_options=request_options,
         )
@@ -516,9 +500,7 @@ class AsyncServiceClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_response(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> Response:
+    async def get_response(self, *, request_options: typing.Optional[RequestOptions] = None) -> Response:
         """
         Parameters
         ----------

@@ -16,9 +16,7 @@ class S3Client:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_presigned_url(
-        self, *, s_3_key: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> str:
+    def get_presigned_url(self, *, s_3_key: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters
         ----------
@@ -73,9 +71,7 @@ class AsyncS3Client:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_presigned_url(
-        self, *, s_3_key: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> str:
+    async def get_presigned_url(self, *, s_3_key: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters
         ----------

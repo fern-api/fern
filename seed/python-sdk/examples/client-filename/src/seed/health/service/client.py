@@ -14,9 +14,7 @@ class ServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def check(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    def check(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         This endpoint checks the health of a resource.
 
@@ -106,9 +104,7 @@ class AsyncServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def check(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    async def check(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         This endpoint checks the health of a resource.
 
@@ -158,9 +154,7 @@ class AsyncServiceClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def ping(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> bool:
+    async def ping(self, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
         This endpoint checks the health of the service.
 

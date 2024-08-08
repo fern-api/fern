@@ -18,12 +18,7 @@ class UnionClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get(
-        self,
-        *,
-        request: MyUnion,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> MyUnion:
+    def get(self, *, request: MyUnion, request_options: typing.Optional[RequestOptions] = None) -> MyUnion:
         """
         Parameters
         ----------
@@ -67,9 +62,7 @@ class UnionClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_metadata(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> Metadata:
+    def get_metadata(self, *, request_options: typing.Optional[RequestOptions] = None) -> Metadata:
         """
         Parameters
         ----------
@@ -113,12 +106,7 @@ class AsyncUnionClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get(
-        self,
-        *,
-        request: MyUnion,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> MyUnion:
+    async def get(self, *, request: MyUnion, request_options: typing.Optional[RequestOptions] = None) -> MyUnion:
         """
         Parameters
         ----------
@@ -170,9 +158,7 @@ class AsyncUnionClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_metadata(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> Metadata:
+    async def get_metadata(self, *, request_options: typing.Optional[RequestOptions] = None) -> Metadata:
         """
         Parameters
         ----------

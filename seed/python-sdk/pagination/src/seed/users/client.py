@@ -101,10 +101,7 @@ class UsersClient:
                 )
                 _has_next = False
                 _get_next = None
-                if (
-                    _parsed_response.page is not None
-                    and _parsed_response.page.next is not None
-                ):
+                if _parsed_response.page is not None and _parsed_response.page.next is not None:
                     _parsed_next = _parsed_response.page.next.starting_after
                     _has_next = _parsed_next is not None
                     _get_next = lambda: self.list_with_cursor_pagination(
@@ -122,10 +119,7 @@ class UsersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def list_with_body_cursor_pagination(
-        self,
-        *,
-        pagination: typing.Optional[WithCursor] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, pagination: typing.Optional[WithCursor] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> SyncPager[User]:
         """
         Parameters
@@ -182,10 +176,7 @@ class UsersClient:
                 )
                 _has_next = False
                 _get_next = None
-                if (
-                    _parsed_response.page is not None
-                    and _parsed_response.page.next is not None
-                ):
+                if _parsed_response.page is not None and _parsed_response.page.next is not None:
                     _parsed_next = _parsed_response.page.next.starting_after
                     _has_next = _parsed_next is not None
                     _get_next = lambda: self.list_with_body_cursor_pagination(
@@ -287,10 +278,7 @@ class UsersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def list_with_body_offset_pagination(
-        self,
-        *,
-        pagination: typing.Optional[WithPage] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, pagination: typing.Optional[WithPage] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> SyncPager[User]:
         """
         Parameters
@@ -440,10 +428,7 @@ class UsersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def list_with_extended_results(
-        self,
-        *,
-        cursor: typing.Optional[uuid.UUID] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> SyncPager[User]:
         """
         Parameters
@@ -511,10 +496,7 @@ class UsersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def list_usernames(
-        self,
-        *,
-        starting_after: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> SyncPager[str]:
         """
         Parameters
@@ -583,10 +565,7 @@ class UsersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def list_with_global_config(
-        self,
-        *,
-        offset: typing.Optional[int] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, offset: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> SyncPager[str]:
         """
         Parameters
@@ -733,10 +712,7 @@ class AsyncUsersClient:
                 )
                 _has_next = False
                 _get_next = None
-                if (
-                    _parsed_response.page is not None
-                    and _parsed_response.page.next is not None
-                ):
+                if _parsed_response.page is not None and _parsed_response.page.next is not None:
                     _parsed_next = _parsed_response.page.next.starting_after
                     _has_next = _parsed_next is not None
                     _get_next = lambda: self.list_with_cursor_pagination(
@@ -754,10 +730,7 @@ class AsyncUsersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def list_with_body_cursor_pagination(
-        self,
-        *,
-        pagination: typing.Optional[WithCursor] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, pagination: typing.Optional[WithCursor] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncPager[User]:
         """
         Parameters
@@ -822,10 +795,7 @@ class AsyncUsersClient:
                 )
                 _has_next = False
                 _get_next = None
-                if (
-                    _parsed_response.page is not None
-                    and _parsed_response.page.next is not None
-                ):
+                if _parsed_response.page is not None and _parsed_response.page.next is not None:
                     _parsed_next = _parsed_response.page.next.starting_after
                     _has_next = _parsed_next is not None
                     _get_next = lambda: self.list_with_body_cursor_pagination(
@@ -935,10 +905,7 @@ class AsyncUsersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def list_with_body_offset_pagination(
-        self,
-        *,
-        pagination: typing.Optional[WithPage] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, pagination: typing.Optional[WithPage] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncPager[User]:
         """
         Parameters
@@ -1104,10 +1071,7 @@ class AsyncUsersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def list_with_extended_results(
-        self,
-        *,
-        cursor: typing.Optional[uuid.UUID] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncPager[User]:
         """
         Parameters
@@ -1182,10 +1146,7 @@ class AsyncUsersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def list_usernames(
-        self,
-        *,
-        starting_after: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncPager[str]:
         """
         Parameters
@@ -1262,10 +1223,7 @@ class AsyncUsersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def list_with_global_config(
-        self,
-        *,
-        offset: typing.Optional[int] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, offset: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncPager[str]:
         """
         Parameters

@@ -6,9 +6,7 @@ import typing
 from .utilities import validate_response
 
 
-async def test_create_user(
-    client: SeedExtraProperties, async_client: AsyncSeedExtraProperties
-) -> None:
+async def test_create_user(client: SeedExtraProperties, async_client: AsyncSeedExtraProperties) -> None:
     expected_response: typing.Any = {"name": "string"}
     expected_types: typing.Any = {"name": None}
     response = client.user.create_user(name="string")

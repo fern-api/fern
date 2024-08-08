@@ -16,36 +16,24 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def integer(self, value: int) -> UnionWithBaseProperties:
         if IS_PYDANTIC_V2:
-            return UnionWithBaseProperties(
-                root=_UnionWithBaseProperties.Integer(type="integer", value=value)
-            )
+            return UnionWithBaseProperties(root=_UnionWithBaseProperties.Integer(type="integer", value=value))
         else:
-            return UnionWithBaseProperties(
-                __root__=_UnionWithBaseProperties.Integer(type="integer", value=value)
-            )
+            return UnionWithBaseProperties(__root__=_UnionWithBaseProperties.Integer(type="integer", value=value))
 
     def string(self, value: str) -> UnionWithBaseProperties:
         if IS_PYDANTIC_V2:
-            return UnionWithBaseProperties(
-                root=_UnionWithBaseProperties.String(type="string", value=value)
-            )
+            return UnionWithBaseProperties(root=_UnionWithBaseProperties.String(type="string", value=value))
         else:
-            return UnionWithBaseProperties(
-                __root__=_UnionWithBaseProperties.String(type="string", value=value)
-            )
+            return UnionWithBaseProperties(__root__=_UnionWithBaseProperties.String(type="string", value=value))
 
     def foo(self, value: types_types_foo_Foo) -> UnionWithBaseProperties:
         if IS_PYDANTIC_V2:
             return UnionWithBaseProperties(
-                root=_UnionWithBaseProperties.Foo(
-                    **value.dict(exclude_unset=True), type="foo"
-                )
+                root=_UnionWithBaseProperties.Foo(**value.dict(exclude_unset=True), type="foo")
             )
         else:
             return UnionWithBaseProperties(
-                __root__=_UnionWithBaseProperties.Foo(
-                    **value.dict(exclude_unset=True), type="foo"
-                )
+                __root__=_UnionWithBaseProperties.Foo(**value.dict(exclude_unset=True), type="foo")
             )
 
 
@@ -55,9 +43,7 @@ class UnionWithBaseProperties(UniversalRootModel):
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
             typing.Union[
-                _UnionWithBaseProperties.Integer,
-                _UnionWithBaseProperties.String,
-                _UnionWithBaseProperties.Foo,
+                _UnionWithBaseProperties.Integer, _UnionWithBaseProperties.String, _UnionWithBaseProperties.Foo
             ],
             pydantic.Field(discriminator="type"),
         ]
@@ -65,17 +51,13 @@ class UnionWithBaseProperties(UniversalRootModel):
         def get_as_union(
             self,
         ) -> typing.Union[
-            _UnionWithBaseProperties.Integer,
-            _UnionWithBaseProperties.String,
-            _UnionWithBaseProperties.Foo,
+            _UnionWithBaseProperties.Integer, _UnionWithBaseProperties.String, _UnionWithBaseProperties.Foo
         ]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
             typing.Union[
-                _UnionWithBaseProperties.Integer,
-                _UnionWithBaseProperties.String,
-                _UnionWithBaseProperties.Foo,
+                _UnionWithBaseProperties.Integer, _UnionWithBaseProperties.String, _UnionWithBaseProperties.Foo
             ],
             pydantic.Field(discriminator="type"),
         ]
@@ -83,9 +65,7 @@ class UnionWithBaseProperties(UniversalRootModel):
         def get_as_union(
             self,
         ) -> typing.Union[
-            _UnionWithBaseProperties.Integer,
-            _UnionWithBaseProperties.String,
-            _UnionWithBaseProperties.Foo,
+            _UnionWithBaseProperties.Integer, _UnionWithBaseProperties.String, _UnionWithBaseProperties.Foo
         ]:
             return self.__root__
 
@@ -101,11 +81,7 @@ class UnionWithBaseProperties(UniversalRootModel):
         if unioned_value.type == "string":
             return string(unioned_value.value)
         if unioned_value.type == "foo":
-            return foo(
-                types_types_foo_Foo(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
-            )
+            return foo(types_types_foo_Foo(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
 
 
 class _UnionWithBaseProperties:
@@ -114,9 +90,7 @@ class _UnionWithBaseProperties:
         value: int
 
         if IS_PYDANTIC_V2:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-                frozen=True
-            )  # type: ignore # Pydantic v2
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
         else:
 
             class Config:
@@ -128,9 +102,7 @@ class _UnionWithBaseProperties:
         value: str
 
         if IS_PYDANTIC_V2:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-                frozen=True
-            )  # type: ignore # Pydantic v2
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
         else:
 
             class Config:
@@ -141,9 +113,7 @@ class _UnionWithBaseProperties:
         type: typing.Literal["foo"] = "foo"
 
         if IS_PYDANTIC_V2:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-                frozen=True
-            )  # type: ignore # Pydantic v2
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
         else:
 
             class Config:

@@ -15,23 +15,15 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def integer(self, value: int) -> UnionWithPrimitive:
         if IS_PYDANTIC_V2:
-            return UnionWithPrimitive(
-                root=_UnionWithPrimitive.Integer(type="integer", value=value)
-            )
+            return UnionWithPrimitive(root=_UnionWithPrimitive.Integer(type="integer", value=value))
         else:
-            return UnionWithPrimitive(
-                __root__=_UnionWithPrimitive.Integer(type="integer", value=value)
-            )
+            return UnionWithPrimitive(__root__=_UnionWithPrimitive.Integer(type="integer", value=value))
 
     def string(self, value: str) -> UnionWithPrimitive:
         if IS_PYDANTIC_V2:
-            return UnionWithPrimitive(
-                root=_UnionWithPrimitive.String(type="string", value=value)
-            )
+            return UnionWithPrimitive(root=_UnionWithPrimitive.String(type="string", value=value))
         else:
-            return UnionWithPrimitive(
-                __root__=_UnionWithPrimitive.String(type="string", value=value)
-            )
+            return UnionWithPrimitive(__root__=_UnionWithPrimitive.String(type="string", value=value))
 
 
 class UnionWithPrimitive(UniversalRootModel):
@@ -39,30 +31,20 @@ class UnionWithPrimitive(UniversalRootModel):
 
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
-            typing.Union[_UnionWithPrimitive.Integer, _UnionWithPrimitive.String],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_UnionWithPrimitive.Integer, _UnionWithPrimitive.String], pydantic.Field(discriminator="type")
         ]
 
-        def get_as_union(
-            self,
-        ) -> typing.Union[_UnionWithPrimitive.Integer, _UnionWithPrimitive.String]:
+        def get_as_union(self) -> typing.Union[_UnionWithPrimitive.Integer, _UnionWithPrimitive.String]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
-            typing.Union[_UnionWithPrimitive.Integer, _UnionWithPrimitive.String],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_UnionWithPrimitive.Integer, _UnionWithPrimitive.String], pydantic.Field(discriminator="type")
         ]
 
-        def get_as_union(
-            self,
-        ) -> typing.Union[_UnionWithPrimitive.Integer, _UnionWithPrimitive.String]:
+        def get_as_union(self) -> typing.Union[_UnionWithPrimitive.Integer, _UnionWithPrimitive.String]:
             return self.__root__
 
-    def visit(
-        self,
-        integer: typing.Callable[[int], T_Result],
-        string: typing.Callable[[str], T_Result],
-    ) -> T_Result:
+    def visit(self, integer: typing.Callable[[int], T_Result], string: typing.Callable[[str], T_Result]) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "integer":
             return integer(unioned_value.value)
@@ -76,9 +58,7 @@ class _UnionWithPrimitive:
         value: int
 
         if IS_PYDANTIC_V2:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-                frozen=True
-            )  # type: ignore # Pydantic v2
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
         else:
 
             class Config:
@@ -90,9 +70,7 @@ class _UnionWithPrimitive:
         value: str
 
         if IS_PYDANTIC_V2:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-                frozen=True
-            )  # type: ignore # Pydantic v2
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
         else:
 
             class Config:

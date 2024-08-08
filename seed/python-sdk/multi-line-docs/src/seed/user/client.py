@@ -18,9 +18,7 @@ class UserClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_user(
-        self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    def get_user(self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Retrieve a user.
         This endpoint is used to retrieve a user.
@@ -63,11 +61,7 @@ class UserClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def create_user(
-        self,
-        *,
-        name: str,
-        age: typing.Optional[int] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, name: str, age: typing.Optional[int] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> User:
         """
         Create a new user.
@@ -133,9 +127,7 @@ class AsyncUserClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_user(
-        self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    async def get_user(self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Retrieve a user.
         This endpoint is used to retrieve a user.
@@ -186,11 +178,7 @@ class AsyncUserClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def create_user(
-        self,
-        *,
-        name: str,
-        age: typing.Optional[int] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, name: str, age: typing.Optional[int] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> User:
         """
         Create a new user.

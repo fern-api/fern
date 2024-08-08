@@ -13,6 +13,4 @@ def client() -> SeedUndiscriminatedUnions:
 
 @pytest.fixture
 def async_client() -> AsyncSeedUndiscriminatedUnions:
-    return AsyncSeedUndiscriminatedUnions(
-        base_url=os.getenv("TESTS_BASE_URL", "base_url")
-    )
+    return AsyncSeedUndiscriminatedUnions(base_url=os.getenv("TESTS_BASE_URL", "base_url"))

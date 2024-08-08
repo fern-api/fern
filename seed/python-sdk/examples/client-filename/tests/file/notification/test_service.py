@@ -6,9 +6,7 @@ import typing
 from ...utilities import validate_response
 
 
-async def test_get_exception(
-    client: SeedExhaustive, async_client: AsyncSeedExhaustive
-) -> None:
+async def test_get_exception(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
     expected_response: typing.Any = {
         "type": "generic",
         "exceptionType": "Unavailable",
@@ -16,12 +14,8 @@ async def test_get_exception(
         "exceptionStacktrace": "<logs>",
     }
     expected_types: typing.Any = "no_validate"
-    response = client.file.notification.service.get_exception(
-        notification_id="notification-hsy129x"
-    )
+    response = client.file.notification.service.get_exception(notification_id="notification-hsy129x")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.file.notification.service.get_exception(
-        notification_id="notification-hsy129x"
-    )
+    async_response = await async_client.file.notification.service.get_exception(notification_id="notification-hsy129x")
     validate_response(async_response, expected_response, expected_types)

@@ -15,9 +15,7 @@ class PropertyBasedErrorClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def throw_error(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> str:
+    def throw_error(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         GET request that always throws an error
 
@@ -74,9 +72,7 @@ class AsyncPropertyBasedErrorClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def throw_error(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> str:
+    async def throw_error(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         GET request that always throws an error
 

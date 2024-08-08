@@ -21,11 +21,7 @@ class DummyClient:
 
     @typing.overload
     def generate(
-        self,
-        *,
-        stream: typing.Literal[True],
-        num_events: int,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, stream: typing.Literal[True], num_events: int, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Iterator[StreamResponse]:
         """
         Parameters
@@ -56,11 +52,7 @@ class DummyClient:
 
     @typing.overload
     def generate(
-        self,
-        *,
-        stream: typing.Literal[False],
-        num_events: int,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, stream: typing.Literal[False], num_events: int, request_options: typing.Optional[RequestOptions] = None
     ) -> RegularResponse:
         """
         Parameters
@@ -88,11 +80,7 @@ class DummyClient:
         ...
 
     def generate(
-        self,
-        *,
-        stream: bool,
-        num_events: int,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, stream: bool, num_events: int, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Union[typing.Iterator[StreamResponse], RegularResponse]:
         """
         Parameters
@@ -138,12 +126,8 @@ class DummyClient:
                         _response.read()
                         _response_json = _response.json()
                     except JSONDecodeError:
-                        raise ApiError(
-                            status_code=_response.status_code, body=_response.text
-                        )
-                    raise ApiError(
-                        status_code=_response.status_code, body=_response_json
-                    )
+                        raise ApiError(status_code=_response.status_code, body=_response.text)
+                    raise ApiError(status_code=_response.status_code, body=_response_json)
 
             return stream_generator()
         else:
@@ -175,11 +159,7 @@ class AsyncDummyClient:
 
     @typing.overload
     async def generate(
-        self,
-        *,
-        stream: typing.Literal[True],
-        num_events: int,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, stream: typing.Literal[True], num_events: int, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.AsyncIterator[StreamResponse]:
         """
         Parameters
@@ -218,11 +198,7 @@ class AsyncDummyClient:
 
     @typing.overload
     async def generate(
-        self,
-        *,
-        stream: typing.Literal[False],
-        num_events: int,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, stream: typing.Literal[False], num_events: int, request_options: typing.Optional[RequestOptions] = None
     ) -> RegularResponse:
         """
         Parameters
@@ -258,11 +234,7 @@ class AsyncDummyClient:
         ...
 
     async def generate(
-        self,
-        *,
-        stream: bool,
-        num_events: int,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, stream: bool, num_events: int, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Union[typing.AsyncIterator[StreamResponse], RegularResponse]:
         """
         Parameters
@@ -308,12 +280,8 @@ class AsyncDummyClient:
                         await _response.aread()
                         _response_json = _response.json()
                     except JSONDecodeError:
-                        raise ApiError(
-                            status_code=_response.status_code, body=_response.text
-                        )
-                    raise ApiError(
-                        status_code=_response.status_code, body=_response_json
-                    )
+                        raise ApiError(status_code=_response.status_code, body=_response.text)
+                    raise ApiError(status_code=_response.status_code, body=_response_json)
 
             return stream_generator()
         else:

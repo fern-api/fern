@@ -7,9 +7,7 @@ from .utilities import validate_response
 import datetime
 
 
-async def test_get_resource(
-    client: SeedMixedCase, async_client: AsyncSeedMixedCase
-) -> None:
+async def test_get_resource(client: SeedMixedCase, async_client: AsyncSeedMixedCase) -> None:
     expected_response: typing.Any = {
         "resource_type": "user",
         "userName": "username",
@@ -24,9 +22,7 @@ async def test_get_resource(
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_list_resources(
-    client: SeedMixedCase, async_client: AsyncSeedMixedCase
-) -> None:
+async def test_list_resources(client: SeedMixedCase, async_client: AsyncSeedMixedCase) -> None:
     expected_response: typing.Any = [
         {
             "resource_type": "user",
@@ -36,9 +32,7 @@ async def test_list_resources(
         }
     ]
     expected_types: typing.Tuple[typing.Any, typing.Any] = ("list", {0: "no_validate"})
-    response = client.service.list_resources(
-        page_limit=10, before_date=datetime.date.fromisoformat("2023-01-01")
-    )
+    response = client.service.list_resources(page_limit=10, before_date=datetime.date.fromisoformat("2023-01-01"))
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.service.list_resources(

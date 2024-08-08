@@ -17,23 +17,15 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def foo(self, value: types_types_foo_Foo) -> UnionWithDiscriminant:
         if IS_PYDANTIC_V2:
-            return UnionWithDiscriminant(
-                root=_UnionWithDiscriminant.Foo(type="foo", foo=value)
-            )
+            return UnionWithDiscriminant(root=_UnionWithDiscriminant.Foo(type="foo", foo=value))
         else:
-            return UnionWithDiscriminant(
-                __root__=_UnionWithDiscriminant.Foo(type="foo", foo=value)
-            )
+            return UnionWithDiscriminant(__root__=_UnionWithDiscriminant.Foo(type="foo", foo=value))
 
     def bar(self, value: types_types_bar_Bar) -> UnionWithDiscriminant:
         if IS_PYDANTIC_V2:
-            return UnionWithDiscriminant(
-                root=_UnionWithDiscriminant.Bar(type="bar", bar=value)
-            )
+            return UnionWithDiscriminant(root=_UnionWithDiscriminant.Bar(type="bar", bar=value))
         else:
-            return UnionWithDiscriminant(
-                __root__=_UnionWithDiscriminant.Bar(type="bar", bar=value)
-            )
+            return UnionWithDiscriminant(__root__=_UnionWithDiscriminant.Bar(type="bar", bar=value))
 
 
 class UnionWithDiscriminant(UniversalRootModel):
@@ -41,23 +33,17 @@ class UnionWithDiscriminant(UniversalRootModel):
 
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
-            typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar], pydantic.Field(discriminator="type")
         ]
 
-        def get_as_union(
-            self,
-        ) -> typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar]:
+        def get_as_union(self) -> typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
-            typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar], pydantic.Field(discriminator="type")
         ]
 
-        def get_as_union(
-            self,
-        ) -> typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar]:
+        def get_as_union(self) -> typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar]:
             return self.__root__
 
     def visit(
@@ -78,9 +64,7 @@ class _UnionWithDiscriminant:
         foo: types_types_foo_Foo
 
         if IS_PYDANTIC_V2:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-                frozen=True
-            )  # type: ignore # Pydantic v2
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
         else:
 
             class Config:
@@ -92,9 +76,7 @@ class _UnionWithDiscriminant:
         bar: types_types_bar_Bar
 
         if IS_PYDANTIC_V2:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-                frozen=True
-            )  # type: ignore # Pydantic v2
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
         else:
 
             class Config:

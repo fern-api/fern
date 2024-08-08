@@ -18,10 +18,7 @@ class ContainerClient:
         self._client_wrapper = client_wrapper
 
     def get_and_return_list_of_primitives(
-        self,
-        *,
-        request: typing.Sequence[str],
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, request: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[str]:
         """
         Parameters
@@ -125,10 +122,7 @@ class ContainerClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_and_return_set_of_primitives(
-        self,
-        *,
-        request: typing.Set[str],
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, request: typing.Set[str], request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Set[str]:
         """
         Parameters
@@ -232,10 +226,7 @@ class ContainerClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_and_return_map_prim_to_prim(
-        self,
-        *,
-        request: typing.Dict[str, str],
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, request: typing.Dict[str, str], request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Dict[str, str]:
         """
         Parameters
@@ -398,10 +389,7 @@ class AsyncContainerClient:
         self._client_wrapper = client_wrapper
 
     async def get_and_return_list_of_primitives(
-        self,
-        *,
-        request: typing.Sequence[str],
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, request: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[str]:
         """
         Parameters
@@ -521,10 +509,7 @@ class AsyncContainerClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_and_return_set_of_primitives(
-        self,
-        *,
-        request: typing.Set[str],
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, request: typing.Set[str], request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Set[str]:
         """
         Parameters
@@ -644,10 +629,7 @@ class AsyncContainerClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_and_return_map_prim_to_prim(
-        self,
-        *,
-        request: typing.Dict[str, str],
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, request: typing.Dict[str, str], request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Dict[str, str]:
         """
         Parameters

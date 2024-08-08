@@ -14,13 +14,9 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def fern(self, value: typing.Literal["fern"]) -> UnionWithLiteral:
         if IS_PYDANTIC_V2:
-            return UnionWithLiteral(
-                root=_UnionWithLiteral.Fern(type="fern", value=value)
-            )
+            return UnionWithLiteral(root=_UnionWithLiteral.Fern(type="fern", value=value))
         else:
-            return UnionWithLiteral(
-                __root__=_UnionWithLiteral.Fern(type="fern", value=value)
-            )
+            return UnionWithLiteral(__root__=_UnionWithLiteral.Fern(type="fern", value=value))
 
 
 class UnionWithLiteral(UniversalRootModel):
@@ -37,9 +33,7 @@ class UnionWithLiteral(UniversalRootModel):
         def get_as_union(self) -> typing.Union[_UnionWithLiteral.Fern]:
             return self.__root__
 
-    def visit(
-        self, fern: typing.Callable[[typing.Literal["fern"]], T_Result]
-    ) -> T_Result:
+    def visit(self, fern: typing.Callable[[typing.Literal["fern"]], T_Result]) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "fern":
             return fern(unioned_value.value)
@@ -51,9 +45,7 @@ class _UnionWithLiteral:
         value: typing.Literal["fern"]
 
         if IS_PYDANTIC_V2:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-                frozen=True
-            )  # type: ignore # Pydantic v2
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
         else:
 
             class Config:

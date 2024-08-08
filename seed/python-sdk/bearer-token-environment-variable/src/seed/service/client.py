@@ -13,9 +13,7 @@ class ServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_with_bearer_token(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> str:
+    def get_with_bearer_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         GET request with custom api key
 
@@ -62,9 +60,7 @@ class AsyncServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_with_bearer_token(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> str:
+    async def get_with_bearer_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         GET request with custom api key
 

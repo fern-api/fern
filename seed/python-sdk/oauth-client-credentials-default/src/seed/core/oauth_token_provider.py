@@ -8,9 +8,7 @@ from ..auth.client import AuthClient
 class OAuthTokenProvider:
     BUFFER_IN_MINUTES = 2
 
-    def __init__(
-        self, *, client_id: str, client_secret: str, client_wrapper: SyncClientWrapper
-    ):
+    def __init__(self, *, client_id: str, client_secret: str, client_wrapper: SyncClientWrapper):
         self._client_id = client_id
         self._client_secret = client_secret
         self._access_token: typing.Optional[str] = None
@@ -22,8 +20,6 @@ class OAuthTokenProvider:
         return self._refresh()
 
     def _refresh(self) -> str:
-        token_response = self._auth_client.get_token(
-            client_id=self._client_id, client_secret=self._client_secret
-        )
+        token_response = self._auth_client.get_token(client_id=self._client_id, client_secret=self._client_secret)
         self._access_token = token_response.access_token
         return self._access_token

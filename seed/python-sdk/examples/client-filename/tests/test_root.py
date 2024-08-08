@@ -12,7 +12,5 @@ async def test_echo(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -
     response = client.echo(request="Hello world!\\n\\nwith\\n\\tnewlines")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.echo(
-        request="Hello world!\\n\\nwith\\n\\tnewlines"
-    )
+    async_response = await async_client.echo(request="Hello world!\\n\\nwith\\n\\tnewlines")
     validate_response(async_response, expected_response, expected_types)

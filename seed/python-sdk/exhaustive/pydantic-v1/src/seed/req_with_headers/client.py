@@ -58,12 +58,8 @@ class ReqWithHeadersClient:
             method="POST",
             json=request,
             headers={
-                "X-TEST-SERVICE-HEADER": str(x_test_service_header)
-                if x_test_service_header is not None
-                else None,
-                "X-TEST-ENDPOINT-HEADER": str(x_test_endpoint_header)
-                if x_test_endpoint_header is not None
-                else None,
+                "X-TEST-SERVICE-HEADER": str(x_test_service_header) if x_test_service_header is not None else None,
+                "X-TEST-ENDPOINT-HEADER": str(x_test_endpoint_header) if x_test_endpoint_header is not None else None,
             },
             request_options=request_options,
             omit=OMIT,
@@ -132,12 +128,8 @@ class AsyncReqWithHeadersClient:
             method="POST",
             json=request,
             headers={
-                "X-TEST-SERVICE-HEADER": str(x_test_service_header)
-                if x_test_service_header is not None
-                else None,
-                "X-TEST-ENDPOINT-HEADER": str(x_test_endpoint_header)
-                if x_test_endpoint_header is not None
-                else None,
+                "X-TEST-SERVICE-HEADER": str(x_test_service_header) if x_test_service_header is not None else None,
+                "X-TEST-ENDPOINT-HEADER": str(x_test_endpoint_header) if x_test_endpoint_header is not None else None,
             },
             request_options=request_options,
             omit=OMIT,

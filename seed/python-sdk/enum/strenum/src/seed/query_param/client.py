@@ -77,12 +77,8 @@ class QueryParamClient:
         *,
         operand: typing.Union[Operand, typing.Sequence[Operand]],
         operand_or_color: typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]],
-        maybe_operand: typing.Optional[
-            typing.Union[Operand, typing.Sequence[Operand]]
-        ] = None,
-        maybe_operand_or_color: typing.Optional[
-            typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]
-        ] = None,
+        maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]] = None,
+        maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -212,12 +208,8 @@ class AsyncQueryParamClient:
         *,
         operand: typing.Union[Operand, typing.Sequence[Operand]],
         operand_or_color: typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]],
-        maybe_operand: typing.Optional[
-            typing.Union[Operand, typing.Sequence[Operand]]
-        ] = None,
-        maybe_operand_or_color: typing.Optional[
-            typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]
-        ] = None,
+        maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]] = None,
+        maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """

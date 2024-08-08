@@ -4,20 +4,14 @@ from seed import SeedExtends
 from seed import AsyncSeedExtends
 
 
-async def test_extended_inline_request_body(
-    client: SeedExtends, async_client: AsyncSeedExtends
-) -> None:
+async def test_extended_inline_request_body(client: SeedExtends, async_client: AsyncSeedExtends) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.extended_inline_request_body(
-            unique="string", name="string", docs="string"
-        )  # type: ignore[func-returns-value]
+        client.extended_inline_request_body(unique="string", name="string", docs="string")  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.extended_inline_request_body(
-            unique="string", name="string", docs="string"
-        )  # type: ignore[func-returns-value]
+        await async_client.extended_inline_request_body(unique="string", name="string", docs="string")  # type: ignore[func-returns-value]
         is None
     )

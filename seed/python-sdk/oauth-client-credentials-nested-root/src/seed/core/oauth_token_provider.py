@@ -9,9 +9,7 @@ from ..auth.client import AuthClient
 class OAuthTokenProvider:
     BUFFER_IN_MINUTES = 2
 
-    def __init__(
-        self, *, client_id: str, client_secret: str, client_wrapper: SyncClientWrapper
-    ):
+    def __init__(self, *, client_id: str, client_secret: str, client_wrapper: SyncClientWrapper):
         self._client_id = client_id
         self._client_secret = client_secret
         self._access_token: typing.Optional[str] = None
@@ -24,19 +22,12 @@ class OAuthTokenProvider:
         return self._refresh()
 
     def _refresh(self) -> str:
-        token_response = self._auth_client.get_token(
-            client_id=self._client_id, client_secret=self._client_secret
-        )
+        token_response = self._auth_client.get_token(client_id=self._client_id, client_secret=self._client_secret)
         self._access_token = token_response.access_token
         self._expires_at = self._get_expires_at(
-            expires_in_seconds=token_response.expires_in,
-            buffer_in_minutes=self.BUFFER_IN_MINUTES,
+            expires_in_seconds=token_response.expires_in, buffer_in_minutes=self.BUFFER_IN_MINUTES
         )
         return self._access_token
 
     def _get_expires_at(self, *, expires_in_seconds: int, buffer_in_minutes: int):
-        return (
-            dt.datetime.now()
-            + dt.timedelta(seconds=expires_in_seconds)
-            - dt.timedelta(minutes=buffer_in_minutes)
-        )
+        return dt.datetime.now() + dt.timedelta(seconds=expires_in_seconds) - dt.timedelta(minutes=buffer_in_minutes)

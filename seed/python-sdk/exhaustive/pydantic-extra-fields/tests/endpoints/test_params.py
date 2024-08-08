@@ -6,9 +6,7 @@ import typing
 from ..utilities import validate_response
 
 
-async def test_get_with_path(
-    client: SeedExhaustive, async_client: AsyncSeedExhaustive
-) -> None:
+async def test_get_with_path(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
     expected_response: typing.Any = "string"
     expected_types: typing.Any = None
     response = client.endpoints.params.get_with_path(param="string")
@@ -18,9 +16,7 @@ async def test_get_with_path(
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_get_with_query(
-    client: SeedExhaustive, async_client: AsyncSeedExhaustive
-) -> None:
+async def test_get_with_query(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
         client.endpoints.params.get_with_query(query="string", number=1)  # type: ignore[func-returns-value]
@@ -33,9 +29,7 @@ async def test_get_with_query(
     )
 
 
-async def test_get_with_allow_multiple_query(
-    client: SeedExhaustive, async_client: AsyncSeedExhaustive
-) -> None:
+async def test_get_with_allow_multiple_query(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
         client.endpoints.params.get_with_allow_multiple_query(query="string", numer=1)  # type: ignore[func-returns-value]
@@ -43,16 +37,12 @@ async def test_get_with_allow_multiple_query(
     )
 
     assert (
-        await async_client.endpoints.params.get_with_allow_multiple_query(
-            query="string", numer=1
-        )  # type: ignore[func-returns-value]
+        await async_client.endpoints.params.get_with_allow_multiple_query(query="string", numer=1)  # type: ignore[func-returns-value]
         is None
     )
 
 
-async def test_get_with_path_and_query(
-    client: SeedExhaustive, async_client: AsyncSeedExhaustive
-) -> None:
+async def test_get_with_path_and_query(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
         client.endpoints.params.get_with_path_and_query(param="string", query="string")  # type: ignore[func-returns-value]
@@ -60,24 +50,16 @@ async def test_get_with_path_and_query(
     )
 
     assert (
-        await async_client.endpoints.params.get_with_path_and_query(
-            param="string", query="string"
-        )  # type: ignore[func-returns-value]
+        await async_client.endpoints.params.get_with_path_and_query(param="string", query="string")  # type: ignore[func-returns-value]
         is None
     )
 
 
-async def test_modify_with_path(
-    client: SeedExhaustive, async_client: AsyncSeedExhaustive
-) -> None:
+async def test_modify_with_path(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
     expected_response: typing.Any = "string"
     expected_types: typing.Any = None
-    response = client.endpoints.params.modify_with_path(
-        param="string", request="string"
-    )
+    response = client.endpoints.params.modify_with_path(param="string", request="string")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.endpoints.params.modify_with_path(
-        param="string", request="string"
-    )
+    async_response = await async_client.endpoints.params.modify_with_path(param="string", request="string")
     validate_response(async_response, expected_response, expected_types)

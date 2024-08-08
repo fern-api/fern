@@ -6,9 +6,7 @@ import typing
 from .utilities import validate_response
 
 
-async def test_get_user(
-    client: SeedMultiLineDocs, async_client: AsyncSeedMultiLineDocs
-) -> None:
+async def test_get_user(client: SeedMultiLineDocs, async_client: AsyncSeedMultiLineDocs) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
         client.user.get_user(user_id="string")  # type: ignore[func-returns-value]
@@ -21,9 +19,7 @@ async def test_get_user(
     )
 
 
-async def test_create_user(
-    client: SeedMultiLineDocs, async_client: AsyncSeedMultiLineDocs
-) -> None:
+async def test_create_user(client: SeedMultiLineDocs, async_client: AsyncSeedMultiLineDocs) -> None:
     expected_response: typing.Any = {"id": "string", "name": "string", "age": 1}
     expected_types: typing.Any = {"id": None, "name": None, "age": "integer"}
     response = client.user.create_user(name="string", age=1)

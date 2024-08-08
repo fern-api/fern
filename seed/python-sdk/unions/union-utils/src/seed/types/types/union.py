@@ -36,9 +36,7 @@ class Union(UniversalRootModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     if IS_PYDANTIC_V2:
-        root: typing_extensions.Annotated[
-            typing.Union[_Union.Foo, _Union.Bar], pydantic.Field(discriminator="type")
-        ]
+        root: typing_extensions.Annotated[typing.Union[_Union.Foo, _Union.Bar], pydantic.Field(discriminator="type")]
 
         def get_as_union(self) -> typing.Union[_Union.Foo, _Union.Bar]:
             return self.root
@@ -68,9 +66,7 @@ class _Union:
         foo: types_types_foo_Foo
 
         if IS_PYDANTIC_V2:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-                frozen=True
-            )  # type: ignore # Pydantic v2
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
         else:
 
             class Config:
@@ -82,9 +78,7 @@ class _Union:
         bar: types_types_bar_Bar
 
         if IS_PYDANTIC_V2:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-                frozen=True
-            )  # type: ignore # Pydantic v2
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
         else:
 
             class Config:
