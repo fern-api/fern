@@ -4,6 +4,7 @@ export { GENERATOR_INVOCATIONS } from "./generatorInvocations";
 export { GeneratorName } from "./GeneratorName";
 export {
     GenerationLanguage,
+    getPackageName,
     type GeneratorGroup,
     type GeneratorInvocation,
     type GeneratorsConfiguration
