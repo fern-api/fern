@@ -29,7 +29,7 @@ export async function getIntermediateRepresentation({
         disableExamples: generatorInvocation.disableExamples,
         readme: generatorInvocation.readme,
         version: undefined,
-        packageName: undefined,
+        packageName: undefined
     });
     context.logger.debug("Generated IR");
     const migratedIntermediateRepresentation =

@@ -32,7 +32,7 @@ export async function registerApi({
         disableExamples: false,
         readme: undefined,
         version: undefined,
-        packageName: undefined,
+        packageName: undefined
     });
 
     const fdrService = createFdrService({

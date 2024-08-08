@@ -67,7 +67,7 @@ it("converts to api reference node", async () => {
         disableExamples: false,
         readme: undefined,
         version: undefined,
-        packageName: undefined,
+        packageName: undefined
     });
 
     const apiDefinition = convertIrToApiDefinition(ir, apiDefinitionId);
