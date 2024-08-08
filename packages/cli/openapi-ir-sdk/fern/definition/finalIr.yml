@@ -62,12 +62,15 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSource
     properties:
       schema: optional<Schema>
       examples: optional<list<ErrorExample>>
 
   Webhook:
-    extends: commons.WithDescription
+    extends:
+      - commons.WithDescription
+      - commons.WithSource
     properties:
       sdkName: optional<EndpointSdkName>
       method: WebhookHttpMethod
@@ -89,7 +92,9 @@ types:
       payload: example.FullExample
 
   WebsocketChannel:
-    extends: commons.WithDescription
+    extends:
+      - commons.WithDescription
+      - commons.WithSource
     properties:
       path: string
       groupName: commons.SdkGroupName
@@ -136,6 +141,7 @@ types:
     extends: 
       - commons.WithDescription
       - commons.WithAvailability
+      - commons.WithSource
     properties:
       authed: boolean
       internal: optional<boolean>
@@ -309,6 +315,7 @@ types:
     extends: 
       - commons.WithDescription
       - commons.WithAvailability
+      - commons.WithSource
     properties:
       name: string
       schema: Schema
@@ -318,6 +325,7 @@ types:
     extends: 
       - commons.WithDescription
       - commons.WithAvailability
+      - commons.WithSource
     properties:
       name: string
       schema: Schema
@@ -330,6 +338,7 @@ types:
     extends: 
       - commons.WithDescription
       - commons.WithAvailability
+      - commons.WithSource
     properties:
       name: string
       schema: Schema
@@ -346,18 +355,24 @@ types:
       json: JsonRequest
 
   OctetStreamRequest:
-    extends: commons.WithDescription
+    extends:
+      - commons.WithDescription
+      - commons.WithSource
     properties: {}
 
   JsonRequest:
-    extends: commons.WithDescription
+    extends:
+      - commons.WithDescription
+      - commons.WithSource
     properties:
       schema: Schema
       contentType: optional<string>
       additionalProperties: boolean
 
   MultipartRequest:
-    extends: commons.WithDescription
+    extends:
+      - commons.WithDescription
+      - commons.WithSource
     properties:
       name:
         type: optional<string>
@@ -392,13 +407,19 @@ types:
         docs: Checks if `x-fern-streaming` is present and is true.
 
   FileResponse:
-    extends: commons.WithDescription
+    extends:
+      - commons.WithDescription
+      - commons.WithSource
 
   TextResponse:
-    extends: commons.WithDescription
+    extends:
+      - commons.WithDescription
+      - commons.WithSource
 
   JsonResponse:
-    extends: commons.WithDescription
+    extends:
+      - commons.WithDescription
+      - commons.WithSource
     properties:
       schema: Schema
       responseProperty: optional<string>
@@ -513,6 +534,7 @@ types:
       - commons.WithName
       - commons.WithSdkGroupName
       - commons.WithAvailability
+      - commons.WithSource
     properties:
       allOf: list<ReferencedSchema>
       properties: list<ObjectProperty>
@@ -598,6 +620,7 @@ types:
       - commons.WithName
       - commons.WithSdkGroupName
       - commons.WithAvailability
+      - commons.WithSource
     properties:
       default: optional<EnumValue>
       values: list<EnumValue>
@@ -631,6 +654,7 @@ types:
       - commons.WithName
       - commons.WithSdkGroupName
       - commons.WithAvailability
+      - commons.WithSource
     properties:
       schema: commons.SchemaId
 
@@ -645,6 +669,7 @@ types:
       - commons.WithName
       - commons.WithSdkGroupName
       - commons.WithAvailability
+      - commons.WithSource
     properties:
       discriminantProperty: string
       commonProperties: list<CommonProperty>
@@ -661,5 +686,6 @@ types:
       - commons.WithName
       - commons.WithSdkGroupName
       - commons.WithAvailability
+      - commons.WithSource
     properties:
       schemas: list<Schema>

@@ -4,7 +4,7 @@
 
 import * as FernOpenapiIr from "../../..";
 
-export interface JsonRequest extends FernOpenapiIr.WithDescription {
+export interface JsonRequest extends FernOpenapiIr.WithDescription, FernOpenapiIr.WithSource {
     schema: FernOpenapiIr.Schema;
     contentType: string | undefined;
     additionalProperties: boolean;

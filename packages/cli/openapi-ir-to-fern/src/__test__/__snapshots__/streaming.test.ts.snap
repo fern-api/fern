@@ -201,6 +201,9 @@ exports[`open api parser streaming docs 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "streaming/openapi.yml",
+      },
     },
     "types": {
       "StreamUser": {
@@ -215,6 +218,9 @@ exports[`open api parser streaming docs 1`] = `
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "streaming/openapi.yml",
         },
       },
       "StreamUser2": {
@@ -232,6 +238,9 @@ exports[`open api parser streaming docs 1`] = `
           "name": "optional<string>",
           "streamed": "optional<literal<true>>",
         },
+        "source": {
+          "openapi": "streaming/openapi.yml",
+        },
       },
       "User": {
         "docs": undefined,
@@ -245,6 +254,9 @@ exports[`open api parser streaming docs 1`] = `
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "streaming/openapi.yml",
         },
       },
       "User2": {
@@ -262,6 +274,9 @@ exports[`open api parser streaming docs 1`] = `
           "name": "optional<string>",
           "streamed": "optional<literal<false>>",
         },
+        "source": {
+          "openapi": "streaming/openapi.yml",
+        },
       },
       "UserV3Response": {
         "docs": undefined,
@@ -276,6 +291,9 @@ exports[`open api parser streaming docs 1`] = `
             },
           },
           "inline": "optional<boolean>",
+        },
+        "source": {
+          "openapi": "streaming/openapi.yml",
         },
       },
       "UserV3StreamResponse": {
@@ -292,6 +310,9 @@ exports[`open api parser streaming docs 1`] = `
           },
           "inline": "optional<boolean>",
           "streamed": "optional<boolean>",
+        },
+        "source": {
+          "openapi": "streaming/openapi.yml",
         },
       },
     },
@@ -507,6 +528,9 @@ exports[`open api parser streaming simple 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "streaming/openapi.yml",
+      },
     },
     "types": {
       "StreamUser": {
@@ -521,6 +545,9 @@ exports[`open api parser streaming simple 1`] = `
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "streaming/openapi.yml",
         },
       },
       "StreamUser2": {
@@ -538,6 +565,9 @@ exports[`open api parser streaming simple 1`] = `
           "name": "optional<string>",
           "streamed": "optional<literal<true>>",
         },
+        "source": {
+          "openapi": "streaming/openapi.yml",
+        },
       },
       "User": {
         "docs": undefined,
@@ -551,6 +581,9 @@ exports[`open api parser streaming simple 1`] = `
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "streaming/openapi.yml",
         },
       },
       "User2": {
@@ -568,6 +601,9 @@ exports[`open api parser streaming simple 1`] = `
           "name": "optional<string>",
           "streamed": "optional<literal<false>>",
         },
+        "source": {
+          "openapi": "streaming/openapi.yml",
+        },
       },
       "UserV3Response": {
         "docs": undefined,
@@ -582,6 +618,9 @@ exports[`open api parser streaming simple 1`] = `
             },
           },
           "inline": "optional<boolean>",
+        },
+        "source": {
+          "openapi": "streaming/openapi.yml",
         },
       },
       "UserV3StreamResponse": {
@@ -598,6 +637,9 @@ exports[`open api parser streaming simple 1`] = `
           },
           "inline": "optional<boolean>",
           "streamed": "optional<boolean>",
+        },
+        "source": {
+          "openapi": "streaming/openapi.yml",
         },
       },
     },

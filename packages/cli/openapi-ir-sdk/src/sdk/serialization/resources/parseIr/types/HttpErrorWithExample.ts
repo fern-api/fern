@@ -18,10 +18,11 @@ export const HttpErrorWithExample: core.serialization.ObjectSchema<
             .optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithName));
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithName))
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSource));
 
 export declare namespace HttpErrorWithExample {
-    interface Raw extends serializers.WithDescription.Raw, serializers.WithName.Raw {
+    interface Raw extends serializers.WithDescription.Raw, serializers.WithName.Raw, serializers.WithSource.Raw {
         statusCode: serializers.StatusCode.Raw;
         schema: serializers.SchemaWithExample.Raw;
         fullExamples?: serializers.NamedFullExample.Raw[] | null;

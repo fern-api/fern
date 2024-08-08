@@ -288,7 +288,10 @@
             "referencedTypes": [
                 "type_commons/metadata:Metadata"
             ],
-            "encoding": null,
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
             "source": null,
             "userProvidedExamples": [
                 {
@@ -2152,7 +2155,10 @@
                 "type_:Node",
                 "type_commons/metadata:Metadata"
             ],
-            "encoding": null,
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
             "source": null,
             "userProvidedExamples": [
                 {
@@ -4375,7 +4381,10 @@
                 "extendedProperties": []
             },
             "referencedTypes": [],
-            "encoding": null,
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
             "source": null,
             "userProvidedExamples": [
                 {
@@ -5058,7 +5067,10 @@
             "referencedTypes": [
                 "type_file:FileInfo"
             ],
-            "encoding": null,
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
             "source": null,
             "userProvidedExamples": [
                 {
@@ -6029,7 +6041,10 @@
                 ]
             },
             "referencedTypes": [],
-            "encoding": null,
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
             "source": null,
             "userProvidedExamples": [
                 {
@@ -6539,7 +6554,10 @@
                 "type_file:FileInfo",
                 "type_file/directory:Directory"
             ],
-            "encoding": null,
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
             "source": null,
             "userProvidedExamples": [
                 {

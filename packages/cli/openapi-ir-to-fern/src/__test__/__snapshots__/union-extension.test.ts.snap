@@ -12,11 +12,17 @@ exports[`union-extension union-extension docs 1`] = `
           "iban": "optional<string>",
           "other": "optional<Other>",
         },
+        "source": {
+          "openapi": "union-extension/openapi.yml",
+        },
       },
       "IbanField": {
         "docs": undefined,
         "properties": {
           "iban": "optional<string>",
+        },
+        "source": {
+          "openapi": "union-extension/openapi.yml",
         },
       },
       "Other": {
@@ -25,16 +31,23 @@ exports[`union-extension union-extension docs 1`] = `
           "identification": "optional<string>",
           "schemeNameCone": "optional<string>",
         },
+        "source": {
+          "openapi": "union-extension/openapi.yml",
+        },
       },
       "OtherField": {
         "docs": undefined,
         "properties": {
           "other": "optional<Other>",
         },
+        "source": {
+          "openapi": "union-extension/openapi.yml",
+        },
       },
       "PartyAccount": {
         "discriminated": false,
         "docs": "PartyAccount with excluded currency in response",
+        "source": undefined,
         "union": [
           "IbanField",
           "OtherField",
@@ -64,11 +77,17 @@ exports[`union-extension union-extension simple 1`] = `
           "iban": "optional<string>",
           "other": "optional<Other>",
         },
+        "source": {
+          "openapi": "union-extension/openapi.yml",
+        },
       },
       "IbanField": {
         "docs": undefined,
         "properties": {
           "iban": "optional<string>",
+        },
+        "source": {
+          "openapi": "union-extension/openapi.yml",
         },
       },
       "Other": {
@@ -77,16 +96,23 @@ exports[`union-extension union-extension simple 1`] = `
           "identification": "optional<string>",
           "schemeNameCone": "optional<string>",
         },
+        "source": {
+          "openapi": "union-extension/openapi.yml",
+        },
       },
       "OtherField": {
         "docs": undefined,
         "properties": {
           "other": "optional<Other>",
         },
+        "source": {
+          "openapi": "union-extension/openapi.yml",
+        },
       },
       "PartyAccount": {
         "discriminated": false,
         "docs": "PartyAccount with excluded currency in response",
+        "source": undefined,
         "union": [
           "IbanField",
           "OtherField",

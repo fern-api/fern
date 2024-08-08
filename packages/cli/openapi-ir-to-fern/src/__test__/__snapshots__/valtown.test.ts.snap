@@ -108,6 +108,9 @@ API endpoints",
             },
           },
         },
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "types": {
         "AliasValResponse": {
@@ -196,6 +199,9 @@ API endpoints",
               },
             },
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "AliasValResponseAuthor": {
           "docs": "The user who created this val",
@@ -210,6 +216,9 @@ API endpoints",
               },
             },
             "username": "optional<string>",
+          },
+          "source": {
+            "openapi": "valtown/openapi.yml",
           },
         },
         "AliasValResponseLinks": {
@@ -246,6 +255,9 @@ API endpoints",
               },
             },
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "AliasValResponsePrivacy": {
           "docs": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
@@ -254,6 +266,9 @@ API endpoints",
             "unlisted",
             "private",
           ],
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "AliasValResponseType": {
           "docs": "The type of a val. HTTP can receive web requests, Email can receive emails, Cron runs periodically, and Script can be used for libraries or one-off calculations",
@@ -266,6 +281,9 @@ API endpoints",
             "rpc",
             "httpnext",
           ],
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
       },
     },
@@ -380,6 +398,9 @@ API endpoints",
             },
           },
         },
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "types": {
         "BlobListingItem": {
@@ -394,6 +415,9 @@ API endpoints",
               "docs": "Size in bytes of the object",
               "type": "optional<integer>",
             },
+          },
+          "source": {
+            "openapi": "valtown/openapi.yml",
           },
         },
       },
@@ -479,6 +503,9 @@ API endpoints",
             },
           },
         },
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "types": {
         "AttachmentObject": {
@@ -490,10 +517,14 @@ API endpoints",
             "filename": "string",
             "type": "optional<string>",
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "EmailData": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "string",
             {
@@ -505,6 +536,7 @@ API endpoints",
         "EmailDataInput": {
           "discriminated": false,
           "docs": "A single email or list of emails for one of the address fields",
+          "source": undefined,
           "union": [
             "EmailData",
             "list<EmailData>",
@@ -516,16 +548,23 @@ API endpoints",
             "email": "string",
             "name": "optional<string>",
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "EmailsSendResponse": {
           "docs": "Successfully sent email",
           "properties": {
             "message": "string",
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "ReplyToList": {
           "discriminated": false,
           "docs": "A reply-to list of email addresses",
+          "source": undefined,
           "union": [
             {
               "docs": "An email address and name",
@@ -771,6 +810,9 @@ give access to details and data from the requesting user.",
             },
           },
         },
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "types": {
         "MeCommentsRequestRelationship": {
@@ -780,12 +822,18 @@ give access to details and data from the requesting user.",
             "received",
             "given",
           ],
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "MeCommentsResponse": {
           "docs": "A paginated result set",
           "properties": {
             "data": "list<MeCommentsResponseDataItem>",
             "links": "root.PaginationLinks",
+          },
+          "source": {
+            "openapi": "valtown/openapi.yml",
           },
         },
         "MeCommentsResponseDataItem": {
@@ -809,6 +857,9 @@ give access to details and data from the requesting user.",
             },
             "val": "MeCommentsResponseDataItemVal",
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "MeCommentsResponseDataItemAuthor": {
           "docs": undefined,
@@ -823,6 +874,9 @@ give access to details and data from the requesting user.",
               },
             },
             "username": "optional<string>",
+          },
+          "source": {
+            "openapi": "valtown/openapi.yml",
           },
         },
         "MeCommentsResponseDataItemVal": {
@@ -860,6 +914,9 @@ give access to details and data from the requesting user.",
               },
             },
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "MeCommentsResponseDataItemValAuthor": {
           "docs": "The user who created this val",
@@ -875,6 +932,9 @@ give access to details and data from the requesting user.",
             },
             "username": "optional<string>",
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "MeCommentsResponseDataItemValPrivacy": {
           "docs": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
@@ -883,6 +943,9 @@ give access to details and data from the requesting user.",
             "unlisted",
             "private",
           ],
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "MeGetResponse": {
           "docs": "Your user information, with tier and email included",
@@ -935,6 +998,9 @@ give access to details and data from the requesting user.",
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "MeGetResponseLinks": {
           "docs": undefined,
@@ -950,6 +1016,9 @@ give access to details and data from the requesting user.",
               },
             },
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "MeGetResponseTier": {
           "docs": "Your account tier",
@@ -957,6 +1026,9 @@ give access to details and data from the requesting user.",
             "free",
             "pro",
           ],
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "MeLikesResponse": {
           "docs": "A paginated result set",
@@ -964,12 +1036,18 @@ give access to details and data from the requesting user.",
             "data": "list<root.BasicVal>",
             "links": "root.PaginationLinks",
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "MeReferencesResponse": {
           "docs": "A paginated result set",
           "properties": {
             "data": "list<MeReferencesResponseDataItem>",
             "links": "root.PaginationLinks",
+          },
+          "source": {
+            "openapi": "valtown/openapi.yml",
           },
         },
         "MeReferencesResponseDataItem": {
@@ -984,6 +1062,9 @@ give access to details and data from the requesting user.",
               "type": "MeReferencesResponseDataItemReference",
             },
             "referencedAt": "datetime",
+          },
+          "source": {
+            "openapi": "valtown/openapi.yml",
           },
         },
         "MeReferencesResponseDataItemDependsOn": {
@@ -1018,6 +1099,9 @@ give access to details and data from the requesting user.",
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "MeReferencesResponseDataItemReference": {
           "docs": "A val in a dependency relationship",
@@ -1050,6 +1134,9 @@ give access to details and data from the requesting user.",
               "docs": "The username of the person who authored this val",
               "type": "optional<string>",
             },
+          },
+          "source": {
+            "openapi": "valtown/openapi.yml",
           },
         },
       },
@@ -1132,6 +1219,9 @@ give access to details and data from the requesting user.",
             },
           },
         },
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "types": {
         "SearchValsResponse": {
@@ -1139,6 +1229,9 @@ give access to details and data from the requesting user.",
           "properties": {
             "data": "list<root.BasicVal>",
             "links": "root.PaginationLinks",
+          },
+          "source": {
+            "openapi": "valtown/openapi.yml",
           },
         },
       },
@@ -1283,6 +1376,9 @@ give access to details and data from the requesting user.",
             },
           },
         },
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "types": {
         "ParameterizedQuery": {
@@ -1297,6 +1393,9 @@ give access to details and data from the requesting user.",
               "type": "string",
             },
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "SqliteBatchRequestMode": {
           "enum": [
@@ -1304,10 +1403,14 @@ give access to details and data from the requesting user.",
             "read",
             "deferred",
           ],
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "SqliteBatchRequestStatementsItem": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             {
               "docs": "Simple SQL statement to run in SQLite",
@@ -1322,6 +1425,7 @@ give access to details and data from the requesting user.",
         "SqliteExecuteRequestStatement": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             {
               "docs": "Simple SQL statement to run in SQLite",
@@ -1336,6 +1440,7 @@ give access to details and data from the requesting user.",
         "StatementArg": {
           "discriminated": false,
           "docs": "List of arguments to be used in the given statement",
+          "source": undefined,
           "union": [
             "list<optional<TursoValue>>",
             "map<string, optional<TursoValue>>",
@@ -1344,6 +1449,7 @@ give access to details and data from the requesting user.",
         "TursoValue": {
           "discriminated": false,
           "docs": "A value to be used as a parameter",
+          "source": undefined,
           "union": [
             "string",
             "double",
@@ -1470,6 +1576,9 @@ give access to details and data from the requesting user.",
             },
           },
         },
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "types": {
         "UsersValsResponse": {
@@ -1477,6 +1586,9 @@ give access to details and data from the requesting user.",
           "properties": {
             "data": "list<root.BasicVal>",
             "links": "root.PaginationLinks",
+          },
+          "source": {
+            "openapi": "valtown/openapi.yml",
           },
         },
       },
@@ -2234,11 +2346,15 @@ let you get, create, and run vals.",
             },
           },
         },
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "types": {
         "EvalGetResponse": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "string",
             "double",
@@ -2250,6 +2366,7 @@ let you get, create, and run vals.",
         "EvalPostResponse": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "string",
             "double",
@@ -2266,6 +2383,9 @@ let you get, create, and run vals.",
               "type": "boolean",
             },
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "ValsCreateRequestPrivacy": {
           "docs": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
@@ -2274,6 +2394,9 @@ let you get, create, and run vals.",
             "unlisted",
             "private",
           ],
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "ValsCreateRequestType": {
           "default": "script",
@@ -2283,6 +2406,9 @@ let you get, create, and run vals.",
             "script",
             "email",
           ],
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "ValsCreateVersionRequestPrivacy": {
           "docs": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
@@ -2291,6 +2417,9 @@ let you get, create, and run vals.",
             "unlisted",
             "private",
           ],
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "ValsCreateVersionRequestType": {
           "default": "script",
@@ -2300,12 +2429,18 @@ let you get, create, and run vals.",
             "script",
             "email",
           ],
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "ValsListResponse": {
           "docs": "A paginated result set",
           "properties": {
             "data": "list<ValsListResponseDataItem>",
             "links": "root.PaginationLinks",
+          },
+          "source": {
+            "openapi": "valtown/openapi.yml",
           },
         },
         "ValsListResponseDataItem": {
@@ -2334,6 +2469,9 @@ let you get, create, and run vals.",
               },
             },
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "ValsUpdateRequestPrivacy": {
           "docs": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
@@ -2342,6 +2480,9 @@ let you get, create, and run vals.",
             "unlisted",
             "private",
           ],
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "ValsUpdateRequestType": {
           "docs": "The type of the val you want to update. Note that this does not include interval vals, because they cannot be created through the API yet.",
@@ -2350,6 +2491,9 @@ let you get, create, and run vals.",
             "script",
             "email",
           ],
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
       },
     },
@@ -2459,6 +2603,9 @@ let you get, create, and run vals.",
             },
           },
         },
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "BasicValAuthor": {
         "docs": "The user who created this val",
@@ -2473,6 +2620,9 @@ let you get, create, and run vals.",
             },
           },
           "username": "optional<string>",
+        },
+        "source": {
+          "openapi": "valtown/openapi.yml",
         },
       },
       "BasicValLinks": {
@@ -2509,6 +2659,9 @@ let you get, create, and run vals.",
             },
           },
         },
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "BasicValPrivacy": {
         "docs": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
@@ -2517,6 +2670,9 @@ let you get, create, and run vals.",
           "unlisted",
           "private",
         ],
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "BasicValType": {
         "docs": "The type of a val. HTTP can receive web requests, Email can receive emails, Cron runs periodically, and Script can be used for libraries or one-off calculations",
@@ -2529,11 +2685,17 @@ let you get, create, and run vals.",
           "rpc",
           "httpnext",
         ],
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "EmailsSendRequestInternalServerErrorBody": {
         "docs": undefined,
         "properties": {
           "error": "string",
+        },
+        "source": {
+          "openapi": "valtown/openapi.yml",
         },
       },
       "EvalGetRequestBadRequestErrorBody": {
@@ -2542,12 +2704,18 @@ let you get, create, and run vals.",
           "error": "string",
           "type": "literal<"error">",
         },
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "EvalPostRequestBadRequestErrorBody": {
         "docs": undefined,
         "properties": {
           "error": "string",
           "type": "literal<"error">",
+        },
+        "source": {
+          "openapi": "valtown/openapi.yml",
         },
       },
       "ExtendedVal": {
@@ -2636,6 +2804,9 @@ let you get, create, and run vals.",
             },
           },
         },
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "ExtendedValAuthor": {
         "docs": "The user who created this val",
@@ -2650,6 +2821,9 @@ let you get, create, and run vals.",
             },
           },
           "username": "optional<string>",
+        },
+        "source": {
+          "openapi": "valtown/openapi.yml",
         },
       },
       "ExtendedValLinks": {
@@ -2686,6 +2860,9 @@ let you get, create, and run vals.",
             },
           },
         },
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "ExtendedValPrivacy": {
         "docs": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
@@ -2694,6 +2871,9 @@ let you get, create, and run vals.",
           "unlisted",
           "private",
         ],
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "ExtendedValType": {
         "docs": "The type of a val. HTTP can receive web requests, Email can receive emails, Cron runs periodically, and Script can be used for libraries or one-off calculations",
@@ -2706,6 +2886,9 @@ let you get, create, and run vals.",
           "rpc",
           "httpnext",
         ],
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "PaginationLinks": {
         "docs": "Links to use for pagination",
@@ -2740,6 +2923,9 @@ let you get, create, and run vals.",
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "valtown/openapi.yml",
         },
       },
       "ResultSet": {
@@ -2778,12 +2964,16 @@ This value is not specified for other SQL statements.",
             "type": "double",
           },
         },
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "ResultSetLastInsertRowid": {
         "discriminated": false,
         "docs": "ROWID of the last inserted row.
 
 This value is not specified if the SQL statement was not an INSERT or if the table was not a ROWID table.",
+        "source": undefined,
         "union": [
           "string",
           "double",
@@ -2832,6 +3022,9 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "UserLinks": {
         "docs": undefined,
@@ -2846,6 +3039,9 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "valtown/openapi.yml",
         },
       },
     },
@@ -2978,6 +3174,9 @@ API endpoints",
             },
           },
         },
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "types": {
         "AliasValResponse": {
@@ -3066,6 +3265,9 @@ API endpoints",
               },
             },
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "AliasValResponseAuthor": {
           "docs": "The user who created this val",
@@ -3080,6 +3282,9 @@ API endpoints",
               },
             },
             "username": "optional<string>",
+          },
+          "source": {
+            "openapi": "valtown/openapi.yml",
           },
         },
         "AliasValResponseLinks": {
@@ -3116,6 +3321,9 @@ API endpoints",
               },
             },
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "AliasValResponsePrivacy": {
           "docs": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
@@ -3124,6 +3332,9 @@ API endpoints",
             "unlisted",
             "private",
           ],
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "AliasValResponseType": {
           "docs": "The type of a val. HTTP can receive web requests, Email can receive emails, Cron runs periodically, and Script can be used for libraries or one-off calculations",
@@ -3136,6 +3347,9 @@ API endpoints",
             "rpc",
             "httpnext",
           ],
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
       },
     },
@@ -3250,6 +3464,9 @@ API endpoints",
             },
           },
         },
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "types": {
         "BlobListingItem": {
@@ -3264,6 +3481,9 @@ API endpoints",
               "docs": "Size in bytes of the object",
               "type": "optional<integer>",
             },
+          },
+          "source": {
+            "openapi": "valtown/openapi.yml",
           },
         },
       },
@@ -3349,6 +3569,9 @@ API endpoints",
             },
           },
         },
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "types": {
         "AttachmentObject": {
@@ -3360,10 +3583,14 @@ API endpoints",
             "filename": "string",
             "type": "optional<string>",
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "EmailData": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "string",
             {
@@ -3375,6 +3602,7 @@ API endpoints",
         "EmailDataInput": {
           "discriminated": false,
           "docs": "A single email or list of emails for one of the address fields",
+          "source": undefined,
           "union": [
             "EmailData",
             "list<EmailData>",
@@ -3386,16 +3614,23 @@ API endpoints",
             "email": "string",
             "name": "optional<string>",
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "EmailsSendResponse": {
           "docs": "Successfully sent email",
           "properties": {
             "message": "string",
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "ReplyToList": {
           "discriminated": false,
           "docs": "A reply-to list of email addresses",
+          "source": undefined,
           "union": [
             {
               "docs": "An email address and name",
@@ -3641,6 +3876,9 @@ give access to details and data from the requesting user.",
             },
           },
         },
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "types": {
         "MeCommentsRequestRelationship": {
@@ -3650,12 +3888,18 @@ give access to details and data from the requesting user.",
             "received",
             "given",
           ],
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "MeCommentsResponse": {
           "docs": "A paginated result set",
           "properties": {
             "data": "list<MeCommentsResponseDataItem>",
             "links": "root.PaginationLinks",
+          },
+          "source": {
+            "openapi": "valtown/openapi.yml",
           },
         },
         "MeCommentsResponseDataItem": {
@@ -3679,6 +3923,9 @@ give access to details and data from the requesting user.",
             },
             "val": "MeCommentsResponseDataItemVal",
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "MeCommentsResponseDataItemAuthor": {
           "docs": undefined,
@@ -3693,6 +3940,9 @@ give access to details and data from the requesting user.",
               },
             },
             "username": "optional<string>",
+          },
+          "source": {
+            "openapi": "valtown/openapi.yml",
           },
         },
         "MeCommentsResponseDataItemVal": {
@@ -3730,6 +3980,9 @@ give access to details and data from the requesting user.",
               },
             },
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "MeCommentsResponseDataItemValAuthor": {
           "docs": "The user who created this val",
@@ -3745,6 +3998,9 @@ give access to details and data from the requesting user.",
             },
             "username": "optional<string>",
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "MeCommentsResponseDataItemValPrivacy": {
           "docs": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
@@ -3753,6 +4009,9 @@ give access to details and data from the requesting user.",
             "unlisted",
             "private",
           ],
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "MeGetResponse": {
           "docs": "Your user information, with tier and email included",
@@ -3805,6 +4064,9 @@ give access to details and data from the requesting user.",
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "MeGetResponseLinks": {
           "docs": undefined,
@@ -3820,6 +4082,9 @@ give access to details and data from the requesting user.",
               },
             },
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "MeGetResponseTier": {
           "docs": "Your account tier",
@@ -3827,6 +4092,9 @@ give access to details and data from the requesting user.",
             "free",
             "pro",
           ],
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "MeLikesResponse": {
           "docs": "A paginated result set",
@@ -3834,12 +4102,18 @@ give access to details and data from the requesting user.",
             "data": "list<root.BasicVal>",
             "links": "root.PaginationLinks",
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "MeReferencesResponse": {
           "docs": "A paginated result set",
           "properties": {
             "data": "list<MeReferencesResponseDataItem>",
             "links": "root.PaginationLinks",
+          },
+          "source": {
+            "openapi": "valtown/openapi.yml",
           },
         },
         "MeReferencesResponseDataItem": {
@@ -3854,6 +4128,9 @@ give access to details and data from the requesting user.",
               "type": "MeReferencesResponseDataItemReference",
             },
             "referencedAt": "datetime",
+          },
+          "source": {
+            "openapi": "valtown/openapi.yml",
           },
         },
         "MeReferencesResponseDataItemDependsOn": {
@@ -3888,6 +4165,9 @@ give access to details and data from the requesting user.",
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "MeReferencesResponseDataItemReference": {
           "docs": "A val in a dependency relationship",
@@ -3920,6 +4200,9 @@ give access to details and data from the requesting user.",
               "docs": "The username of the person who authored this val",
               "type": "optional<string>",
             },
+          },
+          "source": {
+            "openapi": "valtown/openapi.yml",
           },
         },
       },
@@ -4002,6 +4285,9 @@ give access to details and data from the requesting user.",
             },
           },
         },
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "types": {
         "SearchValsResponse": {
@@ -4009,6 +4295,9 @@ give access to details and data from the requesting user.",
           "properties": {
             "data": "list<root.BasicVal>",
             "links": "root.PaginationLinks",
+          },
+          "source": {
+            "openapi": "valtown/openapi.yml",
           },
         },
       },
@@ -4153,6 +4442,9 @@ give access to details and data from the requesting user.",
             },
           },
         },
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "types": {
         "ParameterizedQuery": {
@@ -4167,6 +4459,9 @@ give access to details and data from the requesting user.",
               "type": "string",
             },
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "SqliteBatchRequestMode": {
           "enum": [
@@ -4174,10 +4469,14 @@ give access to details and data from the requesting user.",
             "read",
             "deferred",
           ],
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "SqliteBatchRequestStatementsItem": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             {
               "docs": "Simple SQL statement to run in SQLite",
@@ -4192,6 +4491,7 @@ give access to details and data from the requesting user.",
         "SqliteExecuteRequestStatement": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             {
               "docs": "Simple SQL statement to run in SQLite",
@@ -4206,6 +4506,7 @@ give access to details and data from the requesting user.",
         "StatementArg": {
           "discriminated": false,
           "docs": "List of arguments to be used in the given statement",
+          "source": undefined,
           "union": [
             "list<optional<TursoValue>>",
             "map<string, optional<TursoValue>>",
@@ -4214,6 +4515,7 @@ give access to details and data from the requesting user.",
         "TursoValue": {
           "discriminated": false,
           "docs": "A value to be used as a parameter",
+          "source": undefined,
           "union": [
             "string",
             "double",
@@ -4340,6 +4642,9 @@ give access to details and data from the requesting user.",
             },
           },
         },
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "types": {
         "UsersValsResponse": {
@@ -4347,6 +4652,9 @@ give access to details and data from the requesting user.",
           "properties": {
             "data": "list<root.BasicVal>",
             "links": "root.PaginationLinks",
+          },
+          "source": {
+            "openapi": "valtown/openapi.yml",
           },
         },
       },
@@ -5104,11 +5412,15 @@ let you get, create, and run vals.",
             },
           },
         },
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "types": {
         "EvalGetResponse": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "string",
             "double",
@@ -5120,6 +5432,7 @@ let you get, create, and run vals.",
         "EvalPostResponse": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "string",
             "double",
@@ -5136,6 +5449,9 @@ let you get, create, and run vals.",
               "type": "boolean",
             },
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "ValsCreateRequestPrivacy": {
           "docs": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
@@ -5144,6 +5460,9 @@ let you get, create, and run vals.",
             "unlisted",
             "private",
           ],
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "ValsCreateRequestType": {
           "default": "script",
@@ -5153,6 +5472,9 @@ let you get, create, and run vals.",
             "script",
             "email",
           ],
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "ValsCreateVersionRequestPrivacy": {
           "docs": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
@@ -5161,6 +5483,9 @@ let you get, create, and run vals.",
             "unlisted",
             "private",
           ],
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "ValsCreateVersionRequestType": {
           "default": "script",
@@ -5170,12 +5495,18 @@ let you get, create, and run vals.",
             "script",
             "email",
           ],
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "ValsListResponse": {
           "docs": "A paginated result set",
           "properties": {
             "data": "list<ValsListResponseDataItem>",
             "links": "root.PaginationLinks",
+          },
+          "source": {
+            "openapi": "valtown/openapi.yml",
           },
         },
         "ValsListResponseDataItem": {
@@ -5204,6 +5535,9 @@ let you get, create, and run vals.",
               },
             },
           },
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "ValsUpdateRequestPrivacy": {
           "docs": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
@@ -5212,6 +5546,9 @@ let you get, create, and run vals.",
             "unlisted",
             "private",
           ],
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
         "ValsUpdateRequestType": {
           "docs": "The type of the val you want to update. Note that this does not include interval vals, because they cannot be created through the API yet.",
@@ -5220,6 +5557,9 @@ let you get, create, and run vals.",
             "script",
             "email",
           ],
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
         },
       },
     },
@@ -5257,6 +5597,9 @@ let you get, create, and run vals.",
         "properties": {
           "error": "string",
           "type": "literal<"error">",
+        },
+        "source": {
+          "openapi": "valtown/openapi.yml",
         },
       },
       "BasicVal": {
@@ -5320,6 +5663,9 @@ let you get, create, and run vals.",
             },
           },
         },
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "BasicValAuthor": {
         "docs": "The user who created this val",
@@ -5334,6 +5680,9 @@ let you get, create, and run vals.",
             },
           },
           "username": "optional<string>",
+        },
+        "source": {
+          "openapi": "valtown/openapi.yml",
         },
       },
       "BasicValLinks": {
@@ -5370,6 +5719,9 @@ let you get, create, and run vals.",
             },
           },
         },
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "BasicValPrivacy": {
         "docs": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
@@ -5378,6 +5730,9 @@ let you get, create, and run vals.",
           "unlisted",
           "private",
         ],
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "BasicValType": {
         "docs": "The type of a val. HTTP can receive web requests, Email can receive emails, Cron runs periodically, and Script can be used for libraries or one-off calculations",
@@ -5390,6 +5745,9 @@ let you get, create, and run vals.",
           "rpc",
           "httpnext",
         ],
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "ExtendedVal": {
         "docs": "A Val",
@@ -5477,6 +5835,9 @@ let you get, create, and run vals.",
             },
           },
         },
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "ExtendedValAuthor": {
         "docs": "The user who created this val",
@@ -5491,6 +5852,9 @@ let you get, create, and run vals.",
             },
           },
           "username": "optional<string>",
+        },
+        "source": {
+          "openapi": "valtown/openapi.yml",
         },
       },
       "ExtendedValLinks": {
@@ -5527,6 +5891,9 @@ let you get, create, and run vals.",
             },
           },
         },
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "ExtendedValPrivacy": {
         "docs": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
@@ -5535,6 +5902,9 @@ let you get, create, and run vals.",
           "unlisted",
           "private",
         ],
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "ExtendedValType": {
         "docs": "The type of a val. HTTP can receive web requests, Email can receive emails, Cron runs periodically, and Script can be used for libraries or one-off calculations",
@@ -5547,11 +5917,17 @@ let you get, create, and run vals.",
           "rpc",
           "httpnext",
         ],
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "InternalServerErrorBody": {
         "docs": undefined,
         "properties": {
           "error": "string",
+        },
+        "source": {
+          "openapi": "valtown/openapi.yml",
         },
       },
       "PaginationLinks": {
@@ -5587,6 +5963,9 @@ let you get, create, and run vals.",
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "valtown/openapi.yml",
         },
       },
       "ResultSet": {
@@ -5625,12 +6004,16 @@ This value is not specified for other SQL statements.",
             "type": "double",
           },
         },
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "ResultSetLastInsertRowid": {
         "discriminated": false,
         "docs": "ROWID of the last inserted row.
 
 This value is not specified if the SQL statement was not an INSERT or if the table was not a ROWID table.",
+        "source": undefined,
         "union": [
           "string",
           "double",
@@ -5679,6 +6062,9 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
       },
       "UserLinks": {
         "docs": undefined,
@@ -5693,6 +6079,9 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "valtown/openapi.yml",
         },
       },
     },

@@ -16,10 +16,11 @@ export const MultipartRequest: core.serialization.ObjectSchema<
             core.serialization.lazyObject(async () => (await import("../../..")).MultipartRequestProperty)
         ),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSource));
 
 export declare namespace MultipartRequest {
-    interface Raw extends serializers.WithDescription.Raw {
+    interface Raw extends serializers.WithDescription.Raw, serializers.WithSource.Raw {
         name?: string | null;
         properties: serializers.MultipartRequestProperty.Raw[];
     }

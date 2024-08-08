@@ -5,7 +5,8 @@ import {
     PathParameterWithExample,
     PrimitiveSchemaValueWithExample,
     QueryParameterWithExample,
-    SchemaWithExample
+    SchemaWithExample,
+    Source
 } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { convertAvailability } from "../../../../schema/convertAvailability";
@@ -28,13 +29,15 @@ export function convertParameters({
     httpMethod,
     parameters,
     context,
-    requestBreadcrumbs
+    requestBreadcrumbs,
+    source
 }: {
     path: string;
     httpMethod: HttpMethod;
     parameters: (OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject)[];
     context: AbstractOpenAPIV3ParserContext;
     requestBreadcrumbs: string[];
+    source: Source;
 }): ConvertedParameters {
     const convertedParameters: ConvertedParameters = {
         pathParameters: [],
@@ -65,6 +68,7 @@ export function convertParameters({
                       !isRequired,
                       context,
                       parameterBreadcrumbs,
+                      source,
                       false,
                       new Set(),
                       getExamplesString({
@@ -142,7 +146,8 @@ export function convertParameters({
             schema,
             description: resolvedParameter.description,
             parameterNameOverride: getParameterName(resolvedParameter),
-            availability
+            availability,
+            source
         };
         if (resolvedParameter.in === "query") {
             convertedParameters.queryParameters.push(convertedParameter);

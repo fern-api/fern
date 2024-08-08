@@ -19,6 +19,9 @@ exports[`json-string json-string docs 1`] = `
           },
           "metadata": "optional<unknown>",
         },
+        "source": {
+          "openapi": "json-string/openapi.yml",
+        },
       },
     },
   },
@@ -50,6 +53,9 @@ exports[`json-string json-string simple 1`] = `
             },
           },
           "metadata": "optional<unknown>",
+        },
+        "source": {
+          "openapi": "json-string/openapi.yml",
         },
       },
     },

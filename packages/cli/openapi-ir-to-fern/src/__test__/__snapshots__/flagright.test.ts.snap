@@ -1865,6 +1865,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
+      "source": {
+        "openapi": "flagright/openapi.yml",
+      },
     },
     "types": {
       "ACHDetails": {
@@ -1910,6 +1913,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "ACHPaymentMethod": {
         "docs": "Classify the method of payment as "ACH" for ACHDetails",
@@ -1925,6 +1931,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "GATHERING",
           "UNKNOWN",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "Address": {
         "docs": "Model for standardized address",
@@ -1978,6 +1987,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<list<Tag>>",
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "AlertClosedDetails": {
         "docs": undefined,
@@ -1994,6 +2006,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "transactionIds": "optional<list<string>>",
           "userId": "optional<string>",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "Amount": {
         "docs": "Model for amount",
@@ -2004,6 +2019,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "double",
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "Business": {
         "docs": undefined,
@@ -2012,6 +2030,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "BusinessOptional",
         ],
         "properties": {},
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "BusinessBase": {
         "docs": "Model for a business user base fields",
@@ -2038,12 +2059,18 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "BusinessEntityLink": {
         "docs": undefined,
         "properties": {
           "childUserIds": "optional<list<string>>",
           "parentUserId": "optional<string>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "BusinessOptional": {
@@ -2072,11 +2099,17 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "transactionLimits": "optional<TransactionLimits>",
           "userStateDetails": "optional<UserStateDetails>",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "BusinessOptionalSavedPaymentDetailsItem": {
         "base-properties": {},
         "discriminant": "method",
         "docs": undefined,
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
         "union": {
           "ACH": "ACHDetails",
           "CARD": "CardDetails",
@@ -2103,6 +2136,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "BusinessWithRulesResult": {
         "docs": "Model for business payload with rules result",
@@ -2112,6 +2148,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "properties": {
           "executedRules": "optional<list<ExecutedRulesResult>>",
           "hitRules": "optional<list<HitRulesDetails>>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "CardDetails": {
@@ -2171,6 +2210,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "CardDetailsCardBrand": {
         "docs": "Brand of Card",
@@ -2183,6 +2225,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "RUPAY",
           "JCB",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "CardDetailsCardFunding": {
         "docs": "Funding of Card",
@@ -2191,18 +2236,27 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "DEBIT",
           "PREPAID",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "CardDetailsCardType": {
         "enum": [
           "VIRTUAL",
           "PHYSICAL",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "CardExpiry": {
         "docs": undefined,
         "properties": {
           "month": "optional<double>",
           "year": "optional<double>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "CardMerchantDetails": {
@@ -2224,6 +2278,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "postCode": "optional<string>",
           "state": "optional<string>",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "CardPaymentMethod": {
         "docs": "Classify the method of payment as "Card" for CardDetails
@@ -2240,6 +2297,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "status": "optional<string>",
           "transactionIds": "optional<list<string>>",
           "userId": "optional<string>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "CaseManagementEvent": {
@@ -2287,6 +2347,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "CaseManagementEventCaseStatus": {
         "docs": "Status of a case. E.g. Open, Closed etc.",
@@ -2294,6 +2357,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "CLOSED",
           "HIT",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "CaseManagementEventCaseStatusReason": {
         "docs": "Case status reason. E.g. Closed & False Positive, Closed & Investigation Completed etc.",
@@ -2303,6 +2369,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "DOCUMENTS_COLLECTED",
           "OTHER",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "CheckDetails": {
         "docs": undefined,
@@ -2323,6 +2392,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "name": "optional<string>",
           "shippingAddress": "optional<Address>",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "CheckDetailsDeliveryStatus": {
         "enum": [
@@ -2333,6 +2405,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "REFUND",
           "DECLINED",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "CheckPaymentMethod": {
         "docs": "Classify the method of payment as "CHECK" for CheckDetails",
@@ -2347,6 +2422,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Additional information that can be added via tags",
             "type": "optional<list<Tag>>",
           },
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "CompanyGeneralDetails": {
@@ -2380,6 +2458,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<CompanyGeneralDetailsUserSegment>",
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "CompanyGeneralDetailsUserSegment": {
         "docs": "Segmentation of the business user",
@@ -2391,6 +2472,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "LARGE",
           "UNKNOWN",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "CompanyRegistrationDetails": {
         "docs": "Model for business user company registration details",
@@ -2428,6 +2512,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "ConsumerName": {
         "docs": "Model for a generic consumer name",
@@ -2463,6 +2550,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "ConsumerUsersResponse": {
         "docs": "Model for consumer user risk score response",
@@ -2477,6 +2567,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "ContactDetails": {
@@ -2502,6 +2595,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Website of the company",
             "type": "optional<list<string>>",
           },
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "CountryCode": {
@@ -2760,6 +2856,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "value": "N/A",
           },
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "CurrencyCode": {
         "enum": [
@@ -3037,6 +3136,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "ZMW",
           "ZWL",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "Date": {
         "docs": "Model for date",
@@ -3053,6 +3155,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Year of date",
             "type": "double",
           },
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "DeviceData": {
@@ -3145,6 +3250,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<boolean>",
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "ExecutedRulesResult": {
         "docs": "Model for list of executed rules",
@@ -3186,6 +3294,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "FailedRulesResult": {
         "docs": "Model for list of rules failed execution. It means rules could not be run",
@@ -3222,12 +3333,18 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "FalsePositiveDetails": {
         "docs": undefined,
         "properties": {
           "confidenceScore": "double",
           "isFalsePositive": "boolean",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "GeneralBankAccountPaymentMethod": {
@@ -3276,6 +3393,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "HitRulesDetails": {
         "docs": "Model for list of hit rules",
@@ -3315,6 +3435,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "IBANDetails": {
@@ -3357,6 +3480,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "paymentChannel": "optional<string>",
           "tags": "optional<Tag>",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "IBANPaymentMethod": {
         "docs": "Classify the method of payment as "IBAN" for IBANDetails
@@ -3371,12 +3497,18 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "IN_PROGRESS",
           "MANUAL_REVIEW",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "KYCStatusDetails": {
         "docs": undefined,
         "properties": {
           "reason": "optional<string>",
           "status": "optional<KYCStatus>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "LegalDocument": {
@@ -3417,6 +3549,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<list<Tag>>",
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "LegalEntity": {
         "docs": "Model for business user legal entity details",
@@ -3430,6 +3565,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<list<string>>",
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "ListData": {
         "docs": "Payload of a list, new or existed",
@@ -3439,6 +3577,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<list<ListItem>>",
           },
           "metadata": "optional<ListMetadata>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "ListExisted": {
@@ -3451,6 +3592,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "listId": "string",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "ListHeader": {
         "docs": undefined,
@@ -3462,12 +3606,18 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "size": "double",
           "subtype": "ListSubtype",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "ListItem": {
         "docs": undefined,
         "properties": {
           "key": "string",
           "metadata": "optional<ListKeyMetadata>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "ListKeyMetadata": "map<string, unknown>",
@@ -3486,6 +3636,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "status": "optional<boolean>",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "ListSubtype": {
         "enum": [
@@ -3501,6 +3654,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "IP_ADDRESS",
           "STRING",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "ListType": {
         "enum": [
@@ -3508,6 +3664,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "BLACKLIST",
           "FLAGRIGHT_LIBRARY",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "MCCDetails": {
         "docs": undefined,
@@ -3520,6 +3679,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Merchant Description",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "MpesaDetails": {
@@ -3544,6 +3706,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "MpesaDetailsTransactionType",
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "MpesaDetailsTransactionType": {
         "docs": "Type of transaction",
@@ -3554,6 +3719,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "BusinessPayment",
           "PromotionPayment",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "MpesaPaymentMethod": {
         "docs": "Classify the method of payment as "Mpesa" for MpesaDetails",
@@ -3573,6 +3741,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "PaymentMethod": {
         "enum": [
@@ -3586,6 +3757,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "WALLET",
           "CHECK",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "Person": {
         "docs": "Model for a generic individual - different from User model by not having userId field",
@@ -3601,6 +3775,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Additional information that can be added via tags",
             "type": "optional<list<Tag>>",
           },
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "PostBusinessUserResponse": {
@@ -3621,6 +3798,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "PostConsumerTransactionResponse": {
         "docs": undefined,
@@ -3629,6 +3809,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         ],
         "properties": {
           "message": "optional<string>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "PostConsumerUserResponse": {
@@ -3649,6 +3832,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "RiskLevel": {
         "enum": [
@@ -3658,6 +3844,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "LOW",
           "VERY_LOW",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "RiskScoringResult": {
         "docs": "Model for results from Risk Scoring",
@@ -3675,6 +3864,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "double",
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "RuleAction": {
         "docs": "Model for rule action if a rule is hit. This is returned in the API response and can be configured on Console by operational accounts like a Compliance Analyst",
@@ -3684,6 +3876,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "BLOCK",
           "SUSPEND",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "RuleFailureException": {
         "docs": undefined,
@@ -3709,12 +3904,18 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "RuleHitDirection": {
         "enum": [
           "ORIGIN",
           "DESTINATION",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "RuleHitMeta": {
         "docs": "Details of rule execution, for internal purposes only",
@@ -3722,6 +3923,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "falsePositiveDetails": "optional<FalsePositiveDetails>",
           "hitDirections": "optional<list<RuleHitDirection>>",
           "sanctionsDetails": "optional<list<SanctionsDetails>>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "RuleLabels": {
@@ -3739,6 +3943,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "SANCTIONS_PEP",
           "SANCTIONS_PEP_ADVERSE_MEDIA",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "RuleNature": {
         "enum": [
@@ -3747,6 +3954,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "CTF",
           "SCREENING",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "RulesResults": {
         "docs": undefined,
@@ -3759,6 +3969,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Unique transaction identifier",
             "type": "list<HitRulesDetails>",
           },
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "SWIFTDetails": {
@@ -3808,6 +4021,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "SWIFTPaymentMethod": {
         "docs": "Classify the method of payment as "SWIFT" for SWIFTDetails",
@@ -3819,6 +4035,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "entityType": "optional<SanctionsDetailsEntityType>",
           "name": "string",
           "searchId": "string",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "SanctionsDetailsEntityType": {
@@ -3832,6 +4051,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "PAYMENT_BENEFICIARY_NAME",
           "BANK_NAME",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "Tag": {
         "docs": "Generic key-value pair model to append a custom variable being sent to Flagright API",
@@ -3857,11 +4079,17 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "Thing": {
         "docs": undefined,
         "properties": {
           "publishedAt": "optional<string>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "Transaction": {
@@ -3871,6 +4099,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "TransactionUpdatable",
         ],
         "properties": {},
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "TransactionAmountDetails": {
         "docs": "Model for transaction amount details",
@@ -3882,6 +4113,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "transactionCurrency": "CurrencyCode",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "TransactionAmountLimit": {
         "docs": undefined,
@@ -3890,6 +4124,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "month": "optional<Amount>",
           "week": "optional<Amount>",
           "year": "optional<Amount>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "TransactionBase": {
@@ -3926,6 +4163,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "type": "optional<TransactionType>",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "TransactionCountLimit": {
         "docs": undefined,
@@ -3934,6 +4174,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "month": "optional<double>",
           "week": "optional<double>",
           "year": "optional<double>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "TransactionEventMonitoringResult": {
@@ -3945,6 +4188,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "eventId": "string",
           "transaction": "Transaction",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "TransactionLimit": {
         "docs": undefined,
@@ -3952,6 +4198,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "averageTransactionAmountLimit": "optional<TransactionAmountLimit>",
           "transactionAmountLimit": "optional<TransactionAmountLimit>",
           "transactionCountLimit": "optional<TransactionCountLimit>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "TransactionLimits": {
@@ -3964,6 +4213,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "maximumWeeklyTransactionLimit": "optional<Amount>",
           "maximumYearlyTransactionLimit": "optional<Amount>",
           "paymentMethodLimits": "optional<TransactionLimitsPaymentMethodLimits>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "TransactionLimitsPaymentMethodLimits": {
@@ -3979,6 +4231,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "UPI": "optional<TransactionLimit>",
           "WALLET": "optional<TransactionLimit>",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "TransactionMonitoringResult": {
         "docs": undefined,
@@ -3990,6 +4245,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Transaction ID that the results pertain to",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "TransactionState": {
@@ -4004,6 +4262,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "REFUNDED",
           "SUCCESSFUL",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "TransactionType": {
         "enum": [
@@ -4014,6 +4275,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "REFUND",
           "OTHER",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "TransactionUpdatable": {
         "docs": "Model for transaction additional payload",
@@ -4057,11 +4321,17 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "transactionState": "optional<TransactionState>",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "TransactionUpdatableDestinationPaymentDetails": {
         "base-properties": {},
         "discriminant": "method",
         "docs": "Payment details of the destination. It can be a bank account number, wallet ID, card fingerprint etc.",
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
         "union": {
           "ACH": "ACHDetails",
           "CARD": "CardDetails",
@@ -4078,6 +4348,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "base-properties": {},
         "discriminant": "method",
         "docs": "Payment details of the origin. It can be a bank account number, wallet ID, card fingerprint etc.",
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
         "union": {
           "ACH": "ACHDetails",
           "CARD": "CardDetails",
@@ -4098,6 +4371,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "properties": {
           "executedRules": "list<ExecutedRulesResult>",
           "hitRules": "list<HitRulesDetails>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "UPIDetails": {
@@ -4138,6 +4414,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "UPIPaymentMethod": {
         "docs": "Classify the method of payment as "UPI" for UPIDetails",
@@ -4150,6 +4429,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "UserOptional",
         ],
         "properties": {},
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "UserBase": {
         "docs": "Model for User details",
@@ -4177,6 +4459,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "UserDetails": {
         "docs": "Model for consumer user personal details",
@@ -4199,6 +4484,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "name": "ConsumerName",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "UserDetailsGender": {
         "docs": "Gender of the individual - Male, Female or Non-Binary",
@@ -4207,6 +4495,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "F",
           "NB",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "UserMonitoringResult": {
         "docs": undefined,
@@ -4218,6 +4509,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "User ID that the results pertain to",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "UserOptional": {
@@ -4241,18 +4535,27 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "userSegment": "optional<UserOptionalUserSegment>",
           "userStateDetails": "optional<UserStateDetails>",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "UserOptionalUserSegment": {
         "enum": [
           "RETAIL",
           "PROFESSIONAL",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "UserRegistrationStatus": {
         "enum": [
           "REGISTERED",
           "UNREGISTERED",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "UserState": {
         "enum": [
@@ -4267,6 +4570,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "SUSPENDED",
           "BLOCKED",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "UserStateDetails": {
         "docs": undefined,
@@ -4274,6 +4580,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "reason": "optional<string>",
           "state": "UserState",
           "userId": "optional<string>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "UserWithRulesResult": {
@@ -4284,6 +4593,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "properties": {
           "executedRules": "optional<list<ExecutedRulesResult>>",
           "hitRules": "optional<list<HitRulesDetails>>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "WalletDetails": {
@@ -4317,6 +4629,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "WalletPaymentMethod": {
         "docs": "Classify the method of payment as "Wallet" for WalletDetails",
@@ -4339,6 +4654,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "id": "string",
           "type": "WebhookEventType",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "WebhookEventType": {
         "enum": [
@@ -4346,6 +4664,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "USER_STATE_UPDATED",
           "ALERT_CLOSED",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
     },
   },
@@ -6131,6 +6452,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
+      "source": {
+        "openapi": "flagright/openapi.yml",
+      },
     },
     "types": {
       "ACHDetails": {
@@ -6176,6 +6500,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "ACHPaymentMethod": {
         "docs": "Classify the method of payment as "ACH" for ACHDetails",
@@ -6191,6 +6518,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "GATHERING",
           "UNKNOWN",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "Address": {
         "docs": "Model for standardized address",
@@ -6244,6 +6574,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<list<Tag>>",
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "AlertClosedDetails": {
         "docs": undefined,
@@ -6260,6 +6593,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "transactionIds": "optional<list<string>>",
           "userId": "optional<string>",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "Amount": {
         "docs": "Model for amount",
@@ -6270,6 +6606,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "double",
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "Business": {
         "docs": undefined,
@@ -6278,6 +6617,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "BusinessOptional",
         ],
         "properties": {},
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "BusinessBase": {
         "docs": "Model for a business user base fields",
@@ -6304,12 +6646,18 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "BusinessEntityLink": {
         "docs": undefined,
         "properties": {
           "childUserIds": "optional<list<string>>",
           "parentUserId": "optional<string>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "BusinessOptional": {
@@ -6338,11 +6686,17 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "transactionLimits": "optional<TransactionLimits>",
           "userStateDetails": "optional<UserStateDetails>",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "BusinessOptionalSavedPaymentDetailsItem": {
         "base-properties": {},
         "discriminant": "method",
         "docs": undefined,
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
         "union": {
           "ACH": "ACHDetails",
           "CARD": "CardDetails",
@@ -6369,6 +6723,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "BusinessWithRulesResult": {
         "docs": "Model for business payload with rules result",
@@ -6378,6 +6735,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "properties": {
           "executedRules": "optional<list<ExecutedRulesResult>>",
           "hitRules": "optional<list<HitRulesDetails>>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "CardDetails": {
@@ -6437,6 +6797,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "CardDetailsCardBrand": {
         "docs": "Brand of Card",
@@ -6449,6 +6812,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "RUPAY",
           "JCB",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "CardDetailsCardFunding": {
         "docs": "Funding of Card",
@@ -6457,18 +6823,27 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "DEBIT",
           "PREPAID",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "CardDetailsCardType": {
         "enum": [
           "VIRTUAL",
           "PHYSICAL",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "CardExpiry": {
         "docs": undefined,
         "properties": {
           "month": "optional<double>",
           "year": "optional<double>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "CardMerchantDetails": {
@@ -6490,6 +6865,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "postCode": "optional<string>",
           "state": "optional<string>",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "CardPaymentMethod": {
         "docs": "Classify the method of payment as "Card" for CardDetails
@@ -6506,6 +6884,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "status": "optional<string>",
           "transactionIds": "optional<list<string>>",
           "userId": "optional<string>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "CaseManagementEvent": {
@@ -6553,6 +6934,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "CaseManagementEventCaseStatus": {
         "docs": "Status of a case. E.g. Open, Closed etc.",
@@ -6560,6 +6944,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "CLOSED",
           "HIT",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "CaseManagementEventCaseStatusReason": {
         "docs": "Case status reason. E.g. Closed & False Positive, Closed & Investigation Completed etc.",
@@ -6569,6 +6956,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "DOCUMENTS_COLLECTED",
           "OTHER",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "CheckDetails": {
         "docs": undefined,
@@ -6589,6 +6979,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "name": "optional<string>",
           "shippingAddress": "optional<Address>",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "CheckDetailsDeliveryStatus": {
         "enum": [
@@ -6599,6 +6992,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "REFUND",
           "DECLINED",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "CheckPaymentMethod": {
         "docs": "Classify the method of payment as "CHECK" for CheckDetails",
@@ -6613,6 +7009,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Additional information that can be added via tags",
             "type": "optional<list<Tag>>",
           },
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "CompanyGeneralDetails": {
@@ -6646,6 +7045,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<CompanyGeneralDetailsUserSegment>",
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "CompanyGeneralDetailsUserSegment": {
         "docs": "Segmentation of the business user",
@@ -6657,6 +7059,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "LARGE",
           "UNKNOWN",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "CompanyRegistrationDetails": {
         "docs": "Model for business user company registration details",
@@ -6694,6 +7099,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "ConsumerName": {
         "docs": "Model for a generic consumer name",
@@ -6729,6 +7137,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "ConsumerUsersResponse": {
         "docs": "Model for consumer user risk score response",
@@ -6743,6 +7154,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "ContactDetails": {
@@ -6768,6 +7182,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Website of the company",
             "type": "optional<list<string>>",
           },
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "CountryCode": {
@@ -7026,6 +7443,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "value": "N/A",
           },
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "CurrencyCode": {
         "enum": [
@@ -7303,6 +7723,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "ZMW",
           "ZWL",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "Date": {
         "docs": "Model for date",
@@ -7319,6 +7742,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Year of date",
             "type": "double",
           },
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "DeviceData": {
@@ -7411,6 +7837,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<boolean>",
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "ExecutedRulesResult": {
         "docs": "Model for list of executed rules",
@@ -7452,6 +7881,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "FailedRulesResult": {
         "docs": "Model for list of rules failed execution. It means rules could not be run",
@@ -7488,12 +7920,18 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "FalsePositiveDetails": {
         "docs": undefined,
         "properties": {
           "confidenceScore": "double",
           "isFalsePositive": "boolean",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "GeneralBankAccountPaymentMethod": {
@@ -7542,6 +7980,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "HitRulesDetails": {
         "docs": "Model for list of hit rules",
@@ -7581,6 +8022,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "IBANDetails": {
@@ -7623,6 +8067,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "paymentChannel": "optional<string>",
           "tags": "optional<Tag>",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "IBANPaymentMethod": {
         "docs": "Classify the method of payment as "IBAN" for IBANDetails
@@ -7637,12 +8084,18 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "IN_PROGRESS",
           "MANUAL_REVIEW",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "KYCStatusDetails": {
         "docs": undefined,
         "properties": {
           "reason": "optional<string>",
           "status": "optional<KYCStatus>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "LegalDocument": {
@@ -7683,6 +8136,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<list<Tag>>",
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "LegalEntity": {
         "docs": "Model for business user legal entity details",
@@ -7696,6 +8152,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<list<string>>",
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "ListData": {
         "docs": "Payload of a list, new or existed",
@@ -7705,6 +8164,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<list<ListItem>>",
           },
           "metadata": "optional<ListMetadata>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "ListExisted": {
@@ -7717,6 +8179,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "listId": "string",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "ListHeader": {
         "docs": undefined,
@@ -7728,12 +8193,18 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "size": "double",
           "subtype": "ListSubtype",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "ListItem": {
         "docs": undefined,
         "properties": {
           "key": "string",
           "metadata": "optional<ListKeyMetadata>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "ListKeyMetadata": "map<string, unknown>",
@@ -7752,6 +8223,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "status": "optional<boolean>",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "ListSubtype": {
         "enum": [
@@ -7767,6 +8241,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "IP_ADDRESS",
           "STRING",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "ListType": {
         "enum": [
@@ -7774,6 +8251,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "BLACKLIST",
           "FLAGRIGHT_LIBRARY",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "MCCDetails": {
         "docs": undefined,
@@ -7786,6 +8266,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Merchant Description",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "MpesaDetails": {
@@ -7810,6 +8293,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "MpesaDetailsTransactionType",
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "MpesaDetailsTransactionType": {
         "docs": "Type of transaction",
@@ -7820,6 +8306,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "BusinessPayment",
           "PromotionPayment",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "MpesaPaymentMethod": {
         "docs": "Classify the method of payment as "Mpesa" for MpesaDetails",
@@ -7839,6 +8328,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "PaymentMethod": {
         "enum": [
@@ -7852,6 +8344,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "WALLET",
           "CHECK",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "Person": {
         "docs": "Model for a generic individual - different from User model by not having userId field",
@@ -7867,6 +8362,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Additional information that can be added via tags",
             "type": "optional<list<Tag>>",
           },
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "PostBusinessUserResponse": {
@@ -7887,6 +8385,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "PostConsumerTransactionResponse": {
         "docs": undefined,
@@ -7895,6 +8396,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         ],
         "properties": {
           "message": "optional<string>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "PostConsumerUserResponse": {
@@ -7915,6 +8419,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "RiskLevel": {
         "enum": [
@@ -7924,6 +8431,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "LOW",
           "VERY_LOW",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "RiskScoringResult": {
         "docs": "Model for results from Risk Scoring",
@@ -7941,6 +8451,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "double",
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "RuleAction": {
         "docs": "Model for rule action if a rule is hit. This is returned in the API response and can be configured on Console by operational accounts like a Compliance Analyst",
@@ -7950,6 +8463,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "BLOCK",
           "SUSPEND",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "RuleFailureException": {
         "docs": undefined,
@@ -7975,12 +8491,18 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "RuleHitDirection": {
         "enum": [
           "ORIGIN",
           "DESTINATION",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "RuleHitMeta": {
         "docs": "Details of rule execution, for internal purposes only",
@@ -7988,6 +8510,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "falsePositiveDetails": "optional<FalsePositiveDetails>",
           "hitDirections": "optional<list<RuleHitDirection>>",
           "sanctionsDetails": "optional<list<SanctionsDetails>>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "RuleLabels": {
@@ -8005,6 +8530,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "SANCTIONS_PEP",
           "SANCTIONS_PEP_ADVERSE_MEDIA",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "RuleNature": {
         "enum": [
@@ -8013,6 +8541,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "CTF",
           "SCREENING",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "RulesResults": {
         "docs": undefined,
@@ -8025,6 +8556,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Unique transaction identifier",
             "type": "list<HitRulesDetails>",
           },
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "SWIFTDetails": {
@@ -8074,6 +8608,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "SWIFTPaymentMethod": {
         "docs": "Classify the method of payment as "SWIFT" for SWIFTDetails",
@@ -8085,6 +8622,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "entityType": "optional<SanctionsDetailsEntityType>",
           "name": "string",
           "searchId": "string",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "SanctionsDetailsEntityType": {
@@ -8098,6 +8638,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "PAYMENT_BENEFICIARY_NAME",
           "BANK_NAME",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "Tag": {
         "docs": "Generic key-value pair model to append a custom variable being sent to Flagright API",
@@ -8123,11 +8666,17 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "Thing": {
         "docs": undefined,
         "properties": {
           "publishedAt": "optional<string>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "Transaction": {
@@ -8137,6 +8686,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "TransactionUpdatable",
         ],
         "properties": {},
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "TransactionAmountDetails": {
         "docs": "Model for transaction amount details",
@@ -8148,6 +8700,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "transactionCurrency": "CurrencyCode",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "TransactionAmountLimit": {
         "docs": undefined,
@@ -8156,6 +8711,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "month": "optional<Amount>",
           "week": "optional<Amount>",
           "year": "optional<Amount>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "TransactionBase": {
@@ -8192,6 +8750,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "type": "optional<TransactionType>",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "TransactionCountLimit": {
         "docs": undefined,
@@ -8200,6 +8761,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "month": "optional<double>",
           "week": "optional<double>",
           "year": "optional<double>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "TransactionEventMonitoringResult": {
@@ -8211,6 +8775,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "eventId": "string",
           "transaction": "Transaction",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "TransactionLimit": {
         "docs": undefined,
@@ -8218,6 +8785,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "averageTransactionAmountLimit": "optional<TransactionAmountLimit>",
           "transactionAmountLimit": "optional<TransactionAmountLimit>",
           "transactionCountLimit": "optional<TransactionCountLimit>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "TransactionLimits": {
@@ -8230,6 +8800,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "maximumWeeklyTransactionLimit": "optional<Amount>",
           "maximumYearlyTransactionLimit": "optional<Amount>",
           "paymentMethodLimits": "optional<TransactionLimitsPaymentMethodLimits>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "TransactionLimitsPaymentMethodLimits": {
@@ -8245,6 +8818,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "UPI": "optional<TransactionLimit>",
           "WALLET": "optional<TransactionLimit>",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "TransactionMonitoringResult": {
         "docs": undefined,
@@ -8256,6 +8832,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Transaction ID that the results pertain to",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "TransactionState": {
@@ -8270,6 +8849,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "REFUNDED",
           "SUCCESSFUL",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "TransactionType": {
         "enum": [
@@ -8280,6 +8862,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "REFUND",
           "OTHER",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "TransactionUpdatable": {
         "docs": "Model for transaction additional payload",
@@ -8323,11 +8908,17 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "transactionState": "optional<TransactionState>",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "TransactionUpdatableDestinationPaymentDetails": {
         "base-properties": {},
         "discriminant": "method",
         "docs": "Payment details of the destination. It can be a bank account number, wallet ID, card fingerprint etc.",
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
         "union": {
           "ACH": "ACHDetails",
           "CARD": "CardDetails",
@@ -8344,6 +8935,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "base-properties": {},
         "discriminant": "method",
         "docs": "Payment details of the origin. It can be a bank account number, wallet ID, card fingerprint etc.",
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
         "union": {
           "ACH": "ACHDetails",
           "CARD": "CardDetails",
@@ -8364,6 +8958,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "properties": {
           "executedRules": "list<ExecutedRulesResult>",
           "hitRules": "list<HitRulesDetails>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "UPIDetails": {
@@ -8404,6 +9001,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "UPIPaymentMethod": {
         "docs": "Classify the method of payment as "UPI" for UPIDetails",
@@ -8416,6 +9016,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "UserOptional",
         ],
         "properties": {},
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "UserBase": {
         "docs": "Model for User details",
@@ -8443,6 +9046,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "UserDetails": {
         "docs": "Model for consumer user personal details",
@@ -8465,6 +9071,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "name": "ConsumerName",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "UserDetailsGender": {
         "docs": "Gender of the individual - Male, Female or Non-Binary",
@@ -8473,6 +9082,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "F",
           "NB",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "UserMonitoringResult": {
         "docs": undefined,
@@ -8484,6 +9096,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "User ID that the results pertain to",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "UserOptional": {
@@ -8507,18 +9122,27 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "userSegment": "optional<UserOptionalUserSegment>",
           "userStateDetails": "optional<UserStateDetails>",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "UserOptionalUserSegment": {
         "enum": [
           "RETAIL",
           "PROFESSIONAL",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "UserRegistrationStatus": {
         "enum": [
           "REGISTERED",
           "UNREGISTERED",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "UserState": {
         "enum": [
@@ -8533,6 +9157,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "SUSPENDED",
           "BLOCKED",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "UserStateDetails": {
         "docs": undefined,
@@ -8540,6 +9167,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "reason": "optional<string>",
           "state": "UserState",
           "userId": "optional<string>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "UserWithRulesResult": {
@@ -8550,6 +9180,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "properties": {
           "executedRules": "optional<list<ExecutedRulesResult>>",
           "hitRules": "optional<list<HitRulesDetails>>",
+        },
+        "source": {
+          "openapi": "flagright/openapi.yml",
         },
       },
       "WalletDetails": {
@@ -8583,6 +9216,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "WalletPaymentMethod": {
         "docs": "Classify the method of payment as "Wallet" for WalletDetails",
@@ -8605,6 +9241,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "id": "string",
           "type": "WebhookEventType",
         },
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
       "WebhookEventType": {
         "enum": [
@@ -8612,6 +9251,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "USER_STATE_UPDATED",
           "ALERT_CLOSED",
         ],
+        "source": {
+          "openapi": "flagright/openapi.yml",
+        },
       },
     },
   },

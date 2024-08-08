@@ -67,6 +67,7 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
     ): Promise<FernDefinition> {
         const openApiSpecs = await getAllOpenAPISpecs({ context, specs: this.specs });
         const openApiIr = await parse({
+            absoluteFilePathToWorkspace: this.absoluteFilepath,
             specs: openApiSpecs,
             taskContext: context,
             optionOverrides: getOptionsOverridesFromSettings(settings)

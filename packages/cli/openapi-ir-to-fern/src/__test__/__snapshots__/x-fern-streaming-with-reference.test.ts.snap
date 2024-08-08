@@ -70,6 +70,9 @@ exports[`x-fern-streaming-with-reference x-fern-streaming-with-reference docs 1`
             },
           },
         },
+        "source": {
+          "openapi": "x-fern-streaming-with-reference/openapi.yml",
+        },
       },
     },
   },
@@ -80,11 +83,17 @@ exports[`x-fern-streaming-with-reference x-fern-streaming-with-reference docs 1`
         "properties": {
           "text": "optional<string>",
         },
+        "source": {
+          "openapi": "x-fern-streaming-with-reference/openapi.yml",
+        },
       },
       "CompletionChunk": {
         "docs": undefined,
         "properties": {
           "text": "optional<string>",
+        },
+        "source": {
+          "openapi": "x-fern-streaming-with-reference/openapi.yml",
         },
       },
     },
@@ -169,6 +178,9 @@ exports[`x-fern-streaming-with-reference x-fern-streaming-with-reference simple 
             },
           },
         },
+        "source": {
+          "openapi": "x-fern-streaming-with-reference/openapi.yml",
+        },
       },
     },
   },
@@ -179,11 +191,17 @@ exports[`x-fern-streaming-with-reference x-fern-streaming-with-reference simple 
         "properties": {
           "text": "optional<string>",
         },
+        "source": {
+          "openapi": "x-fern-streaming-with-reference/openapi.yml",
+        },
       },
       "CompletionChunk": {
         "docs": undefined,
         "properties": {
           "text": "optional<string>",
+        },
+        "source": {
+          "openapi": "x-fern-streaming-with-reference/openapi.yml",
         },
       },
     },

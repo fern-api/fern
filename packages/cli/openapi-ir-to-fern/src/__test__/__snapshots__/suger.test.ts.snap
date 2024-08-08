@@ -58,6 +58,9 @@ exports[`open api parser suger docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
     },
     "buyer.yml": {
@@ -279,6 +282,9 @@ exports[`open api parser suger docs 1`] = `
               "type": "root.SharedIdentityBuyer",
             },
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
     },
@@ -995,6 +1001,9 @@ exports[`open api parser suger docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "types": {
         "ListEntitlementsByPartnerRequestPartner": {
@@ -1003,6 +1012,9 @@ exports[`open api parser suger docs 1`] = `
             "AZURE",
             "GCP",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
       },
     },
@@ -1199,6 +1211,9 @@ exports[`open api parser suger docs 1`] = `
               "type": "list<root.SharedWorkloadEntitlementTerm>",
             },
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
     },
@@ -1723,6 +1738,9 @@ exports[`open api parser suger docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "types": {
         "DeleteIntegrationRequestPartner": {
@@ -1731,12 +1749,18 @@ exports[`open api parser suger docs 1`] = `
             "AZURE",
             "GCP",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
         "DeleteIntegrationRequestService": {
           "enum": [
             "MARKETPLACE",
             "CRM",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
         "GetIntegrationRequestPartner": {
           "enum": [
@@ -1744,12 +1768,18 @@ exports[`open api parser suger docs 1`] = `
             "AZURE",
             "GCP",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
         "GetIntegrationRequestService": {
           "enum": [
             "MARKETPLACE",
             "CRM",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
         "SharedCreateIntegrationParamsPartner": {
           "enum": [
@@ -1757,6 +1787,9 @@ exports[`open api parser suger docs 1`] = `
             "AZURE",
             "GCP",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
         "SharedUpdateIntegrationParamsPartner": {
           "enum": [
@@ -1764,6 +1797,9 @@ exports[`open api parser suger docs 1`] = `
             "AZURE",
             "GCP",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
         "UpdateIntegrationRequestPartner": {
           "enum": [
@@ -1771,12 +1807,18 @@ exports[`open api parser suger docs 1`] = `
             "AZURE",
             "GCP",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
         "UpdateIntegrationRequestService": {
           "enum": [
             "MARKETPLACE",
             "CRM",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
         "VerifyIntegrationRequestPartner": {
           "enum": [
@@ -1784,12 +1826,18 @@ exports[`open api parser suger docs 1`] = `
             "AZURE",
             "GCP",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
         "VerifyIntegrationRequestService": {
           "enum": [
             "MARKETPLACE",
             "CRM",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
       },
     },
@@ -2457,6 +2505,9 @@ exports[`open api parser suger docs 1`] = `
               "type": "root.SharedMeteringUsageRecordGroup",
             },
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
     },
@@ -3312,6 +3363,9 @@ exports[`open api parser suger docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "types": {
         "ListOffersByPartnerRequestPartner": {
@@ -3320,6 +3374,9 @@ exports[`open api parser suger docs 1`] = `
             "AZURE",
             "GCP",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
       },
     },
@@ -3393,6 +3450,9 @@ exports[`open api parser suger docs 1`] = `
               "type": "list<root.SharedOperation>",
             },
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
     },
@@ -3869,6 +3929,9 @@ exports[`open api parser suger docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "types": {
         "ListProductsByPartnerRequestPartner": {
@@ -3877,6 +3940,9 @@ exports[`open api parser suger docs 1`] = `
             "AZURE",
             "GCP",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
       },
     },
@@ -4230,6 +4296,9 @@ exports[`open api parser suger docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "types": {
         "ListRevenueRecordDetailsRequestPartner": {
@@ -4238,6 +4307,9 @@ exports[`open api parser suger docs 1`] = `
             "AZURE",
             "GCP",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
         "ListRevenueRecordsRequestPartner": {
           "enum": [
@@ -4245,6 +4317,9 @@ exports[`open api parser suger docs 1`] = `
             "AZURE",
             "GCP",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
         "SharedGetRevenueReportParamsPartner": {
           "docs": "Required.",
@@ -4253,6 +4328,9 @@ exports[`open api parser suger docs 1`] = `
             "AZURE",
             "GCP",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
       },
     },
@@ -4602,6 +4680,9 @@ exports[`open api parser suger docs 1`] = `
           "description": "optional<string>",
           "id": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureGovernmentCertification": {
         "docs": undefined,
@@ -4609,6 +4690,9 @@ exports[`open api parser suger docs 1`] = `
           "title": "optional<string>",
           "uri": "optional<string>",
           "validationResults": "optional<list<AzureValidationResult>>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "AzureIncludedBaseQuantity": {
@@ -4618,12 +4702,18 @@ exports[`open api parser suger docs 1`] = `
           "quantity": "optional<double>",
           "recurringUnit": "optional<AzureIncludedBaseQuantityRecurringUnit>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureIncludedBaseQuantityRecurringUnit": {
         "enum": [
           "Monthly",
           "Annual",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureListingContact": {
         "docs": undefined,
@@ -4634,6 +4724,9 @@ exports[`open api parser suger docs 1`] = `
           "type": "optional<AzureListingContactType>",
           "uri": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureListingContactType": {
         "enum": [
@@ -4641,6 +4734,9 @@ exports[`open api parser suger docs 1`] = `
           "Engineering",
           "ChannelManager",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureListingUri": {
         "docs": undefined,
@@ -4650,6 +4746,9 @@ exports[`open api parser suger docs 1`] = `
           "type": "optional<string>",
           "uri": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureLocalizedDateTime": {
         "docs": undefined,
@@ -4657,12 +4756,18 @@ exports[`open api parser suger docs 1`] = `
           "dateTimeInUtc": "optional<string>",
           "localizePerMarket": "optional<boolean>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureLocalizedTimeRange": {
         "docs": undefined,
         "properties": {
           "endAt": "optional<AzureLocalizedDateTime>",
           "startAt": "optional<AzureLocalizedDateTime>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "AzureMarket": {
@@ -4674,6 +4779,9 @@ exports[`open api parser suger docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketState": {
         "docs": undefined,
@@ -4684,6 +4792,9 @@ exports[`open api parser suger docs 1`] = `
           },
           "state": "optional<AzureMarketStateState>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketStateState": {
         "enum": [
@@ -4692,6 +4803,9 @@ exports[`open api parser suger docs 1`] = `
           "StopSelling",
           "Terminated",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketplacePrice": {
         "docs": undefined,
@@ -4706,6 +4820,9 @@ exports[`open api parser suger docs 1`] = `
             "type": "optional<double>",
           },
           "prices": "optional<unknown>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "AzureMarketplacePrivateOffer": {
@@ -4757,6 +4874,9 @@ exports[`open api parser suger docs 1`] = `
           "validations": "optional<list<AzureMarketplaceValidation>>",
           "variableStartDate": "optional<boolean>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketplacePrivateOfferAcceptanceLink": {
         "docs": undefined,
@@ -4766,6 +4886,9 @@ exports[`open api parser suger docs 1`] = `
             "type": "optional<string>",
           },
           "link": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "AzureMarketplacePrivateOfferBeneficiary": {
@@ -4778,6 +4901,9 @@ exports[`open api parser suger docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketplacePrivateOfferBeneficiaryRecipient": {
         "docs": undefined,
@@ -4785,12 +4911,18 @@ exports[`open api parser suger docs 1`] = `
           "id": "optional<string>",
           "recipientType": "optional<AzureMarketplacePrivateOfferBeneficiaryRecipientRecipientType>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketplacePrivateOfferBeneficiaryRecipientRecipientType": {
         "enum": [
           "cspCustomer",
           "billingGroup",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketplacePrivateOfferPricing": {
         "docs": undefined,
@@ -4824,12 +4956,18 @@ exports[`open api parser suger docs 1`] = `
           },
           "sugerOfferId": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketplacePrivateOfferPricingDiscountType": {
         "enum": [
           "percentage",
           "absolute",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketplacePrivateOfferPricingPlanType": {
         "docs": "The type of the plan, FLAT_RATE or PER_USER.",
@@ -4837,18 +4975,27 @@ exports[`open api parser suger docs 1`] = `
           "FLAT_RATE",
           "PER_USER",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketplacePrivateOfferPrivateOfferType": {
         "enum": [
           "customerPromotion",
           "cspPromotion",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketplacePrivateOfferPromotionReference": {
         "docs": undefined,
         "properties": {
           "id": "optional<string>",
           "name": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "AzureMarketplacePrivateOfferState": {
@@ -4858,12 +5005,18 @@ exports[`open api parser suger docs 1`] = `
           "withdrawn",
           "deleted",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketplacePrivateOfferSubState": {
         "enum": [
           "pendingAcceptance",
           "accepted",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketplaceTerm": {
         "docs": undefined,
@@ -4874,6 +5027,9 @@ exports[`open api parser suger docs 1`] = `
             "type": "optional<double>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketplaceTermType": {
         "enum": [
@@ -4882,6 +5038,9 @@ exports[`open api parser suger docs 1`] = `
           "month",
           "year",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketplaceValidation": {
         "docs": undefined,
@@ -4891,6 +5050,9 @@ exports[`open api parser suger docs 1`] = `
           "level": "optional<AzureMarketplaceValidationLevel>",
           "message": "optional<string>",
           "resourceId": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "AzureMarketplaceValidationCode": {
@@ -4909,18 +5071,27 @@ exports[`open api parser suger docs 1`] = `
           "resourceNotFound",
           "schemaValidationError",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketplaceValidationLevel": {
         "enum": [
           "informational",
           "warning",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzurePendingUpdateInfo": {
         "docs": undefined,
         "properties": {
           "status": "optional<string>",
           "updateType": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "AzurePrice": {
@@ -4933,6 +5104,9 @@ exports[`open api parser suger docs 1`] = `
           "openPrice": "optional<double>",
           "priceTierID": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzurePriceAndAvailabilityPrivateOfferCustomMeters": {
         "docs": undefined,
@@ -4943,6 +5117,9 @@ exports[`open api parser suger docs 1`] = `
             "type": "optional<AzurePriceAndAvailabilityPrivateOfferCustomMetersPriceInputOption>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzurePriceAndAvailabilityPrivateOfferCustomMetersPriceInputOption": {
         "docs": "default "usd"",
@@ -4950,6 +5127,9 @@ exports[`open api parser suger docs 1`] = `
           "perMarket",
           "usd",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzurePriceAndAvailabilityPrivateOfferPlan": {
         "docs": undefined,
@@ -4962,12 +5142,18 @@ exports[`open api parser suger docs 1`] = `
           "resourceName": "optional<string>",
           "validations": "optional<list<AzureMarketplaceValidation>>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzurePriceAndAvailabilityPrivateOfferPrice": {
         "docs": undefined,
         "properties": {
           "customMeters": "optional<AzurePriceAndAvailabilityPrivateOfferCustomMeters>",
           "recurrentPrice": "optional<AzurePriceAndAvailabilityRecurrentPrice>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "AzurePriceAndAvailabilityRecurrentPrice": {
@@ -4979,6 +5165,9 @@ exports[`open api parser suger docs 1`] = `
           },
           "prices": "optional<list<AzurePriceAndAvailabilityRecurrentPriceItem>>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzurePriceAndAvailabilityRecurrentPriceItem": {
         "docs": undefined,
@@ -4988,6 +5177,9 @@ exports[`open api parser suger docs 1`] = `
           "pricePerPaymentInUsd": "optional<double>",
           "prices": "optional<list<AzureMarketplacePrice>>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzurePriceAndAvailabilityRecurrentPricePriceInputOption": {
         "docs": "default "usd"",
@@ -4995,6 +5187,9 @@ exports[`open api parser suger docs 1`] = `
           "perMarket",
           "usd",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzurePriceCadence": {
         "docs": undefined,
@@ -5002,12 +5197,18 @@ exports[`open api parser suger docs 1`] = `
           "type": "optional<AzurePriceCadenceType>",
           "value": "optional<integer>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzurePriceCadenceType": {
         "enum": [
           "Month",
           "Year",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzurePriceSchedule": {
         "docs": undefined,
@@ -5017,6 +5218,9 @@ exports[`open api parser suger docs 1`] = `
           "pricingUnits": "optional<list<AzurePricingUnit>>",
           "retailPrice": "optional<AzurePrice>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzurePriceSchedulePricingModel": {
         "enum": [
@@ -5024,6 +5228,9 @@ exports[`open api parser suger docs 1`] = `
           "Recurring",
           "Usage",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzurePricingUnit": {
         "docs": undefined,
@@ -5034,12 +5241,18 @@ exports[`open api parser suger docs 1`] = `
           "unitType": "optional<string>",
           "upperUnit": "optional<integer>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzurePricingUnitName": {
         "enum": [
           "sharedcore",
           "transactions",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProduct": {
         "docs": undefined,
@@ -5061,6 +5274,9 @@ exports[`open api parser suger docs 1`] = `
           "submissions": "optional<list<AzureProductSubmission>>",
           "variants": "optional<list<AzureProductVariant>>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductAvailability": {
         "docs": undefined,
@@ -5071,6 +5287,9 @@ exports[`open api parser suger docs 1`] = `
           "resourceType": "optional<string>",
           "subscriptionAudiences": "optional<list<AzureAudience>>",
           "visibility": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "AzureProductBranch": {
@@ -5083,6 +5302,9 @@ exports[`open api parser suger docs 1`] = `
           "resourceType": "optional<string>",
           "type": "optional<string>",
           "variantID": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "AzureProductFeatureAvailability": {
@@ -5104,12 +5326,18 @@ exports[`open api parser suger docs 1`] = `
           "trial": "optional<AzureProductVariantTrial>",
           "visibility": "optional<AzureProductFeatureAvailabilityVisibility>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductFeatureAvailabilityVisibility": {
         "enum": [
           "Public",
           "Private",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductListing": {
         "docs": undefined,
@@ -5134,6 +5362,9 @@ exports[`open api parser suger docs 1`] = `
           "summary": "optional<string>",
           "title": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductListingAsset": {
         "docs": undefined,
@@ -5149,6 +5380,9 @@ exports[`open api parser suger docs 1`] = `
           "state": "optional<AzureProductListingAssetState>",
           "type": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductListingAssetResourceType": {
         "enum": [
@@ -5156,6 +5390,9 @@ exports[`open api parser suger docs 1`] = `
           "ListingImage",
           "ListingVideo",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductListingAssetState": {
         "enum": [
@@ -5165,6 +5402,9 @@ exports[`open api parser suger docs 1`] = `
           "Processed",
           "ProcessFailed",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductPackageConfiguration": {
         "docs": undefined,
@@ -5175,6 +5415,9 @@ exports[`open api parser suger docs 1`] = `
           "id": "optional<string>",
           "landingPageUri": "optional<string>",
           "resourceType": "optional<literal<"AzureSoftwareAsAServicePackageConfiguration">>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "AzureProductProperty": {
@@ -5199,6 +5442,9 @@ exports[`open api parser suger docs 1`] = `
           "termsOfUse": "optional<string>",
           "useEnterpriseContract": "optional<boolean>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductSetup": {
         "docs": undefined,
@@ -5210,6 +5456,9 @@ exports[`open api parser suger docs 1`] = `
           "sellingOption": "optional<AzureProductSetupSellingOption>",
           "testDriveType": "optional<string>",
           "trialUri": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "AzureProductSetupCallToAction": {
@@ -5224,12 +5473,18 @@ exports[`open api parser suger docs 1`] = `
             "value": "contact-me",
           },
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductSetupSellingOption": {
         "enum": [
           "ListingOnly",
           "ListAndSell",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductSubmission": {
         "docs": undefined,
@@ -5247,12 +5502,18 @@ exports[`open api parser suger docs 1`] = `
           "targets": "optional<list<AzureTypeValue>>",
           "variantResources": "optional<list<AzureVariantResource>>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductSubmissionState": {
         "enum": [
           "Inprogress",
           "Published",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductSubmissionSubState": {
         "enum": [
@@ -5265,6 +5526,9 @@ exports[`open api parser suger docs 1`] = `
           "Published",
           "InStore",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductVariant": {
         "docs": undefined,
@@ -5285,6 +5549,9 @@ exports[`open api parser suger docs 1`] = `
           "resourceType": "optional<AzureProductVariantResourceType>",
           "state": "optional<AzureProductVariantState>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductVariantCustomMeter": {
         "docs": undefined,
@@ -5296,6 +5563,9 @@ exports[`open api parser suger docs 1`] = `
           "priceInUsd": "optional<double>",
           "uniqueID": "optional<string>",
           "unitOfMeasure": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "AzureProductVariantPriceSchedule": {
@@ -5313,18 +5583,27 @@ exports[`open api parser suger docs 1`] = `
           },
           "schedules": "optional<list<AzurePriceSchedule>>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductVariantResourceType": {
         "enum": [
           "AzureSkuVariant",
           "AzureTestDriveVariant",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductVariantState": {
         "enum": [
           "InActive",
           "Active",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductVariantTrial": {
         "docs": undefined,
@@ -5334,6 +5613,9 @@ exports[`open api parser suger docs 1`] = `
           "durationType": "optional<AzureProductVariantTrialDurationType>",
           "type": "optional<AzureProductVariantTrialType>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductVariantTrialDurationType": {
         "enum": [
@@ -5341,6 +5623,9 @@ exports[`open api parser suger docs 1`] = `
           "Days",
           "Months",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductVariantTrialType": {
         "enum": [
@@ -5349,12 +5634,18 @@ exports[`open api parser suger docs 1`] = `
           "TimedUsage",
           "Unlimited",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureTypeValue": {
         "docs": undefined,
         "properties": {
           "type": "optional<string>",
           "value": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "AzureValidationResult": {
@@ -5363,12 +5654,18 @@ exports[`open api parser suger docs 1`] = `
           "errorMessage": "optional<string>",
           "memberNames": "optional<list<string>>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureVariantResource": {
         "docs": undefined,
         "properties": {
           "resources": "optional<list<AzureTypeValue>>",
           "variantID": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "GithubComAwsAwsSdkGoV2ServiceMarketplacemeteringTypesTag": {
@@ -5389,12 +5686,18 @@ This member is required.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1BatchUsageEventOkResponse": {
         "docs": undefined,
         "properties": {
           "count": "optional<integer>",
           "result": "optional<list<GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageBatchEventOkMessage>>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageBatchEventOkMessage": {
@@ -5438,6 +5741,9 @@ This member is required.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventConflictResponse": {
         "docs": undefined,
@@ -5446,11 +5752,17 @@ This member is required.",
           "code": "optional<string>",
           "message": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventConflictResponseAdditionalInfo": {
         "docs": undefined,
         "properties": {
           "acceptedMessage": "optional<GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventOkResponse>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventOkResponse": {
@@ -5493,6 +5805,9 @@ This member is required.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventStatusEnum": {
         "enum": [
@@ -5506,6 +5821,9 @@ This member is required.",
           "InvalidQuantity",
           "BadArgument",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "GithubComSugerioMarketplaceServiceRdsDbLibBillingAwsBillingEvent": {
         "docs": undefined,
@@ -5539,6 +5857,9 @@ This member is required.",
           "usagePeriodEndDate": "optional<SqlNullTime>",
           "usagePeriodStartDate": "optional<SqlNullTime>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "GithubComSugerioMarketplaceServiceRdsDbLibBillingAzureCmaRevenue": {
         "docs": undefined,
@@ -5560,6 +5881,9 @@ This member is required.",
           "revenueUsd": "optional<double>",
           "termEndDate": "optional<string>",
           "termStartDate": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "GithubComSugerioMarketplaceServiceRdsDbLibBillingGcpChargeUsage": {
@@ -5593,6 +5917,9 @@ This member is required.",
           "usedBy": "optional<string>",
           "withheld": "optional<double>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "MarketplacemeteringBatchMeterUsageOutput": {
         "docs": undefined,
@@ -5614,6 +5941,9 @@ BatchMeterUsage call with this list as input in the BatchMeterUsageRequest.",
             "type": "optional<list<TypesUsageRecord>>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "MiddlewareMetadata": "map<string, unknown>",
       "ServicecontrolReportError": {
@@ -5627,6 +5957,9 @@ BatchMeterUsage call with this list as input in the BatchMeterUsageRequest.",
             "docs": "Status: Details of the error when processing the Operation.",
             "type": "optional<ServicecontrolStatus>",
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "ServicecontrolReportResponse": {
@@ -5657,6 +5990,9 @@ request.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "ServicecontrolStatus": {
         "docs": undefined,
@@ -5678,6 +6014,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAddEntitlementCreditResponse": {
         "docs": undefined,
@@ -5694,6 +6033,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "organizationID": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedApiClientAccessToken": {
         "docs": undefined,
@@ -5708,6 +6050,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "default": "Bearer",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedAwsAccountIdentifier": {
@@ -5726,6 +6071,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "docs": "The Account ID in AWS Marketplace Data Feed service",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedAwsAceIntegration": {
@@ -5749,6 +6097,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAwsIntegrationCredential": {
         "docs": undefined,
@@ -5765,6 +6116,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "docs": "The secret access key of the IAM user for Suger service to access the client's AWS services.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedAwsMarketplaceIntegration": {
@@ -5819,6 +6173,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "type": "optional<boolean>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAwsSaasProduct": {
         "docs": undefined,
@@ -5834,6 +6191,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "productId": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAwsSaasProductAdditionalResource": {
         "docs": undefined,
@@ -5842,6 +6202,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "Type": "optional<string>",
           "Url": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAwsSaasProductDeliveryOption": {
         "docs": undefined,
@@ -5849,6 +6212,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "FulfillmentUrl": "optional<string>",
           "Id": "optional<string>",
           "Type": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedAwsSaasProductDescription": {
@@ -5869,6 +6235,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "UsW9Submitted": "optional<boolean>",
           "Visibility": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAwsSaasProductDimension": {
         "docs": undefined,
@@ -5879,6 +6248,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "Types": "optional<list<string>>",
           "Unit": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAwsSaasProductPromotionalResources": {
         "docs": undefined,
@@ -5886,11 +6258,17 @@ in the google.rpc.Status.details field, or localized by the client.",
           "AdditionalResources": "optional<list<SharedAwsSaasProductAdditionalResource>>",
           "LogoUrl": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAwsSaasProductSupportInformation": {
         "docs": undefined,
         "properties": {
           "Description": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedAwsSaasProductVersion": {
@@ -5898,6 +6276,9 @@ in the google.rpc.Status.details field, or localized by the client.",
         "properties": {
           "DeliveryOptions": "optional<list<SharedAwsSaasProductDeliveryOption>>",
           "Id": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedAwsSnsSubscription": {
@@ -5909,6 +6290,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "SubscriptionArn": "optional<string>",
           "TopicArn": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAwsSnsSubscriptionStatus": {
         "enum": [
@@ -5916,6 +6300,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "CONFIRMED",
           "PENDING_CONFIRMATION",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAzureAdIdentifier": {
         "docs": undefined,
@@ -5933,6 +6320,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "tenantId": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAzureBuyerInfo": {
         "docs": undefined,
@@ -5941,6 +6331,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "customerId": "optional<string>",
           "firstName": "optional<string>",
           "lastName": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedAzureIntegration": {
@@ -5955,6 +6348,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "docs": "The secret key used to store the AzureIntegrationCredential in AWS Secret manager. for internal usage only.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedAzureIntegrationCredential": {
@@ -5974,6 +6370,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "tenantID": "optional<string>",
           "tokenScope": "optional<string>",
           "tokenType": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedAzureMarketplaceSubscription": {
@@ -6001,6 +6400,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "storeFront": "optional<string>",
           "term": "optional<SharedAzureTerm>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAzureMarketplaceSubscriptionAllowedCustomerOperationsItem": {
         "enum": [
@@ -6008,18 +6410,27 @@ in the google.rpc.Status.details field, or localized by the client.",
           "Update",
           "Delete",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAzureMarketplaceSubscriptionSandboxType": {
         "enum": [
           "None",
           "Csp",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAzureMarketplaceSubscriptionSessionMode": {
         "enum": [
           "None",
           "DryRun",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAzureMarketplaceSubscriptionStatus": {
         "enum": [
@@ -6029,6 +6440,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "Suspended",
           "Unsubscribed",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAzureTerm": {
         "docs": undefined,
@@ -6037,6 +6451,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "endDate": "optional<datetime>",
           "startDate": "optional<datetime>",
           "termUnit": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedBuyerInfo": {
@@ -6066,6 +6483,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "docs": "The amount that the buyer has got invoiced.",
             "type": "optional<double>",
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedCommitDimension": {
@@ -6128,6 +6548,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "type": "optional<SharedCommitDimensionType>",
           "types": "optional<list<string>>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedCommitDimensionTimeUnit": {
         "enum": [
@@ -6135,12 +6558,18 @@ in the google.rpc.Status.details field, or localized by the client.",
           "MONTH",
           "YEAR",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedCommitDimensionType": {
         "enum": [
           "FLAT_RATE",
           "PER_USER",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedCompanyInfo": {
         "docs": undefined,
@@ -6154,6 +6583,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "postalCode": "optional<string>",
           "state": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedContact": {
         "docs": undefined,
@@ -6161,6 +6593,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "company": "optional<string>",
           "email": "optional<string>",
           "name": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedEntitlementInfo": {
@@ -6227,11 +6662,17 @@ in the google.rpc.Status.details field, or localized by the client.",
           "refundCancelationPolicy": "optional<string>",
           "sellerNotes": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedEntitlementTermInfo": {
         "docs": undefined,
         "properties": {
           "type": "optional<SharedEntitlementTermType>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedEntitlementTermType": {
@@ -6246,6 +6687,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "QuantityChange",
           "Signup",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedEntitlementUsageRecord": {
         "docs": undefined,
@@ -6254,6 +6698,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "date": "optional<datetime>",
           "keys": "optional<list<string>>",
           "quantities": "optional<list<double>>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedEntityType": {
@@ -6265,6 +6712,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "ENTITLEMENT_TERM",
           "INTEGRATION",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedEulaType": {
         "enum": [
@@ -6278,6 +6728,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "ISV",
           "CURRENT",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpCommerceProducerExternalAccountSpec": {
         "docs": undefined,
@@ -6285,6 +6738,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "loginUri": "optional<string>",
           "signupUri": "optional<string>",
           "singleSignOnUri": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedGcpCommerceProducerListingSpec": {
@@ -6294,6 +6750,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "listingType": "optional<literal<"BillingIntegratedManagedService">>",
           "marketingSpec": "optional<SharedGcpCommerceProducerMarketingSpec>",
           "purchaseSpec": "optional<SharedGcpCommerceProducerPurchaseSpec>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedGcpCommerceProducerMarketingSpec": {
@@ -6320,6 +6779,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpCommerceProducerPrice": {
         "docs": undefined,
@@ -6337,6 +6799,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "type": "optional<integer>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpCommerceProducerPriceInfo": {
         "docs": undefined,
@@ -6352,6 +6817,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "type": "optional<list<SharedGcpCommerceProducerPriceUsage>>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpCommerceProducerPriceModel": {
         "enum": [
@@ -6360,6 +6828,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "USAGE",
           "SUBSCRIPTION_PLUS_USAGE",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpCommerceProducerPriceSubscription": {
         "docs": undefined,
@@ -6370,6 +6841,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "type": "optional<SharedGcpCommerceProducerPrice>",
           },
           "taxCategoryOverride": "optional<literal<"TAX_CATEGORY_UNSPECIFIED">>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedGcpCommerceProducerPriceTier": {
@@ -6388,6 +6862,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "type": "optional<double>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpCommerceProducerPriceUsage": {
         "docs": undefined,
@@ -6402,6 +6879,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "priceTiers": "optional<list<SharedGcpCommerceProducerPriceTier>>",
           "taxCategoryOverride": "optional<literal<"TAX_CATEGORY_UNSPECIFIED">>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedGcpCommerceProducerPurchaseMetric": {
@@ -6427,12 +6907,18 @@ in the google.rpc.Status.details field, or localized by the client.",
           "unit": "optional<string>",
           "valueType": "optional<SharedValueType>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpCommerceProducerPurchaseSpec": {
         "docs": undefined,
         "properties": {
           "metrics": "optional<list<SharedGcpCommerceProducerPurchaseMetric>>",
           "purchaseOptionSpecs": "optional<list<SharedGcpPurchasePlan>>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedGcpCommerceProducerServiceBilling": {
@@ -6442,6 +6928,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "docs": "in format of ["{product-name}.endpoints.{provider-id}.cloud.goog/{plan_key}_{usage_dimension_key}"]",
             "type": "optional<list<string>>",
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedGcpCommerceProducerServiceConfig": {
@@ -6462,6 +6951,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpCommerceProducerSupportSpec": {
         "docs": undefined,
@@ -6469,6 +6961,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "description": "optional<string>",
           "email": "optional<string>",
           "uri": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedGcpIntegration": {
@@ -6504,6 +6999,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "workloadIdentityPoolId": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpMarketplaceConsumer": {
         "docs": undefined,
@@ -6512,6 +7010,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "docs": "The project name with format \`projects/\`.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedGcpMarketplaceEntitlement": {
@@ -6632,6 +7133,9 @@ This field is present only if the product has usage-based billing configured.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpMarketplaceEntitlementState": {
         "enum": [
@@ -6668,6 +7172,9 @@ This field is present only if the product has usage-based billing configured.",
             "value": "ENTITLEMENT_SUSPENDED",
           },
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpMarketplaceUserAccount": {
         "docs": undefined,
@@ -6703,6 +7210,9 @@ This field is present only if the product has usage-based billing configured.",
           },
           "userInfo": "optional<SharedGcpUserInfo>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpMarketplaceUserAccountApproval": {
         "docs": undefined,
@@ -6718,6 +7228,9 @@ This field is present only if the product has usage-based billing configured.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpMarketplaceUserAccountApprovalState": {
         "enum": [
@@ -6726,6 +7239,9 @@ This field is present only if the product has usage-based billing configured.",
           "APPROVED",
           "REJECTED",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpMarketplaceUserAccountState": {
         "enum": [
@@ -6738,6 +7254,9 @@ This field is present only if the product has usage-based billing configured.",
             "value": "ACCOUNT_ACTIVE",
           },
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpProduct": {
         "docs": undefined,
@@ -6759,6 +7278,9 @@ This field is present only if the product has usage-based billing configured.",
           },
           "serviceConfig": "optional<SharedGcpCommerceProducerServiceConfig>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpPurchasePlan": {
         "docs": undefined,
@@ -6774,6 +7296,9 @@ This field is present only if the product has usage-based billing configured.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpUserInfo": {
         "docs": undefined,
@@ -6787,6 +7312,9 @@ This field is present only if the product has usage-based billing configured.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedHubspotCrmCredential": {
         "docs": undefined,
@@ -6799,6 +7327,9 @@ This field is present only if the product has usage-based billing configured.",
           "expiresIn": "optional<integer>",
           "refreshToken": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedHubspotCrmIntegration": {
         "docs": undefined,
@@ -6809,6 +7340,9 @@ This field is present only if the product has usage-based billing configured.",
             "type": "optional<integer>",
           },
           "secretKey": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedIdentityBuyer": {
@@ -6824,6 +7358,9 @@ This field is present only if the product has usage-based billing configured.",
           "organizationID": "optional<string>",
           "partner": "optional<SharedIdentityBuyerPartner>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedIdentityBuyerPartner": {
         "enum": [
@@ -6831,6 +7368,9 @@ This field is present only if the product has usage-based billing configured.",
           "AZURE",
           "GCP",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedIdentityIntegration": {
         "docs": undefined,
@@ -6845,6 +7385,9 @@ This field is present only if the product has usage-based billing configured.",
           "service": "optional<literal<"MARKETPLACE">>",
           "status": "optional<SharedIdentityIntegrationStatus>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedIdentityIntegrationPartner": {
         "enum": [
@@ -6852,6 +7395,9 @@ This field is present only if the product has usage-based billing configured.",
           "AZURE",
           "GCP",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedIdentityIntegrationStatus": {
         "enum": [
@@ -6859,6 +7405,9 @@ This field is present only if the product has usage-based billing configured.",
           "VERIFIED",
           "NOT_VERIFIED",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedIntegrationInfo": {
         "docs": undefined,
@@ -6889,12 +7438,18 @@ This field is present only if the product has usage-based billing configured.",
           },
           "slackIntegration": "optional<SharedSlackIntegration>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedListRevenueRecordDetailsResponse": {
         "docs": undefined,
         "properties": {
           "nextOffset": "optional<integer>",
           "revenueRecordDetails": "optional<list<SharedRevenueRecordDetail>>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedListRevenueRecordsResponse": {
@@ -6903,6 +7458,9 @@ This field is present only if the product has usage-based billing configured.",
           "nextOffset": "optional<integer>",
           "revenueRecords": "optional<list<SharedRevenueRecord>>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedListUsageRecordGroupsResponse": {
         "docs": undefined,
@@ -6910,12 +7468,18 @@ This field is present only if the product has usage-based billing configured.",
           "nextOffset": "optional<integer>",
           "usageRecordGroups": "optional<list<SharedMeteringUsageRecordGroup>>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedListUsageRecordReportsResponse": {
         "docs": undefined,
         "properties": {
           "nextOffset": "optional<integer>",
           "usageRecordReports": "optional<list<SharedMeteringUsageRecordReport>>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedMeteringDimension": {
@@ -6940,6 +7504,9 @@ This field is present only if the product has usage-based billing configured.",
           },
           "valueType": "optional<SharedValueType>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedMeteringUsageRecordGroup": {
         "docs": undefined,
@@ -6955,6 +7522,9 @@ This field is present only if the product has usage-based billing configured.",
           "status": "optional<string>",
           "usageRecordReportID": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedMeteringUsageRecordGroupMetaInfo": {
         "docs": undefined,
@@ -6963,6 +7533,9 @@ This field is present only if the product has usage-based billing configured.",
             "docs": "The original records reported by the customer before convertion. If no dimension mapping is applied, this field is the same as the records field.",
             "type": "optional<map<string, double>>",
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedMeteringUsageRecordReport": {
@@ -6975,6 +7548,9 @@ This field is present only if the product has usage-based billing configured.",
           "info": "optional<SharedMeteringUsageRecordReportInfo>",
           "organizationID": "optional<string>",
           "productID": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedMeteringUsageRecordReportInfo": {
@@ -7045,6 +7621,9 @@ This field is present only if the product has usage-based billing configured.",
             "type": "optional<double>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedNotificationEvent": {
         "docs": undefined,
@@ -7075,6 +7654,9 @@ This field is present only if the product has usage-based billing configured.",
             "type": "optional<datetime>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedNotificationEventAction": {
         "enum": [
@@ -7090,6 +7672,9 @@ This field is present only if the product has usage-based billing configured.",
           "NOTIFY_CONTACTS",
           "TEST",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedNotificationEventStatus": {
         "enum": [
@@ -7102,6 +7687,9 @@ This field is present only if the product has usage-based billing configured.",
           "DONE",
           "FAILED",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedOfferInfo": {
         "docs": undefined,
@@ -7155,6 +7743,9 @@ This field is present only if the product has usage-based billing configured.",
             "type": "optional<SharedOfferInfoVisibility>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedOfferInfoVisibility": {
         "docs": "The default visibility of offer is PRIVATE.",
@@ -7162,6 +7753,9 @@ This field is present only if the product has usage-based billing configured.",
           "PRIVATE",
           "PUBLIC",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedOfferMetaInfo": {
         "docs": undefined,
@@ -7187,6 +7781,9 @@ This field is present only if the product has usage-based billing configured.",
             "type": "optional<list<SharedNotificationEvent>>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedOperation": {
         "docs": undefined,
@@ -7202,6 +7799,9 @@ This field is present only if the product has usage-based billing configured.",
           "status": "optional<string>",
           "type": "optional<SharedOperationType>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedOperationType": "literal<"TemporalWorkflow">",
       "SharedPaymentInstallment": {
@@ -7209,6 +7809,9 @@ This field is present only if the product has usage-based billing configured.",
         "properties": {
           "amount": "optional<double>",
           "chargeOn": "optional<datetime>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedProductInfo": {
@@ -7225,6 +7828,9 @@ This field is present only if the product has usage-based billing configured.",
           "gcpProduct": "optional<SharedGcpProduct>",
           "refundCancelationPolicy": "optional<string>",
           "sellerNotes": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedRevenueRecord": {
@@ -7264,6 +7870,9 @@ This field is present only if the product has usage-based billing configured.",
           "refundInvoiceDate": "optional<datetime>",
           "taxAmount": "optional<double>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedRevenueRecordDetail": {
         "docs": undefined,
@@ -7280,6 +7889,9 @@ This field is present only if the product has usage-based billing configured.",
             "docs": "For GCP Marketplace",
             "type": "optional<GithubComSugerioMarketplaceServiceRdsDbLibBillingGcpChargeUsage>",
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedRevenueRecordInfo": {
@@ -7298,6 +7910,9 @@ This field is present only if the product has usage-based billing configured.",
             "type": "optional<list<GithubComSugerioMarketplaceServiceRdsDbLibBillingGcpChargeUsage>>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedRevenueReport": {
         "docs": undefined,
@@ -7312,6 +7927,9 @@ This field is present only if the product has usage-based billing configured.",
           "revenueRecords": "optional<list<SharedRevenueRecord>>",
           "service": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedRevenueReportType": {
         "enum": [
@@ -7319,6 +7937,9 @@ This field is present only if the product has usage-based billing configured.",
           "CollectableAmount",
           "DisbursedAmount",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedSalesforceCrmCredential": {
         "docs": undefined,
@@ -7327,6 +7948,9 @@ This field is present only if the product has usage-based billing configured.",
           "exp": "optional<integer>",
           "instance_url": "optional<string>",
           "refresh_token": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedSalesforceCrmIntegration": {
@@ -7345,6 +7969,9 @@ This field is present only if the product has usage-based billing configured.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedSalesforceSyncFilter": {
         "docs": undefined,
@@ -7352,6 +7979,9 @@ This field is present only if the product has usage-based billing configured.",
           "fieldName": "optional<string>",
           "operator": "optional<string>",
           "value": "optional<unknown>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedSlackIntegration": {
@@ -7373,6 +8003,9 @@ This field is present only if the product has usage-based billing configured.",
           "team": "optional<SlackOAuthV2ResponseTeam>",
           "tokenType": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedUsageCount": {
         "docs": undefined,
@@ -7390,6 +8023,9 @@ This field is present only if the product has usage-based billing configured.",
             "type": "optional<double>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedUsageReport": {
         "docs": undefined,
@@ -7398,6 +8034,9 @@ This field is present only if the product has usage-based billing configured.",
           "organizationID": "optional<string>",
           "reportDate": "optional<datetime>",
           "usageRecords": "optional<list<SharedEntitlementUsageRecord>>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedValueType": {
@@ -7413,6 +8052,9 @@ This field is present only if the product has usage-based billing configured.",
           "DISTRIBUTION",
           "MONEY",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedWorkloadEntitlement": {
         "docs": undefined,
@@ -7440,6 +8082,9 @@ This field is present only if the product has usage-based billing configured.",
           "status": "optional<SharedWorkloadEntitlementStatus>",
           "type": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedWorkloadEntitlementPartner": {
         "enum": [
@@ -7447,6 +8092,9 @@ This field is present only if the product has usage-based billing configured.",
           "AZURE",
           "GCP",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedWorkloadEntitlementStatus": {
         "enum": [
@@ -7456,6 +8104,9 @@ This field is present only if the product has usage-based billing configured.",
           "PENDING_START",
           "UNKNOWN",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedWorkloadEntitlementTerm": {
         "docs": undefined,
@@ -7481,6 +8132,9 @@ This field is present only if the product has usage-based billing configured.",
           "usedCommitAmount": "optional<double>",
           "usedCreditAmount": "optional<double>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedWorkloadEntitlementTermPartner": {
         "enum": [
@@ -7488,6 +8142,9 @@ This field is present only if the product has usage-based billing configured.",
           "AZURE",
           "GCP",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedWorkloadOffer": {
         "docs": undefined,
@@ -7516,6 +8173,9 @@ This field is present only if the product has usage-based billing configured.",
           "service": "optional<literal<"MARKETPLACE">>",
           "status": "optional<SharedWorkloadOfferStatus>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedWorkloadOfferOfferType": {
         "enum": [
@@ -7528,6 +8188,9 @@ This field is present only if the product has usage-based billing configured.",
           "PRIVATE",
           "UNKNOWN",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedWorkloadOfferPartner": {
         "enum": [
@@ -7535,6 +8198,9 @@ This field is present only if the product has usage-based billing configured.",
           "AZURE",
           "GCP",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedWorkloadOfferStatus": {
         "enum": [
@@ -7549,6 +8215,9 @@ This field is present only if the product has usage-based billing configured.",
           "CANCEL_FAILED",
           "CANCEL_SUCCESS",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedWorkloadProduct": {
         "docs": undefined,
@@ -7568,6 +8237,9 @@ This field is present only if the product has usage-based billing configured.",
           "service": "optional<literal<"MARKETPLACE">>",
           "status": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedWorkloadProductPartner": {
         "enum": [
@@ -7575,6 +8247,9 @@ This field is present only if the product has usage-based billing configured.",
           "AZURE",
           "GCP",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedWorkloadProductProductType": {
         "enum": [
@@ -7585,6 +8260,9 @@ This field is present only if the product has usage-based billing configured.",
           "PER_USER",
           "USAGE_BASED",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SlackOAuthResponseIncomingWebhook": {
         "docs": undefined,
@@ -7593,6 +8271,9 @@ This field is present only if the product has usage-based billing configured.",
           "channel_id": "optional<string>",
           "configuration_url": "optional<string>",
           "url": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SlackOAuthV2ResponseAuthedUser": {
@@ -7605,6 +8286,9 @@ This field is present only if the product has usage-based billing configured.",
           "scope": "optional<string>",
           "token_type": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SlackOAuthV2ResponseEnterprise": {
         "docs": undefined,
@@ -7612,12 +8296,18 @@ This field is present only if the product has usage-based billing configured.",
           "id": "optional<string>",
           "name": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SlackOAuthV2ResponseTeam": {
         "docs": undefined,
         "properties": {
           "id": "optional<string>",
           "name": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SqlNullTime": {
@@ -7628,6 +8318,9 @@ This field is present only if the product has usage-based billing configured.",
             "docs": "Valid is true if Time is not NULL",
             "type": "optional<boolean>",
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "TypesEntitlement": {
@@ -7660,6 +8353,9 @@ provided by AWS Marketplace when the product listing is created.",
           },
           "value": "optional<unknown>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "TypesUsageAllocation": {
         "docs": undefined,
@@ -7675,6 +8371,9 @@ This member is required.",
 tags, this parameter can be left out.",
             "type": "optional<list<GithubComAwsAwsSdkGoV2ServiceMarketplacemeteringTypesTag>>",
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "TypesUsageRecord": {
@@ -7712,6 +8411,9 @@ This member is required.",
 must equal the Quantity of the UsageRecord.",
             "type": "optional<list<TypesUsageAllocation>>",
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "TypesUsageRecordResult": {
@@ -7752,6 +8454,9 @@ the same customer, dimension, and time, but a different quantity.",
             "type": "optional<TypesUsageRecord>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "TypesUsageRecordResultStatus": {
         "enum": [
@@ -7759,6 +8464,9 @@ the same customer, dimension, and time, but a different quantity.",
           "CustomerNotSubscribed",
           "DuplicateRecord",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
     },
   },
@@ -7844,6 +8552,9 @@ exports[`open api parser suger simple 1`] = `
               "type": "root.SharedApiClientAccessToken",
             },
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
     },
@@ -8066,6 +8777,9 @@ exports[`open api parser suger simple 1`] = `
               "type": "root.SharedIdentityBuyer",
             },
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
     },
@@ -8782,6 +9496,9 @@ exports[`open api parser suger simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "types": {
         "ListEntitlementsByPartnerRequestPartner": {
@@ -8790,6 +9507,9 @@ exports[`open api parser suger simple 1`] = `
             "AZURE",
             "GCP",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
       },
     },
@@ -8986,6 +9706,9 @@ exports[`open api parser suger simple 1`] = `
               "type": "list<root.SharedWorkloadEntitlementTerm>",
             },
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
     },
@@ -9510,6 +10233,9 @@ exports[`open api parser suger simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "types": {
         "DeleteIntegrationRequestPartner": {
@@ -9518,12 +10244,18 @@ exports[`open api parser suger simple 1`] = `
             "AZURE",
             "GCP",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
         "DeleteIntegrationRequestService": {
           "enum": [
             "MARKETPLACE",
             "CRM",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
         "GetIntegrationRequestPartner": {
           "enum": [
@@ -9531,12 +10263,18 @@ exports[`open api parser suger simple 1`] = `
             "AZURE",
             "GCP",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
         "GetIntegrationRequestService": {
           "enum": [
             "MARKETPLACE",
             "CRM",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
         "SharedCreateIntegrationParamsPartner": {
           "enum": [
@@ -9544,6 +10282,9 @@ exports[`open api parser suger simple 1`] = `
             "AZURE",
             "GCP",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
         "SharedUpdateIntegrationParamsPartner": {
           "enum": [
@@ -9551,6 +10292,9 @@ exports[`open api parser suger simple 1`] = `
             "AZURE",
             "GCP",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
         "UpdateIntegrationRequestPartner": {
           "enum": [
@@ -9558,12 +10302,18 @@ exports[`open api parser suger simple 1`] = `
             "AZURE",
             "GCP",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
         "UpdateIntegrationRequestService": {
           "enum": [
             "MARKETPLACE",
             "CRM",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
         "VerifyIntegrationRequestPartner": {
           "enum": [
@@ -9571,12 +10321,18 @@ exports[`open api parser suger simple 1`] = `
             "AZURE",
             "GCP",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
         "VerifyIntegrationRequestService": {
           "enum": [
             "MARKETPLACE",
             "CRM",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
       },
     },
@@ -10244,6 +11000,9 @@ exports[`open api parser suger simple 1`] = `
               "type": "root.SharedMeteringUsageRecordGroup",
             },
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
     },
@@ -11099,6 +11858,9 @@ exports[`open api parser suger simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "types": {
         "ListOffersByPartnerRequestPartner": {
@@ -11107,6 +11869,9 @@ exports[`open api parser suger simple 1`] = `
             "AZURE",
             "GCP",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
       },
     },
@@ -11180,6 +11945,9 @@ exports[`open api parser suger simple 1`] = `
               "type": "list<root.SharedOperation>",
             },
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
     },
@@ -11656,6 +12424,9 @@ exports[`open api parser suger simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "types": {
         "ListProductsByPartnerRequestPartner": {
@@ -11664,6 +12435,9 @@ exports[`open api parser suger simple 1`] = `
             "AZURE",
             "GCP",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
       },
     },
@@ -12017,6 +12791,9 @@ exports[`open api parser suger simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "types": {
         "ListRevenueRecordDetailsRequestPartner": {
@@ -12025,6 +12802,9 @@ exports[`open api parser suger simple 1`] = `
             "AZURE",
             "GCP",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
         "ListRevenueRecordsRequestPartner": {
           "enum": [
@@ -12032,6 +12812,9 @@ exports[`open api parser suger simple 1`] = `
             "AZURE",
             "GCP",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
         "SharedGetRevenueReportParamsPartner": {
           "docs": "Required.",
@@ -12040,6 +12823,9 @@ exports[`open api parser suger simple 1`] = `
             "AZURE",
             "GCP",
           ],
+          "source": {
+            "openapi": "suger/swagger.json",
+          },
         },
       },
     },
@@ -12072,6 +12858,9 @@ exports[`open api parser suger simple 1`] = `
           "description": "optional<string>",
           "id": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureGovernmentCertification": {
         "docs": undefined,
@@ -12079,6 +12868,9 @@ exports[`open api parser suger simple 1`] = `
           "title": "optional<string>",
           "uri": "optional<string>",
           "validationResults": "optional<list<AzureValidationResult>>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "AzureIncludedBaseQuantity": {
@@ -12088,12 +12880,18 @@ exports[`open api parser suger simple 1`] = `
           "quantity": "optional<double>",
           "recurringUnit": "optional<AzureIncludedBaseQuantityRecurringUnit>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureIncludedBaseQuantityRecurringUnit": {
         "enum": [
           "Monthly",
           "Annual",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureListingContact": {
         "docs": undefined,
@@ -12104,6 +12902,9 @@ exports[`open api parser suger simple 1`] = `
           "type": "optional<AzureListingContactType>",
           "uri": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureListingContactType": {
         "enum": [
@@ -12111,6 +12912,9 @@ exports[`open api parser suger simple 1`] = `
           "Engineering",
           "ChannelManager",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureListingUri": {
         "docs": undefined,
@@ -12120,6 +12924,9 @@ exports[`open api parser suger simple 1`] = `
           "type": "optional<string>",
           "uri": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureLocalizedDateTime": {
         "docs": undefined,
@@ -12127,12 +12934,18 @@ exports[`open api parser suger simple 1`] = `
           "dateTimeInUtc": "optional<string>",
           "localizePerMarket": "optional<boolean>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureLocalizedTimeRange": {
         "docs": undefined,
         "properties": {
           "endAt": "optional<AzureLocalizedDateTime>",
           "startAt": "optional<AzureLocalizedDateTime>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "AzureMarket": {
@@ -12144,6 +12957,9 @@ exports[`open api parser suger simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketState": {
         "docs": undefined,
@@ -12154,6 +12970,9 @@ exports[`open api parser suger simple 1`] = `
           },
           "state": "optional<AzureMarketStateState>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketStateState": {
         "enum": [
@@ -12162,6 +12981,9 @@ exports[`open api parser suger simple 1`] = `
           "StopSelling",
           "Terminated",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketplacePrice": {
         "docs": undefined,
@@ -12176,6 +12998,9 @@ exports[`open api parser suger simple 1`] = `
             "type": "optional<double>",
           },
           "prices": "optional<unknown>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "AzureMarketplacePrivateOffer": {
@@ -12227,6 +13052,9 @@ exports[`open api parser suger simple 1`] = `
           "validations": "optional<list<AzureMarketplaceValidation>>",
           "variableStartDate": "optional<boolean>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketplacePrivateOfferAcceptanceLink": {
         "docs": undefined,
@@ -12236,6 +13064,9 @@ exports[`open api parser suger simple 1`] = `
             "type": "optional<string>",
           },
           "link": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "AzureMarketplacePrivateOfferBeneficiary": {
@@ -12248,6 +13079,9 @@ exports[`open api parser suger simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketplacePrivateOfferBeneficiaryRecipient": {
         "docs": undefined,
@@ -12255,12 +13089,18 @@ exports[`open api parser suger simple 1`] = `
           "id": "optional<string>",
           "recipientType": "optional<AzureMarketplacePrivateOfferBeneficiaryRecipientRecipientType>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketplacePrivateOfferBeneficiaryRecipientRecipientType": {
         "enum": [
           "cspCustomer",
           "billingGroup",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketplacePrivateOfferPricing": {
         "docs": undefined,
@@ -12294,12 +13134,18 @@ exports[`open api parser suger simple 1`] = `
           },
           "sugerOfferId": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketplacePrivateOfferPricingDiscountType": {
         "enum": [
           "percentage",
           "absolute",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketplacePrivateOfferPricingPlanType": {
         "docs": "The type of the plan, FLAT_RATE or PER_USER.",
@@ -12307,18 +13153,27 @@ exports[`open api parser suger simple 1`] = `
           "FLAT_RATE",
           "PER_USER",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketplacePrivateOfferPrivateOfferType": {
         "enum": [
           "customerPromotion",
           "cspPromotion",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketplacePrivateOfferPromotionReference": {
         "docs": undefined,
         "properties": {
           "id": "optional<string>",
           "name": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "AzureMarketplacePrivateOfferState": {
@@ -12328,12 +13183,18 @@ exports[`open api parser suger simple 1`] = `
           "withdrawn",
           "deleted",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketplacePrivateOfferSubState": {
         "enum": [
           "pendingAcceptance",
           "accepted",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketplaceTerm": {
         "docs": undefined,
@@ -12344,6 +13205,9 @@ exports[`open api parser suger simple 1`] = `
             "type": "optional<double>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketplaceTermType": {
         "enum": [
@@ -12352,6 +13216,9 @@ exports[`open api parser suger simple 1`] = `
           "month",
           "year",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketplaceValidation": {
         "docs": undefined,
@@ -12361,6 +13228,9 @@ exports[`open api parser suger simple 1`] = `
           "level": "optional<AzureMarketplaceValidationLevel>",
           "message": "optional<string>",
           "resourceId": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "AzureMarketplaceValidationCode": {
@@ -12379,18 +13249,27 @@ exports[`open api parser suger simple 1`] = `
           "resourceNotFound",
           "schemaValidationError",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureMarketplaceValidationLevel": {
         "enum": [
           "informational",
           "warning",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzurePendingUpdateInfo": {
         "docs": undefined,
         "properties": {
           "status": "optional<string>",
           "updateType": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "AzurePrice": {
@@ -12403,6 +13282,9 @@ exports[`open api parser suger simple 1`] = `
           "openPrice": "optional<double>",
           "priceTierID": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzurePriceAndAvailabilityPrivateOfferCustomMeters": {
         "docs": undefined,
@@ -12413,6 +13295,9 @@ exports[`open api parser suger simple 1`] = `
             "type": "optional<AzurePriceAndAvailabilityPrivateOfferCustomMetersPriceInputOption>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzurePriceAndAvailabilityPrivateOfferCustomMetersPriceInputOption": {
         "docs": "default "usd"",
@@ -12420,6 +13305,9 @@ exports[`open api parser suger simple 1`] = `
           "perMarket",
           "usd",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzurePriceAndAvailabilityPrivateOfferPlan": {
         "docs": undefined,
@@ -12432,12 +13320,18 @@ exports[`open api parser suger simple 1`] = `
           "resourceName": "optional<string>",
           "validations": "optional<list<AzureMarketplaceValidation>>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzurePriceAndAvailabilityPrivateOfferPrice": {
         "docs": undefined,
         "properties": {
           "customMeters": "optional<AzurePriceAndAvailabilityPrivateOfferCustomMeters>",
           "recurrentPrice": "optional<AzurePriceAndAvailabilityRecurrentPrice>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "AzurePriceAndAvailabilityRecurrentPrice": {
@@ -12449,6 +13343,9 @@ exports[`open api parser suger simple 1`] = `
           },
           "prices": "optional<list<AzurePriceAndAvailabilityRecurrentPriceItem>>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzurePriceAndAvailabilityRecurrentPriceItem": {
         "docs": undefined,
@@ -12458,6 +13355,9 @@ exports[`open api parser suger simple 1`] = `
           "pricePerPaymentInUsd": "optional<double>",
           "prices": "optional<list<AzureMarketplacePrice>>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzurePriceAndAvailabilityRecurrentPricePriceInputOption": {
         "docs": "default "usd"",
@@ -12465,6 +13365,9 @@ exports[`open api parser suger simple 1`] = `
           "perMarket",
           "usd",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzurePriceCadence": {
         "docs": undefined,
@@ -12472,12 +13375,18 @@ exports[`open api parser suger simple 1`] = `
           "type": "optional<AzurePriceCadenceType>",
           "value": "optional<integer>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzurePriceCadenceType": {
         "enum": [
           "Month",
           "Year",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzurePriceSchedule": {
         "docs": undefined,
@@ -12487,6 +13396,9 @@ exports[`open api parser suger simple 1`] = `
           "pricingUnits": "optional<list<AzurePricingUnit>>",
           "retailPrice": "optional<AzurePrice>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzurePriceSchedulePricingModel": {
         "enum": [
@@ -12494,6 +13406,9 @@ exports[`open api parser suger simple 1`] = `
           "Recurring",
           "Usage",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzurePricingUnit": {
         "docs": undefined,
@@ -12504,12 +13419,18 @@ exports[`open api parser suger simple 1`] = `
           "unitType": "optional<string>",
           "upperUnit": "optional<integer>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzurePricingUnitName": {
         "enum": [
           "sharedcore",
           "transactions",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProduct": {
         "docs": undefined,
@@ -12531,6 +13452,9 @@ exports[`open api parser suger simple 1`] = `
           "submissions": "optional<list<AzureProductSubmission>>",
           "variants": "optional<list<AzureProductVariant>>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductAvailability": {
         "docs": undefined,
@@ -12541,6 +13465,9 @@ exports[`open api parser suger simple 1`] = `
           "resourceType": "optional<string>",
           "subscriptionAudiences": "optional<list<AzureAudience>>",
           "visibility": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "AzureProductBranch": {
@@ -12553,6 +13480,9 @@ exports[`open api parser suger simple 1`] = `
           "resourceType": "optional<string>",
           "type": "optional<string>",
           "variantID": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "AzureProductFeatureAvailability": {
@@ -12574,12 +13504,18 @@ exports[`open api parser suger simple 1`] = `
           "trial": "optional<AzureProductVariantTrial>",
           "visibility": "optional<AzureProductFeatureAvailabilityVisibility>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductFeatureAvailabilityVisibility": {
         "enum": [
           "Public",
           "Private",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductListing": {
         "docs": undefined,
@@ -12604,6 +13540,9 @@ exports[`open api parser suger simple 1`] = `
           "summary": "optional<string>",
           "title": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductListingAsset": {
         "docs": undefined,
@@ -12619,6 +13558,9 @@ exports[`open api parser suger simple 1`] = `
           "state": "optional<AzureProductListingAssetState>",
           "type": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductListingAssetResourceType": {
         "enum": [
@@ -12626,6 +13568,9 @@ exports[`open api parser suger simple 1`] = `
           "ListingImage",
           "ListingVideo",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductListingAssetState": {
         "enum": [
@@ -12635,6 +13580,9 @@ exports[`open api parser suger simple 1`] = `
           "Processed",
           "ProcessFailed",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductPackageConfiguration": {
         "docs": undefined,
@@ -12645,6 +13593,9 @@ exports[`open api parser suger simple 1`] = `
           "id": "optional<string>",
           "landingPageUri": "optional<string>",
           "resourceType": "optional<literal<"AzureSoftwareAsAServicePackageConfiguration">>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "AzureProductProperty": {
@@ -12669,6 +13620,9 @@ exports[`open api parser suger simple 1`] = `
           "termsOfUse": "optional<string>",
           "useEnterpriseContract": "optional<boolean>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductSetup": {
         "docs": undefined,
@@ -12680,6 +13634,9 @@ exports[`open api parser suger simple 1`] = `
           "sellingOption": "optional<AzureProductSetupSellingOption>",
           "testDriveType": "optional<string>",
           "trialUri": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "AzureProductSetupCallToAction": {
@@ -12694,12 +13651,18 @@ exports[`open api parser suger simple 1`] = `
             "value": "contact-me",
           },
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductSetupSellingOption": {
         "enum": [
           "ListingOnly",
           "ListAndSell",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductSubmission": {
         "docs": undefined,
@@ -12717,12 +13680,18 @@ exports[`open api parser suger simple 1`] = `
           "targets": "optional<list<AzureTypeValue>>",
           "variantResources": "optional<list<AzureVariantResource>>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductSubmissionState": {
         "enum": [
           "Inprogress",
           "Published",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductSubmissionSubState": {
         "enum": [
@@ -12735,6 +13704,9 @@ exports[`open api parser suger simple 1`] = `
           "Published",
           "InStore",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductVariant": {
         "docs": undefined,
@@ -12755,6 +13727,9 @@ exports[`open api parser suger simple 1`] = `
           "resourceType": "optional<AzureProductVariantResourceType>",
           "state": "optional<AzureProductVariantState>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductVariantCustomMeter": {
         "docs": undefined,
@@ -12766,6 +13741,9 @@ exports[`open api parser suger simple 1`] = `
           "priceInUsd": "optional<double>",
           "uniqueID": "optional<string>",
           "unitOfMeasure": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "AzureProductVariantPriceSchedule": {
@@ -12783,18 +13761,27 @@ exports[`open api parser suger simple 1`] = `
           },
           "schedules": "optional<list<AzurePriceSchedule>>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductVariantResourceType": {
         "enum": [
           "AzureSkuVariant",
           "AzureTestDriveVariant",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductVariantState": {
         "enum": [
           "InActive",
           "Active",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductVariantTrial": {
         "docs": undefined,
@@ -12804,6 +13791,9 @@ exports[`open api parser suger simple 1`] = `
           "durationType": "optional<AzureProductVariantTrialDurationType>",
           "type": "optional<AzureProductVariantTrialType>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductVariantTrialDurationType": {
         "enum": [
@@ -12811,6 +13801,9 @@ exports[`open api parser suger simple 1`] = `
           "Days",
           "Months",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureProductVariantTrialType": {
         "enum": [
@@ -12819,12 +13812,18 @@ exports[`open api parser suger simple 1`] = `
           "TimedUsage",
           "Unlimited",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureTypeValue": {
         "docs": undefined,
         "properties": {
           "type": "optional<string>",
           "value": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "AzureValidationResult": {
@@ -12833,12 +13832,18 @@ exports[`open api parser suger simple 1`] = `
           "errorMessage": "optional<string>",
           "memberNames": "optional<list<string>>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "AzureVariantResource": {
         "docs": undefined,
         "properties": {
           "resources": "optional<list<AzureTypeValue>>",
           "variantID": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "GithubComAwsAwsSdkGoV2ServiceMarketplacemeteringTypesTag": {
@@ -12859,12 +13864,18 @@ This member is required.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1BatchUsageEventOkResponse": {
         "docs": undefined,
         "properties": {
           "count": "optional<integer>",
           "result": "optional<list<GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageBatchEventOkMessage>>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageBatchEventOkMessage": {
@@ -12908,6 +13919,9 @@ This member is required.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventConflictResponse": {
         "docs": undefined,
@@ -12916,11 +13930,17 @@ This member is required.",
           "code": "optional<string>",
           "message": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventConflictResponseAdditionalInfo": {
         "docs": undefined,
         "properties": {
           "acceptedMessage": "optional<GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventOkResponse>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventOkResponse": {
@@ -12963,6 +13983,9 @@ This member is required.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventStatusEnum": {
         "enum": [
@@ -12976,6 +13999,9 @@ This member is required.",
           "InvalidQuantity",
           "BadArgument",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "GithubComSugerioMarketplaceServiceRdsDbLibBillingAwsBillingEvent": {
         "docs": undefined,
@@ -13009,6 +14035,9 @@ This member is required.",
           "usagePeriodEndDate": "optional<SqlNullTime>",
           "usagePeriodStartDate": "optional<SqlNullTime>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "GithubComSugerioMarketplaceServiceRdsDbLibBillingAzureCmaRevenue": {
         "docs": undefined,
@@ -13030,6 +14059,9 @@ This member is required.",
           "revenueUsd": "optional<double>",
           "termEndDate": "optional<string>",
           "termStartDate": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "GithubComSugerioMarketplaceServiceRdsDbLibBillingGcpChargeUsage": {
@@ -13063,6 +14095,9 @@ This member is required.",
           "usedBy": "optional<string>",
           "withheld": "optional<double>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "MarketplacemeteringBatchMeterUsageOutput": {
         "docs": undefined,
@@ -13084,6 +14119,9 @@ BatchMeterUsage call with this list as input in the BatchMeterUsageRequest.",
             "type": "optional<list<TypesUsageRecord>>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "MiddlewareMetadata": "map<string, unknown>",
       "ServicecontrolReportError": {
@@ -13097,6 +14135,9 @@ BatchMeterUsage call with this list as input in the BatchMeterUsageRequest.",
             "docs": "Status: Details of the error when processing the Operation.",
             "type": "optional<ServicecontrolStatus>",
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "ServicecontrolReportResponse": {
@@ -13127,6 +14168,9 @@ request.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "ServicecontrolStatus": {
         "docs": undefined,
@@ -13148,6 +14192,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAddEntitlementCreditResponse": {
         "docs": undefined,
@@ -13164,6 +14211,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "organizationID": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedApiClientAccessToken": {
         "docs": undefined,
@@ -13178,6 +14228,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "default": "Bearer",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedAwsAccountIdentifier": {
@@ -13196,6 +14249,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "docs": "The Account ID in AWS Marketplace Data Feed service",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedAwsAceIntegration": {
@@ -13219,6 +14275,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAwsIntegrationCredential": {
         "docs": undefined,
@@ -13235,6 +14294,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "docs": "The secret access key of the IAM user for Suger service to access the client's AWS services.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedAwsMarketplaceIntegration": {
@@ -13289,6 +14351,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "type": "optional<boolean>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAwsSaasProduct": {
         "docs": undefined,
@@ -13304,6 +14369,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "productId": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAwsSaasProductAdditionalResource": {
         "docs": undefined,
@@ -13312,6 +14380,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "Type": "optional<string>",
           "Url": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAwsSaasProductDeliveryOption": {
         "docs": undefined,
@@ -13319,6 +14390,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "FulfillmentUrl": "optional<string>",
           "Id": "optional<string>",
           "Type": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedAwsSaasProductDescription": {
@@ -13339,6 +14413,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "UsW9Submitted": "optional<boolean>",
           "Visibility": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAwsSaasProductDimension": {
         "docs": undefined,
@@ -13349,6 +14426,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "Types": "optional<list<string>>",
           "Unit": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAwsSaasProductPromotionalResources": {
         "docs": undefined,
@@ -13356,11 +14436,17 @@ in the google.rpc.Status.details field, or localized by the client.",
           "AdditionalResources": "optional<list<SharedAwsSaasProductAdditionalResource>>",
           "LogoUrl": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAwsSaasProductSupportInformation": {
         "docs": undefined,
         "properties": {
           "Description": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedAwsSaasProductVersion": {
@@ -13368,6 +14454,9 @@ in the google.rpc.Status.details field, or localized by the client.",
         "properties": {
           "DeliveryOptions": "optional<list<SharedAwsSaasProductDeliveryOption>>",
           "Id": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedAwsSnsSubscription": {
@@ -13379,6 +14468,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "SubscriptionArn": "optional<string>",
           "TopicArn": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAwsSnsSubscriptionStatus": {
         "enum": [
@@ -13386,6 +14478,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "CONFIRMED",
           "PENDING_CONFIRMATION",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAzureAdIdentifier": {
         "docs": undefined,
@@ -13403,6 +14498,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "tenantId": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAzureBuyerInfo": {
         "docs": undefined,
@@ -13411,6 +14509,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "customerId": "optional<string>",
           "firstName": "optional<string>",
           "lastName": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedAzureIntegration": {
@@ -13425,6 +14526,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "docs": "The secret key used to store the AzureIntegrationCredential in AWS Secret manager. for internal usage only.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedAzureIntegrationCredential": {
@@ -13444,6 +14548,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "tenantID": "optional<string>",
           "tokenScope": "optional<string>",
           "tokenType": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedAzureMarketplaceSubscription": {
@@ -13471,6 +14578,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "storeFront": "optional<string>",
           "term": "optional<SharedAzureTerm>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAzureMarketplaceSubscriptionAllowedCustomerOperationsItem": {
         "enum": [
@@ -13478,18 +14588,27 @@ in the google.rpc.Status.details field, or localized by the client.",
           "Update",
           "Delete",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAzureMarketplaceSubscriptionSandboxType": {
         "enum": [
           "None",
           "Csp",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAzureMarketplaceSubscriptionSessionMode": {
         "enum": [
           "None",
           "DryRun",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAzureMarketplaceSubscriptionStatus": {
         "enum": [
@@ -13499,6 +14618,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "Suspended",
           "Unsubscribed",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedAzureTerm": {
         "docs": undefined,
@@ -13507,6 +14629,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "endDate": "optional<datetime>",
           "startDate": "optional<datetime>",
           "termUnit": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedBuyerInfo": {
@@ -13536,6 +14661,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "docs": "The amount that the buyer has got invoiced.",
             "type": "optional<double>",
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedCommitDimension": {
@@ -13598,6 +14726,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "type": "optional<SharedCommitDimensionType>",
           "types": "optional<list<string>>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedCommitDimensionTimeUnit": {
         "enum": [
@@ -13605,12 +14736,18 @@ in the google.rpc.Status.details field, or localized by the client.",
           "MONTH",
           "YEAR",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedCommitDimensionType": {
         "enum": [
           "FLAT_RATE",
           "PER_USER",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedCompanyInfo": {
         "docs": undefined,
@@ -13624,6 +14761,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "postalCode": "optional<string>",
           "state": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedContact": {
         "docs": undefined,
@@ -13631,6 +14771,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "company": "optional<string>",
           "email": "optional<string>",
           "name": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedEntitlementInfo": {
@@ -13697,11 +14840,17 @@ in the google.rpc.Status.details field, or localized by the client.",
           "refundCancelationPolicy": "optional<string>",
           "sellerNotes": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedEntitlementTermInfo": {
         "docs": undefined,
         "properties": {
           "type": "optional<SharedEntitlementTermType>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedEntitlementTermType": {
@@ -13716,6 +14865,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "QuantityChange",
           "Signup",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedEntitlementUsageRecord": {
         "docs": undefined,
@@ -13724,6 +14876,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "date": "optional<datetime>",
           "keys": "optional<list<string>>",
           "quantities": "optional<list<double>>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedEntityType": {
@@ -13735,6 +14890,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "ENTITLEMENT_TERM",
           "INTEGRATION",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedEulaType": {
         "enum": [
@@ -13748,6 +14906,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "ISV",
           "CURRENT",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpCommerceProducerExternalAccountSpec": {
         "docs": undefined,
@@ -13755,6 +14916,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "loginUri": "optional<string>",
           "signupUri": "optional<string>",
           "singleSignOnUri": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedGcpCommerceProducerListingSpec": {
@@ -13764,6 +14928,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "listingType": "optional<literal<"BillingIntegratedManagedService">>",
           "marketingSpec": "optional<SharedGcpCommerceProducerMarketingSpec>",
           "purchaseSpec": "optional<SharedGcpCommerceProducerPurchaseSpec>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedGcpCommerceProducerMarketingSpec": {
@@ -13790,6 +14957,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpCommerceProducerPrice": {
         "docs": undefined,
@@ -13807,6 +14977,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "type": "optional<integer>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpCommerceProducerPriceInfo": {
         "docs": undefined,
@@ -13822,6 +14995,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "type": "optional<list<SharedGcpCommerceProducerPriceUsage>>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpCommerceProducerPriceModel": {
         "enum": [
@@ -13830,6 +15006,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "USAGE",
           "SUBSCRIPTION_PLUS_USAGE",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpCommerceProducerPriceSubscription": {
         "docs": undefined,
@@ -13840,6 +15019,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "type": "optional<SharedGcpCommerceProducerPrice>",
           },
           "taxCategoryOverride": "optional<literal<"TAX_CATEGORY_UNSPECIFIED">>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedGcpCommerceProducerPriceTier": {
@@ -13858,6 +15040,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "type": "optional<double>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpCommerceProducerPriceUsage": {
         "docs": undefined,
@@ -13872,6 +15057,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "priceTiers": "optional<list<SharedGcpCommerceProducerPriceTier>>",
           "taxCategoryOverride": "optional<literal<"TAX_CATEGORY_UNSPECIFIED">>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedGcpCommerceProducerPurchaseMetric": {
@@ -13897,12 +15085,18 @@ in the google.rpc.Status.details field, or localized by the client.",
           "unit": "optional<string>",
           "valueType": "optional<SharedValueType>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpCommerceProducerPurchaseSpec": {
         "docs": undefined,
         "properties": {
           "metrics": "optional<list<SharedGcpCommerceProducerPurchaseMetric>>",
           "purchaseOptionSpecs": "optional<list<SharedGcpPurchasePlan>>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedGcpCommerceProducerServiceBilling": {
@@ -13912,6 +15106,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "docs": "in format of ["{product-name}.endpoints.{provider-id}.cloud.goog/{plan_key}_{usage_dimension_key}"]",
             "type": "optional<list<string>>",
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedGcpCommerceProducerServiceConfig": {
@@ -13932,6 +15129,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpCommerceProducerSupportSpec": {
         "docs": undefined,
@@ -13939,6 +15139,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           "description": "optional<string>",
           "email": "optional<string>",
           "uri": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedGcpIntegration": {
@@ -13974,6 +15177,9 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "workloadIdentityPoolId": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpMarketplaceConsumer": {
         "docs": undefined,
@@ -13982,6 +15188,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             "docs": "The project name with format \`projects/\`.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedGcpMarketplaceEntitlement": {
@@ -14102,6 +15311,9 @@ This field is present only if the product has usage-based billing configured.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpMarketplaceEntitlementState": {
         "enum": [
@@ -14138,6 +15350,9 @@ This field is present only if the product has usage-based billing configured.",
             "value": "ENTITLEMENT_SUSPENDED",
           },
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpMarketplaceUserAccount": {
         "docs": undefined,
@@ -14173,6 +15388,9 @@ This field is present only if the product has usage-based billing configured.",
           },
           "userInfo": "optional<SharedGcpUserInfo>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpMarketplaceUserAccountApproval": {
         "docs": undefined,
@@ -14188,6 +15406,9 @@ This field is present only if the product has usage-based billing configured.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpMarketplaceUserAccountApprovalState": {
         "enum": [
@@ -14196,6 +15417,9 @@ This field is present only if the product has usage-based billing configured.",
           "APPROVED",
           "REJECTED",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpMarketplaceUserAccountState": {
         "enum": [
@@ -14208,6 +15432,9 @@ This field is present only if the product has usage-based billing configured.",
             "value": "ACCOUNT_ACTIVE",
           },
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpProduct": {
         "docs": undefined,
@@ -14229,6 +15456,9 @@ This field is present only if the product has usage-based billing configured.",
           },
           "serviceConfig": "optional<SharedGcpCommerceProducerServiceConfig>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpPurchasePlan": {
         "docs": undefined,
@@ -14244,6 +15474,9 @@ This field is present only if the product has usage-based billing configured.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedGcpUserInfo": {
         "docs": undefined,
@@ -14257,6 +15490,9 @@ This field is present only if the product has usage-based billing configured.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedHubspotCrmCredential": {
         "docs": undefined,
@@ -14269,6 +15505,9 @@ This field is present only if the product has usage-based billing configured.",
           "expiresIn": "optional<integer>",
           "refreshToken": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedHubspotCrmIntegration": {
         "docs": undefined,
@@ -14279,6 +15518,9 @@ This field is present only if the product has usage-based billing configured.",
             "type": "optional<integer>",
           },
           "secretKey": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedIdentityBuyer": {
@@ -14294,6 +15536,9 @@ This field is present only if the product has usage-based billing configured.",
           "organizationID": "optional<string>",
           "partner": "optional<SharedIdentityBuyerPartner>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedIdentityBuyerPartner": {
         "enum": [
@@ -14301,6 +15546,9 @@ This field is present only if the product has usage-based billing configured.",
           "AZURE",
           "GCP",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedIdentityIntegration": {
         "docs": undefined,
@@ -14315,6 +15563,9 @@ This field is present only if the product has usage-based billing configured.",
           "service": "optional<literal<"MARKETPLACE">>",
           "status": "optional<SharedIdentityIntegrationStatus>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedIdentityIntegrationPartner": {
         "enum": [
@@ -14322,6 +15573,9 @@ This field is present only if the product has usage-based billing configured.",
           "AZURE",
           "GCP",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedIdentityIntegrationStatus": {
         "enum": [
@@ -14329,6 +15583,9 @@ This field is present only if the product has usage-based billing configured.",
           "VERIFIED",
           "NOT_VERIFIED",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedIntegrationInfo": {
         "docs": undefined,
@@ -14359,12 +15616,18 @@ This field is present only if the product has usage-based billing configured.",
           },
           "slackIntegration": "optional<SharedSlackIntegration>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedListRevenueRecordDetailsResponse": {
         "docs": undefined,
         "properties": {
           "nextOffset": "optional<integer>",
           "revenueRecordDetails": "optional<list<SharedRevenueRecordDetail>>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedListRevenueRecordsResponse": {
@@ -14373,6 +15636,9 @@ This field is present only if the product has usage-based billing configured.",
           "nextOffset": "optional<integer>",
           "revenueRecords": "optional<list<SharedRevenueRecord>>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedListUsageRecordGroupsResponse": {
         "docs": undefined,
@@ -14380,12 +15646,18 @@ This field is present only if the product has usage-based billing configured.",
           "nextOffset": "optional<integer>",
           "usageRecordGroups": "optional<list<SharedMeteringUsageRecordGroup>>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedListUsageRecordReportsResponse": {
         "docs": undefined,
         "properties": {
           "nextOffset": "optional<integer>",
           "usageRecordReports": "optional<list<SharedMeteringUsageRecordReport>>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedMeteringDimension": {
@@ -14410,6 +15682,9 @@ This field is present only if the product has usage-based billing configured.",
           },
           "valueType": "optional<SharedValueType>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedMeteringUsageRecordGroup": {
         "docs": undefined,
@@ -14425,6 +15700,9 @@ This field is present only if the product has usage-based billing configured.",
           "status": "optional<string>",
           "usageRecordReportID": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedMeteringUsageRecordGroupMetaInfo": {
         "docs": undefined,
@@ -14433,6 +15711,9 @@ This field is present only if the product has usage-based billing configured.",
             "docs": "The original records reported by the customer before convertion. If no dimension mapping is applied, this field is the same as the records field.",
             "type": "optional<map<string, double>>",
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedMeteringUsageRecordReport": {
@@ -14445,6 +15726,9 @@ This field is present only if the product has usage-based billing configured.",
           "info": "optional<SharedMeteringUsageRecordReportInfo>",
           "organizationID": "optional<string>",
           "productID": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedMeteringUsageRecordReportInfo": {
@@ -14515,6 +15799,9 @@ This field is present only if the product has usage-based billing configured.",
             "type": "optional<double>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedNotificationEvent": {
         "docs": undefined,
@@ -14545,6 +15832,9 @@ This field is present only if the product has usage-based billing configured.",
             "type": "optional<datetime>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedNotificationEventAction": {
         "enum": [
@@ -14560,6 +15850,9 @@ This field is present only if the product has usage-based billing configured.",
           "NOTIFY_CONTACTS",
           "TEST",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedNotificationEventStatus": {
         "enum": [
@@ -14572,6 +15865,9 @@ This field is present only if the product has usage-based billing configured.",
           "DONE",
           "FAILED",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedOfferInfo": {
         "docs": undefined,
@@ -14625,6 +15921,9 @@ This field is present only if the product has usage-based billing configured.",
             "type": "optional<SharedOfferInfoVisibility>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedOfferInfoVisibility": {
         "docs": "The default visibility of offer is PRIVATE.",
@@ -14632,6 +15931,9 @@ This field is present only if the product has usage-based billing configured.",
           "PRIVATE",
           "PUBLIC",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedOfferMetaInfo": {
         "docs": undefined,
@@ -14657,6 +15959,9 @@ This field is present only if the product has usage-based billing configured.",
             "type": "optional<list<SharedNotificationEvent>>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedOperation": {
         "docs": undefined,
@@ -14672,6 +15977,9 @@ This field is present only if the product has usage-based billing configured.",
           "status": "optional<string>",
           "type": "optional<SharedOperationType>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedOperationType": "literal<"TemporalWorkflow">",
       "SharedPaymentInstallment": {
@@ -14679,6 +15987,9 @@ This field is present only if the product has usage-based billing configured.",
         "properties": {
           "amount": "optional<double>",
           "chargeOn": "optional<datetime>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedProductInfo": {
@@ -14695,6 +16006,9 @@ This field is present only if the product has usage-based billing configured.",
           "gcpProduct": "optional<SharedGcpProduct>",
           "refundCancelationPolicy": "optional<string>",
           "sellerNotes": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedRevenueRecord": {
@@ -14734,6 +16048,9 @@ This field is present only if the product has usage-based billing configured.",
           "refundInvoiceDate": "optional<datetime>",
           "taxAmount": "optional<double>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedRevenueRecordDetail": {
         "docs": undefined,
@@ -14750,6 +16067,9 @@ This field is present only if the product has usage-based billing configured.",
             "docs": "For GCP Marketplace",
             "type": "optional<GithubComSugerioMarketplaceServiceRdsDbLibBillingGcpChargeUsage>",
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedRevenueRecordInfo": {
@@ -14768,6 +16088,9 @@ This field is present only if the product has usage-based billing configured.",
             "type": "optional<list<GithubComSugerioMarketplaceServiceRdsDbLibBillingGcpChargeUsage>>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedRevenueReport": {
         "docs": undefined,
@@ -14782,6 +16105,9 @@ This field is present only if the product has usage-based billing configured.",
           "revenueRecords": "optional<list<SharedRevenueRecord>>",
           "service": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedRevenueReportType": {
         "enum": [
@@ -14789,6 +16115,9 @@ This field is present only if the product has usage-based billing configured.",
           "CollectableAmount",
           "DisbursedAmount",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedSalesforceCrmCredential": {
         "docs": undefined,
@@ -14797,6 +16126,9 @@ This field is present only if the product has usage-based billing configured.",
           "exp": "optional<integer>",
           "instance_url": "optional<string>",
           "refresh_token": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedSalesforceCrmIntegration": {
@@ -14815,6 +16147,9 @@ This field is present only if the product has usage-based billing configured.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedSalesforceSyncFilter": {
         "docs": undefined,
@@ -14822,6 +16157,9 @@ This field is present only if the product has usage-based billing configured.",
           "fieldName": "optional<string>",
           "operator": "optional<string>",
           "value": "optional<unknown>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedSlackIntegration": {
@@ -14843,6 +16181,9 @@ This field is present only if the product has usage-based billing configured.",
           "team": "optional<SlackOAuthV2ResponseTeam>",
           "tokenType": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedUsageCount": {
         "docs": undefined,
@@ -14860,6 +16201,9 @@ This field is present only if the product has usage-based billing configured.",
             "type": "optional<double>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedUsageReport": {
         "docs": undefined,
@@ -14868,6 +16212,9 @@ This field is present only if the product has usage-based billing configured.",
           "organizationID": "optional<string>",
           "reportDate": "optional<datetime>",
           "usageRecords": "optional<list<SharedEntitlementUsageRecord>>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SharedValueType": {
@@ -14883,6 +16230,9 @@ This field is present only if the product has usage-based billing configured.",
           "DISTRIBUTION",
           "MONEY",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedWorkloadEntitlement": {
         "docs": undefined,
@@ -14910,6 +16260,9 @@ This field is present only if the product has usage-based billing configured.",
           "status": "optional<SharedWorkloadEntitlementStatus>",
           "type": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedWorkloadEntitlementPartner": {
         "enum": [
@@ -14917,6 +16270,9 @@ This field is present only if the product has usage-based billing configured.",
           "AZURE",
           "GCP",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedWorkloadEntitlementStatus": {
         "enum": [
@@ -14926,6 +16282,9 @@ This field is present only if the product has usage-based billing configured.",
           "PENDING_START",
           "UNKNOWN",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedWorkloadEntitlementTerm": {
         "docs": undefined,
@@ -14951,6 +16310,9 @@ This field is present only if the product has usage-based billing configured.",
           "usedCommitAmount": "optional<double>",
           "usedCreditAmount": "optional<double>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedWorkloadEntitlementTermPartner": {
         "enum": [
@@ -14958,6 +16320,9 @@ This field is present only if the product has usage-based billing configured.",
           "AZURE",
           "GCP",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedWorkloadOffer": {
         "docs": undefined,
@@ -14986,6 +16351,9 @@ This field is present only if the product has usage-based billing configured.",
           "service": "optional<literal<"MARKETPLACE">>",
           "status": "optional<SharedWorkloadOfferStatus>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedWorkloadOfferOfferType": {
         "enum": [
@@ -14998,6 +16366,9 @@ This field is present only if the product has usage-based billing configured.",
           "PRIVATE",
           "UNKNOWN",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedWorkloadOfferPartner": {
         "enum": [
@@ -15005,6 +16376,9 @@ This field is present only if the product has usage-based billing configured.",
           "AZURE",
           "GCP",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedWorkloadOfferStatus": {
         "enum": [
@@ -15019,6 +16393,9 @@ This field is present only if the product has usage-based billing configured.",
           "CANCEL_FAILED",
           "CANCEL_SUCCESS",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedWorkloadProduct": {
         "docs": undefined,
@@ -15038,6 +16415,9 @@ This field is present only if the product has usage-based billing configured.",
           "service": "optional<literal<"MARKETPLACE">>",
           "status": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedWorkloadProductPartner": {
         "enum": [
@@ -15045,6 +16425,9 @@ This field is present only if the product has usage-based billing configured.",
           "AZURE",
           "GCP",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SharedWorkloadProductProductType": {
         "enum": [
@@ -15055,6 +16438,9 @@ This field is present only if the product has usage-based billing configured.",
           "PER_USER",
           "USAGE_BASED",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SlackOAuthResponseIncomingWebhook": {
         "docs": undefined,
@@ -15063,6 +16449,9 @@ This field is present only if the product has usage-based billing configured.",
           "channel_id": "optional<string>",
           "configuration_url": "optional<string>",
           "url": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SlackOAuthV2ResponseAuthedUser": {
@@ -15075,6 +16464,9 @@ This field is present only if the product has usage-based billing configured.",
           "scope": "optional<string>",
           "token_type": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SlackOAuthV2ResponseEnterprise": {
         "docs": undefined,
@@ -15082,12 +16474,18 @@ This field is present only if the product has usage-based billing configured.",
           "id": "optional<string>",
           "name": "optional<string>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "SlackOAuthV2ResponseTeam": {
         "docs": undefined,
         "properties": {
           "id": "optional<string>",
           "name": "optional<string>",
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "SqlNullTime": {
@@ -15098,6 +16496,9 @@ This field is present only if the product has usage-based billing configured.",
             "docs": "Valid is true if Time is not NULL",
             "type": "optional<boolean>",
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "TypesEntitlement": {
@@ -15130,6 +16531,9 @@ provided by AWS Marketplace when the product listing is created.",
           },
           "value": "optional<unknown>",
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "TypesUsageAllocation": {
         "docs": undefined,
@@ -15145,6 +16549,9 @@ This member is required.",
 tags, this parameter can be left out.",
             "type": "optional<list<GithubComAwsAwsSdkGoV2ServiceMarketplacemeteringTypesTag>>",
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "TypesUsageRecord": {
@@ -15182,6 +16589,9 @@ This member is required.",
 must equal the Quantity of the UsageRecord.",
             "type": "optional<list<TypesUsageAllocation>>",
           },
+        },
+        "source": {
+          "openapi": "suger/swagger.json",
         },
       },
       "TypesUsageRecordResult": {
@@ -15222,6 +16632,9 @@ the same customer, dimension, and time, but a different quantity.",
             "type": "optional<TypesUsageRecord>",
           },
         },
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
       "TypesUsageRecordResultStatus": {
         "enum": [
@@ -15229,6 +16642,9 @@ the same customer, dimension, and time, but a different quantity.",
           "CustomerNotSubscribed",
           "DuplicateRecord",
         ],
+        "source": {
+          "openapi": "suger/swagger.json",
+        },
       },
     },
   },

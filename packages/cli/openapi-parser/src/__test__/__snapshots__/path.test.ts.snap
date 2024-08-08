@@ -41,6 +41,10 @@ exports[`path parsing path parse open api 1`] = `
       "response": null,
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "path/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Get Example",
       "tags": [],
     },
@@ -78,6 +82,10 @@ exports[`path parsing path parse open api 1`] = `
       "response": null,
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "path/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Get Example with trailing",
       "tags": [],
     },

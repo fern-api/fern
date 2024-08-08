@@ -568,6 +568,7 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
         generatedName: "",
         groupName: undefined,
         additionalProperties: false,
-        availability: undefined
+        availability: undefined,
+        source: request.source
     });
 }

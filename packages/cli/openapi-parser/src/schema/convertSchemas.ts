@@ -5,7 +5,8 @@ import {
     PrimitiveSchemaValueWithExample,
     ReferencedSchema,
     Schema,
-    SchemaWithExample
+    SchemaWithExample,
+    Source
 } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../getExtension";
@@ -42,6 +43,7 @@ export function convertSchema(
     wrapAsNullable: boolean,
     context: SchemaParserContext,
     breadcrumbs: string[],
+    source: Source,
     referencedAsRequest = false,
     propertiesToExclude: Set<string> = new Set(),
     fallback?: string | number | boolean | unknown[]
@@ -54,7 +56,7 @@ export function convertSchema(
             } else {
                 context.markSchemaAsReferencedByRequest(schemaId);
             }
-            return convertReferenceObject(schema, wrapAsNullable, context, breadcrumbs);
+            return convertReferenceObject(schema, wrapAsNullable, context, breadcrumbs, source);
         }
         // if the schema id is null, we should convert the entire schema and inline it
         // in the OpenAPI IR
@@ -63,6 +65,7 @@ export function convertSchema(
             wrapAsNullable,
             context,
             getBreadcrumbsFromReference(schema.$ref),
+            source,
             propertiesToExclude,
             referencedAsRequest,
             fallback
@@ -73,6 +76,7 @@ export function convertSchema(
             wrapAsNullable,
             context,
             breadcrumbs,
+            source,
             propertiesToExclude,
             referencedAsRequest,
             fallback
@@ -84,11 +88,19 @@ export function convertReferenceObject(
     schema: OpenAPIV3.ReferenceObject,
     wrapAsNullable: boolean,
     context: SchemaParserContext,
-    breadcrumbs: string[]
+    breadcrumbs: string[],
+    source: Source
 ): SchemaWithExample {
     const referenceSchema = schema.$ref.includes("properties")
-        ? convertSchemaObject(context.resolveSchemaReference(schema), wrapAsNullable, context, breadcrumbs, new Set())
-        : SchemaWithExample.reference(convertToReferencedSchema(schema, breadcrumbs));
+        ? convertSchemaObject(
+              context.resolveSchemaReference(schema),
+              wrapAsNullable,
+              context,
+              breadcrumbs,
+              source,
+              new Set()
+          )
+        : SchemaWithExample.reference(convertToReferencedSchema(schema, breadcrumbs, source));
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
             nameOverride: undefined,
@@ -122,6 +134,7 @@ export function convertSchemaObject(
     wrapAsNullable: boolean,
     context: SchemaParserContext,
     breadcrumbs: string[],
+    source: Source,
     propertiesToExclude: Set<string> = new Set(),
     referencedAsRequest = false,
     fallback?: string | number | boolean | unknown[]
@@ -163,6 +176,7 @@ export function convertSchemaObject(
             true,
             context,
             breadcrumbs,
+            source,
             propertiesToExclude,
             referencedAsRequest,
             fallback
@@ -217,7 +231,8 @@ export function convertSchemaObject(
             availability,
             wrapAsNullable,
             groupName,
-            context
+            context,
+            source
         });
     }
 
@@ -237,6 +252,7 @@ export function convertSchemaObject(
                     wrapAsNullable,
                     context,
                     breadcrumbs,
+                    source,
                     propertiesToExclude,
                     referencedAsRequest,
                     fallback
@@ -257,6 +273,7 @@ export function convertSchemaObject(
                     wrapAsNullable,
                     context,
                     breadcrumbs,
+                    source,
                     propertiesToExclude,
                     referencedAsRequest,
                     fallback
@@ -289,7 +306,8 @@ export function convertSchemaObject(
             wrapAsNullable,
             context,
             subtypes,
-            groupName
+            groupName,
+            source
         });
     }
 
@@ -441,7 +459,8 @@ export function convertSchemaObject(
             wrapAsNullable,
             context,
             groupName,
-            example: getExampleAsArray({ schema, logger: context.logger, fallback })
+            example: getExampleAsArray({ schema, logger: context.logger, fallback }),
+            source
         });
     }
 
@@ -457,7 +476,8 @@ export function convertSchemaObject(
             wrapAsNullable,
             context,
             groupName,
-            example: schema.example
+            example: schema.example,
+            source
         });
     }
 
@@ -474,7 +494,8 @@ export function convertSchemaObject(
                 required: schema.required,
                 wrapAsNullable,
                 context,
-                groupName
+                groupName,
+                source
             });
         } else {
             return convertUndiscriminatedOneOfWithDiscriminant({
@@ -485,7 +506,8 @@ export function convertSchemaObject(
                 wrapAsNullable,
                 context,
                 groupName,
-                discriminator: schema.discriminator
+                discriminator: schema.discriminator,
+                source
             });
         }
     }
@@ -507,7 +529,8 @@ export function convertSchemaObject(
                     wrapAsNullable,
                     context,
                     groupName,
-                    discriminator: schema.discriminator
+                    discriminator: schema.discriminator,
+                    source
                 });
             } else {
                 return convertDiscriminatedOneOf({
@@ -521,7 +544,8 @@ export function convertSchemaObject(
                     required: schema.required,
                     wrapAsNullable,
                     context,
-                    groupName
+                    groupName,
+                    source
                 });
             }
         } else if (schema.oneOf.length === 1 && schema.oneOf[0] != null) {
@@ -530,6 +554,7 @@ export function convertSchemaObject(
                 wrapAsNullable,
                 context,
                 breadcrumbs,
+                source,
                 referencedAsRequest
             );
             return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
@@ -538,9 +563,9 @@ export function convertSchemaObject(
                 const firstSchema = schema.oneOf[0];
                 const secondSchema = schema.oneOf[1];
                 if (!isReferenceObject(firstSchema) && (firstSchema.type as string) === "null") {
-                    return convertSchema(secondSchema, true, context, breadcrumbs);
+                    return convertSchema(secondSchema, true, context, breadcrumbs, source);
                 } else if (!isReferenceObject(secondSchema) && (secondSchema.type as string) === "null") {
-                    return convertSchema(firstSchema, true, context, breadcrumbs);
+                    return convertSchema(firstSchema, true, context, breadcrumbs, source);
                 }
             }
 
@@ -557,7 +582,8 @@ export function convertSchemaObject(
                     availability,
                     wrapAsNullable,
                     groupName,
-                    context
+                    context,
+                    source
                 });
             }
 
@@ -575,7 +601,8 @@ export function convertSchemaObject(
                     discriminant: maybeDiscriminant.discriminant,
                     variants: maybeDiscriminant.schemas,
                     context,
-                    groupName
+                    groupName,
+                    source
                 });
             }
 
@@ -594,7 +621,8 @@ export function convertSchemaObject(
                 subtypes: schema.oneOf.filter((schema) => {
                     return isReferenceObject(schema) || (schema.type as string) !== "null";
                 }),
-                groupName
+                groupName,
+                source
             });
         }
     }
@@ -607,6 +635,7 @@ export function convertSchemaObject(
                 wrapAsNullable,
                 context,
                 breadcrumbs,
+                source,
                 referencedAsRequest
             );
             return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
@@ -616,10 +645,10 @@ export function convertSchemaObject(
             const [firstSchema, secondSchema] = schema.anyOf;
             if (firstSchema != null && secondSchema != null) {
                 if (!isReferenceObject(firstSchema) && (firstSchema.type as unknown) === "null") {
-                    const convertedSchema = convertSchema(secondSchema, true, context, breadcrumbs);
+                    const convertedSchema = convertSchema(secondSchema, true, context, breadcrumbs, source);
                     return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
                 } else if (!isReferenceObject(secondSchema) && (secondSchema.type as unknown) === "null") {
-                    const convertedSchema = convertSchema(firstSchema, true, context, breadcrumbs);
+                    const convertedSchema = convertSchema(firstSchema, true, context, breadcrumbs, source);
                     return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
                 }
             }
@@ -642,7 +671,8 @@ export function convertSchemaObject(
                 discriminant: maybeDiscriminant.discriminant,
                 variants: maybeDiscriminant.schemas,
                 context,
-                groupName
+                groupName,
+                source
             });
         }
 
@@ -661,7 +691,8 @@ export function convertSchemaObject(
             subtypes: schema.anyOf.filter((schema) => {
                 return isReferenceObject(schema) || (schema.type as string) !== "null";
             }),
-            groupName
+            groupName,
+            source
         });
     }
 
@@ -685,6 +716,7 @@ export function convertSchemaObject(
                 wrapAsNullable,
                 context,
                 breadcrumbs,
+                source,
                 referencedAsRequest
             );
             return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
@@ -711,6 +743,7 @@ export function convertSchemaObject(
                 wrapAsNullable,
                 context,
                 breadcrumbs,
+                source,
                 referencedAsRequest
             );
             return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
@@ -730,7 +763,8 @@ export function convertSchemaObject(
             groupName,
             fullExamples,
             additionalProperties: schema.additionalProperties,
-            availability
+            availability,
+            source
         });
     }
 
@@ -794,7 +828,11 @@ export function getSchemaIdFromReference(ref: OpenAPIV3.ReferenceObject): string
     return ref.$ref.replace(SCHEMA_REFERENCE_PREFIX, "");
 }
 
-export function convertToReferencedSchema(schema: OpenAPIV3.ReferenceObject, breadcrumbs: string[]): ReferencedSchema {
+export function convertToReferencedSchema(
+    schema: OpenAPIV3.ReferenceObject,
+    breadcrumbs: string[],
+    source: Source
+): ReferencedSchema {
     const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME);
     const generatedName = getGeneratedTypeName(breadcrumbs);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -813,7 +851,8 @@ export function convertToReferencedSchema(schema: OpenAPIV3.ReferenceObject, bre
         schema: schemaId,
         description: description ?? undefined,
         availability,
-        groupName: undefined
+        groupName: undefined,
+        source
     });
 }
 

@@ -103,6 +103,10 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
                     },
                   },
                 ],
+                "source": {
+                  "file": "x-fern-examples/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "object",
               },
               {
@@ -112,6 +116,10 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "Schema1",
+                "source": {
+                  "file": "x-fern-examples/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
               {
@@ -121,6 +129,10 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "Schema2",
+                "source": {
+                  "file": "x-fern-examples/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
               {
@@ -166,16 +178,29 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
                     },
                   },
                 ],
+                "source": {
+                  "file": "x-fern-examples/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "object",
               },
             ],
+            "source": null,
             "type": "undisciminated",
           },
+        },
+        "source": {
+          "file": "x-fern-examples/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "x-fern-examples/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Get Example",
       "tags": [],
     },
@@ -265,6 +290,10 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "x-fern-examples/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Schema2": {
@@ -343,6 +372,10 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "x-fern-examples/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
   },

@@ -54,6 +54,9 @@ exports[`x-fern-resolutions x-fern-resolutions docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "x-fern-resolutions/openapi.yml",
+        },
       },
     },
   },
@@ -71,6 +74,9 @@ exports[`x-fern-resolutions x-fern-resolutions docs 1`] = `
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "x-fern-resolutions/openapi.yml",
         },
       },
     },
@@ -139,6 +145,9 @@ exports[`x-fern-resolutions x-fern-resolutions simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "x-fern-resolutions/openapi.yml",
+        },
       },
     },
   },
@@ -156,6 +165,9 @@ exports[`x-fern-resolutions x-fern-resolutions simple 1`] = `
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "x-fern-resolutions/openapi.yml",
         },
       },
     },

@@ -102,6 +102,9 @@ exports[`x-fern-global-headers x-fern-global-headers docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "x-fern-global-headers/openapi.yml",
+        },
       },
     },
   },
@@ -121,6 +124,9 @@ exports[`x-fern-global-headers x-fern-global-headers docs 1`] = `
           },
           "streamed": "optional<literal<true>>",
         },
+        "source": {
+          "openapi": "x-fern-global-headers/openapi.yml",
+        },
       },
       "User": {
         "docs": undefined,
@@ -135,6 +141,9 @@ exports[`x-fern-global-headers x-fern-global-headers docs 1`] = `
             },
           },
           "streamed": "optional<literal<false>>",
+        },
+        "source": {
+          "openapi": "x-fern-global-headers/openapi.yml",
         },
       },
     },
@@ -264,6 +273,9 @@ exports[`x-fern-global-headers x-fern-global-headers simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "x-fern-global-headers/openapi.yml",
+        },
       },
     },
   },
@@ -283,6 +295,9 @@ exports[`x-fern-global-headers x-fern-global-headers simple 1`] = `
           },
           "streamed": "optional<literal<true>>",
         },
+        "source": {
+          "openapi": "x-fern-global-headers/openapi.yml",
+        },
       },
       "User": {
         "docs": undefined,
@@ -297,6 +312,9 @@ exports[`x-fern-global-headers x-fern-global-headers simple 1`] = `
             },
           },
           "streamed": "optional<literal<false>>",
+        },
+        "source": {
+          "openapi": "x-fern-global-headers/openapi.yml",
         },
       },
     },

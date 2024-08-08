@@ -9,8 +9,9 @@ import * as core from "../../../../core";
 export const FileResponse: core.serialization.ObjectSchema<serializers.FileResponse.Raw, FernOpenapiIr.FileResponse> =
     core.serialization
         .objectWithoutOptionalProperties({})
-        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
+        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
+        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSource));
 
 export declare namespace FileResponse {
-    interface Raw extends serializers.WithDescription.Raw {}
+    interface Raw extends serializers.WithDescription.Raw, serializers.WithSource.Raw {}
 }

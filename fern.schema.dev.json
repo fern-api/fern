@@ -68,6 +68,32 @@
                         },
                         "additionalProperties": false
                       },
+                      "source": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "proto": {
+                                "type": "string",
+                                "description": "The Protobuf filepath that defined this node."
+                              }
+                            },
+                            "required": ["proto"],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "openapi": {
+                                "type": "string",
+                                "description": "The OpenAPI filepath that defined this node."
+                              }
+                            },
+                            "required": ["openapi"],
+                            "additionalProperties": false
+                          }
+                        ]
+                      },
                       "extensions": { "type": "object", "additionalProperties": {} },
                       "extends": {
                         "anyOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
@@ -147,6 +173,7 @@
                       "encoding": {
                         "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/encoding"
                       },
+                      "source": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/source" },
                       "extensions": { "type": "object", "additionalProperties": {} },
                       "extends": {
                         "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
@@ -176,6 +203,7 @@
                   },
                   "examples": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples" },
                   "encoding": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/encoding" },
+                  "source": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/source" },
                   "base-properties": {
                     "type": "object",
                     "additionalProperties": {
@@ -257,6 +285,7 @@
                   },
                   "examples": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples" },
                   "encoding": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/encoding" },
+                  "source": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/source" },
                   "type": { "type": "string" },
                   "validation": {
                     "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/validation"
@@ -277,6 +306,7 @@
                   },
                   "examples": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples" },
                   "encoding": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/encoding" },
+                  "source": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/source" },
                   "default": { "type": "string" },
                   "enum": {
                     "type": "array",
@@ -326,6 +356,7 @@
                   },
                   "examples": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples" },
                   "encoding": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/encoding" },
+                  "source": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/source" },
                   "union": {
                     "type": "array",
                     "items": {
@@ -822,7 +853,8 @@
                 "required": ["path"],
                 "additionalProperties": false
               }
-            }
+            },
+            "source": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/source" }
           },
           "required": ["auth", "base-path", "endpoints"],
           "additionalProperties": false

@@ -1,6 +1,6 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
-import { parse } from "@fern-api/openapi-parser";
+import { parse, Spec } from "@fern-api/openapi-parser";
 import { createMockTaskContext } from "@fern-api/task-context";
 import path from "path";
 import { convert } from "../convert";
@@ -20,19 +20,28 @@ export function testConvertOpenAPI(fixtureName: string, filename: string, asyncA
                     ? join(FIXTURES_PATH, RelativeFilePath.of(fixtureName), RelativeFilePath.of(asyncApiFilename))
                     : undefined;
 
-            const specs = [];
+            const specs: Spec[] = [];
             specs.push({
                 absoluteFilepath: AbsoluteFilePath.of(openApiPath),
-                absoluteFilepathToOverrides: undefined
+                absoluteFilepathToOverrides: undefined,
+                source: {
+                    type: "openapi",
+                    file: AbsoluteFilePath.of(openApiPath)
+                }
             });
             if (absolutePathToAsyncAPI != null) {
                 specs.push({
                     absoluteFilepath: absolutePathToAsyncAPI,
-                    absoluteFilepathToOverrides: undefined
+                    absoluteFilepathToOverrides: undefined,
+                    source: {
+                        type: "asyncapi",
+                        file: absolutePathToAsyncAPI
+                    }
                 });
             }
 
             const openApiIr = await parse({
+                absoluteFilePathToWorkspace: FIXTURES_PATH,
                 specs,
                 taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER })
             });
@@ -54,19 +63,28 @@ export function testConvertOpenAPI(fixtureName: string, filename: string, asyncA
                     ? join(FIXTURES_PATH, RelativeFilePath.of(fixtureName), RelativeFilePath.of(asyncApiFilename))
                     : undefined;
 
-            const specs = [];
+            const specs: Spec[] = [];
             specs.push({
                 absoluteFilepath: AbsoluteFilePath.of(openApiPath),
-                absoluteFilepathToOverrides: undefined
+                absoluteFilepathToOverrides: undefined,
+                source: {
+                    type: "openapi",
+                    file: AbsoluteFilePath.of(openApiPath)
+                }
             });
             if (absolutePathToAsyncAPI != null) {
                 specs.push({
                     absoluteFilepath: absolutePathToAsyncAPI,
-                    absoluteFilepathToOverrides: undefined
+                    absoluteFilepathToOverrides: undefined,
+                    source: {
+                        type: "asyncapi",
+                        file: absolutePathToAsyncAPI
+                    }
                 });
             }
 
             const openApiIr = await parse({
+                absoluteFilePathToWorkspace: FIXTURES_PATH,
                 specs,
                 taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER })
             });

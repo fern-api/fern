@@ -133,6 +133,9 @@ exports[`open api parser hookdeck docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "types": {
         "GetAttemptsRequestDir": {
@@ -580,6 +583,9 @@ exports[`open api parser hookdeck docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "types": {
         "GetBookmarksRequestDir": {
@@ -599,6 +605,9 @@ exports[`open api parser hookdeck docs 1`] = `
             "http",
             "cli",
           ],
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
       },
     },
@@ -859,6 +868,9 @@ exports[`open api parser hookdeck docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "types": {
         "CreateEventBulkRetryRequestQuery": {
@@ -930,10 +942,14 @@ exports[`open api parser hookdeck docs 1`] = `
               "type": "optional<CreateEventBulkRetryRequestQueryWebhookId>",
             },
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateEventBulkRetryRequestQueryAttempts": {
           "discriminated": false,
           "docs": "Filter by number of attempts",
+          "source": undefined,
           "union": [
             {
               "type": "integer",
@@ -1003,10 +1019,14 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             },
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateEventBulkRetryRequestQueryBody": {
           "discriminated": false,
           "docs": "URL Encoded string of the JSON to match to the data body",
+          "source": undefined,
           "union": [
             "string",
             "CreateEventBulkRetryRequestQueryBodyOne",
@@ -1015,10 +1035,14 @@ exports[`open api parser hookdeck docs 1`] = `
         "CreateEventBulkRetryRequestQueryBodyOne": {
           "docs": undefined,
           "properties": {},
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateEventBulkRetryRequestQueryBulkRetryId": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             {
               "type": "string",
@@ -1035,6 +1059,7 @@ exports[`open api parser hookdeck docs 1`] = `
         "CreateEventBulkRetryRequestQueryCliId": {
           "discriminated": false,
           "docs": "Filter by CLI IDs. \`?[any]=true\` operator for any CLI.",
+          "source": undefined,
           "union": [
             "string",
             "CreateEventBulkRetryRequestQueryCliIdAny",
@@ -1046,10 +1071,14 @@ exports[`open api parser hookdeck docs 1`] = `
           "properties": {
             "any": "optional<boolean>",
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateEventBulkRetryRequestQueryCliUserId": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "string",
             "list<string>",
@@ -1058,6 +1087,7 @@ exports[`open api parser hookdeck docs 1`] = `
         "CreateEventBulkRetryRequestQueryCreatedAt": {
           "discriminated": false,
           "docs": "Filter by \`created_at\` date using a date operator",
+          "source": undefined,
           "union": [
             "datetime",
             "CreateEventBulkRetryRequestQueryCreatedAtAny",
@@ -1072,10 +1102,14 @@ exports[`open api parser hookdeck docs 1`] = `
             "le": "optional<datetime>",
             "lte": "optional<datetime>",
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateEventBulkRetryRequestQueryDestinationId": {
           "discriminated": false,
           "docs": "Filter by destination IDs",
+          "source": undefined,
           "union": [
             {
               "docs": "Destination ID",
@@ -1093,6 +1127,7 @@ exports[`open api parser hookdeck docs 1`] = `
         "CreateEventBulkRetryRequestQueryErrorCode": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             {
               "type": "string",
@@ -1109,6 +1144,7 @@ exports[`open api parser hookdeck docs 1`] = `
         "CreateEventBulkRetryRequestQueryEventDataId": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             {
               "type": "string",
@@ -1125,6 +1161,7 @@ exports[`open api parser hookdeck docs 1`] = `
         "CreateEventBulkRetryRequestQueryHeaders": {
           "discriminated": false,
           "docs": "URL Encoded string of the JSON to match to the data headers",
+          "source": undefined,
           "union": [
             "string",
             "CreateEventBulkRetryRequestQueryHeadersOne",
@@ -1133,10 +1170,14 @@ exports[`open api parser hookdeck docs 1`] = `
         "CreateEventBulkRetryRequestQueryHeadersOne": {
           "docs": undefined,
           "properties": {},
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateEventBulkRetryRequestQueryId": {
           "discriminated": false,
           "docs": "Filter by event IDs",
+          "source": undefined,
           "union": [
             {
               "docs": "Event ID",
@@ -1154,6 +1195,7 @@ exports[`open api parser hookdeck docs 1`] = `
         "CreateEventBulkRetryRequestQueryIssueId": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             {
               "type": "string",
@@ -1170,6 +1212,7 @@ exports[`open api parser hookdeck docs 1`] = `
         "CreateEventBulkRetryRequestQueryLastAttemptAt": {
           "discriminated": false,
           "docs": "Filter by \`last_attempt_at\` date using a date operator",
+          "source": undefined,
           "union": [
             "datetime",
             "CreateEventBulkRetryRequestQueryLastAttemptAtAny",
@@ -1184,10 +1227,14 @@ exports[`open api parser hookdeck docs 1`] = `
             "le": "optional<datetime>",
             "lte": "optional<datetime>",
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateEventBulkRetryRequestQueryParsedQuery": {
           "discriminated": false,
           "docs": "URL Encoded string of the JSON to match to the parsed query (JSON representation of the query)",
+          "source": undefined,
           "union": [
             "string",
             "CreateEventBulkRetryRequestQueryParsedQueryOne",
@@ -1196,10 +1243,14 @@ exports[`open api parser hookdeck docs 1`] = `
         "CreateEventBulkRetryRequestQueryParsedQueryOne": {
           "docs": undefined,
           "properties": {},
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateEventBulkRetryRequestQueryResponseStatus": {
           "discriminated": false,
           "docs": "Filter by HTTP response status code",
+          "source": undefined,
           "union": [
             {
               "type": "integer",
@@ -1270,10 +1321,14 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             },
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateEventBulkRetryRequestQuerySourceId": {
           "discriminated": false,
           "docs": "Filter by source IDs",
+          "source": undefined,
           "union": [
             {
               "docs": "Source ID",
@@ -1291,6 +1346,7 @@ exports[`open api parser hookdeck docs 1`] = `
         "CreateEventBulkRetryRequestQueryStatus": {
           "discriminated": false,
           "docs": "Lifecyle status of the event",
+          "source": undefined,
           "union": [
             "root.EventStatus",
             "list<root.EventStatus>",
@@ -1299,6 +1355,7 @@ exports[`open api parser hookdeck docs 1`] = `
         "CreateEventBulkRetryRequestQuerySuccessfulAt": {
           "discriminated": false,
           "docs": "Filter by \`successful_at\` date using a date operator",
+          "source": undefined,
           "union": [
             "datetime",
             "CreateEventBulkRetryRequestQuerySuccessfulAtAny",
@@ -1313,10 +1370,14 @@ exports[`open api parser hookdeck docs 1`] = `
             "le": "optional<datetime>",
             "lte": "optional<datetime>",
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateEventBulkRetryRequestQueryWebhookId": {
           "discriminated": false,
           "docs": "Filter by webhook connection IDs",
+          "source": undefined,
           "union": [
             {
               "docs": "Webhook ID",
@@ -1601,6 +1662,9 @@ exports[`open api parser hookdeck docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "types": {
         "CreateIgnoredEventBulkRetryRequestQuery": {
@@ -1625,10 +1689,14 @@ exports[`open api parser hookdeck docs 1`] = `
               "type": "optional<CreateIgnoredEventBulkRetryRequestQueryWebhookId>",
             },
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateIgnoredEventBulkRetryRequestQueryCause": {
           "discriminated": false,
           "docs": "The cause of the ignored event",
+          "source": undefined,
           "union": [
             {
               "type": "string",
@@ -1645,6 +1713,7 @@ exports[`open api parser hookdeck docs 1`] = `
         "CreateIgnoredEventBulkRetryRequestQueryWebhookId": {
           "discriminated": false,
           "docs": "Connection ID of the ignored event",
+          "source": undefined,
           "union": [
             {
               "type": "string",
@@ -1928,6 +1997,9 @@ exports[`open api parser hookdeck docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "types": {
         "CreateRequestBulkRetryRequestQuery": {
@@ -1972,10 +2044,14 @@ exports[`open api parser hookdeck docs 1`] = `
               "type": "optional<boolean>",
             },
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateRequestBulkRetryRequestQueryBody": {
           "discriminated": false,
           "docs": "URL Encoded string of the JSON to match to the data body",
+          "source": undefined,
           "union": [
             "string",
             "CreateRequestBulkRetryRequestQueryBodyOne",
@@ -1984,10 +2060,14 @@ exports[`open api parser hookdeck docs 1`] = `
         "CreateRequestBulkRetryRequestQueryBodyOne": {
           "docs": undefined,
           "properties": {},
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateRequestBulkRetryRequestQueryBulkRetryId": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             {
               "type": "string",
@@ -2004,6 +2084,7 @@ exports[`open api parser hookdeck docs 1`] = `
         "CreateRequestBulkRetryRequestQueryCreatedAt": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "datetime",
             "CreateRequestBulkRetryRequestQueryCreatedAtAny",
@@ -2018,10 +2099,14 @@ exports[`open api parser hookdeck docs 1`] = `
             "le": "optional<datetime>",
             "lte": "optional<datetime>",
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateRequestBulkRetryRequestQueryEventsCount": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             {
               "type": "integer",
@@ -2092,10 +2177,14 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             },
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateRequestBulkRetryRequestQueryHeaders": {
           "discriminated": false,
           "docs": "URL Encoded string of the JSON to match to the data headers",
+          "source": undefined,
           "union": [
             "string",
             "CreateRequestBulkRetryRequestQueryHeadersOne",
@@ -2104,10 +2193,14 @@ exports[`open api parser hookdeck docs 1`] = `
         "CreateRequestBulkRetryRequestQueryHeadersOne": {
           "docs": undefined,
           "properties": {},
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateRequestBulkRetryRequestQueryId": {
           "discriminated": false,
           "docs": "Filter by requests IDs",
+          "source": undefined,
           "union": [
             {
               "docs": "Request ID",
@@ -2125,6 +2218,7 @@ exports[`open api parser hookdeck docs 1`] = `
         "CreateRequestBulkRetryRequestQueryIgnoredCount": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             {
               "type": "integer",
@@ -2195,10 +2289,14 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             },
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateRequestBulkRetryRequestQueryIngestedAt": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "datetime",
             "CreateRequestBulkRetryRequestQueryIngestedAtAny",
@@ -2213,10 +2311,14 @@ exports[`open api parser hookdeck docs 1`] = `
             "le": "optional<datetime>",
             "lte": "optional<datetime>",
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateRequestBulkRetryRequestQueryParsedQuery": {
           "discriminated": false,
           "docs": "URL Encoded string of the JSON to match to the parsed query (JSON representation of the query)",
+          "source": undefined,
           "union": [
             "string",
             "CreateRequestBulkRetryRequestQueryParsedQueryOne",
@@ -2225,10 +2327,14 @@ exports[`open api parser hookdeck docs 1`] = `
         "CreateRequestBulkRetryRequestQueryParsedQueryOne": {
           "docs": undefined,
           "properties": {},
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateRequestBulkRetryRequestQueryRejectionCause": {
           "discriminated": false,
           "docs": "Filter by rejection cause",
+          "source": undefined,
           "union": [
             "root.RequestRejectionCause",
             "CreateRequestBulkRetryRequestQueryRejectionCauseAny",
@@ -2245,10 +2351,14 @@ exports[`open api parser hookdeck docs 1`] = `
             "le": "optional<root.RequestRejectionCause>",
             "lte": "optional<root.RequestRejectionCause>",
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateRequestBulkRetryRequestQuerySourceId": {
           "discriminated": false,
           "docs": "Filter by source IDs",
+          "source": undefined,
           "union": [
             {
               "docs": "Source ID",
@@ -2268,6 +2378,9 @@ exports[`open api parser hookdeck docs 1`] = `
             "accepted",
             "rejected",
           ],
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "GetRequestBulkRetriesRequestDir": {
           "enum": [
@@ -3169,6 +3282,9 @@ exports[`open api parser hookdeck docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "types": {
         "CreateConnectionRequestDestination": {
@@ -3202,6 +3318,9 @@ exports[`open api parser hookdeck docs 1`] = `
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateConnectionRequestDestinationRateLimitPeriod": {
           "docs": "Period to rate limit attempts",
@@ -3210,6 +3329,9 @@ exports[`open api parser hookdeck docs 1`] = `
             "minute",
             "hour",
           ],
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateConnectionRequestRuleset": {
           "docs": "Ruleset input object",
@@ -3230,6 +3352,9 @@ exports[`open api parser hookdeck docs 1`] = `
               "type": "optional<list<root.Rule>>",
             },
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateConnectionRequestSource": {
           "docs": "Source input object",
@@ -3244,6 +3369,9 @@ exports[`open api parser hookdeck docs 1`] = `
                 "pattern": "^[A-z0-9-_]+$",
               },
             },
+          },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
           },
         },
         "GetConnectionsRequestDir": {
@@ -3275,6 +3403,9 @@ exports[`open api parser hookdeck docs 1`] = `
               "docs": "Array of rules to apply",
               "type": "optional<list<root.Rule>>",
             },
+          },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
           },
         },
         "UpsertConnectionRequestDestination": {
@@ -3308,6 +3439,9 @@ exports[`open api parser hookdeck docs 1`] = `
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "UpsertConnectionRequestDestinationRateLimitPeriod": {
           "docs": "Period to rate limit attempts",
@@ -3316,6 +3450,9 @@ exports[`open api parser hookdeck docs 1`] = `
             "minute",
             "hour",
           ],
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "UpsertConnectionRequestRuleset": {
           "docs": "Ruleset input object",
@@ -3336,6 +3473,9 @@ exports[`open api parser hookdeck docs 1`] = `
               "type": "optional<list<root.Rule>>",
             },
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "UpsertConnectionRequestSource": {
           "docs": "Source input object",
@@ -3350,6 +3490,9 @@ exports[`open api parser hookdeck docs 1`] = `
                 "pattern": "^[A-z0-9-_]+$",
               },
             },
+          },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
           },
         },
       },
@@ -3787,6 +3930,9 @@ exports[`open api parser hookdeck docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "types": {
         "CreateDestinationRequestRateLimitPeriod": {
@@ -3796,6 +3942,9 @@ exports[`open api parser hookdeck docs 1`] = `
             "minute",
             "hour",
           ],
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "GetDestinationsRequestDir": {
           "enum": [
@@ -3815,6 +3964,9 @@ exports[`open api parser hookdeck docs 1`] = `
             "minute",
             "hour",
           ],
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "UpsertDestinationRequestRateLimitPeriod": {
           "docs": "Period to rate limit attempts",
@@ -3823,6 +3975,9 @@ exports[`open api parser hookdeck docs 1`] = `
             "minute",
             "hour",
           ],
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
       },
     },
@@ -4170,6 +4325,9 @@ exports[`open api parser hookdeck docs 1`] = `
               "type": "root.RetriedEvent",
             },
           },
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "types": {
@@ -4550,11 +4708,15 @@ exports[`open api parser hookdeck docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "types": {
         "CreateIntegrationRequestConfigs": {
           "discriminated": false,
           "docs": "Decrypted Key/Value object of the associated configuration for that provider",
+          "source": undefined,
           "union": [
             "root.HmacIntegrationConfigs",
             "root.ApiKeyIntegrationConfigs",
@@ -4566,6 +4728,7 @@ exports[`open api parser hookdeck docs 1`] = `
         "UpdateIntegrationRequestConfigs": {
           "discriminated": false,
           "docs": "Decrypted Key/Value object of the associated configuration for that provider",
+          "source": undefined,
           "union": [
             "root.HmacIntegrationConfigs",
             "root.ApiKeyIntegrationConfigs",
@@ -5031,11 +5194,15 @@ exports[`open api parser hookdeck docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "types": {
         "CreateIssueTriggerRequestConfigs": {
           "discriminated": false,
           "docs": "Configuration object for the specific issue type selected",
+          "source": undefined,
           "union": [
             "root.IssueTriggerDeliveryConfigs",
             "root.IssueTriggerTransformationConfigs",
@@ -5057,6 +5224,7 @@ exports[`open api parser hookdeck docs 1`] = `
         "UpdateIssueTriggerRequestConfigs": {
           "discriminated": false,
           "docs": "Configuration object for the specific issue type selected",
+          "source": undefined,
           "union": [
             "root.IssueTriggerDeliveryConfigs",
             "root.IssueTriggerTransformationConfigs",
@@ -5066,6 +5234,7 @@ exports[`open api parser hookdeck docs 1`] = `
         "UpsertIssueTriggerRequestConfigs": {
           "discriminated": false,
           "docs": "Configuration object for the specific issue type selected",
+          "source": undefined,
           "union": [
             "root.IssueTriggerDeliveryConfigs",
             "root.IssueTriggerTransformationConfigs",
@@ -5275,6 +5444,9 @@ exports[`open api parser hookdeck docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "types": {
         "GetIssueCountRequestDir": {
@@ -5345,6 +5517,9 @@ exports[`open api parser hookdeck docs 1`] = `
             "ACKNOWLEDGED",
             "RESOLVED",
           ],
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
       },
     },
@@ -5405,6 +5580,9 @@ exports[`open api parser hookdeck docs 1`] = `
               "type": "root.ToggleWebhookNotifications",
             },
           },
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
     },
@@ -5878,6 +6056,9 @@ exports[`open api parser hookdeck docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "types": {
         "GetRequestEventsRequestDir": {
@@ -5921,6 +6102,9 @@ exports[`open api parser hookdeck docs 1`] = `
             "accepted",
             "rejected",
           ],
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
       },
     },
@@ -6292,6 +6476,9 @@ exports[`open api parser hookdeck docs 1`] = `
               "type": "optional<root.Ruleset>",
             },
           },
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "types": {
@@ -6718,6 +6905,9 @@ exports[`open api parser hookdeck docs 1`] = `
               "type": "root.Source",
             },
           },
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "types": {
@@ -7264,11 +7454,15 @@ exports[`open api parser hookdeck docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "types": {
         "CreateTransformationRequestEnvValue": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "string",
             "float",
@@ -7308,6 +7502,9 @@ exports[`open api parser hookdeck docs 1`] = `
         "TestTransformationRequestEnv": {
           "docs": "Key-value environment variables to be passed to the transformation",
           "properties": {},
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "TestTransformationRequestRequest": {
           "docs": "Request input to use for the transformation execution",
@@ -7333,10 +7530,14 @@ exports[`open api parser hookdeck docs 1`] = `
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "TestTransformationRequestRequestBody": {
           "discriminated": false,
           "docs": "Body of the request",
+          "source": undefined,
           "union": [
             "TestTransformationRequestRequestBodyZero",
             "string",
@@ -7345,14 +7546,21 @@ exports[`open api parser hookdeck docs 1`] = `
         "TestTransformationRequestRequestBodyZero": {
           "docs": undefined,
           "properties": {},
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "TestTransformationRequestRequestParsedQuery": {
           "docs": "JSON representation of the query params",
           "properties": {},
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "UpdateTransformationRequestEnvValue": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "string",
             "float",
@@ -7361,6 +7569,7 @@ exports[`open api parser hookdeck docs 1`] = `
         "UpsertTransformationRequestEnvValue": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "string",
             "float",
@@ -8148,6 +8357,9 @@ exports[`open api parser hookdeck docs 1`] = `
         "properties": {
           "strategy": "AlertStrategy",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "AlertStrategy": {
         "docs": "Alert strategy to use",
@@ -8155,6 +8367,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "each_attempt",
           "last_attempt",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "ApiErrorResponse": {
         "docs": "Error response model",
@@ -8173,10 +8388,16 @@ exports[`open api parser hookdeck docs 1`] = `
             "type": "float",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "ApiErrorResponseData": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "ApiKeyIntegrationConfigs": {
         "docs": undefined,
@@ -8184,11 +8405,17 @@ exports[`open api parser hookdeck docs 1`] = `
           "api_key": "string",
           "header_key": "string",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "AttachedIntegrationToSource": {
         "docs": undefined,
         "properties": {
           "success": "boolean",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "AttemptErrorCodes": {
@@ -8214,6 +8441,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "SOCKET_CLOSED",
           "UNKNOWN",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "AttemptState": {
         "enum": [
@@ -8223,6 +8453,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "COMPLETED",
           "HOLD",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "AttemptStatus": {
         "docs": "Attempt status",
@@ -8232,6 +8465,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "SUCCESSFUL",
           "HOLD",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "AttemptTrigger": {
         "docs": "How the attempt was triggered",
@@ -8242,12 +8478,18 @@ exports[`open api parser hookdeck docs 1`] = `
           "UNPAUSE",
           "AUTOMATIC",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "BasicAuthIntegrationConfigs": {
         "docs": undefined,
         "properties": {
           "name": "string",
           "password": "string",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "BatchOperation": {
@@ -8311,6 +8553,9 @@ exports[`open api parser hookdeck docs 1`] = `
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "BatchOperationPaginatedResult": {
         "docs": undefined,
@@ -8318,6 +8563,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "count": "optional<integer>",
           "models": "optional<list<BatchOperation>>",
           "pagination": "optional<SeekPagination>",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "BatchOperationPlan": {
@@ -8336,10 +8584,14 @@ exports[`open api parser hookdeck docs 1`] = `
             "type": "optional<float>",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "BatchOperationQuery": {
         "discriminated": false,
         "docs": "Query object to filter records",
+        "source": undefined,
         "union": [
           "map<string, unknown>",
           "optional<string>",
@@ -8386,6 +8638,9 @@ exports[`open api parser hookdeck docs 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "BookmarkPaginatedResult": {
         "docs": undefined,
@@ -8393,6 +8648,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "count": "optional<integer>",
           "models": "optional<list<Bookmark>>",
           "pagination": "optional<SeekPagination>",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "Connection": {
@@ -8438,10 +8696,14 @@ exports[`open api parser hookdeck docs 1`] = `
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "ConnectionFilterProperty": {
         "discriminated": false,
         "docs": "JSON using our filter syntax to filter on request headers",
+        "source": undefined,
         "union": [
           "optional<string>",
           "float",
@@ -8452,6 +8714,9 @@ exports[`open api parser hookdeck docs 1`] = `
       "ConnectionFilterPropertyThree": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "ConnectionPaginatedResult": {
         "docs": undefined,
@@ -8460,12 +8725,18 @@ exports[`open api parser hookdeck docs 1`] = `
           "models": "optional<list<Connection>>",
           "pagination": "optional<SeekPagination>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "ConsoleLine": {
         "docs": undefined,
         "properties": {
           "message": "string",
           "type": "ConsoleLineType",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "ConsoleLineType": {
@@ -8476,6 +8747,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "info",
           "debug",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "DelayRule": {
         "docs": undefined,
@@ -8484,6 +8758,9 @@ exports[`open api parser hookdeck docs 1`] = `
             "docs": "Delay to introduce in MS",
             "type": "integer",
           },
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "DeletedBookmarkResponse": {
@@ -8494,17 +8771,26 @@ exports[`open api parser hookdeck docs 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "DeletedIntegration": {
         "docs": undefined,
         "properties": {
           "id": "string",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "DeletedIssueTriggerResponse": {
         "docs": undefined,
         "properties": {
           "id": "string",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "DeliveryIssue": {
@@ -8552,6 +8838,9 @@ exports[`open api parser hookdeck docs 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "DeliveryIssueAggregationKeys": {
         "docs": "Keys used as the aggregation keys a 'delivery' type issue",
@@ -8560,6 +8849,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "response_status": "list<float>",
           "webhook_id": "list<string>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "DeliveryIssueData": {
         "docs": "Delivery issue data",
@@ -8567,12 +8859,18 @@ exports[`open api parser hookdeck docs 1`] = `
           "trigger_attempt": "optional<EventAttempt>",
           "trigger_event": "optional<Event>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "DeliveryIssueReference": {
         "docs": "Reference to the event and attempt an issue is being created for.",
         "properties": {
           "attempt_id": "string",
           "event_id": "string",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "DeliveryIssueWithData": {
@@ -8621,6 +8919,9 @@ exports[`open api parser hookdeck docs 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "Destination": {
         "docs": "Associated [Destination](#destination-object) object",
@@ -8664,6 +8965,9 @@ exports[`open api parser hookdeck docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "DestinationPaginatedResult": {
         "docs": undefined,
@@ -8671,6 +8975,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "count": "optional<integer>",
           "models": "optional<list<Destination>>",
           "pagination": "optional<SeekPagination>",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "DestinationRateLimitPeriod": {
@@ -8681,10 +8988,16 @@ exports[`open api parser hookdeck docs 1`] = `
           "minute",
           "hour",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "DetachedIntegrationFromSource": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "Event": {
         "docs": undefined,
@@ -8753,6 +9066,9 @@ exports[`open api parser hookdeck docs 1`] = `
             "docs": "ID of the associated connection",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "EventArray": "list<Event>",
@@ -8829,10 +9145,16 @@ exports[`open api parser hookdeck docs 1`] = `
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "EventAttemptBody": {
         "docs": "Response body from the destination",
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "EventAttemptPaginatedResult": {
         "docs": undefined,
@@ -8840,6 +9162,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "count": "optional<integer>",
           "models": "optional<list<optional<EventAttempt>>>",
           "pagination": "optional<SeekPagination>",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "EventData": {
@@ -8852,10 +9177,14 @@ exports[`open api parser hookdeck docs 1`] = `
           "path": "string",
           "query": "optional<string>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "EventDataBody": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "string",
           "EventDataBodyOne",
@@ -8865,10 +9194,14 @@ exports[`open api parser hookdeck docs 1`] = `
       "EventDataBodyOne": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "EventDataHeaders": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "string",
           "map<string, optional<string>>",
@@ -8877,6 +9210,7 @@ exports[`open api parser hookdeck docs 1`] = `
       "EventDataParsedQuery": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "optional<string>",
           "EventDataParsedQueryOne",
@@ -8885,6 +9219,9 @@ exports[`open api parser hookdeck docs 1`] = `
       "EventDataParsedQueryOne": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "EventPaginatedResult": {
         "docs": undefined,
@@ -8892,6 +9229,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "count": "optional<integer>",
           "models": "optional<list<Event>>",
           "pagination": "optional<SeekPagination>",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "EventStatus": {
@@ -8902,6 +9242,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "SUCCESSFUL",
           "FAILED",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "FilterRule": {
         "docs": undefined,
@@ -8911,6 +9254,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "path": "optional<ConnectionFilterProperty>",
           "query": "optional<ConnectionFilterProperty>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "FilteredMeta": {
         "enum": [
@@ -8919,11 +9265,17 @@ exports[`open api parser hookdeck docs 1`] = `
           "path",
           "query",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "HandledHmacConfigs": {
         "docs": undefined,
         "properties": {
           "webhook_secret_key": "string",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "HmacAlgorithms": {
@@ -8933,6 +9285,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "sha256",
           "sha512",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "HmacIntegrationConfigs": {
         "docs": undefined,
@@ -8942,12 +9297,18 @@ exports[`open api parser hookdeck docs 1`] = `
           "header_key": "string",
           "webhook_secret_key": "string",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "HmacIntegrationConfigsEncoding": {
         "enum": [
           "base64",
           "hex",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IgnoredEvent": {
         "docs": undefined,
@@ -8961,6 +9322,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "updated_at": "datetime",
           "webhook_id": "string",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IgnoredEventCause": {
         "enum": [
@@ -8969,10 +9333,14 @@ exports[`open api parser hookdeck docs 1`] = `
           "TRANSFORMATION_FAILED",
           "CLI_DISCONNECTED",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IgnoredEventMeta": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "FilteredMeta",
           "TransformationFailedMeta",
@@ -8984,6 +9352,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "count": "optional<integer>",
           "models": "optional<list<IgnoredEvent>>",
           "pagination": "optional<SeekPagination>",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "Integration": {
@@ -9023,10 +9394,14 @@ exports[`open api parser hookdeck docs 1`] = `
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IntegrationConfigs": {
         "discriminated": false,
         "docs": "Decrypted Key/Value object of the associated configuration for that provider",
+        "source": undefined,
         "union": [
           "HmacIntegrationConfigs",
           "ApiKeyIntegrationConfigs",
@@ -9041,6 +9416,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "HANDSHAKE",
           "POLLING",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IntegrationPaginatedResult": {
         "docs": undefined,
@@ -9048,6 +9426,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "count": "optional<integer>",
           "models": "optional<list<Integration>>",
           "pagination": "optional<SeekPagination>",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "IntegrationProvider": {
@@ -9080,11 +9461,17 @@ exports[`open api parser hookdeck docs 1`] = `
           "pipedrive",
           "sendgrid",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "Issue": {
         "base-properties": {},
         "discriminant": "type",
         "docs": "Issue",
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
         "union": {
           "delivery": "DeliveryIssue",
           "transformation": "TransformationIssue",
@@ -9098,6 +9485,9 @@ exports[`open api parser hookdeck docs 1`] = `
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IssueStatus": {
         "docs": "Issue status",
@@ -9107,6 +9497,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "ACKNOWLEDGED",
           "RESOLVED",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IssueTrigger": {
         "docs": undefined,
@@ -9143,6 +9536,9 @@ exports[`open api parser hookdeck docs 1`] = `
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IssueTriggerBackpressureConfigs": {
         "docs": "Configurations for a 'Backpressure' issue trigger",
@@ -9153,10 +9549,14 @@ exports[`open api parser hookdeck docs 1`] = `
             "type": "IssueTriggerBackpressureConfigsDestinations",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IssueTriggerBackpressureConfigsDestinations": {
         "discriminated": false,
         "docs": "A pattern to match on the destination name or array of destination IDs. Use \`*\` as wildcard.",
+        "source": undefined,
         "union": [
           "string",
           "list<string>",
@@ -9180,6 +9580,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "opsgenie": "optional<IssueTriggerIntegrationChannel>",
           "slack": "optional<IssueTriggerSlackChannel>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IssueTriggerDeliveryConfigs": {
         "docs": "Configurations for a 'delivery' issue trigger",
@@ -9190,10 +9593,14 @@ exports[`open api parser hookdeck docs 1`] = `
           },
           "strategy": "IssueTriggerStrategy",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IssueTriggerDeliveryConfigsConnections": {
         "discriminated": false,
         "docs": "A pattern to match on the connection name or array of connection IDs. Use \`*\` as wildcard.",
+        "source": undefined,
         "union": [
           "string",
           "list<string>",
@@ -9202,10 +9609,16 @@ exports[`open api parser hookdeck docs 1`] = `
       "IssueTriggerEmailChannel": {
         "docs": "Email channel for an issue trigger",
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IssueTriggerIntegrationChannel": {
         "docs": "Integration channel for an issue trigger",
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IssueTriggerPaginatedResult": {
         "docs": undefined,
@@ -9214,10 +9627,14 @@ exports[`open api parser hookdeck docs 1`] = `
           "models": "optional<list<IssueTrigger>>",
           "pagination": "optional<SeekPagination>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IssueTriggerReference": {
         "discriminated": false,
         "docs": "Configuration object for the specific issue type selected",
+        "source": undefined,
         "union": [
           "IssueTriggerDeliveryConfigs",
           "IssueTriggerTransformationConfigs",
@@ -9232,6 +9649,9 @@ exports[`open api parser hookdeck docs 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IssueTriggerStrategy": {
         "docs": "The strategy uses to open the issue",
@@ -9239,6 +9659,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "first_attempt",
           "final_attempt",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IssueTriggerTransformationConfigs": {
         "docs": "Configurations for a 'Transformation' issue trigger",
@@ -9249,10 +9672,14 @@ exports[`open api parser hookdeck docs 1`] = `
             "type": "IssueTriggerTransformationConfigsTransformations",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IssueTriggerTransformationConfigsTransformations": {
         "discriminated": false,
         "docs": "A pattern to match on the transformation name or array of transformation IDs. Use \`*\` as wildcard.",
+        "source": undefined,
         "union": [
           "string",
           "list<string>",
@@ -9265,11 +9692,17 @@ exports[`open api parser hookdeck docs 1`] = `
           "transformation",
           "backpressure",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IssueWithData": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
         "union": {
           "delivery": "DeliveryIssueWithData",
           "transformation": "TransformationIssueWithData",
@@ -9282,17 +9715,26 @@ exports[`open api parser hookdeck docs 1`] = `
           "models": "optional<list<IssueWithData>>",
           "pagination": "optional<SeekPagination>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "OrderByDirection": {
         "enum": [
           "asc",
           "desc",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "RawBody": {
         "docs": undefined,
         "properties": {
           "body": "string",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "Request": {
@@ -9355,6 +9797,9 @@ exports[`open api parser hookdeck docs 1`] = `
             "type": "optional<boolean>",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "RequestData": {
         "docs": undefined,
@@ -9366,10 +9811,14 @@ exports[`open api parser hookdeck docs 1`] = `
           "path": "string",
           "query": "optional<string>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "RequestDataBody": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "string",
           "RequestDataBodyOne",
@@ -9379,10 +9828,14 @@ exports[`open api parser hookdeck docs 1`] = `
       "RequestDataBodyOne": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "RequestDataHeaders": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "string",
           "map<string, optional<string>>",
@@ -9391,6 +9844,7 @@ exports[`open api parser hookdeck docs 1`] = `
       "RequestDataParsedQuery": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "optional<string>",
           "RequestDataParsedQueryOne",
@@ -9399,6 +9853,9 @@ exports[`open api parser hookdeck docs 1`] = `
       "RequestDataParsedQueryOne": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "RequestIngestPriority": {
         "docs": "The priority attributed to the request when received",
@@ -9406,6 +9863,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "NORMAL",
           "LOW",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "RequestPaginatedResult": {
         "docs": undefined,
@@ -9413,6 +9873,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "count": "optional<integer>",
           "models": "optional<list<Request>>",
           "pagination": "optional<SeekPagination>",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "RequestRejectionCause": {
@@ -9427,6 +9890,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "INGESTION_FATAL",
           "UNKNOWN",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "RetriedEvent": {
         "docs": undefined,
@@ -9434,12 +9900,18 @@ exports[`open api parser hookdeck docs 1`] = `
           "attempt": "optional<EventAttempt>",
           "event": "Event",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "RetryRequest": {
         "docs": undefined,
         "properties": {
           "events": "optional<list<Event>>",
           "request": "Request",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "RetryRule": {
@@ -9455,6 +9927,9 @@ exports[`open api parser hookdeck docs 1`] = `
           },
           "strategy": "RetryStrategy",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "RetryStrategy": {
         "docs": "Algorithm to use when calculating delay between retries",
@@ -9462,11 +9937,17 @@ exports[`open api parser hookdeck docs 1`] = `
           "linear",
           "exponential",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "Rule": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
         "union": {
           "alert": "AlertRule",
           "delay": "DelayRule",
@@ -9511,6 +9992,9 @@ exports[`open api parser hookdeck docs 1`] = `
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "RulesetPaginatedResult": {
         "docs": undefined,
@@ -9518,6 +10002,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "count": "optional<integer>",
           "models": "optional<list<optional<Ruleset>>>",
           "pagination": "optional<SeekPagination>",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "SeekPagination": {
@@ -9529,10 +10016,14 @@ exports[`open api parser hookdeck docs 1`] = `
           "order_by": "optional<SeekPaginationOrderBy>",
           "prev": "optional<string>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "SeekPaginationDir": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "OrderByDirection",
           "list<OrderByDirection>",
@@ -9541,6 +10032,7 @@ exports[`open api parser hookdeck docs 1`] = `
       "SeekPaginationOrderBy": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "string",
           "list<string>",
@@ -9556,12 +10048,18 @@ exports[`open api parser hookdeck docs 1`] = `
           "shop": "optional<string>",
           "webhook_secret_key": "string",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "ShopifyIntegrationConfigsRateLimitPeriod": {
         "enum": [
           "minute",
           "second",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "ShortEventData": {
         "docs": undefined,
@@ -9573,10 +10071,14 @@ exports[`open api parser hookdeck docs 1`] = `
           "path": "string",
           "query": "optional<string>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "ShortEventDataBody": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "string",
           "ShortEventDataBodyOne",
@@ -9586,10 +10088,14 @@ exports[`open api parser hookdeck docs 1`] = `
       "ShortEventDataBodyOne": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "ShortEventDataHeaders": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "string",
           "map<string, optional<string>>",
@@ -9598,6 +10104,7 @@ exports[`open api parser hookdeck docs 1`] = `
       "ShortEventDataParsedQuery": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "optional<string>",
           "ShortEventDataParsedQueryOne",
@@ -9606,6 +10113,9 @@ exports[`open api parser hookdeck docs 1`] = `
       "ShortEventDataParsedQueryOne": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "Source": {
         "docs": "Associated [Source](#source-object) object",
@@ -9647,6 +10157,9 @@ exports[`open api parser hookdeck docs 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "SourceIntegration": {
         "docs": "Integration object",
@@ -9665,6 +10178,9 @@ exports[`open api parser hookdeck docs 1`] = `
           },
           "provider": "IntegrationProvider",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "SourcePaginatedResult": {
         "docs": undefined,
@@ -9673,6 +10189,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "models": "optional<list<Source>>",
           "pagination": "optional<SeekPagination>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "ToggleWebhookNotifications": {
         "docs": undefined,
@@ -9680,6 +10199,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "enabled": "boolean",
           "source_id": "string",
           "topics": "optional<list<TopicsValue>>",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "TopicsValue": {
@@ -9702,6 +10224,9 @@ exports[`open api parser hookdeck docs 1`] = `
             "value": "event.successful",
           },
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "TransformFull": {
         "docs": undefined,
@@ -9718,6 +10243,9 @@ exports[`open api parser hookdeck docs 1`] = `
             "docs": "A transformation rule must be of type \`transformation\`",
             "type": "literal<"transform">",
           },
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "TransformFullTransformation": {
@@ -9736,6 +10264,9 @@ exports[`open api parser hookdeck docs 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "TransformReference": {
         "docs": undefined,
@@ -9749,10 +10280,14 @@ exports[`open api parser hookdeck docs 1`] = `
             "type": "literal<"transform">",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "TransformRule": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "TransformReference",
           "TransformFull",
@@ -9792,6 +10327,9 @@ exports[`open api parser hookdeck docs 1`] = `
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "TransformationExecution": {
         "docs": undefined,
@@ -9810,6 +10348,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "updated_at": "datetime",
           "webhook_id": "string",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "TransformationExecutionLogLevel": {
         "docs": "The minimum log level to open the issue on",
@@ -9820,6 +10361,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "error",
           "fatal",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "TransformationExecutionPaginatedResult": {
         "docs": undefined,
@@ -9827,6 +10371,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "count": "optional<integer>",
           "models": "optional<list<TransformationExecution>>",
           "pagination": "optional<SeekPagination>",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "TransformationExecutorOutput": {
@@ -9839,6 +10386,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "request_id": "optional<string>",
           "transformation_id": "optional<string>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "TransformationExecutorOutputRequest": {
         "docs": undefined,
@@ -9849,10 +10399,14 @@ exports[`open api parser hookdeck docs 1`] = `
           "path": "string",
           "query": "optional<TransformationExecutorOutputRequestQuery>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "TransformationExecutorOutputRequestBody": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "optional<string>",
           "TransformationExecutorOutputRequestBodyOne",
@@ -9861,10 +10415,14 @@ exports[`open api parser hookdeck docs 1`] = `
       "TransformationExecutorOutputRequestBodyOne": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "TransformationExecutorOutputRequestHeaders": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "string",
           "map<string, unknown>",
@@ -9873,6 +10431,7 @@ exports[`open api parser hookdeck docs 1`] = `
       "TransformationExecutorOutputRequestParsedQuery": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "optional<string>",
           "TransformationExecutorOutputRequestParsedQueryOne",
@@ -9881,10 +10440,14 @@ exports[`open api parser hookdeck docs 1`] = `
       "TransformationExecutorOutputRequestParsedQueryOne": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "TransformationExecutorOutputRequestQuery": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "optional<TransformationExecutorOutputRequestQueryZero>",
           "string",
@@ -9893,11 +10456,17 @@ exports[`open api parser hookdeck docs 1`] = `
       "TransformationExecutorOutputRequestQueryZero": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "TransformationFailedMeta": {
         "docs": undefined,
         "properties": {
           "transformation_id": "string",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "TransformationIssue": {
@@ -9945,6 +10514,9 @@ exports[`open api parser hookdeck docs 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "TransformationIssueAggregationKeys": {
         "docs": "Keys used as the aggregation keys a 'transformation' type issue",
@@ -9952,12 +10524,18 @@ exports[`open api parser hookdeck docs 1`] = `
           "log_level": "TransformationExecutionLogLevel",
           "transformation_id": "list<string>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "TransformationIssueData": {
         "docs": "Transformation issue data",
         "properties": {
           "transformation_execution": "TransformationExecution",
           "trigger_attempt": "optional<EventAttempt>",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "TransformationIssueReference": {
@@ -9968,6 +10546,9 @@ exports[`open api parser hookdeck docs 1`] = `
             "docs": "Deprecated but still found on historical issues",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "TransformationIssueWithData": {
@@ -10016,6 +10597,9 @@ exports[`open api parser hookdeck docs 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "TransformationPaginatedResult": {
         "docs": undefined,
@@ -10023,6 +10607,9 @@ exports[`open api parser hookdeck docs 1`] = `
           "count": "optional<integer>",
           "models": "optional<list<Transformation>>",
           "pagination": "optional<SeekPagination>",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
     },
@@ -10182,6 +10769,9 @@ exports[`open api parser hookdeck simple 1`] = `
               "type": "root.EventAttemptPaginatedResult",
             },
           },
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "types": {
@@ -10630,6 +11220,9 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "types": {
         "GetBookmarksRequestDir": {
@@ -10649,6 +11242,9 @@ exports[`open api parser hookdeck simple 1`] = `
             "http",
             "cli",
           ],
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
       },
     },
@@ -10909,6 +11505,9 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "types": {
         "CreateEventBulkRetryRequestQuery": {
@@ -10980,10 +11579,14 @@ exports[`open api parser hookdeck simple 1`] = `
               "type": "optional<CreateEventBulkRetryRequestQueryWebhookId>",
             },
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateEventBulkRetryRequestQueryAttempts": {
           "discriminated": false,
           "docs": "Filter by number of attempts",
+          "source": undefined,
           "union": [
             {
               "type": "integer",
@@ -11053,10 +11656,14 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             },
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateEventBulkRetryRequestQueryBody": {
           "discriminated": false,
           "docs": "URL Encoded string of the JSON to match to the data body",
+          "source": undefined,
           "union": [
             "string",
             "CreateEventBulkRetryRequestQueryBodyOne",
@@ -11065,10 +11672,14 @@ exports[`open api parser hookdeck simple 1`] = `
         "CreateEventBulkRetryRequestQueryBodyOne": {
           "docs": undefined,
           "properties": {},
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateEventBulkRetryRequestQueryBulkRetryId": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             {
               "type": "string",
@@ -11085,6 +11696,7 @@ exports[`open api parser hookdeck simple 1`] = `
         "CreateEventBulkRetryRequestQueryCliId": {
           "discriminated": false,
           "docs": "Filter by CLI IDs. \`?[any]=true\` operator for any CLI.",
+          "source": undefined,
           "union": [
             "string",
             "CreateEventBulkRetryRequestQueryCliIdAny",
@@ -11096,10 +11708,14 @@ exports[`open api parser hookdeck simple 1`] = `
           "properties": {
             "any": "optional<boolean>",
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateEventBulkRetryRequestQueryCliUserId": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "string",
             "list<string>",
@@ -11108,6 +11724,7 @@ exports[`open api parser hookdeck simple 1`] = `
         "CreateEventBulkRetryRequestQueryCreatedAt": {
           "discriminated": false,
           "docs": "Filter by \`created_at\` date using a date operator",
+          "source": undefined,
           "union": [
             "datetime",
             "CreateEventBulkRetryRequestQueryCreatedAtAny",
@@ -11122,10 +11739,14 @@ exports[`open api parser hookdeck simple 1`] = `
             "le": "optional<datetime>",
             "lte": "optional<datetime>",
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateEventBulkRetryRequestQueryDestinationId": {
           "discriminated": false,
           "docs": "Filter by destination IDs",
+          "source": undefined,
           "union": [
             {
               "docs": "Destination ID",
@@ -11143,6 +11764,7 @@ exports[`open api parser hookdeck simple 1`] = `
         "CreateEventBulkRetryRequestQueryErrorCode": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             {
               "type": "string",
@@ -11159,6 +11781,7 @@ exports[`open api parser hookdeck simple 1`] = `
         "CreateEventBulkRetryRequestQueryEventDataId": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             {
               "type": "string",
@@ -11175,6 +11798,7 @@ exports[`open api parser hookdeck simple 1`] = `
         "CreateEventBulkRetryRequestQueryHeaders": {
           "discriminated": false,
           "docs": "URL Encoded string of the JSON to match to the data headers",
+          "source": undefined,
           "union": [
             "string",
             "CreateEventBulkRetryRequestQueryHeadersOne",
@@ -11183,10 +11807,14 @@ exports[`open api parser hookdeck simple 1`] = `
         "CreateEventBulkRetryRequestQueryHeadersOne": {
           "docs": undefined,
           "properties": {},
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateEventBulkRetryRequestQueryId": {
           "discriminated": false,
           "docs": "Filter by event IDs",
+          "source": undefined,
           "union": [
             {
               "docs": "Event ID",
@@ -11204,6 +11832,7 @@ exports[`open api parser hookdeck simple 1`] = `
         "CreateEventBulkRetryRequestQueryIssueId": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             {
               "type": "string",
@@ -11220,6 +11849,7 @@ exports[`open api parser hookdeck simple 1`] = `
         "CreateEventBulkRetryRequestQueryLastAttemptAt": {
           "discriminated": false,
           "docs": "Filter by \`last_attempt_at\` date using a date operator",
+          "source": undefined,
           "union": [
             "datetime",
             "CreateEventBulkRetryRequestQueryLastAttemptAtAny",
@@ -11234,10 +11864,14 @@ exports[`open api parser hookdeck simple 1`] = `
             "le": "optional<datetime>",
             "lte": "optional<datetime>",
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateEventBulkRetryRequestQueryParsedQuery": {
           "discriminated": false,
           "docs": "URL Encoded string of the JSON to match to the parsed query (JSON representation of the query)",
+          "source": undefined,
           "union": [
             "string",
             "CreateEventBulkRetryRequestQueryParsedQueryOne",
@@ -11246,10 +11880,14 @@ exports[`open api parser hookdeck simple 1`] = `
         "CreateEventBulkRetryRequestQueryParsedQueryOne": {
           "docs": undefined,
           "properties": {},
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateEventBulkRetryRequestQueryResponseStatus": {
           "discriminated": false,
           "docs": "Filter by HTTP response status code",
+          "source": undefined,
           "union": [
             {
               "type": "integer",
@@ -11320,10 +11958,14 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             },
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateEventBulkRetryRequestQuerySourceId": {
           "discriminated": false,
           "docs": "Filter by source IDs",
+          "source": undefined,
           "union": [
             {
               "docs": "Source ID",
@@ -11341,6 +11983,7 @@ exports[`open api parser hookdeck simple 1`] = `
         "CreateEventBulkRetryRequestQueryStatus": {
           "discriminated": false,
           "docs": "Lifecyle status of the event",
+          "source": undefined,
           "union": [
             "root.EventStatus",
             "list<root.EventStatus>",
@@ -11349,6 +11992,7 @@ exports[`open api parser hookdeck simple 1`] = `
         "CreateEventBulkRetryRequestQuerySuccessfulAt": {
           "discriminated": false,
           "docs": "Filter by \`successful_at\` date using a date operator",
+          "source": undefined,
           "union": [
             "datetime",
             "CreateEventBulkRetryRequestQuerySuccessfulAtAny",
@@ -11363,10 +12007,14 @@ exports[`open api parser hookdeck simple 1`] = `
             "le": "optional<datetime>",
             "lte": "optional<datetime>",
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateEventBulkRetryRequestQueryWebhookId": {
           "discriminated": false,
           "docs": "Filter by webhook connection IDs",
+          "source": undefined,
           "union": [
             {
               "docs": "Webhook ID",
@@ -11651,6 +12299,9 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "types": {
         "CreateIgnoredEventBulkRetryRequestQuery": {
@@ -11675,10 +12326,14 @@ exports[`open api parser hookdeck simple 1`] = `
               "type": "optional<CreateIgnoredEventBulkRetryRequestQueryWebhookId>",
             },
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateIgnoredEventBulkRetryRequestQueryCause": {
           "discriminated": false,
           "docs": "The cause of the ignored event",
+          "source": undefined,
           "union": [
             {
               "type": "string",
@@ -11695,6 +12350,7 @@ exports[`open api parser hookdeck simple 1`] = `
         "CreateIgnoredEventBulkRetryRequestQueryWebhookId": {
           "discriminated": false,
           "docs": "Connection ID of the ignored event",
+          "source": undefined,
           "union": [
             {
               "type": "string",
@@ -11978,6 +12634,9 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "types": {
         "CreateRequestBulkRetryRequestQuery": {
@@ -12022,10 +12681,14 @@ exports[`open api parser hookdeck simple 1`] = `
               "type": "optional<boolean>",
             },
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateRequestBulkRetryRequestQueryBody": {
           "discriminated": false,
           "docs": "URL Encoded string of the JSON to match to the data body",
+          "source": undefined,
           "union": [
             "string",
             "CreateRequestBulkRetryRequestQueryBodyOne",
@@ -12034,10 +12697,14 @@ exports[`open api parser hookdeck simple 1`] = `
         "CreateRequestBulkRetryRequestQueryBodyOne": {
           "docs": undefined,
           "properties": {},
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateRequestBulkRetryRequestQueryBulkRetryId": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             {
               "type": "string",
@@ -12054,6 +12721,7 @@ exports[`open api parser hookdeck simple 1`] = `
         "CreateRequestBulkRetryRequestQueryCreatedAt": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "datetime",
             "CreateRequestBulkRetryRequestQueryCreatedAtAny",
@@ -12068,10 +12736,14 @@ exports[`open api parser hookdeck simple 1`] = `
             "le": "optional<datetime>",
             "lte": "optional<datetime>",
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateRequestBulkRetryRequestQueryEventsCount": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             {
               "type": "integer",
@@ -12142,10 +12814,14 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             },
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateRequestBulkRetryRequestQueryHeaders": {
           "discriminated": false,
           "docs": "URL Encoded string of the JSON to match to the data headers",
+          "source": undefined,
           "union": [
             "string",
             "CreateRequestBulkRetryRequestQueryHeadersOne",
@@ -12154,10 +12830,14 @@ exports[`open api parser hookdeck simple 1`] = `
         "CreateRequestBulkRetryRequestQueryHeadersOne": {
           "docs": undefined,
           "properties": {},
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateRequestBulkRetryRequestQueryId": {
           "discriminated": false,
           "docs": "Filter by requests IDs",
+          "source": undefined,
           "union": [
             {
               "docs": "Request ID",
@@ -12175,6 +12855,7 @@ exports[`open api parser hookdeck simple 1`] = `
         "CreateRequestBulkRetryRequestQueryIgnoredCount": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             {
               "type": "integer",
@@ -12245,10 +12926,14 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             },
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateRequestBulkRetryRequestQueryIngestedAt": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "datetime",
             "CreateRequestBulkRetryRequestQueryIngestedAtAny",
@@ -12263,10 +12948,14 @@ exports[`open api parser hookdeck simple 1`] = `
             "le": "optional<datetime>",
             "lte": "optional<datetime>",
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateRequestBulkRetryRequestQueryParsedQuery": {
           "discriminated": false,
           "docs": "URL Encoded string of the JSON to match to the parsed query (JSON representation of the query)",
+          "source": undefined,
           "union": [
             "string",
             "CreateRequestBulkRetryRequestQueryParsedQueryOne",
@@ -12275,10 +12964,14 @@ exports[`open api parser hookdeck simple 1`] = `
         "CreateRequestBulkRetryRequestQueryParsedQueryOne": {
           "docs": undefined,
           "properties": {},
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateRequestBulkRetryRequestQueryRejectionCause": {
           "discriminated": false,
           "docs": "Filter by rejection cause",
+          "source": undefined,
           "union": [
             "root.RequestRejectionCause",
             "CreateRequestBulkRetryRequestQueryRejectionCauseAny",
@@ -12295,10 +12988,14 @@ exports[`open api parser hookdeck simple 1`] = `
             "le": "optional<root.RequestRejectionCause>",
             "lte": "optional<root.RequestRejectionCause>",
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateRequestBulkRetryRequestQuerySourceId": {
           "discriminated": false,
           "docs": "Filter by source IDs",
+          "source": undefined,
           "union": [
             {
               "docs": "Source ID",
@@ -12318,6 +13015,9 @@ exports[`open api parser hookdeck simple 1`] = `
             "accepted",
             "rejected",
           ],
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "GetRequestBulkRetriesRequestDir": {
           "enum": [
@@ -13219,6 +13919,9 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "types": {
         "CreateConnectionRequestDestination": {
@@ -13252,6 +13955,9 @@ exports[`open api parser hookdeck simple 1`] = `
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateConnectionRequestDestinationRateLimitPeriod": {
           "docs": "Period to rate limit attempts",
@@ -13260,6 +13966,9 @@ exports[`open api parser hookdeck simple 1`] = `
             "minute",
             "hour",
           ],
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateConnectionRequestRuleset": {
           "docs": "Ruleset input object",
@@ -13280,6 +13989,9 @@ exports[`open api parser hookdeck simple 1`] = `
               "type": "optional<list<root.Rule>>",
             },
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "CreateConnectionRequestSource": {
           "docs": "Source input object",
@@ -13294,6 +14006,9 @@ exports[`open api parser hookdeck simple 1`] = `
                 "pattern": "^[A-z0-9-_]+$",
               },
             },
+          },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
           },
         },
         "GetConnectionsRequestDir": {
@@ -13325,6 +14040,9 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "Array of rules to apply",
               "type": "optional<list<root.Rule>>",
             },
+          },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
           },
         },
         "UpsertConnectionRequestDestination": {
@@ -13358,6 +14076,9 @@ exports[`open api parser hookdeck simple 1`] = `
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "UpsertConnectionRequestDestinationRateLimitPeriod": {
           "docs": "Period to rate limit attempts",
@@ -13366,6 +14087,9 @@ exports[`open api parser hookdeck simple 1`] = `
             "minute",
             "hour",
           ],
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "UpsertConnectionRequestRuleset": {
           "docs": "Ruleset input object",
@@ -13386,6 +14110,9 @@ exports[`open api parser hookdeck simple 1`] = `
               "type": "optional<list<root.Rule>>",
             },
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "UpsertConnectionRequestSource": {
           "docs": "Source input object",
@@ -13400,6 +14127,9 @@ exports[`open api parser hookdeck simple 1`] = `
                 "pattern": "^[A-z0-9-_]+$",
               },
             },
+          },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
           },
         },
       },
@@ -13837,6 +14567,9 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "types": {
         "CreateDestinationRequestRateLimitPeriod": {
@@ -13846,6 +14579,9 @@ exports[`open api parser hookdeck simple 1`] = `
             "minute",
             "hour",
           ],
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "GetDestinationsRequestDir": {
           "enum": [
@@ -13865,6 +14601,9 @@ exports[`open api parser hookdeck simple 1`] = `
             "minute",
             "hour",
           ],
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "UpsertDestinationRequestRateLimitPeriod": {
           "docs": "Period to rate limit attempts",
@@ -13873,6 +14612,9 @@ exports[`open api parser hookdeck simple 1`] = `
             "minute",
             "hour",
           ],
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
       },
     },
@@ -14220,6 +14962,9 @@ exports[`open api parser hookdeck simple 1`] = `
               "type": "root.RetriedEvent",
             },
           },
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "types": {
@@ -14600,11 +15345,15 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "types": {
         "CreateIntegrationRequestConfigs": {
           "discriminated": false,
           "docs": "Decrypted Key/Value object of the associated configuration for that provider",
+          "source": undefined,
           "union": [
             "root.HmacIntegrationConfigs",
             "root.ApiKeyIntegrationConfigs",
@@ -14616,6 +15365,7 @@ exports[`open api parser hookdeck simple 1`] = `
         "UpdateIntegrationRequestConfigs": {
           "discriminated": false,
           "docs": "Decrypted Key/Value object of the associated configuration for that provider",
+          "source": undefined,
           "union": [
             "root.HmacIntegrationConfigs",
             "root.ApiKeyIntegrationConfigs",
@@ -15081,11 +15831,15 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "types": {
         "CreateIssueTriggerRequestConfigs": {
           "discriminated": false,
           "docs": "Configuration object for the specific issue type selected",
+          "source": undefined,
           "union": [
             "root.IssueTriggerDeliveryConfigs",
             "root.IssueTriggerTransformationConfigs",
@@ -15107,6 +15861,7 @@ exports[`open api parser hookdeck simple 1`] = `
         "UpdateIssueTriggerRequestConfigs": {
           "discriminated": false,
           "docs": "Configuration object for the specific issue type selected",
+          "source": undefined,
           "union": [
             "root.IssueTriggerDeliveryConfigs",
             "root.IssueTriggerTransformationConfigs",
@@ -15116,6 +15871,7 @@ exports[`open api parser hookdeck simple 1`] = `
         "UpsertIssueTriggerRequestConfigs": {
           "discriminated": false,
           "docs": "Configuration object for the specific issue type selected",
+          "source": undefined,
           "union": [
             "root.IssueTriggerDeliveryConfigs",
             "root.IssueTriggerTransformationConfigs",
@@ -15325,6 +16081,9 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "types": {
         "GetIssueCountRequestDir": {
@@ -15395,6 +16154,9 @@ exports[`open api parser hookdeck simple 1`] = `
             "ACKNOWLEDGED",
             "RESOLVED",
           ],
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
       },
     },
@@ -15455,6 +16217,9 @@ exports[`open api parser hookdeck simple 1`] = `
               "type": "root.ToggleWebhookNotifications",
             },
           },
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
     },
@@ -15928,6 +16693,9 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "types": {
         "GetRequestEventsRequestDir": {
@@ -15971,6 +16739,9 @@ exports[`open api parser hookdeck simple 1`] = `
             "accepted",
             "rejected",
           ],
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
       },
     },
@@ -16342,6 +17113,9 @@ exports[`open api parser hookdeck simple 1`] = `
               "type": "optional<root.Ruleset>",
             },
           },
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "types": {
@@ -16768,6 +17542,9 @@ exports[`open api parser hookdeck simple 1`] = `
               "type": "root.Source",
             },
           },
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "types": {
@@ -17314,11 +18091,15 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "types": {
         "CreateTransformationRequestEnvValue": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "string",
             "float",
@@ -17358,6 +18139,9 @@ exports[`open api parser hookdeck simple 1`] = `
         "TestTransformationRequestEnv": {
           "docs": "Key-value environment variables to be passed to the transformation",
           "properties": {},
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "TestTransformationRequestRequest": {
           "docs": "Request input to use for the transformation execution",
@@ -17383,10 +18167,14 @@ exports[`open api parser hookdeck simple 1`] = `
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "TestTransformationRequestRequestBody": {
           "discriminated": false,
           "docs": "Body of the request",
+          "source": undefined,
           "union": [
             "TestTransformationRequestRequestBodyZero",
             "string",
@@ -17395,14 +18183,21 @@ exports[`open api parser hookdeck simple 1`] = `
         "TestTransformationRequestRequestBodyZero": {
           "docs": undefined,
           "properties": {},
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "TestTransformationRequestRequestParsedQuery": {
           "docs": "JSON representation of the query params",
           "properties": {},
+          "source": {
+            "openapi": "hookdeck/openapi.yml",
+          },
         },
         "UpdateTransformationRequestEnvValue": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "string",
             "float",
@@ -17411,6 +18206,7 @@ exports[`open api parser hookdeck simple 1`] = `
         "UpsertTransformationRequestEnvValue": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "string",
             "float",
@@ -17443,6 +18239,9 @@ exports[`open api parser hookdeck simple 1`] = `
         "properties": {
           "strategy": "AlertStrategy",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "AlertStrategy": {
         "docs": "Alert strategy to use",
@@ -17450,6 +18249,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "each_attempt",
           "last_attempt",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "ApiErrorResponse": {
         "docs": "Error response model",
@@ -17468,10 +18270,16 @@ exports[`open api parser hookdeck simple 1`] = `
             "type": "float",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "ApiErrorResponseData": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "ApiKeyIntegrationConfigs": {
         "docs": undefined,
@@ -17479,11 +18287,17 @@ exports[`open api parser hookdeck simple 1`] = `
           "api_key": "string",
           "header_key": "string",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "AttachedIntegrationToSource": {
         "docs": undefined,
         "properties": {
           "success": "boolean",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "AttemptErrorCodes": {
@@ -17509,6 +18323,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "SOCKET_CLOSED",
           "UNKNOWN",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "AttemptState": {
         "enum": [
@@ -17518,6 +18335,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "COMPLETED",
           "HOLD",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "AttemptStatus": {
         "docs": "Attempt status",
@@ -17527,6 +18347,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "SUCCESSFUL",
           "HOLD",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "AttemptTrigger": {
         "docs": "How the attempt was triggered",
@@ -17537,12 +18360,18 @@ exports[`open api parser hookdeck simple 1`] = `
           "UNPAUSE",
           "AUTOMATIC",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "BasicAuthIntegrationConfigs": {
         "docs": undefined,
         "properties": {
           "name": "string",
           "password": "string",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "BatchOperation": {
@@ -17606,6 +18435,9 @@ exports[`open api parser hookdeck simple 1`] = `
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "BatchOperationPaginatedResult": {
         "docs": undefined,
@@ -17613,6 +18445,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "count": "optional<integer>",
           "models": "optional<list<BatchOperation>>",
           "pagination": "optional<SeekPagination>",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "BatchOperationPlan": {
@@ -17631,10 +18466,14 @@ exports[`open api parser hookdeck simple 1`] = `
             "type": "optional<float>",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "BatchOperationQuery": {
         "discriminated": false,
         "docs": "Query object to filter records",
+        "source": undefined,
         "union": [
           "map<string, unknown>",
           "optional<string>",
@@ -17681,6 +18520,9 @@ exports[`open api parser hookdeck simple 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "BookmarkPaginatedResult": {
         "docs": undefined,
@@ -17688,6 +18530,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "count": "optional<integer>",
           "models": "optional<list<Bookmark>>",
           "pagination": "optional<SeekPagination>",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "Connection": {
@@ -17733,10 +18578,14 @@ exports[`open api parser hookdeck simple 1`] = `
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "ConnectionFilterProperty": {
         "discriminated": false,
         "docs": "JSON using our filter syntax to filter on request headers",
+        "source": undefined,
         "union": [
           "optional<string>",
           "float",
@@ -17747,6 +18596,9 @@ exports[`open api parser hookdeck simple 1`] = `
       "ConnectionFilterPropertyThree": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "ConnectionPaginatedResult": {
         "docs": undefined,
@@ -17755,12 +18607,18 @@ exports[`open api parser hookdeck simple 1`] = `
           "models": "optional<list<Connection>>",
           "pagination": "optional<SeekPagination>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "ConsoleLine": {
         "docs": undefined,
         "properties": {
           "message": "string",
           "type": "ConsoleLineType",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "ConsoleLineType": {
@@ -17771,6 +18629,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "info",
           "debug",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "DelayRule": {
         "docs": undefined,
@@ -17779,6 +18640,9 @@ exports[`open api parser hookdeck simple 1`] = `
             "docs": "Delay to introduce in MS",
             "type": "integer",
           },
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "DeletedBookmarkResponse": {
@@ -17789,17 +18653,26 @@ exports[`open api parser hookdeck simple 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "DeletedIntegration": {
         "docs": undefined,
         "properties": {
           "id": "string",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "DeletedIssueTriggerResponse": {
         "docs": undefined,
         "properties": {
           "id": "string",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "DeliveryIssue": {
@@ -17847,6 +18720,9 @@ exports[`open api parser hookdeck simple 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "DeliveryIssueAggregationKeys": {
         "docs": "Keys used as the aggregation keys a 'delivery' type issue",
@@ -17855,6 +18731,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "response_status": "list<float>",
           "webhook_id": "list<string>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "DeliveryIssueData": {
         "docs": "Delivery issue data",
@@ -17862,12 +18741,18 @@ exports[`open api parser hookdeck simple 1`] = `
           "trigger_attempt": "optional<EventAttempt>",
           "trigger_event": "optional<Event>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "DeliveryIssueReference": {
         "docs": "Reference to the event and attempt an issue is being created for.",
         "properties": {
           "attempt_id": "string",
           "event_id": "string",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "DeliveryIssueWithData": {
@@ -17916,6 +18801,9 @@ exports[`open api parser hookdeck simple 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "Destination": {
         "docs": "Associated [Destination](#destination-object) object",
@@ -17959,6 +18847,9 @@ exports[`open api parser hookdeck simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "DestinationPaginatedResult": {
         "docs": undefined,
@@ -17966,6 +18857,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "count": "optional<integer>",
           "models": "optional<list<Destination>>",
           "pagination": "optional<SeekPagination>",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "DestinationRateLimitPeriod": {
@@ -17976,10 +18870,16 @@ exports[`open api parser hookdeck simple 1`] = `
           "minute",
           "hour",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "DetachedIntegrationFromSource": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "Event": {
         "docs": undefined,
@@ -18048,6 +18948,9 @@ exports[`open api parser hookdeck simple 1`] = `
             "docs": "ID of the associated connection",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "EventArray": "list<Event>",
@@ -18124,10 +19027,16 @@ exports[`open api parser hookdeck simple 1`] = `
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "EventAttemptBody": {
         "docs": "Response body from the destination",
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "EventAttemptPaginatedResult": {
         "docs": undefined,
@@ -18135,6 +19044,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "count": "optional<integer>",
           "models": "optional<list<optional<EventAttempt>>>",
           "pagination": "optional<SeekPagination>",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "EventData": {
@@ -18147,10 +19059,14 @@ exports[`open api parser hookdeck simple 1`] = `
           "path": "string",
           "query": "optional<string>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "EventDataBody": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "string",
           "EventDataBodyOne",
@@ -18160,10 +19076,14 @@ exports[`open api parser hookdeck simple 1`] = `
       "EventDataBodyOne": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "EventDataHeaders": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "string",
           "map<string, optional<string>>",
@@ -18172,6 +19092,7 @@ exports[`open api parser hookdeck simple 1`] = `
       "EventDataParsedQuery": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "optional<string>",
           "EventDataParsedQueryOne",
@@ -18180,6 +19101,9 @@ exports[`open api parser hookdeck simple 1`] = `
       "EventDataParsedQueryOne": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "EventPaginatedResult": {
         "docs": undefined,
@@ -18187,6 +19111,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "count": "optional<integer>",
           "models": "optional<list<Event>>",
           "pagination": "optional<SeekPagination>",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "EventStatus": {
@@ -18197,6 +19124,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "SUCCESSFUL",
           "FAILED",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "FilterRule": {
         "docs": undefined,
@@ -18206,6 +19136,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "path": "optional<ConnectionFilterProperty>",
           "query": "optional<ConnectionFilterProperty>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "FilteredMeta": {
         "enum": [
@@ -18214,11 +19147,17 @@ exports[`open api parser hookdeck simple 1`] = `
           "path",
           "query",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "HandledHmacConfigs": {
         "docs": undefined,
         "properties": {
           "webhook_secret_key": "string",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "HmacAlgorithms": {
@@ -18228,6 +19167,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "sha256",
           "sha512",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "HmacIntegrationConfigs": {
         "docs": undefined,
@@ -18237,12 +19179,18 @@ exports[`open api parser hookdeck simple 1`] = `
           "header_key": "string",
           "webhook_secret_key": "string",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "HmacIntegrationConfigsEncoding": {
         "enum": [
           "base64",
           "hex",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IgnoredEvent": {
         "docs": undefined,
@@ -18256,6 +19204,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "updated_at": "datetime",
           "webhook_id": "string",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IgnoredEventCause": {
         "enum": [
@@ -18264,10 +19215,14 @@ exports[`open api parser hookdeck simple 1`] = `
           "TRANSFORMATION_FAILED",
           "CLI_DISCONNECTED",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IgnoredEventMeta": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "FilteredMeta",
           "TransformationFailedMeta",
@@ -18279,6 +19234,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "count": "optional<integer>",
           "models": "optional<list<IgnoredEvent>>",
           "pagination": "optional<SeekPagination>",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "Integration": {
@@ -18318,10 +19276,14 @@ exports[`open api parser hookdeck simple 1`] = `
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IntegrationConfigs": {
         "discriminated": false,
         "docs": "Decrypted Key/Value object of the associated configuration for that provider",
+        "source": undefined,
         "union": [
           "HmacIntegrationConfigs",
           "ApiKeyIntegrationConfigs",
@@ -18336,6 +19298,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "HANDSHAKE",
           "POLLING",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IntegrationPaginatedResult": {
         "docs": undefined,
@@ -18343,6 +19308,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "count": "optional<integer>",
           "models": "optional<list<Integration>>",
           "pagination": "optional<SeekPagination>",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "IntegrationProvider": {
@@ -18375,11 +19343,17 @@ exports[`open api parser hookdeck simple 1`] = `
           "pipedrive",
           "sendgrid",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "Issue": {
         "base-properties": {},
         "discriminant": "type",
         "docs": "Issue",
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
         "union": {
           "delivery": "DeliveryIssue",
           "transformation": "TransformationIssue",
@@ -18393,6 +19367,9 @@ exports[`open api parser hookdeck simple 1`] = `
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IssueStatus": {
         "docs": "Issue status",
@@ -18402,6 +19379,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "ACKNOWLEDGED",
           "RESOLVED",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IssueTrigger": {
         "docs": undefined,
@@ -18438,6 +19418,9 @@ exports[`open api parser hookdeck simple 1`] = `
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IssueTriggerBackpressureConfigs": {
         "docs": "Configurations for a 'Backpressure' issue trigger",
@@ -18448,10 +19431,14 @@ exports[`open api parser hookdeck simple 1`] = `
             "type": "IssueTriggerBackpressureConfigsDestinations",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IssueTriggerBackpressureConfigsDestinations": {
         "discriminated": false,
         "docs": "A pattern to match on the destination name or array of destination IDs. Use \`*\` as wildcard.",
+        "source": undefined,
         "union": [
           "string",
           "list<string>",
@@ -18475,6 +19462,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "opsgenie": "optional<IssueTriggerIntegrationChannel>",
           "slack": "optional<IssueTriggerSlackChannel>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IssueTriggerDeliveryConfigs": {
         "docs": "Configurations for a 'delivery' issue trigger",
@@ -18485,10 +19475,14 @@ exports[`open api parser hookdeck simple 1`] = `
           },
           "strategy": "IssueTriggerStrategy",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IssueTriggerDeliveryConfigsConnections": {
         "discriminated": false,
         "docs": "A pattern to match on the connection name or array of connection IDs. Use \`*\` as wildcard.",
+        "source": undefined,
         "union": [
           "string",
           "list<string>",
@@ -18497,10 +19491,16 @@ exports[`open api parser hookdeck simple 1`] = `
       "IssueTriggerEmailChannel": {
         "docs": "Email channel for an issue trigger",
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IssueTriggerIntegrationChannel": {
         "docs": "Integration channel for an issue trigger",
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IssueTriggerPaginatedResult": {
         "docs": undefined,
@@ -18509,10 +19509,14 @@ exports[`open api parser hookdeck simple 1`] = `
           "models": "optional<list<IssueTrigger>>",
           "pagination": "optional<SeekPagination>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IssueTriggerReference": {
         "discriminated": false,
         "docs": "Configuration object for the specific issue type selected",
+        "source": undefined,
         "union": [
           "IssueTriggerDeliveryConfigs",
           "IssueTriggerTransformationConfigs",
@@ -18527,6 +19531,9 @@ exports[`open api parser hookdeck simple 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IssueTriggerStrategy": {
         "docs": "The strategy uses to open the issue",
@@ -18534,6 +19541,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "first_attempt",
           "final_attempt",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IssueTriggerTransformationConfigs": {
         "docs": "Configurations for a 'Transformation' issue trigger",
@@ -18544,10 +19554,14 @@ exports[`open api parser hookdeck simple 1`] = `
             "type": "IssueTriggerTransformationConfigsTransformations",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IssueTriggerTransformationConfigsTransformations": {
         "discriminated": false,
         "docs": "A pattern to match on the transformation name or array of transformation IDs. Use \`*\` as wildcard.",
+        "source": undefined,
         "union": [
           "string",
           "list<string>",
@@ -18560,11 +19574,17 @@ exports[`open api parser hookdeck simple 1`] = `
           "transformation",
           "backpressure",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "IssueWithData": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
         "union": {
           "delivery": "DeliveryIssueWithData",
           "transformation": "TransformationIssueWithData",
@@ -18577,17 +19597,26 @@ exports[`open api parser hookdeck simple 1`] = `
           "models": "optional<list<IssueWithData>>",
           "pagination": "optional<SeekPagination>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "OrderByDirection": {
         "enum": [
           "asc",
           "desc",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "RawBody": {
         "docs": undefined,
         "properties": {
           "body": "string",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "Request": {
@@ -18650,6 +19679,9 @@ exports[`open api parser hookdeck simple 1`] = `
             "type": "optional<boolean>",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "RequestData": {
         "docs": undefined,
@@ -18661,10 +19693,14 @@ exports[`open api parser hookdeck simple 1`] = `
           "path": "string",
           "query": "optional<string>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "RequestDataBody": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "string",
           "RequestDataBodyOne",
@@ -18674,10 +19710,14 @@ exports[`open api parser hookdeck simple 1`] = `
       "RequestDataBodyOne": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "RequestDataHeaders": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "string",
           "map<string, optional<string>>",
@@ -18686,6 +19726,7 @@ exports[`open api parser hookdeck simple 1`] = `
       "RequestDataParsedQuery": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "optional<string>",
           "RequestDataParsedQueryOne",
@@ -18694,6 +19735,9 @@ exports[`open api parser hookdeck simple 1`] = `
       "RequestDataParsedQueryOne": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "RequestIngestPriority": {
         "docs": "The priority attributed to the request when received",
@@ -18701,6 +19745,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "NORMAL",
           "LOW",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "RequestPaginatedResult": {
         "docs": undefined,
@@ -18708,6 +19755,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "count": "optional<integer>",
           "models": "optional<list<Request>>",
           "pagination": "optional<SeekPagination>",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "RequestRejectionCause": {
@@ -18722,6 +19772,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "INGESTION_FATAL",
           "UNKNOWN",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "RetriedEvent": {
         "docs": undefined,
@@ -18729,12 +19782,18 @@ exports[`open api parser hookdeck simple 1`] = `
           "attempt": "optional<EventAttempt>",
           "event": "Event",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "RetryRequest": {
         "docs": undefined,
         "properties": {
           "events": "optional<list<Event>>",
           "request": "Request",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "RetryRule": {
@@ -18750,6 +19809,9 @@ exports[`open api parser hookdeck simple 1`] = `
           },
           "strategy": "RetryStrategy",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "RetryStrategy": {
         "docs": "Algorithm to use when calculating delay between retries",
@@ -18757,11 +19819,17 @@ exports[`open api parser hookdeck simple 1`] = `
           "linear",
           "exponential",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "Rule": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
         "union": {
           "alert": "AlertRule",
           "delay": "DelayRule",
@@ -18806,6 +19874,9 @@ exports[`open api parser hookdeck simple 1`] = `
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "RulesetPaginatedResult": {
         "docs": undefined,
@@ -18813,6 +19884,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "count": "optional<integer>",
           "models": "optional<list<optional<Ruleset>>>",
           "pagination": "optional<SeekPagination>",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "SeekPagination": {
@@ -18824,10 +19898,14 @@ exports[`open api parser hookdeck simple 1`] = `
           "order_by": "optional<SeekPaginationOrderBy>",
           "prev": "optional<string>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "SeekPaginationDir": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "OrderByDirection",
           "list<OrderByDirection>",
@@ -18836,6 +19914,7 @@ exports[`open api parser hookdeck simple 1`] = `
       "SeekPaginationOrderBy": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "string",
           "list<string>",
@@ -18851,12 +19930,18 @@ exports[`open api parser hookdeck simple 1`] = `
           "shop": "optional<string>",
           "webhook_secret_key": "string",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "ShopifyIntegrationConfigsRateLimitPeriod": {
         "enum": [
           "minute",
           "second",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "ShortEventData": {
         "docs": undefined,
@@ -18868,10 +19953,14 @@ exports[`open api parser hookdeck simple 1`] = `
           "path": "string",
           "query": "optional<string>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "ShortEventDataBody": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "string",
           "ShortEventDataBodyOne",
@@ -18881,10 +19970,14 @@ exports[`open api parser hookdeck simple 1`] = `
       "ShortEventDataBodyOne": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "ShortEventDataHeaders": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "string",
           "map<string, optional<string>>",
@@ -18893,6 +19986,7 @@ exports[`open api parser hookdeck simple 1`] = `
       "ShortEventDataParsedQuery": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "optional<string>",
           "ShortEventDataParsedQueryOne",
@@ -18901,6 +19995,9 @@ exports[`open api parser hookdeck simple 1`] = `
       "ShortEventDataParsedQueryOne": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "Source": {
         "docs": "Associated [Source](#source-object) object",
@@ -18942,6 +20039,9 @@ exports[`open api parser hookdeck simple 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "SourceIntegration": {
         "docs": "Integration object",
@@ -18960,6 +20060,9 @@ exports[`open api parser hookdeck simple 1`] = `
           },
           "provider": "IntegrationProvider",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "SourcePaginatedResult": {
         "docs": undefined,
@@ -18968,6 +20071,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "models": "optional<list<Source>>",
           "pagination": "optional<SeekPagination>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "ToggleWebhookNotifications": {
         "docs": undefined,
@@ -18975,6 +20081,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "enabled": "boolean",
           "source_id": "string",
           "topics": "optional<list<TopicsValue>>",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "TopicsValue": {
@@ -18997,6 +20106,9 @@ exports[`open api parser hookdeck simple 1`] = `
             "value": "event.successful",
           },
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "TransformFull": {
         "docs": undefined,
@@ -19013,6 +20125,9 @@ exports[`open api parser hookdeck simple 1`] = `
             "docs": "A transformation rule must be of type \`transformation\`",
             "type": "literal<"transform">",
           },
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "TransformFullTransformation": {
@@ -19031,6 +20146,9 @@ exports[`open api parser hookdeck simple 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "TransformReference": {
         "docs": undefined,
@@ -19044,10 +20162,14 @@ exports[`open api parser hookdeck simple 1`] = `
             "type": "literal<"transform">",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "TransformRule": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "TransformReference",
           "TransformFull",
@@ -19087,6 +20209,9 @@ exports[`open api parser hookdeck simple 1`] = `
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "TransformationExecution": {
         "docs": undefined,
@@ -19105,6 +20230,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "updated_at": "datetime",
           "webhook_id": "string",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "TransformationExecutionLogLevel": {
         "docs": "The minimum log level to open the issue on",
@@ -19115,6 +20243,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "error",
           "fatal",
         ],
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "TransformationExecutionPaginatedResult": {
         "docs": undefined,
@@ -19122,6 +20253,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "count": "optional<integer>",
           "models": "optional<list<TransformationExecution>>",
           "pagination": "optional<SeekPagination>",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "TransformationExecutorOutput": {
@@ -19134,6 +20268,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "request_id": "optional<string>",
           "transformation_id": "optional<string>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "TransformationExecutorOutputRequest": {
         "docs": undefined,
@@ -19144,10 +20281,14 @@ exports[`open api parser hookdeck simple 1`] = `
           "path": "string",
           "query": "optional<TransformationExecutorOutputRequestQuery>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "TransformationExecutorOutputRequestBody": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "optional<string>",
           "TransformationExecutorOutputRequestBodyOne",
@@ -19156,10 +20297,14 @@ exports[`open api parser hookdeck simple 1`] = `
       "TransformationExecutorOutputRequestBodyOne": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "TransformationExecutorOutputRequestHeaders": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "string",
           "map<string, unknown>",
@@ -19168,6 +20313,7 @@ exports[`open api parser hookdeck simple 1`] = `
       "TransformationExecutorOutputRequestParsedQuery": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "optional<string>",
           "TransformationExecutorOutputRequestParsedQueryOne",
@@ -19176,10 +20322,14 @@ exports[`open api parser hookdeck simple 1`] = `
       "TransformationExecutorOutputRequestParsedQueryOne": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "TransformationExecutorOutputRequestQuery": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "optional<TransformationExecutorOutputRequestQueryZero>",
           "string",
@@ -19188,11 +20338,17 @@ exports[`open api parser hookdeck simple 1`] = `
       "TransformationExecutorOutputRequestQueryZero": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "TransformationFailedMeta": {
         "docs": undefined,
         "properties": {
           "transformation_id": "string",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "TransformationIssue": {
@@ -19240,6 +20396,9 @@ exports[`open api parser hookdeck simple 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "TransformationIssueAggregationKeys": {
         "docs": "Keys used as the aggregation keys a 'transformation' type issue",
@@ -19247,12 +20406,18 @@ exports[`open api parser hookdeck simple 1`] = `
           "log_level": "TransformationExecutionLogLevel",
           "transformation_id": "list<string>",
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "TransformationIssueData": {
         "docs": "Transformation issue data",
         "properties": {
           "transformation_execution": "TransformationExecution",
           "trigger_attempt": "optional<EventAttempt>",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "TransformationIssueReference": {
@@ -19263,6 +20428,9 @@ exports[`open api parser hookdeck simple 1`] = `
             "docs": "Deprecated but still found on historical issues",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
       "TransformationIssueWithData": {
@@ -19311,6 +20479,9 @@ exports[`open api parser hookdeck simple 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
+        },
       },
       "TransformationPaginatedResult": {
         "docs": undefined,
@@ -19318,6 +20489,9 @@ exports[`open api parser hookdeck simple 1`] = `
           "count": "optional<integer>",
           "models": "optional<list<Transformation>>",
           "pagination": "optional<SeekPagination>",
+        },
+        "source": {
+          "openapi": "hookdeck/openapi.yml",
         },
       },
     },

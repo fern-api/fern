@@ -3,7 +3,8 @@ import {
     CommonPropertyWithExample,
     OneOfSchemaWithExample,
     SchemaWithExample,
-    SdkGroupName
+    SdkGroupName,
+    Source
 } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { convertReferenceObject, convertSchema, convertSchemaObject } from "./convertSchemas";
@@ -21,7 +22,8 @@ export function convertDiscriminatedOneOf({
     wrapAsNullable,
     discriminator,
     context,
-    groupName
+    groupName,
+    source
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -34,6 +36,7 @@ export function convertDiscriminatedOneOf({
     discriminator: OpenAPIV3.DiscriminatorObject;
     context: SchemaParserContext;
     groupName: SdkGroupName | undefined;
+    source: Source;
 }): SchemaWithExample {
     const discriminant = discriminator.propertyName;
     const unionSubTypes = Object.fromEntries(
@@ -44,7 +47,8 @@ export function convertDiscriminatedOneOf({
                 },
                 false,
                 context,
-                [schema]
+                [schema],
+                source
             );
             context.markReferencedByDiscriminatedUnion(
                 {
@@ -62,7 +66,7 @@ export function convertDiscriminatedOneOf({
         })
         .map(([propertyName, propertySchema]) => {
             const isRequired = required != null && required.includes(propertyName);
-            const schema = convertSchema(propertySchema, !isRequired, context, [...breadcrumbs, propertyName]);
+            const schema = convertSchema(propertySchema, !isRequired, context, [...breadcrumbs, propertyName], source);
             return {
                 key: propertyName,
                 schema
@@ -77,7 +81,8 @@ export function convertDiscriminatedOneOf({
         availability,
         discriminant,
         subtypes: unionSubTypes,
-        groupName
+        groupName,
+        source
     });
 }
 
@@ -93,7 +98,8 @@ export function convertDiscriminatedOneOfWithVariants({
     discriminant,
     variants,
     context,
-    groupName
+    groupName,
+    source
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -107,11 +113,12 @@ export function convertDiscriminatedOneOfWithVariants({
     variants: Record<string, OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject>;
     context: SchemaParserContext;
     groupName: SdkGroupName | undefined;
+    source: Source;
 }): SchemaWithExample {
     const unionSubTypes = Object.fromEntries(
         Object.entries(variants).map(([discriminantValue, schema]) => {
             if (isReferenceObject(schema)) {
-                const subtypeReference = convertReferenceObject(schema, false, context, [schema.$ref]);
+                const subtypeReference = convertReferenceObject(schema, false, context, [schema.$ref], source);
                 context.markReferencedByDiscriminatedUnion(schema, discriminant, 1);
                 return [discriminantValue, subtypeReference];
             } else {
@@ -120,6 +127,7 @@ export function convertDiscriminatedOneOfWithVariants({
                     false,
                     context,
                     [...breadcrumbs, discriminantValue],
+                    source,
                     new Set([discriminant])
                 );
                 return [discriminantValue, variantSchema];
@@ -132,7 +140,7 @@ export function convertDiscriminatedOneOfWithVariants({
         })
         .map(([propertyName, propertySchema]) => {
             const isRequired = required != null && required.includes(propertyName);
-            const schema = convertSchema(propertySchema, !isRequired, context, [...breadcrumbs, propertyName]);
+            const schema = convertSchema(propertySchema, !isRequired, context, [...breadcrumbs, propertyName], source);
             return {
                 key: propertyName,
                 schema
@@ -147,7 +155,8 @@ export function convertDiscriminatedOneOfWithVariants({
         availability,
         discriminant,
         subtypes: unionSubTypes,
-        groupName
+        groupName,
+        source
     });
 }
 
@@ -160,7 +169,8 @@ export function wrapDiscriminantedOneOf({
     availability,
     discriminant,
     subtypes,
-    groupName
+    groupName,
+    source
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -171,6 +181,7 @@ export function wrapDiscriminantedOneOf({
     discriminant: string;
     subtypes: Record<string, SchemaWithExample>;
     groupName: SdkGroupName | undefined;
+    source: Source;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
@@ -185,7 +196,8 @@ export function wrapDiscriminantedOneOf({
                     generatedName,
                     schemas: subtypes,
                     commonProperties: properties,
-                    groupName
+                    groupName,
+                    source
                 })
             ),
             groupName,
@@ -202,7 +214,8 @@ export function wrapDiscriminantedOneOf({
             generatedName,
             schemas: subtypes,
             commonProperties: properties,
-            groupName
+            groupName,
+            source
         })
     );
 }

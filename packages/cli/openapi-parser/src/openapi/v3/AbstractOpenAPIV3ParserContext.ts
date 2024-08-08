@@ -1,5 +1,5 @@
 import { Logger } from "@fern-api/logger";
-import { SchemaId } from "@fern-api/openapi-ir-sdk";
+import { SchemaId, Source } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 import { ParseOpenAPIOptions } from "../../options";
@@ -30,17 +30,20 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     public readonly refOccurrences: Record<string, number>;
     public readonly DUMMY: SchemaParserContext;
     public readonly options: ParseOpenAPIOptions;
+    public readonly source: Source;
 
     constructor({
         document,
         taskContext,
         authHeaders,
-        options
+        options,
+        source
     }: {
         document: OpenAPIV3.Document;
         taskContext: TaskContext;
         authHeaders: Set<string>;
         options: ParseOpenAPIOptions;
+        source: Source;
     }) {
         this.document = document;
         this.logger = taskContext.logger;
@@ -48,6 +51,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         this.authHeaders = authHeaders;
         this.refOccurrences = getReferenceOccurrences(document);
         this.options = options;
+        this.source = source;
         this.DUMMY = this.getDummy();
     }
 

@@ -38,7 +38,8 @@ export function buildServices(context: OpenApiIrConverterContext): {
         schemaIdsToExclude = [...schemaIdsToExclude, ...convertedEndpoint.schemaIdsToExclude];
         context.builder.addEndpoint(file, {
             name: endpointId,
-            schema: convertedEndpoint.value
+            schema: convertedEndpoint.value,
+            source: endpoint.source
         });
         if (irTag?.id != null || irTag?.description != null) {
             context.builder.setServiceInfo(file, {

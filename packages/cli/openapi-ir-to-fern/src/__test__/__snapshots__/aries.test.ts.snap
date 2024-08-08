@@ -221,6 +221,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
     },
     "basicmessage.yml": {
@@ -279,6 +282,9 @@ exports[`open api parser aries docs 1`] = `
               "type": "root.BasicMessageModuleResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
     },
@@ -1089,15 +1095,24 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "types": {
         "ConnectionMetadataSetRequestMetadata": {
           "docs": "Dictionary of metadata to set for connection.",
           "properties": {},
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "CreateInvitationRequestMetadata": {
           "docs": "Optional metadata to attach to the connection created with the invitation",
           "properties": {},
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "GetMatchingConnectionsRequestConnectionProtocol": {
           "enum": [
@@ -1110,6 +1125,9 @@ exports[`open api parser aries docs 1`] = `
               "value": "didexchange/1.0",
             },
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "GetMatchingConnectionsRequestState": {
           "enum": [
@@ -1123,6 +1141,9 @@ exports[`open api parser aries docs 1`] = `
             "active",
             "completed",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "GetMatchingConnectionsRequestTheirRole": {
           "enum": [
@@ -1131,6 +1152,9 @@ exports[`open api parser aries docs 1`] = `
             "inviter",
             "responder",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
       },
     },
@@ -1424,6 +1448,9 @@ exports[`open api parser aries docs 1`] = `
               "type": "root.CredentialDefinitionGetResult",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
     },
@@ -1879,6 +1906,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
     },
     "didExchange.yml": {
@@ -2202,6 +2232,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
     },
     "discoverFeatures.yml": {
@@ -2350,6 +2383,9 @@ exports[`open api parser aries docs 1`] = `
               "type": "root.V10DiscoveryRecord",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
     },
@@ -2503,6 +2539,9 @@ exports[`open api parser aries docs 1`] = `
               "type": "root.V20DiscoveryExchangeResult",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
     },
@@ -3071,6 +3110,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "types": {
         "SetEndorserRoleForConnIdRequestTransactionMyJob": {
@@ -3079,6 +3121,9 @@ exports[`open api parser aries docs 1`] = `
             "TRANSACTION_ENDORSER",
             "reset",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
       },
     },
@@ -3138,6 +3183,9 @@ exports[`open api parser aries docs 1`] = `
               "type": "root.IntroModuleResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
     },
@@ -5564,6 +5612,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "types": {
         "GetMatchingCredExRecordsRequestRole": {
@@ -5571,6 +5622,9 @@ exports[`open api parser aries docs 1`] = `
             "issuer",
             "holder",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "GetMatchingCredExRecordsRequestState": {
           "enum": [
@@ -5586,6 +5640,9 @@ exports[`open api parser aries docs 1`] = `
             "credential_revoked",
             "abandoned",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
       },
     },
@@ -8883,6 +8940,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "types": {
         "GetMatchingCredExRecordsV2RequestRole": {
@@ -8890,6 +8950,9 @@ exports[`open api parser aries docs 1`] = `
             "issuer",
             "holder",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "GetMatchingCredExRecordsV2RequestState": {
           "enum": [
@@ -8932,6 +8995,9 @@ exports[`open api parser aries docs 1`] = `
             },
             "abandoned",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
       },
     },
@@ -9035,6 +9101,9 @@ exports[`open api parser aries docs 1`] = `
               "type": "root.VerifyResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
     },
@@ -9394,6 +9463,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "types": {
         "GetPublishedDidEndpointRequestEndpointType": {
@@ -9402,6 +9474,9 @@ exports[`open api parser aries docs 1`] = `
             "Profile",
             "LinkedDomains",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "RegisterNymRequestRole": {
           "enum": [
@@ -9411,6 +9486,9 @@ exports[`open api parser aries docs 1`] = `
             "NETWORK_MONITOR",
             "reset",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
       },
     },
@@ -10150,6 +10228,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "types": {
         "GetKeylistsRequestRole": {
@@ -10158,6 +10239,9 @@ exports[`open api parser aries docs 1`] = `
             "client",
             "server",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "GetMatchingMediationRecordsRequestState": {
           "enum": [
@@ -10165,10 +10249,16 @@ exports[`open api parser aries docs 1`] = `
             "granted",
             "denied",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "KeylistQueryFilterRequestFilter": {
           "docs": "Filter for keylist query",
           "properties": {},
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
       },
     },
@@ -10504,6 +10594,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "types": {
         "CreateWalletRequestWalletDispatchType": {
@@ -10513,6 +10606,9 @@ exports[`open api parser aries docs 1`] = `
             "both",
             "base",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "CreateWalletRequestWalletKeyDerivation": {
           "docs": "Key derivation",
@@ -10521,6 +10617,9 @@ exports[`open api parser aries docs 1`] = `
             "ARGON2I_INT",
             "RAW",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "CreateWalletRequestWalletType": {
           "docs": "Type of the wallet to create",
@@ -10529,6 +10628,9 @@ exports[`open api parser aries docs 1`] = `
             "in_memory",
             "indy",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "UpdateWalletRequestWalletDispatchType": {
           "docs": "Webhook target dispatch type for this wallet.             default - Dispatch only to webhooks associated with this wallet.             base - Dispatch only to webhooks associated with the base wallet.             both - Dispatch to both webhook targets.",
@@ -10537,6 +10639,9 @@ exports[`open api parser aries docs 1`] = `
             "both",
             "base",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
       },
     },
@@ -10937,11 +11042,17 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "types": {
         "InvitationCreateRequestMetadata": {
           "docs": "Optional metadata to attach to the connection created with the invitation",
           "properties": {},
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
       },
     },
@@ -12780,6 +12891,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "types": {
         "GetMatchingPresExRecordsRequestRole": {
@@ -12787,6 +12901,9 @@ exports[`open api parser aries docs 1`] = `
             "prover",
             "verifier",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "GetMatchingPresExRecordsRequestState": {
           "enum": [
@@ -12800,6 +12917,9 @@ exports[`open api parser aries docs 1`] = `
             "presentation_acked",
             "abandoned",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
       },
     },
@@ -14469,6 +14589,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "types": {
         "GetMatchingPresExRecordsV2RequestRole": {
@@ -14476,6 +14599,9 @@ exports[`open api parser aries docs 1`] = `
             "prover",
             "verifier",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "GetMatchingPresExRecordsV2RequestState": {
           "enum": [
@@ -14506,6 +14632,9 @@ exports[`open api parser aries docs 1`] = `
             "done",
             "abandoned",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
       },
     },
@@ -14550,6 +14679,9 @@ exports[`open api parser aries docs 1`] = `
               "type": "root.ResolutionResult",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
     },
@@ -15693,6 +15825,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "types": {
         "GetCreatedRegistriesRequestState": {
@@ -15703,6 +15838,9 @@ exports[`open api parser aries docs 1`] = `
             "active",
             "full",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "RevokeRequestNotifyVersion": {
           "docs": "Specify which version of the revocation notification should be sent",
@@ -15710,6 +15848,9 @@ exports[`open api parser aries docs 1`] = `
             "v1_0",
             "v2_0",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "SetRevocationRegistryStateRequestState": {
           "enum": [
@@ -15719,6 +15860,9 @@ exports[`open api parser aries docs 1`] = `
             "active",
             "full",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
       },
     },
@@ -15969,6 +16113,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
     },
     "server.yml": {
@@ -16129,6 +16276,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
     },
     "trustping.yml": {
@@ -16187,6 +16337,9 @@ exports[`open api parser aries docs 1`] = `
               "type": "root.PingRequestResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
     },
@@ -16524,6 +16677,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "types": {
         "DidEndpointWithTypeEndpointType": {
@@ -16533,18 +16689,27 @@ exports[`open api parser aries docs 1`] = `
             "Profile",
             "LinkedDomains",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "GetDidsRequestKeyType": {
           "enum": [
             "ed25519",
             "bls12381g2",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "GetDidsRequestMethod": {
           "enum": [
             "key",
             "sov",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "GetDidsRequestPosture": {
           "enum": [
@@ -16552,6 +16717,9 @@ exports[`open api parser aries docs 1`] = `
             "posted",
             "wallet_only",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
       },
     },
@@ -16631,6 +16799,9 @@ exports[`open api parser aries docs 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "aries/openapi.yml",
+      },
     },
     "types": {
       "AMLRecord": {
@@ -16640,11 +16811,17 @@ exports[`open api parser aries docs 1`] = `
           "amlContext": "optional<string>",
           "version": "optional<string>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ActionMenuFetchResult": {
         "docs": undefined,
         "properties": {
           "result": "optional<ActionMenuFetchResultResult>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "ActionMenuFetchResultResult": {
@@ -16660,10 +16837,16 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<AdminConfigConfig>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "AdminConfigConfig": {
         "docs": "Configuration settings",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "AdminModules": {
         "docs": undefined,
@@ -16672,6 +16855,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "List of admin modules",
             "type": "optional<list<string>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "AdminReset": "map<string, unknown>",
@@ -16696,10 +16882,16 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "AdminStatusConductor": {
         "docs": "Conductor statistics",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "AdminStatusLiveliness": {
         "docs": undefined,
@@ -16708,6 +16900,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Liveliness status",
             "type": "optional<boolean>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "AdminStatusReadiness": {
@@ -16718,10 +16913,16 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<boolean>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "AdminStatusTiming": {
         "docs": "Timing results",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "AttachDecorator": {
         "docs": undefined,
@@ -16758,6 +16959,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "AttachDecoratorData": {
         "docs": undefined,
@@ -16792,6 +16996,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "AttachDecoratorData1Jws": {
         "docs": undefined,
@@ -16817,6 +17024,9 @@ exports[`open api parser aries docs 1`] = `
               "pattern": "^[-_a-zA-Z0-9]*$",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "AttachDecoratorDataJWS": {
@@ -16848,6 +17058,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<list<AttachDecoratorData1Jws>>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "AttachDecoratorDataJWSHeader": {
         "docs": undefined,
@@ -16862,6 +17075,9 @@ exports[`open api parser aries docs 1`] = `
               "pattern": "^did:(?:key:z[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]+|sov:[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}(;.*)?(\\?.*)?#.+)$",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "AttachDecoratorDataJws": {
@@ -16880,6 +17096,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<AttachmentDefType>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "AttachmentDefType": {
         "docs": "Attachment type",
@@ -16893,11 +17112,17 @@ exports[`open api parser aries docs 1`] = `
             "value": "present-proof",
           },
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "AttributeMimeTypesResult": {
         "docs": undefined,
         "properties": {
           "results": "optional<map<string, optional<string>>>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "BasicMessageModuleResponse": "map<string, unknown>",
@@ -16911,22 +17136,37 @@ exports[`open api parser aries docs 1`] = `
           "ldp_vc": "optional<ClaimFormatLdpVc>",
           "ldp_vp": "optional<ClaimFormatLdpVp>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ClaimFormatJwtVc": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ClaimFormatJwtVp": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ClaimFormatLdpVc": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ClaimFormatLdpVp": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ConnRecord": {
         "docs": undefined,
@@ -17042,6 +17282,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ConnRecordAccept": {
         "docs": "Connection acceptance: manual or auto",
@@ -17049,6 +17292,9 @@ exports[`open api parser aries docs 1`] = `
           "manual",
           "auto",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ConnRecordConnectionProtocol": {
         "docs": "Connection protocol used",
@@ -17062,6 +17308,9 @@ exports[`open api parser aries docs 1`] = `
             "value": "didexchange/1.0",
           },
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ConnRecordInvitationMode": {
         "docs": "Invitation mode",
@@ -17070,6 +17319,9 @@ exports[`open api parser aries docs 1`] = `
           "multi",
           "static",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ConnRecordRoutingState": {
         "docs": "Routing state of connection",
@@ -17079,6 +17331,9 @@ exports[`open api parser aries docs 1`] = `
           "active",
           "error",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ConnRecordTheirRole": {
         "docs": "Their role in the connection protocol",
@@ -17088,6 +17343,9 @@ exports[`open api parser aries docs 1`] = `
           "inviter",
           "responder",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ConnectionInvitation": {
         "docs": undefined,
@@ -17131,6 +17389,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ConnectionList": {
         "docs": undefined,
@@ -17139,6 +17400,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "List of connection records",
             "type": "optional<list<ConnRecord>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "ConnectionMetadata": {
@@ -17149,10 +17413,16 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<ConnectionMetadataResults>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ConnectionMetadataResults": {
         "docs": "Dictionary of metadata associated with connection.",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ConnectionModuleResponse": "map<string, unknown>",
       "ConnectionStaticResult": {
@@ -17210,6 +17480,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "Constraints": {
         "docs": undefined,
@@ -17228,6 +17501,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<ConstraintsSubjectIsIssuer>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ConstraintsStatusActive": {
         "enum": [
@@ -17235,6 +17511,9 @@ exports[`open api parser aries docs 1`] = `
           "allowed",
           "disallowed",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ConstraintsStatusRevoked": {
         "enum": [
@@ -17242,6 +17521,9 @@ exports[`open api parser aries docs 1`] = `
           "allowed",
           "disallowed",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ConstraintsStatusSuspended": {
         "enum": [
@@ -17249,6 +17531,9 @@ exports[`open api parser aries docs 1`] = `
           "allowed",
           "disallowed",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ConstraintsSubjectIsIssuer": {
         "docs": "SubjectIsIssuer",
@@ -17256,6 +17541,9 @@ exports[`open api parser aries docs 1`] = `
           "required",
           "preferred",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CreateWalletResponse": {
         "docs": undefined,
@@ -17301,6 +17589,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CreateWalletResponseKeyManagementMode": {
         "docs": "Mode regarding management of wallet key",
@@ -17308,10 +17599,16 @@ exports[`open api parser aries docs 1`] = `
           "managed",
           "unmanaged",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CreateWalletResponseSettings": {
         "docs": "Settings for this wallet.",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CreateWalletTokenResponse": {
         "docs": undefined,
@@ -17320,6 +17617,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Authorization token to authenticate wallet requests",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "CredAttrSpec": {
@@ -17338,12 +17638,18 @@ exports[`open api parser aries docs 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CredDefValue": {
         "docs": undefined,
         "properties": {
           "primary": "optional<CredDefValuePrimary>",
           "revocation": "optional<CredDefValueRevocation>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "CredDefValuePrimary": {
@@ -17387,6 +17693,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CredDefValueRevocation": {
         "docs": undefined,
@@ -17403,11 +17712,17 @@ exports[`open api parser aries docs 1`] = `
           "u": "optional<string>",
           "y": "optional<string>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CredInfoList": {
         "docs": undefined,
         "properties": {
           "results": "optional<list<IndyCredInfo>>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "CredRevIndyRecordsResult": {
@@ -17418,21 +17733,33 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<CredRevIndyRecordsResultRevRegDelta>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CredRevIndyRecordsResultRevRegDelta": {
         "docs": "Indy revocation registry delta",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CredRevRecordDetailsResult": {
         "docs": undefined,
         "properties": {
           "results": "optional<list<IssuerCredRevRecord>>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CredRevRecordResult": {
         "docs": undefined,
         "properties": {
           "result": "optional<IssuerCredRevRecord>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "CredRevokedResult": {
@@ -17442,6 +17769,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Whether credential is revoked on the ledger",
             "type": "optional<boolean>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "Credential": {
@@ -17491,6 +17821,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "list<string>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CredentialDefinition": {
         "docs": undefined,
@@ -17529,11 +17862,17 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CredentialDefinitionGetResult": {
         "docs": undefined,
         "properties": {
           "credential_definition": "optional<CredentialDefinition>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "CredentialDefinitionSendResult": {
@@ -17550,6 +17889,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CredentialDefinitionValue": {
         "docs": "Credential definition primary and revocation values",
@@ -17559,6 +17901,9 @@ exports[`open api parser aries docs 1`] = `
         "docs": undefined,
         "properties": {
           "credential_definition_ids": "optional<list<string>>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "CredentialOffer": {
@@ -17579,6 +17924,9 @@ exports[`open api parser aries docs 1`] = `
           "credential_preview": "optional<CredentialPreview>",
           "offers~attach": "list<AttachDecorator>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CredentialPreview": {
         "docs": undefined,
@@ -17588,6 +17936,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<string>",
           },
           "attributes": "list<CredAttrSpec>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "CredentialProof": {
@@ -17657,6 +18008,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CredentialStatusOptions": {
         "docs": undefined,
@@ -17665,6 +18019,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Credential status method type to use for the credential. Should match status method registered in the Verifiable Credential Extension Registry",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "DID": {
@@ -17703,6 +18060,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "DIDCreateOptions": {
         "docs": undefined,
@@ -17721,6 +18081,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Key type to use for the DID keypair. Validated with the chosen DID method's supported key types.",
             "type": "DidCreateOptionsKeyType",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "DIDEndpoint": {
@@ -17747,6 +18110,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "DIDList": {
         "docs": undefined,
@@ -17756,11 +18122,17 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<list<DID>>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "DIDResult": {
         "docs": undefined,
         "properties": {
           "result": "optional<DID>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "DIFField": {
@@ -17781,6 +18153,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "DIFHolder": {
         "docs": undefined,
@@ -17790,6 +18165,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<directive>",
           },
           "field_id": "optional<list<string>>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "DIFOptions": {
@@ -17810,6 +18188,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "DIFPresSpec": {
         "docs": undefined,
@@ -17828,6 +18209,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<DifPresSpecRevealDoc>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "DIFProofProposal": {
         "docs": undefined,
@@ -17835,12 +18219,18 @@ exports[`open api parser aries docs 1`] = `
           "input_descriptors": "optional<list<InputDescriptors>>",
           "options": "optional<DIFOptions>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "DIFProofRequest": {
         "docs": undefined,
         "properties": {
           "options": "optional<DIFOptions>",
           "presentation_definition": "PresentationDefinition",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "DidCreateOptions": {
@@ -17853,6 +18243,9 @@ exports[`open api parser aries docs 1`] = `
           "ed25519",
           "bls12381g2",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "DidKeyType": {
         "docs": "Key type associated with the DID",
@@ -17860,6 +18253,9 @@ exports[`open api parser aries docs 1`] = `
           "ed25519",
           "bls12381g2",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "DidPosture": {
         "docs": "Whether DID is current public DID, posted to ledger but not current public DID, or local to the wallet",
@@ -17868,6 +18264,9 @@ exports[`open api parser aries docs 1`] = `
           "posted",
           "wallet_only",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "DidxRequestDidDocAttach": {
         "docs": "As signed attachment, DID Doc associated with DID",
@@ -17876,10 +18275,16 @@ exports[`open api parser aries docs 1`] = `
       "DifPresSpecRecordIds": {
         "docs": "Mapping of input_descriptor id to list of stored W3C credential record_id",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "DifPresSpecRevealDoc": {
         "docs": "reveal doc [JSON-LD frame] dict used to derive the credential when selective disclosure is required",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "Disclose": {
         "docs": undefined,
@@ -17896,6 +18301,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "List of protocol descriptors",
             "type": "list<ProtocolDescriptor>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "Disclosures": {
@@ -17914,6 +18322,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "list<map<string, unknown>>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "Doc": {
         "docs": undefined,
@@ -17924,10 +18335,16 @@ exports[`open api parser aries docs 1`] = `
           },
           "options": "DocOptions",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "DocCredential": {
         "docs": "Credential to sign",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "DocOptions": {
         "docs": "Signature options",
@@ -17944,6 +18361,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Endorser Name",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "EndpointsResult": {
@@ -17969,6 +18389,9 @@ exports[`open api parser aries docs 1`] = `
               "pattern": "^[A-Za-z0-9\\.\\-\\+]+://([A-Za-z0-9][.A-Za-z0-9-_]+[A-Za-z0-9])+(:[1-9][0-9]*)?(/[^?&#]+)?$",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "Filter": {
@@ -18020,6 +18443,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "Generated": {
         "docs": undefined,
@@ -18052,6 +18478,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "GetDIDEndpointResponse": {
         "docs": undefined,
@@ -18066,6 +18495,9 @@ exports[`open api parser aries docs 1`] = `
               "pattern": "^[A-Za-z0-9\\.\\-\\+]+://([A-Za-z0-9][.A-Za-z0-9-_]+[A-Za-z0-9])+(:[1-9][0-9]*)?(/[^?&#]+)?$",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "GetDIDVerkeyResponse": {
@@ -18082,6 +18514,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "GetNymRoleResponse": {
         "docs": undefined,
@@ -18090,6 +18525,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Ledger role",
             "type": "optional<GetNymRoleResponseRole>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "GetNymRoleResponseRole": {
@@ -18102,6 +18540,9 @@ exports[`open api parser aries docs 1`] = `
           "USER",
           "ROLE_REMOVE",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "HolderModuleResponse": "map<string, unknown>",
       "IndyAttrValue": {
@@ -18121,6 +18562,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Attribute raw value",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyCredAbstract": {
@@ -18157,6 +18601,9 @@ exports[`open api parser aries docs 1`] = `
               "pattern": "^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+$",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyCredAbstractKeyCorrectnessProof": {
@@ -18215,6 +18662,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyCredPrecis": {
         "docs": undefined,
@@ -18222,6 +18672,9 @@ exports[`open api parser aries docs 1`] = `
           "cred_info": "optional<IndyCredPrecisCredInfo>",
           "interval": "optional<IndyCredPrecisInterval>",
           "presentation_referents": "optional<list<string>>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyCredPrecisCredInfo": {
@@ -18274,14 +18727,23 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyCredRequestBlindedMs": {
         "docs": "Blinded master secret",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyCredRequestBlindedMsCorrectnessProof": {
         "docs": "Blinded master secret correctness proof",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyCredential": {
         "docs": undefined,
@@ -18337,14 +18799,23 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<witness>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyCredentialRevReg": {
         "docs": "Revocation registry state",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyCredentialSignatureCorrectnessProof": {
         "docs": "Credential signature correctness proof",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyCredentialValuesValue": {
         "docs": "Attribute value",
@@ -18392,6 +18863,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyGEProof": {
         "docs": undefined,
@@ -18419,6 +18893,9 @@ exports[`open api parser aries docs 1`] = `
           "t": "optional<map<string, string>>",
           "u": "optional<map<string, string>>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyGEProofPred": {
         "docs": undefined,
@@ -18436,6 +18913,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<integer>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyGeProofPredPType": {
         "docs": "Predicate type",
@@ -18445,6 +18925,9 @@ exports[`open api parser aries docs 1`] = `
           "GE",
           "GT",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyKeyCorrectnessProof": {
         "docs": undefined,
@@ -18474,12 +18957,18 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyNonRevocProof": {
         "docs": undefined,
         "properties": {
           "c_list": "optional<map<string, string>>",
           "x_list": "optional<map<string, string>>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyNonRevocationInterval": {
@@ -18507,6 +18996,9 @@ exports[`open api parser aries docs 1`] = `
               "multipleOf": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyPresAttrSpec": {
@@ -18538,6 +19030,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyPresPredSpec": {
         "docs": undefined,
@@ -18565,6 +19060,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyPresPredSpecPredicate": {
         "docs": "Predicate type ('<', '<=', '>=', or '>')",
@@ -18586,6 +19084,9 @@ exports[`open api parser aries docs 1`] = `
             "value": ">",
           },
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyPresPreview": {
         "docs": undefined,
@@ -18596,6 +19097,9 @@ exports[`open api parser aries docs 1`] = `
           },
           "attributes": "list<IndyPresAttrSpec>",
           "predicates": "list<IndyPresPredSpec>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyPresSpec": {
@@ -18618,6 +19122,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<boolean>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyPrimaryProof": {
         "docs": undefined,
@@ -18627,6 +19134,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Indy GE proofs",
             "type": "optional<list<IndyGEProof>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyPrimaryProofEqProof": {
@@ -18642,6 +19152,9 @@ exports[`open api parser aries docs 1`] = `
           },
           "proof": "optional<IndyProofProof>",
           "requested_proof": "optional<IndyProofRequestedProof>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyProofIdentifier": {
@@ -18689,6 +19202,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyProofProof": {
         "docs": undefined,
@@ -18698,6 +19214,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Indy proof proofs",
             "type": "optional<list<IndyProofProofProofsProof>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyProofProofAggregatedProof": {
@@ -18712,12 +19231,18 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<list<list<integer>>>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyProofProofProofsProof": {
         "docs": undefined,
         "properties": {
           "non_revoc_proof": "optional<IndyProofProofProofsProofNonRevocProof>",
           "primary_proof": "optional<IndyProofProofProofsProofPrimaryProof>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyProofProofProofsProofNonRevocProof": {
@@ -18744,6 +19269,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "If present, credential must satisfy one of given restrictions: specify schema_id, schema_issuer_did, schema_name, schema_version, issuer_did, cred_def_id, and/or attr::<attribute-name>::value where <attribute-name> represents a credential attribute name",
             "type": "optional<list<map<string, string>>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyProofReqAttrSpecNonRevoked": {
@@ -18772,6 +19300,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyProofReqPredSpec": {
         "docs": undefined,
@@ -18793,6 +19324,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "If present, credential must satisfy one of given restrictions: specify schema_id, schema_issuer_did, schema_name, schema_version, issuer_did, cred_def_id, and/or attr::<attribute-name>::value where <attribute-name> represents a credential attribute name",
             "type": "optional<list<map<string, string>>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyProofReqPredSpecNonRevoked": {
@@ -18821,6 +19355,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyProofReqPredSpecPType": {
         "docs": "Predicate type ('<', '<=', '>=', or '>')",
@@ -18842,6 +19379,9 @@ exports[`open api parser aries docs 1`] = `
             "value": ">",
           },
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyProofRequest": {
         "docs": undefined,
@@ -18880,6 +19420,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyProofRequestNonRevoked": {
         "docs": undefined,
@@ -18907,6 +19450,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyProofRequestedProof": {
         "docs": undefined,
@@ -18932,6 +19478,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<IndyProofRequestedProofUnrevealedAttrs>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyProofRequestedProofPredicate": {
         "docs": undefined,
@@ -18940,6 +19489,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Sub-proof index",
             "type": "optional<integer>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyProofRequestedProofRevealedAttr": {
@@ -18964,6 +19516,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<integer>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyProofRequestedProofRevealedAttrGroup": {
         "docs": undefined,
@@ -18977,14 +19532,23 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<map<string, RawEncoded>>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyProofRequestedProofSelfAttestedAttrs": {
         "docs": "Proof requested proof self-attested attributes",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyProofRequestedProofUnrevealedAttrs": {
         "docs": "Unrevealed attributes",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyRequestedCredsRequestedAttr": {
         "docs": undefined,
@@ -18997,6 +19561,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Whether to reveal attribute in proof (default true)",
             "type": "optional<boolean>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyRequestedCredsRequestedPred": {
@@ -19017,6 +19584,9 @@ exports[`open api parser aries docs 1`] = `
               "multipleOf": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyRevRegDef": {
@@ -19062,6 +19632,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyRevRegDefValue": {
         "docs": undefined,
@@ -19097,11 +19670,17 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyRevRegDefValuePublicKeys": {
         "docs": undefined,
         "properties": {
           "accumKey": "optional<IndyRevRegDefValuePublicKeysAccumKey>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyRevRegDefValuePublicKeysAccumKey": {
@@ -19111,6 +19690,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Value for z",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyRevRegEntry": {
@@ -19128,6 +19710,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyRevRegEntryValue": {
         "docs": undefined,
@@ -19144,6 +19729,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Revoked credential revocation identifiers",
             "type": "optional<list<integer>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "InputDescriptors": {
@@ -19168,6 +19756,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<string>",
           },
           "schema": "optional<InputDescriptorsSchema>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "InputDescriptorsSchema": {
@@ -19204,6 +19795,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<list<AttachDecorator>>",
           },
           "services": "optional<list<map<string, unknown>>>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "InvitationRecord": {
@@ -19255,6 +19849,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "InvitationRecordInvitation": {
         "docs": "Out of band invitation message",
@@ -19272,6 +19869,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Invitation URL",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IssueCredentialModuleResponse": "map<string, unknown>",
@@ -19344,6 +19944,9 @@ exports[`open api parser aries docs 1`] = `
               "pattern": "^\\d{4}-\\d\\d-\\d\\d[T ]\\d\\d:\\d\\d(?:\\:(?:\\d\\d(?:\\.\\d{1,6})?))?(?:[+-]\\d\\d:?\\d\\d|Z|)$",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IssuerRevRegRecord": {
@@ -19448,6 +20051,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IssuerRevRegRecordRevocRegDef": {
         "docs": "Revocation registry definition",
@@ -19464,6 +20070,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "List of keylist records",
             "type": "optional<list<RouteRecord>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "KeylistQuery": {
@@ -19483,10 +20092,16 @@ exports[`open api parser aries docs 1`] = `
           },
           "paginate": "optional<KeylistQueryPaginate>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "KeylistQueryFilter": {
         "docs": "Query dictionary object",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "KeylistQueryPaginate": {
         "docs": undefined,
@@ -19499,6 +20114,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Offset value for query",
             "type": "optional<integer>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "KeylistUpdate": {
@@ -19516,6 +20134,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "List of update rules",
             "type": "optional<list<KeylistUpdateRule>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "KeylistUpdateRule": {
@@ -19536,6 +20157,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "KeylistUpdateRuleAction": {
         "docs": "Action for specific key",
@@ -19543,12 +20167,18 @@ exports[`open api parser aries docs 1`] = `
           "add",
           "remove",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "LDProofVCDetail": {
         "docs": undefined,
         "properties": {
           "credential": "LdProofVcDetailCredential",
           "options": "LdProofVcDetailOptions",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "LDProofVCDetailOptions": {
@@ -19581,6 +20211,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "The proof type used for the proof. Should match suites registered in the Linked Data Cryptographic Suite Registry",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "LdProofVcDetailCredential": {
@@ -19619,11 +20252,17 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<boolean>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "LedgerConfigList": {
         "docs": undefined,
         "properties": {
           "ledger_config_list": "list<LedgerConfigInstance>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "LedgerModulesResult": "map<string, unknown>",
@@ -19685,6 +20324,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "MediationDeny": {
         "docs": undefined,
@@ -19699,6 +20341,9 @@ exports[`open api parser aries docs 1`] = `
           },
           "mediator_terms": "optional<list<string>>",
           "recipient_terms": "optional<list<string>>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "MediationGrant": {
@@ -19718,6 +20363,9 @@ exports[`open api parser aries docs 1`] = `
           },
           "routing_keys": "optional<list<string>>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "MediationList": {
         "docs": undefined,
@@ -19726,6 +20374,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "List of mediation records",
             "type": "optional<list<MediationRecord>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "MediationRecord": {
@@ -19763,6 +20414,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "Menu": {
         "docs": undefined,
@@ -19792,6 +20446,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "MenuForm": {
         "docs": undefined,
@@ -19812,6 +20469,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Menu form title",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "MenuFormParam": {
@@ -19842,6 +20502,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "MenuJson": {
         "docs": undefined,
@@ -19862,6 +20525,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Menu title",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "MenuOption": {
@@ -19884,6 +20550,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Menu option title",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "MultitenantModuleResponse": "map<string, unknown>",
@@ -19945,6 +20614,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "OobRecordRole": {
         "docs": "OOB Role",
@@ -19952,6 +20624,9 @@ exports[`open api parser aries docs 1`] = `
           "sender",
           "receiver",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "OobRecordState": {
         "docs": "Out of band message exchange state",
@@ -19976,6 +20651,9 @@ exports[`open api parser aries docs 1`] = `
           "done",
           "deleted",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "PingRequestResponse": {
         "docs": undefined,
@@ -19984,6 +20662,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Thread ID of the ping message",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "PresentationDefinition": {
@@ -20011,6 +20692,9 @@ exports[`open api parser aries docs 1`] = `
           },
           "submission_requirements": "optional<list<SubmissionRequirements>>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "PresentationProposal": {
         "docs": undefined,
@@ -20028,6 +20712,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<string>",
           },
           "presentation_proposal": "IndyPresPreview",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "PresentationRequest": {
@@ -20047,6 +20734,9 @@ exports[`open api parser aries docs 1`] = `
           },
           "request_presentations~attach": "list<AttachDecorator>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ProtocolDescriptor": {
         "docs": undefined,
@@ -20057,6 +20747,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<list<string>>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "PublishRevocations": {
         "docs": undefined,
@@ -20065,6 +20758,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Credential revocation ids by revocation registry id",
             "type": "optional<map<string, list<string>>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "Queries": {
@@ -20079,6 +20775,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<string>",
           },
           "queries": "optional<list<QueryItem>>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "Query": {
@@ -20095,6 +20794,9 @@ exports[`open api parser aries docs 1`] = `
           "comment": "optional<string>",
           "query": "string",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "QueryItem": {
         "docs": undefined,
@@ -20108,6 +20810,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "QueryItemFeatureType": {
         "docs": "feature type",
@@ -20118,6 +20823,9 @@ exports[`open api parser aries docs 1`] = `
             "value": "goal-code",
           },
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "RawEncoded": {
         "docs": undefined,
@@ -20137,6 +20845,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ResolutionResult": {
         "docs": undefined,
@@ -20150,14 +20861,23 @@ exports[`open api parser aries docs 1`] = `
             "type": "ResolutionResultMetadata",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ResolutionResultDidDocument": {
         "docs": "DID Document",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ResolutionResultMetadata": {
         "docs": "Resolution metadata",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "RevRegIssuedResult": {
         "docs": undefined,
@@ -20174,11 +20894,17 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "RevRegResult": {
         "docs": undefined,
         "properties": {
           "result": "optional<IssuerRevRegRecord>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "RevRegWalletUpdatedResult": {
@@ -20197,23 +20923,38 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<RevRegWalletUpdatedResultRevRegDelta>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "RevRegWalletUpdatedResultAccumCalculated": {
         "docs": "Calculated accumulator for phantom revocations",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "RevRegWalletUpdatedResultAccumFixed": {
         "docs": "Applied ledger transaction to fix revocations",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "RevRegWalletUpdatedResultRevRegDelta": {
         "docs": "Indy revocation registry delta",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "RevRegsCreated": {
         "docs": undefined,
         "properties": {
           "rev_reg_ids": "optional<list<string>>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "RevocationModuleResponse": "map<string, unknown>",
@@ -20249,6 +20990,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
           "wallet_id": "optional<string>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "Schema": {
@@ -20304,11 +21048,17 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "SchemaGetResult": {
         "docs": undefined,
         "properties": {
           "schema": "optional<Schema>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "SchemaInputDescriptor": {
@@ -20322,6 +21072,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "URI",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "SchemaSendResult": {
@@ -20339,6 +21092,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "SchemaSendResultSchema": {
         "docs": "Schema definition",
@@ -20349,6 +21105,9 @@ exports[`open api parser aries docs 1`] = `
         "properties": {
           "schema_ids": "optional<list<string>>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "SchemasInputDescriptorFilter": {
         "docs": undefined,
@@ -20358,6 +21117,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<boolean>",
           },
           "uri_groups": "optional<list<list<SchemaInputDescriptor>>>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "SendMenuMenu": {
@@ -20380,6 +21142,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "SignResponse": {
         "docs": undefined,
@@ -20393,10 +21158,16 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<SignResponseSignedDoc>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "SignResponseSignedDoc": {
         "docs": "Signed document",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "SignatureOptions": {
         "docs": undefined,
@@ -20407,11 +21178,17 @@ exports[`open api parser aries docs 1`] = `
           "type": "optional<string>",
           "verificationMethod": "string",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "SignedDoc": {
         "docs": undefined,
         "properties": {
           "proof": "SignedDocProof",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "SignedDocProof": {
@@ -20451,6 +21228,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<rule>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TAAAcceptance": {
         "docs": undefined,
@@ -20467,6 +21247,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TAAInfo": {
         "docs": undefined,
@@ -20476,6 +21259,9 @@ exports[`open api parser aries docs 1`] = `
           "taa_record": "optional<TAARecord>",
           "taa_required": "optional<boolean>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TAARecord": {
         "docs": undefined,
@@ -20484,17 +21270,26 @@ exports[`open api parser aries docs 1`] = `
           "text": "optional<string>",
           "version": "optional<string>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TAAResult": {
         "docs": undefined,
         "properties": {
           "result": "optional<TAAInfo>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TailsDeleteResponse": {
         "docs": undefined,
         "properties": {
           "message": "optional<string>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "TransactionJobs": {
@@ -20509,6 +21304,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<TransactionJobsTransactionTheirJob>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TransactionJobsTransactionMyJob": {
         "docs": "My transaction related job",
@@ -20517,6 +21315,9 @@ exports[`open api parser aries docs 1`] = `
           "TRANSACTION_ENDORSER",
           "reset",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TransactionJobsTransactionTheirJob": {
         "docs": "Their transaction related job",
@@ -20525,6 +21326,9 @@ exports[`open api parser aries docs 1`] = `
           "TRANSACTION_ENDORSER",
           "reset",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TransactionList": {
         "docs": undefined,
@@ -20533,6 +21337,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "List of transaction records",
             "type": "optional<list<TransactionRecord>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "TransactionRecord": {
@@ -20593,32 +21400,53 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TransactionRecordMessagesAttachItem": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TransactionRecordMetaData": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TransactionRecordSignatureRequestItem": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TransactionRecordSignatureResponseItem": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TransactionRecordTiming": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TxnOrCredentialDefinitionSendResult": {
         "docs": undefined,
         "properties": {
           "sent": "optional<CredentialDefinitionSendResult>",
           "txn": "optional<TxnOrCredentialDefinitionSendResultTxn>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "TxnOrCredentialDefinitionSendResultTxn": {
@@ -20630,6 +21458,9 @@ exports[`open api parser aries docs 1`] = `
         "properties": {
           "sent": "optional<PublishRevocations>",
           "txn": "optional<TxnOrPublishRevocationsResultTxn>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "TxnOrPublishRevocationsResultTxn": {
@@ -20645,6 +21476,9 @@ exports[`open api parser aries docs 1`] = `
           },
           "txn": "optional<TxnOrRegisterLedgerNymResponseTxn>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TxnOrRegisterLedgerNymResponseTxn": {
         "docs": "DID transaction to endorse",
@@ -20656,6 +21490,9 @@ exports[`open api parser aries docs 1`] = `
           "sent": "optional<RevRegResult>",
           "txn": "optional<TxnOrRevRegResultTxn>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TxnOrRevRegResultTxn": {
         "docs": "Revocation registry definition transaction to endorse",
@@ -20666,6 +21503,9 @@ exports[`open api parser aries docs 1`] = `
         "properties": {
           "sent": "optional<TxnOrSchemaSendResultSent>",
           "txn": "optional<TxnOrSchemaSendResultTxn>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "TxnOrSchemaSendResultSent": {
@@ -20794,6 +21634,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V10CredentialExchangeCredential": {
         "docs": "Credential as stored",
@@ -20818,6 +21661,9 @@ exports[`open api parser aries docs 1`] = `
       "V10CredentialExchangeCredentialRequestMetadata": {
         "docs": "(Indy) credential request metadata",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V10CredentialExchangeInitiator": {
         "docs": "Issue-credential exchange initiator: self or external",
@@ -20825,6 +21671,9 @@ exports[`open api parser aries docs 1`] = `
           "self",
           "external",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V10CredentialExchangeListResult": {
         "docs": undefined,
@@ -20833,6 +21682,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Aries#0036 v1.0 credential exchange records",
             "type": "optional<list<V10CredentialExchange>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V10CredentialExchangeRawCredential": {
@@ -20845,11 +21697,17 @@ exports[`open api parser aries docs 1`] = `
           "holder",
           "issuer",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V10DiscoveryExchangeListResult": {
         "docs": undefined,
         "properties": {
           "results": "optional<list<V10DiscoveryExchangeListResultResultsInner>>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V10DiscoveryExchangeListResultResultsInner": {
@@ -20901,6 +21759,9 @@ exports[`open api parser aries docs 1`] = `
               "pattern": "^\\d{4}-\\d\\d-\\d\\d[T ]\\d\\d:\\d\\d(?:\\:(?:\\d\\d(?:\\.\\d{1,6})?))?(?:[+-]\\d\\d:?\\d\\d|Z|)$",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V10DiscoveryRecordDisclose": {
@@ -20985,6 +21846,9 @@ exports[`open api parser aries docs 1`] = `
           },
           "verified_msgs": "optional<list<string>>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V10PresentationExchangeInitiator": {
         "docs": "Present-proof exchange initiator: self or external",
@@ -20992,6 +21856,9 @@ exports[`open api parser aries docs 1`] = `
           "self",
           "external",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V10PresentationExchangeList": {
         "docs": undefined,
@@ -21000,6 +21867,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Aries RFC 37 v1.0 presentation exchange records",
             "type": "optional<list<V10PresentationExchange>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V10PresentationExchangePresentation": {
@@ -21024,6 +21894,9 @@ exports[`open api parser aries docs 1`] = `
           "prover",
           "verifier",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V10PresentationExchangeVerified": {
         "docs": "Whether presentation is verified: true or false",
@@ -21031,6 +21904,9 @@ exports[`open api parser aries docs 1`] = `
           "true",
           "false",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredAttrSpec": {
         "docs": undefined,
@@ -21047,6 +21923,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Attribute value: base64-encode if MIME type is present",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V20CredBoundOfferRequestCounterPreview": {
@@ -21088,6 +21967,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "For ld-proofs. Verification method for signing.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V20CredExRecord": {
@@ -21168,6 +22050,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredExRecordByFormat": {
         "docs": undefined,
@@ -21177,22 +22062,37 @@ exports[`open api parser aries docs 1`] = `
           "cred_proposal": "optional<V20CredExRecordByFormatCredProposal>",
           "cred_request": "optional<V20CredExRecordByFormatCredRequest>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredExRecordByFormatCredIssue": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredExRecordByFormatCredOffer": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredExRecordByFormatCredProposal": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredExRecordByFormatCredRequest": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredExRecordCredIssue": {
         "docs": "Serialized credential issue message",
@@ -21220,6 +22120,9 @@ exports[`open api parser aries docs 1`] = `
           "cred_ex_record": "optional<V20CredExRecordDetailCredExRecord>",
           "indy": "optional<V20CredExRecordIndy>",
           "ld_proof": "optional<V20CredExRecordLdProof>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V20CredExRecordDetailCredExRecord": {
@@ -21290,10 +22193,16 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredExRecordIndyCredRequestMetadata": {
         "docs": "Credential request metadata for indy holder",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredExRecordInitiator": {
         "docs": "Issue-credential exchange initiator: self or external",
@@ -21301,6 +22210,9 @@ exports[`open api parser aries docs 1`] = `
           "self",
           "external",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredExRecordLdProof": {
         "docs": undefined,
@@ -21342,6 +22254,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredExRecordListResult": {
         "docs": undefined,
@@ -21351,6 +22266,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<list<V20CredExRecordDetail>>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredExRecordRole": {
         "docs": "Issue-credential exchange role: holder or issuer",
@@ -21358,6 +22276,9 @@ exports[`open api parser aries docs 1`] = `
           "issuer",
           "holder",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredExRecordState": {
         "docs": "Issue-credential exchange state",
@@ -21402,12 +22323,18 @@ exports[`open api parser aries docs 1`] = `
           "abandoned",
           "deleted",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredFilter": {
         "docs": undefined,
         "properties": {
           "indy": "optional<V20CredFilterIndy>",
           "ld_proof": "optional<V20CredFilterLdProof>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V20CredFilterIndy": {
@@ -21468,6 +22395,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredFilterLdProof": {
         "docs": "Credential filter for linked data proof",
@@ -21484,6 +22414,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Attachment format specifier",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V20CredIssue": {
@@ -21513,6 +22446,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Issuer-unique identifier to coordinate credential replacement",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V20CredOffer": {
@@ -21544,6 +22480,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredPreview": {
         "docs": undefined,
@@ -21553,6 +22492,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<string>",
           },
           "attributes": "list<V20CredAttrSpec>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V20CredProposal": {
@@ -21579,6 +22521,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Attachment formats",
             "type": "list<V20CredFormat>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V20CredProposalCredentialPreview": {
@@ -21609,6 +22554,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "list<AttachDecorator>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredRequestFreeFilter": {
         "docs": "Credential specification criteria by format",
@@ -21619,6 +22567,9 @@ exports[`open api parser aries docs 1`] = `
         "properties": {
           "results": "optional<list<V20DiscoveryExchangeListResultResultsInner>>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20DiscoveryExchangeListResultResultsInner": {
         "docs": "Discover Features v2.0 exchange record",
@@ -21628,6 +22579,9 @@ exports[`open api parser aries docs 1`] = `
         "docs": undefined,
         "properties": {
           "results": "optional<V20DiscoveryExchangeListResultResultsInner>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V20DiscoveryRecord": {
@@ -21676,6 +22630,9 @@ exports[`open api parser aries docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20DiscoveryRecordDisclosures": {
         "docs": "Disclosures message",
@@ -21706,6 +22663,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "list<V20PresFormat>",
           },
           "presentations~attach": "list<AttachDecorator>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V20PresExRecord": {
@@ -21781,6 +22741,9 @@ exports[`open api parser aries docs 1`] = `
           },
           "verified_msgs": "optional<list<string>>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20PresExRecordByFormat": {
         "docs": undefined,
@@ -21789,14 +22752,23 @@ exports[`open api parser aries docs 1`] = `
           "pres_proposal": "optional<V20PresExRecordByFormatPresProposal>",
           "pres_request": "optional<V20PresExRecordByFormatPresRequest>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20PresExRecordByFormatPresProposal": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20PresExRecordByFormatPresRequest": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20PresExRecordInitiator": {
         "docs": "Present-proof exchange initiator: self or external",
@@ -21804,6 +22776,9 @@ exports[`open api parser aries docs 1`] = `
           "self",
           "external",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20PresExRecordList": {
         "docs": undefined,
@@ -21812,6 +22787,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Presentation exchange records",
             "type": "optional<list<V20PresExRecord>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V20PresExRecordPres": {
@@ -21832,6 +22810,9 @@ exports[`open api parser aries docs 1`] = `
           "prover",
           "verifier",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20PresExRecordState": {
         "docs": "Present-proof exchange state",
@@ -21864,6 +22845,9 @@ exports[`open api parser aries docs 1`] = `
           "abandoned",
           "deleted",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20PresExRecordVerified": {
         "docs": "Whether presentation is verified: 'true' or 'false'",
@@ -21871,6 +22855,9 @@ exports[`open api parser aries docs 1`] = `
           "true",
           "false",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20PresFormat": {
         "docs": undefined,
@@ -21883,6 +22870,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Attachment format specifier",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V20PresProposal": {
@@ -21906,12 +22896,18 @@ exports[`open api parser aries docs 1`] = `
             "type": "list<AttachDecorator>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20PresProposalByFormat": {
         "docs": undefined,
         "properties": {
           "dif": "optional<V20PresProposalByFormatDif>",
           "indy": "optional<V20PresProposalByFormatIndy>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V20PresProposalByFormatDif": {
@@ -21947,12 +22943,18 @@ exports[`open api parser aries docs 1`] = `
             "type": "optional<boolean>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20PresRequestByFormat": {
         "docs": undefined,
         "properties": {
           "dif": "optional<V20PresRequestByFormatDif>",
           "indy": "optional<V20PresRequestByFormatIndy>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V20PresRequestByFormatDif": {
@@ -21998,16 +23000,25 @@ exports[`open api parser aries docs 1`] = `
           "schema_ids": "optional<list<string>>",
           "subject_ids": "optional<list<string>>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "VCRecordList": {
         "docs": undefined,
         "properties": {
           "results": "optional<list<VCRecord>>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "VcRecordCredValue": {
         "docs": "(JSON-serializable) credential value",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "VerifyRequestDoc": {
         "docs": "Signed document",
@@ -22022,6 +23033,9 @@ exports[`open api parser aries docs 1`] = `
           },
           "valid": "boolean",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "WalletList": {
         "docs": undefined,
@@ -22030,6 +23044,9 @@ exports[`open api parser aries docs 1`] = `
             "docs": "List of wallet records",
             "type": "optional<list<WalletRecord>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "WalletModuleResponse": "map<string, unknown>",
@@ -22073,6 +23090,9 @@ exports[`open api parser aries docs 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "WalletRecordKeyManagementMode": {
         "docs": "Mode regarding management of wallet key",
@@ -22080,15 +23100,24 @@ exports[`open api parser aries docs 1`] = `
           "managed",
           "unmanaged",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "WalletRecordSettings": {
         "docs": "Settings for this wallet.",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "WriteLedgerRequest": {
         "docs": undefined,
         "properties": {
           "ledger_id": "optional<string>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "directive": {
@@ -22097,6 +23126,9 @@ exports[`open api parser aries docs 1`] = `
           "required",
           "preferred",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "issuanceType": {
         "docs": "Issuance type",
@@ -22104,18 +23136,30 @@ exports[`open api parser aries docs 1`] = `
           "ISSUANCE_ON_DEMAND",
           "ISSUANCE_BY_DEFAULT",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "jwt": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ldp": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "metadata": {
         "docs": "Metadata dictionary",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "predicate": {
         "docs": "Preference",
@@ -22123,10 +23167,16 @@ exports[`open api parser aries docs 1`] = `
           "required",
           "preferred",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "pres": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "rule": {
         "docs": "Selection",
@@ -22134,14 +23184,23 @@ exports[`open api parser aries docs 1`] = `
           "all",
           "pick",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "signature": {
         "docs": "Credential signature",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "witness": {
         "docs": "Witness for revocation proof",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
     },
   },
@@ -22388,6 +23447,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
     },
     "basicmessage.yml": {
@@ -22446,6 +23508,9 @@ exports[`open api parser aries simple 1`] = `
               "type": "root.BasicMessageModuleResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
     },
@@ -23256,15 +24321,24 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "types": {
         "ConnectionMetadataSetRequestMetadata": {
           "docs": "Dictionary of metadata to set for connection.",
           "properties": {},
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "CreateInvitationRequestMetadata": {
           "docs": "Optional metadata to attach to the connection created with the invitation",
           "properties": {},
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "GetMatchingConnectionsRequestConnectionProtocol": {
           "enum": [
@@ -23277,6 +24351,9 @@ exports[`open api parser aries simple 1`] = `
               "value": "didexchange/1.0",
             },
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "GetMatchingConnectionsRequestState": {
           "enum": [
@@ -23290,6 +24367,9 @@ exports[`open api parser aries simple 1`] = `
             "active",
             "completed",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "GetMatchingConnectionsRequestTheirRole": {
           "enum": [
@@ -23298,6 +24378,9 @@ exports[`open api parser aries simple 1`] = `
             "inviter",
             "responder",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
       },
     },
@@ -23591,6 +24674,9 @@ exports[`open api parser aries simple 1`] = `
               "type": "root.CredentialDefinitionGetResult",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
     },
@@ -24046,6 +25132,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
     },
     "didExchange.yml": {
@@ -24369,6 +25458,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
     },
     "discoverFeatures.yml": {
@@ -24517,6 +25609,9 @@ exports[`open api parser aries simple 1`] = `
               "type": "root.V10DiscoveryRecord",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
     },
@@ -24670,6 +25765,9 @@ exports[`open api parser aries simple 1`] = `
               "type": "root.V20DiscoveryExchangeResult",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
     },
@@ -25238,6 +26336,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "types": {
         "SetEndorserRoleForConnIdRequestTransactionMyJob": {
@@ -25246,6 +26347,9 @@ exports[`open api parser aries simple 1`] = `
             "TRANSACTION_ENDORSER",
             "reset",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
       },
     },
@@ -25305,6 +26409,9 @@ exports[`open api parser aries simple 1`] = `
               "type": "root.IntroModuleResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
     },
@@ -27731,6 +28838,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "types": {
         "GetMatchingCredExRecordsRequestRole": {
@@ -27738,6 +28848,9 @@ exports[`open api parser aries simple 1`] = `
             "issuer",
             "holder",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "GetMatchingCredExRecordsRequestState": {
           "enum": [
@@ -27753,6 +28866,9 @@ exports[`open api parser aries simple 1`] = `
             "credential_revoked",
             "abandoned",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
       },
     },
@@ -31050,6 +32166,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "types": {
         "GetMatchingCredExRecordsV2RequestRole": {
@@ -31057,6 +32176,9 @@ exports[`open api parser aries simple 1`] = `
             "issuer",
             "holder",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "GetMatchingCredExRecordsV2RequestState": {
           "enum": [
@@ -31099,6 +32221,9 @@ exports[`open api parser aries simple 1`] = `
             },
             "abandoned",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
       },
     },
@@ -31202,6 +32327,9 @@ exports[`open api parser aries simple 1`] = `
               "type": "root.VerifyResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
     },
@@ -31561,6 +32689,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "types": {
         "GetPublishedDidEndpointRequestEndpointType": {
@@ -31569,6 +32700,9 @@ exports[`open api parser aries simple 1`] = `
             "Profile",
             "LinkedDomains",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "RegisterNymRequestRole": {
           "enum": [
@@ -31578,6 +32712,9 @@ exports[`open api parser aries simple 1`] = `
             "NETWORK_MONITOR",
             "reset",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
       },
     },
@@ -32317,6 +33454,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "types": {
         "GetKeylistsRequestRole": {
@@ -32325,6 +33465,9 @@ exports[`open api parser aries simple 1`] = `
             "client",
             "server",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "GetMatchingMediationRecordsRequestState": {
           "enum": [
@@ -32332,10 +33475,16 @@ exports[`open api parser aries simple 1`] = `
             "granted",
             "denied",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "KeylistQueryFilterRequestFilter": {
           "docs": "Filter for keylist query",
           "properties": {},
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
       },
     },
@@ -32671,6 +33820,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "types": {
         "CreateWalletRequestWalletDispatchType": {
@@ -32680,6 +33832,9 @@ exports[`open api parser aries simple 1`] = `
             "both",
             "base",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "CreateWalletRequestWalletKeyDerivation": {
           "docs": "Key derivation",
@@ -32688,6 +33843,9 @@ exports[`open api parser aries simple 1`] = `
             "ARGON2I_INT",
             "RAW",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "CreateWalletRequestWalletType": {
           "docs": "Type of the wallet to create",
@@ -32696,6 +33854,9 @@ exports[`open api parser aries simple 1`] = `
             "in_memory",
             "indy",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "UpdateWalletRequestWalletDispatchType": {
           "docs": "Webhook target dispatch type for this wallet.             default - Dispatch only to webhooks associated with this wallet.             base - Dispatch only to webhooks associated with the base wallet.             both - Dispatch to both webhook targets.",
@@ -32704,6 +33865,9 @@ exports[`open api parser aries simple 1`] = `
             "both",
             "base",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
       },
     },
@@ -33104,11 +34268,17 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "types": {
         "InvitationCreateRequestMetadata": {
           "docs": "Optional metadata to attach to the connection created with the invitation",
           "properties": {},
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
       },
     },
@@ -34947,6 +36117,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "types": {
         "GetMatchingPresExRecordsRequestRole": {
@@ -34954,6 +36127,9 @@ exports[`open api parser aries simple 1`] = `
             "prover",
             "verifier",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "GetMatchingPresExRecordsRequestState": {
           "enum": [
@@ -34967,6 +36143,9 @@ exports[`open api parser aries simple 1`] = `
             "presentation_acked",
             "abandoned",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
       },
     },
@@ -36636,6 +37815,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "types": {
         "GetMatchingPresExRecordsV2RequestRole": {
@@ -36643,6 +37825,9 @@ exports[`open api parser aries simple 1`] = `
             "prover",
             "verifier",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "GetMatchingPresExRecordsV2RequestState": {
           "enum": [
@@ -36673,6 +37858,9 @@ exports[`open api parser aries simple 1`] = `
             "done",
             "abandoned",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
       },
     },
@@ -36717,6 +37905,9 @@ exports[`open api parser aries simple 1`] = `
               "type": "root.ResolutionResult",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
     },
@@ -37860,6 +39051,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "types": {
         "GetCreatedRegistriesRequestState": {
@@ -37870,6 +39064,9 @@ exports[`open api parser aries simple 1`] = `
             "active",
             "full",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "RevokeRequestNotifyVersion": {
           "docs": "Specify which version of the revocation notification should be sent",
@@ -37877,6 +39074,9 @@ exports[`open api parser aries simple 1`] = `
             "v1_0",
             "v2_0",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "SetRevocationRegistryStateRequestState": {
           "enum": [
@@ -37886,6 +39086,9 @@ exports[`open api parser aries simple 1`] = `
             "active",
             "full",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
       },
     },
@@ -38136,6 +39339,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
     },
     "server.yml": {
@@ -38296,6 +39502,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
     },
     "trustping.yml": {
@@ -38354,6 +39563,9 @@ exports[`open api parser aries simple 1`] = `
               "type": "root.PingRequestResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
     },
@@ -38691,6 +39903,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "types": {
         "DidEndpointWithTypeEndpointType": {
@@ -38700,18 +39915,27 @@ exports[`open api parser aries simple 1`] = `
             "Profile",
             "LinkedDomains",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "GetDidsRequestKeyType": {
           "enum": [
             "ed25519",
             "bls12381g2",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "GetDidsRequestMethod": {
           "enum": [
             "key",
             "sov",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
         "GetDidsRequestPosture": {
           "enum": [
@@ -38719,6 +39943,9 @@ exports[`open api parser aries simple 1`] = `
             "posted",
             "wallet_only",
           ],
+          "source": {
+            "openapi": "aries/openapi.yml",
+          },
         },
       },
     },
@@ -38798,6 +40025,9 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "aries/openapi.yml",
+      },
     },
     "types": {
       "AMLRecord": {
@@ -38807,11 +40037,17 @@ exports[`open api parser aries simple 1`] = `
           "amlContext": "optional<string>",
           "version": "optional<string>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ActionMenuFetchResult": {
         "docs": undefined,
         "properties": {
           "result": "optional<ActionMenuFetchResultResult>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "ActionMenuFetchResultResult": {
@@ -38827,10 +40063,16 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<AdminConfigConfig>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "AdminConfigConfig": {
         "docs": "Configuration settings",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "AdminModules": {
         "docs": undefined,
@@ -38839,6 +40081,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "List of admin modules",
             "type": "optional<list<string>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "AdminReset": "map<string, unknown>",
@@ -38863,10 +40108,16 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "AdminStatusConductor": {
         "docs": "Conductor statistics",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "AdminStatusLiveliness": {
         "docs": undefined,
@@ -38875,6 +40126,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Liveliness status",
             "type": "optional<boolean>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "AdminStatusReadiness": {
@@ -38885,10 +40139,16 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<boolean>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "AdminStatusTiming": {
         "docs": "Timing results",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "AttachDecorator": {
         "docs": undefined,
@@ -38925,6 +40185,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "AttachDecoratorData": {
         "docs": undefined,
@@ -38959,6 +40222,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "AttachDecoratorData1Jws": {
         "docs": undefined,
@@ -38984,6 +40250,9 @@ exports[`open api parser aries simple 1`] = `
               "pattern": "^[-_a-zA-Z0-9]*$",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "AttachDecoratorDataJWS": {
@@ -39015,6 +40284,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<list<AttachDecoratorData1Jws>>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "AttachDecoratorDataJWSHeader": {
         "docs": undefined,
@@ -39029,6 +40301,9 @@ exports[`open api parser aries simple 1`] = `
               "pattern": "^did:(?:key:z[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]+|sov:[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}(;.*)?(\\?.*)?#.+)$",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "AttachDecoratorDataJws": {
@@ -39047,6 +40322,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<AttachmentDefType>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "AttachmentDefType": {
         "docs": "Attachment type",
@@ -39060,11 +40338,17 @@ exports[`open api parser aries simple 1`] = `
             "value": "present-proof",
           },
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "AttributeMimeTypesResult": {
         "docs": undefined,
         "properties": {
           "results": "optional<map<string, optional<string>>>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "BasicMessageModuleResponse": "map<string, unknown>",
@@ -39078,22 +40362,37 @@ exports[`open api parser aries simple 1`] = `
           "ldp_vc": "optional<ClaimFormatLdpVc>",
           "ldp_vp": "optional<ClaimFormatLdpVp>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ClaimFormatJwtVc": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ClaimFormatJwtVp": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ClaimFormatLdpVc": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ClaimFormatLdpVp": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ConnRecord": {
         "docs": undefined,
@@ -39209,6 +40508,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ConnRecordAccept": {
         "docs": "Connection acceptance: manual or auto",
@@ -39216,6 +40518,9 @@ exports[`open api parser aries simple 1`] = `
           "manual",
           "auto",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ConnRecordConnectionProtocol": {
         "docs": "Connection protocol used",
@@ -39229,6 +40534,9 @@ exports[`open api parser aries simple 1`] = `
             "value": "didexchange/1.0",
           },
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ConnRecordInvitationMode": {
         "docs": "Invitation mode",
@@ -39237,6 +40545,9 @@ exports[`open api parser aries simple 1`] = `
           "multi",
           "static",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ConnRecordRoutingState": {
         "docs": "Routing state of connection",
@@ -39246,6 +40557,9 @@ exports[`open api parser aries simple 1`] = `
           "active",
           "error",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ConnRecordTheirRole": {
         "docs": "Their role in the connection protocol",
@@ -39255,6 +40569,9 @@ exports[`open api parser aries simple 1`] = `
           "inviter",
           "responder",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ConnectionInvitation": {
         "docs": undefined,
@@ -39298,6 +40615,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ConnectionList": {
         "docs": undefined,
@@ -39306,6 +40626,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "List of connection records",
             "type": "optional<list<ConnRecord>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "ConnectionMetadata": {
@@ -39316,10 +40639,16 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<ConnectionMetadataResults>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ConnectionMetadataResults": {
         "docs": "Dictionary of metadata associated with connection.",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ConnectionModuleResponse": "map<string, unknown>",
       "ConnectionStaticResult": {
@@ -39377,6 +40706,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "Constraints": {
         "docs": undefined,
@@ -39395,6 +40727,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<ConstraintsSubjectIsIssuer>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ConstraintsStatusActive": {
         "enum": [
@@ -39402,6 +40737,9 @@ exports[`open api parser aries simple 1`] = `
           "allowed",
           "disallowed",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ConstraintsStatusRevoked": {
         "enum": [
@@ -39409,6 +40747,9 @@ exports[`open api parser aries simple 1`] = `
           "allowed",
           "disallowed",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ConstraintsStatusSuspended": {
         "enum": [
@@ -39416,6 +40757,9 @@ exports[`open api parser aries simple 1`] = `
           "allowed",
           "disallowed",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ConstraintsSubjectIsIssuer": {
         "docs": "SubjectIsIssuer",
@@ -39423,6 +40767,9 @@ exports[`open api parser aries simple 1`] = `
           "required",
           "preferred",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CreateWalletResponse": {
         "docs": undefined,
@@ -39468,6 +40815,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CreateWalletResponseKeyManagementMode": {
         "docs": "Mode regarding management of wallet key",
@@ -39475,10 +40825,16 @@ exports[`open api parser aries simple 1`] = `
           "managed",
           "unmanaged",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CreateWalletResponseSettings": {
         "docs": "Settings for this wallet.",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CreateWalletTokenResponse": {
         "docs": undefined,
@@ -39487,6 +40843,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Authorization token to authenticate wallet requests",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "CredAttrSpec": {
@@ -39505,12 +40864,18 @@ exports[`open api parser aries simple 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CredDefValue": {
         "docs": undefined,
         "properties": {
           "primary": "optional<CredDefValuePrimary>",
           "revocation": "optional<CredDefValueRevocation>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "CredDefValuePrimary": {
@@ -39554,6 +40919,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CredDefValueRevocation": {
         "docs": undefined,
@@ -39570,11 +40938,17 @@ exports[`open api parser aries simple 1`] = `
           "u": "optional<string>",
           "y": "optional<string>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CredInfoList": {
         "docs": undefined,
         "properties": {
           "results": "optional<list<IndyCredInfo>>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "CredRevIndyRecordsResult": {
@@ -39585,21 +40959,33 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<CredRevIndyRecordsResultRevRegDelta>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CredRevIndyRecordsResultRevRegDelta": {
         "docs": "Indy revocation registry delta",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CredRevRecordDetailsResult": {
         "docs": undefined,
         "properties": {
           "results": "optional<list<IssuerCredRevRecord>>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CredRevRecordResult": {
         "docs": undefined,
         "properties": {
           "result": "optional<IssuerCredRevRecord>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "CredRevokedResult": {
@@ -39609,6 +40995,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Whether credential is revoked on the ledger",
             "type": "optional<boolean>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "Credential": {
@@ -39658,6 +41047,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "list<string>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CredentialDefinition": {
         "docs": undefined,
@@ -39696,11 +41088,17 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CredentialDefinitionGetResult": {
         "docs": undefined,
         "properties": {
           "credential_definition": "optional<CredentialDefinition>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "CredentialDefinitionSendResult": {
@@ -39717,6 +41115,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CredentialDefinitionValue": {
         "docs": "Credential definition primary and revocation values",
@@ -39726,6 +41127,9 @@ exports[`open api parser aries simple 1`] = `
         "docs": undefined,
         "properties": {
           "credential_definition_ids": "optional<list<string>>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "CredentialOffer": {
@@ -39746,6 +41150,9 @@ exports[`open api parser aries simple 1`] = `
           "credential_preview": "optional<CredentialPreview>",
           "offers~attach": "list<AttachDecorator>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CredentialPreview": {
         "docs": undefined,
@@ -39755,6 +41162,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<string>",
           },
           "attributes": "list<CredAttrSpec>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "CredentialProof": {
@@ -39824,6 +41234,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "CredentialStatusOptions": {
         "docs": undefined,
@@ -39832,6 +41245,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Credential status method type to use for the credential. Should match status method registered in the Verifiable Credential Extension Registry",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "DID": {
@@ -39870,6 +41286,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "DIDCreateOptions": {
         "docs": undefined,
@@ -39888,6 +41307,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Key type to use for the DID keypair. Validated with the chosen DID method's supported key types.",
             "type": "DidCreateOptionsKeyType",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "DIDEndpoint": {
@@ -39914,6 +41336,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "DIDList": {
         "docs": undefined,
@@ -39923,11 +41348,17 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<list<DID>>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "DIDResult": {
         "docs": undefined,
         "properties": {
           "result": "optional<DID>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "DIFField": {
@@ -39948,6 +41379,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "DIFHolder": {
         "docs": undefined,
@@ -39957,6 +41391,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<directive>",
           },
           "field_id": "optional<list<string>>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "DIFOptions": {
@@ -39977,6 +41414,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "DIFPresSpec": {
         "docs": undefined,
@@ -39995,6 +41435,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<DifPresSpecRevealDoc>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "DIFProofProposal": {
         "docs": undefined,
@@ -40002,12 +41445,18 @@ exports[`open api parser aries simple 1`] = `
           "input_descriptors": "optional<list<InputDescriptors>>",
           "options": "optional<DIFOptions>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "DIFProofRequest": {
         "docs": undefined,
         "properties": {
           "options": "optional<DIFOptions>",
           "presentation_definition": "PresentationDefinition",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "DidCreateOptions": {
@@ -40020,6 +41469,9 @@ exports[`open api parser aries simple 1`] = `
           "ed25519",
           "bls12381g2",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "DidKeyType": {
         "docs": "Key type associated with the DID",
@@ -40027,6 +41479,9 @@ exports[`open api parser aries simple 1`] = `
           "ed25519",
           "bls12381g2",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "DidPosture": {
         "docs": "Whether DID is current public DID, posted to ledger but not current public DID, or local to the wallet",
@@ -40035,6 +41490,9 @@ exports[`open api parser aries simple 1`] = `
           "posted",
           "wallet_only",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "DidxRequestDidDocAttach": {
         "docs": "As signed attachment, DID Doc associated with DID",
@@ -40043,10 +41501,16 @@ exports[`open api parser aries simple 1`] = `
       "DifPresSpecRecordIds": {
         "docs": "Mapping of input_descriptor id to list of stored W3C credential record_id",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "DifPresSpecRevealDoc": {
         "docs": "reveal doc [JSON-LD frame] dict used to derive the credential when selective disclosure is required",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "Disclose": {
         "docs": undefined,
@@ -40063,6 +41527,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "List of protocol descriptors",
             "type": "list<ProtocolDescriptor>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "Disclosures": {
@@ -40081,6 +41548,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "list<map<string, unknown>>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "Doc": {
         "docs": undefined,
@@ -40091,10 +41561,16 @@ exports[`open api parser aries simple 1`] = `
           },
           "options": "DocOptions",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "DocCredential": {
         "docs": "Credential to sign",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "DocOptions": {
         "docs": "Signature options",
@@ -40111,6 +41587,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Endorser Name",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "EndpointsResult": {
@@ -40136,6 +41615,9 @@ exports[`open api parser aries simple 1`] = `
               "pattern": "^[A-Za-z0-9\\.\\-\\+]+://([A-Za-z0-9][.A-Za-z0-9-_]+[A-Za-z0-9])+(:[1-9][0-9]*)?(/[^?&#]+)?$",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "Filter": {
@@ -40187,6 +41669,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "Generated": {
         "docs": undefined,
@@ -40219,6 +41704,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "GetDIDEndpointResponse": {
         "docs": undefined,
@@ -40233,6 +41721,9 @@ exports[`open api parser aries simple 1`] = `
               "pattern": "^[A-Za-z0-9\\.\\-\\+]+://([A-Za-z0-9][.A-Za-z0-9-_]+[A-Za-z0-9])+(:[1-9][0-9]*)?(/[^?&#]+)?$",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "GetDIDVerkeyResponse": {
@@ -40249,6 +41740,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "GetNymRoleResponse": {
         "docs": undefined,
@@ -40257,6 +41751,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Ledger role",
             "type": "optional<GetNymRoleResponseRole>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "GetNymRoleResponseRole": {
@@ -40269,6 +41766,9 @@ exports[`open api parser aries simple 1`] = `
           "USER",
           "ROLE_REMOVE",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "HolderModuleResponse": "map<string, unknown>",
       "IndyAttrValue": {
@@ -40288,6 +41788,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Attribute raw value",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyCredAbstract": {
@@ -40324,6 +41827,9 @@ exports[`open api parser aries simple 1`] = `
               "pattern": "^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+$",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyCredAbstractKeyCorrectnessProof": {
@@ -40382,6 +41888,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyCredPrecis": {
         "docs": undefined,
@@ -40389,6 +41898,9 @@ exports[`open api parser aries simple 1`] = `
           "cred_info": "optional<IndyCredPrecisCredInfo>",
           "interval": "optional<IndyCredPrecisInterval>",
           "presentation_referents": "optional<list<string>>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyCredPrecisCredInfo": {
@@ -40441,14 +41953,23 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyCredRequestBlindedMs": {
         "docs": "Blinded master secret",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyCredRequestBlindedMsCorrectnessProof": {
         "docs": "Blinded master secret correctness proof",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyCredential": {
         "docs": undefined,
@@ -40504,14 +42025,23 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<witness>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyCredentialRevReg": {
         "docs": "Revocation registry state",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyCredentialSignatureCorrectnessProof": {
         "docs": "Credential signature correctness proof",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyCredentialValuesValue": {
         "docs": "Attribute value",
@@ -40559,6 +42089,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyGEProof": {
         "docs": undefined,
@@ -40586,6 +42119,9 @@ exports[`open api parser aries simple 1`] = `
           "t": "optional<map<string, string>>",
           "u": "optional<map<string, string>>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyGEProofPred": {
         "docs": undefined,
@@ -40603,6 +42139,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<integer>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyGeProofPredPType": {
         "docs": "Predicate type",
@@ -40612,6 +42151,9 @@ exports[`open api parser aries simple 1`] = `
           "GE",
           "GT",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyKeyCorrectnessProof": {
         "docs": undefined,
@@ -40641,12 +42183,18 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyNonRevocProof": {
         "docs": undefined,
         "properties": {
           "c_list": "optional<map<string, string>>",
           "x_list": "optional<map<string, string>>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyNonRevocationInterval": {
@@ -40674,6 +42222,9 @@ exports[`open api parser aries simple 1`] = `
               "multipleOf": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyPresAttrSpec": {
@@ -40705,6 +42256,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyPresPredSpec": {
         "docs": undefined,
@@ -40732,6 +42286,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyPresPredSpecPredicate": {
         "docs": "Predicate type ('<', '<=', '>=', or '>')",
@@ -40753,6 +42310,9 @@ exports[`open api parser aries simple 1`] = `
             "value": ">",
           },
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyPresPreview": {
         "docs": undefined,
@@ -40763,6 +42323,9 @@ exports[`open api parser aries simple 1`] = `
           },
           "attributes": "list<IndyPresAttrSpec>",
           "predicates": "list<IndyPresPredSpec>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyPresSpec": {
@@ -40785,6 +42348,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<boolean>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyPrimaryProof": {
         "docs": undefined,
@@ -40794,6 +42360,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Indy GE proofs",
             "type": "optional<list<IndyGEProof>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyPrimaryProofEqProof": {
@@ -40809,6 +42378,9 @@ exports[`open api parser aries simple 1`] = `
           },
           "proof": "optional<IndyProofProof>",
           "requested_proof": "optional<IndyProofRequestedProof>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyProofIdentifier": {
@@ -40856,6 +42428,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyProofProof": {
         "docs": undefined,
@@ -40865,6 +42440,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Indy proof proofs",
             "type": "optional<list<IndyProofProofProofsProof>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyProofProofAggregatedProof": {
@@ -40879,12 +42457,18 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<list<list<integer>>>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyProofProofProofsProof": {
         "docs": undefined,
         "properties": {
           "non_revoc_proof": "optional<IndyProofProofProofsProofNonRevocProof>",
           "primary_proof": "optional<IndyProofProofProofsProofPrimaryProof>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyProofProofProofsProofNonRevocProof": {
@@ -40911,6 +42495,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "If present, credential must satisfy one of given restrictions: specify schema_id, schema_issuer_did, schema_name, schema_version, issuer_did, cred_def_id, and/or attr::<attribute-name>::value where <attribute-name> represents a credential attribute name",
             "type": "optional<list<map<string, string>>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyProofReqAttrSpecNonRevoked": {
@@ -40939,6 +42526,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyProofReqPredSpec": {
         "docs": undefined,
@@ -40960,6 +42550,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "If present, credential must satisfy one of given restrictions: specify schema_id, schema_issuer_did, schema_name, schema_version, issuer_did, cred_def_id, and/or attr::<attribute-name>::value where <attribute-name> represents a credential attribute name",
             "type": "optional<list<map<string, string>>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyProofReqPredSpecNonRevoked": {
@@ -40988,6 +42581,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyProofReqPredSpecPType": {
         "docs": "Predicate type ('<', '<=', '>=', or '>')",
@@ -41009,6 +42605,9 @@ exports[`open api parser aries simple 1`] = `
             "value": ">",
           },
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyProofRequest": {
         "docs": undefined,
@@ -41047,6 +42646,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyProofRequestNonRevoked": {
         "docs": undefined,
@@ -41074,6 +42676,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyProofRequestedProof": {
         "docs": undefined,
@@ -41099,6 +42704,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<IndyProofRequestedProofUnrevealedAttrs>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyProofRequestedProofPredicate": {
         "docs": undefined,
@@ -41107,6 +42715,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Sub-proof index",
             "type": "optional<integer>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyProofRequestedProofRevealedAttr": {
@@ -41131,6 +42742,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<integer>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyProofRequestedProofRevealedAttrGroup": {
         "docs": undefined,
@@ -41144,14 +42758,23 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<map<string, RawEncoded>>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyProofRequestedProofSelfAttestedAttrs": {
         "docs": "Proof requested proof self-attested attributes",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyProofRequestedProofUnrevealedAttrs": {
         "docs": "Unrevealed attributes",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyRequestedCredsRequestedAttr": {
         "docs": undefined,
@@ -41164,6 +42787,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Whether to reveal attribute in proof (default true)",
             "type": "optional<boolean>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyRequestedCredsRequestedPred": {
@@ -41184,6 +42810,9 @@ exports[`open api parser aries simple 1`] = `
               "multipleOf": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyRevRegDef": {
@@ -41229,6 +42858,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyRevRegDefValue": {
         "docs": undefined,
@@ -41264,11 +42896,17 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyRevRegDefValuePublicKeys": {
         "docs": undefined,
         "properties": {
           "accumKey": "optional<IndyRevRegDefValuePublicKeysAccumKey>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyRevRegDefValuePublicKeysAccumKey": {
@@ -41278,6 +42916,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Value for z",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IndyRevRegEntry": {
@@ -41295,6 +42936,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IndyRevRegEntryValue": {
         "docs": undefined,
@@ -41311,6 +42955,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Revoked credential revocation identifiers",
             "type": "optional<list<integer>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "InputDescriptors": {
@@ -41335,6 +42982,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<string>",
           },
           "schema": "optional<InputDescriptorsSchema>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "InputDescriptorsSchema": {
@@ -41371,6 +43021,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<list<AttachDecorator>>",
           },
           "services": "optional<list<map<string, unknown>>>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "InvitationRecord": {
@@ -41422,6 +43075,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "InvitationRecordInvitation": {
         "docs": "Out of band invitation message",
@@ -41439,6 +43095,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Invitation URL",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IssueCredentialModuleResponse": "map<string, unknown>",
@@ -41511,6 +43170,9 @@ exports[`open api parser aries simple 1`] = `
               "pattern": "^\\d{4}-\\d\\d-\\d\\d[T ]\\d\\d:\\d\\d(?:\\:(?:\\d\\d(?:\\.\\d{1,6})?))?(?:[+-]\\d\\d:?\\d\\d|Z|)$",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "IssuerRevRegRecord": {
@@ -41615,6 +43277,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "IssuerRevRegRecordRevocRegDef": {
         "docs": "Revocation registry definition",
@@ -41631,6 +43296,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "List of keylist records",
             "type": "optional<list<RouteRecord>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "KeylistQuery": {
@@ -41650,10 +43318,16 @@ exports[`open api parser aries simple 1`] = `
           },
           "paginate": "optional<KeylistQueryPaginate>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "KeylistQueryFilter": {
         "docs": "Query dictionary object",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "KeylistQueryPaginate": {
         "docs": undefined,
@@ -41666,6 +43340,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Offset value for query",
             "type": "optional<integer>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "KeylistUpdate": {
@@ -41683,6 +43360,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "List of update rules",
             "type": "optional<list<KeylistUpdateRule>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "KeylistUpdateRule": {
@@ -41703,6 +43383,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "KeylistUpdateRuleAction": {
         "docs": "Action for specific key",
@@ -41710,12 +43393,18 @@ exports[`open api parser aries simple 1`] = `
           "add",
           "remove",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "LDProofVCDetail": {
         "docs": undefined,
         "properties": {
           "credential": "LdProofVcDetailCredential",
           "options": "LdProofVcDetailOptions",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "LDProofVCDetailOptions": {
@@ -41748,6 +43437,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "The proof type used for the proof. Should match suites registered in the Linked Data Cryptographic Suite Registry",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "LdProofVcDetailCredential": {
@@ -41786,11 +43478,17 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<boolean>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "LedgerConfigList": {
         "docs": undefined,
         "properties": {
           "ledger_config_list": "list<LedgerConfigInstance>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "LedgerModulesResult": "map<string, unknown>",
@@ -41852,6 +43550,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "MediationDeny": {
         "docs": undefined,
@@ -41866,6 +43567,9 @@ exports[`open api parser aries simple 1`] = `
           },
           "mediator_terms": "optional<list<string>>",
           "recipient_terms": "optional<list<string>>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "MediationGrant": {
@@ -41885,6 +43589,9 @@ exports[`open api parser aries simple 1`] = `
           },
           "routing_keys": "optional<list<string>>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "MediationList": {
         "docs": undefined,
@@ -41893,6 +43600,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "List of mediation records",
             "type": "optional<list<MediationRecord>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "MediationRecord": {
@@ -41930,6 +43640,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "Menu": {
         "docs": undefined,
@@ -41959,6 +43672,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "MenuForm": {
         "docs": undefined,
@@ -41979,6 +43695,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Menu form title",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "MenuFormParam": {
@@ -42009,6 +43728,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "MenuJson": {
         "docs": undefined,
@@ -42029,6 +43751,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Menu title",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "MenuOption": {
@@ -42051,6 +43776,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Menu option title",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "MultitenantModuleResponse": "map<string, unknown>",
@@ -42112,6 +43840,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "OobRecordRole": {
         "docs": "OOB Role",
@@ -42119,6 +43850,9 @@ exports[`open api parser aries simple 1`] = `
           "sender",
           "receiver",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "OobRecordState": {
         "docs": "Out of band message exchange state",
@@ -42143,6 +43877,9 @@ exports[`open api parser aries simple 1`] = `
           "done",
           "deleted",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "PingRequestResponse": {
         "docs": undefined,
@@ -42151,6 +43888,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Thread ID of the ping message",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "PresentationDefinition": {
@@ -42178,6 +43918,9 @@ exports[`open api parser aries simple 1`] = `
           },
           "submission_requirements": "optional<list<SubmissionRequirements>>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "PresentationProposal": {
         "docs": undefined,
@@ -42195,6 +43938,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<string>",
           },
           "presentation_proposal": "IndyPresPreview",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "PresentationRequest": {
@@ -42214,6 +43960,9 @@ exports[`open api parser aries simple 1`] = `
           },
           "request_presentations~attach": "list<AttachDecorator>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ProtocolDescriptor": {
         "docs": undefined,
@@ -42224,6 +43973,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<list<string>>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "PublishRevocations": {
         "docs": undefined,
@@ -42232,6 +43984,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Credential revocation ids by revocation registry id",
             "type": "optional<map<string, list<string>>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "Queries": {
@@ -42246,6 +44001,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<string>",
           },
           "queries": "optional<list<QueryItem>>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "Query": {
@@ -42262,6 +44020,9 @@ exports[`open api parser aries simple 1`] = `
           "comment": "optional<string>",
           "query": "string",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "QueryItem": {
         "docs": undefined,
@@ -42275,6 +44036,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "QueryItemFeatureType": {
         "docs": "feature type",
@@ -42285,6 +44049,9 @@ exports[`open api parser aries simple 1`] = `
             "value": "goal-code",
           },
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "RawEncoded": {
         "docs": undefined,
@@ -42304,6 +44071,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ResolutionResult": {
         "docs": undefined,
@@ -42317,14 +44087,23 @@ exports[`open api parser aries simple 1`] = `
             "type": "ResolutionResultMetadata",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ResolutionResultDidDocument": {
         "docs": "DID Document",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ResolutionResultMetadata": {
         "docs": "Resolution metadata",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "RevRegIssuedResult": {
         "docs": undefined,
@@ -42341,11 +44120,17 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "RevRegResult": {
         "docs": undefined,
         "properties": {
           "result": "optional<IssuerRevRegRecord>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "RevRegWalletUpdatedResult": {
@@ -42364,23 +44149,38 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<RevRegWalletUpdatedResultRevRegDelta>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "RevRegWalletUpdatedResultAccumCalculated": {
         "docs": "Calculated accumulator for phantom revocations",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "RevRegWalletUpdatedResultAccumFixed": {
         "docs": "Applied ledger transaction to fix revocations",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "RevRegWalletUpdatedResultRevRegDelta": {
         "docs": "Indy revocation registry delta",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "RevRegsCreated": {
         "docs": undefined,
         "properties": {
           "rev_reg_ids": "optional<list<string>>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "RevocationModuleResponse": "map<string, unknown>",
@@ -42416,6 +44216,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
           "wallet_id": "optional<string>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "Schema": {
@@ -42471,11 +44274,17 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "SchemaGetResult": {
         "docs": undefined,
         "properties": {
           "schema": "optional<Schema>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "SchemaInputDescriptor": {
@@ -42489,6 +44298,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "URI",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "SchemaSendResult": {
@@ -42506,6 +44318,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "SchemaSendResultSchema": {
         "docs": "Schema definition",
@@ -42516,6 +44331,9 @@ exports[`open api parser aries simple 1`] = `
         "properties": {
           "schema_ids": "optional<list<string>>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "SchemasInputDescriptorFilter": {
         "docs": undefined,
@@ -42525,6 +44343,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<boolean>",
           },
           "uri_groups": "optional<list<list<SchemaInputDescriptor>>>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "SendMenuMenu": {
@@ -42547,6 +44368,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "SignResponse": {
         "docs": undefined,
@@ -42560,10 +44384,16 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<SignResponseSignedDoc>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "SignResponseSignedDoc": {
         "docs": "Signed document",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "SignatureOptions": {
         "docs": undefined,
@@ -42574,11 +44404,17 @@ exports[`open api parser aries simple 1`] = `
           "type": "optional<string>",
           "verificationMethod": "string",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "SignedDoc": {
         "docs": undefined,
         "properties": {
           "proof": "SignedDocProof",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "SignedDocProof": {
@@ -42618,6 +44454,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<rule>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TAAAcceptance": {
         "docs": undefined,
@@ -42634,6 +44473,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TAAInfo": {
         "docs": undefined,
@@ -42643,6 +44485,9 @@ exports[`open api parser aries simple 1`] = `
           "taa_record": "optional<TAARecord>",
           "taa_required": "optional<boolean>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TAARecord": {
         "docs": undefined,
@@ -42651,17 +44496,26 @@ exports[`open api parser aries simple 1`] = `
           "text": "optional<string>",
           "version": "optional<string>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TAAResult": {
         "docs": undefined,
         "properties": {
           "result": "optional<TAAInfo>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TailsDeleteResponse": {
         "docs": undefined,
         "properties": {
           "message": "optional<string>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "TransactionJobs": {
@@ -42676,6 +44530,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<TransactionJobsTransactionTheirJob>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TransactionJobsTransactionMyJob": {
         "docs": "My transaction related job",
@@ -42684,6 +44541,9 @@ exports[`open api parser aries simple 1`] = `
           "TRANSACTION_ENDORSER",
           "reset",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TransactionJobsTransactionTheirJob": {
         "docs": "Their transaction related job",
@@ -42692,6 +44552,9 @@ exports[`open api parser aries simple 1`] = `
           "TRANSACTION_ENDORSER",
           "reset",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TransactionList": {
         "docs": undefined,
@@ -42700,6 +44563,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "List of transaction records",
             "type": "optional<list<TransactionRecord>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "TransactionRecord": {
@@ -42760,32 +44626,53 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TransactionRecordMessagesAttachItem": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TransactionRecordMetaData": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TransactionRecordSignatureRequestItem": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TransactionRecordSignatureResponseItem": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TransactionRecordTiming": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TxnOrCredentialDefinitionSendResult": {
         "docs": undefined,
         "properties": {
           "sent": "optional<CredentialDefinitionSendResult>",
           "txn": "optional<TxnOrCredentialDefinitionSendResultTxn>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "TxnOrCredentialDefinitionSendResultTxn": {
@@ -42797,6 +44684,9 @@ exports[`open api parser aries simple 1`] = `
         "properties": {
           "sent": "optional<PublishRevocations>",
           "txn": "optional<TxnOrPublishRevocationsResultTxn>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "TxnOrPublishRevocationsResultTxn": {
@@ -42812,6 +44702,9 @@ exports[`open api parser aries simple 1`] = `
           },
           "txn": "optional<TxnOrRegisterLedgerNymResponseTxn>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TxnOrRegisterLedgerNymResponseTxn": {
         "docs": "DID transaction to endorse",
@@ -42823,6 +44716,9 @@ exports[`open api parser aries simple 1`] = `
           "sent": "optional<RevRegResult>",
           "txn": "optional<TxnOrRevRegResultTxn>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "TxnOrRevRegResultTxn": {
         "docs": "Revocation registry definition transaction to endorse",
@@ -42833,6 +44729,9 @@ exports[`open api parser aries simple 1`] = `
         "properties": {
           "sent": "optional<TxnOrSchemaSendResultSent>",
           "txn": "optional<TxnOrSchemaSendResultTxn>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "TxnOrSchemaSendResultSent": {
@@ -42961,6 +44860,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V10CredentialExchangeCredential": {
         "docs": "Credential as stored",
@@ -42985,6 +44887,9 @@ exports[`open api parser aries simple 1`] = `
       "V10CredentialExchangeCredentialRequestMetadata": {
         "docs": "(Indy) credential request metadata",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V10CredentialExchangeInitiator": {
         "docs": "Issue-credential exchange initiator: self or external",
@@ -42992,6 +44897,9 @@ exports[`open api parser aries simple 1`] = `
           "self",
           "external",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V10CredentialExchangeListResult": {
         "docs": undefined,
@@ -43000,6 +44908,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Aries#0036 v1.0 credential exchange records",
             "type": "optional<list<V10CredentialExchange>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V10CredentialExchangeRawCredential": {
@@ -43012,11 +44923,17 @@ exports[`open api parser aries simple 1`] = `
           "holder",
           "issuer",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V10DiscoveryExchangeListResult": {
         "docs": undefined,
         "properties": {
           "results": "optional<list<V10DiscoveryExchangeListResultResultsInner>>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V10DiscoveryExchangeListResultResultsInner": {
@@ -43068,6 +44985,9 @@ exports[`open api parser aries simple 1`] = `
               "pattern": "^\\d{4}-\\d\\d-\\d\\d[T ]\\d\\d:\\d\\d(?:\\:(?:\\d\\d(?:\\.\\d{1,6})?))?(?:[+-]\\d\\d:?\\d\\d|Z|)$",
             },
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V10DiscoveryRecordDisclose": {
@@ -43152,6 +45072,9 @@ exports[`open api parser aries simple 1`] = `
           },
           "verified_msgs": "optional<list<string>>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V10PresentationExchangeInitiator": {
         "docs": "Present-proof exchange initiator: self or external",
@@ -43159,6 +45082,9 @@ exports[`open api parser aries simple 1`] = `
           "self",
           "external",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V10PresentationExchangeList": {
         "docs": undefined,
@@ -43167,6 +45093,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Aries RFC 37 v1.0 presentation exchange records",
             "type": "optional<list<V10PresentationExchange>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V10PresentationExchangePresentation": {
@@ -43191,6 +45120,9 @@ exports[`open api parser aries simple 1`] = `
           "prover",
           "verifier",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V10PresentationExchangeVerified": {
         "docs": "Whether presentation is verified: true or false",
@@ -43198,6 +45130,9 @@ exports[`open api parser aries simple 1`] = `
           "true",
           "false",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredAttrSpec": {
         "docs": undefined,
@@ -43214,6 +45149,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Attribute value: base64-encode if MIME type is present",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V20CredBoundOfferRequestCounterPreview": {
@@ -43255,6 +45193,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "For ld-proofs. Verification method for signing.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V20CredExRecord": {
@@ -43335,6 +45276,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredExRecordByFormat": {
         "docs": undefined,
@@ -43344,22 +45288,37 @@ exports[`open api parser aries simple 1`] = `
           "cred_proposal": "optional<V20CredExRecordByFormatCredProposal>",
           "cred_request": "optional<V20CredExRecordByFormatCredRequest>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredExRecordByFormatCredIssue": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredExRecordByFormatCredOffer": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredExRecordByFormatCredProposal": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredExRecordByFormatCredRequest": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredExRecordCredIssue": {
         "docs": "Serialized credential issue message",
@@ -43387,6 +45346,9 @@ exports[`open api parser aries simple 1`] = `
           "cred_ex_record": "optional<V20CredExRecordDetailCredExRecord>",
           "indy": "optional<V20CredExRecordIndy>",
           "ld_proof": "optional<V20CredExRecordLdProof>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V20CredExRecordDetailCredExRecord": {
@@ -43457,10 +45419,16 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredExRecordIndyCredRequestMetadata": {
         "docs": "Credential request metadata for indy holder",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredExRecordInitiator": {
         "docs": "Issue-credential exchange initiator: self or external",
@@ -43468,6 +45436,9 @@ exports[`open api parser aries simple 1`] = `
           "self",
           "external",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredExRecordLdProof": {
         "docs": undefined,
@@ -43509,6 +45480,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredExRecordListResult": {
         "docs": undefined,
@@ -43518,6 +45492,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<list<V20CredExRecordDetail>>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredExRecordRole": {
         "docs": "Issue-credential exchange role: holder or issuer",
@@ -43525,6 +45502,9 @@ exports[`open api parser aries simple 1`] = `
           "issuer",
           "holder",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredExRecordState": {
         "docs": "Issue-credential exchange state",
@@ -43569,12 +45549,18 @@ exports[`open api parser aries simple 1`] = `
           "abandoned",
           "deleted",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredFilter": {
         "docs": undefined,
         "properties": {
           "indy": "optional<V20CredFilterIndy>",
           "ld_proof": "optional<V20CredFilterLdProof>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V20CredFilterIndy": {
@@ -43635,6 +45621,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredFilterLdProof": {
         "docs": "Credential filter for linked data proof",
@@ -43651,6 +45640,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Attachment format specifier",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V20CredIssue": {
@@ -43680,6 +45672,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Issuer-unique identifier to coordinate credential replacement",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V20CredOffer": {
@@ -43711,6 +45706,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredPreview": {
         "docs": undefined,
@@ -43720,6 +45718,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<string>",
           },
           "attributes": "list<V20CredAttrSpec>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V20CredProposal": {
@@ -43746,6 +45747,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Attachment formats",
             "type": "list<V20CredFormat>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V20CredProposalCredentialPreview": {
@@ -43776,6 +45780,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "list<AttachDecorator>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20CredRequestFreeFilter": {
         "docs": "Credential specification criteria by format",
@@ -43786,6 +45793,9 @@ exports[`open api parser aries simple 1`] = `
         "properties": {
           "results": "optional<list<V20DiscoveryExchangeListResultResultsInner>>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20DiscoveryExchangeListResultResultsInner": {
         "docs": "Discover Features v2.0 exchange record",
@@ -43795,6 +45805,9 @@ exports[`open api parser aries simple 1`] = `
         "docs": undefined,
         "properties": {
           "results": "optional<V20DiscoveryExchangeListResultResultsInner>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V20DiscoveryRecord": {
@@ -43843,6 +45856,9 @@ exports[`open api parser aries simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20DiscoveryRecordDisclosures": {
         "docs": "Disclosures message",
@@ -43873,6 +45889,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "list<V20PresFormat>",
           },
           "presentations~attach": "list<AttachDecorator>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V20PresExRecord": {
@@ -43948,6 +45967,9 @@ exports[`open api parser aries simple 1`] = `
           },
           "verified_msgs": "optional<list<string>>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20PresExRecordByFormat": {
         "docs": undefined,
@@ -43956,14 +45978,23 @@ exports[`open api parser aries simple 1`] = `
           "pres_proposal": "optional<V20PresExRecordByFormatPresProposal>",
           "pres_request": "optional<V20PresExRecordByFormatPresRequest>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20PresExRecordByFormatPresProposal": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20PresExRecordByFormatPresRequest": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20PresExRecordInitiator": {
         "docs": "Present-proof exchange initiator: self or external",
@@ -43971,6 +46002,9 @@ exports[`open api parser aries simple 1`] = `
           "self",
           "external",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20PresExRecordList": {
         "docs": undefined,
@@ -43979,6 +46013,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Presentation exchange records",
             "type": "optional<list<V20PresExRecord>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V20PresExRecordPres": {
@@ -43999,6 +46036,9 @@ exports[`open api parser aries simple 1`] = `
           "prover",
           "verifier",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20PresExRecordState": {
         "docs": "Present-proof exchange state",
@@ -44031,6 +46071,9 @@ exports[`open api parser aries simple 1`] = `
           "abandoned",
           "deleted",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20PresExRecordVerified": {
         "docs": "Whether presentation is verified: 'true' or 'false'",
@@ -44038,6 +46081,9 @@ exports[`open api parser aries simple 1`] = `
           "true",
           "false",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20PresFormat": {
         "docs": undefined,
@@ -44050,6 +46096,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Attachment format specifier",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V20PresProposal": {
@@ -44073,12 +46122,18 @@ exports[`open api parser aries simple 1`] = `
             "type": "list<AttachDecorator>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20PresProposalByFormat": {
         "docs": undefined,
         "properties": {
           "dif": "optional<V20PresProposalByFormatDif>",
           "indy": "optional<V20PresProposalByFormatIndy>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V20PresProposalByFormatDif": {
@@ -44114,12 +46169,18 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<boolean>",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "V20PresRequestByFormat": {
         "docs": undefined,
         "properties": {
           "dif": "optional<V20PresRequestByFormatDif>",
           "indy": "optional<V20PresRequestByFormatIndy>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "V20PresRequestByFormatDif": {
@@ -44165,16 +46226,25 @@ exports[`open api parser aries simple 1`] = `
           "schema_ids": "optional<list<string>>",
           "subject_ids": "optional<list<string>>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "VCRecordList": {
         "docs": undefined,
         "properties": {
           "results": "optional<list<VCRecord>>",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "VcRecordCredValue": {
         "docs": "(JSON-serializable) credential value",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "VerifyRequestDoc": {
         "docs": "Signed document",
@@ -44189,6 +46259,9 @@ exports[`open api parser aries simple 1`] = `
           },
           "valid": "boolean",
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "WalletList": {
         "docs": undefined,
@@ -44197,6 +46270,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": "List of wallet records",
             "type": "optional<list<WalletRecord>>",
           },
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "WalletModuleResponse": "map<string, unknown>",
@@ -44240,6 +46316,9 @@ exports[`open api parser aries simple 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "WalletRecordKeyManagementMode": {
         "docs": "Mode regarding management of wallet key",
@@ -44247,15 +46326,24 @@ exports[`open api parser aries simple 1`] = `
           "managed",
           "unmanaged",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "WalletRecordSettings": {
         "docs": "Settings for this wallet.",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "WriteLedgerRequest": {
         "docs": undefined,
         "properties": {
           "ledger_id": "optional<string>",
+        },
+        "source": {
+          "openapi": "aries/openapi.yml",
         },
       },
       "directive": {
@@ -44264,6 +46352,9 @@ exports[`open api parser aries simple 1`] = `
           "required",
           "preferred",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "issuanceType": {
         "docs": "Issuance type",
@@ -44271,18 +46362,30 @@ exports[`open api parser aries simple 1`] = `
           "ISSUANCE_ON_DEMAND",
           "ISSUANCE_BY_DEFAULT",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "jwt": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "ldp": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "metadata": {
         "docs": "Metadata dictionary",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "predicate": {
         "docs": "Preference",
@@ -44290,10 +46393,16 @@ exports[`open api parser aries simple 1`] = `
           "required",
           "preferred",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "pres": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "rule": {
         "docs": "Selection",
@@ -44301,14 +46410,23 @@ exports[`open api parser aries simple 1`] = `
           "all",
           "pick",
         ],
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "signature": {
         "docs": "Credential signature",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
       "witness": {
         "docs": "Witness for revocation proof",
         "properties": {},
+        "source": {
+          "openapi": "aries/openapi.yml",
+        },
       },
     },
   },

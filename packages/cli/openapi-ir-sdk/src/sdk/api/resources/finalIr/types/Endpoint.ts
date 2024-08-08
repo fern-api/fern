@@ -4,7 +4,10 @@
 
 import * as FernOpenapiIr from "../../..";
 
-export interface Endpoint extends FernOpenapiIr.WithDescription, FernOpenapiIr.WithAvailability {
+export interface Endpoint
+    extends FernOpenapiIr.WithDescription,
+        FernOpenapiIr.WithAvailability,
+        FernOpenapiIr.WithSource {
     authed: boolean;
     internal: boolean | undefined;
     idempotent: boolean | undefined;

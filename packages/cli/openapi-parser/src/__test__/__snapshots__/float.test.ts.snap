@@ -68,7 +68,15 @@ exports[`float float parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Request",
+          "source": {
+            "file": "float/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "float/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -83,12 +91,24 @@ exports[`float float parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Response",
+          "source": {
+            "file": "float/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "float/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "float/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [],
     },
@@ -140,6 +160,10 @@ exports[`float float parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "float/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Response": {
@@ -208,6 +232,10 @@ exports[`float float parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "float/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
   },
