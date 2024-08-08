@@ -148,8 +148,6 @@ async function writeIrToFile({
     outputVersionOverride: string | undefined;
 }): Promise<AbsoluteFilePath> {
     const packageName = generatorsYml.getPackageName({ generatorInvocation });
-    console.log("packageName", packageName);
-    console.log("version", outputVersionOverride);
     const intermediateRepresentation = await getIntermediateRepresentation({
         workspace,
         audiences,
