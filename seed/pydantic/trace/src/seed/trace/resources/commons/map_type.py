@@ -10,8 +10,8 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, updat
 
 
 class MapType(UniversalBaseModel):
-    key_type: VariableType = pydantic.Field(alias="keyType")
-    value_type: VariableType = pydantic.Field(alias="valueType")
+    key_type: "VariableType" = pydantic.Field(alias="keyType")
+    value_type: "VariableType" = pydantic.Field(alias="valueType")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

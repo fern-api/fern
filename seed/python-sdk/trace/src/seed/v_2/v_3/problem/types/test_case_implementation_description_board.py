@@ -4,26 +4,36 @@ from __future__ import annotations
 
 import typing
 
-from .....core.pydantic_utilities import pydantic_v1
+import pydantic
+
+from .....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .parameter_id import ParameterId
 
 
-class TestCaseImplementationDescriptionBoard_Html(pydantic_v1.BaseModel):
-    type: typing.Literal["html"] = "html"
+class TestCaseImplementationDescriptionBoard_Html(UniversalBaseModel):
     value: str
+    type: typing.Literal["html"] = "html"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
-class TestCaseImplementationDescriptionBoard_ParamId(pydantic_v1.BaseModel):
-    type: typing.Literal["paramId"] = "paramId"
+class TestCaseImplementationDescriptionBoard_ParamId(UniversalBaseModel):
     value: ParameterId
+    type: typing.Literal["paramId"] = "paramId"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
 TestCaseImplementationDescriptionBoard = typing.Union[

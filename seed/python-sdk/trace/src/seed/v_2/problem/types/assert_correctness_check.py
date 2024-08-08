@@ -4,28 +4,41 @@ from __future__ import annotations
 
 import typing
 
-from .deep_equality_correctness_check import DeepEqualityCorrectnessCheck
-from .void_function_definition_that_takes_actual_result import VoidFunctionDefinitionThatTakesActualResult
+import pydantic
+
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .function_implementation_for_multiple_languages import FunctionImplementationForMultipleLanguages
+from .parameter import Parameter
+from .parameter_id import ParameterId
 
 
-class AssertCorrectnessCheck_DeepEquality(DeepEqualityCorrectnessCheck):
+class AssertCorrectnessCheck_DeepEquality(UniversalBaseModel):
     type: typing.Literal["deepEquality"] = "deepEquality"
+    expected_value_parameter_id: ParameterId = pydantic.Field(alias="expectedValueParameterId")
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
-class AssertCorrectnessCheck_Custom(VoidFunctionDefinitionThatTakesActualResult):
+class AssertCorrectnessCheck_Custom(UniversalBaseModel):
     type: typing.Literal["custom"] = "custom"
+    additional_parameters: typing.List[Parameter] = pydantic.Field(alias="additionalParameters")
+    code: FunctionImplementationForMultipleLanguages
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
 AssertCorrectnessCheck = typing.Union[AssertCorrectnessCheck_DeepEquality, AssertCorrectnessCheck_Custom]

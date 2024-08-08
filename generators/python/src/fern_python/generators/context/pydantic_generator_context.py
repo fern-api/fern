@@ -71,6 +71,12 @@ class PydanticGeneratorContext(ABC):
         ...
 
     @abstractmethod
+    def does_type_reference_reference_other_type(
+        self, type_reference: ir_types.TypeReference, other_type_id: ir_types.TypeId
+    ) -> bool:
+        ...
+
+    @abstractmethod
     def get_referenced_types(self, type_id: ir_types.TypeId) -> Set[ir_types.TypeId]:
         ...
 

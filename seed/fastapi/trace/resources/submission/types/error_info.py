@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
 from .compile_error import CompileError as resources_submission_types_compile_error_CompileError
 from .internal_error import InternalError as resources_submission_types_internal_error_InternalError
 from .runtime_error import RuntimeError as resources_submission_types_runtime_error_RuntimeError
@@ -96,6 +96,3 @@ class _ErrorInfo:
 
     class InternalError(resources_submission_types_internal_error_InternalError):
         type: typing.Literal["internalError"] = "internalError"
-
-
-update_forward_refs(ErrorInfo)

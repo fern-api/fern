@@ -3,30 +3,24 @@
 import datetime as dt
 import typing
 
+import pydantic
+
 from ...commons.types.language import Language
-from ...core.datetime_utils import serialize_datetime
-from ...core.pydantic_utilities import pydantic_v1
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .submission_type_state import SubmissionTypeState
 
 
-class GetSubmissionStateResponse(pydantic_v1.BaseModel):
-    time_submitted: typing.Optional[dt.datetime] = pydantic_v1.Field(alias="timeSubmitted", default=None)
+class GetSubmissionStateResponse(UniversalBaseModel):
+    time_submitted: typing.Optional[dt.datetime] = pydantic.Field(alias="timeSubmitted", default=None)
     submission: str
     language: Language
-    submission_type_state: SubmissionTypeState = pydantic_v1.Field(alias="submissionTypeState")
+    submission_type_state: SubmissionTypeState = pydantic.Field(alias="submissionTypeState")
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().dict(**kwargs_with_defaults)
-
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow

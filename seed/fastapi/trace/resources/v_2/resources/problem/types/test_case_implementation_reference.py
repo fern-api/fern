@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
+from ......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
 from .test_case_implementation import TestCaseImplementation
 from .test_case_template_id import TestCaseTemplateId
 
@@ -84,6 +84,3 @@ class _TestCaseImplementationReference:
 
     class Implementation(TestCaseImplementation):
         type: typing.Literal["implementation"] = "implementation"
-
-
-update_forward_refs(TestCaseImplementationReference)

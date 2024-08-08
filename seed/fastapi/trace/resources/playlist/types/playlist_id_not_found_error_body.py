@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import typing
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
 from .playlist_id import PlaylistId as resources_playlist_types_playlist_id_PlaylistId
 
 T_Result = typing.TypeVar("T_Result")
@@ -49,6 +49,3 @@ class _PlaylistIdNotFoundErrorBody:
     class PlaylistId(UniversalBaseModel):
         type: typing.Literal["playlistId"] = "playlistId"
         value: resources_playlist_types_playlist_id_PlaylistId
-
-
-update_forward_refs(PlaylistIdNotFoundErrorBody)

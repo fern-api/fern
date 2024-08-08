@@ -41,8 +41,8 @@ class Node(UniversalBaseModel):
     """
 
     name: str
-    nodes: typing.Optional[typing.List[Node]] = None
-    trees: typing.Optional[typing.List[Tree]] = None
+    nodes: typing.Optional[typing.List["Node"]] = None
+    trees: typing.Optional[typing.List["Tree"]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

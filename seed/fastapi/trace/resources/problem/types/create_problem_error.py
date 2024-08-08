@@ -6,7 +6,7 @@ import typing
 
 import pydantic
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
 from .generic_create_problem_error import GenericCreateProblemError
 
 T_Result = typing.TypeVar("T_Result")
@@ -48,6 +48,3 @@ class CreateProblemError(UniversalRootModel):
 class _CreateProblemError:
     class Generic(GenericCreateProblemError):
         error_type: typing.Literal["generic"] = pydantic.Field(alias="_type", default="generic")
-
-
-update_forward_refs(CreateProblemError)

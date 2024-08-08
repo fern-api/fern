@@ -47,8 +47,8 @@ class ContainerValue(UniversalRootModel):
 
     def visit(
         self,
-        list_: typing.Callable[[typing.List[FieldValue]], T_Result],
-        optional: typing.Callable[[typing.Optional[FieldValue]], T_Result],
+        list_: typing.Callable[[typing.List["FieldValue"]], T_Result],
+        optional: typing.Callable[[typing.Optional["FieldValue"]], T_Result],
     ) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "list":
@@ -70,6 +70,6 @@ class _ContainerValue:
         value: typing.Optional[FieldValue] = None
 
 
-update_forward_refs(_ContainerValue.List, ContainerValue=ContainerValue, FieldValue=FieldValue)
-update_forward_refs(_ContainerValue.Optional, ContainerValue=ContainerValue, FieldValue=FieldValue)
+update_forward_refs(_ContainerValue.List)
+update_forward_refs(_ContainerValue.Optional)
 update_forward_refs(ContainerValue)

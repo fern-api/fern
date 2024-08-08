@@ -96,4 +96,16 @@ components:
       title: ObjectValue
       type: object
       properties: {}
+    JsonLike:
+      title: JsonLike
+      oneOf:
+        - type: array
+          items:
+            $ref: '#/components/schemas/JsonLike'
+        - type: object
+          additionalProperties:
+            $ref: '#/components/schemas/JsonLike'
+        - type: string
+        - type: integer
+        - type: boolean
   securitySchemes: {}

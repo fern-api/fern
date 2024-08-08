@@ -4,18 +4,25 @@ from __future__ import annotations
 
 import typing
 
-from ...core.pydantic_utilities import pydantic_v1
-from .generic_create_problem_error import GenericCreateProblemError
+import pydantic
+
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class CreateProblemError_Generic(GenericCreateProblemError):
-    error_type: typing.Literal["generic"] = pydantic_v1.Field(alias="_type", default="generic")
+class CreateProblemError_Generic(UniversalBaseModel):
+    error_type: typing.Literal["generic"] = pydantic.Field(alias="_type", default="generic")
+    message: str
+    type: str
+    stacktrace: str
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
-CreateProblemError = typing.Union[CreateProblemError_Generic]
+CreateProblemError = CreateProblemError_Generic
