@@ -46,7 +46,7 @@
     "@types/node": "^18.7.18",
     "@types/object-hash": "^3.0.6",
     "@types/prettier": "^2.7.1",
-    "@types/url-join": "4.0.1",
+    "@types/url-join": "4.0.3",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
     "jest": "^29.7.0",
