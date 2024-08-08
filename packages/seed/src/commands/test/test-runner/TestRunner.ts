@@ -126,7 +126,7 @@ export abstract class TestRunner {
                       RelativeFilePath.of(configuration.outputFolder)
                   );
         const language = this.generator.workspaceConfig.language;
-        const outputVersion = configuration?.outputVersion;
+        const outputVersion = configuration?.outputVersion ?? "0.0.1";
         const customConfig =
             this.generator.workspaceConfig.defaultCustomConfig != null || configuration?.customConfig != null
                 ? {

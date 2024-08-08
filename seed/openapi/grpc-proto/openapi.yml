@@ -1,0 +1,86 @@
+openapi: 3.0.1
+info:
+  title: '""'
+  version: ''
+paths:
+  /users:
+    post:
+      operationId: user_create
+      tags:
+        - User
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateResponse'
+              examples:
+                Example1:
+                  value:
+                    user:
+                      username: username
+                      email: email
+                      age: 1
+                      weight: 1.1
+                      metadata:
+                        key: value
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  nullable: true
+                email:
+                  type: string
+                  nullable: true
+                age:
+                  type: integer
+                  nullable: true
+                weight:
+                  type: number
+                  format: double
+                  nullable: true
+                metadata:
+                  type: object
+                  additionalProperties: true
+                  nullable: true
+            examples:
+              Example1:
+                value: {}
+components:
+  schemas:
+    CreateResponse:
+      title: CreateResponse
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/UserModel'
+          nullable: true
+    UserModel:
+      title: UserModel
+      type: object
+      properties:
+        username:
+          type: string
+          nullable: true
+        email:
+          type: string
+          nullable: true
+        age:
+          type: integer
+          nullable: true
+        weight:
+          type: number
+          format: double
+          nullable: true
+        metadata:
+          type: object
+          additionalProperties: true
+          nullable: true
+  securitySchemes: {}

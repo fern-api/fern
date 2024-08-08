@@ -16,12 +16,23 @@ export interface DocsWorkspace {
     config: docsYml.RawSchemas.DocsConfiguration;
 }
 
-export interface Spec {
+export type Spec = OpenAPISpec | ProtobufSpec;
+
+export interface OpenAPISpec {
+    type: "openapi";
     absoluteFilepath: AbsoluteFilePath;
     absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
     settings?: SpecImportSettings;
 }
 
+export interface ProtobufSpec {
+    type: "protobuf";
+    absoluteFilepathToProtobufRoot: AbsoluteFilePath;
+    absoluteFilepathToProtobufTarget: AbsoluteFilePath;
+    absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
+    generateLocally: boolean;
+    settings?: SpecImportSettings;
+}
 export interface SpecImportSettings {
     audiences: string[];
     shouldUseTitleAsName: boolean;

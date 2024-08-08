@@ -11,6 +11,7 @@ export const PlatformHeaders: core.serialization.ObjectSchema<serializers.Platfo
         language: core.serialization.string(),
         sdkName: core.serialization.string(),
         sdkVersion: core.serialization.string(),
+        userAgent: core.serialization.lazyObject(async () => (await import("../../..")).UserAgent).optional(),
     });
 
 export declare namespace PlatformHeaders {
@@ -18,5 +19,6 @@ export declare namespace PlatformHeaders {
         language: string;
         sdkName: string;
         sdkVersion: string;
+        userAgent?: serializers.UserAgent.Raw | null;
     }
 }

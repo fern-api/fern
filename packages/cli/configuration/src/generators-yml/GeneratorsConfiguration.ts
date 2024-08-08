@@ -31,11 +31,25 @@ export interface APIDefinitionSettings {
 }
 
 export interface APIDefinitionLocation {
-    path: string;
+    schema: APIDefinitionSchema;
     origin: string | undefined;
     overrides: string | undefined;
     audiences: string[] | undefined;
     settings: APIDefinitionSettings | undefined;
+}
+
+export type APIDefinitionSchema = ProtoAPIDefinitionSchema | OSSAPIDefinitionSchema;
+
+export interface ProtoAPIDefinitionSchema {
+    type: "protobuf";
+    root: string;
+    target: string;
+    localGeneration: boolean;
+}
+
+export interface OSSAPIDefinitionSchema {
+    type: "oss";
+    path: string;
 }
 
 export interface GeneratorGroup {
@@ -84,3 +98,36 @@ export const GenerationLanguage = {
 } as const;
 
 export type GenerationLanguage = Values<typeof GenerationLanguage>;
+
+export function getPackageName({
+    generatorInvocation
+}: {
+    generatorInvocation: GeneratorInvocation;
+}): string | undefined {
+    return generatorInvocation.outputMode._visit<string | undefined>({
+        downloadFiles: () => undefined,
+        github: (val) =>
+            val.publishInfo?._visit<string | undefined>({
+                maven: (val) => val.coordinate,
+                npm: (val) => val.packageName,
+                pypi: (val) => val.packageName,
+                postman: () => undefined,
+                rubygems: (val) => val.packageName,
+                nuget: (val) => val.packageName,
+                _other: () => undefined
+            }),
+        githubV2: (val) =>
+            val.publishInfo?._visit<string | undefined>({
+                maven: (val) => val.coordinate,
+                npm: (val) => val.packageName,
+                pypi: (val) => val.packageName,
+                postman: () => undefined,
+                rubygems: (val) => val.packageName,
+                nuget: (val) => val.packageName,
+                _other: () => undefined
+            }),
+        publish: () => undefined,
+        publishV2: () => undefined,
+        _other: () => undefined
+    });
+}

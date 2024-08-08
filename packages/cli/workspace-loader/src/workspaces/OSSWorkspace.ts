@@ -7,6 +7,7 @@ import { TaskContext } from "@fern-api/task-context";
 import yaml from "js-yaml";
 import { mapValues as mapValuesLodash } from "lodash-es";
 import { APIChangelog, FernDefinition, Spec } from "../types/Workspace";
+import { getAllOpenAPISpecs } from "../utils/getAllOpenAPISpecs";
 import { AbstractAPIWorkspace } from "./AbstractAPIWorkspace";
 import { FernWorkspace } from "./FernWorkspace";
 
@@ -64,8 +65,9 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
         },
         settings?: OSSWorkspace.Settings
     ): Promise<FernDefinition> {
+        const openApiSpecs = await getAllOpenAPISpecs({ context, specs: this.specs });
         const openApiIr = await parse({
-            specs: this.specs,
+            specs: openApiSpecs,
             taskContext: context,
             optionOverrides: getOptionsOverridesFromSettings(settings)
         });
@@ -125,7 +127,10 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
         return [
             this.absoluteFilepath,
             ...this.specs
-                .flatMap((spec) => [spec.absoluteFilepath, spec.absoluteFilepathToOverrides])
+                .flatMap((spec) => [
+                    spec.type === "protobuf" ? spec.absoluteFilepathToProtobufTarget : spec.absoluteFilepath,
+                    spec.absoluteFilepathToOverrides
+                ])
                 .filter(isNonNullish)
         ];
     }

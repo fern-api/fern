@@ -39,16 +39,60 @@ export async function loadAPIWorkspace({
     if (generatorsConfiguration?.api != null && generatorsConfiguration.api.definitions.length > 0) {
         const specs: Spec[] = [];
         for (const definition of generatorsConfiguration.api.definitions) {
-            const absoluteFilepath = join(absolutePathToWorkspace, RelativeFilePath.of(definition.path));
             const absoluteFilepathToOverrides =
                 definition.overrides != null
                     ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.overrides))
                     : undefined;
+            if (definition.schema.type === "protobuf") {
+                const absoluteFilepathToProtobufRoot = join(
+                    absolutePathToWorkspace,
+                    RelativeFilePath.of(definition.schema.root)
+                );
+                if (!(await doesPathExist(absoluteFilepathToProtobufRoot))) {
+                    return {
+                        didSucceed: false,
+                        failures: {
+                            [RelativeFilePath.of(definition.schema.root)]: {
+                                type: WorkspaceLoaderFailureType.FILE_MISSING
+                            }
+                        }
+                    };
+                }
+                const absoluteFilepathToProtobufTarget = join(
+                    absolutePathToWorkspace,
+                    RelativeFilePath.of(definition.schema.target)
+                );
+                if (!(await doesPathExist(absoluteFilepathToProtobufTarget))) {
+                    return {
+                        didSucceed: false,
+                        failures: {
+                            [RelativeFilePath.of(definition.schema.target)]: {
+                                type: WorkspaceLoaderFailureType.FILE_MISSING
+                            }
+                        }
+                    };
+                }
+                specs.push({
+                    type: "protobuf",
+                    absoluteFilepathToProtobufRoot,
+                    absoluteFilepathToProtobufTarget,
+                    absoluteFilepathToOverrides,
+                    generateLocally: definition.schema.localGeneration,
+                    settings: {
+                        audiences: definition.audiences ?? [],
+                        shouldUseTitleAsName: definition.settings?.shouldUseTitleAsName ?? true,
+                        shouldUseUndiscriminatedUnionsWithLiterals:
+                            definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false
+                    }
+                });
+                continue;
+            }
+            const absoluteFilepath = join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.path));
             if (!(await doesPathExist(absoluteFilepath))) {
                 return {
                     didSucceed: false,
                     failures: {
-                        [RelativeFilePath.of(definition.path)]: {
+                        [RelativeFilePath.of(definition.schema.path)]: {
                             type: WorkspaceLoaderFailureType.FILE_MISSING
                         }
                     }
@@ -69,6 +113,7 @@ export async function loadAPIWorkspace({
                 };
             }
             specs.push({
+                type: "openapi",
                 absoluteFilepath,
                 absoluteFilepathToOverrides,
                 settings: {
@@ -103,12 +148,14 @@ export async function loadAPIWorkspace({
         const specs: Spec[] = [];
         if (absolutePathToOpenAPI != null) {
             specs.push({
+                type: "openapi",
                 absoluteFilepath: absolutePathToOpenAPI,
                 absoluteFilepathToOverrides: undefined
             });
         }
         if (absolutePathToAsyncAPI != null) {
             specs.push({
+                type: "openapi",
                 absoluteFilepath: absolutePathToAsyncAPI,
                 absoluteFilepathToOverrides: undefined
             });
