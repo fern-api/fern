@@ -2,7 +2,8 @@
 
 from .container_value import ContainerValue
 from .field_value import FieldValue
+from .json_like import JsonLike
 from .object_value import ObjectValue
 from .primitive_value import PrimitiveValue
 
-__all__ = ["ContainerValue", "FieldValue", "ObjectValue", "PrimitiveValue"]
+__all__ = ["ContainerValue", "FieldValue", "JsonLike", "ObjectValue", "PrimitiveValue"]
