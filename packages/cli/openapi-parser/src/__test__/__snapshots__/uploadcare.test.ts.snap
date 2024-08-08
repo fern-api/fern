@@ -5,6 +5,7 @@ exports[`open api parser > uploadcare > parse open api 1`] = `
   "apiVersion": null,
   "basePath": null,
   "channel": [],
+  "defaultEnvironment": null,
   "description": "### Summary
 Upload API provides several ways of uploading files to Uploadcare servers in a
 secure and reliable way.
@@ -15531,6 +15532,7 @@ change the value to \`auto\`.
     {
       "audiences": null,
       "description": "Production server",
+      "environment": null,
       "name": null,
       "url": "https://upload.uploadcare.com",
     },

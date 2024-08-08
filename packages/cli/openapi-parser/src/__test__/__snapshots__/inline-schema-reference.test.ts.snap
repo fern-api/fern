@@ -5,6 +5,7 @@ exports[`inline-schema-reference > inline-schema-reference > parse open api 1`] 
   "apiVersion": null,
   "basePath": null,
   "channel": [],
+  "defaultEnvironment": null,
   "description": null,
   "endpoints": [
     {

@@ -5,6 +5,7 @@ exports[`rightbrain > rightbrain > parse open api 1`] = `
   "apiVersion": null,
   "basePath": null,
   "channel": [],
+  "defaultEnvironment": null,
   "description": "
 Brain Core API. 🚀
 ",

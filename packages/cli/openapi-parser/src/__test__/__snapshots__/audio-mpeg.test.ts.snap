@@ -5,6 +5,7 @@ exports[`open api parser > audio-mpeg-content-type > parse open api 1`] = `
   "apiVersion": null,
   "basePath": null,
   "channel": [],
+  "defaultEnvironment": null,
   "description": null,
   "endpoints": [
     {

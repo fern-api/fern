@@ -370,6 +370,7 @@ The parameter should map to a JSON encoded list of strings.
       "summary": null,
     },
   ],
+  "defaultEnvironment": null,
   "description": "AssemblyAI API",
   "endpoints": [
     {
@@ -17947,6 +17948,7 @@ The default value is 'en_us'.
     {
       "audiences": null,
       "description": "AssemblyAI API",
+      "environment": null,
       "name": null,
       "url": "https://api.assemblyai.com",
     },

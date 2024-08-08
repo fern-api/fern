@@ -5,6 +5,7 @@ exports[`open api parser > devrev > parse open api 1`] = `
   "apiVersion": null,
   "basePath": null,
   "channel": [],
+  "defaultEnvironment": null,
   "description": "DevRev's REST API.",
   "endpoints": [
     {
@@ -36327,6 +36328,7 @@ empty.
     {
       "audiences": null,
       "description": "DevRev API endpoint.",
+      "environment": null,
       "name": null,
       "url": "https://api.devrev.ai",
     },

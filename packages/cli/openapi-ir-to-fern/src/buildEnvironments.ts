@@ -58,6 +58,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                 }
                 // Set the first environment as the default environment this should
                 // be a safe check since we've already validated the length of the Record.
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 context.builder.setDefaultEnvironment(firstEnvironmentName!);
                 return;
             }

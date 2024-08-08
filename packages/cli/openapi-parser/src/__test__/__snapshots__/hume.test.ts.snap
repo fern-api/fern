@@ -5,6 +5,7 @@ exports[`open api parser > hume > parse open api 1`] = `
   "apiVersion": null,
   "basePath": null,
   "channel": [],
+  "defaultEnvironment": null,
   "description": "The Batch API provides access to Hume models through an asynchronous job-based interface. You can submit a job to have many different files processed in parallel. The status of a job can then be checked with the job ID. Email notifications are available to alert on completed jobs.",
   "endpoints": [
     {
@@ -7015,6 +7016,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
     {
       "audiences": null,
       "description": null,
+      "environment": null,
       "name": null,
       "url": "https://api.hume.ai",
     },

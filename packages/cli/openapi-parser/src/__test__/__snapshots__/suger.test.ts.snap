@@ -5,6 +5,7 @@ exports[`open api parser > suger > parse open api 1`] = `
   "apiVersion": null,
   "basePath": null,
   "channel": [],
+  "defaultEnvironment": null,
   "description": "CRUD operations on a set of resources, including organizations, products, offers, entitlements, usage record groups for meterting, etc.",
   "endpoints": [
     {
@@ -57849,6 +57850,7 @@ the same customer, dimension, and time, but a different quantity.",
     {
       "audiences": null,
       "description": null,
+      "environment": null,
       "name": null,
       "url": "//https://api.suger.cloud",
     },

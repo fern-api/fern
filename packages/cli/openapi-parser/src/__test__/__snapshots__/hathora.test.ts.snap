@@ -5,6 +5,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
   "apiVersion": null,
   "basePath": null,
   "channel": [],
+  "defaultEnvironment": null,
   "description": null,
   "endpoints": [
     {
@@ -14940,12 +14941,14 @@ exports[`open api parser > hathora > parse open api 1`] = `
     {
       "audiences": null,
       "description": null,
+      "environment": null,
       "name": null,
       "url": "https://api.hathora.dev",
     },
     {
       "audiences": null,
       "description": null,
+      "environment": null,
       "name": null,
       "url": "/",
     },

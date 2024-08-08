@@ -5,6 +5,7 @@ exports[`x-fern-token-variable-name > x-fern-token-variable-name > parse open ap
   "apiVersion": null,
   "basePath": null,
   "channel": [],
+  "defaultEnvironment": null,
   "description": null,
   "endpoints": [
     {

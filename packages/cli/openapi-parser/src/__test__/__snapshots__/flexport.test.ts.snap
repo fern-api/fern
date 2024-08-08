@@ -5,6 +5,7 @@ exports[`open api parser > flexport > parse open api 1`] = `
   "apiVersion": null,
   "basePath": null,
   "channel": [],
+  "defaultEnvironment": null,
   "description": "The Flexport API enables you to programmatically interact with Flexport's freight data.
 
 The API follows modern RESTful conventions and speaks JSON in both directions. As the API uses JSON for both
@@ -102602,6 +102603,7 @@ Other details about this invoice",
     {
       "audiences": null,
       "description": "Flexport API",
+      "environment": null,
       "name": null,
       "url": "https://api.flexport.com",
     },

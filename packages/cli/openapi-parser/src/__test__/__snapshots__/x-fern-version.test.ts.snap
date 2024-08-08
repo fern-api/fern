@@ -13,6 +13,7 @@ exports[`x-fern-version > x-fern-version > parse open api 1`] = `
   },
   "basePath": null,
   "channel": [],
+  "defaultEnvironment": null,
   "description": null,
   "endpoints": [
     {

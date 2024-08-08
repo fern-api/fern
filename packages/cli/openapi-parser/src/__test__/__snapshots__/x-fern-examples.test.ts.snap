@@ -5,6 +5,7 @@ exports[`x-fern-examples > x-fern-examples > parse open api 1`] = `
   "apiVersion": null,
   "basePath": null,
   "channel": [],
+  "defaultEnvironment": null,
   "description": null,
   "endpoints": [
     {

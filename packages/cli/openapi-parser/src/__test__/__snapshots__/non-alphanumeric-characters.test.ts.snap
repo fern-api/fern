@@ -5,6 +5,7 @@ exports[`non alphanumeric characters > non-alphanumeric-characters > parse open 
   "apiVersion": null,
   "basePath": null,
   "channel": [],
+  "defaultEnvironment": null,
   "description": null,
   "endpoints": [
     {

@@ -5,6 +5,7 @@ exports[`open api parser > flagright > parse open api 1`] = `
   "apiVersion": null,
   "basePath": null,
   "channel": [],
+  "defaultEnvironment": null,
   "description": "",
   "endpoints": [
     {
@@ -28707,6 +28708,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     {
       "audiences": null,
       "description": null,
+      "environment": null,
       "name": null,
       "url": "https://sandbox.api.flagright.com",
     },
