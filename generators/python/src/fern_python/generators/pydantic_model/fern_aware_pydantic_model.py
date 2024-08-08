@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from types import TracebackType
-from typing import List, Optional, Sequence, Set, Tuple, Type
+from typing import List, Optional, Sequence, Tuple, Type
 
 import fern.ir.resources as ir_types
 
@@ -181,7 +181,9 @@ class FernAwarePydanticModel:
         type_id_to_reference = self._type_id_for_forward_ref()
         is_circular_reference = False
         if type_id_to_reference is not None:
-            is_circular_reference = self._context.does_type_reference_other_type(type_id=type_name.type_id, other_type_id=type_id_to_reference)
+            is_circular_reference = self._context.does_type_reference_other_type(
+                type_id=type_name.type_id, other_type_id=type_id_to_reference
+            )
 
         if is_circular_reference:
             self._model_contains_forward_refs = True

@@ -159,7 +159,7 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
             # There are some types that will not cause their dependent types to rebuild
             # for example other unions, and so to make sure those types are rebuilt
             # we import them all here.
-            for type_id in (self._context.maybe_get_type_ids_for_type_reference(referenced_type) or []):
+            for type_id in self._context.maybe_get_type_ids_for_type_reference(referenced_type) or []:
                 type_alias_declaration.add_ghost_reference(
                     self._context.get_class_reference_for_type_id(
                         type_id,
@@ -184,9 +184,9 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
     ) -> None:
         referenced_type_ids: Set[ir_types.TypeId] = single_union_type.shape.visit(
             same_properties_as_object=lambda _: set(),
-            single_property=lambda single_property: set(self._context.get_referenced_types_of_type_reference(
-                single_property.type
-            ) or []),
+            single_property=lambda single_property: set(
+                self._context.get_referenced_types_of_type_reference(single_property.type) or []
+            ),
             no_properties=lambda: set(),
         )
 

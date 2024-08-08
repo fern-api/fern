@@ -278,7 +278,9 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     forward_refed_types = [
                         referenced_type_id
                         for referenced_type_id in referenced_type_ids
-                        if self._context.does_type_reference_other_type(type_id=referenced_type_id, other_type_id=self._name.type_id)
+                        if self._context.does_type_reference_other_type(
+                            type_id=referenced_type_id, other_type_id=self._name.type_id
+                        )
                     ]
 
                     if len(forward_refed_types) > 0:
