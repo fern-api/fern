@@ -43,6 +43,7 @@
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
     "express": "^4.19.2",
+    "fetch-mock-jest": "^1.5.1",
     "form-data": "4.0.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",

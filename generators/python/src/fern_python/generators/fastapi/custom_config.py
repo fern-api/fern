@@ -16,3 +16,6 @@ class FastAPICustomConfig(pydantic.BaseModel):
     skip_formatting: bool = False
     async_handlers: Union[bool, List[str]] = False
     pydantic_config: FastApiPydanticModelCustomConfig = FastApiPydanticModelCustomConfig()
+
+    class Config:
+        extra = pydantic.Extra.forbid

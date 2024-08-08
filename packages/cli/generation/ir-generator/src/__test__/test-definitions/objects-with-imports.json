@@ -288,6 +288,8 @@
             "referencedTypes": [
                 "type_commons/metadata:Metadata"
             ],
+            "encoding": null,
+            "source": null,
             "userProvidedExamples": [
                 {
                     "name": {
@@ -2150,6 +2152,8 @@
                 "type_:Node",
                 "type_commons/metadata:Metadata"
             ],
+            "encoding": null,
+            "source": null,
             "userProvidedExamples": [
                 {
                     "name": {
@@ -4371,6 +4375,8 @@
                 "extendedProperties": []
             },
             "referencedTypes": [],
+            "encoding": null,
+            "source": null,
             "userProvidedExamples": [
                 {
                     "name": {
@@ -5052,6 +5058,8 @@
             "referencedTypes": [
                 "type_file:FileInfo"
             ],
+            "encoding": null,
+            "source": null,
             "userProvidedExamples": [
                 {
                     "name": {
@@ -6021,6 +6029,8 @@
                 ]
             },
             "referencedTypes": [],
+            "encoding": null,
+            "source": null,
             "userProvidedExamples": [
                 {
                     "name": {
@@ -6529,6 +6539,8 @@
                 "type_file:FileInfo",
                 "type_file/directory:Directory"
             ],
+            "encoding": null,
+            "source": null,
             "userProvidedExamples": [
                 {
                     "name": {
@@ -8964,6 +8976,7 @@
     "webhookGroups": {},
     "websocketChannels": {},
     "readmeConfig": null,
+    "sourceConfig": null,
     "subpackages": {
         "subpackage_commons": {
             "name": {
@@ -9379,7 +9392,8 @@
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
-            "sdkVersion": "X-Fern-SDK-Version"
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
         }
     }
 }

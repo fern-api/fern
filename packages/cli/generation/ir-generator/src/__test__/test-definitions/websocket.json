@@ -489,6 +489,7 @@
         }
     },
     "readmeConfig": null,
+    "sourceConfig": null,
     "subpackages": {
         "subpackage_realtime": {
             "name": {
@@ -590,7 +591,8 @@
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
-            "sdkVersion": "X-Fern-SDK-Version"
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
         }
     }
 }
