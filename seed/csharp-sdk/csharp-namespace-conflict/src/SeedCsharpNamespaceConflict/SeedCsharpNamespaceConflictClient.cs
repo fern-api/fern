@@ -1,6 +1,8 @@
 using System;
 using System.Net.Http;
 using SeedCsharpNamespaceConflict.A;
+using SeedCsharpNamespaceConflict.B;
+using SeedCsharpNamespaceConflict.C;
 using SeedCsharpNamespaceConflict.Core;
 
 #nullable enable
@@ -19,9 +21,15 @@ public partial class SeedCsharpNamespaceConflictClient
             clientOptions ?? new ClientOptions()
         );
         A = new AClient(_client);
+        B = new BClient(_client);
+        C = new CClient(_client);
     }
 
     public AClient A { get; init; }
+
+    public BClient B { get; init; }
+
+    public CClient C { get; init; }
 
     public async Task GetAsync(string typeId, RequestOptions? options = null)
     {

@@ -34,7 +34,8 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
         return new CSharpFile({
             clazz: class_,
             directory: this.context.getCoreDirectory(),
-            context: this.context
+            allBaseNamespaces: this.context.getAllBaseNamespaces(),
+            namespace: this.context.getNamespace()
         });
     }
 

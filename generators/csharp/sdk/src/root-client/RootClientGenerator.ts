@@ -105,7 +105,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         return new CSharpFile({
             clazz: class_,
             directory: RelativeFilePath.of(""),
-            context: this.context
+            allBaseNamespaces: this.context.getAllBaseNamespaces(),
+            namespace: this.context.getNamespace()
         });
     }
 

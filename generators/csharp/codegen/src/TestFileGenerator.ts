@@ -25,7 +25,8 @@ export class TestFileGenerator extends FileGenerator<
         return new CSharpFile({
             clazz: testClass,
             directory: RelativeFilePath.of(""),
-            context: this.context
+            allBaseNamespaces: this.context.getAllBaseNamespaces(),
+            namespace: this.context.getNamespace()
         });
     }
 }

@@ -61,7 +61,8 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
         return new CSharpFile({
             clazz: class_,
             directory: this.context.getDirectoryForTypeId(this.typeDeclaration.name.typeId),
-            context: this.context
+            allBaseNamespaces: this.context.getAllBaseNamespaces(),
+            namespace: this.context.getNamespace()
         });
     }
 

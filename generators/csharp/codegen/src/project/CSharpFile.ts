@@ -1,7 +1,6 @@
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernFilepath } from "@fern-fern/ir-sdk/api";
 import path from "path";
-import { AbstractCsharpGeneratorContext } from "..";
 import { Class, Enum } from "../ast";
 import { File } from "./File";
 
@@ -11,17 +10,16 @@ export declare namespace CSharpFile {
         clazz: Class | Enum;
         /* Directory of the filepath */
         directory: RelativeFilePath;
-        context: AbstractCsharpGeneratorContext<any>;
+        /* All base namespaces. Can be pulled directly from context. */
+        allBaseNamespaces: Set<string>;
+        /* The root namespace of the project. Can be pulled directly from context. */
+        namespace: string;
     }
 }
 
 export class CSharpFile extends File {
-    constructor({ clazz, directory, context }: CSharpFile.Args) {
-        super(
-            `${clazz.name}.cs`,
-            directory,
-            clazz.toString(clazz.getNamespace(), context.getAllBaseNamespaces(), context.getNamespace())
-        );
+    constructor({ clazz, directory, allBaseNamespaces, namespace }: CSharpFile.Args) {
+        super(`${clazz.name}.cs`, directory, clazz.toString(clazz.getNamespace(), allBaseNamespaces, namespace));
     }
 
     public async tryWrite(directoryPrefix: AbsoluteFilePath): Promise<void> {
