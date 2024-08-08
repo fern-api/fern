@@ -47,6 +47,7 @@ export class Optional {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/optional",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/optional/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

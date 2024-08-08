@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.38.6] - 2024-08-07
+
+- Feature: The SDK generator now sends a `User-Agent` header on each request that is set to 
+  `<package>/<version>`. For example if your package is called `imdb` and is versioned `0.1.0`, then 
+  the user agent header will be `imdb/0.1.0`. 
+
 ## [0.38.5] - 2024-08-07
 
 - Fix: Addressed fetcher unit test flakiness by using a mock fetcher

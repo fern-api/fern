@@ -28,6 +28,7 @@ func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File
 		config.IncludeLegacyClientOptions,
 		includeReadme,
 		config.Whitelabel,
+		config.AlwaysSendRequiredProperties,
 		config.Organization,
 		config.Version,
 		config.IrFilepath,

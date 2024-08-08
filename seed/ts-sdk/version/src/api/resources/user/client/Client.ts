@@ -48,6 +48,7 @@ export class User {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/version",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/version/0.0.1",
                 "X-API-Version": requestOptions?.xApiVersion ?? this._options?.xApiVersion ?? "2.0.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,

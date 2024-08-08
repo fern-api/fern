@@ -32,7 +32,7 @@
     "@fern-api/logging-execa": "workspace:*",
     "@fern-fern/generator-cli-sdk": "0.0.56",
     "@fern-fern/generator-exec-sdk": "^0.0.898",
-    "@fern-fern/ir-sdk": "53.1.0",
+    "@fern-fern/ir-sdk": "53.4.0",
     "@fern-fern/snippet-sdk": "^0.0.5526",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",

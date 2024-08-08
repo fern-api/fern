@@ -56,7 +56,7 @@ export async function replaceReferencedMarkdown({
                 .join("\n");
             newMarkdown = newMarkdown.replace(matchString, replaceString);
         } catch (e) {
-            context.failAndThrow(`Failed to read markdown file "${src}" referenced in ${absolutePathToMdx}`, e);
+            context.logger.warn(`Failed to read markdown file "${src}" referenced in ${absolutePathToMdx}`);
             break;
         }
     }

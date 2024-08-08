@@ -1,5 +1,7 @@
 import { serialize } from "next-mdx-remote/serialize";
 import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 import { z } from "zod";
 import { Rule } from "../../Rule";
 
@@ -28,7 +30,8 @@ export const ValidMarkdownRule: Rule = {
     }
 };
 
-const REMARK_PLUGINS = [remarkGfm];
+const REMARK_PLUGINS = [remarkGfm, remarkMath];
+const REHYPE_PLUGINS = [rehypeKatex];
 
 type MarkdownParseResult = MarkdownParseSuccess | MarkdownParseFailure;
 
@@ -65,6 +68,7 @@ async function parseMarkdown({ markdown }: { markdown: string }): Promise<Markdo
             scope: {},
             mdxOptions: {
                 remarkPlugins: REMARK_PLUGINS,
+                rehypePlugins: REHYPE_PLUGINS,
                 format: "detect"
             },
             parseFrontmatter: true
