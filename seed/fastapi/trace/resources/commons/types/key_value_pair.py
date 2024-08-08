@@ -10,8 +10,8 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, upda
 
 
 class KeyValuePair(UniversalBaseModel):
-    key: VariableValue
-    value: VariableValue
+    key: "VariableValue"
+    value: "VariableValue"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

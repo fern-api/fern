@@ -4,39 +4,52 @@ from __future__ import annotations
 
 import typing
 
-from .compile_error import CompileError
-from .internal_error import InternalError
-from .runtime_error import RuntimeError
+import pydantic
+
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .exception_info import ExceptionInfo
 
 
-class ErrorInfo_CompileError(CompileError):
+class ErrorInfo_CompileError(UniversalBaseModel):
     type: typing.Literal["compileError"] = "compileError"
+    message: str
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
-class ErrorInfo_RuntimeError(RuntimeError):
+class ErrorInfo_RuntimeError(UniversalBaseModel):
     type: typing.Literal["runtimeError"] = "runtimeError"
+    message: str
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
-class ErrorInfo_InternalError(InternalError):
+class ErrorInfo_InternalError(UniversalBaseModel):
     type: typing.Literal["internalError"] = "internalError"
+    exception_info: ExceptionInfo = pydantic.Field(alias="exceptionInfo")
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
 ErrorInfo = typing.Union[ErrorInfo_CompileError, ErrorInfo_RuntimeError, ErrorInfo_InternalError]

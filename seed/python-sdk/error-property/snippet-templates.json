@@ -16,7 +16,7 @@
                     "from seed import SeedErrorProperty"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedErrorProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateString": "client = SeedErrorProperty(base_url=\"https://yourhost.com/path/to/api\", )",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -38,7 +38,7 @@
                         "from seed import AsyncSeedErrorProperty"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedErrorProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateString": "client = AsyncSeedErrorProperty(base_url=\"https://yourhost.com/path/to/api\", )",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

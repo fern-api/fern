@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
 from .error_info import ErrorInfo
 from .graded_test_case_update import GradedTestCaseUpdate
 from .recorded_test_case_update import RecordedTestCaseUpdate
@@ -167,6 +167,3 @@ class _TestSubmissionUpdateInfo:
 
     class Finished(UniversalBaseModel):
         type: typing.Literal["finished"] = "finished"
-
-
-update_forward_refs(TestSubmissionUpdateInfo)

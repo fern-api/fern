@@ -4,28 +4,44 @@ from __future__ import annotations
 
 import typing
 
-from .test_submission_state import TestSubmissionState
-from .workspace_submission_state import WorkspaceSubmissionState
+import pydantic
+
+from ...commons.types.problem_id import ProblemId
+from ...commons.types.test_case import TestCase
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .test_submission_status import TestSubmissionStatus
+from .workspace_submission_status import WorkspaceSubmissionStatus
 
 
-class SubmissionTypeState_Test(TestSubmissionState):
+class SubmissionTypeState_Test(UniversalBaseModel):
     type: typing.Literal["test"] = "test"
+    problem_id: ProblemId = pydantic.Field(alias="problemId")
+    default_test_cases: typing.List[TestCase] = pydantic.Field(alias="defaultTestCases")
+    custom_test_cases: typing.List[TestCase] = pydantic.Field(alias="customTestCases")
+    status: TestSubmissionStatus
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
-class SubmissionTypeState_Workspace(WorkspaceSubmissionState):
+class SubmissionTypeState_Workspace(UniversalBaseModel):
     type: typing.Literal["workspace"] = "workspace"
+    status: WorkspaceSubmissionStatus
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
 SubmissionTypeState = typing.Union[SubmissionTypeState_Test, SubmissionTypeState_Workspace]

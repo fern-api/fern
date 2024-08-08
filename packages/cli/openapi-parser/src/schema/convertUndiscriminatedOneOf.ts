@@ -16,6 +16,17 @@ import { isReferenceObject } from "./utils/isReferenceObject";
 import { isSchemaEqual } from "./utils/isSchemaEqual";
 import { convertNumberToSnakeCase } from "./utils/replaceStartingNumber";
 
+export interface UndiscriminatedOneOfPrefixNotFound {
+    type: "notFound";
+}
+
+export interface UndiscriminatedOneOfPrefixName {
+    type: "name";
+    name: string;
+}
+
+export type UndiscriminatedOneOfPrefix = UndiscriminatedOneOfPrefixName | UndiscriminatedOneOfPrefixNotFound;
+
 export function convertUndiscriminatedOneOf({
     nameOverride,
     generatedName,
@@ -26,7 +37,8 @@ export function convertUndiscriminatedOneOf({
     context,
     subtypes,
     groupName,
-    source
+    source,
+    subtypePrefixOverrides
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -38,8 +50,9 @@ export function convertUndiscriminatedOneOf({
     subtypes: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[];
     groupName: SdkGroupName | undefined;
     source: Source;
+    subtypePrefixOverrides?: UndiscriminatedOneOfPrefix[];
 }): SchemaWithExample {
-    const subtypePrefixes = getUniqueSubTypeNames({ schemas: subtypes });
+    const derivedSubtypePrefixes = getUniqueSubTypeNames({ schemas: subtypes });
 
     const convertedSubtypes = subtypes.flatMap((schema, index) => {
         if (!isReferenceObject(schema) && schema.enum != null) {
@@ -54,7 +67,14 @@ export function convertUndiscriminatedOneOf({
                 });
             });
         }
-        return [convertSchema(schema, false, context, [...breadcrumbs, subtypePrefixes[index] ?? `${index}`], source)];
+        let subtypePrefix = derivedSubtypePrefixes[index];
+        if (subtypePrefixOverrides != null) {
+            const override = subtypePrefixOverrides[index];
+            if (override != null && "name" in override) {
+                subtypePrefix = override.name;
+            }
+        }
+        return [convertSchema(schema, false, context, [...breadcrumbs, subtypePrefix ?? `${index}`], source)];
     });
 
     const uniqueSubtypes: SchemaWithExample[] = [];
@@ -288,6 +308,7 @@ function getUniqueSubTypeNames({
         }
         ++i;
     }
+
     return prefixes;
 }
 

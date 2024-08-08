@@ -4,39 +4,56 @@ from __future__ import annotations
 
 import typing
 
-from .custom_test_cases_unsupported import CustomTestCasesUnsupported
-from .submission_id_not_found import SubmissionIdNotFound
-from .unexpected_language_error import UnexpectedLanguageError
+import pydantic
+
+from ...commons.types.language import Language
+from ...commons.types.problem_id import ProblemId
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .submission_id import SubmissionId
 
 
-class InvalidRequestCause_SubmissionIdNotFound(SubmissionIdNotFound):
+class InvalidRequestCause_SubmissionIdNotFound(UniversalBaseModel):
     type: typing.Literal["submissionIdNotFound"] = "submissionIdNotFound"
+    missing_submission_id: SubmissionId = pydantic.Field(alias="missingSubmissionId")
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
-class InvalidRequestCause_CustomTestCasesUnsupported(CustomTestCasesUnsupported):
+class InvalidRequestCause_CustomTestCasesUnsupported(UniversalBaseModel):
     type: typing.Literal["customTestCasesUnsupported"] = "customTestCasesUnsupported"
+    problem_id: ProblemId = pydantic.Field(alias="problemId")
+    submission_id: SubmissionId = pydantic.Field(alias="submissionId")
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
-class InvalidRequestCause_UnexpectedLanguage(UnexpectedLanguageError):
+class InvalidRequestCause_UnexpectedLanguage(UniversalBaseModel):
     type: typing.Literal["unexpectedLanguage"] = "unexpectedLanguage"
+    expected_language: Language = pydantic.Field(alias="expectedLanguage")
+    actual_language: Language = pydantic.Field(alias="actualLanguage")
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
 InvalidRequestCause = typing.Union[

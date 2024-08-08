@@ -6,7 +6,7 @@ import typing
 
 import pydantic
 
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
 from .foo import Foo as types_types_foo_Foo
 
 T_Result = typing.TypeVar("T_Result")
@@ -56,6 +56,3 @@ class _UnionWithSingleElement:
             class Config:
                 frozen = True
                 smart_union = True
-
-
-update_forward_refs(UnionWithSingleElement)

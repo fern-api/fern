@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -77,6 +77,3 @@ class _UnionWithPrimitive:
             class Config:
                 frozen = True
                 smart_union = True
-
-
-update_forward_refs(UnionWithPrimitive)

@@ -4,91 +4,143 @@ from __future__ import annotations
 
 import typing
 
-from ...core.pydantic_utilities import pydantic_v1
+import pydantic
+
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 
 
-class VariableType_IntegerType(pydantic_v1.BaseModel):
+class VariableType_IntegerType(UniversalBaseModel):
     type: typing.Literal["integerType"] = "integerType"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
-class VariableType_DoubleType(pydantic_v1.BaseModel):
+class VariableType_DoubleType(UniversalBaseModel):
     type: typing.Literal["doubleType"] = "doubleType"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
-class VariableType_BooleanType(pydantic_v1.BaseModel):
+class VariableType_BooleanType(UniversalBaseModel):
     type: typing.Literal["booleanType"] = "booleanType"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
-class VariableType_StringType(pydantic_v1.BaseModel):
+class VariableType_StringType(UniversalBaseModel):
     type: typing.Literal["stringType"] = "stringType"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
-class VariableType_CharType(pydantic_v1.BaseModel):
+class VariableType_CharType(UniversalBaseModel):
     type: typing.Literal["charType"] = "charType"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
-class VariableType_ListType(ListType):
+class VariableType_ListType(UniversalBaseModel):
     type: typing.Literal["listType"] = "listType"
+    value_type: "VariableType" = pydantic.Field(alias="valueType")
+    is_fixed_length: typing.Optional[bool] = pydantic.Field(alias="isFixedLength", default=None)
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
-class VariableType_MapType(MapType):
+class VariableType_MapType(UniversalBaseModel):
     type: typing.Literal["mapType"] = "mapType"
+    key_type: "VariableType" = pydantic.Field(alias="keyType")
+    value_type: "VariableType" = pydantic.Field(alias="valueType")
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
-class VariableType_BinaryTreeType(pydantic_v1.BaseModel):
+class VariableType_BinaryTreeType(UniversalBaseModel):
     type: typing.Literal["binaryTreeType"] = "binaryTreeType"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
-class VariableType_SinglyLinkedListType(pydantic_v1.BaseModel):
+class VariableType_SinglyLinkedListType(UniversalBaseModel):
     type: typing.Literal["singlyLinkedListType"] = "singlyLinkedListType"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
-class VariableType_DoublyLinkedListType(pydantic_v1.BaseModel):
+class VariableType_DoublyLinkedListType(UniversalBaseModel):
     type: typing.Literal["doublyLinkedListType"] = "doublyLinkedListType"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
 VariableType = typing.Union[
@@ -103,8 +155,5 @@ VariableType = typing.Union[
     VariableType_SinglyLinkedListType,
     VariableType_DoublyLinkedListType,
 ]
-from .list_type import ListType  # noqa: E402
-from .map_type import MapType  # noqa: E402
-
-VariableType_ListType.update_forward_refs(ListType=ListType, MapType=MapType, VariableType=VariableType)
-VariableType_MapType.update_forward_refs(ListType=ListType, MapType=MapType, VariableType=VariableType)
+update_forward_refs(VariableType_ListType)
+update_forward_refs(VariableType_MapType)

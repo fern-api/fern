@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
 from .error_info import ErrorInfo
 from .running_submission_state import RunningSubmissionState
 from .workspace_run_details import WorkspaceRunDetails
@@ -183,6 +183,3 @@ class _WorkspaceSubmissionUpdateInfo:
 
     class Finished(UniversalBaseModel):
         type: typing.Literal["finished"] = "finished"
-
-
-update_forward_refs(WorkspaceSubmissionUpdateInfo)

@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
+from ......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
 from .....commons.types.language import Language
 from .basic_custom_files import BasicCustomFiles
 from .files import Files
@@ -67,6 +67,3 @@ class _CustomFiles:
     class Custom(UniversalBaseModel):
         type: typing.Literal["custom"] = "custom"
         value: typing.Dict[Language, Files]
-
-
-update_forward_refs(CustomFiles)

@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
 from .organization import Organization as resources_service_types_organization_Organization
 from .user import User as resources_service_types_user_User
 
@@ -85,6 +85,3 @@ class _Resource:
 
     class Organization(resources_service_types_organization_Organization):
         resource_type: typing.Literal["Organization"] = "Organization"
-
-
-update_forward_refs(Resource)

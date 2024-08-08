@@ -181,7 +181,7 @@ allowedFailures:
   - exhaustive:union-utils
   - extra-properties
   - trace
-  - circular-references-advanced
+
   # Remove the following fixtures soon as a CLI is released with
   # default enum value support, the latest primitive types, and gRPC
   # configuration. This otherwise causes a 'fern check' issue when
@@ -201,3 +201,6 @@ allowedFailures:
   # We are not generating the correct snippets for union-utils
   # types (e.g. we generate `Shape_Square` instead of Shape.factory.square())
   - unions:union-utils
+
+  # Complex circular refs
+  - simple-fhir

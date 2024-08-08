@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
 from ...commons.types.variable_value import VariableValue
 from .exception_info import ExceptionInfo
 from .exception_v_2 import ExceptionV2 as resources_submission_types_exception_v_2_ExceptionV2
@@ -82,6 +82,3 @@ class _ActualResult:
     class ExceptionV2(UniversalBaseModel):
         type: typing.Literal["exceptionV2"] = "exceptionV2"
         value: resources_submission_types_exception_v_2_ExceptionV2
-
-
-update_forward_refs(ActualResult)

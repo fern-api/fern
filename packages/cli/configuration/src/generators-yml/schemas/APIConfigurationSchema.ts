@@ -17,7 +17,12 @@ export const APIDefinitionSettingsSchema = z.object({
         ),
     unions: z
         .optional(z.enum(["v1"]))
-        .describe("What version of union generation to use, this will grow over time. Defaults to v0.")
+        .describe("What version of union generation to use, this will grow over time. Defaults to v0."),
+    "message-naming": z
+        .optional(z.enum(["v1", "v2"]))
+        .describe(
+            "What version of message naming to use for AsyncAPI messages, this will grow over time. Defaults to v1."
+        )
 });
 
 export type APIDefinitionSettingsSchema = z.infer<typeof APIDefinitionSettingsSchema>;

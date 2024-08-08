@@ -4,56 +4,84 @@ from __future__ import annotations
 
 import typing
 
-from ...core.pydantic_utilities import pydantic_v1
+import pydantic
+
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .error_info import ErrorInfo
+from .exception_info import ExceptionInfo
+from .exception_v_2 import ExceptionV2
 from .running_submission_state import RunningSubmissionState
-from .workspace_run_details import WorkspaceRunDetails
 
 
-class WorkspaceSubmissionStatus_Stopped(pydantic_v1.BaseModel):
+class WorkspaceSubmissionStatus_Stopped(UniversalBaseModel):
     type: typing.Literal["stopped"] = "stopped"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
-class WorkspaceSubmissionStatus_Errored(pydantic_v1.BaseModel):
-    type: typing.Literal["errored"] = "errored"
+class WorkspaceSubmissionStatus_Errored(UniversalBaseModel):
     value: ErrorInfo
+    type: typing.Literal["errored"] = "errored"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
-class WorkspaceSubmissionStatus_Running(pydantic_v1.BaseModel):
-    type: typing.Literal["running"] = "running"
+class WorkspaceSubmissionStatus_Running(UniversalBaseModel):
     value: RunningSubmissionState
+    type: typing.Literal["running"] = "running"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
-class WorkspaceSubmissionStatus_Ran(WorkspaceRunDetails):
+class WorkspaceSubmissionStatus_Ran(UniversalBaseModel):
     type: typing.Literal["ran"] = "ran"
+    exception_v_2: typing.Optional[ExceptionV2] = pydantic.Field(alias="exceptionV2", default=None)
+    exception: typing.Optional[ExceptionInfo] = None
+    stdout: str
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
-class WorkspaceSubmissionStatus_Traced(WorkspaceRunDetails):
+class WorkspaceSubmissionStatus_Traced(UniversalBaseModel):
     type: typing.Literal["traced"] = "traced"
+    exception_v_2: typing.Optional[ExceptionV2] = pydantic.Field(alias="exceptionV2", default=None)
+    exception: typing.Optional[ExceptionInfo] = None
+    stdout: str
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
 WorkspaceSubmissionStatus = typing.Union[

@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
 from .test_case_grade import TestCaseGrade
 from .test_case_result_with_stdout import TestCaseResultWithStdout
 from .traced_test_case import TracedTestCase
@@ -111,6 +111,3 @@ class _SubmissionStatusForTestCase:
 
     class Traced(TracedTestCase):
         type: typing.Literal["traced"] = "traced"
-
-
-update_forward_refs(SubmissionStatusForTestCase)

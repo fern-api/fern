@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
 from .building_executor_response import BuildingExecutorResponse
 from .errored_response import ErroredResponse
 from .finished_response import FinishedResponse
@@ -284,6 +284,3 @@ class _CodeExecutionUpdate:
 
     class Finished(FinishedResponse):
         type: typing.Literal["finished"] = "finished"
-
-
-update_forward_refs(CodeExecutionUpdate)

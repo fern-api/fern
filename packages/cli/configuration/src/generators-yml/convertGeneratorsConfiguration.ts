@@ -87,7 +87,11 @@ async function parseAPIConfiguration(
                 origin: undefined,
                 overrides: undefined,
                 audiences: [],
-                settings: { shouldUseTitleAsName: undefined, shouldUseUndiscriminatedUnionsWithLiterals: undefined }
+                settings: {
+                    shouldUseTitleAsName: undefined,
+                    shouldUseUndiscriminatedUnionsWithLiterals: undefined,
+                    asyncApiMessageNaming: undefined
+                }
             });
         } else if (isRawProtobufAPIDefinitionSchema(apiConfiguration)) {
             apiDefinitions.push({
@@ -100,7 +104,11 @@ async function parseAPIConfiguration(
                 origin: undefined,
                 overrides: apiConfiguration.proto.overrides,
                 audiences: [],
-                settings: { shouldUseTitleAsName: undefined, shouldUseUndiscriminatedUnionsWithLiterals: undefined }
+                settings: {
+                    shouldUseTitleAsName: undefined,
+                    shouldUseUndiscriminatedUnionsWithLiterals: undefined,
+                    asyncApiMessageNaming: undefined
+                }
             });
         } else if (Array.isArray(apiConfiguration)) {
             for (const definition of apiConfiguration) {
@@ -115,7 +123,8 @@ async function parseAPIConfiguration(
                         audiences: [],
                         settings: {
                             shouldUseTitleAsName: undefined,
-                            shouldUseUndiscriminatedUnionsWithLiterals: undefined
+                            shouldUseUndiscriminatedUnionsWithLiterals: undefined,
+                            asyncApiMessageNaming: undefined
                         }
                     });
                 } else if (isRawProtobufAPIDefinitionSchema(definition)) {
@@ -131,7 +140,8 @@ async function parseAPIConfiguration(
                         audiences: [],
                         settings: {
                             shouldUseTitleAsName: undefined,
-                            shouldUseUndiscriminatedUnionsWithLiterals: undefined
+                            shouldUseUndiscriminatedUnionsWithLiterals: undefined,
+                            asyncApiMessageNaming: undefined
                         }
                     });
                 } else {
@@ -145,7 +155,8 @@ async function parseAPIConfiguration(
                         audiences: definition.audiences,
                         settings: {
                             shouldUseTitleAsName: definition.settings?.["use-title"],
-                            shouldUseUndiscriminatedUnionsWithLiterals: definition.settings?.unions === "v1"
+                            shouldUseUndiscriminatedUnionsWithLiterals: definition.settings?.unions === "v1",
+                            asyncApiMessageNaming: definition.settings?.["message-naming"]
                         }
                     });
                 }
@@ -161,7 +172,8 @@ async function parseAPIConfiguration(
                 audiences: apiConfiguration.audiences,
                 settings: {
                     shouldUseTitleAsName: apiConfiguration.settings?.["use-title"],
-                    shouldUseUndiscriminatedUnionsWithLiterals: apiConfiguration.settings?.unions === "v1"
+                    shouldUseUndiscriminatedUnionsWithLiterals: apiConfiguration.settings?.unions === "v1",
+                    asyncApiMessageNaming: apiConfiguration.settings?.["message-naming"]
                 }
             });
         }
@@ -183,7 +195,8 @@ async function parseAPIConfiguration(
                 audiences: [],
                 settings: {
                     shouldUseTitleAsName: settings?.["use-title"],
-                    shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1"
+                    shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1",
+                    asyncApiMessageNaming: undefined
                 }
             });
         } else if (openapi != null) {
@@ -197,7 +210,8 @@ async function parseAPIConfiguration(
                 audiences: [],
                 settings: {
                     shouldUseTitleAsName: openapi.settings?.["use-title"],
-                    shouldUseUndiscriminatedUnionsWithLiterals: openapi.settings?.unions === "v1"
+                    shouldUseUndiscriminatedUnionsWithLiterals: openapi.settings?.unions === "v1",
+                    asyncApiMessageNaming: undefined
                 }
             });
         }
@@ -213,7 +227,8 @@ async function parseAPIConfiguration(
                 audiences: [],
                 settings: {
                     shouldUseTitleAsName: settings?.["use-title"],
-                    shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1"
+                    shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1",
+                    asyncApiMessageNaming: settings?.["message-naming"]
                 }
             });
         }

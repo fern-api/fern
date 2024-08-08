@@ -10,8 +10,8 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, updat
 
 
 class DebugKeyValuePairs(UniversalBaseModel):
-    key: DebugVariableValue
-    value: DebugVariableValue
+    key: "DebugVariableValue"
+    value: "DebugVariableValue"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -4,27 +4,37 @@ from __future__ import annotations
 
 import typing
 
+import pydantic
+
 from ...commons.types.problem_id import ProblemId
-from ...core.pydantic_utilities import pydantic_v1
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .create_problem_error import CreateProblemError
 
 
-class CreateProblemResponse_Success(pydantic_v1.BaseModel):
-    type: typing.Literal["success"] = "success"
+class CreateProblemResponse_Success(UniversalBaseModel):
     value: ProblemId
+    type: typing.Literal["success"] = "success"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
-class CreateProblemResponse_Error(pydantic_v1.BaseModel):
-    type: typing.Literal["error"] = "error"
+class CreateProblemResponse_Error(UniversalBaseModel):
     value: CreateProblemError
+    type: typing.Literal["error"] = "error"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
 CreateProblemResponse = typing.Union[CreateProblemResponse_Success, CreateProblemResponse_Error]
