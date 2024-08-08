@@ -27,11 +27,11 @@ class FieldValue_ObjectValue(UniversalBaseModel):
 
 
 class FieldValue_ContainerValue(UniversalBaseModel):
-    value: ContainerValue
+    value: "ContainerValue"
     type: typing.Literal["container_value"] = "container_value"
 
 
 FieldValue = typing.Union[FieldValue_PrimitiveValue, FieldValue_ObjectValue, FieldValue_ContainerValue]
 from .container_value import ContainerValue  # noqa: E402
 
-update_forward_refs(FieldValue_ContainerValue, ContainerValue=ContainerValue)
+update_forward_refs(FieldValue_ContainerValue)

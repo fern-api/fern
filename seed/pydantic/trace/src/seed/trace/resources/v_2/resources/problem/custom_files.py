@@ -9,7 +9,6 @@ import pydantic
 from .....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ....commons.language import Language
 from .basic_test_case_template import BasicTestCaseTemplate
-from .file_info_v_2 import FileInfoV2
 from .files import Files
 from .non_void_function_signature import NonVoidFunctionSignature
 

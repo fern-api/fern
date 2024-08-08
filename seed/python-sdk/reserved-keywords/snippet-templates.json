@@ -16,7 +16,7 @@
                     "from seed import SeedNurseryApi"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedNurseryApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateString": "client = SeedNurseryApi(base_url=\"https://yourhost.com/path/to/api\", )",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -55,7 +55,7 @@
                         "from seed import AsyncSeedNurseryApi"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedNurseryApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateString": "client = AsyncSeedNurseryApi(base_url=\"https://yourhost.com/path/to/api\", )",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

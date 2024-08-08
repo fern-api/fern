@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
 from .custom_test_cases_unsupported import (
     CustomTestCasesUnsupported as resources_submission_types_custom_test_cases_unsupported_CustomTestCasesUnsupported,
 )
@@ -148,6 +148,3 @@ class _InvalidRequestCause:
 
     class UnexpectedLanguage(UnexpectedLanguageError):
         type: typing.Literal["unexpectedLanguage"] = "unexpectedLanguage"
-
-
-update_forward_refs(InvalidRequestCause)

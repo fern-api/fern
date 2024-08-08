@@ -7,6 +7,7 @@ import typing
 import pydantic
 
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..commons.variable_value import VariableValue
 from .exception_v_2 import ExceptionV2
 
 
@@ -35,4 +36,3 @@ class ActualResult_ExceptionV2(UniversalBaseModel):
 
 
 ActualResult = typing.Union[ActualResult_Value, ActualResult_Exception, ActualResult_ExceptionV2]
-from ..commons.variable_value import VariableValue  # noqa: E402

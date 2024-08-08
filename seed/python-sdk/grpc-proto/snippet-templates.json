@@ -16,7 +16,7 @@
                     "from seed import SeedApi"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateString": "client = SeedApi(base_url=\"https://yourhost.com/path/to/api\", )",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -144,7 +144,7 @@
                         "from seed import AsyncSeedApi"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateString": "client = AsyncSeedApi(base_url=\"https://yourhost.com/path/to/api\", )",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
+from ......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
 from .metadata import Metadata as resources_commons_resources_types_types_metadata_Metadata
 from .tag import Tag as resources_commons_resources_types_types_tag_Tag
 
@@ -82,6 +82,3 @@ class _EventInfo:
     class Tag(UniversalBaseModel):
         type: typing.Literal["tag"] = "tag"
         value: resources_commons_resources_types_types_tag_Tag
-
-
-update_forward_refs(EventInfo)

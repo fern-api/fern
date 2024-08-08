@@ -16,7 +16,7 @@
                     "from seed import SeedAudiences"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedAudiences(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateString": "client = SeedAudiences(base_url=\"https://yourhost.com/path/to/api\", )",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -38,7 +38,7 @@
                         "from seed import AsyncSeedAudiences"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedAudiences(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateString": "client = AsyncSeedAudiences(base_url=\"https://yourhost.com/path/to/api\", )",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -72,7 +72,7 @@
                     "from seed import SeedAudiences"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedAudiences(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateString": "client = SeedAudiences(base_url=\"https://yourhost.com/path/to/api\", )",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -143,7 +143,7 @@
                         "from seed import AsyncSeedAudiences"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedAudiences(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateString": "client = AsyncSeedAudiences(base_url=\"https://yourhost.com/path/to/api\", )",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

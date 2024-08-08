@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
 from .circle import Circle as resources_union_types_circle_Circle
 from .square import Square as resources_union_types_square_Square
 
@@ -69,6 +69,3 @@ class _Shape:
 
     class Square(resources_union_types_square_Square):
         type: typing.Literal["square"] = "square"
-
-
-update_forward_refs(Shape)

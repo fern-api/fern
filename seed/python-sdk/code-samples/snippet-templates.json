@@ -16,7 +16,7 @@
                     "from seed import SeedCodeSamples"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedCodeSamples(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateString": "client = SeedCodeSamples(base_url=\"https://yourhost.com/path/to/api\", )",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -55,7 +55,7 @@
                         "from seed import AsyncSeedCodeSamples"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedCodeSamples(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateString": "client = AsyncSeedCodeSamples(base_url=\"https://yourhost.com/path/to/api\", )",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

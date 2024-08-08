@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
 from ...commons.types.problem_id import ProblemId
 from .code_execution_update import (
     CodeExecutionUpdate as resources_submission_types_code_execution_update_CodeExecutionUpdate,
@@ -173,6 +173,3 @@ class _SubmissionResponse:
 
     class Terminated(TerminatedResponse):
         type: typing.Literal["terminated"] = "terminated"
-
-
-update_forward_refs(SubmissionResponse)

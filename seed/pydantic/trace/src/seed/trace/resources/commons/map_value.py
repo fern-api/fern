@@ -10,7 +10,7 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, updat
 
 
 class MapValue(UniversalBaseModel):
-    key_value_pairs: typing.List[KeyValuePair] = pydantic.Field(alias="keyValuePairs")
+    key_value_pairs: typing.List["KeyValuePair"] = pydantic.Field(alias="keyValuePairs")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
 from ...commons.types.variable_value import VariableValue
 
 T_Result = typing.TypeVar("T_Result")
@@ -93,6 +93,3 @@ class _ProblemDescriptionBoard:
     class TestCaseId(UniversalBaseModel):
         type: typing.Literal["testCaseId"] = "testCaseId"
         value: str
-
-
-update_forward_refs(ProblemDescriptionBoard)

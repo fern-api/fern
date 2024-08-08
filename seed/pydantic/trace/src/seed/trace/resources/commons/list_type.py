@@ -10,7 +10,7 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, updat
 
 
 class ListType(UniversalBaseModel):
-    value_type: VariableType = pydantic.Field(alias="valueType")
+    value_type: "VariableType" = pydantic.Field(alias="valueType")
     is_fixed_length: typing.Optional[bool] = pydantic.Field(alias="isFixedLength", default=None)
     """
     Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.

@@ -8,12 +8,9 @@ import pydantic
 
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from .binary_tree_node_value import BinaryTreeNodeValue
-from .binary_tree_value import BinaryTreeValue
 from .doubly_linked_list_node_value import DoublyLinkedListNodeValue
-from .doubly_linked_list_value import DoublyLinkedListValue
 from .node_id import NodeId
 from .singly_linked_list_node_value import SinglyLinkedListNodeValue
-from .singly_linked_list_value import SinglyLinkedListValue
 
 
 class VariableValue_IntegerValue(UniversalBaseModel):
@@ -43,7 +40,7 @@ class VariableValue_CharValue(UniversalBaseModel):
 
 class VariableValue_MapValue(UniversalBaseModel):
     type: typing.Literal["mapValue"] = "mapValue"
-    key_value_pairs: typing.List[KeyValuePair] = pydantic.Field(alias="keyValuePairs")
+    key_value_pairs: typing.List["KeyValuePair"] = pydantic.Field(alias="keyValuePairs")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -54,7 +51,7 @@ class VariableValue_MapValue(UniversalBaseModel):
 
 
 class VariableValue_ListValue(UniversalBaseModel):
-    value: typing.List[VariableValue]
+    value: typing.List["VariableValue"]
     type: typing.Literal["listValue"] = "listValue"
 
 
@@ -122,6 +119,6 @@ VariableValue = typing.Union[
     VariableValue_NullValue,
 ]
 from .key_value_pair import KeyValuePair  # noqa: E402
-from .map_value import MapValue  # noqa: E402
 
-update_forward_refs(VariableValue_ListValue, KeyValuePair=KeyValuePair)
+update_forward_refs(VariableValue_MapValue)
+update_forward_refs(VariableValue_ListValue)

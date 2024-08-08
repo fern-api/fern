@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
+from ......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
 from .deep_equality_correctness_check import DeepEqualityCorrectnessCheck
 from .void_function_definition_that_takes_actual_result import VoidFunctionDefinitionThatTakesActualResult
 
@@ -79,6 +79,3 @@ class _AssertCorrectnessCheck:
 
     class Custom(VoidFunctionDefinitionThatTakesActualResult):
         type: typing.Literal["custom"] = "custom"
-
-
-update_forward_refs(AssertCorrectnessCheck)
