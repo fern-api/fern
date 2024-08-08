@@ -12,7 +12,7 @@ export interface DocsConfiguration {
      * The `analytics` object allows you to configure analytics for your docs site.
      * Currently, only Segment is supported.
      */
-    analyticsConfig?: FernDocsConfig.AnalyticsConfig;
+    analytics?: FernDocsConfig.AnalyticsConfig;
     tabs?: Record<FernDocsConfig.TabId, FernDocsConfig.TabConfig>;
     versions?: FernDocsConfig.VersionConfig[];
     landingPage?: FernDocsConfig.PageConfiguration;
