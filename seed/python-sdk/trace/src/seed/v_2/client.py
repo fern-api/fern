@@ -5,8 +5,6 @@ from json.decoder import JSONDecodeError
 
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.jsonable_encoder import jsonable_encoder
-from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from .problem.client import AsyncProblemClient, ProblemClient
 from .v_3.client import AsyncV3Client, V3Client
@@ -20,10 +18,18 @@ class V2Client:
 
     def test(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
-        from seed.client import SeedTrace
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from seed import SeedTrace
 
         client = SeedTrace(
             x_random_header="YOUR_X_RANDOM_HEADER",
@@ -31,26 +37,7 @@ class V2Client:
         )
         client.v_2.test()
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            self._client_wrapper.get_base_url(),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
-            ),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
+        _response = self._client_wrapper.httpx_client.request(method="GET", request_options=request_options)
         if 200 <= _response.status_code < 300:
             return
         try:
@@ -68,37 +55,34 @@ class AsyncV2Client:
 
     async def test(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
-        from seed.client import AsyncSeedTrace
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedTrace
 
         client = AsyncSeedTrace(
             x_random_header="YOUR_X_RANDOM_HEADER",
             token="YOUR_TOKEN",
         )
-        await client.v_2.test()
+
+
+        async def main() -> None:
+            await client.v_2.test()
+
+
+        asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            self._client_wrapper.get_base_url(),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
-            ),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
+        _response = await self._client_wrapper.httpx_client.request(method="GET", request_options=request_options)
         if 200 <= _response.status_code < 300:
             return
         try:

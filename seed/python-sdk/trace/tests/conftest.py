@@ -3,7 +3,7 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedTrace, SeedTrace
+from seed import AsyncSeedTrace, SeedTrace
 
 
 @pytest.fixture

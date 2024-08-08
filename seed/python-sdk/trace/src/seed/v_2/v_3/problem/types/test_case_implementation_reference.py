@@ -4,28 +4,40 @@ from __future__ import annotations
 
 import typing
 
-from .....core.pydantic_utilities import pydantic_v1
-from .test_case_implementation import TestCaseImplementation
+import pydantic
+
+from .....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .test_case_function import TestCaseFunction
+from .test_case_implementation_description import TestCaseImplementationDescription
 from .test_case_template_id import TestCaseTemplateId
 
 
-class TestCaseImplementationReference_TemplateId(pydantic_v1.BaseModel):
-    type: typing.Literal["templateId"] = "templateId"
+class TestCaseImplementationReference_TemplateId(UniversalBaseModel):
     value: TestCaseTemplateId
+    type: typing.Literal["templateId"] = "templateId"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
-class TestCaseImplementationReference_Implementation(TestCaseImplementation):
+class TestCaseImplementationReference_Implementation(UniversalBaseModel):
     type: typing.Literal["implementation"] = "implementation"
+    description: TestCaseImplementationDescription
+    function: TestCaseFunction
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
 TestCaseImplementationReference = typing.Union[

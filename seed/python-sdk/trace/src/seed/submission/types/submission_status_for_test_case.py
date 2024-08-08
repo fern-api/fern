@@ -4,39 +4,55 @@ from __future__ import annotations
 
 import typing
 
-from ...core.pydantic_utilities import pydantic_v1
+import pydantic
+
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .test_case_grade import TestCaseGrade
+from .test_case_result import TestCaseResult
 from .test_case_result_with_stdout import TestCaseResultWithStdout
-from .traced_test_case import TracedTestCase
 
 
-class SubmissionStatusForTestCase_Graded(TestCaseResultWithStdout):
+class SubmissionStatusForTestCase_Graded(UniversalBaseModel):
     type: typing.Literal["graded"] = "graded"
+    result: TestCaseResult
+    stdout: str
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
-class SubmissionStatusForTestCase_GradedV2(pydantic_v1.BaseModel):
-    type: typing.Literal["gradedV2"] = "gradedV2"
+class SubmissionStatusForTestCase_GradedV2(UniversalBaseModel):
     value: TestCaseGrade
+    type: typing.Literal["gradedV2"] = "gradedV2"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
-class SubmissionStatusForTestCase_Traced(TracedTestCase):
+class SubmissionStatusForTestCase_Traced(UniversalBaseModel):
     type: typing.Literal["traced"] = "traced"
+    result: TestCaseResultWithStdout
+    trace_responses_size: int = pydantic.Field(alias="traceResponsesSize")
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
 SubmissionStatusForTestCase = typing.Union[

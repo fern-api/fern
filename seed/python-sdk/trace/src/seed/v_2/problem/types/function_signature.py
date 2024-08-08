@@ -4,39 +4,55 @@ from __future__ import annotations
 
 import typing
 
-from .non_void_function_signature import NonVoidFunctionSignature
-from .void_function_signature import VoidFunctionSignature
-from .void_function_signature_that_takes_actual_result import VoidFunctionSignatureThatTakesActualResult
+import pydantic
+
+from ....commons.types.variable_type import VariableType
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .parameter import Parameter
 
 
-class FunctionSignature_Void(VoidFunctionSignature):
+class FunctionSignature_Void(UniversalBaseModel):
     type: typing.Literal["void"] = "void"
+    parameters: typing.List[Parameter]
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
-class FunctionSignature_NonVoid(NonVoidFunctionSignature):
+class FunctionSignature_NonVoid(UniversalBaseModel):
     type: typing.Literal["nonVoid"] = "nonVoid"
+    parameters: typing.List[Parameter]
+    return_type: VariableType = pydantic.Field(alias="returnType")
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
-class FunctionSignature_VoidThatTakesActualResult(VoidFunctionSignatureThatTakesActualResult):
+class FunctionSignature_VoidThatTakesActualResult(UniversalBaseModel):
     type: typing.Literal["voidThatTakesActualResult"] = "voidThatTakesActualResult"
+    parameters: typing.List[Parameter]
+    actual_result_type: VariableType = pydantic.Field(alias="actualResultType")
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
 FunctionSignature = typing.Union[

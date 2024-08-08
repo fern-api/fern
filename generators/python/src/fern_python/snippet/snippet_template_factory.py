@@ -67,7 +67,7 @@ class SnippetTemplateFactory:
     CLIENT_FIXTURE_NAME = "client"
     TEST_URL_ENVVAR = "TESTS_BASE_URL"
 
-    MAXIMUM_TEMPLATE_DEPTH = 10
+    MAXIMUM_TEMPLATE_DEPTH = 15
 
     TAB_CHAR = "\t"
 
@@ -533,7 +533,7 @@ class SnippetTemplateFactory:
                 wire_or_original_name=wire_or_original_name,
                 name_breadcrumbs=name_breadcrumbs,
                 indentation_level=indentation_level,
-                depth=depth,
+                depth=depth + 1,
             )
             if member_template is not None:
                 member_templates[sut.discriminant_value.wire_value] = member_template

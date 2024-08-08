@@ -4,37 +4,51 @@ from __future__ import annotations
 
 import typing
 
-from ...core.pydantic_utilities import pydantic_v1
+import pydantic
+
+from ...commons.types.variable_value import VariableValue
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class ProblemDescriptionBoard_Html(pydantic_v1.BaseModel):
+class ProblemDescriptionBoard_Html(UniversalBaseModel):
+    value: str
     type: typing.Literal["html"] = "html"
-    value: str
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
-class ProblemDescriptionBoard_Variable(pydantic_v1.BaseModel):
-    type: typing.Literal["variable"] = "variable"
+class ProblemDescriptionBoard_Variable(UniversalBaseModel):
     value: VariableValue
+    type: typing.Literal["variable"] = "variable"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
-class ProblemDescriptionBoard_TestCaseId(pydantic_v1.BaseModel):
-    type: typing.Literal["testCaseId"] = "testCaseId"
+class ProblemDescriptionBoard_TestCaseId(UniversalBaseModel):
     value: str
+    type: typing.Literal["testCaseId"] = "testCaseId"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
 ProblemDescriptionBoard = typing.Union[
     ProblemDescriptionBoard_Html, ProblemDescriptionBoard_Variable, ProblemDescriptionBoard_TestCaseId
 ]
-from ...commons.types.variable_value import VariableValue  # noqa: E402
