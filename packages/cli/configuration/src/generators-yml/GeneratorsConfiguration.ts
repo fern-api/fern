@@ -27,6 +27,7 @@ export interface SingleNamespaceAPIDefinition {
 export interface APIDefinitionSettings {
     shouldUseTitleAsName: boolean | undefined;
     shouldUseUndiscriminatedUnionsWithLiterals: boolean | undefined;
+    asyncApiMessageNaming: "v1" | "v2" | undefined;
 }
 
 export interface APIDefinitionLocation {
