@@ -5,6 +5,7 @@ exports[`open api parser aries parse open api 1`] = `
   "apiVersion": null,
   "basePath": null,
   "channel": [],
+  "defaultEnvironment": null,
   "description": null,
   "endpoints": [
     {
@@ -106925,6 +106926,7 @@ exports[`open api parser aries parse open api 1`] = `
   "servers": [
     {
       "description": null,
+      "environment": null,
       "name": null,
       "url": "/",
     },

@@ -5,6 +5,7 @@ exports[`open api parser vellum parse open api 1`] = `
   "apiVersion": null,
   "basePath": null,
   "channel": [],
+  "defaultEnvironment": null,
   "description": "
 ## Vellum API Documentation
 
@@ -1236,6 +1237,7 @@ Executes a deployed Workflow and streams back its results.",
       "server": [
         {
           "description": null,
+          "environment": null,
           "name": "Predict",
           "url": "https://predict.vellum.ai",
         },
@@ -1470,6 +1472,7 @@ Generate a completion using a previously defined deployment.
       "server": [
         {
           "description": null,
+          "environment": null,
           "name": "Predict",
           "url": "https://predict.vellum.ai",
         },
@@ -1595,6 +1598,7 @@ Generate a stream of completions using a previously defined deployment.
       "server": [
         {
           "description": null,
+          "environment": null,
           "name": "Predict",
           "url": "https://predict.vellum.ai",
         },
@@ -3098,6 +3102,7 @@ Perform a search against a document index.
       "server": [
         {
           "description": null,
+          "environment": null,
           "name": "Predict",
           "url": "https://predict.vellum.ai",
         },
@@ -3220,6 +3225,7 @@ Used to submit feedback regarding the quality of previously generated completion
       "server": [
         {
           "description": null,
+          "environment": null,
           "name": "Predict",
           "url": "https://predict.vellum.ai",
         },
@@ -3816,6 +3822,7 @@ Upload a document to be indexed and used for search.
       "server": [
         {
           "description": null,
+          "environment": null,
           "name": "Documents",
           "url": "https://documents.vellum.ai",
         },
@@ -15363,6 +15370,7 @@ Upload a document to be indexed and used for search.
   "servers": [
     {
       "description": "Default Server",
+      "environment": null,
       "name": "Default",
       "url": "https://api.vellum.ai",
     },

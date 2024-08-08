@@ -5,6 +5,7 @@ exports[`open api parser defaults parse open api 1`] = `
   "apiVersion": null,
   "basePath": null,
   "channel": [],
+  "defaultEnvironment": null,
   "description": null,
   "endpoints": [],
   "globalHeaders": [],
@@ -119,6 +120,7 @@ exports[`open api parser defaults parse open api 1`] = `
   "servers": [
     {
       "description": null,
+      "environment": null,
       "name": null,
       "url": "https://api.apiture.com/banking",
     },

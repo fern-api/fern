@@ -5,6 +5,7 @@ exports[`open api parser dopt parse open api 1`] = `
   "apiVersion": null,
   "basePath": null,
   "channel": [],
+  "defaultEnvironment": null,
   "description": "The Dopt Blocks API",
   "endpoints": [
     {
@@ -4605,6 +4606,7 @@ exports[`open api parser dopt parse open api 1`] = `
   "servers": [
     {
       "description": null,
+      "environment": null,
       "name": null,
       "url": "http://blocks-api:7071",
     },

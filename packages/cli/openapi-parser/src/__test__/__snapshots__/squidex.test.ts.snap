@@ -5,6 +5,7 @@ exports[`open api parser squidex parse open api 1`] = `
   "apiVersion": null,
   "basePath": null,
   "channel": [],
+  "defaultEnvironment": null,
   "description": null,
   "endpoints": [
     {
@@ -78252,6 +78253,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
   "servers": [
     {
       "description": null,
+      "environment": null,
       "name": null,
       "url": "https://localhost:5001",
     },

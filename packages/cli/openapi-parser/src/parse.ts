@@ -187,7 +187,7 @@ function merge(
             ...ir1.groups,
             ...ir2.groups
         },
-        defaultEnvironment: undefined
+        defaultEnvironment: ir1.defaultEnvironment ?? ir2.defaultEnvironment
     };
 }
 

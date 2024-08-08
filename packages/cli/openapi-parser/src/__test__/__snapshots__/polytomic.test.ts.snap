@@ -5,6 +5,7 @@ exports[`polytomic polytomic parse open api 1`] = `
   "apiVersion": null,
   "basePath": null,
   "channel": [],
+  "defaultEnvironment": null,
   "description": null,
   "endpoints": [
     {
@@ -1977,6 +1978,7 @@ exports[`polytomic polytomic parse open api 1`] = `
   "servers": [
     {
       "description": null,
+      "environment": null,
       "name": null,
       "url": "https://app.polytomic.com",
     },
