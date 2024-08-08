@@ -1,7 +1,3 @@
-using SeedBearerTokenEnvironmentVariable.Core;
-
-#nullable enable
-
 namespace SeedBearerTokenEnvironmentVariable.Core;
 
 /// <summary>

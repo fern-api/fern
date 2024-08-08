@@ -2,7 +2,6 @@ using System.Net.Http;
 using System.Text.Json;
 using SeedExhaustive.Core;
 using SeedExhaustive.GeneralErrors;
-using SeedExhaustive.InlinedRequests;
 using SeedExhaustive.Types.Object;
 
 #nullable enable

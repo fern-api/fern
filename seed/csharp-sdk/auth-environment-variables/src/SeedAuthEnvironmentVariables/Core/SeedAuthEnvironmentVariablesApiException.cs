@@ -1,7 +1,3 @@
-using SeedAuthEnvironmentVariables.Core;
-
-#nullable enable
-
 namespace SeedAuthEnvironmentVariables.Core;
 
 /// <summary>

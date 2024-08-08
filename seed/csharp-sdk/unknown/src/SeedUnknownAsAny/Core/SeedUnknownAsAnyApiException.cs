@@ -1,7 +1,3 @@
-using SeedUnknownAsAny.Core;
-
-#nullable enable
-
 namespace SeedUnknownAsAny.Core;
 
 /// <summary>

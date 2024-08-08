@@ -212,10 +212,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return this.customConfig["extra-dependencies"] ?? {};
     }
 
-    private getNamespaceFromFernFilepath(fernFilepath: FernFilepath): string {
-        const parts =
+    override getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {
+        const segmentNames =
             this.customConfig["explicit-namespaces"] === true ? fernFilepath.allParts : fernFilepath.packagePath;
-        return [this.getNamespace(), ...parts.map((path) => path.pascalCase.safeName)].join(".");
+        return segmentNames.map((segmentName) => segmentName.pascalCase.safeName);
     }
 
     public isOptional(typeReference: TypeReference): boolean {

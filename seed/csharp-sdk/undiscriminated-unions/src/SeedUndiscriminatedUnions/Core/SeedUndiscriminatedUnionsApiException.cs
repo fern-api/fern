@@ -1,7 +1,3 @@
-using SeedUndiscriminatedUnions.Core;
-
-#nullable enable
-
 namespace SeedUndiscriminatedUnions.Core;
 
 /// <summary>

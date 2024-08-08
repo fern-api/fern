@@ -1,7 +1,3 @@
-using SeedValidation.Core;
-
-#nullable enable
-
 namespace SeedValidation.Core;
 
 /// <summary>

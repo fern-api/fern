@@ -1,7 +1,3 @@
-using SeedMixedCase.Core;
-
-#nullable enable
-
 namespace SeedMixedCase.Core;
 
 /// <summary>

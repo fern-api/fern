@@ -1,7 +1,3 @@
-using SeedAudiences.Core;
-
-#nullable enable
-
 namespace SeedAudiences.Core;
 
 /// <summary>

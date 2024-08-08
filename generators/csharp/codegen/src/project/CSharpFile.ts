@@ -10,12 +10,16 @@ export declare namespace CSharpFile {
         clazz: Class | Enum;
         /* Directory of the filepath */
         directory: RelativeFilePath;
+        /* All base namespaces. Can be pulled directly from context. */
+        allNamespaceSegments: Set<string>;
+        /* The root namespace of the project. Can be pulled directly from context. */
+        namespace: string;
     }
 }
 
 export class CSharpFile extends File {
-    constructor({ clazz, directory }: CSharpFile.Args) {
-        super(`${clazz.name}.cs`, directory, clazz.toString());
+    constructor({ clazz, directory, allNamespaceSegments, namespace }: CSharpFile.Args) {
+        super(`${clazz.name}.cs`, directory, clazz.toString(clazz.getNamespace(), allNamespaceSegments, namespace));
     }
 
     public async tryWrite(directoryPrefix: AbsoluteFilePath): Promise<void> {

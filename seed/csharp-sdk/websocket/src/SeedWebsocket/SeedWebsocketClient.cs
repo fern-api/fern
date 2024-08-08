@@ -1,5 +1,4 @@
 using System;
-using SeedWebsocket;
 using SeedWebsocket.Core;
 
 #nullable enable

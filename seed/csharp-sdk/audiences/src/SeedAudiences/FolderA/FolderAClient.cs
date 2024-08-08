@@ -1,5 +1,4 @@
 using SeedAudiences.Core;
-using SeedAudiences.FolderA;
 
 #nullable enable
 

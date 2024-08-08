@@ -1,7 +1,3 @@
-using SeedCustomAuth.Core;
-
-#nullable enable
-
 namespace SeedCustomAuth.Core;
 
 /// <summary>
