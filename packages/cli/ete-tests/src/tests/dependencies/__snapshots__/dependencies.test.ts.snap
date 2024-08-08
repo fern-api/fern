@@ -850,10 +850,11 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
-            "sdkVersion": "X-Fern-SDK-Version"
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
         }
     }
 }"
 `;
 
-exports[`dependencies file dependencies 1`] = `3033661`;
+exports[`dependencies file dependencies 1`] = `3033692`;

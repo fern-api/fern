@@ -6,6 +6,7 @@ export * from "./ApiDefinitionSource";
 export * from "./ProtoSource";
 export * from "./SdkConfig";
 export * from "./PlatformHeaders";
+export * from "./UserAgent";
 export * from "./ApiVersionScheme";
 export * from "./HeaderApiVersionScheme";
 export * from "./ErrorDiscriminationStrategy";

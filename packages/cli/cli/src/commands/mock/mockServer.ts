@@ -42,7 +42,9 @@ export async function mockServer({
             keywords: undefined,
             smartCasing: false,
             disableExamples: false,
-            readme: undefined
+            readme: undefined,
+            version: undefined,
+            packageName: undefined
         });
 
         const mockServer = new MockServer({
