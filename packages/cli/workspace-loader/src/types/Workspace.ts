@@ -26,6 +26,7 @@ export interface SpecImportSettings {
     audiences: string[];
     shouldUseTitleAsName: boolean;
     shouldUseUndiscriminatedUnionsWithLiterals: boolean;
+    asyncApiNaming?: "v1" | "v2";
 }
 export interface APIChangelog {
     files: ChangelogFile[];

@@ -75,7 +75,8 @@ export async function loadAPIWorkspace({
                     audiences: definition.audiences ?? [],
                     shouldUseTitleAsName: definition.settings?.shouldUseTitleAsName ?? true,
                     shouldUseUndiscriminatedUnionsWithLiterals:
-                        definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false
+                        definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
+                    asyncApiNaming: definition.settings?.asyncApiMessageNaming
                 }
             });
         }

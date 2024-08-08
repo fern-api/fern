@@ -4,6 +4,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { OpenAPI, OpenAPIV2, OpenAPIV3 } from "openapi-types";
+import { DEFAULT_PARSE_ASYNCAPI_SETTINGS, ParseAsyncAPIOptions } from "./asyncapi/options";
 import { parseAsyncAPI } from "./asyncapi/parse";
 import { AsyncAPIV2 } from "./asyncapi/v2";
 import { loadOpenAPI } from "./loadOpenAPI";
@@ -22,8 +23,8 @@ export interface SpecImportSettings {
     audiences: string[];
     shouldUseTitleAsName: boolean;
     shouldUseUndiscriminatedUnionsWithLiterals: boolean;
+    asyncApiNaming?: "v1" | "v2";
 }
-
 export interface RawOpenAPIFile {
     absoluteFilepath: AbsoluteFilePath;
     contents: string;
@@ -99,10 +100,8 @@ export async function parse({
             const parsedAsyncAPI = parseAsyncAPI({
                 document: asyncAPI,
                 taskContext,
-                options: {
-                    ...getParseOptions({ specSettings: spec.settings }),
-                    useImprovedMessageNaming: true
-                }
+                options: getParseOptions({ specSettings: spec.settings }),
+                asyncApiOptions: getParseAsyncOptions({ specSettings: spec.settings })
             });
             if (parsedAsyncAPI.channel != null) {
                 ir.channel.push(parsedAsyncAPI.channel);
@@ -141,8 +140,19 @@ function getParseOptions({
             overrides?.useTitlesAsName ??
             specSettings?.shouldUseTitleAsName ??
             DEFAULT_PARSE_OPENAPI_SETTINGS.useTitlesAsName,
-        audiences: overrides?.audiences ?? specSettings?.audiences ?? DEFAULT_PARSE_OPENAPI_SETTINGS.audiences,
-        useImprovedMessageNaming: DEFAULT_PARSE_OPENAPI_SETTINGS.useImprovedMessageNaming
+        audiences: overrides?.audiences ?? specSettings?.audiences ?? DEFAULT_PARSE_OPENAPI_SETTINGS.audiences
+    };
+}
+
+function getParseAsyncOptions({
+    specSettings,
+    overrides
+}: {
+    specSettings?: SpecImportSettings;
+    overrides?: Partial<ParseAsyncAPIOptions>;
+}): ParseAsyncAPIOptions {
+    return {
+        naming: overrides?.naming ?? specSettings?.asyncApiNaming ?? DEFAULT_PARSE_ASYNCAPI_SETTINGS.naming
     };
 }
 
