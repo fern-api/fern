@@ -305,7 +305,7 @@ navigation:
           - page: ReadMe
             slug: readme
             path: ./pages/docs/comparison/readme.mdx
-      -section: AnalyticsConfig:
+      - section: Analytics
         contents:
           - page: Segment
             path: ./pages/docs/analytics/segment.mdx
