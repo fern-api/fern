@@ -5,17 +5,21 @@ info:
 paths: {}
 servers:
   - url: https://api.example.com
-    x-fern-server-name: api
-    x-fern-environment: Production
+    x-fern-server: 
+      name: api
+      environment: Production
   - url: https://auth.example.com
-    x-fern-server-name: auth
-    x-fern-environment: Production
+    x-fern-server: 
+      name: auth
+      environment: Production
   - url: https://api-sandbox.example.com
-    x-fern-server-name: api
-    x-fern-environment: Sandbox
+    x-fern-server: 
+      name: api
+      environment: Sandbox
   - url: https://auth-sandbox.example.com
-    x-fern-server-name: auth
-    x-fern-environment: Sandbox
+    x-fern-server: 
+      name: auth
+      environment: Sandbox
 
 components: 
   schemas: 

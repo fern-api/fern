@@ -299,7 +299,7 @@ export function generateIr({
                 return [key, { summary: value.summary ?? undefined, description: value.description ?? undefined }];
             })
         ),
-        servers: (openApi.servers ?? []).map((server) => convertServer(server)),
+        servers: (openApi.servers ?? []).map((server) => convertServer(server, context)),
         tags: {
             tagsById: Object.fromEntries(
                 (openApi.tags ?? []).map((tag) => {

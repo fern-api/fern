@@ -123,7 +123,7 @@ export function convertHttpOperation({
         request: convertedRequest,
         response: convertedResponse.value,
         errors: convertedResponse.errors,
-        server: (operation.servers ?? []).map((server) => convertServer(server)),
+        server: (operation.servers ?? []).map((server) => convertServer(server, context)),
         description: operation.description,
         authed: isEndpointAuthed(operation, document),
         availability,

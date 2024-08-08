@@ -11,25 +11,7 @@ export const FernOpenAPIExtension = {
     BOOLEAN_LITERAL: "x-fern-boolean-literal",
 
     SERVER_NAME_V1: "x-name",
-    /**
-     * Enables configuring multiple base URLs for different environments.
-     * Note: that if x-fern-environment is used, then so must x-fern-default-environment.
-     *
-     * x-fern-default-environment: Production
-     *
-     * servers:
-     *   - url: https://api.example.com
-     *     x-fern-server-name: api
-     *     x-fern-environment: Production
-     *   - url: https://auth.example.com
-     *     x-fern-server-name: auth
-     *     x-fern-environment: Production
-     * paths:
-     *   /path/to/my/endpoint:
-     */
     SERVER_NAME_V2: "x-fern-server-name",
-    SERVER_ENVIRONMENT: "x-fern-environment",
-    SERVER_DEFAULT_ENVIRONMENT: "x-fern-default-environment",
 
     /**
      * Alternatively, this configuration works as well.
@@ -43,6 +25,7 @@ export const FernOpenAPIExtension = {
      *        environment: Production
      */
     SERVER_CONFIG: "x-fern-server",
+    SERVER_DEFAULT_ENVIRONMENT: "x-fern-default-environment",
 
     /**
      * Prepends the configured base path to all of the endpoint paths.
