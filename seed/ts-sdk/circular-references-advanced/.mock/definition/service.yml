@@ -1,0 +1,17 @@
+imports:
+  ast: ast.yml
+
+service:
+  auth: false
+  base-path: /circular
+  endpoints:
+    createMetadata:
+      docs: Create a cyclic object.
+      method: POST
+      path: /metadata
+      request:
+        name: CreateMetadataRequest
+        body:
+          properties:
+            metadata: optional<ast.Metadata>
+

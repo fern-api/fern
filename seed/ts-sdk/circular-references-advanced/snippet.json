@@ -1,4 +1,16 @@
 {
-    "endpoints": [],
+    "endpoints": [
+        {
+            "id": {
+                "path": "/circular/metadata",
+                "method": "POST",
+                "identifier_override": "endpoint_service.createMetadata"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/circular-references-advanced\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.createMetadata({\n    metadata: {\n        \"string\": {\n            \"key\": \"value\"\n        }\n    }\n});\n"
+            }
+        }
+    ],
     "types": {}
 }

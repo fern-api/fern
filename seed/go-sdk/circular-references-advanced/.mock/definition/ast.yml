@@ -21,3 +21,11 @@ types:
       name: FieldName
       value: FieldValue
 
+  Metadata: map<string, optional<MetadataValue>>
+  MetadataValue:
+    discriminated: false
+    union:
+      - double
+      - string
+      - boolean
+      - list<optional<MetadataValue>>

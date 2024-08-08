@@ -5,6 +5,7 @@ package client
 import (
 	core "github.com/circular-references-advanced/fern/core"
 	option "github.com/circular-references-advanced/fern/option"
+	service "github.com/circular-references-advanced/fern/service"
 	http "net/http"
 )
 
@@ -12,6 +13,8 @@ type Client struct {
 	baseURL string
 	caller  *core.Caller
 	header  http.Header
+
+	Service *service.Client
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -24,6 +27,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
+		header:  options.ToHeader(),
+		Service: service.NewClient(opts...),
 	}
 }

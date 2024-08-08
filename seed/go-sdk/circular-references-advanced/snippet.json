@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/circular/metadata",
+                "method": "POST",
+                "identifier_override": "endpoint_service.createMetadata"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/circular-references-advanced/fern\"\n\tfernclient \"github.com/circular-references-advanced/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Service.CreateMetadata(\n\tcontext.TODO(),\n\t\u0026fern.CreateMetadataRequest{\n\t\tMetadata: map[string]*interface{}{\n\t\t\t\"string\": map[string]interface{}{\n\t\t\t\t\"key\": \"value\",\n\t\t\t},\n\t\t},\n\t},\n)\n"
+            }
+        }
+    ]
+}
