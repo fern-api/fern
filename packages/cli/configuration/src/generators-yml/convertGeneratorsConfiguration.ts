@@ -104,7 +104,11 @@ async function parseAPIConfiguration(
                 origin: undefined,
                 overrides: apiConfiguration.proto.overrides,
                 audiences: [],
-                settings: { shouldUseTitleAsName: undefined, shouldUseUndiscriminatedUnionsWithLiterals: undefined }
+                settings: {
+                    shouldUseTitleAsName: undefined,
+                    shouldUseUndiscriminatedUnionsWithLiterals: undefined,
+                    asyncApiMessageNaming: undefined
+                }
             });
         } else if (Array.isArray(apiConfiguration)) {
             for (const definition of apiConfiguration) {
@@ -136,7 +140,8 @@ async function parseAPIConfiguration(
                         audiences: [],
                         settings: {
                             shouldUseTitleAsName: undefined,
-                            shouldUseUndiscriminatedUnionsWithLiterals: undefined
+                            shouldUseUndiscriminatedUnionsWithLiterals: undefined,
+                            asyncApiMessageNaming: undefined
                         }
                     });
                 } else {
