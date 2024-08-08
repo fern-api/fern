@@ -78,13 +78,13 @@ export class ProtobufOpenAPIGenerator {
         cwd: AbsoluteFilePath;
         target: RelativeFilePath;
     }): Promise<AbsoluteFilePath> {
-        const command = createLoggingExecutable("command", {
+        const which = createLoggingExecutable("which", {
             cwd,
             logger: this.context.logger
         });
 
         try {
-            await command(["-v", "buf"]);
+            await which(["buf"]);
         } catch (err) {
             this.context.failAndThrow(
                 "Missing required dependency; please install 'buf' to continue (e.g. 'brew install buf')."
@@ -92,7 +92,7 @@ export class ProtobufOpenAPIGenerator {
         }
 
         try {
-            await command(["-v", "protoc-gen-openapi"]);
+            await which(["protoc-gen-openapi"]);
         } catch (err) {
             this.context.failAndThrow(
                 "Missing required dependency; please install 'protoc-gen-openapi' to continue (e.g. 'brew install go && go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest')."
