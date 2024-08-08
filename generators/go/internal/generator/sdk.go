@@ -2444,7 +2444,7 @@ func (f *fileWriter) WriteRequestType(
 			)
 			continue
 		}
-		f.P(queryParam.Name.Name.PascalCase.UnsafeName, " ", value, urlTagForType(queryParam.Name.WireValue, queryParam.ValueType, f.types))
+		f.P(queryParam.Name.Name.PascalCase.UnsafeName, " ", value, urlTagForType(queryParam.Name.WireValue, queryParam.ValueType, f.types, f.alwaysSendRequiredProperties))
 	}
 	if endpoint.RequestBody == nil {
 		// If the request doesn't have a body, we don't need any custom [de]serialization logic.

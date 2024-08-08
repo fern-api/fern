@@ -1717,6 +1717,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "language": "X-Fern-Language",
       "sdkName": "X-Fern-SDK-Name",
       "sdkVersion": "X-Fern-SDK-Version",
+      "userAgent": undefined,
     },
   },
   "serviceTypeReferenceInfo": {

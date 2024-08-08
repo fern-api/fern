@@ -462,6 +462,15 @@ class SnippetTestFactory:
                         or endpoint.request_body.get_as_union().type == "bytes"
                     )
                 )
+                # TODO(FER-2852): support test generation for nested property responses
+                or (
+                    endpoint.response is not None
+                    and endpoint.response.body
+                    and (
+                        endpoint.response.body.get_as_union().type == "json"
+                        and endpoint.response.body.get_as_union().value.get_as_union().type == "nestedPropertyAsResponse"  # type: ignore
+                    )
+                )
             ):
                 continue
             endpoint_name = endpoint.name.snake_case.safe_name

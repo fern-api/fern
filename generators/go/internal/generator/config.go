@@ -14,18 +14,19 @@ const (
 
 // Config represents the Fern generator configuration.
 type Config struct {
-	DryRun                     bool
-	EnableExplicitNull         bool
-	IncludeLegacyClientOptions bool
-	IncludeReadme              bool
-	Whitelabel                 bool
-	Organization               string
-	Version                    string
-	IRFilepath                 string
-	SnippetFilepath            string
-	ImportPath                 string
-	UnionVersion               UnionVersion
-	PackageName                string
+	DryRun                       bool
+	EnableExplicitNull           bool
+	IncludeLegacyClientOptions   bool
+	IncludeReadme                bool
+	Whitelabel                   bool
+	AlwaysSendRequiredProperties bool
+	Organization                 string
+	Version                      string
+	IRFilepath                   string
+	SnippetFilepath              string
+	ImportPath                   string
+	UnionVersion                 UnionVersion
+	PackageName                  string
 
 	// If not specified, a go.mod and go.sum will not be generated.
 	ModuleConfig *ModuleConfig
@@ -54,6 +55,7 @@ func NewConfig(
 	includeLegacyClientOptions bool,
 	includeReadme bool,
 	whitelabel bool,
+	alwaysSendRequiredProperties bool,
 	organization string,
 	version string,
 	irFilepath string,
@@ -68,19 +70,20 @@ func NewConfig(
 		return nil, err
 	}
 	return &Config{
-		DryRun:                     dryRun,
-		EnableExplicitNull:         enableExplicitNull,
-		IncludeLegacyClientOptions: includeLegacyClientOptions,
-		IncludeReadme:              includeReadme,
-		Organization:               organization,
-		Whitelabel:                 whitelabel,
-		Version:                    version,
-		IRFilepath:                 irFilepath,
-		SnippetFilepath:            snippetFilepath,
-		ImportPath:                 importPath,
-		PackageName:                packageName,
-		UnionVersion:               uv,
-		ModuleConfig:               moduleConfig,
+		DryRun:                       dryRun,
+		EnableExplicitNull:           enableExplicitNull,
+		IncludeLegacyClientOptions:   includeLegacyClientOptions,
+		IncludeReadme:                includeReadme,
+		Organization:                 organization,
+		Whitelabel:                   whitelabel,
+		AlwaysSendRequiredProperties: alwaysSendRequiredProperties,
+		Version:                      version,
+		IRFilepath:                   irFilepath,
+		SnippetFilepath:              snippetFilepath,
+		ImportPath:                   importPath,
+		PackageName:                  packageName,
+		UnionVersion:                 uv,
+		ModuleConfig:                 moduleConfig,
 	}, nil
 }
 

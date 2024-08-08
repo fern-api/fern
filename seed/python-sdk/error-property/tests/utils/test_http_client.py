@@ -45,3 +45,17 @@ def test_get_none_request_body() -> None:
 
     assert json_body_extras == {"see you": "later"}
     assert data_body_extras is None
+
+
+def test_get_empty_json_request_body() -> None:
+    unrelated_request_options: RequestOptions = {"max_retries": 3}
+    json_body, data_body = get_request_body(json=None, data=None, request_options=unrelated_request_options, omit=None)
+    assert json_body is None
+    assert data_body is None
+
+    json_body_extras, data_body_extras = get_request_body(
+        json={}, data=None, request_options=unrelated_request_options, omit=None
+    )
+
+    assert json_body_extras is None
+    assert data_body_extras is None

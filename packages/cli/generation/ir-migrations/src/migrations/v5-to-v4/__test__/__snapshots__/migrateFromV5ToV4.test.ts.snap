@@ -119,6 +119,7 @@ exports[`migrateFromV5ToV4 correctly migrates 1`] = `
       "language": "X-Fern-Language",
       "sdkName": "X-Fern-SDK-Name",
       "sdkVersion": "X-Fern-SDK-Version",
+      "userAgent": undefined,
     },
   },
   "services": {
