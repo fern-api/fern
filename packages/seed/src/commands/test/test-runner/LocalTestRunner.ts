@@ -73,7 +73,7 @@ export class LocalTestRunner extends TestRunner {
             irVersionOverride: irVersion,
             generatorInvocation,
             packageName: undefined,
-            version: undefined,
+            version: undefined
         });
         let generatorConfig = getGeneratorConfig({
             generatorInvocation,

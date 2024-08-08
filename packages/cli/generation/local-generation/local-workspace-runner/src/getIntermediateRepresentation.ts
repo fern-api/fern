@@ -14,7 +14,7 @@ export async function getIntermediateRepresentation({
     context,
     irVersionOverride,
     version,
-    packageName,
+    packageName
 }: {
     workspace: FernWorkspace;
     audiences: Audiences;
@@ -33,7 +33,7 @@ export async function getIntermediateRepresentation({
         disableExamples: generatorInvocation.disableExamples,
         readme: generatorInvocation.readme,
         version,
-        packageName,
+        packageName
     });
     context.logger.debug("Generated IR");
     const migratedIntermediateRepresentation =
