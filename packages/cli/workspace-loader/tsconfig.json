@@ -5,6 +5,7 @@
   "references": [
     { "path": "../../commons/core-utils" },
     { "path": "../../commons/fs-utils" },
+    { "path": "../../commons/logging-execa" },
     { "path": "../../core" },
     { "path": "../configuration" },
     { "path": "../logger" },
