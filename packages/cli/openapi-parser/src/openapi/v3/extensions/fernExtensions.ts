@@ -408,7 +408,31 @@ export const FernOpenAPIExtension = {
      *     - "2.0"
      *     - "Latest"
      */
-    FERN_VERSION: "x-fern-version"
+    FERN_VERSION: "x-fern-version",
+
+    /**
+     * Allows users to specify the encoding of the type. For example, suppose you need to configure
+     * Protobuf-encoding details like the following:
+     *
+     * User:
+     *  properties:
+     *    username:
+     *      type: string
+     *  x-fern-encoding:
+     *    proto:
+     *      type: user.v1.User
+     */
+    ENCODING: "x-fern-encoding",
+
+    /**
+     * Allows users to configure gRPC services. This must be specified on individual service
+     * declarations.
+     *
+     * x-fern-transport:
+     *   grpc:
+     *     service-name: UserService
+     */
+    TRANSPORT: "x-fern-transport"
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;

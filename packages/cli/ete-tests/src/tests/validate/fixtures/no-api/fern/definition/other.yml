@@ -1,0 +1,6 @@
+types:
+  MyType: MissingType
+errors:
+  MyError:
+    type: string
+    status-code: 400

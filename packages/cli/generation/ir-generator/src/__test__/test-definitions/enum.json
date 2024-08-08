@@ -143,6 +143,8 @@
                 ]
             },
             "referencedTypes": [],
+            "encoding": null,
+            "source": null,
             "userProvidedExamples": [
                 {
                     "name": {
@@ -332,6 +334,8 @@
                 ]
             },
             "referencedTypes": [],
+            "encoding": null,
+            "source": null,
             "userProvidedExamples": [
                 {
                     "name": {
@@ -489,6 +493,8 @@
                 "type_:Color",
                 "type_:Operand"
             ],
+            "encoding": null,
+            "source": null,
             "userProvidedExamples": [
                 {
                     "name": {
@@ -637,6 +643,8 @@
             },
             "headers": [],
             "pathParameters": [],
+            "encoding": null,
+            "transport": null,
             "endpoints": [
                 {
                     "id": "endpoint_inlined-request.send",
@@ -1535,6 +1543,8 @@
             },
             "headers": [],
             "pathParameters": [],
+            "encoding": null,
+            "transport": null,
             "endpoints": [
                 {
                     "id": "endpoint_path-param.send",
@@ -3120,6 +3130,8 @@
             },
             "headers": [],
             "pathParameters": [],
+            "encoding": null,
+            "transport": null,
             "endpoints": [
                 {
                     "id": "endpoint_query-param.send",
@@ -5108,6 +5120,7 @@
     "webhookGroups": {},
     "websocketChannels": {},
     "readmeConfig": null,
+    "sourceConfig": null,
     "subpackages": {
         "subpackage_inlined-request": {
             "name": {
@@ -5361,7 +5374,8 @@
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
-            "sdkVersion": "X-Fern-SDK-Version"
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
         }
     }
 }

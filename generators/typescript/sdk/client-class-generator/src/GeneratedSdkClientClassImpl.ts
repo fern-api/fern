@@ -814,6 +814,13 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             );
         }
 
+        if (context.ir.sdkConfig.platformHeaders.userAgent != null) {
+            headers.push({
+                header: context.ir.sdkConfig.platformHeaders.userAgent.header,
+                value: ts.factory.createStringLiteral(context.ir.sdkConfig.platformHeaders.userAgent.value)
+            });
+        }
+
         const generatedVersion = context.version.getGeneratedVersion();
         if (generatedVersion != null) {
             const header = generatedVersion.getHeader();

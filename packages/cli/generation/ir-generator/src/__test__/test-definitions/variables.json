@@ -86,6 +86,8 @@
             },
             "headers": [],
             "pathParameters": [],
+            "encoding": null,
+            "transport": null,
             "endpoints": [
                 {
                     "id": "endpoint_service.post",
@@ -353,6 +355,7 @@
     "webhookGroups": {},
     "websocketChannels": {},
     "readmeConfig": null,
+    "sourceConfig": null,
     "subpackages": {
         "subpackage_service": {
             "name": {
@@ -454,7 +457,8 @@
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
-            "sdkVersion": "X-Fern-SDK-Version"
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
         }
     }
 }

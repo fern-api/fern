@@ -172,6 +172,8 @@
             "referencedTypes": [
                 "type_:Docs"
             ],
+            "encoding": null,
+            "source": null,
             "userProvidedExamples": [
                 {
                     "name": {
@@ -515,6 +517,8 @@
                 "type_:JSON",
                 "type_:Docs"
             ],
+            "encoding": null,
+            "source": null,
             "userProvidedExamples": [
                 {
                     "name": {
@@ -816,6 +820,8 @@
                 "extendedProperties": []
             },
             "referencedTypes": [],
+            "encoding": null,
+            "source": null,
             "userProvidedExamples": [
                 {
                     "name": {
@@ -1057,6 +1063,8 @@
             "referencedTypes": [
                 "type_:Docs"
             ],
+            "encoding": null,
+            "source": null,
             "userProvidedExamples": [
                 {
                     "name": {
@@ -1239,6 +1247,8 @@
             },
             "headers": [],
             "pathParameters": [],
+            "encoding": null,
+            "transport": null,
             "endpoints": [
                 {
                     "id": "endpoint_.extendedInlineRequestBody",
@@ -1763,6 +1773,7 @@
     "webhookGroups": {},
     "websocketChannels": {},
     "readmeConfig": null,
+    "sourceConfig": null,
     "subpackages": {},
     "rootPackage": {
         "fernFilepath": {
@@ -1793,7 +1804,8 @@
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
-            "sdkVersion": "X-Fern-SDK-Version"
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
         }
     }
 }

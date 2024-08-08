@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import re
 from abc import ABC, abstractmethod
 from typing import Literal, Optional, Sequence, Tuple, cast
 
@@ -90,6 +91,13 @@ class AbstractGenerator(ABC):
                 generator_config=generator_config,
             ),
         )
+
+    # We're trying not to change the casing more than we need to, so here
+    # we're using the same casing as is given but just removing `-` and other special characters as
+    # python does not allow `-` in package names. Note pypi should be fine with it
+    def _clean_organization_name(self, organization: str) -> str:
+        # Replace non-alphanumeric characters with underscores
+        return re.sub("[^a-zA-Z0-9]", "_", organization)
 
     def _get_github_publish_config(
         self, generator_config: GeneratorConfig, output_mode: GithubOutputMode

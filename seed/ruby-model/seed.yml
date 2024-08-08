@@ -6,4 +6,6 @@ generatorType: model
 defaultOutputMode: local_files
 fixtures: []
 scripts: []
-
+allowedFailures:
+    # TODO: Add support for recursive undiscriminated unions.
+  - grpc

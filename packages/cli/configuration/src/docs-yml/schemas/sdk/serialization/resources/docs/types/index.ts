@@ -1,3 +1,4 @@
+export * from "./ProgrammingLanguage";
 export * from "./DocsConfiguration";
 export * from "./TabId";
 export * from "./TabConfig";
