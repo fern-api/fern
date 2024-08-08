@@ -1,4 +1,4 @@
-import { DocsV1Write } from "@fern-api/fdr-sdk";
+import { DocsV1 } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { Audiences } from "../commons";
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
@@ -29,6 +29,7 @@ export interface ParsedDocsConfiguration {
     typography: TypographyConfig | undefined;
     layout: WithoutQuestionMarks<DocsV1Write.DocsLayoutConfig> | undefined;
     defaultLanguage: DocsV1Write.ProgrammingLanguage | undefined;
+    analyticsConfig: DocsV1Write.AnalyticsConfig | undefined;
 
     /* integrations */
     integrations: DocsV1Write.IntegrationsConfig | undefined;

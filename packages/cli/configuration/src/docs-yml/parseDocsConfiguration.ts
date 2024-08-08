@@ -66,6 +66,7 @@ export async function parseDocsConfiguration({
         /* scripts */
         css: rawCssConfig,
         js: rawJsConfig,
+        analyticsConfig,
 
         experimental
     } = rawDocsConfiguration;
@@ -130,6 +131,7 @@ export async function parseDocsConfiguration({
         navbarLinks: convertNavbarLinks(navbarLinks),
         footerLinks: convertFooterLinks(footerLinks),
         defaultLanguage,
+        analyticsConfig,
 
         /* seo */
         metadata,
