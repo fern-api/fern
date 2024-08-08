@@ -35,7 +35,7 @@ types:
       title:
         type: optional<string>
         docs: used as tab bar title, and in the navbar if no logo is defined
-      analytics: 
+      analyticsConfig: 
         type: optional<AnalyticsConfig>
         docs: |
           The `analytics` object allows you to configure analytics for your docs site.

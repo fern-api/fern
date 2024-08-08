@@ -14,6 +14,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
         core.serialization.lazyObject(async () => (await import("../../..")).DocsInstance)
     ),
     title: core.serialization.string().optional(),
+    analyticsConfig: core.serialization.lazyObject(async () => (await import("../../..")).AnalyticsConfig).optional(),
     tabs: core.serialization
         .record(
             core.serialization.lazy(async () => (await import("../../..")).TabId),
@@ -63,6 +64,7 @@ export declare namespace DocsConfiguration {
     interface Raw {
         instances: serializers.DocsInstance.Raw[];
         title?: string | null;
+        analyticsConfig?: serializers.AnalyticsConfig.Raw | null;
         tabs?: Record<serializers.TabId.Raw, serializers.TabConfig.Raw> | null;
         versions?: serializers.VersionConfig.Raw[] | null;
         "landing-page"?: serializers.PageConfiguration.Raw | null;

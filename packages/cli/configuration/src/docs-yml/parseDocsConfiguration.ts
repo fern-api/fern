@@ -59,14 +59,13 @@ export async function parseDocsConfiguration({
         colors,
         typography: rawTypography,
         layout,
-
+        analyticsConfig,
         /* integrations */
         integrations,
 
         /* scripts */
         css: rawCssConfig,
         js: rawJsConfig,
-        analyticsConfig,
 
         experimental
     } = rawDocsConfiguration;
@@ -131,7 +130,6 @@ export async function parseDocsConfiguration({
         navbarLinks: convertNavbarLinks(navbarLinks),
         footerLinks: convertFooterLinks(footerLinks),
         defaultLanguage,
-        analyticsConfig,
 
         /* seo */
         metadata,
@@ -144,6 +142,7 @@ export async function parseDocsConfiguration({
         colors: convertColorsConfiguration(colors, context),
         typography,
         layout: convertLayoutConfig(layout),
+        analyticsConfig: rawDocsConfiguration.analyticsConfig,
 
         /* integrations */
         integrations,
