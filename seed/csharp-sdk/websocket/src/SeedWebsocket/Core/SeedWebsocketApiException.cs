@@ -1,7 +1,3 @@
-using SeedWebsocket.Core;
-
-#nullable enable
-
 namespace SeedWebsocket.Core;
 
 /// <summary>

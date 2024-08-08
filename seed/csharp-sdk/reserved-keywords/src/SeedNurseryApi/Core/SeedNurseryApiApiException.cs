@@ -1,7 +1,3 @@
-using SeedNurseryApi.Core;
-
-#nullable enable
-
 namespace SeedNurseryApi.Core;
 
 /// <summary>

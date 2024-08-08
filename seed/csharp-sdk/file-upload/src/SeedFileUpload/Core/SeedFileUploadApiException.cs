@@ -1,7 +1,3 @@
-using SeedFileUpload.Core;
-
-#nullable enable
-
 namespace SeedFileUpload.Core;
 
 /// <summary>

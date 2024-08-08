@@ -1,5 +1,4 @@
 using System;
-using SeedObjectsWithImports;
 using SeedObjectsWithImports.Commons;
 using SeedObjectsWithImports.Core;
 

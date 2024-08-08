@@ -1,7 +1,3 @@
-using SeedVersion.Core;
-
-#nullable enable
-
 namespace SeedVersion.Core;
 
 /// <summary>

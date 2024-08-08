@@ -1,7 +1,3 @@
-using SeedOauthClientCredentialsDefault.Core;
-
-#nullable enable
-
 namespace SeedOauthClientCredentialsDefault.Core;
 
 /// <summary>

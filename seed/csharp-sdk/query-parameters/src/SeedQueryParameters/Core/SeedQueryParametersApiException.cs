@@ -1,7 +1,3 @@
-using SeedQueryParameters.Core;
-
-#nullable enable
-
 namespace SeedQueryParameters.Core;
 
 /// <summary>

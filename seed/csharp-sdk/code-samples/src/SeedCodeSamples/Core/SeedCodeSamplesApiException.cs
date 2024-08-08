@@ -1,7 +1,3 @@
-using SeedCodeSamples.Core;
-
-#nullable enable
-
 namespace SeedCodeSamples.Core;
 
 /// <summary>

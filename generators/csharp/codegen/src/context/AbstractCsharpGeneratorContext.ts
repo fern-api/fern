@@ -76,21 +76,29 @@ export abstract class AbstractCsharpGeneratorContext<
         });
     }
 
-    public getAllBaseNamespaces(): Set<string> {
+    public getAllNamespaceSegments(): Set<string> {
         if (this.baseNamespacesCache == null) {
-            const namespaces = new Set<string>();
+            const namespaces: string[] = [];
             for (const [_, subpackage] of Object.entries(this.ir.subpackages)) {
-                const baseNamespace = this.getBaseNamespaceParts(subpackage.fernFilepath)[0];
-                if (baseNamespace != null) {
-                    namespaces.add(baseNamespace.pascalCase.safeName);
+                const namespaceSegments = this.getFullNamespaceSegments(subpackage.fernFilepath);
+                if (namespaceSegments != null) {
+                    namespaces.push(...namespaceSegments);
                 }
             }
-            this.baseNamespacesCache = namespaces;
+            this.baseNamespacesCache = new Set(namespaces);
         }
         return this.baseNamespacesCache;
     }
 
-    abstract getBaseNamespaceParts(fernFilepath: FernFilepath): Name[];
+    public getNamespaceFromFernFilepath(fernFilepath: FernFilepath): string {
+        return this.getFullNamespaceSegments(fernFilepath).join(".");
+    }
+
+    abstract getChildNamespaceSegments(fernFilepath: FernFilepath): string[];
+
+    public getFullNamespaceSegments(fernFilepath: FernFilepath): string[] {
+        return [this.getNamespace(), ...this.getChildNamespaceSegments(fernFilepath)];
+    }
 
     public getStringEnumSerializerClassReference(): csharp.ClassReference {
         return csharp.classReference({

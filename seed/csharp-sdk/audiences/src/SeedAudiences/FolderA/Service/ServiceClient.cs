@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using SeedAudiences.Core;
-using SeedAudiences.FolderA;
 
 #nullable enable
 

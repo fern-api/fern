@@ -27,7 +27,9 @@ export class ClassReference extends AstNode {
 
     public write(writer: Writer): void {
         if (this.qualifiedTypeNameRequired(writer)) {
-            writer.write(`${this.namespace}.${this.name}`);
+            // diff of this namespace and namespace where type if found
+            const typeQualification = this.getSuffixAfterPrefix(this.namespace, writer.getNamespace());
+            writer.write(`${typeQualification}${typeQualification ? "." : ""}${this.name}`);
         } else {
             writer.addReference(this);
             writer.write(`${this.name}`);
@@ -42,6 +44,16 @@ export class ClassReference extends AstNode {
             });
             writer.write(">");
         }
+    }
+
+    private getSuffixAfterPrefix(a: string, b: string): string {
+        let i = 0;
+        // Find the length of the longest matching prefix
+        while (i < a.length && i < b.length && a[i] === b[i]) {
+            i++;
+        }
+        // Return the part of 'a' after the matching prefix
+        return a.slice(i);
     }
 
     /**
@@ -68,15 +80,7 @@ export class ClassReference extends AstNode {
      *
      */
     private qualifiedTypeNameRequired(writer: Writer): boolean {
-        // ex: .Core
-        const afterRootNamespace = this.namespace.slice(writer.getRootNamespace().length);
-        // ex: Core
-        const baseNamespace = `${afterRootNamespace.split(".")[1]}`;
-        return (
-            writer.getAllBaseNamespaces().has(this.name) &&
-            // qualified type name not required if we're in the same base namespace as the conflicting type
-            !writer.getNamespace()?.startsWith(`${writer.getRootNamespace()}.${baseNamespace}`)
-        );
+        return writer.getAllNamespaceSegments().has(this.name);
     }
 }
 

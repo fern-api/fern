@@ -1,7 +1,3 @@
-using SeedTrace.Core;
-
-#nullable enable
-
 namespace SeedTrace.Core;
 
 /// <summary>

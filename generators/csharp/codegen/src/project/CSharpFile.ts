@@ -11,15 +11,15 @@ export declare namespace CSharpFile {
         /* Directory of the filepath */
         directory: RelativeFilePath;
         /* All base namespaces. Can be pulled directly from context. */
-        allBaseNamespaces: Set<string>;
+        allNamespaceSegments: Set<string>;
         /* The root namespace of the project. Can be pulled directly from context. */
         namespace: string;
     }
 }
 
 export class CSharpFile extends File {
-    constructor({ clazz, directory, allBaseNamespaces, namespace }: CSharpFile.Args) {
-        super(`${clazz.name}.cs`, directory, clazz.toString(clazz.getNamespace(), allBaseNamespaces, namespace));
+    constructor({ clazz, directory, allNamespaceSegments, namespace }: CSharpFile.Args) {
+        super(`${clazz.name}.cs`, directory, clazz.toString(clazz.getNamespace(), allNamespaceSegments, namespace));
     }
 
     public async tryWrite(directoryPrefix: AbsoluteFilePath): Promise<void> {

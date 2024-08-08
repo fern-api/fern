@@ -1,3 +1,4 @@
+using SeedCsharpNamespaceConflict.A.Aa;
 using SeedCsharpNamespaceConflict.Core;
 
 #nullable enable
@@ -11,5 +12,8 @@ public class AClient
     public AClient(RawClient client)
     {
         _client = client;
+        Aa = new AaClient(_client);
     }
+
+    public AaClient Aa { get; }
 }

@@ -1,7 +1,3 @@
-using SeedResponseProperty.Core;
-
-#nullable enable
-
 namespace SeedResponseProperty.Core;
 
 /// <summary>

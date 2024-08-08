@@ -132,7 +132,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         return new CSharpFile({
             clazz: class_,
             directory: this.getDirectory(),
-            allBaseNamespaces: this.context.getAllBaseNamespaces(),
+            allNamespaceSegments: this.context.getAllNamespaceSegments(),
             namespace: this.context.getNamespace()
         });
     }

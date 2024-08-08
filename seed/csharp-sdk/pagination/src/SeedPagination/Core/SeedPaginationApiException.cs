@@ -1,7 +1,3 @@
-using SeedPagination.Core;
-
-#nullable enable
-
 namespace SeedPagination.Core;
 
 /// <summary>

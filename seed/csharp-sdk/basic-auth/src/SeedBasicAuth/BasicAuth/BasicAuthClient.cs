@@ -1,6 +1,5 @@
 using System.Net.Http;
 using System.Text.Json;
-using SeedBasicAuth;
 using SeedBasicAuth.Core;
 
 #nullable enable

@@ -1,7 +1,6 @@
 using System;
 using System.Net.Http;
 using System.Text.Json;
-using SeedExamples;
 using SeedExamples.Commons;
 using SeedExamples.Core;
 using SeedExamples.File;

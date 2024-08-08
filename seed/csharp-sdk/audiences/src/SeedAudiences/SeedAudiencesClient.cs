@@ -1,5 +1,4 @@
 using System;
-using SeedAudiences;
 using SeedAudiences.Core;
 using SeedAudiences.FolderA;
 using SeedAudiences.FolderB;

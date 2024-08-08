@@ -1,7 +1,3 @@
-using SeedEnum.Core;
-
-#nullable enable
-
 namespace SeedEnum.Core;
 
 /// <summary>

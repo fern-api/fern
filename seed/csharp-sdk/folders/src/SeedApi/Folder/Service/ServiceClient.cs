@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using SeedApi.Core;
-using SeedApi.Folder;
 
 #nullable enable
 

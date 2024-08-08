@@ -43,7 +43,7 @@ export class RequestOptionsGenerator extends FileGenerator<CSharpFile, SdkCustom
         return new CSharpFile({
             clazz: class_,
             directory: this.context.getCoreDirectory(),
-            allBaseNamespaces: this.context.getAllBaseNamespaces(),
+            allNamespaceSegments: this.context.getAllNamespaceSegments(),
             namespace: this.context.getNamespace()
         });
     }

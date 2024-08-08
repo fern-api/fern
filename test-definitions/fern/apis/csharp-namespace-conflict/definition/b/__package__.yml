@@ -1,7 +1,8 @@
 imports:
-  a: ../a/__package__.yml
-types:  
-  OtherTestType:
+  aa: ../a/aa/__package__.yml
+
+types:
+  TestType:
     properties:
-      aProperty: a.A
-      bProperty: a.B
+      a: aa.A
+      b: aa.B

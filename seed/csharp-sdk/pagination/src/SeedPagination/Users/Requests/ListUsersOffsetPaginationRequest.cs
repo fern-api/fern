@@ -1,7 +1,3 @@
-using SeedPagination;
-
-#nullable enable
-
 namespace SeedPagination;
 
 public record ListUsersOffsetPaginationRequest

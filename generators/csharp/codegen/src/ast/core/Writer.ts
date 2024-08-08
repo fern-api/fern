@@ -142,7 +142,7 @@ export class Writer {
         }
     }
 
-    public getAllBaseNamespaces(): Set<string> {
+    public getAllNamespaceSegments(): Set<string> {
         return this.allBaseNamespaces;
     }
 
