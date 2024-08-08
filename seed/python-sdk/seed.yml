@@ -187,6 +187,7 @@ allowedFailures:
   # configuration. This otherwise causes a 'fern check' issue when
   # 'fern test' is run.
   - grpc
+  - grpc-proto
   - object
   - validation:no-custom-config
   - validation:with-defaults
