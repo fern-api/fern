@@ -27,9 +27,8 @@ export class ClassReference extends AstNode {
 
     public write(writer: Writer): void {
         if (this.qualifiedTypeNameRequired(writer)) {
-            // diff of this namespace and namespace where type if found
-            const typeQualification = this.getSuffixAfterPrefix(this.namespace, writer.getNamespace());
-            writer.write(`${typeQualification}${typeQualification ? "." : ""}${this.name}`);
+            const typeQualification = this.getTypeQualification(this.namespace, writer.getNamespace());
+            writer.write(`${typeQualification}${this.name}`);
         } else {
             writer.addReference(this);
             writer.write(`${this.name}`);
@@ -46,38 +45,52 @@ export class ClassReference extends AstNode {
         }
     }
 
-    private getSuffixAfterPrefix(a: string, b: string): string {
+    /**
+     * Computes the type qualification starting at the point where the namespace of the type
+     * differs from the namespace being written to.
+     *
+     * Example:
+     * - classReferenceNamespace: Company.Employee.Engineer.Backend
+     * - namespaceToBeWrittenTo: Company.Employee.Janitor
+     *
+     * Result: Engineer.Backend.
+     */
+    private getTypeQualification(classReferenceNamespace: string, namespaceToBeWrittenTo: string): string {
         let i = 0;
         // Find the length of the longest matching prefix
-        while (i < a.length && i < b.length && a[i] === b[i]) {
+        while (
+            i < classReferenceNamespace.length &&
+            i < namespaceToBeWrittenTo.length &&
+            classReferenceNamespace[i] === namespaceToBeWrittenTo[i]
+        ) {
             i++;
         }
         // Return the part of 'a' after the matching prefix
-        return a.slice(i);
+        const typeQualification = classReferenceNamespace.slice(i);
+        return `${typeQualification}${typeQualification ? "." : ""}`;
     }
 
     /**
-     *
-     * This method is used to help address an edge case with namespace and type name imports. If a class name
-     * matches a base namespace in the project, this name name must be fully qualified when referenced outside
-     * of the base namespace where the class is defined.
-     *
+     * This method addresses an edge case involving namespace and type conflicts.
+     * When a class name matches any segment of a namespace within the project, the .NET compiler
+     * might require references to that class to be qualified to avoid conflicts.
+     * The rules governing this behavior are complex, so this method errs on the side of caution
+     * by performing a simple check.
      *
      * -- Exploration supporting this --
      *
-     * LEGEND: <Class name> -- <Namespace of class>
-     * SETUP: Company.Net is the root namespace (the name of the project)
+     * LEGEND: <Class Name> -- <Namespace of Class>
+     * SETUP: Company.Net is the root namespace (i.e., the project name).
      *
-     * Do require full qualification outside of their base namespace:
+     * Full qualification required:
      * - Guarantor -- Company.Net.Guarantor.V1
      * - ImportInvoice -- Company.Net.ImportInvoice.V1
-     * - ImportInvoice -- Company.Net.Guarantor.V1 (assuming Candid.Net.ImportInvoice.V1 also exists)
+     * - ImportInvoice -- Company.Net.Guarantor.V1 (if Candid.Net.ImportInvoice.V1 also exists)
      *
-     * Do not require full qualification outside of their base namespace:
+     * Qualification not required:
      * - V1 -- Company.Net.Guarantor.V1
      * - V1 -- Company.Net.Guarantor.V1.Types
      * - Net -- Company.Net
-     *
      */
     private qualifiedTypeNameRequired(writer: Writer): boolean {
         return writer.getAllNamespaceSegments().has(this.name);
