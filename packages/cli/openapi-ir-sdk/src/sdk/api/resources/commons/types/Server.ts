@@ -8,4 +8,6 @@ export interface Server extends FernOpenapiIr.WithDescription {
     /** Populated by `X-Server-Name` */
     name: string | undefined;
     url: string;
+    /** Populated by `X-Server-Environment` */
+    environment: string | undefined;
 }

@@ -15,6 +15,7 @@ types:
       description: optional<string>
       basePath: optional<string>
       servers: list<commons.Server>
+      defaultEnvironment: optional<string>
       groups:
         docs: |
           Top level group information populated through `x-fern-groups`.

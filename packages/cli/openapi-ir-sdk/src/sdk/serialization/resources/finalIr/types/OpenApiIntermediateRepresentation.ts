@@ -15,6 +15,7 @@ export const OpenApiIntermediateRepresentation: core.serialization.ObjectSchema<
     description: core.serialization.string().optional(),
     basePath: core.serialization.string().optional(),
     servers: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).Server)),
+    defaultEnvironment: core.serialization.string().optional(),
     groups: core.serialization.record(
         core.serialization.string(),
         core.serialization.lazyObject(async () => (await import("../../..")).SdkGroupInfo)
@@ -56,6 +57,7 @@ export declare namespace OpenApiIntermediateRepresentation {
         description?: string | null;
         basePath?: string | null;
         servers: serializers.Server.Raw[];
+        defaultEnvironment?: string | null;
         groups: Record<string, serializers.SdkGroupInfo.Raw>;
         tags: serializers.Tags.Raw;
         hasEndpointsMarkedInternal: boolean;
