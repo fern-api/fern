@@ -177,7 +177,6 @@ allowedFailures:
   - exhaustive:pydantic-v1-wrapped
 
   # TODO(FER-1837): Address this list
-  - response-property
   - websocket
   - exhaustive:union-utils
   - extra-properties
