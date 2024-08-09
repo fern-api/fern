@@ -18,10 +18,7 @@ class UnionClient:
         self._client_wrapper = client_wrapper
 
     def get_and_return_union(
-        self,
-        *,
-        request: Animal,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, request: Animal, request_options: typing.Optional[RequestOptions] = None
     ) -> Animal:
         """
         Parameters
@@ -61,8 +58,12 @@ class UnionClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Animal, parse_obj_as(type_=Animal, object_=_response.json())
-                )  # type: ignore
+                    Animal,
+                    parse_obj_as(
+                        type_=Animal,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -74,10 +75,7 @@ class AsyncUnionClient:
         self._client_wrapper = client_wrapper
 
     async def get_and_return_union(
-        self,
-        *,
-        request: Animal,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, request: Animal, request_options: typing.Optional[RequestOptions] = None
     ) -> Animal:
         """
         Parameters
@@ -125,8 +123,12 @@ class AsyncUnionClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Animal, parse_obj_as(type_=Animal, object_=_response.json())
-                )  # type: ignore
+                    Animal,
+                    parse_obj_as(
+                        type_=Animal,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
