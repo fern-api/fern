@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+=======
+using SeedPagination;
+
+#nullable enable
+
+>>>>>>> f5b9bd2cb7 (add test definition)
 namespace SeedPagination;
 
 public record ListWithOffsetPaginationHasNextPageRequest

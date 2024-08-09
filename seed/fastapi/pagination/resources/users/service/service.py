@@ -72,6 +72,7 @@ class AbstractUsersService(AbstractFernService):
     ) -> ListUsersPaginationResponse: ...
 
     @abc.abstractmethod
+<<<<<<< HEAD
     def list_with_offset_pagination_has_next_page(
         self,
         *,
@@ -81,9 +82,26 @@ class AbstractUsersService(AbstractFernService):
     ) -> ListUsersPaginationResponse: ...
 
     @abc.abstractmethod
+=======
+<<<<<<< HEAD
+>>>>>>> f5b9bd2cb7 (add test definition)
     def list_with_extended_results(
         self, *, cursor: typing.Optional[uuid.UUID] = None
     ) -> ListUsersExtendedResponse: ...
+=======
+    def list_with_offset_pagination_has_next_page(
+        self,
+        *,
+        page: typing.Optional[int] = None,
+        limit: typing.Optional[int] = None,
+        order: typing.Optional[Order] = None,
+    ) -> ListUsersPaginationResponse:
+        ...
+
+    @abc.abstractmethod
+    def list_with_extended_results(self, *, cursor: typing.Optional[uuid.UUID] = None) -> ListUsersExtendedResponse:
+        ...
+>>>>>>> 9355dcb0fd (add test definition)
 
     @abc.abstractmethod
     def list_usernames(
@@ -406,6 +424,7 @@ class AbstractUsersService(AbstractFernService):
         )(wrapper)
 
     @classmethod
+<<<<<<< HEAD
     def __init_list_with_offset_pagination_has_next_page(
         cls, router: fastapi.APIRouter
     ) -> None:
@@ -416,15 +435,25 @@ class AbstractUsersService(AbstractFernService):
         for index, (parameter_name, parameter) in enumerate(
             endpoint_function.parameters.items()
         ):
+=======
+    def __init_list_with_offset_pagination_has_next_page(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.list_with_offset_pagination_has_next_page)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+>>>>>>> f5b9bd2cb7 (add test definition)
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "page":
                 new_parameters.append(
+<<<<<<< HEAD
                     parameter.replace(
                         default=fastapi.Query(
                             default=None, description="Defaults to first page"
                         )
                     )
+=======
+                    parameter.replace(default=fastapi.Query(default=None, description="Defaults to first page"))
+>>>>>>> f5b9bd2cb7 (add test definition)
                 )
             elif parameter_name == "limit":
                 new_parameters.append(
@@ -436,9 +465,13 @@ class AbstractUsersService(AbstractFernService):
                     )
                 )
             elif parameter_name == "order":
+<<<<<<< HEAD
                 new_parameters.append(
                     parameter.replace(default=fastapi.Query(default=None))
                 )
+=======
+                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
+>>>>>>> f5b9bd2cb7 (add test definition)
             else:
                 new_parameters.append(parameter)
         setattr(
@@ -448,9 +481,13 @@ class AbstractUsersService(AbstractFernService):
         )
 
         @functools.wraps(cls.list_with_offset_pagination_has_next_page)
+<<<<<<< HEAD
         def wrapper(
             *args: typing.Any, **kwargs: typing.Any
         ) -> ListUsersPaginationResponse:
+=======
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> ListUsersPaginationResponse:
+>>>>>>> f5b9bd2cb7 (add test definition)
             try:
                 return cls.list_with_offset_pagination_has_next_page(*args, **kwargs)
             except FernHTTPException as e:
@@ -463,17 +500,25 @@ class AbstractUsersService(AbstractFernService):
 
         # this is necessary for FastAPI to find forward-ref'ed type hints.
         # https://github.com/tiangolo/fastapi/pull/5077
+<<<<<<< HEAD
         wrapper.__globals__.update(
             cls.list_with_offset_pagination_has_next_page.__globals__
         )
+=======
+        wrapper.__globals__.update(cls.list_with_offset_pagination_has_next_page.__globals__)
+>>>>>>> f5b9bd2cb7 (add test definition)
 
         router.get(
             path="/users",
             response_model=ListUsersPaginationResponse,
             description=AbstractUsersService.list_with_offset_pagination_has_next_page.__doc__,
+<<<<<<< HEAD
             **get_route_args(
                 cls.list_with_offset_pagination_has_next_page, default_tag="users"
             ),
+=======
+            **get_route_args(cls.list_with_offset_pagination_has_next_page, default_tag="users"),
+>>>>>>> f5b9bd2cb7 (add test definition)
         )(wrapper)
 
     @classmethod
