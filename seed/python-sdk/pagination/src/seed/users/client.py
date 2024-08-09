@@ -434,10 +434,14 @@ class UsersClient:
         limit: typing.Optional[int] = None,
         order: typing.Optional[Order] = None,
 <<<<<<< HEAD
+<<<<<<< HEAD
         request_options: typing.Optional[RequestOptions] = None,
 =======
         request_options: typing.Optional[RequestOptions] = None
 >>>>>>> f5b9bd2cb7 (add test definition)
+=======
+        request_options: typing.Optional[RequestOptions] = None,
+>>>>>>> 823dc8d3c3 (fix)
     ) -> SyncPager[User]:
         """
         Parameters
@@ -483,19 +487,28 @@ class UsersClient:
             "users",
             method="GET",
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 823dc8d3c3 (fix)
             params={
                 "page": page,
                 "limit": limit,
                 "order": order,
             },
+<<<<<<< HEAD
 =======
             params={"page": page, "limit": limit, "order": order},
 >>>>>>> f5b9bd2cb7 (add test definition)
+=======
+>>>>>>> 823dc8d3c3 (fix)
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 823dc8d3c3 (fix)
                 _parsed_response = typing.cast(
                     ListUsersPaginationResponse,
                     parse_obj_as(
@@ -503,6 +516,7 @@ class UsersClient:
                         object_=_response.json(),
                     ),
                 )
+<<<<<<< HEAD
                 _has_next = True
                 _get_next = lambda: self.list_with_offset_pagination_has_next_page(
                     page=page + 1,
@@ -515,6 +529,14 @@ class UsersClient:
                 _get_next = lambda: self.list_with_offset_pagination_has_next_page(
                     page=page + 1, limit=limit, order=order, request_options=request_options
 >>>>>>> f5b9bd2cb7 (add test definition)
+=======
+                _has_next = True
+                _get_next = lambda: self.list_with_offset_pagination_has_next_page(
+                    page=page + 1,
+                    limit=limit,
+                    order=order,
+                    request_options=request_options,
+>>>>>>> 823dc8d3c3 (fix)
                 )
                 _items = _parsed_response.data
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
@@ -1173,10 +1195,14 @@ class AsyncUsersClient:
         limit: typing.Optional[int] = None,
         order: typing.Optional[Order] = None,
 <<<<<<< HEAD
+<<<<<<< HEAD
         request_options: typing.Optional[RequestOptions] = None,
 =======
         request_options: typing.Optional[RequestOptions] = None
 >>>>>>> f5b9bd2cb7 (add test definition)
+=======
+        request_options: typing.Optional[RequestOptions] = None,
+>>>>>>> 823dc8d3c3 (fix)
     ) -> AsyncPager[User]:
         """
         Parameters
@@ -1230,19 +1256,28 @@ class AsyncUsersClient:
             "users",
             method="GET",
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 823dc8d3c3 (fix)
             params={
                 "page": page,
                 "limit": limit,
                 "order": order,
             },
+<<<<<<< HEAD
 =======
             params={"page": page, "limit": limit, "order": order},
 >>>>>>> f5b9bd2cb7 (add test definition)
+=======
+>>>>>>> 823dc8d3c3 (fix)
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 823dc8d3c3 (fix)
                 _parsed_response = typing.cast(
                     ListUsersPaginationResponse,
                     parse_obj_as(
@@ -1250,6 +1285,7 @@ class AsyncUsersClient:
                         object_=_response.json(),
                     ),
                 )
+<<<<<<< HEAD
                 _has_next = True
                 _get_next = lambda: self.list_with_offset_pagination_has_next_page(
                     page=page + 1,
@@ -1262,6 +1298,14 @@ class AsyncUsersClient:
                 _get_next = lambda: self.list_with_offset_pagination_has_next_page(
                     page=page + 1, limit=limit, order=order, request_options=request_options
 >>>>>>> f5b9bd2cb7 (add test definition)
+=======
+                _has_next = True
+                _get_next = lambda: self.list_with_offset_pagination_has_next_page(
+                    page=page + 1,
+                    limit=limit,
+                    order=order,
+                    request_options=request_options,
+>>>>>>> 823dc8d3c3 (fix)
                 )
                 _items = _parsed_response.data
                 return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)

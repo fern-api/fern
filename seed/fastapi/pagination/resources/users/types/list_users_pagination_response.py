@@ -3,15 +3,20 @@
 from ....core.pydantic_utilities import UniversalBaseModel
 import typing
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> 823dc8d3c3 (fix)
 import pydantic
->>>>>>> bb549f4937 ((feat, python): move to ruff for formatting (#4219))
 from .page import Page
+<<<<<<< HEAD
 >>>>>>> 8e516d4440 ((feat, python): move to ruff for formatting (#4219))
 import pydantic
 from .page import Page
+=======
+>>>>>>> 823dc8d3c3 (fix)
 from .user import User
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
