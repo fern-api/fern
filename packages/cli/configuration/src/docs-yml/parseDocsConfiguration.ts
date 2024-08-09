@@ -623,7 +623,8 @@ async function convertNavigationItem({
             skipUrlSlug: rawConfig.skipSlug ?? false,
             flattened: rawConfig.flattened ?? false,
             alphabetized: rawConfig.alphabetized ?? false,
-            paginated: rawConfig.paginated ?? false
+            paginated: rawConfig.paginated ?? false,
+            playground: rawConfig.playground
         };
     }
     if (isRawLinkConfig(rawConfig)) {
@@ -706,7 +707,8 @@ function parseApiReferenceLayoutItem(
                 slug: item.slug,
                 hidden: item.hidden,
                 skipUrlSlug: item.skipSlug,
-                icon: item.icon
+                icon: item.icon,
+                playground: item.playground
             }
         ];
     } else if (isRawApiRefEndpointConfiguration(item)) {
@@ -717,7 +719,8 @@ function parseApiReferenceLayoutItem(
                 title: item.title,
                 icon: item.icon,
                 slug: item.slug,
-                hidden: item.hidden
+                hidden: item.hidden,
+                playground: item.playground
             }
         ];
     }
@@ -733,7 +736,8 @@ function parseApiReferenceLayoutItem(
                 slug: value.slug,
                 hidden: value.hidden,
                 skipUrlSlug: value.skipSlug,
-                icon: value.icon
+                icon: value.icon,
+                playground: value.playground
             };
         }
         return {
@@ -745,7 +749,8 @@ function parseApiReferenceLayoutItem(
             hidden: false,
             slug: undefined,
             skipUrlSlug: false,
-            icon: undefined
+            icon: undefined,
+            playground: undefined
         };
     });
 }

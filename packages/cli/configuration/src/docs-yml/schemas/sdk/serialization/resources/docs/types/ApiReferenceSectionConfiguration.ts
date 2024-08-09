@@ -23,6 +23,7 @@ export const ApiReferenceSectionConfiguration: core.serialization.ObjectSchema<
     icon: core.serialization.string().optional(),
     hidden: core.serialization.boolean().optional(),
     skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
+    playground: core.serialization.lazyObject(async () => (await import("../../..")).PlaygroundSettings).optional(),
 });
 
 export declare namespace ApiReferenceSectionConfiguration {
@@ -35,5 +36,6 @@ export declare namespace ApiReferenceSectionConfiguration {
         icon?: string | null;
         hidden?: boolean | null;
         "skip-slug"?: boolean | null;
+        playground?: serializers.PlaygroundSettings.Raw | null;
     }
 }

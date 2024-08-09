@@ -26,6 +26,7 @@ export const ApiReferenceConfiguration: core.serialization.ObjectSchema<
     alphabetized: core.serialization.boolean().optional(),
     flattened: core.serialization.boolean().optional(),
     paginated: core.serialization.boolean().optional(),
+    playground: core.serialization.lazyObject(async () => (await import("../../..")).PlaygroundSettings).optional(),
 });
 
 export declare namespace ApiReferenceConfiguration {
@@ -44,5 +45,6 @@ export declare namespace ApiReferenceConfiguration {
         alphabetized?: boolean | null;
         flattened?: boolean | null;
         paginated?: boolean | null;
+        playground?: serializers.PlaygroundSettings.Raw | null;
     }
 }
