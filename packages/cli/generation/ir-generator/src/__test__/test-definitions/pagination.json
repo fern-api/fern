@@ -7443,7 +7443,8 @@
                                 "docs": null
                             }
                         },
-                        "step": null
+                        "step": null,
+                        "hasNextPage": null
                     },
                     "availability": null,
                     "docs": null
@@ -8928,7 +8929,8 @@
                                 "docs": null
                             }
                         },
-                        "step": null
+                        "step": null,
+                        "hasNextPage": null
                     },
                     "availability": null,
                     "docs": null
@@ -10497,6 +10499,52 @@
                                     }
                                 },
                                 "allowMultiple": false,
+                                "availability": null,
+                                "docs": "The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint."
+                            },
+                            "propertyPath": null
+                        },
+                        "hasNextPage": {
+                            "property": {
+                                "name": {
+                                    "name": {
+                                        "originalName": "limit",
+                                        "camelCase": {
+                                            "unsafeName": "limit",
+                                            "safeName": "limit"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "limit",
+                                            "safeName": "limit"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "LIMIT",
+                                            "safeName": "LIMIT"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Limit",
+                                            "safeName": "Limit"
+                                        }
+                                    },
+                                    "wireValue": "limit"
+                                },
+                                "valueType": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "optional",
+                                        "optional": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "INTEGER",
+                                                "v2": {
+                                                    "type": "integer",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
                                 "availability": null,
                                 "docs": "The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint."
                             },
@@ -12919,7 +12967,8 @@
                                 "docs": null
                             }
                         },
-                        "step": null
+                        "step": null,
+                        "hasNextPage": null
                     },
                     "availability": null,
                     "docs": null
