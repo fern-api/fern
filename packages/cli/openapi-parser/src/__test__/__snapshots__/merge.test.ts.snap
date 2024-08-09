@@ -5,6 +5,7 @@ exports[`open api parser merge parse open api 1`] = `
   "apiVersion": null,
   "basePath": null,
   "channel": [],
+  "defaultEnvironment": null,
   "description": "The unified API for building rich integrations with multiple HR Information System platforms.",
   "endpoints": [
     {
@@ -61510,11 +61511,13 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
   "servers": [
     {
       "description": "Production",
+      "environment": null,
       "name": "Production",
       "url": "https://api.merge.dev/api/hris/v1",
     },
     {
       "description": "Sandbox",
+      "environment": null,
       "name": "Sandbox",
       "url": "https://api-sandbox.merge.dev/api/hris/v1",
     },

@@ -10,6 +10,7 @@ export const Server: core.serialization.ObjectSchema<serializers.Server.Raw, Fer
     .objectWithoutOptionalProperties({
         name: core.serialization.string().optional(),
         url: core.serialization.string(),
+        environment: core.serialization.string().optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
 
@@ -17,5 +18,6 @@ export declare namespace Server {
     interface Raw extends serializers.WithDescription.Raw {
         name?: string | null;
         url: string;
+        environment?: string | null;
     }
 }

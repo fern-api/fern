@@ -5,6 +5,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
   "apiVersion": null,
   "basePath": null,
   "channel": [],
+  "defaultEnvironment": null,
   "description": null,
   "endpoints": [
     {
@@ -80582,6 +80583,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
   "servers": [
     {
       "description": "Production API",
+      "environment": null,
       "name": null,
       "url": "https://api.hookdeck.com/2023-01-01",
     },

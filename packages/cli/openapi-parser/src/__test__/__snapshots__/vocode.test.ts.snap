@@ -5,6 +5,7 @@ exports[`open api parser vocode parse open api 1`] = `
   "apiVersion": null,
   "basePath": null,
   "channel": [],
+  "defaultEnvironment": null,
   "description": "
         Vocode's Hosted API helps you automate phone calls in minutes. 🚀
 
@@ -12737,11 +12738,13 @@ exports[`open api parser vocode parse open api 1`] = `
   "servers": [
     {
       "description": "Production environment",
+      "environment": null,
       "name": null,
       "url": "https://api.vocode.dev",
     },
     {
       "description": "Staging environment",
+      "environment": null,
       "name": null,
       "url": "https://staging.vocode.dev",
     },

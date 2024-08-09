@@ -1,14 +1,46 @@
 import { Server } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
-import { getExtension } from "../../../getExtension";
+import { getExtension, getExtensionAndValidate } from "../../../getExtension";
+import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
 import { FernOpenAPIExtension } from "../extensions/fernExtensions";
+import { ServerConfigSchema } from "../schemas/ServerConfigSchema";
 
-export function convertServer(server: OpenAPIV3.ServerObject): Server {
-    return {
+export function convertServer(server: OpenAPIV3.ServerObject, context: AbstractOpenAPIV3ParserContext): Server {
+    const initServer = {
         url: getServerUrl({ url: server.url, variables: server.variables ?? {} }),
-        description: server.description,
-        name: getServerName(server)
+        description: server.description
     };
+
+    const maybeFullServerConfig = getFullServerConfig(server, context);
+    if (maybeFullServerConfig != null) {
+        return {
+            ...initServer,
+            ...maybeFullServerConfig,
+            name: maybeFullServerConfig.name
+        };
+    }
+
+    return {
+        ...initServer,
+        name: getServerName(server),
+        environment: undefined
+    };
+}
+
+export function getDefaultEnvironmentName(document: OpenAPIV3.Document): string | undefined {
+    return getExtension<string>(document, FernOpenAPIExtension.SERVER_DEFAULT_ENVIRONMENT);
+}
+
+function getFullServerConfig(
+    server: OpenAPIV3.ServerObject,
+    context: AbstractOpenAPIV3ParserContext
+): ServerConfigSchema | undefined {
+    return getExtensionAndValidate<ServerConfigSchema>(
+        server,
+        FernOpenAPIExtension.SERVER_CONFIG,
+        ServerConfigSchema,
+        context
+    );
 }
 
 function getServerUrl({

@@ -24,7 +24,8 @@ describe("Fern Definition Builder", () => {
                 globalHeaders: [],
                 idempotencyHeaders: [],
                 groups: {},
-                channel: []
+                channel: [],
+                defaultEnvironment: undefined
             },
             true,
             false

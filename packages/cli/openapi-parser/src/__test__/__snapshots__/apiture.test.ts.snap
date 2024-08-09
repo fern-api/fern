@@ -5,6 +5,7 @@ exports[`open api parser apiture parse open api 1`] = `
   "apiVersion": null,
   "basePath": null,
   "channel": [],
+  "defaultEnvironment": null,
   "description": "APIs for digital banking client applications.
 
 ## Customer Accounts
@@ -18572,6 +18573,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
   "servers": [
     {
       "description": null,
+      "environment": null,
       "name": null,
       "url": "https://api.apiture.com/banking",
     },

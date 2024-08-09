@@ -14,6 +14,20 @@ export const FernOpenAPIExtension = {
     SERVER_NAME_V2: "x-fern-server-name",
 
     /**
+     * Alternatively, this configuration works as well.
+     *
+     * x-fern-default-environment: Production
+     *
+     * servers:
+     *   - url: https://api.example.com
+     *     x-fern-server:
+     *        name: api
+     *        environment: Production
+     */
+    SERVER_CONFIG: "x-fern-server",
+    SERVER_DEFAULT_ENVIRONMENT: "x-fern-default-environment",
+
+    /**
      * Prepends the configured base path to all of the endpoint paths.
      *
      * x-fern-base-path: /v1

@@ -5,6 +5,7 @@ exports[`open api parser deel parse open api 1`] = `
   "apiVersion": null,
   "basePath": null,
   "channel": [],
+  "defaultEnvironment": null,
   "description": null,
   "endpoints": [
     {
@@ -73533,11 +73534,13 @@ exports[`open api parser deel parse open api 1`] = `
   "servers": [
     {
       "description": "Production server",
+      "environment": null,
       "name": null,
       "url": "https://api.letsdeel.com/rest/v1",
     },
     {
       "description": "Demo server",
+      "environment": null,
       "name": null,
       "url": "https://api-staging.letsdeel.com/rest/v1",
     },
