@@ -13,5 +13,5 @@ public class ObjectWithRequiredFieldError(ObjectWithRequiredField body)
     /// <summary>
     /// The body of the response that triggered the exception.
     /// </summary>
-    public new ObjectWithRequiredField Body { get; } = body;
+    public new ObjectWithRequiredField Body => body;
 }

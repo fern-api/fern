@@ -17,9 +17,9 @@ public class ParentTest
         var inputJson =
             @"
         {
-  ""parent"": ""Property from the parent""
-}
-";
+          ""parent"": ""Property from the parent""
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {

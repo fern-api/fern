@@ -222,13 +222,31 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     requestBodyReference: `${this.getParameterName()}.${this.wrapper.bodyKey.pascalCase.safeName}`
                 };
             },
-            inlinedRequestBody: () => {
+            inlinedRequestBody: (inlinedRequestBody) => {
                 if (this.endpoint.queryParameters.length === 0 && this.endpoint.headers.length === 0) {
                     return {
                         requestBodyReference: `${this.getParameterName()}`
                     };
                 }
-                return undefined;
+                const allProperties = [
+                    ...inlinedRequestBody.properties,
+                    ...(inlinedRequestBody.extendedProperties ?? [])
+                ];
+                const anonymousClass = csharp.anonymousClass({
+                    properties: allProperties.map((property) => ({
+                        name: property.name.wireValue,
+                        assignment: csharp.codeblock(
+                            `${this.getParameterName()}.${property.name.name.pascalCase.safeName}`
+                        )
+                    }))
+                });
+                return {
+                    requestBodyReference: this.getRequestBodyVariableName(),
+                    code: csharp.codeblock((writer) => {
+                        writer.write(`var ${this.getRequestBodyVariableName()} = `);
+                        writer.writeNodeStatement(anonymousClass);
+                    })
+                };
             },
             fileUpload: () => undefined,
             bytes: () => {

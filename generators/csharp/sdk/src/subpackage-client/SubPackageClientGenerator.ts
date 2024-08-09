@@ -32,7 +32,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
         this.rawClient = new RawClient(context);
         this.service = service;
         this.serviceId = serviceId;
-        this.endpointGenerator = new EndpointGenerator(context, this.rawClient);
+        this.endpointGenerator = new EndpointGenerator(context);
     }
 
     public doGenerate(): CSharpFile {
@@ -68,7 +68,8 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
                 const method = this.endpointGenerator.generate({
                     serviceId: this.serviceId,
                     endpoint,
-                    rawClientReference: CLIENT_MEMBER_NAME
+                    rawClientReference: CLIENT_MEMBER_NAME,
+                    rawClient: this.rawClient
                 });
                 class_.addMethod(method);
             }

@@ -16,11 +16,11 @@ public class FileTest
         var inputJson =
             @"
         {
-  ""name"": ""file.txt"",
-  ""contents"": ""..."",
-  ""info"": ""REGULAR""
-}
-";
+          ""name"": ""file.txt"",
+          ""contents"": ""..."",
+          ""info"": ""REGULAR""
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {
@@ -40,11 +40,11 @@ public class FileTest
         var inputJson =
             @"
         {
-  ""name"": ""another_file.txt"",
-  ""contents"": ""..."",
-  ""info"": ""REGULAR""
-}
-";
+          ""name"": ""another_file.txt"",
+          ""contents"": ""..."",
+          ""info"": ""REGULAR""
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {

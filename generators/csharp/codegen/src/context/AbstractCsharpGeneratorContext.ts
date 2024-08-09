@@ -69,6 +69,14 @@ export abstract class AbstractCsharpGeneratorContext<
         return `${this.namespace}.Test`;
     }
 
+    public getTestUtilsNamespace(): string {
+        return `${this.getTestNamespace()}.Utils`;
+    }
+
+    public getWireTestNamespace(): string {
+        return `${this.getTestNamespace()}.Wire`;
+    }
+
     public getConstantsClassReference(): csharp.ClassReference {
         return csharp.classReference({
             namespace: this.getCoreNamespace(),
@@ -215,6 +223,8 @@ export abstract class AbstractCsharpGeneratorContext<
     }
 
     public abstract getAsIsFiles(): string[];
+
+    public abstract getAsIsTestUtils(): string[];
 
     public abstract getDirectoryForTypeId(typeId: TypeId): string;
 

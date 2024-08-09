@@ -17,11 +17,11 @@ public class NestedTypeTest
         var inputJson =
             @"
         {
-  ""docs"": ""This is an example nested type."",
-  ""name"": ""NestedExample"",
-  ""raw"": ""{\""nested\"": \""example\""}""
-}
-";
+          ""docs"": ""This is an example nested type."",
+          ""name"": ""NestedExample"",
+          ""raw"": ""{\""nested\"": \""example\""}""
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {

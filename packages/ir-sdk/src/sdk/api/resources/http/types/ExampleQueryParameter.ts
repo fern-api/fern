@@ -8,3 +8,6 @@ export interface ExampleQueryParameter {
     name: FernIr.NameAndWireValue;
     value: FernIr.ExampleTypeReference;
 }
+// single
+// exploded
+// comma-separated

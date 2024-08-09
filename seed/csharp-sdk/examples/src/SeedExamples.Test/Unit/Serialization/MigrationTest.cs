@@ -17,10 +17,10 @@ public class MigrationTest
         var inputJson =
             @"
         {
-  ""name"": ""001_init"",
-  ""status"": ""RUNNING""
-}
-";
+          ""name"": ""001_init"",
+          ""status"": ""RUNNING""
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {

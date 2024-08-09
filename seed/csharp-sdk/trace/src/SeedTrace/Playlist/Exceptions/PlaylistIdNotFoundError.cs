@@ -13,5 +13,5 @@ public class PlaylistIdNotFoundError(object body)
     /// <summary>
     /// The body of the response that triggered the exception.
     /// </summary>
-    public new object Body { get; } = body;
+    public new object Body => body;
 }

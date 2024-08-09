@@ -128,7 +128,7 @@ export class PrimitiveInstantiation extends AstNode {
                 break;
             }
             case "uuid":
-                writer.write(this.internalType.value.toString());
+                writer.write('"this.internalType.value.toString()"');
                 break;
             case "null":
                 writer.write("null");

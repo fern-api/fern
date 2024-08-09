@@ -17,10 +17,10 @@ public class EntityTest
         var inputJson =
             @"
         {
-  ""type"": ""unknown"",
-  ""name"": ""unknown""
-}
-";
+          ""type"": ""unknown"",
+          ""name"": ""unknown""
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {

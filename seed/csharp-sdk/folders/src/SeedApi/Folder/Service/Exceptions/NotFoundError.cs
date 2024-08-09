@@ -12,5 +12,5 @@ public class NotFoundError(string body) : SeedApiApiException("NotFoundError", 4
     /// <summary>
     /// The body of the response that triggered the exception.
     /// </summary>
-    public new string Body { get; } = body;
+    public new string Body => body;
 }

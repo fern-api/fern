@@ -17,10 +17,10 @@ public class ChildTest
         var inputJson =
             @"
         {
-  ""parent"": ""Property from the parent"",
-  ""child"": ""Property from the child""
-}
-";
+          ""parent"": ""Property from the parent"",
+          ""child"": ""Property from the child""
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {

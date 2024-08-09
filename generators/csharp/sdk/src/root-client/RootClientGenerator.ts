@@ -48,7 +48,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
     constructor(context: SdkGeneratorContext) {
         super(context);
         this.rawClient = new RawClient(context);
-        this.endpointGenerator = new EndpointGenerator(context, this.rawClient);
+        this.endpointGenerator = new EndpointGenerator(context);
     }
 
     protected getFilepath(): RelativeFilePath {
@@ -57,8 +57,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
 
     public doGenerate(): CSharpFile {
         const class_ = csharp.class_({
-            name: this.context.getRootClientClassName(),
-            namespace: this.context.getNamespace(),
+            ...this.context.getRootClientClassReference(),
             partial: true,
             access: "public"
         });
@@ -92,7 +91,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 const method = this.endpointGenerator.generate({
                     serviceId: rootServiceId,
                     endpoint,
-                    rawClientReference: CLIENT_MEMBER_NAME
+                    rawClientReference: CLIENT_MEMBER_NAME,
+                    rawClient: this.rawClient
                 });
                 class_.addMethod(method);
             }
@@ -240,7 +240,44 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         };
     }
 
-    private getConstructorParameters(): {
+    public generateExampleClientInstantiationSnippet(
+        clientOptionsArgument?: csharp.ClassInstantiation
+    ): csharp.ClassInstantiation {
+        new csharp.ClassInstantiation({
+            classReference: this.context.getClientOptionsClassReference(),
+            arguments_: [{ name: "BaseUrl", assignment: csharp.codeblock("Server.Urls[0]") }]
+        });
+        const arguments_ = [];
+        if (this.context.ir.auth.requirement) {
+            for (const scheme of this.context.ir.auth.schemes) {
+                switch (scheme.type) {
+                    case "header":
+                        // assuming type is string for now to avoid generating complex example types here.
+                        arguments_.push(csharp.codeblock(`"${scheme.name.name.screamingSnakeCase.safeName}"`));
+                        break;
+                    case "basic": {
+                        arguments_.push(csharp.codeblock(`"${scheme.username.screamingSnakeCase.safeName}"`));
+                        arguments_.push(csharp.codeblock(`"${scheme.password.screamingSnakeCase.safeName}"`));
+                        break;
+                    }
+                    case "bearer":
+                        arguments_.push(csharp.codeblock(`"${scheme.token.screamingSnakeCase.safeName}"`));
+                        break;
+                    case "oauth":
+                        break;
+                }
+            }
+        }
+        if (clientOptionsArgument != null) {
+            arguments_.push(csharp.codeblock((writer) => writer.writeNode(clientOptionsArgument)));
+        }
+        return new csharp.ClassInstantiation({
+            classReference: this.context.getRootClientClassReference(),
+            arguments_
+        });
+    }
+
+    private getConstructorParameters(authOnly = false): {
         allParameters: ConstructorParameter[];
         requiredParameters: ConstructorParameter[];
         optionalParameters: ConstructorParameter[];

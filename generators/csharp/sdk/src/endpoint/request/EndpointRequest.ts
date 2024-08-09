@@ -29,6 +29,10 @@ export abstract class EndpointRequest {
         return this.sdkRequest.requestParameterName.camelCase.safeName;
     }
 
+    public getRequestBodyVariableName(): string {
+        return "requestBody";
+    }
+
     public abstract getParameterType(): csharp.Type;
 
     public abstract getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined;

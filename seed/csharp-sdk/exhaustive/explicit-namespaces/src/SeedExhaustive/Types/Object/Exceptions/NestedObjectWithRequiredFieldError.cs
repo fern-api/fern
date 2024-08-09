@@ -13,5 +13,5 @@ public class NestedObjectWithRequiredFieldError(NestedObjectWithRequiredField bo
     /// <summary>
     /// The body of the response that triggered the exception.
     /// </summary>
-    public new NestedObjectWithRequiredField Body { get; } = body;
+    public new NestedObjectWithRequiredField Body => body;
 }

@@ -17,17 +17,17 @@ public class UserTest
         var inputJson =
             @"
         {
-  ""userName"": ""username"",
-  ""metadata_tags"": [
-    ""tag1"",
-    ""tag2""
-  ],
-  ""EXTRA_PROPERTIES"": {
-    ""foo"": ""bar"",
-    ""baz"": ""qux""
-  }
-}
-";
+          ""userName"": ""username"",
+          ""metadata_tags"": [
+            ""tag1"",
+            ""tag2""
+          ],
+          ""EXTRA_PROPERTIES"": {
+            ""foo"": ""bar"",
+            ""baz"": ""qux""
+          }
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {

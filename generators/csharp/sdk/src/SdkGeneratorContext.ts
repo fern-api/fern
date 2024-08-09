@@ -19,6 +19,7 @@ import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
 const TYPES_FOLDER_NAME = "Types";
 const EXCEPTIONS_FOLDER_NAME = "Exceptions";
+export const WIRE_TEST_FOLDER = RelativeFilePath.of("Wire");
 
 export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCustomConfigSchema> {
     /**
@@ -87,6 +88,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         ];
     }
 
+    public getAsIsTestUtils(): string[] {
+        return [AsIsFiles.JsonDiffChecker];
+    }
+
     public getNamespaceForServiceId(serviceId: ServiceId): string {
         const service = this.getHttpServiceOrThrow(serviceId);
         return this.getNamespaceFromFernFilepath(service.name.fernFilepath);
@@ -128,6 +133,13 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             return this.customConfig["client-class-name"];
         }
         return `${this.getComputedClientName()}Client`;
+    }
+
+    public getRootClientClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getRootClientClassName(),
+            namespace: this.getNamespace()
+        });
     }
 
     public getBaseExceptionClassReference(): csharp.ClassReference {
@@ -174,6 +186,13 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return csharp.classReference({
             name: environmentsClassName,
             namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getBaseWireTestClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "BaseWireTest",
+            namespace: this.getWireTestNamespace()
         });
     }
 
