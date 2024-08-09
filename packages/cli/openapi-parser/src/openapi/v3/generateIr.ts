@@ -63,7 +63,8 @@ export function generateIr({
         document: openApi,
         taskContext,
         authHeaders: new Set(),
-        options
+        options,
+        source
     });
 
     const securitySchemes: Record<string, SecurityScheme> = Object.fromEntries(
@@ -71,12 +72,13 @@ export function generateIr({
             const convertedSecurityScheme = convertSecurityScheme({
                 document: openApi,
                 securityScheme,
-                context: dummyContext
+                context: dummyContext,
+                source
             });
             if (convertedSecurityScheme == null) {
                 return [];
             }
-            return [key, convertSecurityScheme({ document: openApi, securityScheme, context: dummyContext })];
+            return [key, convertSecurityScheme({ document: openApi, securityScheme, context: dummyContext, source })];
         })
     );
     const authHeaders = new Set(
