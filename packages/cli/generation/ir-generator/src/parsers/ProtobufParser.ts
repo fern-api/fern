@@ -12,7 +12,7 @@ export class ProtobufParser {
         const content = await readFile(absoluteFilePath, "utf-8");
 
         const csharpNamespaceMatch = content.match(/option\s+csharp_namespace\s*=\s*"([^"]+)";/);
-        const packageNameMatch = content.match(/package\s+([a-zA-Z_][\w\.]*);/);
+        const packageNameMatch = content.match(/package\s+([a-zA-Z_][\w.]*);/);
         const serviceNameMatch = content.match(/service\s+([a-zA-Z_]\w*)\s*{/);
 
         return {

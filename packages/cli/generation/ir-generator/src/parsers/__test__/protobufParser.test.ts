@@ -1,8 +1,8 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import path from "path";
-import { ProtobufFileInfo, ProtobufParser } from "../parsers/ProtobufParser";
+import { ProtobufFileInfo, ProtobufParser } from "../ProtobufParser";
 
-const TEST_DEFINITIONS = AbsoluteFilePath.of(path.join(__dirname, "parsers/protobuf/test-definitions"));
+const TEST_DEFINITIONS = AbsoluteFilePath.of(path.join(__dirname, "protobuf/test-definitions"));
 
 interface TestCase {
     filename: string;
@@ -56,7 +56,7 @@ describe("protobuf parser", () => {
     ];
 
     testCases.forEach((testCase) => {
-        it(testCase.filename, async () => {
+        it(`"${testCase.filename}"`, async () => {
             const actual = await parser.parse({
                 absoluteFilePath: join(TEST_DEFINITIONS, RelativeFilePath.of(testCase.filename))
             });
