@@ -1,8 +1,7 @@
 import { FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration";
 import { isNonNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { convert } from "@fern-api/openapi-ir-to-fern";
-import { OpenApiConvertedFernDefinition } from "@fern-api/openapi-ir-to-fern/src/convert";
+import { convert, OpenApiConvertedFernDefinition } from "@fern-api/openapi-ir-to-fern";
 import { parse, ParseOpenAPIOptions } from "@fern-api/openapi-parser";
 import { TaskContext } from "@fern-api/task-context";
 import { isRawProtobufSourceSchema, visitDefinitionFileYamlAst } from "@fern-api/yaml-schema";
