@@ -433,7 +433,7 @@ class UsersClient:
         page: typing.Optional[int] = None,
         limit: typing.Optional[int] = None,
         order: typing.Optional[Order] = None,
-        request_options: typing.Optional[RequestOptions] = None
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[User]:
         """
         Parameters
@@ -478,15 +478,28 @@ class UsersClient:
         _response = self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
-            params={"page": page, "limit": limit, "order": order},
+            params={
+                "page": page,
+                "limit": limit,
+                "order": order,
+            },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
-                _parsed_response = typing.cast(ListUsersPaginationResponse, parse_obj_as(type_=ListUsersPaginationResponse, object_=_response.json()))  # type: ignore
+                _parsed_response = typing.cast(
+                    ListUsersPaginationResponse,
+                    parse_obj_as(
+                        type_=ListUsersPaginationResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
                 _has_next = True
                 _get_next = lambda: self.list_with_offset_pagination_has_next_page(
-                    page=page + 1, limit=limit, order=order, request_options=request_options
+                    page=page + 1,
+                    limit=limit,
+                    order=order,
+                    request_options=request_options,
                 )
                 _items = _parsed_response.data
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
@@ -1144,7 +1157,7 @@ class AsyncUsersClient:
         page: typing.Optional[int] = None,
         limit: typing.Optional[int] = None,
         order: typing.Optional[Order] = None,
-        request_options: typing.Optional[RequestOptions] = None
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[User]:
         """
         Parameters
@@ -1197,15 +1210,28 @@ class AsyncUsersClient:
         _response = await self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
-            params={"page": page, "limit": limit, "order": order},
+            params={
+                "page": page,
+                "limit": limit,
+                "order": order,
+            },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
-                _parsed_response = typing.cast(ListUsersPaginationResponse, parse_obj_as(type_=ListUsersPaginationResponse, object_=_response.json()))  # type: ignore
+                _parsed_response = typing.cast(
+                    ListUsersPaginationResponse,
+                    parse_obj_as(
+                        type_=ListUsersPaginationResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
                 _has_next = True
                 _get_next = lambda: self.list_with_offset_pagination_has_next_page(
-                    page=page + 1, limit=limit, order=order, request_options=request_options
+                    page=page + 1,
+                    limit=limit,
+                    order=order,
+                    request_options=request_options,
                 )
                 _items = _parsed_response.data
                 return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)

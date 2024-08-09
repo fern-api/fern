@@ -2,8 +2,8 @@
 
 from ...core.pydantic_utilities import UniversalBaseModel
 import typing
-from .page import Page
 import pydantic
+from .page import Page
 from .user import User
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 

@@ -2,12 +2,8 @@
 
 from ....core.pydantic_utilities import UniversalBaseModel
 import typing
-<<<<<<< HEAD
-=======
 import pydantic
->>>>>>> bb549f4937 ((feat, python): move to ruff for formatting (#4219))
 from .page import Page
-import pydantic
 from .user import User
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 

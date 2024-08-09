@@ -72,11 +72,6 @@ class AbstractUsersService(AbstractFernService):
     ) -> ListUsersPaginationResponse: ...
 
     @abc.abstractmethod
-<<<<<<< HEAD
-    def list_with_extended_results(
-        self, *, cursor: typing.Optional[uuid.UUID] = None
-    ) -> ListUsersExtendedResponse: ...
-=======
     def list_with_offset_pagination_has_next_page(
         self,
         *,
@@ -86,15 +81,9 @@ class AbstractUsersService(AbstractFernService):
     ) -> ListUsersPaginationResponse: ...
 
     @abc.abstractmethod
-<<<<<<< HEAD
-    def list_with_extended_results(self, *, cursor: typing.Optional[uuid.UUID] = None) -> ListUsersExtendedResponse:
-        ...
->>>>>>> 9355dcb0fd (add test definition)
-=======
     def list_with_extended_results(
         self, *, cursor: typing.Optional[uuid.UUID] = None
     ) -> ListUsersExtendedResponse: ...
->>>>>>> bb549f4937 ((feat, python): move to ruff for formatting (#4219))
 
     @abc.abstractmethod
     def list_usernames(
