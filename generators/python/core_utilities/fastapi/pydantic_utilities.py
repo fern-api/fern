@@ -167,9 +167,7 @@ def universal_root_validator(
 ) -> typing.Callable[[AnyCallable], AnyCallable]:
     def decorator(func: AnyCallable) -> AnyCallable:
         if IS_PYDANTIC_V2:
-            return pydantic.model_validator("before" if pre else "after")(  # type: ignore # Pydantic v2
-                func
-            )
+            return pydantic.model_validator("before" if pre else "after")(func)  # type: ignore # Pydantic v2
         else:
             return pydantic.root_validator(pre=pre)(func)  # type: ignore # Pydantic v1
 
