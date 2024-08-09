@@ -168,33 +168,19 @@ def universal_root_validator(
     pre: bool = False,
 ) -> typing.Callable[[AnyCallable], AnyCallable]:
     def decorator(func: AnyCallable) -> AnyCallable:
-        @wraps(func)
-        def validate(*args: typing.Any, **kwargs: typing.Any) -> AnyCallable:
-            if IS_PYDANTIC_V2:
-                wrapped_func = pydantic.model_validator("before" if pre else "after")(  # type: ignore # Pydantic v2
-                    func
-                )
-            else:
-                wrapped_func = pydantic.root_validator(pre=pre)(func)  # type: ignore # Pydantic v1
-
-            return wrapped_func(*args, **kwargs)  # type: ignore # Pydantic v2
-
-        return validate
+        if IS_PYDANTIC_V2:
+            return pydantic.model_validator("before" if pre else "after")(func)  # type: ignore # Pydantic v2
+        else:
+            return pydantic.root_validator(pre=pre)(func)  # type: ignore # Pydantic v1
 
     return decorator
 
 
 def universal_field_validator(field_name: str, pre: bool = False) -> typing.Callable[[AnyCallable], AnyCallable]:
     def decorator(func: AnyCallable) -> AnyCallable:
-        @wraps(func)
-        def validate(*args: typing.Any, **kwargs: typing.Any) -> AnyCallable:
-            if IS_PYDANTIC_V2:
-                wrapped_func = pydantic.field_validator(field_name, mode="before" if pre else "after")(func)  # type: ignore # Pydantic v2
-            else:
-                wrapped_func = pydantic.validator(field_name, pre=pre)(func)  # type: ignore # Pydantic v1
-
-            return wrapped_func(*args, **kwargs)
-
-        return validate
+        if IS_PYDANTIC_V2:
+            return pydantic.field_validator(field_name, mode="before" if pre else "after")(func)  # type: ignore # Pydantic v2
+        else:
+            return pydantic.validator(field_name, pre=pre)(func)  # type: ignore # Pydantic v1
 
     return decorator
