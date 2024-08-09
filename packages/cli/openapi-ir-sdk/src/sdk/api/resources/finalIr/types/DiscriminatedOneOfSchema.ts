@@ -8,7 +8,8 @@ export interface DiscriminatedOneOfSchema
     extends FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithName,
         FernOpenapiIr.WithSdkGroupName,
-        FernOpenapiIr.WithAvailability {
+        FernOpenapiIr.WithAvailability,
+        FernOpenapiIr.WithSource {
     discriminantProperty: string;
     commonProperties: FernOpenapiIr.CommonProperty[];
     schemas: Record<string, FernOpenapiIr.Schema>;

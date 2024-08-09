@@ -56,6 +56,9 @@ Used to retrieve a deployment given its ID or name.
             "url": "Default",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
     },
     "documentIndexes.yml": {
@@ -246,6 +249,9 @@ Creates a new document index.",
             "url": "Default",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
     },
     "documents.yml": {
@@ -397,6 +403,9 @@ Upload a document to be indexed and used for search.
             "url": "Documents",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
     },
     "modelVersions.yml": {
@@ -539,6 +548,9 @@ Used to retrieve a model version given its ID.
             },
             "url": "Default",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
     },
@@ -692,6 +704,9 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
             },
             "url": "Default",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
     },
@@ -882,6 +897,9 @@ or overwritten with default values.",
             "url": "Default",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
     },
     "testSuites.yml": {
@@ -1002,6 +1020,9 @@ or overwritten with default values.",
             },
             "url": "Default",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
     },
@@ -1468,6 +1489,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "url": "Predict",
         },
       },
+      "source": {
+        "openapi": "vellum/openapi.yml",
+      },
     },
     "types": {
       "BlockTypeEnum": {
@@ -1481,6 +1505,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "JINJA",
           "FUNCTION_DEFINITION",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "ChatMessage": {
         "docs": undefined,
@@ -1488,12 +1515,18 @@ Used to submit feedback regarding the quality of previously generated completion
           "role": "ChatMessageRole",
           "text": "string",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "ChatMessageRequest": {
         "docs": undefined,
         "properties": {
           "role": "ChatMessageRole",
           "text": "string",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "ChatMessageRole": {
@@ -1507,17 +1540,26 @@ Used to submit feedback regarding the quality of previously generated completion
           "USER",
           "FUNCTION",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "ConditionalNodeResult": {
         "docs": undefined,
         "properties": {
           "data": "ConditionalNodeResultData",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "ConditionalNodeResultData": {
         "docs": undefined,
         "properties": {
           "source_handle_id": "optional<string>",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "ContentType": {
@@ -1527,11 +1569,17 @@ Used to submit feedback regarding the quality of previously generated completion
           "STRING",
           "JSON",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "DeploymentNodeResult": {
         "docs": undefined,
         "properties": {
           "data": "DeploymentNodeResultData",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "DeploymentNodeResultData": {
@@ -1540,6 +1588,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "delta": "optional<string>",
           "output_id": "string",
           "text": "optional<string>",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "DeploymentRead": {
@@ -1601,6 +1652,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "optional<DeploymentReadStatusEnum>",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "DeploymentReadStatusEnum": {
         "docs": "* \`ACTIVE\` - Active
@@ -1611,6 +1665,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "INACTIVE",
           "ARCHIVED",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "Document": {
         "docs": undefined,
@@ -1646,6 +1703,9 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "DocumentDocumentToDocumentIndex": {
         "docs": undefined,
@@ -1680,6 +1740,9 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`FAILED\` - Failed",
             "type": "optional<IndexingStateEnum>",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "DocumentIndexRead": {
@@ -1735,6 +1798,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "optional<DocumentIndexStatus>",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "DocumentIndexStatus": {
         "docs": "* \`ACTIVE\` - Active
@@ -1743,6 +1809,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "ACTIVE",
           "ARCHIVED",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "EnrichedNormalizedCompletion": {
         "docs": undefined,
@@ -1783,6 +1852,9 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "type": "optional<ContentType>",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "EnvironmentEnum": {
         "docs": "* \`DEVELOPMENT\` - Development
@@ -1793,6 +1865,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "STAGING",
           "PRODUCTION",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "EvaluationParams": {
         "docs": undefined,
@@ -1802,6 +1877,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "EvaluationParamsRequest": {
         "docs": undefined,
@@ -1810,6 +1888,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "The target value to compare the LLM output against. Typically what you expect or desire the LLM output to be.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "FinishReasonEnum": {
@@ -1821,6 +1902,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "STOP",
           "UNKNOWN",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "GenerateErrorResponse": {
         "docs": undefined,
@@ -1829,6 +1913,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "Details about why the request failed.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "GenerateOptionsRequest": {
@@ -1841,6 +1928,9 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`NONE\` - NONE",
             "type": "optional<LogprobsEnum>",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "GenerateRequest": {
@@ -1859,6 +1949,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "map<string, unknown>",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "GenerateResponse": {
         "docs": undefined,
@@ -1867,6 +1960,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "The results of each generation request.",
             "type": "list<GenerateResult>",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "GenerateResult": {
@@ -1881,6 +1977,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "optional<GenerateResultError>",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "GenerateResultData": {
         "docs": undefined,
@@ -1889,6 +1988,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "The generated completions. This will generally be a list of length one.",
             "type": "list<EnrichedNormalizedCompletion>",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "GenerateResultError": {
@@ -1899,11 +2001,17 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "GenerateStreamResponse": {
         "docs": undefined,
         "properties": {
           "delta": "GenerateStreamResult",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "GenerateStreamResult": {
@@ -1913,12 +2021,18 @@ Used to submit feedback regarding the quality of previously generated completion
           "error": "optional<GenerateResultError>",
           "request_index": "integer",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "GenerateStreamResultData": {
         "docs": undefined,
         "properties": {
           "completion": "EnrichedNormalizedCompletion",
           "completion_index": "integer",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "IndexingStateEnum": {
@@ -1934,6 +2048,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "INDEXED",
           "FAILED",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "LogprobsEnum": {
         "docs": "* \`ALL\` - ALL
@@ -1942,6 +2059,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "ALL",
           "NONE",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "ModelTypeEnum": {
         "docs": "* \`GENERATE\` - Generate
@@ -1950,6 +2070,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "GENERATE",
           "CLASSIFY",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "ModelVersionBuildConfig": {
         "docs": undefined,
@@ -1963,6 +2086,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "optional<ModelVersionSandboxSnapshot>",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "ModelVersionCompilePromptResponse": {
         "docs": undefined,
@@ -1971,6 +2097,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "Information about the compiled prompt.",
             "type": "ModelVersionCompiledPrompt",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "ModelVersionCompiledPrompt": {
@@ -1992,6 +2121,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "ModelVersionExecConfig": {
         "docs": undefined,
@@ -2011,6 +2143,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "ModelVersionExecConfigParameters": {
         "docs": undefined,
@@ -2023,6 +2158,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "temperature": "double",
           "top_k": "optional<double>",
           "top_p": "double",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "ModelVersionRead": {
@@ -2092,6 +2230,9 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "status": "optional<ModelVersionReadStatusEnum>",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "ModelVersionReadStatusEnum": {
         "docs": "* \`CREATING\` - Creating
@@ -2104,6 +2245,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "CREATION_FAILED",
           "DISABLED",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "ModelVersionSandboxSnapshot": {
         "docs": undefined,
@@ -2129,12 +2273,18 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "sandbox_id": "optional<string>",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "NormalizedLogProbs": {
         "docs": undefined,
         "properties": {
           "likelihood": "optional<double>",
           "tokens": "list<NormalizedTokenLogProbs>",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "NormalizedTokenLogProbs": {
@@ -2144,6 +2294,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "text_offset": "integer",
           "token": "string",
           "top_logprobs": "optional<map<string, optional<double>>>",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "PaginatedSlimDocumentList": {
@@ -2170,6 +2323,9 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "results": "optional<list<SlimDocument>>",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "ProcessingFailureReasonEnum": {
         "docs": "* \`EXCEEDED_CHARACTER_LIMIT\` - Exceeded Character Limit",
@@ -2186,11 +2342,17 @@ Used to submit feedback regarding the quality of previously generated completion
           "PROCESSED",
           "FAILED",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "PromptNodeResult": {
         "docs": undefined,
         "properties": {
           "data": "PromptNodeResultData",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "PromptNodeResultData": {
@@ -2200,6 +2362,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "output_id": "string",
           "text": "optional<string>",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "PromptTemplateBlock": {
         "docs": undefined,
@@ -2208,6 +2373,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "id": "string",
           "properties": "PromptTemplateBlockProperties",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "PromptTemplateBlockData": {
         "docs": undefined,
@@ -2215,12 +2383,18 @@ Used to submit feedback regarding the quality of previously generated completion
           "blocks": "list<PromptTemplateBlock>",
           "version": "integer",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "PromptTemplateBlockDataRequest": {
         "docs": undefined,
         "properties": {
           "blocks": "list<PromptTemplateBlockRequest>",
           "version": "integer",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "PromptTemplateBlockProperties": {
@@ -2237,6 +2411,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "function_parameters": "optional<map<string, unknown>>",
           "template": "optional<string>",
           "template_type": "optional<ContentType>",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "PromptTemplateBlockPropertiesRequest": {
@@ -2270,6 +2447,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "template": "optional<string>",
           "template_type": "optional<ContentType>",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "PromptTemplateBlockRequest": {
         "docs": undefined,
@@ -2286,6 +2466,9 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "properties": "PromptTemplateBlockPropertiesRequest",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "PromptTemplateInputVariable": {
         "docs": undefined,
@@ -2294,6 +2477,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "The name of the input variable.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "PromptTemplateInputVariableRequest": {
@@ -2309,6 +2495,9 @@ Used to submit feedback regarding the quality of previously generated completion
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "ProviderEnum": {
@@ -2330,6 +2519,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "OPENAI",
           "PYQ",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "RegisterPromptErrorResponse": {
         "docs": undefined,
@@ -2338,6 +2530,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "Details about why the request failed.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "RegisterPromptModelParametersRequest": {
@@ -2352,6 +2547,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "top_k": "optional<double>",
           "top_p": "double",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "RegisterPromptPrompt": {
         "docs": undefined,
@@ -2364,6 +2562,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "A human-friendly label for the generated prompt.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "RegisterPromptPromptInfoRequest": {
@@ -2378,6 +2579,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "default": 2,
             "type": "optional<integer>",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "RegisterPromptResponse": {
@@ -2404,6 +2608,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "RegisteredPromptSandboxSnapshot",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "RegisteredPromptDeployment": {
         "docs": undefined,
@@ -2421,6 +2628,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "RegisteredPromptModelVersion": {
         "docs": undefined,
@@ -2433,6 +2643,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "A human-friendly label for the generated model version.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "RegisteredPromptSandbox": {
@@ -2447,6 +2660,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "RegisteredPromptSandboxSnapshot": {
         "docs": undefined,
@@ -2456,11 +2672,17 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "SandboxMetricInputParams": {
         "docs": undefined,
         "properties": {
           "params": "optional<EvaluationParams>",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "SandboxMetricInputParamsRequest": {
@@ -2468,11 +2690,17 @@ Used to submit feedback regarding the quality of previously generated completion
         "properties": {
           "params": "optional<EvaluationParamsRequest>",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "SandboxNodeResult": {
         "docs": undefined,
         "properties": {
           "data": "SandboxNodeResultData",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "SandboxNodeResultData": {
@@ -2481,6 +2709,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "delta": "optional<string>",
           "output_id": "string",
           "text": "optional<string>",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "SandboxScenario": {
@@ -2500,6 +2731,9 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "metric_input_params": "SandboxMetricInputParams",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "ScenarioInput": {
         "docs": undefined,
@@ -2508,6 +2742,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "key": "string",
           "type": "optional<ScenarioInputTypeEnum>",
           "value": "optional<string>",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "ScenarioInputRequest": {
@@ -2526,6 +2763,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "type": "optional<ScenarioInputTypeEnum>",
           "value": "optional<string>",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "ScenarioInputTypeEnum": {
         "docs": "* \`TEXT\` - Text
@@ -2534,6 +2774,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "TEXT",
           "CHAT_HISTORY",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "SearchErrorResponse": {
         "docs": undefined,
@@ -2542,6 +2785,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "Details about why the request failed.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "SearchFiltersRequest": {
@@ -2552,11 +2798,17 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "optional<list<string>>",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "SearchNodeResult": {
         "docs": undefined,
         "properties": {
           "data": "SearchNodeResultData",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "SearchNodeResultData": {
@@ -2566,6 +2818,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "results_output_id": "string",
           "text": "optional<string>",
           "text_output_id": "optional<string>",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "SearchRequestOptionsRequest": {
@@ -2588,6 +2843,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "optional<SearchWeightsRequest>",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "SearchResponse": {
         "docs": undefined,
@@ -2596,6 +2854,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "The results of the search. Each result represents a chunk that matches the search query.",
             "type": "list<SearchResult>",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "SearchResult": {
@@ -2615,6 +2876,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "SearchResultMergingRequest": {
         "docs": undefined,
@@ -2623,6 +2887,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "Whether to enable merging results",
             "type": "boolean",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "SearchWeightsRequest": {
@@ -2636,6 +2903,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "The relative weight to give to semantic similarity",
             "type": "double",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "SlimDocument": {
@@ -2702,6 +2972,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "optional<SlimDocumentStatusEnum>",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "SlimDocumentStatusEnum": {
         "docs": "* \`ACTIVE\` - Active",
@@ -2750,11 +3023,17 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "optional<datetime>",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "SubmitCompletionActualsErrorResponse": {
         "docs": undefined,
         "properties": {
           "detail": "string",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "TerminalNodeChatHistoryResult": {
@@ -2766,6 +3045,9 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "value": "list<ChatMessage>",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "TerminalNodeJsonResult": {
         "docs": undefined,
@@ -2776,11 +3058,17 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "value": "map<string, unknown>",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "TerminalNodeResult": {
         "docs": undefined,
         "properties": {
           "data": "TerminalNodeResultData",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "TerminalNodeResultData": {
@@ -2788,11 +3076,17 @@ Used to submit feedback regarding the quality of previously generated completion
         "properties": {
           "output": "TerminalNodeResultOutput",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "TerminalNodeResultOutput": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
         "union": {
           "CHAT_HISTORY": "TerminalNodeChatHistoryResult",
           "JSON": "TerminalNodeJsonResult",
@@ -2807,6 +3101,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "string",
           },
           "value": "string",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "TestSuiteTestCase": {
@@ -2829,11 +3126,17 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "UploadDocumentErrorResponse": {
         "docs": undefined,
         "properties": {
           "detail": "string",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "UploadDocumentResponse": {
@@ -2850,12 +3153,18 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "WorkflowEventError": {
         "docs": undefined,
         "properties": {
           "code": "WorkflowExecutionEventErrorCode",
           "message": "string",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "WorkflowExecutionEventErrorCode": {
@@ -2865,6 +3174,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "WORKFLOW_INITIALIZATION",
           "NODE_EXECUTION",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "WorkflowExecutionNodeResultEvent": {
         "docs": undefined,
@@ -2872,6 +3184,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "data": "WorkflowNodeResultEvent",
           "external_id": "optional<string>",
           "run_id": "string",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "WorkflowExecutionWorkflowResultEvent": {
@@ -2881,11 +3196,17 @@ Used to submit feedback regarding the quality of previously generated completion
           "external_id": "optional<string>",
           "run_id": "string",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "WorkflowNodeResultData": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
         "union": {
           "CONDITIONAL": "ConditionalNodeResult",
           "DEPLOYMENT": "DeploymentNodeResult",
@@ -2906,6 +3227,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "state": "WorkflowNodeResultEventState",
           "ts": "optional<datetime>",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "WorkflowNodeResultEventState": {
         "docs": "* \`INITIATED\` - INITIATED
@@ -2918,6 +3242,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "FULFILLED",
           "REJECTED",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "WorkflowRequestChatHistoryInputRequest": {
         "docs": undefined,
@@ -2934,11 +3261,17 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "value": "list<ChatMessageRequest>",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "WorkflowRequestInputRequest": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
         "union": {
           "CHAT_HISTORY": "WorkflowRequestChatHistoryInputRequest",
           "JSON": "WorkflowRequestJsonInputRequest",
@@ -2960,6 +3293,9 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "value": "map<string, unknown>",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "WorkflowRequestStringInputRequest": {
         "docs": undefined,
@@ -2976,6 +3312,9 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "value": "string",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "WorkflowResultEvent": {
         "docs": undefined,
@@ -2986,11 +3325,17 @@ Used to submit feedback regarding the quality of previously generated completion
           "state": "WorkflowNodeResultEventState",
           "ts": "datetime",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "WorkflowResultEventOutputData": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
         "union": {
           "CHAT_HISTORY": "WorkflowResultEventOutputDataChatHistory",
           "JSON": "WorkflowResultEventOutputDataJson",
@@ -3009,6 +3354,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "state": "WorkflowNodeResultEventState",
           "value": "optional<list<ChatMessage>>",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "WorkflowResultEventOutputDataJson": {
         "docs": undefined,
@@ -3021,6 +3369,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "node_id": "string",
           "state": "WorkflowNodeResultEventState",
           "value": "optional<map<string, unknown>>",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "WorkflowResultEventOutputDataString": {
@@ -3038,11 +3389,17 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "WorkflowStreamEvent": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
         "union": {
           "NODE": "WorkflowExecutionNodeResultEvent",
           "WORKFLOW": "WorkflowExecutionWorkflowResultEvent",
@@ -3133,6 +3490,9 @@ Used to retrieve a deployment given its ID or name.
             },
             "url": "Default",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
     },
@@ -3324,6 +3684,9 @@ Creates a new document index.",
             "url": "Default",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
     },
     "documents.yml": {
@@ -3475,6 +3838,9 @@ Upload a document to be indexed and used for search.
             "url": "Documents",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
     },
     "modelVersions.yml": {
@@ -3617,6 +3983,9 @@ Used to retrieve a model version given its ID.
             },
             "url": "Default",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
     },
@@ -3770,6 +4139,9 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
             },
             "url": "Default",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
     },
@@ -3960,6 +4332,9 @@ or overwritten with default values.",
             "url": "Default",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
     },
     "testSuites.yml": {
@@ -4080,6 +4455,9 @@ or overwritten with default values.",
             },
             "url": "Default",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
     },
@@ -4478,6 +4856,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "url": "Predict",
         },
       },
+      "source": {
+        "openapi": "vellum/openapi.yml",
+      },
     },
     "types": {
       "BlockTypeEnum": {
@@ -4491,6 +4872,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "JINJA",
           "FUNCTION_DEFINITION",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "ChatMessage": {
         "docs": undefined,
@@ -4498,12 +4882,18 @@ Used to submit feedback regarding the quality of previously generated completion
           "role": "ChatMessageRole",
           "text": "string",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "ChatMessageRequest": {
         "docs": undefined,
         "properties": {
           "role": "ChatMessageRole",
           "text": "string",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "ChatMessageRole": {
@@ -4517,17 +4907,26 @@ Used to submit feedback regarding the quality of previously generated completion
           "USER",
           "FUNCTION",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "ConditionalNodeResult": {
         "docs": undefined,
         "properties": {
           "data": "ConditionalNodeResultData",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "ConditionalNodeResultData": {
         "docs": undefined,
         "properties": {
           "source_handle_id": "optional<string>",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "ContentType": {
@@ -4537,11 +4936,17 @@ Used to submit feedback regarding the quality of previously generated completion
           "STRING",
           "JSON",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "DeploymentNodeResult": {
         "docs": undefined,
         "properties": {
           "data": "DeploymentNodeResultData",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "DeploymentNodeResultData": {
@@ -4550,6 +4955,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "delta": "optional<string>",
           "output_id": "string",
           "text": "optional<string>",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "DeploymentRead": {
@@ -4611,6 +5019,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "optional<DeploymentReadStatusEnum>",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "DeploymentReadStatusEnum": {
         "docs": "* \`ACTIVE\` - Active
@@ -4621,6 +5032,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "INACTIVE",
           "ARCHIVED",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "Document": {
         "docs": undefined,
@@ -4656,6 +5070,9 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "DocumentDocumentToDocumentIndex": {
         "docs": undefined,
@@ -4690,6 +5107,9 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`FAILED\` - Failed",
             "type": "optional<IndexingStateEnum>",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "DocumentIndexRead": {
@@ -4745,6 +5165,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "optional<DocumentIndexStatus>",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "DocumentIndexStatus": {
         "docs": "* \`ACTIVE\` - Active
@@ -4753,6 +5176,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "ACTIVE",
           "ARCHIVED",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "EnrichedNormalizedCompletion": {
         "docs": undefined,
@@ -4793,6 +5219,9 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "type": "optional<ContentType>",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "EnvironmentEnum": {
         "docs": "* \`DEVELOPMENT\` - Development
@@ -4803,6 +5232,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "STAGING",
           "PRODUCTION",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "EvaluationParams": {
         "docs": undefined,
@@ -4812,6 +5244,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "EvaluationParamsRequest": {
         "docs": undefined,
@@ -4820,6 +5255,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "The target value to compare the LLM output against. Typically what you expect or desire the LLM output to be.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "FinishReasonEnum": {
@@ -4831,6 +5269,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "STOP",
           "UNKNOWN",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "GenerateErrorResponse": {
         "docs": undefined,
@@ -4839,6 +5280,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "Details about why the request failed.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "GenerateOptionsRequest": {
@@ -4851,6 +5295,9 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`NONE\` - NONE",
             "type": "optional<LogprobsEnum>",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "GenerateRequest": {
@@ -4869,6 +5316,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "map<string, unknown>",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "GenerateResponse": {
         "docs": undefined,
@@ -4877,6 +5327,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "The results of each generation request.",
             "type": "list<GenerateResult>",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "GenerateResult": {
@@ -4891,6 +5344,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "optional<GenerateResultError>",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "GenerateResultData": {
         "docs": undefined,
@@ -4899,6 +5355,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "The generated completions. This will generally be a list of length one.",
             "type": "list<EnrichedNormalizedCompletion>",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "GenerateResultError": {
@@ -4909,11 +5368,17 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "GenerateStreamResponse": {
         "docs": undefined,
         "properties": {
           "delta": "GenerateStreamResult",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "GenerateStreamResult": {
@@ -4923,12 +5388,18 @@ Used to submit feedback regarding the quality of previously generated completion
           "error": "optional<GenerateResultError>",
           "request_index": "integer",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "GenerateStreamResultData": {
         "docs": undefined,
         "properties": {
           "completion": "EnrichedNormalizedCompletion",
           "completion_index": "integer",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "IndexingStateEnum": {
@@ -4944,6 +5415,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "INDEXED",
           "FAILED",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "LogprobsEnum": {
         "docs": "* \`ALL\` - ALL
@@ -4952,6 +5426,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "ALL",
           "NONE",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "ModelTypeEnum": {
         "docs": "* \`GENERATE\` - Generate
@@ -4960,6 +5437,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "GENERATE",
           "CLASSIFY",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "ModelVersionBuildConfig": {
         "docs": undefined,
@@ -4973,6 +5453,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "optional<ModelVersionSandboxSnapshot>",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "ModelVersionCompilePromptResponse": {
         "docs": undefined,
@@ -4981,6 +5464,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "Information about the compiled prompt.",
             "type": "ModelVersionCompiledPrompt",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "ModelVersionCompiledPrompt": {
@@ -5002,6 +5488,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "ModelVersionExecConfig": {
         "docs": undefined,
@@ -5021,6 +5510,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "ModelVersionExecConfigParameters": {
         "docs": undefined,
@@ -5033,6 +5525,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "temperature": "double",
           "top_k": "optional<double>",
           "top_p": "double",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "ModelVersionRead": {
@@ -5102,6 +5597,9 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "status": "optional<ModelVersionReadStatusEnum>",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "ModelVersionReadStatusEnum": {
         "docs": "* \`CREATING\` - Creating
@@ -5114,6 +5612,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "CREATION_FAILED",
           "DISABLED",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "ModelVersionSandboxSnapshot": {
         "docs": undefined,
@@ -5139,12 +5640,18 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "sandbox_id": "optional<string>",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "NormalizedLogProbs": {
         "docs": undefined,
         "properties": {
           "likelihood": "optional<double>",
           "tokens": "list<NormalizedTokenLogProbs>",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "NormalizedTokenLogProbs": {
@@ -5154,6 +5661,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "text_offset": "integer",
           "token": "string",
           "top_logprobs": "optional<map<string, optional<double>>>",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "PaginatedSlimDocumentList": {
@@ -5180,6 +5690,9 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "results": "optional<list<SlimDocument>>",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "ProcessingFailureReasonEnum": {
         "docs": "* \`EXCEEDED_CHARACTER_LIMIT\` - Exceeded Character Limit",
@@ -5196,11 +5709,17 @@ Used to submit feedback regarding the quality of previously generated completion
           "PROCESSED",
           "FAILED",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "PromptNodeResult": {
         "docs": undefined,
         "properties": {
           "data": "PromptNodeResultData",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "PromptNodeResultData": {
@@ -5210,6 +5729,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "output_id": "string",
           "text": "optional<string>",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "PromptTemplateBlock": {
         "docs": undefined,
@@ -5218,6 +5740,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "id": "string",
           "properties": "PromptTemplateBlockProperties",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "PromptTemplateBlockData": {
         "docs": undefined,
@@ -5225,12 +5750,18 @@ Used to submit feedback regarding the quality of previously generated completion
           "blocks": "list<PromptTemplateBlock>",
           "version": "integer",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "PromptTemplateBlockDataRequest": {
         "docs": undefined,
         "properties": {
           "blocks": "list<PromptTemplateBlockRequest>",
           "version": "integer",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "PromptTemplateBlockProperties": {
@@ -5247,6 +5778,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "function_parameters": "optional<map<string, unknown>>",
           "template": "optional<string>",
           "template_type": "optional<ContentType>",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "PromptTemplateBlockPropertiesRequest": {
@@ -5280,6 +5814,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "template": "optional<string>",
           "template_type": "optional<ContentType>",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "PromptTemplateBlockRequest": {
         "docs": undefined,
@@ -5296,6 +5833,9 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "properties": "PromptTemplateBlockPropertiesRequest",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "PromptTemplateInputVariable": {
         "docs": undefined,
@@ -5304,6 +5844,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "The name of the input variable.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "PromptTemplateInputVariableRequest": {
@@ -5319,6 +5862,9 @@ Used to submit feedback regarding the quality of previously generated completion
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "ProviderEnum": {
@@ -5340,6 +5886,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "OPENAI",
           "PYQ",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "RegisterPromptErrorResponse": {
         "docs": undefined,
@@ -5348,6 +5897,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "Details about why the request failed.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "RegisterPromptModelParametersRequest": {
@@ -5362,6 +5914,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "top_k": "optional<double>",
           "top_p": "double",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "RegisterPromptPrompt": {
         "docs": undefined,
@@ -5374,6 +5929,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "A human-friendly label for the generated prompt.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "RegisterPromptPromptInfoRequest": {
@@ -5388,6 +5946,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "default": 2,
             "type": "optional<integer>",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "RegisterPromptResponse": {
@@ -5414,6 +5975,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "RegisteredPromptSandboxSnapshot",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "RegisteredPromptDeployment": {
         "docs": undefined,
@@ -5431,6 +5995,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "RegisteredPromptModelVersion": {
         "docs": undefined,
@@ -5443,6 +6010,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "A human-friendly label for the generated model version.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "RegisteredPromptSandbox": {
@@ -5457,6 +6027,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "RegisteredPromptSandboxSnapshot": {
         "docs": undefined,
@@ -5466,11 +6039,17 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "SandboxMetricInputParams": {
         "docs": undefined,
         "properties": {
           "params": "optional<EvaluationParams>",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "SandboxMetricInputParamsRequest": {
@@ -5478,11 +6057,17 @@ Used to submit feedback regarding the quality of previously generated completion
         "properties": {
           "params": "optional<EvaluationParamsRequest>",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "SandboxNodeResult": {
         "docs": undefined,
         "properties": {
           "data": "SandboxNodeResultData",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "SandboxNodeResultData": {
@@ -5491,6 +6076,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "delta": "optional<string>",
           "output_id": "string",
           "text": "optional<string>",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "SandboxScenario": {
@@ -5510,6 +6098,9 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "metric_input_params": "SandboxMetricInputParams",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "ScenarioInput": {
         "docs": undefined,
@@ -5518,6 +6109,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "key": "string",
           "type": "optional<ScenarioInputTypeEnum>",
           "value": "optional<string>",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "ScenarioInputRequest": {
@@ -5536,6 +6130,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "type": "optional<ScenarioInputTypeEnum>",
           "value": "optional<string>",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "ScenarioInputTypeEnum": {
         "docs": "* \`TEXT\` - Text
@@ -5544,6 +6141,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "TEXT",
           "CHAT_HISTORY",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "SearchErrorResponse": {
         "docs": undefined,
@@ -5552,6 +6152,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "Details about why the request failed.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "SearchFiltersRequest": {
@@ -5562,11 +6165,17 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "optional<list<string>>",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "SearchNodeResult": {
         "docs": undefined,
         "properties": {
           "data": "SearchNodeResultData",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "SearchNodeResultData": {
@@ -5576,6 +6185,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "results_output_id": "string",
           "text": "optional<string>",
           "text_output_id": "optional<string>",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "SearchRequestOptionsRequest": {
@@ -5598,6 +6210,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "optional<SearchWeightsRequest>",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "SearchResponse": {
         "docs": undefined,
@@ -5606,6 +6221,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "The results of the search. Each result represents a chunk that matches the search query.",
             "type": "list<SearchResult>",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "SearchResult": {
@@ -5625,6 +6243,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "SearchResultMergingRequest": {
         "docs": undefined,
@@ -5633,6 +6254,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "Whether to enable merging results",
             "type": "boolean",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "SearchWeightsRequest": {
@@ -5646,6 +6270,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "The relative weight to give to semantic similarity",
             "type": "double",
           },
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "SlimDocument": {
@@ -5712,6 +6339,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "optional<SlimDocumentStatusEnum>",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "SlimDocumentStatusEnum": {
         "docs": "* \`ACTIVE\` - Active",
@@ -5760,11 +6390,17 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "optional<datetime>",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "SubmitCompletionActualsErrorResponse": {
         "docs": undefined,
         "properties": {
           "detail": "string",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "TerminalNodeChatHistoryResult": {
@@ -5776,6 +6412,9 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "value": "list<ChatMessage>",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "TerminalNodeJsonResult": {
         "docs": undefined,
@@ -5786,11 +6425,17 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "value": "map<string, unknown>",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "TerminalNodeResult": {
         "docs": undefined,
         "properties": {
           "data": "TerminalNodeResultData",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "TerminalNodeResultData": {
@@ -5798,11 +6443,17 @@ Used to submit feedback regarding the quality of previously generated completion
         "properties": {
           "output": "TerminalNodeResultOutput",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "TerminalNodeResultOutput": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
         "union": {
           "CHAT_HISTORY": "TerminalNodeChatHistoryResult",
           "JSON": "TerminalNodeJsonResult",
@@ -5817,6 +6468,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "string",
           },
           "value": "string",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "TestSuiteTestCase": {
@@ -5839,11 +6493,17 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "UploadDocumentErrorResponse": {
         "docs": undefined,
         "properties": {
           "detail": "string",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "UploadDocumentResponse": {
@@ -5860,12 +6520,18 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "WorkflowEventError": {
         "docs": undefined,
         "properties": {
           "code": "WorkflowExecutionEventErrorCode",
           "message": "string",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "WorkflowExecutionEventErrorCode": {
@@ -5875,6 +6541,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "WORKFLOW_INITIALIZATION",
           "NODE_EXECUTION",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "WorkflowExecutionNodeResultEvent": {
         "docs": undefined,
@@ -5882,6 +6551,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "data": "WorkflowNodeResultEvent",
           "external_id": "optional<string>",
           "run_id": "string",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "WorkflowExecutionWorkflowResultEvent": {
@@ -5891,11 +6563,17 @@ Used to submit feedback regarding the quality of previously generated completion
           "external_id": "optional<string>",
           "run_id": "string",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "WorkflowNodeResultData": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
         "union": {
           "CONDITIONAL": "ConditionalNodeResult",
           "DEPLOYMENT": "DeploymentNodeResult",
@@ -5916,6 +6594,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "state": "WorkflowNodeResultEventState",
           "ts": "optional<datetime>",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "WorkflowNodeResultEventState": {
         "docs": "* \`INITIATED\` - INITIATED
@@ -5928,6 +6609,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "FULFILLED",
           "REJECTED",
         ],
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "WorkflowRequestChatHistoryInputRequest": {
         "docs": undefined,
@@ -5944,11 +6628,17 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "value": "list<ChatMessageRequest>",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "WorkflowRequestInputRequest": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
         "union": {
           "CHAT_HISTORY": "WorkflowRequestChatHistoryInputRequest",
           "JSON": "WorkflowRequestJsonInputRequest",
@@ -5970,6 +6660,9 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "value": "map<string, unknown>",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "WorkflowRequestStringInputRequest": {
         "docs": undefined,
@@ -5986,6 +6679,9 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "value": "string",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "WorkflowResultEvent": {
         "docs": undefined,
@@ -5996,11 +6692,17 @@ Used to submit feedback regarding the quality of previously generated completion
           "state": "WorkflowNodeResultEventState",
           "ts": "datetime",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "WorkflowResultEventOutputData": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
         "union": {
           "CHAT_HISTORY": "WorkflowResultEventOutputDataChatHistory",
           "JSON": "WorkflowResultEventOutputDataJson",
@@ -6019,6 +6721,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "state": "WorkflowNodeResultEventState",
           "value": "optional<list<ChatMessage>>",
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "WorkflowResultEventOutputDataJson": {
         "docs": undefined,
@@ -6031,6 +6736,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "node_id": "string",
           "state": "WorkflowNodeResultEventState",
           "value": "optional<map<string, unknown>>",
+        },
+        "source": {
+          "openapi": "vellum/openapi.yml",
         },
       },
       "WorkflowResultEventOutputDataString": {
@@ -6048,11 +6756,17 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
       },
       "WorkflowStreamEvent": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "source": {
+          "openapi": "vellum/openapi.yml",
+        },
         "union": {
           "NODE": "WorkflowExecutionNodeResultEvent",
           "WORKFLOW": "WorkflowExecutionWorkflowResultEvent",

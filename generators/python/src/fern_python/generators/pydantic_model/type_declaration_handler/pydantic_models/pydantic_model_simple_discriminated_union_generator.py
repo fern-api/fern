@@ -14,7 +14,7 @@ from fern_python.pydantic_codegen.pydantic_field import FernAwarePydanticField
 from fern_python.snippet import SnippetWriter
 
 from ....context import PydanticGeneratorContext
-from ...custom_config import PydanticModelCustomConfig
+from ...custom_config import PydanticModelCustomConfig, UnionNamingVersions
 from ..discriminated_union.simple_discriminated_union_generator import (
     AbstractDiscriminatedUnionSnippetGenerator,
     AbstractSimpleDiscriminatedUnionGenerator,
@@ -82,7 +82,9 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
         return type_hint
 
     def _generate_member_name(self, single_union_type: ir_types.SingleUnionType) -> str:
-        return get_single_union_type_class_name(self._name, single_union_type.discriminant_value)
+        return get_single_union_type_class_name(
+            self._name, single_union_type.discriminant_value, self._custom_config.union_naming
+        )
 
     def _generate_no_property_member(
         self, class_name: str, discriminant_field: FernAwarePydanticField
@@ -204,6 +206,7 @@ class PydanticModelDiscriminatedUnionSnippetGenerator(AbstractDiscriminatedUnion
         snippet_writer: SnippetWriter,
         name: ir_types.DeclaredTypeName,
         example: Optional[ir_types.ExampleUnionType],
+        union_naming_version: UnionNamingVersions,
         example_expression: Optional[AST.Expression] = None,
         single_union_type: Optional[ir_types.SingleUnionType] = None,
     ):
@@ -215,6 +218,7 @@ class PydanticModelDiscriminatedUnionSnippetGenerator(AbstractDiscriminatedUnion
             single_union_type=single_union_type,
             use_typeddict_request=False,
             as_request=False,
+            union_naming_version=union_naming_version,
         )
 
     def _get_snippet_for_union_with_same_properties_as_object(

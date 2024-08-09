@@ -100,6 +100,10 @@ exports[`open api parser webhooks parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "webhooks/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
   },
@@ -175,9 +179,17 @@ exports[`open api parser webhooks parse open api 1`] = `
         "groupName": null,
         "nameOverride": null,
         "schema": "Pet",
+        "source": {
+          "file": "webhooks/openapi.yml",
+          "type": "openapi",
+        },
         "type": "reference",
       },
       "sdkName": null,
+      "source": {
+        "file": "webhooks/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [],
     },

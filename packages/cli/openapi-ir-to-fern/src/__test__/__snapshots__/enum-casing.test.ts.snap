@@ -34,6 +34,9 @@ exports[`open api parser enum-casing docs 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "enum-casing/openapi.yml",
+      },
     },
     "types": {
       "ExampleResponse": {
@@ -43,12 +46,18 @@ exports[`open api parser enum-casing docs 1`] = `
           "message": "optional<string>",
           "status": "optional<ExampleResponseStatus>",
         },
+        "source": {
+          "openapi": "enum-casing/openapi.yml",
+        },
       },
       "ExampleResponseStatus": {
         "enum": [
           "success",
           "failure",
         ],
+        "source": {
+          "openapi": "enum-casing/openapi.yml",
+        },
       },
       "GrantTypeEnum": {
         "enum": [
@@ -61,6 +70,9 @@ exports[`open api parser enum-casing docs 1`] = `
             "value": "urn:ietf:params:oauth:grant-type:token-exchange",
           },
         ],
+        "source": {
+          "openapi": "enum-casing/openapi.yml",
+        },
       },
     },
   },
@@ -108,6 +120,9 @@ exports[`open api parser enum-casing simple 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "enum-casing/openapi.yml",
+      },
     },
     "types": {
       "ExampleResponse": {
@@ -117,12 +132,18 @@ exports[`open api parser enum-casing simple 1`] = `
           "message": "optional<string>",
           "status": "optional<ExampleResponseStatus>",
         },
+        "source": {
+          "openapi": "enum-casing/openapi.yml",
+        },
       },
       "ExampleResponseStatus": {
         "enum": [
           "success",
           "failure",
         ],
+        "source": {
+          "openapi": "enum-casing/openapi.yml",
+        },
       },
       "GrantTypeEnum": {
         "enum": [
@@ -135,6 +156,9 @@ exports[`open api parser enum-casing simple 1`] = `
             "value": "urn:ietf:params:oauth:grant-type:token-exchange",
           },
         ],
+        "source": {
+          "openapi": "enum-casing/openapi.yml",
+        },
       },
     },
   },

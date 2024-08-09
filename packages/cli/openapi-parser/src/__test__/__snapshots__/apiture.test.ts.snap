@@ -85,7 +85,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -138,7 +146,15 @@ The \`attributes\` object in the error may have the properties defined by the [\
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "403": {
@@ -171,7 +187,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "422": {
@@ -192,7 +216,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -410,9 +442,17 @@ This error response may have one of the following \`type\` values:
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "productType",
+                "source": {
+                  "file": "apiture/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         {
@@ -434,6 +474,10 @@ This error response may have one of the following \`type\` values:
               "generatedName": "AccountsListAccountsRequestLocation",
               "groupName": null,
               "nameOverride": null,
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "enum",
               "values": [
                 {
@@ -465,6 +509,10 @@ This error response may have one of the following \`type\` values:
               ],
             },
           },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -492,9 +540,17 @@ This error response may have one of the following \`type\` values:
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "accountAllowsFilter",
+                "source": {
+                  "file": "apiture/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         {
@@ -525,6 +581,10 @@ This error response may have one of the following \`type\` values:
               },
               "type": "primitive",
             },
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         {
@@ -557,6 +617,10 @@ This error response may have one of the following \`type\` values:
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -571,7 +635,15 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "accounts",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "apiture/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -582,6 +654,10 @@ This error response may have one of the following \`type\` values:
         "methodName": "listAccounts",
       },
       "server": [],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "List Accounts",
       "tags": [
         "Accounts",
@@ -643,7 +719,15 @@ The \`attributes\` object in the error may have the properties defined by the [\
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "403": {
@@ -676,7 +760,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -691,7 +783,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -880,7 +980,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "resourceId",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -898,7 +1006,15 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "account",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "apiture/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -909,6 +1025,10 @@ This error response may have one of the following \`type\` values:
         "methodName": "getAccount",
       },
       "server": [],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Get an Account",
       "tags": [
         "Accounts",
@@ -972,7 +1092,15 @@ The \`attributes\` object in the error may have the properties defined by the [\
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "403": {
@@ -1005,7 +1133,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "422": {
@@ -1127,7 +1263,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "429": {
@@ -1148,7 +1292,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "503": {
@@ -1163,7 +1315,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -1312,8 +1472,16 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": "accountIds",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         {
@@ -1346,6 +1514,10 @@ This error response may have one of the following \`type\` values:
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -1360,7 +1532,15 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "accountBalances",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "apiture/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -1371,6 +1551,10 @@ This error response may have one of the following \`type\` values:
         "methodName": "listAccountBalances",
       },
       "server": [],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "List Account Balances",
       "tags": [
         "Accounts",
@@ -1400,7 +1584,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -1453,7 +1645,15 @@ The \`attributes\` object in the error may have the properties defined by the [\
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "403": {
@@ -1486,7 +1686,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -1507,7 +1715,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -1583,7 +1799,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "resourceId",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -1601,7 +1825,15 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "accountJointOwners",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "apiture/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -1612,6 +1844,10 @@ This error response may have one of the following \`type\` values:
         "methodName": "listAccountJointOwners",
       },
       "server": [],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Return a collection of account joint owners",
       "tags": [
         "Account Joint Owners",
@@ -1643,7 +1879,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -1696,7 +1940,15 @@ The \`attributes\` object in the error may have the properties defined by the [\
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "403": {
@@ -1729,7 +1981,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "422": {
@@ -1750,7 +2010,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -1784,8 +2052,16 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": "accountAllowsFilter",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         {
@@ -1800,7 +2076,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "achSecCode",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         {
@@ -1822,8 +2106,16 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": "resourceId",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         {
@@ -1854,6 +2146,10 @@ This error response may have one of the following \`type\` values:
               },
               "type": "primitive",
             },
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         {
@@ -1886,6 +2182,10 @@ This error response may have one of the following \`type\` values:
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -1900,7 +2200,15 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "accounts",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "apiture/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -1911,6 +2219,10 @@ This error response may have one of the following \`type\` values:
         "methodName": "listEligibleAchAccounts",
       },
       "server": [],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "List Eligible ACH Accounts",
       "tags": [
         "Accounts",
@@ -1944,7 +2256,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -1997,7 +2317,15 @@ The \`attributes\` object in the error may have the properties defined by the [\
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "403": {
@@ -2030,7 +2358,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -2045,7 +2381,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "422": {
@@ -2066,7 +2410,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -2242,7 +2594,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "resourceId",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -2277,6 +2637,10 @@ This error response may have one of the following \`type\` values:
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -2308,6 +2672,10 @@ This error response may have one of the following \`type\` values:
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -2322,7 +2690,15 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "eligibleOverdraftAccounts",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "apiture/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -2333,6 +2709,10 @@ This error response may have one of the following \`type\` values:
         "methodName": "listEligibleOverdraftAccounts",
       },
       "server": [],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "List Eligible Overdraft Accounts",
       "tags": [
         "Overdraft Protection",
@@ -2394,7 +2774,15 @@ The \`attributes\` object in the error may have the properties defined by the [\
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "403": {
@@ -2427,7 +2815,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -2448,7 +2844,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -2525,7 +2929,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "resourceId",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -2543,7 +2955,15 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "overdraftProtection",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "apiture/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -2554,6 +2974,10 @@ This error response may have one of the following \`type\` values:
         "methodName": "getOverdraftProtection",
       },
       "server": [],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Fetch a representation of the account's overdraft protection settings",
       "tags": [
         "Overdraft Protection",
@@ -2585,7 +3009,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -2638,7 +3070,15 @@ The \`attributes\` object in the error may have the properties defined by the [\
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "403": {
@@ -2671,7 +3111,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -2686,7 +3134,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "422": {
@@ -2719,7 +3175,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -2799,7 +3263,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "resourceId",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -2816,7 +3288,15 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "overdraftProtectionPatch",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "apiture/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -2831,7 +3311,15 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "overdraftProtection",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "apiture/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -2842,6 +3330,10 @@ This error response may have one of the following \`type\` values:
         "methodName": "patchOverdraftAccounts",
       },
       "server": [],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Update the overdraft accounts",
       "tags": [
         "Overdraft Protection",
@@ -2873,7 +3365,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -2926,7 +3426,15 @@ The \`attributes\` object in the error may have the properties defined by the [\
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "403": {
@@ -2959,7 +3467,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -2974,7 +3490,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "422": {
@@ -2995,7 +3519,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -3135,7 +3667,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "resourceId",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -3152,7 +3692,15 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "newJointOwnerInvitation",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "apiture/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -3167,7 +3715,15 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "jointOwnerInvitation",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "apiture/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -3178,6 +3734,10 @@ This error response may have one of the following \`type\` values:
         "methodName": "createJointOwnerInvitation",
       },
       "server": [],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Invite a joint owner",
       "tags": [
         "Account Joint Owners",
@@ -3207,7 +3767,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -3260,7 +3828,15 @@ The \`attributes\` object in the error may have the properties defined by the [\
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "403": {
@@ -3293,7 +3869,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "422": {
@@ -3314,7 +3898,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -3553,6 +4145,10 @@ This error response may have one of the following \`type\` values:
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -3566,7 +4162,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "institutionLocatorType",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         {
@@ -3589,6 +4193,10 @@ This error response may have one of the following \`type\` values:
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         {
@@ -3616,6 +4224,10 @@ This error response may have one of the following \`type\` values:
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -3630,7 +4242,15 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "institutionLookupResult",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "apiture/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -3641,6 +4261,10 @@ This error response may have one of the following \`type\` values:
         "methodName": "lookUpInstitutionByLocator",
       },
       "server": [],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Look up institution by routing number, IBAN, or SWIFT/BIC code",
       "tags": [
         "Institutions",
@@ -3670,7 +4294,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -3723,7 +4355,15 @@ The \`attributes\` object in the error may have the properties defined by the [\
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "403": {
@@ -3756,7 +4396,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -3777,7 +4425,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "422": {
@@ -3792,7 +4448,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -3998,7 +4662,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "institutionId",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -4024,6 +4696,10 @@ This error response may have one of the following \`type\` values:
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         {
@@ -4055,6 +4731,10 @@ This error response may have one of the following \`type\` values:
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -4068,7 +4748,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "transferScheduleDirection",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         {
@@ -4101,6 +4789,10 @@ This error response may have one of the following \`type\` values:
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -4114,7 +4806,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "transferFrequency",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
       ],
@@ -4130,7 +4830,15 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "transferSchedules",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "apiture/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -4141,6 +4849,10 @@ This error response may have one of the following \`type\` values:
         "methodName": "listTransferSchedule",
       },
       "server": [],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Return this institution's list of upcoming transfer schedule dates",
       "tags": [
         "Schedules",
@@ -4172,7 +4884,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -4225,7 +4945,15 @@ The \`attributes\` object in the error may have the properties defined by the [\
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "403": {
@@ -4258,7 +4986,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -4279,7 +5015,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "412": {
@@ -4300,7 +5044,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "422": {
@@ -4315,7 +5067,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -4455,6 +5215,10 @@ This error response may have one of the following \`type\` values:
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "idempotent": null,
@@ -4475,7 +5239,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "institutionId",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -4500,8 +5272,16 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": "timeZoneId",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
       ],
@@ -4517,7 +5297,15 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "cutoffTimes",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "apiture/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -4528,6 +5316,10 @@ This error response may have one of the following \`type\` values:
         "methodName": "getCutoffTimes",
       },
       "server": [],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Return the financial institution's cutoff times for products",
       "tags": [
         "Schedules",
@@ -4559,7 +5351,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -4612,7 +5412,15 @@ The \`attributes\` object in the error may have the properties defined by the [\
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "403": {
@@ -4645,7 +5453,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -4666,7 +5482,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "422": {
@@ -4691,7 +5515,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -5256,7 +6088,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "institutionId",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -5291,6 +6131,10 @@ This error response may have one of the following \`type\` values:
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -5321,6 +6165,10 @@ This error response may have one of the following \`type\` values:
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -5341,8 +6189,16 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": "transferTypeForDateRestrictions",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         {
@@ -5364,8 +6220,16 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": "achAccountRisk",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
       ],
@@ -5381,7 +6245,15 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "transferDateRestrictions",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "apiture/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -5392,6 +6264,10 @@ This error response may have one of the following \`type\` values:
         "methodName": "getTransferDateRestrictions",
       },
       "server": [],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Return the financial institution's transfer dates restrictions",
       "tags": [
         "Schedules",
@@ -5425,7 +6301,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -5478,7 +6362,15 @@ The \`attributes\` object in the error may have the properties defined by the [\
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "403": {
@@ -5511,7 +6403,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -5526,7 +6426,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "422": {
@@ -5547,7 +6455,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "429": {
@@ -5568,7 +6484,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "504": {
@@ -5589,7 +6513,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -5928,7 +6860,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "resourceId",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -5963,6 +6903,10 @@ This error response may have one of the following \`type\` values:
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -5994,6 +6938,10 @@ This error response may have one of the following \`type\` values:
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -6024,6 +6972,10 @@ This error response may have one of the following \`type\` values:
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -6050,6 +7002,10 @@ This error response may have one of the following \`type\` values:
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": "Deprecated",
@@ -6070,8 +7026,16 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": "dateRange",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         {
@@ -6093,8 +7057,16 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": "dateRange",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         {
@@ -6123,9 +7095,17 @@ This error response may have one of the following \`type\` values:
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "transactionCategoryLabel",
+                "source": {
+                  "file": "apiture/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         {
@@ -6154,9 +7134,17 @@ This error response may have one of the following \`type\` values:
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "transactionType",
+                "source": {
+                  "file": "apiture/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         {
@@ -6185,9 +7173,17 @@ This error response may have one of the following \`type\` values:
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "transactionSubType",
+                "source": {
+                  "file": "apiture/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         {
@@ -6209,8 +7205,16 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": "amountRange",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         {
@@ -6232,8 +7236,16 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": "checkNumberRange",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         {
@@ -6266,6 +7278,10 @@ This error response may have one of the following \`type\` values:
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -6280,7 +7296,15 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "transactions",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "apiture/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -6291,6 +7315,10 @@ This error response may have one of the following \`type\` values:
         "methodName": "listTransactions",
       },
       "server": [],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Return a collection of transactions",
       "tags": [
         "Transactions",
@@ -6322,7 +7350,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -6375,7 +7411,15 @@ The \`attributes\` object in the error may have the properties defined by the [\
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "403": {
@@ -6408,7 +7452,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "422": {
@@ -6423,7 +7475,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -6504,6 +7564,10 @@ This error response may have one of the following \`type\` values:
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "idempotent": null,
@@ -6526,7 +7590,15 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "transactionCategories",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "apiture/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -6537,6 +7609,10 @@ This error response may have one of the following \`type\` values:
         "methodName": "listTransactionCategories",
       },
       "server": [],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Return a collection of transaction categories",
       "tags": [
         "Transaction Categories",
@@ -6566,7 +7642,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -6619,7 +7703,15 @@ The \`attributes\` object in the error may have the properties defined by the [\
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "403": {
@@ -6652,7 +7744,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "422": {
@@ -6667,7 +7767,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -7055,8 +8163,16 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": "dateRange",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         {
@@ -7078,8 +8194,16 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": "dateRange",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         {
@@ -7101,8 +8225,16 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": "dateRange",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         {
@@ -7129,6 +8261,10 @@ This error response may have one of the following \`type\` values:
               },
               "type": "primitive",
             },
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         {
@@ -7159,6 +8295,10 @@ This error response may have one of the following \`type\` values:
               },
               "type": "primitive",
             },
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         {
@@ -7191,6 +8331,10 @@ This error response may have one of the following \`type\` values:
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -7205,7 +8349,15 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "transfers",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "apiture/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -7216,6 +8368,10 @@ This error response may have one of the following \`type\` values:
         "methodName": "listTransfers",
       },
       "server": [],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Return a collection of transfers",
       "tags": [
         "Transfers",
@@ -7247,7 +8403,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -7300,7 +8464,15 @@ The \`attributes\` object in the error may have the properties defined by the [\
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "403": {
@@ -7325,7 +8497,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "422": {
@@ -7370,7 +8550,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -7641,8 +8829,16 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": "challengeToken",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
       ],
@@ -7665,7 +8861,15 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "newTransfer",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "apiture/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -7680,7 +8884,15 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "transfer",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "apiture/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -7691,6 +8903,10 @@ This error response may have one of the following \`type\` values:
         "methodName": "createTransfer",
       },
       "server": [],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Create a new transfer",
       "tags": [
         "Transfers",
@@ -7752,7 +8968,15 @@ The \`attributes\` object in the error may have the properties defined by the [\
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "403": {
@@ -7785,7 +9009,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -7800,7 +9032,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -8014,7 +9254,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "resourceId",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -8032,7 +9280,15 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "transfer",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "apiture/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -8043,6 +9299,10 @@ This error response may have one of the following \`type\` values:
         "methodName": "getTransfer",
       },
       "server": [],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Fetch a representation of this transfer",
       "tags": [
         "Transfers",
@@ -8104,7 +9364,15 @@ The \`attributes\` object in the error may have the properties defined by the [\
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "403": {
@@ -8137,7 +9405,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -8152,7 +9428,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "409": {
@@ -8173,7 +9457,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -8221,7 +9513,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "resourceId",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -8237,6 +9537,10 @@ This error response may have one of the following \`type\` values:
         "methodName": "deleteTransfer",
       },
       "server": [],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Delete this transfer resource",
       "tags": [
         "Transfers",
@@ -8268,7 +9572,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -8321,7 +9633,15 @@ The \`attributes\` object in the error may have the properties defined by the [\
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "403": {
@@ -8346,7 +9666,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -8361,7 +9689,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
         "422": {
@@ -8406,7 +9742,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -8661,8 +10005,16 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": "challengeToken",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
         },
       ],
@@ -8684,7 +10036,15 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "resourceId",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -8701,7 +10061,15 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "transferPatch",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "apiture/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -8716,7 +10084,15 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "transfer",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "apiture/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -8727,6 +10103,10 @@ This error response may have one of the following \`type\` values:
         "methodName": "patchTransfer",
       },
       "server": [],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Update this transfer",
       "tags": [
         "Transfers",
@@ -8835,6 +10215,10 @@ This error response may have one of the following \`type\` values:
       "groupName": null,
       "nameOverride": null,
       "properties": [],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "abstractPagedBody": {
@@ -8847,6 +10231,10 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "abstractBody",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -8855,6 +10243,10 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "abstractPagedBodyFields",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -8897,6 +10289,10 @@ This error response may have one of the following \`type\` values:
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "abstractPagedBodyFields": {
@@ -8967,6 +10363,10 @@ This error response may have one of the following \`type\` values:
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "account": {
@@ -8979,6 +10379,10 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "abstractBody",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -8987,6 +10391,10 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "accountFields",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -9010,6 +10418,10 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "fullAccountPermissions",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -9034,6 +10446,10 @@ This error response may have one of the following \`type\` values:
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "accountAllowsFilter": {
@@ -9083,6 +10499,10 @@ This error response may have one of the following \`type\` values:
       "generatedName": "AccountAllowsFilter",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -9202,6 +10622,10 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "readOnlyResourceId",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -9226,6 +10650,10 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": "creditOrDebitValue",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -9251,6 +10679,10 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": "creditOrDebitValue",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -9276,6 +10708,10 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": "readOnlyTimestamp",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -9301,6 +10737,10 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": "creditOrDebitValue",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -9326,6 +10766,10 @@ This error response may have one of the following \`type\` values:
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "accountBalances": {
@@ -9338,6 +10782,10 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "abstractBody",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -9368,11 +10816,19 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": "accountBalance",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "accountFields": {
@@ -9399,6 +10855,10 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "readOnlyResourceId",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -9447,6 +10907,10 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": "accountNickname",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -9465,6 +10929,10 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "maskedAccountNumber",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -9482,6 +10950,10 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "productReference",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -9499,10 +10971,18 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "accountLocation",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "accountIds": {
@@ -9519,6 +10999,10 @@ This error response may have one of the following \`type\` values:
         "groupName": null,
         "nameOverride": null,
         "schema": "resourceId",
+        "source": {
+          "file": "apiture/openapi.yml",
+          "type": "openapi",
+        },
         "type": "reference",
       },
     },
@@ -9532,6 +11016,10 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "accountFields",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -9566,6 +11054,10 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": "readOnlyResourceId",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -9631,6 +11123,10 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": "accountNickname",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -9660,6 +11156,10 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": "maskedAccountNumber",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -9678,6 +11178,10 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "accountPermissions",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -9706,6 +11210,10 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": "productReference",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -9735,11 +11243,19 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": "accountLocation",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "accountJointOwner": {
@@ -9752,6 +11268,10 @@ This error response may have one of the following \`type\` values:
           "groupName": null,
           "nameOverride": null,
           "schema": "abstractBody",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -9775,6 +11295,10 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": "readOnlyResourceId",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -9803,6 +11327,10 @@ This error response may have one of the following \`type\` values:
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "accountJointOwners": {
@@ -9836,11 +11364,19 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": "accountJointOwner",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "accountLocation": {
@@ -9854,6 +11390,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "generatedName": "AccountLocation",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -10064,6 +11604,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "accountRoutingNumber": {
@@ -10092,6 +11636,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "groupName": null,
           "nameOverride": null,
           "schema": "abstractPagedBody",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -10122,6 +11670,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "groupName": null,
               "nameOverride": null,
               "schema": "accountItem",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -10180,6 +11732,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "groupName": null,
               "nameOverride": null,
               "schema": "readOnlyResourceId",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -10221,6 +11777,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "achAccountRisk": {
@@ -10258,6 +11818,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "generatedName": "AchAccountRisk",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -10363,6 +11927,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "generatedName": "AchSecCode",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -10507,6 +12075,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "groupName": null,
           "nameOverride": null,
           "schema": "addressFields",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -10633,6 +12205,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "addressFields": {
@@ -10750,6 +12326,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "amountRange": {
@@ -10965,6 +12545,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "groupName": null,
               "nameOverride": null,
               "schema": "readOnlyResourceId",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -10990,6 +12574,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "groupName": null,
               "nameOverride": null,
               "schema": "readOnlyTimestamp",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -11022,6 +12610,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "apiProblem",
+                "source": {
+                  "file": "apiture/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -11072,6 +12664,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "challengeFactor": {
@@ -11098,6 +12694,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "groupName": null,
             "nameOverride": null,
             "schema": "challengeFactorType",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -11162,11 +12762,19 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "groupName": null,
               "nameOverride": null,
               "schema": "challengeSecurityQuestions",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "challengeFactorType": {
@@ -11208,6 +12816,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "generatedName": "ChallengeFactorType",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -11317,6 +12929,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "groupName": null,
             "nameOverride": null,
             "schema": "challengePromptId",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -11345,6 +12961,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "challengeSecurityQuestions": {
@@ -11378,11 +12998,19 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "groupName": null,
               "nameOverride": null,
               "schema": "challengeSecurityQuestion",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "challengeToken": {
@@ -11408,6 +13036,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "groupName": null,
       "nameOverride": null,
       "schema": "positiveIntegerRange",
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "reference",
     },
     "creditOrDebitValue": {
@@ -11450,6 +13082,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "groupName": null,
             "nameOverride": null,
             "schema": "cutoffTimeType",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -11478,6 +13114,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "cutoffTimeType": {
@@ -11522,6 +13162,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "generatedName": "CutoffTimeType",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -11627,6 +13271,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "groupName": null,
           "nameOverride": null,
           "schema": "abstractBody",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -11651,6 +13299,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": "timeZoneId",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -11675,11 +13327,19 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": "cutoffTime",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "dateRange": {
@@ -11705,6 +13365,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "groupName": null,
       "nameOverride": null,
       "schema": "overdraftAccountFields",
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "reference",
     },
     "eligibleOverdraftAccounts": {
@@ -11717,6 +13381,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "groupName": null,
           "nameOverride": null,
           "schema": "abstractPagedBody",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -11801,6 +13469,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "externalAccountVerificationMethod": {
@@ -11834,6 +13506,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "generatedName": "ExternalAccountVerificationMethod",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -11903,6 +13579,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "groupName": null,
           "nameOverride": null,
           "schema": "accountPermissions",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -11953,6 +13633,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "incompleteAccountBalances": {
@@ -11965,6 +13649,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "groupName": null,
           "nameOverride": null,
           "schema": "abstractBody",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -11995,6 +13683,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": "accountBalance",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -12013,6 +13705,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": "accountIds",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -12042,6 +13738,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "incompleteTransactions": {
@@ -12054,6 +13754,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "groupName": null,
           "nameOverride": null,
           "schema": "abstractBody",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -12089,6 +13793,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "institutionId": {
@@ -12138,6 +13846,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "generatedName": "InstitutionLocatorType",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -12191,6 +13903,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "groupName": null,
           "nameOverride": null,
           "schema": "abstractBody",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -12241,6 +13957,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": "simpleInstitution",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -12273,12 +13993,20 @@ The client can use this value to localize the \`items[].time\` values to the loc
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "simpleInstitution",
+                "source": {
+                  "file": "apiture/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "jointOwnerInvitation": {
@@ -12291,6 +14019,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "groupName": null,
           "nameOverride": null,
           "schema": "abstractBody",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -12299,6 +14031,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "groupName": null,
           "nameOverride": null,
           "schema": "jointOwnerInvitationFields",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -12322,10 +14058,18 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": "readOnlyResourceId",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "jointOwnerInvitationFields": {
@@ -12495,6 +14239,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "maskedAccountNumber": {
@@ -12539,6 +14287,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "groupName": null,
           "nameOverride": null,
           "schema": "abstractBody",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -12547,6 +14299,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "groupName": null,
           "nameOverride": null,
           "schema": "jointOwnerInvitationFields",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -12556,6 +14312,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "groupName": null,
       "nameOverride": null,
       "properties": [],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "newTransfer": {
@@ -12568,6 +14328,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "groupName": null,
           "nameOverride": null,
           "schema": "abstractBody",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -12576,6 +14340,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "groupName": null,
           "nameOverride": null,
           "schema": "transferFields",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -12606,11 +14374,19 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": "transferSchedule",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "overdraftAccountFields": {
@@ -12644,6 +14420,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": "resourceId",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -12701,11 +14481,19 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": "maskedAccountNumber",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "overdraftAccountItem": {
@@ -12715,6 +14503,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "groupName": null,
       "nameOverride": null,
       "schema": "overdraftAccountFields",
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "reference",
     },
     "overdraftProtection": {
@@ -12727,6 +14519,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "groupName": null,
           "nameOverride": null,
           "schema": "abstractBody",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -12735,6 +14531,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "groupName": null,
           "nameOverride": null,
           "schema": "overdraftProtectionFields",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -12770,6 +14570,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "overdraftProtectionFields": {
@@ -12804,6 +14608,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "overdraftProtectionPatch": {
@@ -12816,6 +14624,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "groupName": null,
           "nameOverride": null,
           "schema": "abstractBody",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -12824,6 +14636,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "groupName": null,
           "nameOverride": null,
           "schema": "overdraftProtectionFields",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -12833,6 +14649,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "groupName": null,
       "nameOverride": null,
       "properties": [],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "positiveIntegerRange": {
@@ -12861,6 +14681,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "groupName": null,
           "nameOverride": null,
           "schema": "abstractBody",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -12869,6 +14693,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "groupName": null,
           "nameOverride": null,
           "schema": "apiProblem",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -12878,6 +14706,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "groupName": null,
       "nameOverride": null,
       "properties": [],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "productReference": {
@@ -12904,6 +14736,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": "productType",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -12980,6 +14816,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "productType": {
@@ -13025,6 +14865,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "generatedName": "ProductType",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -13114,6 +14958,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "groupName": null,
       "nameOverride": null,
       "schema": "resourceId",
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "reference",
     },
     "readOnlyTimestamp": {
@@ -13151,6 +14999,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": "readOnlyResourceId",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -13168,6 +15020,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": "readOnlyResourceId",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -13192,11 +15048,19 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": "challengeFactor",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "resourceId": {
@@ -13263,6 +15127,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": "address",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -13304,10 +15172,18 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": "institutionLocatorType",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "timeZoneId": {
@@ -13391,6 +15267,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "transactionCategories": {
@@ -13424,11 +15304,19 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": "transactionCategory",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "transactionCategorization": {
@@ -13455,6 +15343,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": "transactionCategoryLabel",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -13483,6 +15375,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "transactionCategory": {
@@ -13495,6 +15391,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "groupName": null,
           "nameOverride": null,
           "schema": "abstractBody",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -13503,6 +15403,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "groupName": null,
           "nameOverride": null,
           "schema": "transactionCategorization",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -13526,10 +15430,18 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": "transactionCategoryType",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "transactionCategoryLabel": {
@@ -13575,6 +15487,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "generatedName": "TransactionCategoryType",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -13705,6 +15621,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "transactionFields": {
@@ -13755,6 +15675,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": "transactionType",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -13772,6 +15696,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": "transactionSubType",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -13877,6 +15805,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": "creditOrDebitValue",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -13929,6 +15861,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": "creditOrDebitValue",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -14018,6 +15954,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": "transactionCategorization",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -14043,6 +15983,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": "transactionMerchant",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -14068,11 +16012,19 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": "transactionCheck",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "transactionItem": {
@@ -14085,6 +16037,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "groupName": null,
           "nameOverride": null,
           "schema": "abstractBody",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -14093,6 +16049,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "groupName": null,
           "nameOverride": null,
           "schema": "transactionFields",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -14102,6 +16062,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "groupName": null,
       "nameOverride": null,
       "properties": [],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "transactionMerchant": {
@@ -14211,6 +16175,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "transactionSubType": {
@@ -14240,6 +16208,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "generatedName": "TransactionSubType",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -14301,6 +16273,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "generatedName": "TransactionType",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -14354,6 +16330,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "groupName": null,
           "nameOverride": null,
           "schema": "abstractPagedBody",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -14391,6 +16371,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "transactionItem",
+                "source": {
+                  "file": "apiture/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -14430,6 +16414,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "transfer": {
@@ -14442,6 +16430,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "groupName": null,
           "nameOverride": null,
           "schema": "abstractBody",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -14450,6 +16442,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "groupName": null,
           "nameOverride": null,
           "schema": "transferItem",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -14459,6 +16455,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "groupName": null,
       "nameOverride": null,
       "properties": [],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "transferAccountReference": {
@@ -14485,6 +16485,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": "resourceId",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -14541,6 +16545,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": "productType",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -14566,11 +16574,19 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": "accountLocation",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "transferDateRestriction": {
@@ -14621,6 +16637,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": "transferDateRestrictionType",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -14689,6 +16709,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "transferDateRestrictionType": {
@@ -14734,6 +16758,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "generatedName": "TransferDateRestrictionType",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -14826,6 +16854,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "groupName": null,
           "nameOverride": null,
           "schema": "abstractBody",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -14864,6 +16896,10 @@ The response may include dates prior to requested the start date, as that is use
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "transferDateRestriction",
+                "source": {
+                  "file": "apiture/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -14902,6 +16938,10 @@ The response may include dates prior to requested the start date, as that is use
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "transferFields": {
@@ -14935,6 +16975,10 @@ The response may include dates prior to requested the start date, as that is use
               "groupName": null,
               "nameOverride": null,
               "schema": "monetaryValue",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -14960,6 +17004,10 @@ The response may include dates prior to requested the start date, as that is use
               "groupName": null,
               "nameOverride": null,
               "schema": "transferAccountReference",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -14985,6 +17033,10 @@ The response may include dates prior to requested the start date, as that is use
               "groupName": null,
               "nameOverride": null,
               "schema": "transferAccountReference",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -15022,6 +17074,10 @@ The response may include dates prior to requested the start date, as that is use
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "transferFrequency": {
@@ -15095,6 +17151,10 @@ The response may include dates prior to requested the start date, as that is use
       "generatedName": "TransferFrequency",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -15278,6 +17338,10 @@ The response may include dates prior to requested the start date, as that is use
           "groupName": null,
           "nameOverride": null,
           "schema": "transferFields",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -15286,6 +17350,10 @@ The response may include dates prior to requested the start date, as that is use
           "groupName": null,
           "nameOverride": null,
           "schema": "timestampFields",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -15309,6 +17377,10 @@ The response may include dates prior to requested the start date, as that is use
             "groupName": null,
             "nameOverride": null,
             "schema": "readOnlyResourceId",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -15326,6 +17398,10 @@ The response may include dates prior to requested the start date, as that is use
             "groupName": null,
             "nameOverride": null,
             "schema": "transferItemSchedule",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -15343,6 +17419,10 @@ The response may include dates prior to requested the start date, as that is use
             "groupName": null,
             "nameOverride": null,
             "schema": "transferState",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -15406,6 +17486,10 @@ The response may include dates prior to requested the start date, as that is use
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "transferItemSchedule": {
@@ -15418,6 +17502,10 @@ The response may include dates prior to requested the start date, as that is use
           "groupName": null,
           "nameOverride": null,
           "schema": "transferSchedule",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -15492,6 +17580,10 @@ The response may include dates prior to requested the start date, as that is use
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "transferPatch": {
@@ -15504,6 +17596,10 @@ The response may include dates prior to requested the start date, as that is use
           "groupName": null,
           "nameOverride": null,
           "schema": "abstractBody",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -15512,6 +17608,10 @@ The response may include dates prior to requested the start date, as that is use
           "groupName": null,
           "nameOverride": null,
           "schema": "transferFields",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -15542,11 +17642,19 @@ The response may include dates prior to requested the start date, as that is use
               "groupName": null,
               "nameOverride": null,
               "schema": "transferSchedule",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "transferRecurrenceType": {
@@ -15576,6 +17684,10 @@ The response may include dates prior to requested the start date, as that is use
       "generatedName": "TransferRecurrenceType",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -15671,6 +17783,10 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
               "groupName": null,
               "nameOverride": null,
               "schema": "transferRecurrenceType",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -15689,6 +17805,10 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             "groupName": null,
             "nameOverride": null,
             "schema": "transferFrequency",
+            "source": {
+              "file": "apiture/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -15778,11 +17898,19 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
               "groupName": null,
               "nameOverride": null,
               "schema": "monetaryValue",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "transferScheduleDirection": {
@@ -15816,6 +17944,10 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       "generatedName": "TransferScheduleDirection",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -15918,6 +18050,10 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "transferSchedules": {
@@ -15930,6 +18066,10 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "groupName": null,
           "nameOverride": null,
           "schema": "abstractBody",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -15960,11 +18100,19 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
               "groupName": null,
               "nameOverride": null,
               "schema": "transferScheduleItem",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "transferState": {
@@ -16014,6 +18162,10 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       "generatedName": "TransferState",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -16162,6 +18314,10 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       "generatedName": "TransferTypeForDateRestrictions",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -16254,6 +18410,10 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "groupName": null,
           "nameOverride": null,
           "schema": "abstractPagedBody",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -16284,6 +18444,10 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
               "groupName": null,
               "nameOverride": null,
               "schema": "transferItem",
+              "source": {
+                "file": "apiture/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -16322,6 +18486,10 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "wireTransferInstitution": {
@@ -16334,6 +18502,10 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "groupName": null,
           "nameOverride": null,
           "schema": "simpleInstitution",
+          "source": {
+            "file": "apiture/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -16376,6 +18548,10 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           },
         },
       ],
+      "source": {
+        "file": "apiture/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
   },

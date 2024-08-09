@@ -17,10 +17,14 @@ export const HeaderWithExample: core.serialization.ObjectSchema<
         parameterNameOverride: core.serialization.string().optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAvailability));
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAvailability))
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSource));
 
 export declare namespace HeaderWithExample {
-    interface Raw extends serializers.WithDescription.Raw, serializers.WithAvailability.Raw {
+    interface Raw
+        extends serializers.WithDescription.Raw,
+            serializers.WithAvailability.Raw,
+            serializers.WithSource.Raw {
         name: string;
         schema: serializers.SchemaWithExample.Raw;
         env?: string | null;

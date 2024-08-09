@@ -69,6 +69,10 @@ exports[`open api parser hume parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "hume/openapi.yaml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -96,9 +100,17 @@ exports[`open api parser hume parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "Status",
+                "source": {
+                  "file": "hume/openapi.yaml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
+          },
+          "source": {
+            "file": "hume/openapi.yaml",
+            "type": "openapi",
           },
         },
         {
@@ -120,8 +132,16 @@ exports[`open api parser hume parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "When",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "hume/openapi.yaml",
+            "type": "openapi",
           },
         },
         {
@@ -149,6 +169,10 @@ exports[`open api parser hume parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "hume/openapi.yaml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -169,8 +193,16 @@ exports[`open api parser hume parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "SortBy",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "hume/openapi.yaml",
+            "type": "openapi",
           },
         },
         {
@@ -192,8 +224,16 @@ exports[`open api parser hume parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "Direction",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "hume/openapi.yaml",
+            "type": "openapi",
           },
         },
       ],
@@ -216,13 +256,25 @@ exports[`open api parser hume parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "Job_Request",
+            "source": {
+              "file": "hume/openapi.yaml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
+        },
+        "source": {
+          "file": "hume/openapi.yaml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "summary": "List Jobs",
       "tags": [
         "List Jobs",
@@ -282,7 +334,15 @@ exports[`open api parser hume parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "BaseRequest",
+          "source": {
+            "file": "hume/openapi.yaml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "hume/openapi.yaml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -297,12 +357,24 @@ exports[`open api parser hume parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "JobId",
+          "source": {
+            "file": "hume/openapi.yaml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "hume/openapi.yaml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "summary": "Start Job",
       "tags": [
         "Start Job",
@@ -370,6 +442,10 @@ exports[`open api parser hume parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hume/openapi.yaml",
+            "type": "openapi",
+          },
           "variableReference": null,
         },
       ],
@@ -393,13 +469,25 @@ exports[`open api parser hume parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "SourceResult",
+            "source": {
+              "file": "hume/openapi.yaml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
+        },
+        "source": {
+          "file": "hume/openapi.yaml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "summary": "Get Job Predictions",
       "tags": [
         "Get Job Predictions",
@@ -441,6 +529,10 @@ exports[`open api parser hume parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hume/openapi.yaml",
+            "type": "openapi",
+          },
           "variableReference": null,
         },
       ],
@@ -449,10 +541,18 @@ exports[`open api parser hume parse open api 1`] = `
       "requestNameOverride": null,
       "response": {
         "description": "",
+        "source": {
+          "file": "hume/openapi.yaml",
+          "type": "openapi",
+        },
         "type": "file",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "summary": "Get Job Artifacts",
       "tags": [
         "Get Job Predictions",
@@ -494,6 +594,10 @@ exports[`open api parser hume parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hume/openapi.yaml",
+            "type": "openapi",
+          },
           "variableReference": null,
         },
       ],
@@ -510,12 +614,24 @@ exports[`open api parser hume parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Job_Request",
+          "source": {
+            "file": "hume/openapi.yaml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "hume/openapi.yaml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "summary": "Get Job Details",
       "tags": [
         "Get Job Predictions",
@@ -618,6 +734,10 @@ exports[`open api parser hume parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "Models",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -643,6 +763,10 @@ exports[`open api parser hume parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "Transcription",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -750,6 +874,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Bcp47Tag": {
@@ -759,6 +887,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "generatedName": "Bcp47Tag",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -1251,6 +1383,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "BurstPrediction": {
@@ -1277,6 +1413,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "groupName": null,
             "nameOverride": null,
             "schema": "TimeInterval",
+            "source": {
+              "file": "hume/openapi.yaml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -1301,6 +1441,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "groupName": null,
               "nameOverride": null,
               "schema": "EmotionScore",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -1326,11 +1470,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "groupName": null,
               "nameOverride": null,
               "schema": "DescriptionsScore",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Completed": {
@@ -1454,6 +1606,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "DescriptionsScore": {
@@ -1515,6 +1671,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Direction": {
@@ -1524,6 +1684,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "generatedName": "Direction",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -1613,6 +1777,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Empty": {
@@ -1702,6 +1870,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Face": {
@@ -1856,6 +2028,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "groupName": null,
               "nameOverride": null,
               "schema": "Empty",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -1881,6 +2057,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "groupName": null,
               "nameOverride": null,
               "schema": "Empty",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -1914,6 +2094,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "FacePrediction": {
@@ -2009,6 +2193,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "groupName": null,
             "nameOverride": null,
             "schema": "BoundingBox",
+            "source": {
+              "file": "hume/openapi.yaml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -2033,6 +2221,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "groupName": null,
               "nameOverride": null,
               "schema": "EmotionScore",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -2065,6 +2257,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "FacsScore",
+                "source": {
+                  "file": "hume/openapi.yaml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -2098,12 +2294,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "DescriptionsScore",
+                "source": {
+                  "file": "hume/openapi.yaml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "FacemeshPrediction": {
@@ -2137,11 +2341,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "groupName": null,
               "nameOverride": null,
               "schema": "EmotionScore",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "FacsScore": {
@@ -2203,6 +2415,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Failed": {
@@ -2300,6 +2516,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "File": {
@@ -2401,6 +2621,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Granularity": {
@@ -2410,6 +2634,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "generatedName": "Granularity",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -2521,11 +2749,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "groupName": null,
               "nameOverride": null,
               "schema": "BurstPrediction",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "GroupedPredictions_FacePrediction": {
@@ -2583,11 +2819,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "groupName": null,
               "nameOverride": null,
               "schema": "FacePrediction",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "GroupedPredictions_FacemeshPrediction": {
@@ -2645,11 +2889,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "groupName": null,
               "nameOverride": null,
               "schema": "FacemeshPrediction",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "GroupedPredictions_LanguagePrediction": {
@@ -2707,11 +2959,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "groupName": null,
               "nameOverride": null,
               "schema": "LanguagePrediction",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "GroupedPredictions_NerPrediction": {
@@ -2769,11 +3029,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "groupName": null,
               "nameOverride": null,
               "schema": "NerPrediction",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "GroupedPredictions_ProsodyPrediction": {
@@ -2831,11 +3099,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "groupName": null,
               "nameOverride": null,
               "schema": "ProsodyPrediction",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "InProgress": {
@@ -2889,6 +3165,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "JobId": {
@@ -2926,6 +3206,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Job_Request": {
@@ -3000,6 +3284,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "groupName": null,
             "nameOverride": null,
             "schema": "Request",
+            "source": {
+              "file": "hume/openapi.yaml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -3017,10 +3305,18 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "groupName": null,
             "nameOverride": null,
             "schema": "State",
+            "source": {
+              "file": "hume/openapi.yaml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Language": {
@@ -3054,6 +3350,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "groupName": null,
               "nameOverride": null,
               "schema": "Granularity",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -3107,6 +3407,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "groupName": null,
               "nameOverride": null,
               "schema": "Empty",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -3132,11 +3436,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "groupName": null,
               "nameOverride": null,
               "schema": "Empty",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "LanguagePrediction": {
@@ -3187,6 +3499,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "groupName": null,
             "nameOverride": null,
             "schema": "PositionInterval",
+            "source": {
+              "file": "hume/openapi.yaml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -3211,6 +3527,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "groupName": null,
               "nameOverride": null,
               "schema": "TimeInterval",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -3302,6 +3622,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "groupName": null,
               "nameOverride": null,
               "schema": "EmotionScore",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -3336,6 +3660,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "SentimentScore",
+                "source": {
+                  "file": "hume/openapi.yaml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -3369,12 +3697,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "ToxicityScore",
+                "source": {
+                  "file": "hume/openapi.yaml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Models": {
@@ -3408,6 +3744,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "Face",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -3433,6 +3773,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "Empty",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -3458,6 +3802,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "Prosody",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -3483,6 +3831,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "Language",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -3508,6 +3860,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "Ner",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -3533,11 +3889,19 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "Empty",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ModelsPredictions": {
@@ -3571,6 +3935,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "Predictions_optional_Null_FacePrediction",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -3596,6 +3964,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "Predictions_optional_Null_BurstPrediction",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -3621,6 +3993,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "Predictions_optional_TranscriptionMetadata_ProsodyPrediction",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -3646,6 +4022,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "Predictions_optional_TranscriptionMetadata_LanguagePrediction",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -3671,6 +4051,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "Predictions_optional_TranscriptionMetadata_NerPrediction",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -3696,11 +4080,19 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "Predictions_optional_Null_FacemeshPrediction",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Ner": {
@@ -3742,6 +4134,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "NerPrediction": {
@@ -3792,6 +4188,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "groupName": null,
             "nameOverride": null,
             "schema": "PositionInterval",
+            "source": {
+              "file": "hume/openapi.yaml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -3914,6 +4314,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "TimeInterval",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -4005,11 +4409,19 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "EmotionScore",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Null": {
@@ -4089,6 +4501,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Prediction": {
@@ -4139,10 +4555,18 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "groupName": null,
             "nameOverride": null,
             "schema": "ModelsPredictions",
+            "source": {
+              "file": "hume/openapi.yaml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Predictions_optional_Null_BurstPrediction": {
@@ -4176,6 +4600,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "Null",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -4201,11 +4629,19 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "GroupedPredictions_BurstPrediction",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Predictions_optional_Null_FacePrediction": {
@@ -4239,6 +4675,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "Null",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -4264,11 +4704,19 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "GroupedPredictions_FacePrediction",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Predictions_optional_Null_FacemeshPrediction": {
@@ -4302,6 +4750,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "Null",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -4327,11 +4779,19 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "GroupedPredictions_FacemeshPrediction",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Predictions_optional_TranscriptionMetadata_LanguagePrediction": {
@@ -4365,6 +4825,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "TranscriptionMetadata",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -4390,11 +4854,19 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "GroupedPredictions_LanguagePrediction",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Predictions_optional_TranscriptionMetadata_NerPrediction": {
@@ -4428,6 +4900,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "TranscriptionMetadata",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -4453,11 +4929,19 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "GroupedPredictions_NerPrediction",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Predictions_optional_TranscriptionMetadata_ProsodyPrediction": {
@@ -4491,6 +4975,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "TranscriptionMetadata",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -4516,11 +5004,19 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "GroupedPredictions_ProsodyPrediction",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Prosody": {
@@ -4554,6 +5050,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "Granularity",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -4607,11 +5107,19 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "Window",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ProsodyPrediction": {
@@ -4670,6 +5178,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "groupName": null,
             "nameOverride": null,
             "schema": "TimeInterval",
+            "source": {
+              "file": "hume/openapi.yaml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -4760,11 +5272,19 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "EmotionScore",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Queued": {
@@ -4798,6 +5318,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Request": {
@@ -4831,6 +5355,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "Models",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -4856,6 +5384,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": "Transcription",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -4983,11 +5515,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "groupName": null,
               "nameOverride": null,
               "schema": "File",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Results": {
@@ -5021,6 +5561,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "groupName": null,
               "nameOverride": null,
               "schema": "Prediction",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -5046,11 +5590,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "groupName": null,
               "nameOverride": null,
               "schema": "Error",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "SentimentScore": {
@@ -5112,6 +5664,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "SortBy": {
@@ -5121,6 +5677,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "generatedName": "SortBy",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -5182,6 +5742,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "groupName": null,
             "nameOverride": null,
             "schema": "Source_File",
+            "source": {
+              "file": "hume/openapi.yaml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           "url": {
@@ -5191,8 +5755,16 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "groupName": null,
             "nameOverride": null,
             "schema": "Source_Url",
+            "source": {
+              "file": "hume/openapi.yaml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
+        },
+        "source": {
+          "file": "hume/openapi.yaml",
+          "type": "openapi",
         },
         "type": "discriminated",
       },
@@ -5221,6 +5793,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "groupName": null,
             "nameOverride": null,
             "schema": "Source",
+            "source": {
+              "file": "hume/openapi.yaml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -5245,6 +5821,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "groupName": null,
               "nameOverride": null,
               "schema": "Results",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -5282,6 +5862,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Source_File": {
@@ -5294,6 +5878,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "groupName": null,
           "nameOverride": null,
           "schema": "File",
+          "source": {
+            "file": "hume/openapi.yaml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -5303,6 +5891,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "groupName": null,
       "nameOverride": null,
       "properties": [],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Source_Url": {
@@ -5315,6 +5907,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "groupName": null,
           "nameOverride": null,
           "schema": "Url",
+          "source": {
+            "file": "hume/openapi.yaml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -5324,6 +5920,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "groupName": null,
       "nameOverride": null,
       "properties": [],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "State": {
@@ -5344,6 +5944,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "groupName": null,
             "nameOverride": null,
             "schema": "State_Completed",
+            "source": {
+              "file": "hume/openapi.yaml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           "FAILED": {
@@ -5353,6 +5957,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "groupName": null,
             "nameOverride": null,
             "schema": "State_Failed",
+            "source": {
+              "file": "hume/openapi.yaml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           "IN_PROGRESS": {
@@ -5362,6 +5970,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "groupName": null,
             "nameOverride": null,
             "schema": "State_InProgress",
+            "source": {
+              "file": "hume/openapi.yaml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           "QUEUED": {
@@ -5371,8 +5983,16 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "groupName": null,
             "nameOverride": null,
             "schema": "State_Queued",
+            "source": {
+              "file": "hume/openapi.yaml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
+        },
+        "source": {
+          "file": "hume/openapi.yaml",
+          "type": "openapi",
         },
         "type": "discriminated",
       },
@@ -5387,6 +6007,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "groupName": null,
           "nameOverride": null,
           "schema": "Completed",
+          "source": {
+            "file": "hume/openapi.yaml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -5396,6 +6020,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "groupName": null,
       "nameOverride": null,
       "properties": [],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "State_Failed": {
@@ -5408,6 +6036,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "groupName": null,
           "nameOverride": null,
           "schema": "Failed",
+          "source": {
+            "file": "hume/openapi.yaml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -5417,6 +6049,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "groupName": null,
       "nameOverride": null,
       "properties": [],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "State_InProgress": {
@@ -5429,6 +6065,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "groupName": null,
           "nameOverride": null,
           "schema": "InProgress",
+          "source": {
+            "file": "hume/openapi.yaml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -5438,6 +6078,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "groupName": null,
       "nameOverride": null,
       "properties": [],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "State_Queued": {
@@ -5450,6 +6094,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "groupName": null,
           "nameOverride": null,
           "schema": "Queued",
+          "source": {
+            "file": "hume/openapi.yaml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -5459,6 +6107,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "groupName": null,
       "nameOverride": null,
       "properties": [],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Status": {
@@ -5468,6 +6120,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "generatedName": "Status",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -5585,6 +6241,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ToxicityScore": {
@@ -5646,6 +6306,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Transcription": {
@@ -5679,11 +6343,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "groupName": null,
               "nameOverride": null,
               "schema": "Bcp47Tag",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TranscriptionMetadata": {
@@ -5742,11 +6414,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "groupName": null,
               "nameOverride": null,
               "schema": "Bcp47Tag",
+              "source": {
+                "file": "hume/openapi.yaml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Url": {
@@ -5784,6 +6464,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "When": {
@@ -5793,6 +6477,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "generatedName": "When",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -5900,6 +6588,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
       ],
+      "source": {
+        "file": "hume/openapi.yaml",
+        "type": "openapi",
+      },
       "type": "object",
     },
   },

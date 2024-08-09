@@ -8,6 +8,7 @@ export interface ReferencedSchema
     extends FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithName,
         FernOpenapiIr.WithSdkGroupName,
-        FernOpenapiIr.WithAvailability {
+        FernOpenapiIr.WithAvailability,
+        FernOpenapiIr.WithSource {
     schema: FernOpenapiIr.SchemaId;
 }

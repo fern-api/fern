@@ -3,6 +3,7 @@ import {
     HeaderExample,
     QueryParameterExample,
     SchemaWithExample,
+    Source,
     WebsocketHandshakeWithExample,
     WebsocketMessageExample,
     WebsocketSessionExample
@@ -29,13 +30,15 @@ export class ExampleWebsocketSessionFactory {
         extensionExamples,
         publish,
         subscribe,
-        handshake
+        handshake,
+        source
     }: {
         context: AsyncAPIV2ParserContext;
         extensionExamples: WebsocketSessionExampleExtension[];
         handshake: WebsocketHandshakeWithExample;
         publish: SchemaWithExample | undefined;
         subscribe: SchemaWithExample | undefined;
+        source: Source;
     }): WebsocketSessionExample[] {
         const result: WebsocketSessionExample[] = [];
 
@@ -102,7 +105,7 @@ export class ExampleWebsocketSessionFactory {
                     ? context.resolveSchemaReference(messageSchema.payload)
                     : messageSchema.payload;
                 const example = this.exampleTypeFactory.buildExample({
-                    schema: convertSchema(resolvedSchema, false, context, [messageExample.messageId]),
+                    schema: convertSchema(resolvedSchema, false, context, [messageExample.messageId], source),
                     exampleId: undefined,
                     example: messageExample.value,
                     options: {

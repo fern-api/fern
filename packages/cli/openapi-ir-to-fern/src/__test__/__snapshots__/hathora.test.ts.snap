@@ -219,6 +219,9 @@ exports[`open api parser hathora docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
     },
     "authV1.yml": {
@@ -344,6 +347,9 @@ exports[`open api parser hathora docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "types": {
         "LoginAnonymousResponse": {
@@ -351,17 +357,26 @@ exports[`open api parser hathora docs 1`] = `
           "properties": {
             "token": "string",
           },
+          "source": {
+            "openapi": "hathora/openapi.json",
+          },
         },
         "LoginGoogleResponse": {
           "docs": undefined,
           "properties": {
             "token": "string",
           },
+          "source": {
+            "openapi": "hathora/openapi.json",
+          },
         },
         "LoginNicknameResponse": {
           "docs": undefined,
           "properties": {
             "token": "string",
+          },
+          "source": {
+            "openapi": "hathora/openapi.json",
           },
         },
       },
@@ -564,6 +579,9 @@ exports[`open api parser hathora docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
     },
     "deploymentV1.yml": {
@@ -733,6 +751,9 @@ exports[`open api parser hathora docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
     },
     "discoveryV1.yml": {
@@ -767,6 +788,9 @@ exports[`open api parser hathora docs 1`] = `
               "type": "root.DiscoveryResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "hathora/openapi.json",
         },
       },
     },
@@ -935,6 +959,9 @@ exports[`open api parser hathora docs 1`] = `
               "type": "list<root.Lobby>",
             },
           },
+        },
+        "source": {
+          "openapi": "hathora/openapi.json",
         },
       },
     },
@@ -1388,6 +1415,9 @@ exports[`open api parser hathora docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "types": {
         "CreateLobbyRequestVisibility": {
@@ -1396,6 +1426,9 @@ exports[`open api parser hathora docs 1`] = `
             "private",
             "local",
           ],
+          "source": {
+            "openapi": "hathora/openapi.json",
+          },
         },
       },
     },
@@ -1483,6 +1516,9 @@ exports[`open api parser hathora docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
     },
     "metricsV1.yml": {
@@ -1560,6 +1596,9 @@ exports[`open api parser hathora docs 1`] = `
               "type": "root.MetricsResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "hathora/openapi.json",
         },
       },
     },
@@ -1729,6 +1768,9 @@ exports[`open api parser hathora docs 1`] = `
               "type": "list<root.Process>",
             },
           },
+        },
+        "source": {
+          "openapi": "hathora/openapi.json",
         },
       },
     },
@@ -1976,6 +2018,9 @@ exports[`open api parser hathora docs 1`] = `
               "roomId": "root.RoomId",
             },
           },
+        },
+        "source": {
+          "openapi": "hathora/openapi.json",
         },
       },
     },
@@ -2397,6 +2442,9 @@ exports[`open api parser hathora docs 1`] = `
           "roomId": "RoomId",
           "transportType": "TransportType",
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "AppConfig": {
         "docs": undefined,
@@ -2412,6 +2460,9 @@ exports[`open api parser hathora docs 1`] = `
           },
           "authConfiguration": "AppConfigAuthConfiguration",
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "AppConfigAuthConfiguration": {
         "docs": undefined,
@@ -2420,11 +2471,17 @@ exports[`open api parser hathora docs 1`] = `
           "google": "optional<AppConfigAuthConfigurationGoogle>",
           "nickname": "optional<RecordStringNever>",
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "AppConfigAuthConfigurationGoogle": {
         "docs": undefined,
         "properties": {
           "clientId": "string",
+        },
+        "source": {
+          "openapi": "hathora/openapi.json",
         },
       },
       "AppId": "string",
@@ -2441,6 +2498,9 @@ exports[`open api parser hathora docs 1`] = `
           "deletedBy": "optional<string>",
           "orgId": "OrgId",
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "ApplicationAuthConfiguration": {
         "docs": undefined,
@@ -2449,11 +2509,17 @@ exports[`open api parser hathora docs 1`] = `
           "google": "optional<ApplicationAuthConfigurationGoogle>",
           "nickname": "optional<RecordStringNever>",
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "ApplicationAuthConfigurationGoogle": {
         "docs": undefined,
         "properties": {
           "clientId": "string",
+        },
+        "source": {
+          "openapi": "hathora/openapi.json",
         },
       },
       "ApplicationWithDeployment": {
@@ -2463,6 +2529,9 @@ exports[`open api parser hathora docs 1`] = `
         ],
         "properties": {
           "deployment": "Deployment",
+        },
+        "source": {
+          "openapi": "hathora/openapi.json",
         },
       },
       "Build": {
@@ -2479,6 +2548,9 @@ exports[`open api parser hathora docs 1`] = `
           "startedAt": "optional<datetime>",
           "status": "BuildStatus",
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "BuildId": "double",
       "BuildRegionalContainerTagsItem": {
@@ -2486,6 +2558,9 @@ exports[`open api parser hathora docs 1`] = `
         "properties": {
           "containerTag": "string",
           "region": "Region",
+        },
+        "source": {
+          "openapi": "hathora/openapi.json",
         },
       },
       "BuildStatus": {
@@ -2495,11 +2570,17 @@ exports[`open api parser hathora docs 1`] = `
           "succeeded",
           "failed",
         ],
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "ConnectionInfo": {
         "base-properties": {},
         "discriminant": "status",
         "docs": undefined,
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
         "union": {
           "active": "ActiveConnectionInfo",
           "starting": "StartingConnectionInfo",
@@ -2518,6 +2599,9 @@ exports[`open api parser hathora docs 1`] = `
           "deploymentId": "DeploymentId",
           "requestedCPU": "double",
           "requestedMemoryMB": "double",
+        },
+        "source": {
+          "openapi": "hathora/openapi.json",
         },
       },
       "DeploymentConfig": {
@@ -2547,6 +2631,9 @@ exports[`open api parser hathora docs 1`] = `
           },
           "transportType": "TransportType",
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "DeploymentConfigEnvItem": {
         "docs": undefined,
@@ -2570,6 +2657,9 @@ exports[`open api parser hathora docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "DeploymentId": "double",
       "DiscoveryResponse": "list<DiscoveryResponseItem>",
@@ -2579,6 +2669,9 @@ exports[`open api parser hathora docs 1`] = `
           "host": "string",
           "port": "double",
           "region": "Region",
+        },
+        "source": {
+          "openapi": "hathora/openapi.json",
         },
       },
       "Lobby": {
@@ -2594,6 +2687,9 @@ exports[`open api parser hathora docs 1`] = `
           "state": "optional<map<string, unknown>>",
           "visibility": "LobbyVisibility",
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "LobbyVisibility": {
         "enum": [
@@ -2601,6 +2697,9 @@ exports[`open api parser hathora docs 1`] = `
           "public",
           "local",
         ],
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "MetricName": {
         "enum": [
@@ -2609,12 +2708,18 @@ exports[`open api parser hathora docs 1`] = `
           "rate_egress",
           "total_egress",
         ],
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "MetricValue": {
         "docs": undefined,
         "properties": {
           "timestamp": "double",
           "value": "double",
+        },
+        "source": {
+          "openapi": "hathora/openapi.json",
         },
       },
       "MetricsResponse": "RecordPartialMetricNameMetricValueArray",
@@ -2631,6 +2736,9 @@ exports[`open api parser hathora docs 1`] = `
           "roomId": "RoomId",
           "status": "RoomStatus",
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "PlanName": {
         "enum": [
@@ -2639,6 +2747,9 @@ exports[`open api parser hathora docs 1`] = `
           "medium",
           "large",
         ],
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "Process": {
         "docs": undefined,
@@ -2660,6 +2771,9 @@ exports[`open api parser hathora docs 1`] = `
           "stoppingAt": "optional<datetime>",
           "terminatedAt": "optional<datetime>",
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "ProcessId": "string",
       "ProcessWithRooms": {
@@ -2671,6 +2785,9 @@ exports[`open api parser hathora docs 1`] = `
           "rooms": "list<RoomWithoutAllocations>",
           "totalRooms": "double",
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "RecordPartialMetricNameMetricValueArray": {
         "docs": "Construct a type with a set of properties K of type T",
@@ -2680,10 +2797,16 @@ exports[`open api parser hathora docs 1`] = `
           "rate_egress": "optional<list<MetricValue>>",
           "total_egress": "optional<list<MetricValue>>",
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "RecordStringNever": {
         "docs": "Construct a type with a set of properties K of type T",
         "properties": {},
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "Region": {
         "enum": [
@@ -2698,6 +2821,9 @@ exports[`open api parser hathora docs 1`] = `
           "Sydney",
           "Sao_Paulo",
         ],
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "Room": {
         "docs": undefined,
@@ -2708,6 +2834,9 @@ exports[`open api parser hathora docs 1`] = `
           "roomId": "RoomId",
           "status": "RoomStatus",
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "RoomAllocation": {
         "docs": undefined,
@@ -2716,6 +2845,9 @@ exports[`open api parser hathora docs 1`] = `
           "roomAllocationId": "RoomAllocationId",
           "scheduledAt": "datetime",
           "unscheduledAt": "optional<datetime>",
+        },
+        "source": {
+          "openapi": "hathora/openapi.json",
         },
       },
       "RoomAllocationId": "string",
@@ -2727,12 +2859,18 @@ exports[`open api parser hathora docs 1`] = `
           "suspended",
           "destroyed",
         ],
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "RoomWithoutAllocations": "OmitRoomAllocations",
       "StartingConnectionInfo": {
         "docs": undefined,
         "properties": {
           "roomId": "RoomId",
+        },
+        "source": {
+          "openapi": "hathora/openapi.json",
         },
       },
       "TailLines": {
@@ -2751,6 +2889,9 @@ exports[`open api parser hathora docs 1`] = `
           "udp",
           "tls",
         ],
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
     },
   },
@@ -2993,6 +3134,9 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
     },
     "authV1.yml": {
@@ -3118,6 +3262,9 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "types": {
         "LoginAnonymousResponse": {
@@ -3125,17 +3272,26 @@ exports[`open api parser hathora simple 1`] = `
           "properties": {
             "token": "string",
           },
+          "source": {
+            "openapi": "hathora/openapi.json",
+          },
         },
         "LoginGoogleResponse": {
           "docs": undefined,
           "properties": {
             "token": "string",
           },
+          "source": {
+            "openapi": "hathora/openapi.json",
+          },
         },
         "LoginNicknameResponse": {
           "docs": undefined,
           "properties": {
             "token": "string",
+          },
+          "source": {
+            "openapi": "hathora/openapi.json",
           },
         },
       },
@@ -3338,6 +3494,9 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
     },
     "deploymentV1.yml": {
@@ -3507,6 +3666,9 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
     },
     "discoveryV1.yml": {
@@ -3541,6 +3703,9 @@ exports[`open api parser hathora simple 1`] = `
               "type": "root.DiscoveryResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "hathora/openapi.json",
         },
       },
     },
@@ -3709,6 +3874,9 @@ exports[`open api parser hathora simple 1`] = `
               "type": "list<root.Lobby>",
             },
           },
+        },
+        "source": {
+          "openapi": "hathora/openapi.json",
         },
       },
     },
@@ -4162,6 +4330,9 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "types": {
         "CreateLobbyRequestVisibility": {
@@ -4170,6 +4341,9 @@ exports[`open api parser hathora simple 1`] = `
             "private",
             "local",
           ],
+          "source": {
+            "openapi": "hathora/openapi.json",
+          },
         },
       },
     },
@@ -4257,6 +4431,9 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
     },
     "metricsV1.yml": {
@@ -4334,6 +4511,9 @@ exports[`open api parser hathora simple 1`] = `
               "type": "root.MetricsResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "hathora/openapi.json",
         },
       },
     },
@@ -4503,6 +4683,9 @@ exports[`open api parser hathora simple 1`] = `
               "type": "list<root.Process>",
             },
           },
+        },
+        "source": {
+          "openapi": "hathora/openapi.json",
         },
       },
     },
@@ -4751,6 +4934,9 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
     },
   },
@@ -4796,6 +4982,9 @@ exports[`open api parser hathora simple 1`] = `
           "roomId": "RoomId",
           "transportType": "TransportType",
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "AppConfig": {
         "docs": undefined,
@@ -4811,6 +5000,9 @@ exports[`open api parser hathora simple 1`] = `
           },
           "authConfiguration": "AppConfigAuthConfiguration",
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "AppConfigAuthConfiguration": {
         "docs": undefined,
@@ -4819,11 +5011,17 @@ exports[`open api parser hathora simple 1`] = `
           "google": "optional<AppConfigAuthConfigurationGoogle>",
           "nickname": "optional<RecordStringNever>",
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "AppConfigAuthConfigurationGoogle": {
         "docs": undefined,
         "properties": {
           "clientId": "string",
+        },
+        "source": {
+          "openapi": "hathora/openapi.json",
         },
       },
       "AppId": "string",
@@ -4840,6 +5038,9 @@ exports[`open api parser hathora simple 1`] = `
           "deletedBy": "optional<string>",
           "orgId": "OrgId",
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "ApplicationAuthConfiguration": {
         "docs": undefined,
@@ -4848,11 +5049,17 @@ exports[`open api parser hathora simple 1`] = `
           "google": "optional<ApplicationAuthConfigurationGoogle>",
           "nickname": "optional<RecordStringNever>",
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "ApplicationAuthConfigurationGoogle": {
         "docs": undefined,
         "properties": {
           "clientId": "string",
+        },
+        "source": {
+          "openapi": "hathora/openapi.json",
         },
       },
       "ApplicationWithDeployment": {
@@ -4862,6 +5069,9 @@ exports[`open api parser hathora simple 1`] = `
         ],
         "properties": {
           "deployment": "Deployment",
+        },
+        "source": {
+          "openapi": "hathora/openapi.json",
         },
       },
       "Build": {
@@ -4878,6 +5088,9 @@ exports[`open api parser hathora simple 1`] = `
           "startedAt": "optional<datetime>",
           "status": "BuildStatus",
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "BuildId": "double",
       "BuildRegionalContainerTagsItem": {
@@ -4885,6 +5098,9 @@ exports[`open api parser hathora simple 1`] = `
         "properties": {
           "containerTag": "string",
           "region": "Region",
+        },
+        "source": {
+          "openapi": "hathora/openapi.json",
         },
       },
       "BuildStatus": {
@@ -4894,11 +5110,17 @@ exports[`open api parser hathora simple 1`] = `
           "succeeded",
           "failed",
         ],
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "ConnectionInfo": {
         "base-properties": {},
         "discriminant": "status",
         "docs": undefined,
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
         "union": {
           "active": "ActiveConnectionInfo",
           "starting": "StartingConnectionInfo",
@@ -4917,6 +5139,9 @@ exports[`open api parser hathora simple 1`] = `
           "deploymentId": "DeploymentId",
           "requestedCPU": "double",
           "requestedMemoryMB": "double",
+        },
+        "source": {
+          "openapi": "hathora/openapi.json",
         },
       },
       "DeploymentConfig": {
@@ -4946,6 +5171,9 @@ exports[`open api parser hathora simple 1`] = `
           },
           "transportType": "TransportType",
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "DeploymentConfigEnvItem": {
         "docs": undefined,
@@ -4969,6 +5197,9 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "DeploymentId": "double",
       "DiscoveryResponse": "list<DiscoveryResponseItem>",
@@ -4978,6 +5209,9 @@ exports[`open api parser hathora simple 1`] = `
           "host": "string",
           "port": "double",
           "region": "Region",
+        },
+        "source": {
+          "openapi": "hathora/openapi.json",
         },
       },
       "Lobby": {
@@ -4993,6 +5227,9 @@ exports[`open api parser hathora simple 1`] = `
           "state": "optional<map<string, unknown>>",
           "visibility": "LobbyVisibility",
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "LobbyVisibility": {
         "enum": [
@@ -5000,6 +5237,9 @@ exports[`open api parser hathora simple 1`] = `
           "public",
           "local",
         ],
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "MetricName": {
         "enum": [
@@ -5008,12 +5248,18 @@ exports[`open api parser hathora simple 1`] = `
           "rate_egress",
           "total_egress",
         ],
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "MetricValue": {
         "docs": undefined,
         "properties": {
           "timestamp": "double",
           "value": "double",
+        },
+        "source": {
+          "openapi": "hathora/openapi.json",
         },
       },
       "MetricsResponse": "RecordPartialMetricNameMetricValueArray",
@@ -5030,6 +5276,9 @@ exports[`open api parser hathora simple 1`] = `
           "roomId": "RoomId",
           "status": "RoomStatus",
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "PlanName": {
         "enum": [
@@ -5038,6 +5287,9 @@ exports[`open api parser hathora simple 1`] = `
           "medium",
           "large",
         ],
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "Process": {
         "docs": undefined,
@@ -5059,6 +5311,9 @@ exports[`open api parser hathora simple 1`] = `
           "stoppingAt": "optional<datetime>",
           "terminatedAt": "optional<datetime>",
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "ProcessId": "string",
       "ProcessWithRooms": {
@@ -5070,6 +5325,9 @@ exports[`open api parser hathora simple 1`] = `
           "rooms": "list<RoomWithoutAllocations>",
           "totalRooms": "double",
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "RecordPartialMetricNameMetricValueArray": {
         "docs": "Construct a type with a set of properties K of type T",
@@ -5079,10 +5337,16 @@ exports[`open api parser hathora simple 1`] = `
           "rate_egress": "optional<list<MetricValue>>",
           "total_egress": "optional<list<MetricValue>>",
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "RecordStringNever": {
         "docs": "Construct a type with a set of properties K of type T",
         "properties": {},
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "Region": {
         "enum": [
@@ -5097,6 +5361,9 @@ exports[`open api parser hathora simple 1`] = `
           "Sydney",
           "Sao_Paulo",
         ],
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "Room": {
         "docs": undefined,
@@ -5107,6 +5374,9 @@ exports[`open api parser hathora simple 1`] = `
           "roomId": "RoomId",
           "status": "RoomStatus",
         },
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "RoomAllocation": {
         "docs": undefined,
@@ -5115,6 +5385,9 @@ exports[`open api parser hathora simple 1`] = `
           "roomAllocationId": "RoomAllocationId",
           "scheduledAt": "datetime",
           "unscheduledAt": "optional<datetime>",
+        },
+        "source": {
+          "openapi": "hathora/openapi.json",
         },
       },
       "RoomAllocationId": "string",
@@ -5126,12 +5399,18 @@ exports[`open api parser hathora simple 1`] = `
           "suspended",
           "destroyed",
         ],
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
       "RoomWithoutAllocations": "OmitRoomAllocations",
       "StartingConnectionInfo": {
         "docs": undefined,
         "properties": {
           "roomId": "RoomId",
+        },
+        "source": {
+          "openapi": "hathora/openapi.json",
         },
       },
       "TailLines": {
@@ -5150,6 +5429,9 @@ exports[`open api parser hathora simple 1`] = `
           "udp",
           "tls",
         ],
+        "source": {
+          "openapi": "hathora/openapi.json",
+        },
       },
     },
   },

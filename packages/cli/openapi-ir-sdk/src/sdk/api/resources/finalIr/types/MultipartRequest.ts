@@ -4,7 +4,7 @@
 
 import * as FernOpenapiIr from "../../..";
 
-export interface MultipartRequest extends FernOpenapiIr.WithDescription {
+export interface MultipartRequest extends FernOpenapiIr.WithDescription, FernOpenapiIr.WithSource {
     /** If multipart was a reference, this will be the schema name. */
     name: string | undefined;
     properties: FernOpenapiIr.MultipartRequestProperty[];

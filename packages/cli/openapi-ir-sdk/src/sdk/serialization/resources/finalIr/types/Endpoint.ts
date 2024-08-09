@@ -45,10 +45,14 @@ export const Endpoint: core.serialization.ObjectSchema<serializers.Endpoint.Raw,
             pagination: core.serialization.lazy(async () => (await import("../../..")).Pagination).optional(),
         })
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
-        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAvailability));
+        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAvailability))
+        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSource));
 
 export declare namespace Endpoint {
-    interface Raw extends serializers.WithDescription.Raw, serializers.WithAvailability.Raw {
+    interface Raw
+        extends serializers.WithDescription.Raw,
+            serializers.WithAvailability.Raw,
+            serializers.WithSource.Raw {
         authed: boolean;
         internal?: boolean | null;
         idempotent?: boolean | null;

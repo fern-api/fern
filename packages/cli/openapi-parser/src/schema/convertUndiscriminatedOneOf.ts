@@ -3,7 +3,8 @@ import {
     LiteralSchemaValue,
     OneOfSchemaWithExample,
     SchemaWithExample,
-    SdkGroupName
+    SdkGroupName,
+    Source
 } from "@fern-api/openapi-ir-sdk";
 import { difference } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
@@ -36,6 +37,7 @@ export function convertUndiscriminatedOneOf({
     context,
     subtypes,
     groupName,
+    source,
     subtypePrefixOverrides
 }: {
     nameOverride: string | undefined;
@@ -47,6 +49,7 @@ export function convertUndiscriminatedOneOf({
     context: SchemaParserContext;
     subtypes: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[];
     groupName: SdkGroupName | undefined;
+    source: Source;
     subtypePrefixOverrides?: UndiscriminatedOneOfPrefix[];
 }): SchemaWithExample {
     const derivedSubtypePrefixes = getUniqueSubTypeNames({ schemas: subtypes });
@@ -71,7 +74,7 @@ export function convertUndiscriminatedOneOf({
                 subtypePrefix = override.name;
             }
         }
-        return [convertSchema(schema, false, context, [...breadcrumbs, subtypePrefix ?? `${index}`])];
+        return [convertSchema(schema, false, context, [...breadcrumbs, subtypePrefix ?? `${index}`], source)];
     });
 
     const uniqueSubtypes: SchemaWithExample[] = [];
@@ -117,7 +120,8 @@ export function convertUndiscriminatedOneOf({
             enumValues,
             _default: undefined,
             groupName,
-            context
+            context,
+            source
         });
     }
 
@@ -132,7 +136,8 @@ export function convertUndiscriminatedOneOf({
         description,
         availability,
         subtypes: uniqueSubtypes,
-        groupName
+        groupName,
+        source
     });
 }
 
@@ -144,7 +149,8 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
     wrapAsNullable,
     context,
     groupName,
-    discriminator
+    discriminator,
+    source
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -154,12 +160,13 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
     context: SchemaParserContext;
     groupName: SdkGroupName | undefined;
     discriminator: OpenAPIV3.DiscriminatorObject;
+    source: Source;
 }): SchemaWithExample {
     const convertedSubtypes = Object.entries(discriminator.mapping ?? {}).map(([discriminantValue, schema], index) => {
         const subtypeReferenceSchema = {
             $ref: schema
         };
-        const subtypeReference = convertReferenceObject(subtypeReferenceSchema, false, context, [schema]);
+        const subtypeReference = convertReferenceObject(subtypeReferenceSchema, false, context, [schema], source);
         context.markSchemaWithDiscriminantValue(subtypeReferenceSchema, discriminator.propertyName, discriminantValue);
 
         // If the reference is an object (which I think it has to be?), add the discriminant value as a property
@@ -225,7 +232,8 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
             enumValues,
             _default: undefined,
             groupName,
-            context
+            context,
+            source
         });
     }
 
@@ -240,7 +248,8 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
         description,
         availability,
         subtypes: uniqueSubtypes,
-        groupName
+        groupName,
+        source
     });
 }
 
@@ -310,7 +319,8 @@ export function wrapUndiscriminantedOneOf({
     description,
     availability,
     subtypes,
-    groupName
+    groupName,
+    source
 }: {
     wrapAsNullable: boolean;
     nameOverride: string | undefined;
@@ -319,6 +329,7 @@ export function wrapUndiscriminantedOneOf({
     availability: Availability | undefined;
     subtypes: SchemaWithExample[];
     groupName: SdkGroupName | undefined;
+    source: Source;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
@@ -331,7 +342,8 @@ export function wrapUndiscriminantedOneOf({
                     nameOverride,
                     generatedName,
                     schemas: subtypes,
-                    groupName
+                    groupName,
+                    source
                 })
             ),
             description,
@@ -346,7 +358,8 @@ export function wrapUndiscriminantedOneOf({
             nameOverride,
             generatedName,
             schemas: subtypes,
-            groupName
+            groupName,
+            source
         })
     );
 }

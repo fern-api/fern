@@ -90,6 +90,8 @@ jobs:
         run: yarn install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
 
       - uses: actions/setup-go@v5
         with:
@@ -124,6 +126,8 @@ jobs:
         run: yarn install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
 
       - uses: actions/setup-go@v5
         with:
@@ -158,6 +162,8 @@ jobs:
         run: yarn install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
 
       - uses: actions/setup-go@v5
         with:
@@ -199,6 +205,8 @@ jobs:
         run: yarn install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
 
       - uses: actions/setup-go@v5
         with:
@@ -240,6 +248,8 @@ jobs:
         run: yarn install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
 
       - uses: actions/setup-go@v5
         with:
@@ -281,6 +291,8 @@ jobs:
         run: yarn install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
 
       - uses: actions/setup-go@v5
         with:
@@ -315,6 +327,8 @@ jobs:
         run: yarn install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
 
       - uses: actions/setup-go@v5
         with:
@@ -349,6 +363,8 @@ jobs:
         run: yarn install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
 
       - uses: actions/setup-go@v5
         with:
@@ -383,6 +399,8 @@ jobs:
         run: yarn install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
 
       - uses: actions/setup-go@v5
         with:
@@ -417,6 +435,8 @@ jobs:
         run: yarn install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
 
       - uses: actions/setup-go@v5
         with:
@@ -451,6 +471,8 @@ jobs:
         run: yarn install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
 
       - uses: actions/setup-go@v5
         with:
@@ -485,6 +507,8 @@ jobs:
         run: yarn install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
 
       - uses: actions/setup-go@v5
         with:
@@ -519,6 +543,8 @@ jobs:
         run: yarn install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
 
       - uses: actions/setup-go@v5
         with:
@@ -553,6 +579,8 @@ jobs:
         run: yarn install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
 
       - uses: actions/setup-go@v5
         with:
@@ -587,6 +615,8 @@ jobs:
         run: yarn install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
 
       - uses: actions/setup-go@v5
         with:
@@ -621,6 +651,8 @@ jobs:
         run: yarn install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
 
       - uses: actions/setup-go@v5
         with:
@@ -655,6 +687,8 @@ jobs:
         run: yarn install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
 
       - uses: actions/setup-go@v5
         with:

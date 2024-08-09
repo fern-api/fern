@@ -12,10 +12,11 @@ export const JsonResponse: core.serialization.ObjectSchema<serializers.JsonRespo
             schema: core.serialization.lazy(async () => (await import("../../..")).Schema),
             responseProperty: core.serialization.string().optional(),
         })
-        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
+        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
+        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSource));
 
 export declare namespace JsonResponse {
-    interface Raw extends serializers.WithDescription.Raw {
+    interface Raw extends serializers.WithDescription.Raw, serializers.WithSource.Raw {
         schema: serializers.Schema.Raw;
         responseProperty?: string | null;
     }

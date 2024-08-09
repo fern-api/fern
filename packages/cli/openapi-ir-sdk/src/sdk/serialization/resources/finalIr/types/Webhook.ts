@@ -23,10 +23,11 @@ export const Webhook: core.serialization.ObjectSchema<serializers.Webhook.Raw, F
                 core.serialization.lazyObject(async () => (await import("../../..")).WebhookExampleCall)
             ),
         })
-        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
+        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
+        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSource));
 
 export declare namespace Webhook {
-    interface Raw extends serializers.WithDescription.Raw {
+    interface Raw extends serializers.WithDescription.Raw, serializers.WithSource.Raw {
         sdkName?: serializers.EndpointSdkName.Raw | null;
         method: serializers.WebhookHttpMethod.Raw;
         summary?: string | null;

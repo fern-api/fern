@@ -37,6 +37,9 @@ exports[`open api parser assembly docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
     },
     "lemur.yml": {
@@ -300,6 +303,9 @@ The LLM response data, as well as any context provided in the original request w
             },
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
     },
     "realtime.yml": {
@@ -434,11 +440,15 @@ The parameter should map to a JSON encoded list of strings.
             },
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "types": {
         "receiveMessage": {
           "discriminated": false,
           "docs": "Receive messages from the WebSocket",
+          "source": undefined,
           "union": [
             "root.SessionBegins",
             "root.PartialTranscript",
@@ -450,6 +460,7 @@ The parameter should map to a JSON encoded list of strings.
         "sendMessage": {
           "discriminated": false,
           "docs": "Send messages to the WebSocket",
+          "source": undefined,
           "union": [
             "root.AudioData",
             "root.TerminateSession",
@@ -1408,6 +1419,9 @@ The parameter should map to a JSON encoded list of strings.
             },
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "types": {
         "TranscriptListRequestStatus": {
@@ -1430,6 +1444,9 @@ The parameter should map to a JSON encoded list of strings.
               "value": "error",
             },
           ],
+          "source": {
+            "openapi": "assembly/openapi.yml",
+          },
         },
       },
     },
@@ -2006,6 +2023,9 @@ The parameter should map to a JSON encoded list of strings.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "AudioIntelligenceModelStatus": {
         "docs": "Will be either success, or unavailable in the rare case that the model failed.",
@@ -2013,6 +2033,9 @@ The parameter should map to a JSON encoded list of strings.
           "success",
           "unavailable",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "AutoHighlightResult": {
         "docs": undefined,
@@ -2034,6 +2057,9 @@ The parameter should map to a JSON encoded list of strings.
             "type": "list<Timestamp>",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "AutoHighlightsResult": {
         "docs": "An array of results for the Key Phrases model, if it was enabled during the transcription request.
@@ -2044,6 +2070,9 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
             "docs": "A temporally-sequential array of Key Phrases",
             "type": "list<AutoHighlightResult>",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "Chapter": {
@@ -2069,6 +2098,9 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
             "docs": "A one paragraph summary of the content spoken during the chapter",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "ContentSafetyLabel": {
@@ -2100,6 +2132,9 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
               "multipleOf": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "ContentSafetyLabelResult": {
@@ -2133,6 +2168,9 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
             "docs": "Timestamp information for the section",
             "type": "Timestamp",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "CreateTranscriptOptionalParameters": {
@@ -2280,6 +2318,9 @@ Valid values are in the range [0, 1] inclusive.
             "type": "optional<list<string>>",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "Entity": {
         "docs": "A detected entity",
@@ -2300,6 +2341,9 @@ Valid values are in the range [0, 1] inclusive.
             "docs": "The text for the detected entity",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "EntityType": {
@@ -2425,6 +2469,9 @@ Valid values are in the range [0, 1] inclusive.
             "value": "us_social_security_number",
           },
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "Error": {
         "docs": undefined,
@@ -2434,6 +2481,9 @@ Valid values are in the range [0, 1] inclusive.
             "type": "string",
           },
           "status": "optional<literal<"error">>",
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "FinalTranscript": {
@@ -2455,6 +2505,9 @@ Valid values are in the range [0, 1] inclusive.
             "type": "boolean",
           },
         },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "LemurActionItemsParameters": "LemurBaseParameters",
       "LemurActionItemsResponse": {
@@ -2467,6 +2520,9 @@ Valid values are in the range [0, 1] inclusive.
             "docs": "The response generated by LeMUR.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "LemurBaseParameters": {
@@ -2493,10 +2549,14 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "list<string>",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "LemurBaseParametersContext": {
         "discriminated": false,
         "docs": "Context to provide the model. This can be a string or a free-form JSON value.",
+        "source": undefined,
         "union": [
           "string",
           "map<string, unknown>",
@@ -2510,6 +2570,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "LemurModel": {
         "docs": "The model that is used for the final prompt after compression is performed (options: "basic" and "default").
@@ -2518,6 +2581,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "default",
           "basic",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "LemurQuestion": {
         "docs": undefined,
@@ -2541,6 +2607,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "LemurQuestionAnswer": {
         "docs": "An answer generated by LeMUR and its question.",
@@ -2554,6 +2623,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "LemurQuestionAnswerResponse": {
         "docs": undefined,
@@ -2566,10 +2638,14 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "list<LemurQuestionAnswer>",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "LemurQuestionContext": {
         "discriminated": false,
         "docs": "Any context about the transcripts you wish to provide. This can be a string, or free-form JSON.",
+        "source": undefined,
         "union": [
           "string",
           "map<string, unknown>",
@@ -2586,6 +2662,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "LemurTaskResponse": {
         "docs": undefined,
@@ -2598,6 +2677,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "MessageType": {
         "enum": [
@@ -2606,6 +2688,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "FinalTranscript",
           "SessionTerminated",
         ],
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "PageDetails": {
         "docs": undefined,
@@ -2615,6 +2700,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "next_url": "optional<string>",
           "prev_url": "string",
           "result_count": "integer",
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "ParagraphsResponse": {
@@ -2634,6 +2722,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "id": "string",
           "paragraphs": "list<TranscriptParagraph>",
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "PartialTranscript": {
         "docs": undefined,
@@ -2645,6 +2736,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "docs": "Describes the type of message.",
             "type": "literal<"PartialTranscript">",
           },
+        },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
         },
       },
       "PiiPolicy": {
@@ -2677,6 +2771,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "drivers_license",
           "banking_information",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "PurgeLemurRequestDataResponse": {
         "docs": undefined,
@@ -2694,6 +2791,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "RealtimeBaseMessage": {
         "docs": undefined,
@@ -2702,6 +2802,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "docs": "Describes the type of the message.",
             "type": "MessageType",
           },
+        },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
         },
       },
       "RealtimeBaseTranscript": {
@@ -2739,16 +2842,23 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "list<Word>",
           },
         },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "RealtimeError": {
         "docs": undefined,
         "properties": {
           "error": "string",
         },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "RealtimeMessage": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "SessionBegins",
           "PartialTranscript",
@@ -2765,10 +2875,14 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "RealtimeTranscript": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "PartialTranscript",
           "FinalTranscript",
@@ -2779,6 +2893,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "PartialTranscript",
           "FinalTranscript",
         ],
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "RedactedAudioResponse": {
         "docs": undefined,
@@ -2791,6 +2908,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "docs": "The status of the redacted audio",
             "type": "RedactedAudioStatus",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "RedactedAudioStatus": {
@@ -2814,6 +2934,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "id": "string",
           "sentences": "list<TranscriptSentence>",
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "Sentiment": {
         "enum": [
@@ -2821,6 +2944,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "NEUTRAL",
           "NEGATIVE",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "SentimentAnalysisResult": {
         "docs": "The result of the sentiment analysis model.",
@@ -2857,6 +2983,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "SessionBegins": {
         "docs": undefined,
@@ -2874,6 +3003,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "SessionTerminated": {
         "docs": undefined,
@@ -2882,6 +3014,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "docs": "Describes the type of the message.",
             "type": "literal<"SessionTerminated">",
           },
+        },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
         },
       },
       "SeverityScoreSummary": {
@@ -2918,6 +3053,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             },
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "SubstitutionPolicy": {
         "docs": "The replacement logic for detected PII, can be "entity_type" or "hash". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
@@ -2925,6 +3063,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "entity_type",
           "hash",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "SubtitleFormat": {
         "docs": "Format of the subtitles",
@@ -2932,6 +3073,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "srt",
           "vtt",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "SummaryModel": {
         "default": "informative",
@@ -2941,6 +3085,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conversational",
           "catchy",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "SummaryType": {
         "default": "bullets",
@@ -2952,6 +3099,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "headline",
           "paragraph",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TerminateSession": {
         "docs": undefined,
@@ -2963,6 +3113,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "docs": "A boolean value to communicate that you wish to end your real-time session forever.",
             "type": "boolean",
           },
+        },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
         },
       },
       "Timestamp": {
@@ -2977,6 +3130,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TopicDetectionResult": {
         "docs": "THe result of the topic detection model.",
@@ -2987,6 +3143,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
           "timestamp": "optional<Timestamp>",
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "TopicDetectionResultLabelsItem": {
@@ -3007,6 +3166,9 @@ Can be any value between 0.0 and 1.0 inclusive.
               "multipleOf": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "Transcript": {
@@ -3270,6 +3432,9 @@ See [Speech recognition](https://www.assemblyai.com/docs/Models/speech_recogniti
             "type": "optional<list<TranscriptWord>>",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TranscriptBoostParam": {
         "docs": "The word boost parameter value, if provided in the transcription request.",
@@ -3278,6 +3443,9 @@ See [Speech recognition](https://www.assemblyai.com/docs/Models/speech_recogniti
           "default",
           "high",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TranscriptContentSafetyLabels": {
         "docs": "An array of results for the Content Moderation model, if it was enabled during the transcription request.
@@ -3289,6 +3457,9 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
             "docs": "Will be either success, or unavailable in the rare case that the Content Safety Labels model failed.",
             "type": "AudioIntelligenceModelStatus",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "TranscriptCustomSpelling": {
@@ -3302,6 +3473,9 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
             "docs": "Word or phrase to replace with",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "TranscriptIabCategoriesResult": {
@@ -3321,6 +3495,9 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
             "docs": "The overall relevance of topic to the entire audio file",
             "type": "map<string, double>",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "TranscriptLanguageCode": {
@@ -3350,12 +3527,18 @@ The default value is 'en_us'.
           "uk",
           "vi",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TranscriptList": {
         "docs": undefined,
         "properties": {
           "page_details": "PageDetails",
           "transcripts": "list<TranscriptListItem>",
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "TranscriptListItem": {
@@ -3367,6 +3550,9 @@ The default value is 'en_us'.
           "id": "string",
           "resource_url": "string",
           "status": "TranscriptStatus",
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "TranscriptListParameters": {
@@ -3404,6 +3590,9 @@ The default value is 'en_us'.
             "type": "optional<boolean>",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TranscriptParagraph": {
         "docs": undefined,
@@ -3423,6 +3612,9 @@ The default value is 'en_us'.
           "text": "string",
           "words": "list<TranscriptWord>",
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TranscriptSentence": {
         "docs": undefined,
@@ -3441,6 +3633,9 @@ The default value is 'en_us'.
           "start": "integer",
           "text": "string",
           "words": "list<TranscriptWord>",
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "TranscriptStatus": {
@@ -3463,6 +3658,9 @@ The default value is 'en_us'.
             "value": "error",
           },
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TranscriptUtterance": {
         "docs": undefined,
@@ -3483,6 +3681,9 @@ The default value is 'en_us'.
           "text": "string",
           "words": "list<TranscriptWord>",
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TranscriptWord": {
         "docs": undefined,
@@ -3502,6 +3703,9 @@ The default value is 'en_us'.
           "start": "integer",
           "text": "string",
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "UploadedFile": {
         "docs": undefined,
@@ -3510,6 +3714,9 @@ The default value is 'en_us'.
             "docs": "A URL that points to your audio file, accessible only by AssemblyAI's servers",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "Word": {
@@ -3539,6 +3746,9 @@ The default value is 'en_us'.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "WordSearchMatch": {
         "docs": undefined,
@@ -3560,6 +3770,9 @@ The default value is 'en_us'.
             "type": "list<WordSearchTimestamp>",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "WordSearchResponse": {
         "docs": undefined,
@@ -3576,6 +3789,9 @@ The default value is 'en_us'.
             "docs": "The total count of all matched instances. For e.g., word 1 matched 2 times, and word 2 matched 3 times, \`total_count\` will equal 5.",
             "type": "integer",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "WordSearchTimestamp": {
@@ -3642,6 +3858,9 @@ exports[`open api parser assembly simple 1`] = `
               "type": "root.UploadedFile",
             },
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
     },
@@ -3906,6 +4125,9 @@ The LLM response data, as well as any context provided in the original request w
             },
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
     },
     "realtime.yml": {
@@ -4040,11 +4262,15 @@ The parameter should map to a JSON encoded list of strings.
             },
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "types": {
         "receiveMessage": {
           "discriminated": false,
           "docs": "Receive messages from the WebSocket",
+          "source": undefined,
           "union": [
             "root.SessionBegins",
             "root.PartialTranscript",
@@ -4056,6 +4282,7 @@ The parameter should map to a JSON encoded list of strings.
         "sendMessage": {
           "discriminated": false,
           "docs": "Send messages to the WebSocket",
+          "source": undefined,
           "union": [
             "root.AudioData",
             "root.TerminateSession",
@@ -5014,6 +5241,9 @@ The parameter should map to a JSON encoded list of strings.
             },
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "types": {
         "TranscriptListRequestStatus": {
@@ -5036,6 +5266,9 @@ The parameter should map to a JSON encoded list of strings.
               "value": "error",
             },
           ],
+          "source": {
+            "openapi": "assembly/openapi.yml",
+          },
         },
       },
     },
@@ -5087,6 +5320,9 @@ The parameter should map to a JSON encoded list of strings.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "AudioIntelligenceModelStatus": {
         "docs": "Will be either success, or unavailable in the rare case that the model failed.",
@@ -5094,6 +5330,9 @@ The parameter should map to a JSON encoded list of strings.
           "success",
           "unavailable",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "AutoHighlightResult": {
         "docs": undefined,
@@ -5115,6 +5354,9 @@ The parameter should map to a JSON encoded list of strings.
             "type": "list<Timestamp>",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "AutoHighlightsResult": {
         "docs": "An array of results for the Key Phrases model, if it was enabled during the transcription request.
@@ -5125,6 +5367,9 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
             "docs": "A temporally-sequential array of Key Phrases",
             "type": "list<AutoHighlightResult>",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "Chapter": {
@@ -5150,6 +5395,9 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
             "docs": "A one paragraph summary of the content spoken during the chapter",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "ContentSafetyLabel": {
@@ -5181,6 +5429,9 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
               "multipleOf": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "ContentSafetyLabelResult": {
@@ -5214,6 +5465,9 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
             "docs": "Timestamp information for the section",
             "type": "Timestamp",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "CreateTranscriptOptionalParameters": {
@@ -5361,6 +5615,9 @@ Valid values are in the range [0, 1] inclusive.
             "type": "optional<list<string>>",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "Entity": {
         "docs": "A detected entity",
@@ -5381,6 +5638,9 @@ Valid values are in the range [0, 1] inclusive.
             "docs": "The text for the detected entity",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "EntityType": {
@@ -5506,6 +5766,9 @@ Valid values are in the range [0, 1] inclusive.
             "value": "us_social_security_number",
           },
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "Error": {
         "docs": undefined,
@@ -5515,6 +5778,9 @@ Valid values are in the range [0, 1] inclusive.
             "type": "string",
           },
           "status": "optional<literal<"error">>",
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "FinalTranscript": {
@@ -5536,6 +5802,9 @@ Valid values are in the range [0, 1] inclusive.
             "type": "boolean",
           },
         },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "LemurActionItemsParameters": "LemurBaseParameters",
       "LemurActionItemsResponse": {
@@ -5548,6 +5817,9 @@ Valid values are in the range [0, 1] inclusive.
             "docs": "The response generated by LeMUR.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "LemurBaseParameters": {
@@ -5574,10 +5846,14 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "list<string>",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "LemurBaseParametersContext": {
         "discriminated": false,
         "docs": "Context to provide the model. This can be a string or a free-form JSON value.",
+        "source": undefined,
         "union": [
           "string",
           "map<string, unknown>",
@@ -5591,6 +5867,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "LemurModel": {
         "docs": "The model that is used for the final prompt after compression is performed (options: "basic" and "default").
@@ -5599,6 +5878,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "default",
           "basic",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "LemurQuestion": {
         "docs": undefined,
@@ -5622,6 +5904,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "LemurQuestionAnswer": {
         "docs": "An answer generated by LeMUR and its question.",
@@ -5635,6 +5920,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "LemurQuestionAnswerResponse": {
         "docs": undefined,
@@ -5647,10 +5935,14 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "list<LemurQuestionAnswer>",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "LemurQuestionContext": {
         "discriminated": false,
         "docs": "Any context about the transcripts you wish to provide. This can be a string, or free-form JSON.",
+        "source": undefined,
         "union": [
           "string",
           "map<string, unknown>",
@@ -5667,6 +5959,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "LemurTaskResponse": {
         "docs": undefined,
@@ -5679,6 +5974,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "MessageType": {
         "enum": [
@@ -5687,6 +5985,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "FinalTranscript",
           "SessionTerminated",
         ],
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "PageDetails": {
         "docs": undefined,
@@ -5696,6 +5997,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "next_url": "optional<string>",
           "prev_url": "string",
           "result_count": "integer",
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "ParagraphsResponse": {
@@ -5715,6 +6019,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "id": "string",
           "paragraphs": "list<TranscriptParagraph>",
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "PartialTranscript": {
         "docs": undefined,
@@ -5726,6 +6033,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "docs": "Describes the type of message.",
             "type": "literal<"PartialTranscript">",
           },
+        },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
         },
       },
       "PiiPolicy": {
@@ -5758,6 +6068,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "drivers_license",
           "banking_information",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "PurgeLemurRequestDataResponse": {
         "docs": undefined,
@@ -5775,6 +6088,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "RealtimeBaseMessage": {
         "docs": undefined,
@@ -5783,6 +6099,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "docs": "Describes the type of the message.",
             "type": "MessageType",
           },
+        },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
         },
       },
       "RealtimeBaseTranscript": {
@@ -5820,16 +6139,23 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "list<Word>",
           },
         },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "RealtimeError": {
         "docs": undefined,
         "properties": {
           "error": "string",
         },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "RealtimeMessage": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "SessionBegins",
           "PartialTranscript",
@@ -5846,10 +6172,14 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "RealtimeTranscript": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "PartialTranscript",
           "FinalTranscript",
@@ -5860,6 +6190,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "PartialTranscript",
           "FinalTranscript",
         ],
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "RedactedAudioResponse": {
         "docs": undefined,
@@ -5872,6 +6205,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "docs": "The status of the redacted audio",
             "type": "RedactedAudioStatus",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "RedactedAudioStatus": {
@@ -5895,6 +6231,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "id": "string",
           "sentences": "list<TranscriptSentence>",
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "Sentiment": {
         "enum": [
@@ -5902,6 +6241,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "NEUTRAL",
           "NEGATIVE",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "SentimentAnalysisResult": {
         "docs": "The result of the sentiment analysis model.",
@@ -5938,6 +6280,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "SessionBegins": {
         "docs": undefined,
@@ -5955,6 +6300,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "SessionTerminated": {
         "docs": undefined,
@@ -5963,6 +6311,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "docs": "Describes the type of the message.",
             "type": "literal<"SessionTerminated">",
           },
+        },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
         },
       },
       "SeverityScoreSummary": {
@@ -5999,6 +6350,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             },
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "SubstitutionPolicy": {
         "docs": "The replacement logic for detected PII, can be "entity_type" or "hash". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
@@ -6006,6 +6360,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "entity_type",
           "hash",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "SubtitleFormat": {
         "docs": "Format of the subtitles",
@@ -6013,6 +6370,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "srt",
           "vtt",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "SummaryModel": {
         "default": "informative",
@@ -6022,6 +6382,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conversational",
           "catchy",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "SummaryType": {
         "default": "bullets",
@@ -6033,6 +6396,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "headline",
           "paragraph",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TerminateSession": {
         "docs": undefined,
@@ -6044,6 +6410,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "docs": "A boolean value to communicate that you wish to end your real-time session forever.",
             "type": "boolean",
           },
+        },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
         },
       },
       "Timestamp": {
@@ -6058,6 +6427,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TopicDetectionResult": {
         "docs": "THe result of the topic detection model.",
@@ -6068,6 +6440,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
           "timestamp": "optional<Timestamp>",
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "TopicDetectionResultLabelsItem": {
@@ -6088,6 +6463,9 @@ Can be any value between 0.0 and 1.0 inclusive.
               "multipleOf": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "Transcript": {
@@ -6351,6 +6729,9 @@ See [Speech recognition](https://www.assemblyai.com/docs/Models/speech_recogniti
             "type": "optional<list<TranscriptWord>>",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TranscriptBoostParam": {
         "docs": "The word boost parameter value, if provided in the transcription request.",
@@ -6359,6 +6740,9 @@ See [Speech recognition](https://www.assemblyai.com/docs/Models/speech_recogniti
           "default",
           "high",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TranscriptContentSafetyLabels": {
         "docs": "An array of results for the Content Moderation model, if it was enabled during the transcription request.
@@ -6370,6 +6754,9 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
             "docs": "Will be either success, or unavailable in the rare case that the Content Safety Labels model failed.",
             "type": "AudioIntelligenceModelStatus",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "TranscriptCustomSpelling": {
@@ -6383,6 +6770,9 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
             "docs": "Word or phrase to replace with",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "TranscriptIabCategoriesResult": {
@@ -6402,6 +6792,9 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
             "docs": "The overall relevance of topic to the entire audio file",
             "type": "map<string, double>",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "TranscriptLanguageCode": {
@@ -6431,12 +6824,18 @@ The default value is 'en_us'.
           "uk",
           "vi",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TranscriptList": {
         "docs": undefined,
         "properties": {
           "page_details": "PageDetails",
           "transcripts": "list<TranscriptListItem>",
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "TranscriptListItem": {
@@ -6448,6 +6847,9 @@ The default value is 'en_us'.
           "id": "string",
           "resource_url": "string",
           "status": "TranscriptStatus",
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "TranscriptListParameters": {
@@ -6485,6 +6887,9 @@ The default value is 'en_us'.
             "type": "optional<boolean>",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TranscriptParagraph": {
         "docs": undefined,
@@ -6504,6 +6909,9 @@ The default value is 'en_us'.
           "text": "string",
           "words": "list<TranscriptWord>",
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TranscriptSentence": {
         "docs": undefined,
@@ -6522,6 +6930,9 @@ The default value is 'en_us'.
           "start": "integer",
           "text": "string",
           "words": "list<TranscriptWord>",
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "TranscriptStatus": {
@@ -6544,6 +6955,9 @@ The default value is 'en_us'.
             "value": "error",
           },
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TranscriptUtterance": {
         "docs": undefined,
@@ -6564,6 +6978,9 @@ The default value is 'en_us'.
           "text": "string",
           "words": "list<TranscriptWord>",
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TranscriptWord": {
         "docs": undefined,
@@ -6583,6 +7000,9 @@ The default value is 'en_us'.
           "start": "integer",
           "text": "string",
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "UploadedFile": {
         "docs": undefined,
@@ -6591,6 +7011,9 @@ The default value is 'en_us'.
             "docs": "A URL that points to your audio file, accessible only by AssemblyAI's servers",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "Word": {
@@ -6620,6 +7043,9 @@ The default value is 'en_us'.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "WordSearchMatch": {
         "docs": undefined,
@@ -6641,6 +7067,9 @@ The default value is 'en_us'.
             "type": "list<WordSearchTimestamp>",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "WordSearchResponse": {
         "docs": undefined,
@@ -6657,6 +7086,9 @@ The default value is 'en_us'.
             "docs": "The total count of all matched instances. For e.g., word 1 matched 2 times, and word 2 matched 3 times, \`total_count\` will equal 5.",
             "type": "integer",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "WordSearchTimestamp": {

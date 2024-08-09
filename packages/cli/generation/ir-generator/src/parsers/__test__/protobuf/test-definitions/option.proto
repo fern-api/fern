@@ -1,0 +1,5 @@
+syntax = "proto3";
+
+
+// Includes an arbitrary amount of whitespace.
+option   csharp_namespace = "User.V1";

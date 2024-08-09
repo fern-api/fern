@@ -15,10 +15,11 @@ export const HttpError: core.serialization.ObjectSchema<serializers.HttpError.Ra
                 .optional(),
         })
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
-        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithName));
+        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithName))
+        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSource));
 
 export declare namespace HttpError {
-    interface Raw extends serializers.WithDescription.Raw, serializers.WithName.Raw {
+    interface Raw extends serializers.WithDescription.Raw, serializers.WithName.Raw, serializers.WithSource.Raw {
         schema?: serializers.Schema.Raw | null;
         examples?: serializers.ErrorExample.Raw[] | null;
     }

@@ -44,6 +44,9 @@ exports[`anyOf anyOf docs 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "anyOf/openapi.yml",
+      },
     },
     "types": {
       "Response": {
@@ -55,6 +58,9 @@ exports[`anyOf anyOf docs 1`] = `
 ",
             "type": "optional<double>",
           },
+        },
+        "source": {
+          "openapi": "anyOf/openapi.yml",
         },
       },
     },
@@ -113,6 +119,9 @@ exports[`anyOf anyOf simple 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "anyOf/openapi.yml",
+      },
     },
     "types": {
       "Response": {
@@ -124,6 +133,9 @@ exports[`anyOf anyOf simple 1`] = `
 ",
             "type": "optional<double>",
           },
+        },
+        "source": {
+          "openapi": "anyOf/openapi.yml",
         },
       },
     },

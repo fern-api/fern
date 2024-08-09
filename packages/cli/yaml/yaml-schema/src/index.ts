@@ -35,6 +35,7 @@ export * as RawSchemas from "./schemas";
 export * from "./schemas/file-schemas";
 export { getRequestBody } from "./utils/getRequestBody";
 export { isInlineRequestBody } from "./utils/isInlineRequestBody";
+export { isRawProtobufSourceSchema } from "./utils/isRawProtobufSourceSchema";
 export { isRawTextType } from "./utils/isRawTextType";
 export { parseBytesRequest, type BytesRequest } from "./utils/parseBytesRequest";
 export { parseFileUploadRequest, type RawFileUploadRequest } from "./utils/parseFileUploadRequest";

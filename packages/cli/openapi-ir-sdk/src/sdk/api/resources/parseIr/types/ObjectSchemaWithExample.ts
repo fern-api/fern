@@ -8,7 +8,8 @@ export interface ObjectSchemaWithExample
     extends FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithName,
         FernOpenapiIr.WithSdkGroupName,
-        FernOpenapiIr.WithAvailability {
+        FernOpenapiIr.WithAvailability,
+        FernOpenapiIr.WithSource {
     allOf: FernOpenapiIr.ReferencedSchema[];
     properties: FernOpenapiIr.ObjectPropertyWithExample[];
     allOfPropertyConflicts: FernOpenapiIr.AllOfPropertyConflict[];

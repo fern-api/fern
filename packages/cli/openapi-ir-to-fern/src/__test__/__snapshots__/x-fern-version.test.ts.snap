@@ -41,6 +41,9 @@ exports[`x-fern-version x-fern-version docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "x-fern-version/openapi.yml",
+        },
       },
     },
   },
@@ -51,11 +54,17 @@ exports[`x-fern-version x-fern-version docs 1`] = `
         "properties": {
           "text": "optional<string>",
         },
+        "source": {
+          "openapi": "x-fern-version/openapi.yml",
+        },
       },
       "CompletionChunk": {
         "docs": undefined,
         "properties": {
           "text": "optional<string>",
+        },
+        "source": {
+          "openapi": "x-fern-version/openapi.yml",
         },
       },
     },
@@ -133,6 +142,9 @@ exports[`x-fern-version x-fern-version simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "x-fern-version/openapi.yml",
+        },
       },
     },
   },
@@ -143,11 +155,17 @@ exports[`x-fern-version x-fern-version simple 1`] = `
         "properties": {
           "text": "optional<string>",
         },
+        "source": {
+          "openapi": "x-fern-version/openapi.yml",
+        },
       },
       "CompletionChunk": {
         "docs": undefined,
         "properties": {
           "text": "optional<string>",
+        },
+        "source": {
+          "openapi": "x-fern-version/openapi.yml",
         },
       },
     },

@@ -17,14 +17,16 @@ export const EnumSchema: core.serialization.ObjectSchema<serializers.EnumSchema.
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithName))
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSdkGroupName))
-        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAvailability));
+        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAvailability))
+        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSource));
 
 export declare namespace EnumSchema {
     interface Raw
         extends serializers.WithDescription.Raw,
             serializers.WithName.Raw,
             serializers.WithSdkGroupName.Raw,
-            serializers.WithAvailability.Raw {
+            serializers.WithAvailability.Raw,
+            serializers.WithSource.Raw {
         default?: serializers.EnumValue.Raw | null;
         values: serializers.EnumValue.Raw[];
     }

@@ -38,6 +38,9 @@ exports[`x-fern-base-path x-fern-base-path docs 2`] = `
           "path": "/v1/example",
         },
       },
+      "source": {
+        "openapi": "x-fern-base-path/swagger.yml",
+      },
     },
   },
   "rootApiFile": {
@@ -91,6 +94,9 @@ exports[`x-fern-base-path x-fern-base-path simple 2`] = `
           "pagination": undefined,
           "path": "/v1/example",
         },
+      },
+      "source": {
+        "openapi": "x-fern-base-path/swagger.yml",
       },
     },
   },

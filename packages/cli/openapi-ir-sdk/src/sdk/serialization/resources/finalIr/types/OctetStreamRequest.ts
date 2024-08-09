@@ -11,8 +11,9 @@ export const OctetStreamRequest: core.serialization.ObjectSchema<
     FernOpenapiIr.OctetStreamRequest
 > = core.serialization
     .objectWithoutOptionalProperties({})
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSource));
 
 export declare namespace OctetStreamRequest {
-    interface Raw extends serializers.WithDescription.Raw {}
+    interface Raw extends serializers.WithDescription.Raw, serializers.WithSource.Raw {}
 }

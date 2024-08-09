@@ -56,6 +56,10 @@ exports[`x-fern-property-name x-fern-property-name parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "x-fern-property-name/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
   },
