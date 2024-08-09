@@ -26,7 +26,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
-import javax.annotation.Nonnull;
 import javax.lang.model.element.Modifier;
 import org.immutables.value.Value;
 
@@ -253,7 +252,6 @@ public final class BuilderGenerator {
             EnrichedObjectPropertyWithField enrichedObjectProperty, ClassName returnClass) {
         MethodSpec.Builder methodBuilder = getRequiredFieldSetter(enrichedObjectProperty, returnClass)
                 .addAnnotation(ClassName.get("", "java.lang.Override"))
-                .addStatement("NullCheck($L)", enrichedObjectProperty.fieldSpec.name)
                 .addStatement(
                         "this.$L = $L", enrichedObjectProperty.fieldSpec.name, enrichedObjectProperty.fieldSpec.name)
                 .addStatement("return this");
@@ -283,7 +281,7 @@ public final class BuilderGenerator {
                 .returns(returnClass)
                 .addParameter(ParameterSpec.builder(
                                 enrichedObjectProperty.enrichedObjectProperty.poetTypeName(),
-                                enrichedObjectProperty.fieldSpec.name).addAnnotation(Nonnull.class)
+                                enrichedObjectProperty.fieldSpec.name)
                         .build());
         return setterBuilder;
     }
