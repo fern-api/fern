@@ -9,6 +9,7 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ListUsersPaginationResponse(UniversalBaseModel):
+    has_next_page: typing.Optional[bool] = pydantic.Field(alias="hasNextPage", default=None)
     page: typing.Optional[Page] = None
     total_count: int = pydantic.Field()
     """
