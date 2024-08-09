@@ -16,7 +16,11 @@ declare namespace Raw {
         offset: string;
         results: string;
         step: string | undefined;
+<<<<<<< HEAD
         "has-next-page": string | undefined;
+=======
+        "has-next-page":  string | undefined;
+>>>>>>> cc42781fd5 (add next page property to ir)
     }
 }
 
@@ -37,7 +41,7 @@ export function convertPaginationExtension(
         offset: maybeOffsetPagination.offset,
         results: maybeOffsetPagination.results,
         step: maybeOffsetPagination.step,
-        hasNextPage: maybeOffsetPagination["has-next-page"]
+        hasNextPage:  maybeOffsetPagination["has-next-page"]
     });
 }
 
