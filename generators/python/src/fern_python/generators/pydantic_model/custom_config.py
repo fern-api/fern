@@ -8,6 +8,7 @@ from ...external_dependencies.pydantic import PydanticVersionCompatibility
 
 UnionNamingVersions = Literal["v0", "v1"]
 
+
 class BasePydanticModelCustomConfig(pydantic.BaseModel):
     version: PydanticVersionCompatibility = PydanticVersionCompatibility.Both
     frozen: bool = False

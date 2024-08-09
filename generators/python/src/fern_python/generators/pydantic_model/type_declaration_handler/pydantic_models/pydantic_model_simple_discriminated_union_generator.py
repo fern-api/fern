@@ -82,7 +82,9 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
         return type_hint
 
     def _generate_member_name(self, single_union_type: ir_types.SingleUnionType) -> str:
-        return get_single_union_type_class_name(self._name, single_union_type.discriminant_value, self._custom_config.union_naming)
+        return get_single_union_type_class_name(
+            self._name, single_union_type.discriminant_value, self._custom_config.union_naming
+        )
 
     def _generate_no_property_member(
         self, class_name: str, discriminant_field: FernAwarePydanticField

@@ -34,7 +34,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
             type_declaration_referencer=type_declaration_referencer,
             use_str_enums=use_str_enums,
             skip_formatting=skip_formatting,
-            union_naming_version=union_naming_version
+            union_naming_version=union_naming_version,
         )
         self._type_reference_to_type_hint_converter = TypeReferenceToTypeHintConverter(
             type_declaration_referencer=type_declaration_referencer, context=self

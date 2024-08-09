@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import List, Literal, Optional, Set, Union
+from typing import List, Optional, Set, Union
 
 import fern.ir.resources as ir_types
 
@@ -441,7 +441,9 @@ class AbstractDiscriminatedUnionSnippetGenerator(AbstractTypeSnippetGenerator, A
                     ),
                 ),
                 named_import=get_single_union_type_class_name(
-                    name=name, wire_discriminant_value=wire_discriminant_value, union_naming_version=self.union_naming_version
+                    name=name,
+                    wire_discriminant_value=wire_discriminant_value,
+                    union_naming_version=self.union_naming_version,
                 ),
             ),
         )
@@ -449,7 +451,9 @@ class AbstractDiscriminatedUnionSnippetGenerator(AbstractTypeSnippetGenerator, A
 
 # TODO: For V1 naming, we should take into account if the new name introduces a conflcit with an existing class name
 def get_single_union_type_class_name(
-    name: ir_types.DeclaredTypeName, wire_discriminant_value: ir_types.NameAndWireValue, union_naming_version: UnionNamingVersions
+    name: ir_types.DeclaredTypeName,
+    wire_discriminant_value: ir_types.NameAndWireValue,
+    union_naming_version: UnionNamingVersions,
 ) -> str:
     wire_value = wire_discriminant_value.name.pascal_case.unsafe_name
     union_name = get_union_class_name(name)
