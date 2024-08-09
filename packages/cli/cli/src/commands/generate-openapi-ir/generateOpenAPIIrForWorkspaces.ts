@@ -28,6 +28,7 @@ export async function generateOpenAPIIrForWorkspaces({
                 }
                 const openAPISpecs = await getAllOpenAPISpecs({ context, specs: workspace.specs });
                 const openAPIIr = await parse({
+                    absoluteFilePathToWorkspace: workspace.absoluteFilepath,
                     specs: openAPISpecs,
                     taskContext: context
                 });

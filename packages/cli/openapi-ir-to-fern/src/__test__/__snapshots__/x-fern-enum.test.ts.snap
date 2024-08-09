@@ -14,6 +14,9 @@ exports[`x-fern-enum x-fern-enum docs 1`] = `
               "value": "nano",
             },
           ],
+          "source": {
+            "openapi": "x-fern-enum/openapi.yml",
+          },
         },
       },
     },
@@ -43,6 +46,9 @@ exports[`x-fern-enum x-fern-enum simple 1`] = `
               "value": "nano",
             },
           ],
+          "source": {
+            "openapi": "x-fern-enum/openapi.yml",
+          },
         },
       },
     },

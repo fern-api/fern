@@ -122,6 +122,10 @@ export async function loadAPIWorkspace({
                     shouldUseUndiscriminatedUnionsWithLiterals:
                         definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
                     asyncApiNaming: definition.settings?.asyncApiMessageNaming
+                },
+                source: {
+                    type: "openapi",
+                    file: absoluteFilepath
                 }
             });
         }
@@ -150,14 +154,22 @@ export async function loadAPIWorkspace({
             specs.push({
                 type: "openapi",
                 absoluteFilepath: absolutePathToOpenAPI,
-                absoluteFilepathToOverrides: undefined
+                absoluteFilepathToOverrides: undefined,
+                source: {
+                    type: "openapi",
+                    file: absolutePathToOpenAPI
+                }
             });
         }
         if (absolutePathToAsyncAPI != null) {
             specs.push({
                 type: "openapi",
                 absoluteFilepath: absolutePathToAsyncAPI,
-                absoluteFilepathToOverrides: undefined
+                absoluteFilepathToOverrides: undefined,
+                source: {
+                    type: "asyncapi",
+                    file: absolutePathToAsyncAPI
+                }
             });
         }
         if (absolutePathToOpenAPI != null && absolutePathToAsyncAPI != null) {

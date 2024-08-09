@@ -51,3 +51,5 @@ service:
               id: 1000000
               name: name
               tag: tag
+  source:
+    openapi: openapi/openapi.yml

@@ -3,7 +3,8 @@ import {
     PrimitiveSchemaValueWithExample,
     PrimitiveSchemaWithExample,
     SchemaWithExample,
-    SdkGroupName
+    SdkGroupName,
+    Source
 } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { convertSchema } from "./convertSchemas";
@@ -20,7 +21,8 @@ export function convertAdditionalProperties({
     wrapAsNullable,
     context,
     groupName,
-    example
+    example,
+    source
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -32,6 +34,7 @@ export function convertAdditionalProperties({
     context: SchemaParserContext;
     groupName: SdkGroupName | undefined;
     example: unknown | undefined;
+    source: Source;
 }): SchemaWithExample {
     if (typeof additionalProperties === "boolean" || isAdditionalPropertiesAny(additionalProperties)) {
         return wrapMap({
@@ -88,7 +91,7 @@ export function convertAdditionalProperties({
             }),
             groupName: undefined
         },
-        valueSchema: convertSchema(additionalProperties, wrapAsNullable, context, [...breadcrumbs, "Value"]),
+        valueSchema: convertSchema(additionalProperties, wrapAsNullable, context, [...breadcrumbs, "Value"], source),
         groupName,
         example
     });

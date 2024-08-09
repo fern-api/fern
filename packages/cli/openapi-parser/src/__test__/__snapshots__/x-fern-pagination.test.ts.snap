@@ -24,6 +24,18 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
           "request": null,
           "response": {
             "properties": {
+              "meta": {
+                "properties": {
+                  "hasMore": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean",
+                      "value": true,
+                    },
+                  },
+                },
+                "type": "object",
+              },
               "users": {
                 "type": "array",
                 "value": [
@@ -75,6 +87,7 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
       "method": "GET",
       "operationId": "list",
       "pagination": {
+        "hasNextPage": null,
         "offset": "$request.pageNumber",
         "results": "$response.users",
         "step": null,
@@ -113,6 +126,10 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "x-fern-pagination/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -127,12 +144,24 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "UsersResponse",
+          "source": {
+            "file": "x-fern-pagination/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "x-fern-pagination/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "x-fern-pagination/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "List",
       "tags": [],
     },
@@ -153,6 +182,18 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
           "request": null,
           "response": {
             "properties": {
+              "meta": {
+                "properties": {
+                  "hasMore": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean",
+                      "value": true,
+                    },
+                  },
+                },
+                "type": "object",
+              },
               "users": {
                 "type": "array",
                 "value": [
@@ -204,6 +245,7 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
       "method": "GET",
       "operationId": "list",
       "pagination": {
+        "hasNextPage": "$response.meta.hasMore",
         "offset": "$request.pageNumber",
         "results": "$response.users",
         "step": "$request.limit",
@@ -242,6 +284,10 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "x-fern-pagination/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -273,6 +319,10 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "x-fern-pagination/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -287,12 +337,24 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "UsersResponse",
+          "source": {
+            "file": "x-fern-pagination/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "x-fern-pagination/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "x-fern-pagination/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "List",
       "tags": [],
     },
@@ -303,9 +365,55 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
   "idempotencyHeaders": [],
   "nonRequestReferencedSchemas": [
     "UsersResponse",
+    "Meta",
     "User",
   ],
   "schemas": {
+    "Meta": {
+      "additionalProperties": false,
+      "allOf": [],
+      "allOfPropertyConflicts": [],
+      "availability": null,
+      "description": null,
+      "generatedName": "Meta",
+      "groupName": null,
+      "nameOverride": null,
+      "properties": [
+        {
+          "audiences": [],
+          "availability": null,
+          "conflict": {},
+          "generatedName": "metaHasMore",
+          "key": "hasMore",
+          "nameOverride": null,
+          "schema": {
+            "availability": null,
+            "description": null,
+            "generatedName": "metaHasMore",
+            "groupName": null,
+            "nameOverride": null,
+            "type": "optional",
+            "value": {
+              "availability": null,
+              "description": null,
+              "generatedName": "MetaHasMore",
+              "groupName": null,
+              "nameOverride": null,
+              "schema": {
+                "default": null,
+                "type": "boolean",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "source": {
+        "file": "x-fern-pagination/openapi.yml",
+        "type": "openapi",
+      },
+      "type": "object",
+    },
     "User": {
       "additionalProperties": false,
       "allOf": [],
@@ -446,6 +554,10 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "x-fern-pagination/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "UsersResponse": {
@@ -458,6 +570,35 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
       "groupName": null,
       "nameOverride": null,
       "properties": [
+        {
+          "audiences": [],
+          "availability": null,
+          "conflict": {},
+          "generatedName": "usersResponseMeta",
+          "key": "meta",
+          "nameOverride": null,
+          "schema": {
+            "availability": null,
+            "description": null,
+            "generatedName": "usersResponseMeta",
+            "groupName": null,
+            "nameOverride": null,
+            "type": "optional",
+            "value": {
+              "availability": null,
+              "description": null,
+              "generatedName": "UsersResponseMeta",
+              "groupName": null,
+              "nameOverride": null,
+              "schema": "Meta",
+              "source": {
+                "file": "x-fern-pagination/openapi.yml",
+                "type": "openapi",
+              },
+              "type": "reference",
+            },
+          },
+        },
         {
           "audiences": [],
           "availability": null,
@@ -486,12 +627,20 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "User",
+                "source": {
+                  "file": "x-fern-pagination/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "x-fern-pagination/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
   },

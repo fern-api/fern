@@ -112,6 +112,10 @@ exports[`open api parser defaults parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "defaults/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
   },

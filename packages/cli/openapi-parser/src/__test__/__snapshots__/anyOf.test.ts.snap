@@ -61,7 +61,15 @@ exports[`open api parser anyOf parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Request",
+          "source": {
+            "file": "anyOf/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "anyOf/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -76,12 +84,24 @@ exports[`open api parser anyOf parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Response",
+          "source": {
+            "file": "anyOf/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "anyOf/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "anyOf/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [],
     },
@@ -147,6 +167,10 @@ exports[`open api parser anyOf parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "anyOf/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Response": {
@@ -203,6 +227,10 @@ exports[`open api parser anyOf parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "anyOf/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
   },

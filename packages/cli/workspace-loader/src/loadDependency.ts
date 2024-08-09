@@ -139,7 +139,14 @@ async function validateLocalDependencyAndGetDefinition({
         return undefined;
     }
 
-    const definition = await loadDependencyWorkspaceResult.workspace.getDefinition({ context }, settings);
+    context.logger.info("Modifying source filepath ...");
+    const definition = await loadDependencyWorkspaceResult.workspace.getDefinition(
+        {
+            context,
+            modifySourceFilepath: (original: string): string => path.join(dependency.path, original)
+        },
+        settings
+    );
     context.logger.info("Loaded...");
 
     return definition;

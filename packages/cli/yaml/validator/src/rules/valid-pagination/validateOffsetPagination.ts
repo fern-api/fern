@@ -3,7 +3,7 @@ import { RawSchemas } from "@fern-api/yaml-schema";
 import chalk from "chalk";
 import { RuleViolation } from "../../Rule";
 import { maybeFileFromResolvedType, maybePrimitiveType, resolveResponseType } from "../../utils/propertyValidatorUtils";
-import { validateRequestProperty, validateResultsProperty } from "./validateUtils";
+import { validateRequestProperty, validateResponseProperty, validateResultsProperty } from "./validateUtils";
 
 export function validateOffsetPagination({
     endpointId,
@@ -56,6 +56,16 @@ export function validateOffsetPagination({
             file: maybeFileFromResolvedType(resolvedResponseType) ?? file,
             resolvedResponseType,
             resultsProperty: offsetPagination.results
+        })
+    );
+
+    violations.push(
+        ...validateHasNextPageProperty({
+            endpointId,
+            resolvedResponseType,
+            typeResolver,
+            file: maybeFileFromResolvedType(resolvedResponseType) ?? file,
+            offsetPagination
         })
     );
 
@@ -123,4 +133,41 @@ function isValidOffsetType({ resolvedType }: { resolvedType: ResolvedType | unde
         return false;
     }
     return primitiveType === "INTEGER" || primitiveType === "LONG" || primitiveType === "DOUBLE";
+}
+
+function validateHasNextPageProperty({
+    endpointId,
+    resolvedResponseType,
+    typeResolver,
+    file,
+    offsetPagination
+}: {
+    endpointId: string;
+    resolvedResponseType: ResolvedType;
+    typeResolver: TypeResolver;
+    file: FernFileContext;
+    offsetPagination: RawSchemas.OffsetPaginationSchema;
+}): RuleViolation[] {
+    if (offsetPagination["has-next-page"] == null) {
+        return [];
+    }
+    return validateResponseProperty({
+        endpointId,
+        typeResolver,
+        file,
+        responseProperty: offsetPagination["has-next-page"],
+        resolvedResponseType,
+        propertyValidator: {
+            propertyID: "has-next-page",
+            validate: isValidHasNextPageType
+        }
+    });
+}
+
+function isValidHasNextPageType({ resolvedType }: { resolvedType: ResolvedType | undefined }): boolean {
+    const primitiveType = maybePrimitiveType(resolvedType);
+    if (primitiveType == null) {
+        return false;
+    }
+    return primitiveType === "BOOLEAN";
 }

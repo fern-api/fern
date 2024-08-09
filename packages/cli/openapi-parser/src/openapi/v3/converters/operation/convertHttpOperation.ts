@@ -1,4 +1,4 @@
-import { EndpointWithExample } from "@fern-api/openapi-ir-sdk";
+import { EndpointWithExample, Source } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../../getExtension";
 import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
@@ -19,13 +19,15 @@ export function convertHttpOperation({
     context,
     responseStatusCode,
     suffix,
-    streamFormat
+    streamFormat,
+    source
 }: {
     operationContext: OperationContext;
     context: AbstractOpenAPIV3ParserContext;
     responseStatusCode?: number;
     suffix?: string;
     streamFormat: "sse" | "json" | undefined;
+    source: Source;
 }): EndpointWithExample {
     const { document, operation, path, method, baseBreadcrumbs, sdkMethodName } = operationContext;
 
@@ -40,7 +42,8 @@ export function convertHttpOperation({
         context,
         requestBreadcrumbs,
         path,
-        httpMethod: method
+        httpMethod: method,
+        source
     });
     let convertedRequest =
         operation.requestBody != null
@@ -50,9 +53,11 @@ export function convertHttpOperation({
                   context: new DummyOpenAPIV3ParserContext({
                       document: context.document,
                       taskContext: context.taskContext,
-                      options: context.options
+                      options: context.options,
+                      source: context.source
                   }),
-                  requestBreadcrumbs
+                  requestBreadcrumbs,
+                  source
               })
             : undefined;
 
@@ -68,14 +73,16 @@ export function convertHttpOperation({
             requestBody: operation.requestBody,
             document,
             context,
-            requestBreadcrumbs: [...requestBreadcrumbs, "Body"]
+            requestBreadcrumbs: [...requestBreadcrumbs, "Body"],
+            source
         });
     } else if (operation.requestBody != null) {
         convertedRequest = convertRequest({
             requestBody: operation.requestBody,
             document,
             context,
-            requestBreadcrumbs: [...requestBreadcrumbs]
+            requestBreadcrumbs: [...requestBreadcrumbs],
+            source
         });
     }
 
@@ -87,7 +94,8 @@ export function convertHttpOperation({
         responses: operation.responses,
         context,
         responseBreadcrumbs,
-        responseStatusCode
+        responseStatusCode,
+        source
     });
 
     const availability = getFernAvailability(operation);
@@ -119,7 +127,8 @@ export function convertHttpOperation({
         method,
         path,
         examples,
-        pagination: operationContext.pagination
+        pagination: operationContext.pagination,
+        source
     };
 }
 

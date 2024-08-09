@@ -29,7 +29,8 @@ export function buildIdempotencyHeaders(context: OpenApiIrConverterContext): voi
                 name: header.name ?? header.header,
                 parameterNameOverride: undefined,
                 description: undefined,
-                availability: undefined
+                availability: undefined,
+                source: undefined
             },
             fileContainingReference: RelativeFilePath.of(ROOT_API_FILENAME),
             context

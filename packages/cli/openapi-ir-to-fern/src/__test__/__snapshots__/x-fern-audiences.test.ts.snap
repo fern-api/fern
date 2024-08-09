@@ -38,6 +38,9 @@ exports[`x-fern-audiences x-fern-audiences docs 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "x-fern-audiences/openapi.yml",
+      },
     },
     "types": {
       "BaseUser": {
@@ -55,6 +58,9 @@ exports[`x-fern-audiences x-fern-audiences docs 1`] = `
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "x-fern-audiences/openapi.yml",
         },
       },
     },
@@ -107,6 +113,9 @@ exports[`x-fern-audiences x-fern-audiences simple 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "x-fern-audiences/openapi.yml",
+      },
     },
     "types": {
       "BaseUser": {
@@ -124,6 +133,9 @@ exports[`x-fern-audiences x-fern-audiences simple 1`] = `
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "x-fern-audiences/openapi.yml",
         },
       },
     },

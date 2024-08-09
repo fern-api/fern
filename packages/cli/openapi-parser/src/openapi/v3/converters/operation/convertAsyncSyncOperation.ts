@@ -1,4 +1,4 @@
-import { EndpointWithExample, LiteralSchemaValue, SchemaWithExample } from "@fern-api/openapi-ir-sdk";
+import { EndpointWithExample, LiteralSchemaValue, SchemaWithExample, Source } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
@@ -15,11 +15,13 @@ export interface AsyncAndSyncEndpoints {
 export function convertAsyncSyncOperation({
     operationContext,
     context,
-    asyncExtension
+    asyncExtension,
+    source
 }: {
     operationContext: OperationContext;
     context: AbstractOpenAPIV3ParserContext;
     asyncExtension: AsyncFernExtensionSchema;
+    source: Source;
 }): AsyncAndSyncEndpoints {
     const { operation, pathItemParameters, operationParameters } = operationContext;
 
@@ -45,7 +47,8 @@ export function convertAsyncSyncOperation({
             }
         },
         context,
-        streamFormat: undefined
+        streamFormat: undefined,
+        source
     });
 
     const asyncOperation = convertHttpOperation({
@@ -58,7 +61,8 @@ export function convertAsyncSyncOperation({
         context,
         suffix: "async",
         responseStatusCode: asyncResponseStatusCode,
-        streamFormat: undefined
+        streamFormat: undefined,
+        source
     });
 
     asyncOperation.headers.push({
@@ -74,7 +78,8 @@ export function convertAsyncSyncOperation({
         description: undefined,
         parameterNameOverride: undefined,
         env: undefined,
-        availability: undefined
+        availability: undefined,
+        source
     });
 
     return {

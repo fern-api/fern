@@ -81,12 +81,24 @@ exports[`examples enum-casing parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "ExampleResponse",
+          "source": {
+            "file": "enum-casing/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "enum-casing/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "enum-casing/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Get Example",
       "tags": [],
     },
@@ -130,6 +142,10 @@ exports[`examples enum-casing parse open api 1`] = `
               "generatedName": "ExampleResponseStatus",
               "groupName": null,
               "nameOverride": null,
+              "source": {
+                "file": "enum-casing/openapi.yml",
+                "type": "openapi",
+              },
               "type": "enum",
               "values": [
                 {
@@ -250,6 +266,10 @@ exports[`examples enum-casing parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "enum-casing/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "GrantTypeEnum": {
@@ -259,6 +279,10 @@ exports[`examples enum-casing parse open api 1`] = `
       "generatedName": "GrantTypeEnum",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "enum-casing/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {

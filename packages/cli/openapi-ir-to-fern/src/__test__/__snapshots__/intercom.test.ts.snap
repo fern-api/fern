@@ -422,6 +422,9 @@ You can view the currently authorised admin along with the embedded app object (
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "Admin": {
@@ -475,6 +478,9 @@ You can view the currently authorised admin along with the embedded app object (
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
       },
     },
@@ -512,6 +518,9 @@ You can view the currently authorised admin along with the embedded app object (
               "type": "optional<AiAgentSourceType>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "AiAgentSourceType": {
           "docs": "The type of the source that triggered AI Agent involvement in the conversation.",
@@ -522,6 +531,9 @@ You can view the currently authorised admin along with the embedded app object (
             "workflow_preview",
             "fin_preview",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
       },
     },
@@ -547,6 +559,9 @@ You can view the currently authorised admin along with the embedded app object (
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "ContentSourceContentType": {
           "docs": "The type of the content source.",
@@ -557,6 +572,9 @@ You can view the currently authorised admin along with the embedded app object (
             "content_snippet",
             "workflow_connector_action",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
       },
     },
@@ -3139,6 +3157,9 @@ You can view the currently authorised admin along with the embedded app object (
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "Article": {
@@ -3149,6 +3170,9 @@ You can view the currently authorised admin along with the embedded app object (
           "properties": {
             "statistics": "optional<root.ArticleStatistics>",
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "ArticleListItemState": {
           "default": "draft",
@@ -3157,6 +3181,9 @@ You can view the currently authorised admin along with the embedded app object (
             "published",
             "draft",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "ArticleSearchHighlights": {
           "docs": "The highlighted results of an Article search. In the examples provided my search query is always "my query".",
@@ -3174,6 +3201,9 @@ You can view the currently authorised admin along with the embedded app object (
               "type": "optional<list<ArticleSearchHighlightsHighlightedTitleItem>>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "ArticleSearchHighlightsHighlightedSummaryItemItem": {
           "docs": "An instance of highlighted summary text.",
@@ -3187,6 +3217,9 @@ You can view the currently authorised admin along with the embedded app object (
               "type": "optional<ArticleSearchHighlightsHighlightedSummaryItemItemType>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "ArticleSearchHighlightsHighlightedSummaryItemItemType": {
           "docs": "The type of text - \`highlight\` or \`plain\`.",
@@ -3194,6 +3227,9 @@ You can view the currently authorised admin along with the embedded app object (
             "highlight",
             "plain",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "ArticleSearchHighlightsHighlightedTitleItem": {
           "docs": "A highlighted article title.",
@@ -3207,6 +3243,9 @@ You can view the currently authorised admin along with the embedded app object (
               "type": "optional<ArticleSearchHighlightsHighlightedTitleItemType>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "ArticleSearchHighlightsHighlightedTitleItemType": {
           "docs": "The type of text - \`highlight\` or \`plain\`.",
@@ -3214,6 +3253,9 @@ You can view the currently authorised admin along with the embedded app object (
             "highlight",
             "plain",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "ArticleSearchResponse": {
           "docs": "The results of an Article search",
@@ -3232,6 +3274,9 @@ You can view the currently authorised admin along with the embedded app object (
               "type": "optional<literal<"list">>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "ArticleSearchResponseData": {
           "docs": "An object containing the results of the search.",
@@ -3244,6 +3289,9 @@ You can view the currently authorised admin along with the embedded app object (
               "docs": "A corresponding array of highlighted Article content",
               "type": "optional<list<ArticleSearchHighlights>>",
             },
+          },
+          "source": {
+            "openapi": "intercom/openapi.yml",
           },
         },
         "Articles": {
@@ -3311,6 +3359,9 @@ You can view the currently authorised admin along with the embedded app object (
               "docs": "The id of the workspace which the article belongs to.",
               "type": "optional<string>",
             },
+          },
+          "source": {
+            "openapi": "intercom/openapi.yml",
           },
         },
       },
@@ -4463,6 +4514,9 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "Company": {
@@ -4542,6 +4596,9 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "CompanyPlan": {
           "docs": undefined,
@@ -4559,6 +4616,9 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "CompanySegments": {
           "docs": "The list of segments associated with the company",
@@ -4569,6 +4629,9 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
               "type": "optional<literal<"segment.list">>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "CompanyTags": {
           "docs": "The list of tags associated with the company",
@@ -4578,6 +4641,9 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
               "docs": "The type of the object",
               "type": "optional<literal<"tag.list">>",
             },
+          },
+          "source": {
+            "openapi": "intercom/openapi.yml",
           },
         },
       },
@@ -5934,6 +6000,9 @@ The data property will show a combined list of:
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "Contact": {
@@ -6106,6 +6175,9 @@ The data property will show a combined list of:
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "ContactAvatar": {
           "docs": undefined,
@@ -6124,6 +6196,9 @@ The data property will show a combined list of:
               "docs": "The type of object",
               "type": "optional<string>",
             },
+          },
+          "source": {
+            "openapi": "intercom/openapi.yml",
           },
         },
       },
@@ -10828,11 +10903,15 @@ If you want to reply to a coveration or take an action such as assign, unassign,
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "AttachContactToConversationRequestCustomer": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "AttachContactToConversationRequestCustomerIntercomUserId",
             "AttachContactToConversationRequestCustomerUserId",
@@ -10848,6 +10927,9 @@ If you want to reply to a coveration or take an action such as assign, unassign,
               "type": "string",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "AttachContactToConversationRequestCustomerUserId": {
           "docs": undefined,
@@ -10857,6 +10939,9 @@ If you want to reply to a coveration or take an action such as assign, unassign,
               "docs": "The external_id you have defined for the contact who is being added as a participant.",
               "type": "string",
             },
+          },
+          "source": {
+            "openapi": "intercom/openapi.yml",
           },
         },
         "Conversation": {
@@ -10931,6 +11016,9 @@ If you want to reply to a coveration or take an action such as assign, unassign,
               "type": "optional<integer>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "ConversationPriority": {
           "docs": "If marked as priority, it will return priority or else not_priority.",
@@ -10938,6 +11026,9 @@ If you want to reply to a coveration or take an action such as assign, unassign,
             "priority",
             "not_priority",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "ConversationState": {
           "docs": "Can be set to "open", "closed" or "snoozed".",
@@ -10946,6 +11037,9 @@ If you want to reply to a coveration or take an action such as assign, unassign,
             "closed",
             "snoozed",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "CreateConversationRequestFrom": {
           "docs": undefined,
@@ -10965,6 +11059,9 @@ If you want to reply to a coveration or take an action such as assign, unassign,
               "type": "CreateConversationRequestFromType",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "CreateConversationRequestFromType": {
           "docs": "The role associated to the contact - user or lead.",
@@ -10973,6 +11070,9 @@ If you want to reply to a coveration or take an action such as assign, unassign,
             "user",
             "contact",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "Email": {
           "docs": undefined,
@@ -10983,11 +11083,17 @@ If you want to reply to a coveration or take an action such as assign, unassign,
               "type": "string",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "ManageConversationRequestBody": {
           "base-properties": {},
           "discriminant": "message_type",
           "docs": undefined,
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
           "union": {
             "assignment": "root.AssignConversationRequest",
             "close": "root.CloseConversationRequest",
@@ -11018,6 +11124,9 @@ If you want to reply to a coveration or take an action such as assign, unassign,
               "docs": "The identifier of the custom object type that defines the structure of the custom object instance.",
               "type": "optional<string>",
             },
+          },
+          "source": {
+            "openapi": "intercom/openapi.yml",
           },
         },
       },
@@ -11915,6 +12024,9 @@ You can update a data attribute.
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "CreateDataAttributeRequestDataType": {
@@ -11927,6 +12039,9 @@ You can update a data attribute.
             "datetime",
             "date",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "CreateDataAttributeRequestModel": {
           "docs": "The model that the data attribute belongs to.",
@@ -11934,6 +12049,9 @@ You can update a data attribute.
             "contact",
             "company",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "DataAttribute": {
           "docs": "Data Attributes are metadata used to describe your contact, company and conversation models. These include standard and custom attributes. By using the data attributes endpoint, you can get the global list of attributes for your workspace, as well as create and archive custom attributes.",
@@ -12007,6 +12125,9 @@ You can update a data attribute.
               "type": "optional<integer>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "DataAttributeDataType": {
           "docs": "The data type of the attribute.",
@@ -12017,6 +12138,9 @@ You can update a data attribute.
             "boolean",
             "date",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "DataAttributeModel": {
           "docs": "Value is \`contact\` for user/lead attributes and \`company\` for company attributes.",
@@ -12024,6 +12148,9 @@ You can update a data attribute.
             "contact",
             "company",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "LisDataAttributesRequestModel": {
           "enum": [
@@ -12031,6 +12158,9 @@ You can update a data attribute.
             "company",
             "conversation",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
       },
     },
@@ -12197,6 +12327,9 @@ You can optionally define the result page size as well with the \`per_page\` par
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "CreateDataEventSummariesRequestEventSummaries": {
@@ -12218,6 +12351,9 @@ You can optionally define the result page size as well with the \`per_page\` par
               "docs": "The last time the event was sent",
               "type": "optional<integer>",
             },
+          },
+          "source": {
+            "openapi": "intercom/openapi.yml",
           },
         },
         "DataEvent": {
@@ -12256,10 +12392,14 @@ You can optionally define the result page size as well with the \`per_page\` par
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "LisDataEventsRequestFilter": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "LisDataEventsRequestFilterUserId",
             "LisDataEventsRequestFilterIntercomUserId",
@@ -12271,17 +12411,26 @@ You can optionally define the result page size as well with the \`per_page\` par
           "properties": {
             "email": "string",
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "LisDataEventsRequestFilterIntercomUserId": {
           "docs": undefined,
           "properties": {
             "intercom_user_id": "string",
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "LisDataEventsRequestFilterUserId": {
           "docs": undefined,
           "properties": {
             "user_id": "string",
+          },
+          "source": {
+            "openapi": "intercom/openapi.yml",
           },
         },
       },
@@ -12491,6 +12640,9 @@ Your exported message data will be streamed continuously back down to you in a g
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "DataExport": {
@@ -12513,6 +12665,9 @@ Your exported message data will be streamed continuously back down to you in a g
               "type": "optional<DataExportStatus>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "DataExportStatus": {
           "docs": "The current state of your job.",
@@ -12524,6 +12679,9 @@ Your exported message data will be streamed continuously back down to you in a g
             "no_data",
             "canceled",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
       },
     },
@@ -13947,6 +14105,9 @@ Collections will be returned in descending order on the \`updated_at\` attribute
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "Collection": {
@@ -14002,6 +14163,9 @@ Collections will be returned in descending order on the \`updated_at\` attribute
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "HelpCenter": {
           "docs": "Help Centers contain collections",
@@ -14035,6 +14199,9 @@ Collections will be returned in descending order on the \`updated_at\` attribute
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "HelpCenterList": {
           "docs": "A list of Help Centers belonging to the App",
@@ -14047,6 +14214,9 @@ Collections will be returned in descending order on the \`updated_at\` attribute
               "docs": "The type of the object - \`list\`.",
               "type": "optional<literal<"list">>",
             },
+          },
+          "source": {
+            "openapi": "intercom/openapi.yml",
           },
         },
       },
@@ -14317,6 +14487,9 @@ This will return the Message model that has been created.
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "Message": {
@@ -14351,6 +14524,9 @@ This will return the Message model that has been created.
               "type": "string",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "MessageMessageType": {
           "docs": "The type of message that was sent. Can be email, inapp, facebook or twitter.",
@@ -14360,6 +14536,9 @@ This will return the Message model that has been created.
             "facebook",
             "twitter",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
       },
     },
@@ -14877,6 +15056,9 @@ This will return the Message model that has been created.
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "NewsItem": {
@@ -14941,6 +15123,9 @@ This will return the Message model that has been created.
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "NewsItemState": {
           "docs": "News items will not be visible to your users in the assigned newsfeeds until they are set live.",
@@ -14948,6 +15133,9 @@ This will return the Message model that has been created.
             "draft",
             "live",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "Newsfeed": {
           "docs": "A newsfeed is a collection of news items, targeted to a specific audience.
@@ -14972,6 +15160,9 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
               "type": "optional<integer>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "NewsfeedAssignment": {
           "docs": "Assigns a news item to a newsfeed.",
@@ -14984,6 +15175,9 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
               "docs": "Publish date of the news item on the newsfeed, use this field if you want to set a publish date in the past (e.g. when importing existing news items). On write, this field will be ignored if the news item state is "draft".",
               "type": "optional<integer>",
             },
+          },
+          "source": {
+            "openapi": "intercom/openapi.yml",
           },
         },
       },
@@ -15373,6 +15567,9 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "Note": {
@@ -15403,6 +15600,9 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "NoteContact": {
           "docs": "Represents the contact that the note was created about.",
@@ -15415,6 +15615,9 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
               "docs": "String representing the object's type. Always has the value \`contact\`.",
               "type": "optional<string>",
             },
+          },
+          "source": {
+            "openapi": "intercom/openapi.yml",
           },
         },
       },
@@ -15543,6 +15746,9 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "Segment": {
@@ -15577,6 +15783,9 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
               "type": "optional<integer>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "SegmentPersonType": {
           "docs": "Type of the contact: contact (lead) or user.",
@@ -15584,6 +15793,9 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
             "contact",
             "user",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
       },
     },
@@ -15874,6 +16086,9 @@ This will return a subscription type model for the subscription type that was ad
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "SubscriptionType": {
@@ -15905,6 +16120,9 @@ This will return a subscription type model for the subscription type that was ad
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "SubscriptionTypeConsentType": {
           "docs": "Describes the type of consent.",
@@ -15912,12 +16130,18 @@ This will return a subscription type model for the subscription type that was ad
             "opt_out",
             "opt_in",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "SubscriptionTypeContentTypesItem": {
           "enum": [
             "email",
             "sms_message",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "SubscriptionTypeState": {
           "docs": "The state of the subscription type.",
@@ -15926,6 +16150,9 @@ This will return a subscription type model for the subscription type that was ad
             "draft",
             "archived",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
       },
     },
@@ -16036,6 +16263,9 @@ If custom attributes are specified, they will be added to the user or lead's cus
               "type": "optional<root.PhoneSwitch>",
             },
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
     },
@@ -16874,11 +17104,15 @@ This will return a tag object.
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "CreateTagRequestBody": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "root.CreateOrUpdateTagRequest",
             "root.TagCompanyRequest",
@@ -16906,6 +17140,9 @@ This will return a tag object.
               "docs": "value is "tag"",
               "type": "optional<string>",
             },
+          },
+          "source": {
+            "openapi": "intercom/openapi.yml",
           },
         },
       },
@@ -17022,6 +17259,9 @@ This will return a tag object.
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "Team": {
@@ -17044,6 +17284,9 @@ This will return a tag object.
               "docs": "Value is always "team"",
               "type": "optional<string>",
             },
+          },
+          "source": {
+            "openapi": "intercom/openapi.yml",
           },
         },
       },
@@ -17293,6 +17536,9 @@ This will return a tag object.
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "CreateTicketTypeAttributeRequestDataType": {
@@ -17306,6 +17552,9 @@ This will return a tag object.
             "datetime",
             "files",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
       },
     },
@@ -17609,6 +17858,9 @@ You can update a ticket type.
               "type": "optional<tickets.TicketType>",
             },
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
     },
@@ -19223,6 +19475,9 @@ The table below shows the operators you can use to define how you want to search
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "Contacts": {
@@ -19237,10 +19492,14 @@ The table below shows the operators you can use to define how you want to search
               "type": "optional<literal<"contact.list">>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "CreateTicketRequestContactsItem": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "ID",
             "CreateTicketRequestContactsItemExternalId",
@@ -19255,6 +19514,9 @@ The table below shows the operators you can use to define how you want to search
               "type": "string",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "Email": {
           "docs": undefined,
@@ -19263,6 +19525,9 @@ The table below shows the operators you can use to define how you want to search
               "docs": "The email you have defined for the contact who is being added as a participant. If a contact with this email does not exist, one will be created.",
               "type": "string",
             },
+          },
+          "source": {
+            "openapi": "intercom/openapi.yml",
           },
         },
         "ID": {
@@ -19273,10 +19538,14 @@ The table below shows the operators you can use to define how you want to search
               "type": "string",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "ReplyTicketRequestBody": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "root.ContactReplyTicketRequest",
             "root.AdminReplyTicketRequest",
@@ -19347,6 +19616,9 @@ The table below shows the operators you can use to define how you want to search
               "type": "optional<integer>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "TicketCategory": {
           "docs": "Category of the Ticket.",
@@ -19358,6 +19630,9 @@ The table below shows the operators you can use to define how you want to search
             },
             "Tracker",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "TicketPart": {
           "docs": "A Ticket Part represents a message in the ticket.",
@@ -19412,6 +19687,9 @@ The table below shows the operators you can use to define how you want to search
               "type": "optional<integer>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "TicketPartPreviousTicketState": {
           "docs": "The previous state of the ticket.",
@@ -19421,6 +19699,9 @@ The table below shows the operators you can use to define how you want to search
             "waiting_on_customer",
             "resolved",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "TicketPartTicketState": {
           "docs": "The state of the ticket.",
@@ -19430,6 +19711,9 @@ The table below shows the operators you can use to define how you want to search
             "waiting_on_customer",
             "resolved",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "TicketTicketState": {
           "docs": "The state the ticket is currently in",
@@ -19439,6 +19723,9 @@ The table below shows the operators you can use to define how you want to search
             "waiting_on_customer",
             "resolved",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "TicketType": {
           "docs": "A ticket type, used to define the data fields to be captured in a ticket.",
@@ -19485,6 +19772,9 @@ The table below shows the operators you can use to define how you want to search
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "TicketTypeCategory": {
           "docs": "Category of the Ticket Type.",
@@ -19496,6 +19786,9 @@ The table below shows the operators you can use to define how you want to search
             },
             "Tracker",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "UpdateTicketRequestAssignment": {
           "docs": undefined,
@@ -19509,6 +19802,9 @@ The table below shows the operators you can use to define how you want to search
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "UpdateTicketRequestState": {
           "docs": "The state of the ticket.",
@@ -19517,6 +19813,9 @@ The table below shows the operators you can use to define how you want to search
             "waiting_on_customer",
             "resolved",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
       },
     },
@@ -20047,6 +20346,9 @@ The table below shows the operators you can use to define how you want to search
               "type": "optional<root.Visitor>",
             },
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
     },
@@ -24010,6 +24312,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<ActivityLogPerformedBy>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ActivityLogActivityType": {
         "enum": [
@@ -24081,6 +24386,9 @@ The table below shows the operators you can use to define how you want to search
           "upfront_email_collection_change",
           "welcome_message_change",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ActivityLogList": {
         "docs": "A paginated list of activity logs.",
@@ -24094,6 +24402,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "String representing the object's type. Always has the value \`activity_log.list\`.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ActivityLogMetadata": {
@@ -24136,6 +24447,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ActivityLogPerformedBy": {
         "docs": "Details about the Admin involved in the activity.",
@@ -24156,6 +24470,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "String representing the object's type. Always has the value \`admin\`.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "AddressableList": {
@@ -24185,6 +24502,9 @@ The table below shows the operators you can use to define how you want to search
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "Admin": {
@@ -24239,6 +24559,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "AdminPriorityLevel": {
         "docs": "Admin priority levels for the team",
@@ -24251,6 +24574,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "The secondary admin ids for the team",
             "type": "optional<list<integer>>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "AdminReplyConversationRequest": {
@@ -24279,12 +24605,18 @@ The table below shows the operators you can use to define how you want to search
           "message_type": "AdminReplyConversationRequestMessageType",
           "type": "literal<"admin">",
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "AdminReplyConversationRequestMessageType": {
         "enum": [
           "comment",
           "note",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "AdminReplyTicketRequest": {
         "docs": "Payload of the request to reply on behalf of an admin",
@@ -24312,6 +24644,9 @@ The table below shows the operators you can use to define how you want to search
           },
           "type": "literal<"admin">",
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "AdminReplyTicketRequestMessageType": {
         "enum": [
@@ -24319,6 +24654,9 @@ The table below shows the operators you can use to define how you want to search
           "note",
           "quick_reply",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "AdminReplyTicketRequestReplyOptionsItem": {
         "docs": undefined,
@@ -24337,6 +24675,9 @@ The table below shows the operators you can use to define how you want to search
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "AdminWithAppAvatar": {
@@ -24358,6 +24699,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "Admins": {
         "docs": "A list of admins associated with a given workspace.",
@@ -24370,6 +24714,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "String representing the object's type. Always has the value \`admin.list\`.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "App": {
@@ -24404,6 +24751,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ArticleContent": {
@@ -24446,6 +24796,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ArticleContentState": {
         "docs": "Whether the article is \`published\` or is a \`draft\` .",
@@ -24453,6 +24806,9 @@ The table below shows the operators you can use to define how you want to search
           "published",
           "draft",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ArticleStatistics": {
         "docs": "The statistics of an article.",
@@ -24485,6 +24841,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "The number of total views the article has received.",
             "type": "optional<integer>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ArticleTranslatedContent": {
@@ -24643,6 +25002,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<ArticleContent>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "Articles": {
         "docs": "This will return a list of articles for the App.",
@@ -24660,6 +25022,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "The type of the object - \`list\`.",
             "type": "optional<literal<"list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "AssignConversationRequest": {
@@ -24679,12 +25044,18 @@ The table below shows the operators you can use to define how you want to search
           },
           "type": "AssignConversationRequestType",
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "AssignConversationRequestType": {
         "enum": [
           "admin",
           "team",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "CloseConversationRequest": {
         "docs": "Payload of the request to close a conversation",
@@ -24698,6 +25069,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<string>",
           },
           "type": "literal<"admin">",
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "Collections": {
@@ -24717,6 +25091,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<literal<"list">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "Companies": {
         "docs": "This will return a list of companies for the App.",
@@ -24734,6 +25111,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "The type of object - \`list\`.",
             "type": "optional<literal<"list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "CompanyAttachedContacts": {
@@ -24753,6 +25133,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<literal<"list">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "CompanyAttachedSegments": {
         "docs": "A list of Segment Objects",
@@ -24765,6 +25148,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "The type of object - \`list\`",
             "type": "optional<literal<"list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "CompanyScroll": {
@@ -24784,6 +25170,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "The type of object - \`list\`",
             "type": "optional<literal<"list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ContactArchived": {
@@ -24806,6 +25195,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<literal<"contact">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ContactAttachedCompanies": {
         "docs": "A list of Company Objects",
@@ -24823,6 +25215,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "The type of object",
             "type": "optional<literal<"list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ContactCompanies": {
@@ -24847,6 +25242,9 @@ The table below shows the operators you can use to define how you want to search
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ContactDeleted": {
         "docs": "deleted contact object",
@@ -24868,6 +25266,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<literal<"contact">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ContactList": {
         "docs": "Contacts are your users in Intercom.",
@@ -24885,6 +25286,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "Always list",
             "type": "optional<literal<"list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ContactLocation": {
@@ -24906,6 +25310,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "Always location",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ContactNotes": {
@@ -24934,6 +25341,9 @@ The table below shows the operators you can use to define how you want to search
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ContactReference": {
         "docs": "reference to contact object",
@@ -24950,6 +25360,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "always contact",
             "type": "optional<literal<"contact">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ContactReplyBaseRequest": {
@@ -24970,10 +25383,14 @@ The table below shows the operators you can use to define how you want to search
           "message_type": "literal<"comment">",
           "type": "literal<"user">",
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ContactReplyConversationRequest": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "ContactReplyIntercomUserIdRequest",
           "Email",
@@ -24995,6 +25412,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ContactReplyTicketIntercomUserIdRequest": {
         "docs": "Payload of the request to reply on behalf of a contact using their \`intercom_user_id\`",
@@ -25007,10 +25427,14 @@ The table below shows the operators you can use to define how you want to search
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ContactReplyTicketRequest": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "ContactReplyTicketIntercomUserIdRequest",
           "ContactReplyTicketUserIdRequest",
@@ -25028,6 +25452,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ContactReplyUserIdRequest": {
         "docs": "Payload of the request to reply on behalf of a contact using their \`user_id\`",
@@ -25044,6 +25471,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ContactSocialProfiles": {
         "docs": "An object containing social profiles that a contact has.",
@@ -25052,6 +25482,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "A list of social profiles objects associated with the contact.",
             "type": "optional<list<SocialProfile>>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ContactSubscriptionTypes": {
@@ -25080,6 +25513,9 @@ The table below shows the operators you can use to define how you want to search
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ContactTags": {
         "docs": "An object containing tags meta data about the tags that a contact has. Up to 10 will be displayed here. Use the url to get more.",
@@ -25107,6 +25543,9 @@ The table below shows the operators you can use to define how you want to search
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ContactUnarchived": {
         "docs": "unarchived contact object",
@@ -25128,6 +25567,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<literal<"contact">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "Contacts": {
         "docs": "The list of contacts (users or leads) involved in this conversation. This will only contain one customer unless more were added via the group conversation feature.",
@@ -25140,6 +25582,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "",
             "type": "optional<literal<"contact.list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ContentSourcesList": {
@@ -25154,6 +25599,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<integer>",
           },
           "type": "optional<literal<"content_source.list">>",
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ConversationAttachmentFiles": {
@@ -25172,6 +25620,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ConversationFirstContactReply": {
         "docs": "An object containing information on the first users message. For a contact initiated message this will represent the users original message.",
@@ -25188,6 +25639,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ConversationList": {
@@ -25206,6 +25660,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "Always conversation.list",
             "type": "optional<literal<"conversation.list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ConversationPart": {
@@ -25257,6 +25714,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<integer>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ConversationPartAuthor": {
         "docs": "The object who initiated the conversation, which can be a Contact, Admin or Team. Bots and campaigns send messages on behalf of Admins or Teams. For Twitter, this will be blank.",
@@ -25284,6 +25744,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ConversationParts": {
         "docs": "A list of Conversation Part objects for each part message in the conversation. This is only returned when Retrieving a Conversation, and ignored when Listing all Conversations. There is a limit of 500 parts.",
@@ -25300,6 +25763,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "",
             "type": "optional<literal<"conversation_part.list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ConversationRating": {
@@ -25319,6 +25785,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<string>",
           },
           "teammate": "optional<Reference>",
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ConversationSource": {
@@ -25357,6 +25826,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "The URL where the conversation was started. For Twitter, Email, and Bots, this will be blank.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ConversationStatistics": {
@@ -25439,6 +25911,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ConversationTeammates": {
         "docs": "The list of teammates who participated in the conversation (wrote at least one conversation part).",
@@ -25451,6 +25926,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "The type of the object - \`admin.list\`.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "CreateArticleRequest": {
@@ -25486,6 +25964,9 @@ The table below shows the operators you can use to define how you want to search
           },
           "translated_content": "optional<ArticleTranslatedContent>",
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "CreateArticleRequestState": {
         "docs": "Whether the article will be \`published\` or will be a \`draft\`. Defaults to draft. For multilingual articles, this will be the state of the default language's content.",
@@ -25493,6 +25974,9 @@ The table below shows the operators you can use to define how you want to search
           "published",
           "draft",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "CreateContactRequestTwo": "unknown",
       "CreateDataEventRequestTwo": "unknown",
@@ -25537,6 +26021,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "CreateOrUpdateTagRequest": {
         "docs": "You can create or update an existing tag.",
@@ -25550,6 +26037,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "CreatePhoneSwitchRequest": {
         "docs": "You can create an phone switch",
@@ -25560,10 +26050,14 @@ The table below shows the operators you can use to define how you want to search
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "CreateTicketReplyWithCommentRequest": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "ContactReplyTicketRequest",
           "AdminReplyTicketRequest",
@@ -25597,6 +26091,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "CreateTicketTypeRequestCategory": {
         "docs": "Category of the Ticket Type.",
@@ -25608,6 +26105,9 @@ The table below shows the operators you can use to define how you want to search
           },
           "Tracker",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "CursorPages": {
         "docs": "Cursor-based pagination is a technique used in the Intercom API to navigate through large amounts of data.
@@ -25632,6 +26132,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "type": "optional<literal<"pages">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "CustomAttributes": {
         "docs": "An object containing the different custom attributes associated to the conversation as key-value pairs. For relationship attributes the value will be a list of custom object instance models.",
@@ -25640,6 +26143,7 @@ A "cursor" or pointer is used to keep track of the current position in the resul
       "CustomAttributesValue": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "string",
           "optional<customObjectInstances.CustomObjectInstance>",
@@ -25648,6 +26152,7 @@ A "cursor" or pointer is used to keep track of the current position in the resul
       "CustomerRequest": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "CustomerRequestIntercomUserId",
           "CustomerRequestUserId",
@@ -25662,6 +26167,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "CustomerRequestUserId": {
         "docs": undefined,
@@ -25670,6 +26178,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "docs": "The external_id you have defined for the contact who is being added as a participant.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "DataAttributeList": {
@@ -25683,6 +26194,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "docs": "The type of the object",
             "type": "optional<literal<"list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "DataEventList": {
@@ -25701,12 +26215,18 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "type": "optional<literal<"event.list">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "DataEventListPages": {
         "docs": "Pagination",
         "properties": {
           "next": "optional<string>",
           "since": "optional<string>",
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "DataEventSummary": {
@@ -25733,6 +26253,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "DataEventSummaryItem": {
         "docs": "This will return a summary of a data event for the App.",
@@ -25757,6 +26280,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "docs": "The name of the event",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "DataExportCsv": {
@@ -25867,6 +26393,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "DeletedArticleObject": {
         "docs": "Response returned when an object is deleted",
@@ -25883,6 +26412,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "docs": "The type of object which was deleted. - article",
             "type": "optional<literal<"article">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "DeletedCollectionObject": {
@@ -25901,6 +26433,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "type": "optional<literal<"collection">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "DeletedCompanyObject": {
         "docs": "Response returned when an object is deleted",
@@ -25917,6 +26452,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "docs": "The type of object which was deleted. - \`company\`",
             "type": "optional<literal<"company">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "DeletedObject": {
@@ -25935,6 +26473,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "type": "optional<literal<"news-item">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "Email": {
         "docs": undefined,
@@ -25943,6 +26484,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "docs": "The email you have defined for the contact who is being added as a participant.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "Error": {
@@ -25967,6 +26511,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ErrorErrorsItem": {
         "docs": undefined,
@@ -25983,6 +26530,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "docs": "Optional. Human readable description of the error.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "File": {
@@ -26014,6 +26564,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "type": "optional<integer>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "GroupContent": {
         "docs": "The Content of a Group.",
@@ -26030,6 +26583,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "docs": "The type of object - \`group_content\` .",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "GroupTranslatedContent": {
@@ -26188,6 +26744,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "type": "optional<GroupContent>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "IntercomVersion": {
         "default": "2.11",
@@ -26263,6 +26822,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
           },
           "Unstable",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "LinkedObject": {
         "docs": "A linked conversation or ticket.",
@@ -26279,6 +26841,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "docs": "ticket or conversation",
             "type": "optional<LinkedObjectType>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "LinkedObjectList": {
@@ -26301,6 +26866,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "type": "optional<literal<"list">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "LinkedObjectType": {
         "docs": "ticket or conversation",
@@ -26308,6 +26876,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
           "ticket",
           "conversation",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "MultipleFilterSearchRequest": {
         "docs": "Search using Intercoms Search APIs with more than one filter.",
@@ -26318,6 +26889,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
           },
           "value": "optional<MultipleFilterSearchRequestValue>",
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "MultipleFilterSearchRequestOperator": {
         "docs": "An operator to allow boolean inspection between multiple fields.",
@@ -26325,10 +26899,14 @@ A "cursor" or pointer is used to keep track of the current position in the resul
           "AND",
           "OR",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "MultipleFilterSearchRequestValue": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           {
             "docs": "Add mutiple filters.",
@@ -26376,6 +26954,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "NewsItemRequestState": {
         "docs": "News items will not be visible to your users in the assigned newsfeeds until they are set live.",
@@ -26383,6 +26964,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
           "draft",
           "live",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "NoteList": {
         "docs": "A paginated list of notes associated with a contact.",
@@ -26401,6 +26985,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "OpenConversationRequest": {
         "docs": "Payload of the request to open a conversation",
@@ -26409,6 +26996,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "docs": "The id of the admin who is performing the action.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "PagesLink": {
@@ -26432,6 +27022,9 @@ Their responses are likely to contain a pages object that hosts pagination links
           "total_pages": "optional<integer>",
           "type": "optional<literal<"pages">>",
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "PaginatedResponse": {
         "docs": "Paginated Response",
@@ -26450,11 +27043,17 @@ Their responses are likely to contain a pages object that hosts pagination links
             "type": "optional<PaginatedResponseType>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "PaginatedResponseDataItem": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
         "union": {
           "news-item": "news.NewsItem",
           "newsfeed": "news.Newsfeed",
@@ -26469,6 +27068,9 @@ Their responses are likely to contain a pages object that hosts pagination links
             "value": "conversation.list",
           },
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "PartAttachment": {
         "docs": "The file attached to a part",
@@ -26502,6 +27104,9 @@ Their responses are likely to contain a pages object that hosts pagination links
             "type": "optional<integer>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "PhoneSwitch": {
         "docs": "Phone Switch Response",
@@ -26515,11 +27120,17 @@ Their responses are likely to contain a pages object that hosts pagination links
             "type": "optional<literal<"phone_call_redirect">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "RedactConversationRequest": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
         "union": {
           "conversation_part": {
             "docs": "Payload of the request to redact a conversation part",
@@ -26543,6 +27154,9 @@ Their responses are likely to contain a pages object that hosts pagination links
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "RedactConversationRequestSource": {
         "docs": "Payload of the request to redact a conversation source",
@@ -26555,6 +27169,9 @@ Their responses are likely to contain a pages object that hosts pagination links
             "docs": "The id of the source.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "Reference": {
@@ -26569,10 +27186,14 @@ Their responses are likely to contain a pages object that hosts pagination links
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ReplyConversationRequest": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "ContactReplyConversationRequest",
           "AdminReplyConversationRequest",
@@ -26584,10 +27205,14 @@ Their responses are likely to contain a pages object that hosts pagination links
           "pagination": "optional<StartingAfterPaging>",
           "query": "SearchRequestQuery",
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "SearchRequestQuery": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "SingleFilterSearchRequest",
           "MultipleFilterSearchRequest",
@@ -26609,6 +27234,9 @@ Their responses are likely to contain a pages object that hosts pagination links
             "type": "optional<literal<"segment.list">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "Segments": {
         "docs": "A list of segments objects attached to a specific contact.",
@@ -26621,6 +27249,9 @@ Their responses are likely to contain a pages object that hosts pagination links
             "docs": "The type of the object",
             "type": "optional<literal<"list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "SingleFilterSearchRequest": {
@@ -26638,6 +27269,9 @@ Their responses are likely to contain a pages object that hosts pagination links
             "docs": "The value that you want to search on.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "SingleFilterSearchRequestOperator": {
@@ -26666,6 +27300,9 @@ Their responses are likely to contain a pages object that hosts pagination links
             "value": "~",
           },
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "SlaApplied": {
         "docs": "The SLA Applied object contains the details for which SLA has been applied to this conversation.
@@ -26688,6 +27325,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "SlaAppliedSlaStatus": {
         "docs": "SLA statuses:
@@ -26700,6 +27340,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
           "cancelled",
           "active",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "SnoozeConversationRequest": {
         "docs": "Payload of the request to snooze a conversation",
@@ -26712,6 +27355,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "docs": "The time you want the conversation to reopen.",
             "type": "integer",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "SocialProfile": {
@@ -26736,6 +27382,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "StartingAfterPaging": {
         "docs": undefined,
@@ -26748,6 +27397,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "docs": "The cursor to use in the next request to get the next page of results.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "SubscriptionTypeList": {
@@ -26762,6 +27414,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "type": "optional<literal<"list">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "TagCompanyRequest": {
         "docs": "You can tag a single company or a list of companies.",
@@ -26774,6 +27429,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "docs": "The name of the tag, which will be created if not found.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "TagCompanyRequestCompaniesItem": {
@@ -26788,6 +27446,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "TagMultipleUsersRequest": {
         "docs": "You can tag a list of users.",
@@ -26798,6 +27459,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
           },
           "users": "list<TagMultipleUsersRequestUsersItem>",
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "TagMultipleUsersRequestUsersItem": {
         "docs": undefined,
@@ -26806,6 +27470,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "docs": "The Intercom defined id representing the user.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "Tags": {
@@ -26820,6 +27487,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "type": "optional<literal<"tag.list">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "TeamList": {
         "docs": "This will return a list of team objects for the App.",
@@ -26832,6 +27502,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "docs": "The type of the object",
             "type": "optional<literal<"team.list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "TeamPriorityLevel": {
@@ -26846,6 +27519,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "type": "optional<list<integer>>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "TicketCustomAttributes": {
         "docs": "An object containing the different attributes associated to the ticket as key-value pairs. For the default title and description attributes, the keys are \`_default_title_\` and \`_default_description_\`.",
@@ -26854,6 +27530,7 @@ Important: if there are any canceled sla_events for the conversation - meaning a
       "TicketCustomAttributesValue": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "optional<string>",
           "double",
@@ -26878,6 +27555,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "docs": "Always ticket.list",
             "type": "optional<literal<"ticket.list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "TicketPartAuthor": {
@@ -26906,6 +27586,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "type": "optional<TicketPartAuthorType>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "TicketPartAuthorType": {
         "docs": "The type of the author",
@@ -26915,6 +27598,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
           "team",
           "user",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "TicketParts": {
         "docs": "A list of Ticket Part objects for each note and event in the ticket. There is a limit of 500 parts.",
@@ -26931,6 +27617,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "docs": "",
             "type": "optional<literal<"ticket_part.list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "TicketReply": {
@@ -26970,6 +27659,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "type": "optional<integer>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "TicketReplyPartType": {
         "docs": "Type of the part",
@@ -26978,6 +27670,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
           "comment",
           "quick_reply",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "TicketRequestCustomAttributes": {
         "docs": "The attributes set on the ticket. When setting the default title and description attributes, the attribute keys that should be used are \`_default_title_\` and \`_default_description_\`. When setting ticket type attributes of the list attribute type, the key should be the attribute name and the value of the attribute should be the list item id, obtainable by [listing the ticket type](ref:get_ticket-types). For example, if the ticket type has an attribute called \`priority\` of type \`list\`, the key should be \`priority\` and the value of the attribute should be the guid of the list item (e.g. \`de1825a0-0164-4070-8ca6-13e22462fa7e\`).",
@@ -26986,6 +27681,7 @@ Important: if there are any canceled sla_events for the conversation - meaning a
       "TicketRequestCustomAttributesValue": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "optional<string>",
           "double",
@@ -27069,6 +27765,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "TicketTypeAttributeList": {
         "docs": "A list of attributes associated with a given ticket type.",
@@ -27082,6 +27781,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "TicketTypeList": {
         "docs": "A list of ticket types associated with a given workspace.",
@@ -27094,6 +27796,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "docs": "String representing the object's type. Always has the value \`ticket_type.list\`.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "Translation": {
@@ -27112,6 +27817,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "UntagCompanyRequest": {
         "docs": "You can tag a single company or a list of companies.",
@@ -27124,6 +27832,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "docs": "The name of the tag which will be untagged from the company",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "UntagCompanyRequestCompaniesItem": {
@@ -27141,6 +27852,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "docs": "Always set to true",
             "type": "optional<boolean>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "UpdateArticleRequest": {
@@ -27176,6 +27890,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
           },
           "translated_content": "optional<ArticleTranslatedContent>",
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "UpdateArticleRequestState": {
         "docs": "Whether the article will be \`published\` or will be a \`draft\`. Defaults to draft. For multilingual articles, this will be the state of the default language's content.",
@@ -27183,6 +27900,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
           "published",
           "draft",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "UpdateTicketTypeRequest": {
         "docs": "The request payload for updating a ticket type.
@@ -27216,6 +27936,9 @@ You can copy the \`icon\` property for your ticket type from [Twemoji Cheatsheet
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "UpdateTicketTypeRequestCategory": {
         "docs": "Category of the Ticket Type.",
@@ -27227,6 +27950,9 @@ You can copy the \`icon\` property for your ticket type from [Twemoji Cheatsheet
           },
           "Tracker",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "UpdateVisitorRequestOne": "unknown",
       "Visitor": {
@@ -27354,6 +28080,9 @@ You can copy the \`icon\` property for your ticket type from [Twemoji Cheatsheet
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "VisitorAvatar": {
         "docs": undefined,
@@ -27374,6 +28103,9 @@ You can copy the \`icon\` property for your ticket type from [Twemoji Cheatsheet
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "VisitorCompanies": {
         "docs": undefined,
@@ -27383,6 +28115,9 @@ You can copy the \`icon\` property for your ticket type from [Twemoji Cheatsheet
             "docs": "The type of the object",
             "type": "optional<literal<"company.list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "VisitorDeletedObject": {
@@ -27400,6 +28135,9 @@ You can copy the \`icon\` property for your ticket type from [Twemoji Cheatsheet
             "docs": "Automatically generated identifier for the Visitor.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "VisitorLocationData": {
@@ -27439,6 +28177,9 @@ You can copy the \`icon\` property for your ticket type from [Twemoji Cheatsheet
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "VisitorSegments": {
         "docs": undefined,
@@ -27448,6 +28189,9 @@ You can copy the \`icon\` property for your ticket type from [Twemoji Cheatsheet
             "docs": "The type of the object",
             "type": "optional<literal<"segment.list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "VisitorSocialProfiles": {
@@ -27459,6 +28203,9 @@ You can copy the \`icon\` property for your ticket type from [Twemoji Cheatsheet
             "type": "optional<literal<"social_profile.list">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "VisitorTags": {
         "docs": undefined,
@@ -27468,6 +28215,9 @@ You can copy the \`icon\` property for your ticket type from [Twemoji Cheatsheet
             "docs": "The type of the object",
             "type": "optional<literal<"tag.list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "VisitorTagsTagsItem": {
@@ -27485,6 +28235,9 @@ You can copy the \`icon\` property for your ticket type from [Twemoji Cheatsheet
             "docs": "The type of the object",
             "type": "optional<literal<"tag">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
     },
@@ -27893,6 +28646,9 @@ You can view the currently authorised admin along with the embedded app object (
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "Admin": {
@@ -27946,6 +28702,9 @@ You can view the currently authorised admin along with the embedded app object (
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
       },
     },
@@ -27983,6 +28742,9 @@ You can view the currently authorised admin along with the embedded app object (
               "type": "optional<AiAgentSourceType>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "AiAgentSourceType": {
           "docs": "The type of the source that triggered AI Agent involvement in the conversation.",
@@ -27993,6 +28755,9 @@ You can view the currently authorised admin along with the embedded app object (
             "workflow_preview",
             "fin_preview",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
       },
     },
@@ -28018,6 +28783,9 @@ You can view the currently authorised admin along with the embedded app object (
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "ContentSourceContentType": {
           "docs": "The type of the content source.",
@@ -28028,6 +28796,9 @@ You can view the currently authorised admin along with the embedded app object (
             "content_snippet",
             "workflow_connector_action",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
       },
     },
@@ -30563,6 +31334,9 @@ You can view the currently authorised admin along with the embedded app object (
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "Article": {
@@ -30573,6 +31347,9 @@ You can view the currently authorised admin along with the embedded app object (
           "properties": {
             "statistics": "optional<root.ArticleStatistics>",
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "ArticleListItemState": {
           "default": "draft",
@@ -30581,6 +31358,9 @@ You can view the currently authorised admin along with the embedded app object (
             "published",
             "draft",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "ArticleSearchHighlights": {
           "docs": "The highlighted results of an Article search. In the examples provided my search query is always "my query".",
@@ -30598,6 +31378,9 @@ You can view the currently authorised admin along with the embedded app object (
               "type": "optional<list<ArticleSearchHighlightsHighlightedTitleItem>>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "ArticleSearchHighlightsHighlightedSummaryItemItem": {
           "docs": "An instance of highlighted summary text.",
@@ -30611,6 +31394,9 @@ You can view the currently authorised admin along with the embedded app object (
               "type": "optional<ArticleSearchHighlightsHighlightedSummaryItemItemType>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "ArticleSearchHighlightsHighlightedSummaryItemItemType": {
           "docs": "The type of text - \`highlight\` or \`plain\`.",
@@ -30618,6 +31404,9 @@ You can view the currently authorised admin along with the embedded app object (
             "highlight",
             "plain",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "ArticleSearchHighlightsHighlightedTitleItem": {
           "docs": "A highlighted article title.",
@@ -30631,6 +31420,9 @@ You can view the currently authorised admin along with the embedded app object (
               "type": "optional<ArticleSearchHighlightsHighlightedTitleItemType>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "ArticleSearchHighlightsHighlightedTitleItemType": {
           "docs": "The type of text - \`highlight\` or \`plain\`.",
@@ -30638,6 +31430,9 @@ You can view the currently authorised admin along with the embedded app object (
             "highlight",
             "plain",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "ArticleSearchResponse": {
           "docs": "The results of an Article search",
@@ -30656,6 +31451,9 @@ You can view the currently authorised admin along with the embedded app object (
               "type": "optional<literal<"list">>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "ArticleSearchResponseData": {
           "docs": "An object containing the results of the search.",
@@ -30668,6 +31466,9 @@ You can view the currently authorised admin along with the embedded app object (
               "docs": "A corresponding array of highlighted Article content",
               "type": "optional<list<ArticleSearchHighlights>>",
             },
+          },
+          "source": {
+            "openapi": "intercom/openapi.yml",
           },
         },
         "Articles": {
@@ -30735,6 +31536,9 @@ You can view the currently authorised admin along with the embedded app object (
               "docs": "The id of the workspace which the article belongs to.",
               "type": "optional<string>",
             },
+          },
+          "source": {
+            "openapi": "intercom/openapi.yml",
           },
         },
       },
@@ -31803,6 +32607,9 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "Company": {
@@ -31882,6 +32689,9 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "CompanyPlan": {
           "docs": undefined,
@@ -31899,6 +32709,9 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "CompanySegments": {
           "docs": "The list of segments associated with the company",
@@ -31909,6 +32722,9 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
               "type": "optional<literal<"segment.list">>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "CompanyTags": {
           "docs": "The list of tags associated with the company",
@@ -31918,6 +32734,9 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
               "docs": "The type of the object",
               "type": "optional<literal<"tag.list">>",
             },
+          },
+          "source": {
+            "openapi": "intercom/openapi.yml",
           },
         },
       },
@@ -33169,6 +33988,9 @@ The data property will show a combined list of:
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "Contact": {
@@ -33341,6 +34163,9 @@ The data property will show a combined list of:
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "ContactAvatar": {
           "docs": undefined,
@@ -33359,6 +34184,9 @@ The data property will show a combined list of:
               "docs": "The type of object",
               "type": "optional<string>",
             },
+          },
+          "source": {
+            "openapi": "intercom/openapi.yml",
           },
         },
       },
@@ -37989,11 +38817,15 @@ If you want to reply to a coveration or take an action such as assign, unassign,
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "AttachContactToConversationRequestCustomer": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "AttachContactToConversationRequestCustomerIntercomUserId",
             "AttachContactToConversationRequestCustomerUserId",
@@ -38009,6 +38841,9 @@ If you want to reply to a coveration or take an action such as assign, unassign,
               "type": "string",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "AttachContactToConversationRequestCustomerUserId": {
           "docs": undefined,
@@ -38018,6 +38853,9 @@ If you want to reply to a coveration or take an action such as assign, unassign,
               "docs": "The external_id you have defined for the contact who is being added as a participant.",
               "type": "string",
             },
+          },
+          "source": {
+            "openapi": "intercom/openapi.yml",
           },
         },
         "Conversation": {
@@ -38092,6 +38930,9 @@ If you want to reply to a coveration or take an action such as assign, unassign,
               "type": "optional<integer>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "ConversationPriority": {
           "docs": "If marked as priority, it will return priority or else not_priority.",
@@ -38099,6 +38940,9 @@ If you want to reply to a coveration or take an action such as assign, unassign,
             "priority",
             "not_priority",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "ConversationState": {
           "docs": "Can be set to "open", "closed" or "snoozed".",
@@ -38107,6 +38951,9 @@ If you want to reply to a coveration or take an action such as assign, unassign,
             "closed",
             "snoozed",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "CreateConversationRequestFrom": {
           "docs": undefined,
@@ -38126,6 +38973,9 @@ If you want to reply to a coveration or take an action such as assign, unassign,
               "type": "CreateConversationRequestFromType",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "CreateConversationRequestFromType": {
           "docs": "The role associated to the contact - user or lead.",
@@ -38134,6 +38984,9 @@ If you want to reply to a coveration or take an action such as assign, unassign,
             "user",
             "contact",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "Email": {
           "docs": undefined,
@@ -38144,11 +38997,17 @@ If you want to reply to a coveration or take an action such as assign, unassign,
               "type": "string",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "ManageConversationRequestBody": {
           "base-properties": {},
           "discriminant": "message_type",
           "docs": undefined,
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
           "union": {
             "assignment": "root.AssignConversationRequest",
             "close": "root.CloseConversationRequest",
@@ -38179,6 +39038,9 @@ If you want to reply to a coveration or take an action such as assign, unassign,
               "docs": "The identifier of the custom object type that defines the structure of the custom object instance.",
               "type": "optional<string>",
             },
+          },
+          "source": {
+            "openapi": "intercom/openapi.yml",
           },
         },
       },
@@ -39060,6 +39922,9 @@ You can update a data attribute.
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "CreateDataAttributeRequestDataType": {
@@ -39072,6 +39937,9 @@ You can update a data attribute.
             "datetime",
             "date",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "CreateDataAttributeRequestModel": {
           "docs": "The model that the data attribute belongs to.",
@@ -39079,6 +39947,9 @@ You can update a data attribute.
             "contact",
             "company",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "DataAttribute": {
           "docs": "Data Attributes are metadata used to describe your contact, company and conversation models. These include standard and custom attributes. By using the data attributes endpoint, you can get the global list of attributes for your workspace, as well as create and archive custom attributes.",
@@ -39152,6 +40023,9 @@ You can update a data attribute.
               "type": "optional<integer>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "DataAttributeDataType": {
           "docs": "The data type of the attribute.",
@@ -39162,6 +40036,9 @@ You can update a data attribute.
             "boolean",
             "date",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "DataAttributeModel": {
           "docs": "Value is \`contact\` for user/lead attributes and \`company\` for company attributes.",
@@ -39169,6 +40046,9 @@ You can update a data attribute.
             "contact",
             "company",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "LisDataAttributesRequestModel": {
           "enum": [
@@ -39176,6 +40056,9 @@ You can update a data attribute.
             "company",
             "conversation",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
       },
     },
@@ -39324,6 +40207,9 @@ You can optionally define the result page size as well with the \`per_page\` par
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "CreateDataEventSummariesRequestEventSummaries": {
@@ -39345,6 +40231,9 @@ You can optionally define the result page size as well with the \`per_page\` par
               "docs": "The last time the event was sent",
               "type": "optional<integer>",
             },
+          },
+          "source": {
+            "openapi": "intercom/openapi.yml",
           },
         },
         "DataEvent": {
@@ -39383,10 +40272,14 @@ You can optionally define the result page size as well with the \`per_page\` par
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "LisDataEventsRequestFilter": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "LisDataEventsRequestFilterUserId",
             "LisDataEventsRequestFilterIntercomUserId",
@@ -39398,17 +40291,26 @@ You can optionally define the result page size as well with the \`per_page\` par
           "properties": {
             "email": "string",
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "LisDataEventsRequestFilterIntercomUserId": {
           "docs": undefined,
           "properties": {
             "intercom_user_id": "string",
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "LisDataEventsRequestFilterUserId": {
           "docs": undefined,
           "properties": {
             "user_id": "string",
+          },
+          "source": {
+            "openapi": "intercom/openapi.yml",
           },
         },
       },
@@ -39583,6 +40485,9 @@ Your exported message data will be streamed continuously back down to you in a g
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "DataExport": {
@@ -39605,6 +40510,9 @@ Your exported message data will be streamed continuously back down to you in a g
               "type": "optional<DataExportStatus>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "DataExportStatus": {
           "docs": "The current state of your job.",
@@ -39616,6 +40524,9 @@ Your exported message data will be streamed continuously back down to you in a g
             "no_data",
             "canceled",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
       },
     },
@@ -40984,6 +41895,9 @@ Collections will be returned in descending order on the \`updated_at\` attribute
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "Collection": {
@@ -41039,6 +41953,9 @@ Collections will be returned in descending order on the \`updated_at\` attribute
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "HelpCenter": {
           "docs": "Help Centers contain collections",
@@ -41072,6 +41989,9 @@ Collections will be returned in descending order on the \`updated_at\` attribute
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "HelpCenterList": {
           "docs": "A list of Help Centers belonging to the App",
@@ -41084,6 +42004,9 @@ Collections will be returned in descending order on the \`updated_at\` attribute
               "docs": "The type of the object - \`list\`.",
               "type": "optional<literal<"list">>",
             },
+          },
+          "source": {
+            "openapi": "intercom/openapi.yml",
           },
         },
       },
@@ -41347,6 +42270,9 @@ This will return the Message model that has been created.
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "Message": {
@@ -41381,6 +42307,9 @@ This will return the Message model that has been created.
               "type": "string",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "MessageMessageType": {
           "docs": "The type of message that was sent. Can be email, inapp, facebook or twitter.",
@@ -41390,6 +42319,9 @@ This will return the Message model that has been created.
             "facebook",
             "twitter",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
       },
     },
@@ -41839,6 +42771,9 @@ This will return the Message model that has been created.
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "NewsItem": {
@@ -41903,6 +42838,9 @@ This will return the Message model that has been created.
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "NewsItemState": {
           "docs": "News items will not be visible to your users in the assigned newsfeeds until they are set live.",
@@ -41910,6 +42848,9 @@ This will return the Message model that has been created.
             "draft",
             "live",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "Newsfeed": {
           "docs": "A newsfeed is a collection of news items, targeted to a specific audience.
@@ -41934,6 +42875,9 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
               "type": "optional<integer>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "NewsfeedAssignment": {
           "docs": "Assigns a news item to a newsfeed.",
@@ -41946,6 +42890,9 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
               "docs": "Publish date of the news item on the newsfeed, use this field if you want to set a publish date in the past (e.g. when importing existing news items). On write, this field will be ignored if the news item state is "draft".",
               "type": "optional<integer>",
             },
+          },
+          "source": {
+            "openapi": "intercom/openapi.yml",
           },
         },
       },
@@ -42312,6 +43259,9 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "Note": {
@@ -42342,6 +43292,9 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "NoteContact": {
           "docs": "Represents the contact that the note was created about.",
@@ -42354,6 +43307,9 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
               "docs": "String representing the object's type. Always has the value \`contact\`.",
               "type": "optional<string>",
             },
+          },
+          "source": {
+            "openapi": "intercom/openapi.yml",
           },
         },
       },
@@ -42467,6 +43423,9 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "Segment": {
@@ -42501,6 +43460,9 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
               "type": "optional<integer>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "SegmentPersonType": {
           "docs": "Type of the contact: contact (lead) or user.",
@@ -42508,6 +43470,9 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
             "contact",
             "user",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
       },
     },
@@ -42775,6 +43740,9 @@ This will return a subscription type model for the subscription type that was ad
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "SubscriptionType": {
@@ -42806,6 +43774,9 @@ This will return a subscription type model for the subscription type that was ad
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "SubscriptionTypeConsentType": {
           "docs": "Describes the type of consent.",
@@ -42813,12 +43784,18 @@ This will return a subscription type model for the subscription type that was ad
             "opt_out",
             "opt_in",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "SubscriptionTypeContentTypesItem": {
           "enum": [
             "email",
             "sms_message",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "SubscriptionTypeState": {
           "docs": "The state of the subscription type.",
@@ -42827,6 +43804,9 @@ This will return a subscription type model for the subscription type that was ad
             "draft",
             "archived",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
       },
     },
@@ -42930,6 +43910,9 @@ If custom attributes are specified, they will be added to the user or lead's cus
               "type": "optional<root.PhoneSwitch>",
             },
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
     },
@@ -43700,11 +44683,15 @@ This will return a tag object.
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "CreateTagRequestBody": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "root.CreateOrUpdateTagRequest",
             "root.TagCompanyRequest",
@@ -43732,6 +44719,9 @@ This will return a tag object.
               "docs": "value is "tag"",
               "type": "optional<string>",
             },
+          },
+          "source": {
+            "openapi": "intercom/openapi.yml",
           },
         },
       },
@@ -43830,6 +44820,9 @@ This will return a tag object.
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "Team": {
@@ -43852,6 +44845,9 @@ This will return a tag object.
               "docs": "Value is always "team"",
               "type": "optional<string>",
             },
+          },
+          "source": {
+            "openapi": "intercom/openapi.yml",
           },
         },
       },
@@ -44091,6 +45087,9 @@ This will return a tag object.
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "CreateTicketTypeAttributeRequestDataType": {
@@ -44104,6 +45103,9 @@ This will return a tag object.
             "datetime",
             "files",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
       },
     },
@@ -44375,6 +45377,9 @@ You can update a ticket type.
               "type": "optional<tickets.TicketType>",
             },
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
     },
@@ -45956,6 +46961,9 @@ The table below shows the operators you can use to define how you want to search
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "types": {
         "Contacts": {
@@ -45970,10 +46978,14 @@ The table below shows the operators you can use to define how you want to search
               "type": "optional<literal<"contact.list">>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "CreateTicketRequestContactsItem": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "ID",
             "CreateTicketRequestContactsItemExternalId",
@@ -45988,6 +47000,9 @@ The table below shows the operators you can use to define how you want to search
               "type": "string",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "Email": {
           "docs": undefined,
@@ -45996,6 +47011,9 @@ The table below shows the operators you can use to define how you want to search
               "docs": "The email you have defined for the contact who is being added as a participant. If a contact with this email does not exist, one will be created.",
               "type": "string",
             },
+          },
+          "source": {
+            "openapi": "intercom/openapi.yml",
           },
         },
         "ID": {
@@ -46006,10 +47024,14 @@ The table below shows the operators you can use to define how you want to search
               "type": "string",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "ReplyTicketRequestBody": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "root.ContactReplyTicketRequest",
             "root.AdminReplyTicketRequest",
@@ -46080,6 +47102,9 @@ The table below shows the operators you can use to define how you want to search
               "type": "optional<integer>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "TicketCategory": {
           "docs": "Category of the Ticket.",
@@ -46091,6 +47116,9 @@ The table below shows the operators you can use to define how you want to search
             },
             "Tracker",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "TicketPart": {
           "docs": "A Ticket Part represents a message in the ticket.",
@@ -46145,6 +47173,9 @@ The table below shows the operators you can use to define how you want to search
               "type": "optional<integer>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "TicketPartPreviousTicketState": {
           "docs": "The previous state of the ticket.",
@@ -46154,6 +47185,9 @@ The table below shows the operators you can use to define how you want to search
             "waiting_on_customer",
             "resolved",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "TicketPartTicketState": {
           "docs": "The state of the ticket.",
@@ -46163,6 +47197,9 @@ The table below shows the operators you can use to define how you want to search
             "waiting_on_customer",
             "resolved",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "TicketTicketState": {
           "docs": "The state the ticket is currently in",
@@ -46172,6 +47209,9 @@ The table below shows the operators you can use to define how you want to search
             "waiting_on_customer",
             "resolved",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "TicketType": {
           "docs": "A ticket type, used to define the data fields to be captured in a ticket.",
@@ -46218,6 +47258,9 @@ The table below shows the operators you can use to define how you want to search
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "TicketTypeCategory": {
           "docs": "Category of the Ticket Type.",
@@ -46229,6 +47272,9 @@ The table below shows the operators you can use to define how you want to search
             },
             "Tracker",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "UpdateTicketRequestAssignment": {
           "docs": undefined,
@@ -46242,6 +47288,9 @@ The table below shows the operators you can use to define how you want to search
               "type": "optional<string>",
             },
           },
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
         "UpdateTicketRequestState": {
           "docs": "The state of the ticket.",
@@ -46250,6 +47299,9 @@ The table below shows the operators you can use to define how you want to search
             "waiting_on_customer",
             "resolved",
           ],
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
         },
       },
     },
@@ -46762,6 +47814,9 @@ The table below shows the operators you can use to define how you want to search
               "type": "optional<root.Visitor>",
             },
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
     },
@@ -48362,6 +49417,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<ActivityLogPerformedBy>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ActivityLogActivityType": {
         "enum": [
@@ -48433,6 +49491,9 @@ The table below shows the operators you can use to define how you want to search
           "upfront_email_collection_change",
           "welcome_message_change",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ActivityLogList": {
         "docs": "A paginated list of activity logs.",
@@ -48446,6 +49507,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "String representing the object's type. Always has the value \`activity_log.list\`.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ActivityLogMetadata": {
@@ -48488,6 +49552,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ActivityLogPerformedBy": {
         "docs": "Details about the Admin involved in the activity.",
@@ -48508,6 +49575,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "String representing the object's type. Always has the value \`admin\`.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "AddressableList": {
@@ -48537,6 +49607,9 @@ The table below shows the operators you can use to define how you want to search
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "Admin": {
@@ -48591,6 +49664,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "AdminPriorityLevel": {
         "docs": "Admin priority levels for the team",
@@ -48603,6 +49679,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "The secondary admin ids for the team",
             "type": "optional<list<integer>>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "AdminReplyConversationRequest": {
@@ -48631,12 +49710,18 @@ The table below shows the operators you can use to define how you want to search
           "message_type": "AdminReplyConversationRequestMessageType",
           "type": "literal<"admin">",
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "AdminReplyConversationRequestMessageType": {
         "enum": [
           "comment",
           "note",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "AdminReplyTicketRequest": {
         "docs": "Payload of the request to reply on behalf of an admin",
@@ -48664,6 +49749,9 @@ The table below shows the operators you can use to define how you want to search
           },
           "type": "literal<"admin">",
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "AdminReplyTicketRequestMessageType": {
         "enum": [
@@ -48671,6 +49759,9 @@ The table below shows the operators you can use to define how you want to search
           "note",
           "quick_reply",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "AdminReplyTicketRequestReplyOptionsItem": {
         "docs": undefined,
@@ -48689,6 +49780,9 @@ The table below shows the operators you can use to define how you want to search
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "AdminWithAppAvatar": {
@@ -48710,6 +49804,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "Admins": {
         "docs": "A list of admins associated with a given workspace.",
@@ -48722,6 +49819,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "String representing the object's type. Always has the value \`admin.list\`.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "App": {
@@ -48756,6 +49856,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ArticleContent": {
@@ -48798,6 +49901,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ArticleContentState": {
         "docs": "Whether the article is \`published\` or is a \`draft\` .",
@@ -48805,6 +49911,9 @@ The table below shows the operators you can use to define how you want to search
           "published",
           "draft",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ArticleStatistics": {
         "docs": "The statistics of an article.",
@@ -48837,6 +49946,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "The number of total views the article has received.",
             "type": "optional<integer>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ArticleTranslatedContent": {
@@ -48995,6 +50107,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<ArticleContent>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "Articles": {
         "docs": "This will return a list of articles for the App.",
@@ -49012,6 +50127,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "The type of the object - \`list\`.",
             "type": "optional<literal<"list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "AssignConversationRequest": {
@@ -49031,12 +50149,18 @@ The table below shows the operators you can use to define how you want to search
           },
           "type": "AssignConversationRequestType",
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "AssignConversationRequestType": {
         "enum": [
           "admin",
           "team",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "CloseConversationRequest": {
         "docs": "Payload of the request to close a conversation",
@@ -49050,6 +50174,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<string>",
           },
           "type": "literal<"admin">",
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "Collections": {
@@ -49069,6 +50196,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<literal<"list">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "Companies": {
         "docs": "This will return a list of companies for the App.",
@@ -49086,6 +50216,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "The type of object - \`list\`.",
             "type": "optional<literal<"list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "CompanyAttachedContacts": {
@@ -49105,6 +50238,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<literal<"list">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "CompanyAttachedSegments": {
         "docs": "A list of Segment Objects",
@@ -49117,6 +50253,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "The type of object - \`list\`",
             "type": "optional<literal<"list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "CompanyScroll": {
@@ -49136,6 +50275,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "The type of object - \`list\`",
             "type": "optional<literal<"list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ContactArchived": {
@@ -49158,6 +50300,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<literal<"contact">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ContactAttachedCompanies": {
         "docs": "A list of Company Objects",
@@ -49175,6 +50320,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "The type of object",
             "type": "optional<literal<"list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ContactCompanies": {
@@ -49199,6 +50347,9 @@ The table below shows the operators you can use to define how you want to search
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ContactDeleted": {
         "docs": "deleted contact object",
@@ -49220,6 +50371,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<literal<"contact">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ContactList": {
         "docs": "Contacts are your users in Intercom.",
@@ -49237,6 +50391,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "Always list",
             "type": "optional<literal<"list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ContactLocation": {
@@ -49258,6 +50415,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "Always location",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ContactNotes": {
@@ -49286,6 +50446,9 @@ The table below shows the operators you can use to define how you want to search
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ContactReference": {
         "docs": "reference to contact object",
@@ -49302,6 +50465,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "always contact",
             "type": "optional<literal<"contact">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ContactReplyBaseRequest": {
@@ -49322,10 +50488,14 @@ The table below shows the operators you can use to define how you want to search
           "message_type": "literal<"comment">",
           "type": "literal<"user">",
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ContactReplyConversationRequest": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "ContactReplyIntercomUserIdRequest",
           "Email",
@@ -49347,6 +50517,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ContactReplyTicketIntercomUserIdRequest": {
         "docs": "Payload of the request to reply on behalf of a contact using their \`intercom_user_id\`",
@@ -49359,10 +50532,14 @@ The table below shows the operators you can use to define how you want to search
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ContactReplyTicketRequest": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "ContactReplyTicketIntercomUserIdRequest",
           "ContactReplyTicketUserIdRequest",
@@ -49380,6 +50557,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ContactReplyUserIdRequest": {
         "docs": "Payload of the request to reply on behalf of a contact using their \`user_id\`",
@@ -49396,6 +50576,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ContactSocialProfiles": {
         "docs": "An object containing social profiles that a contact has.",
@@ -49404,6 +50587,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "A list of social profiles objects associated with the contact.",
             "type": "optional<list<SocialProfile>>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ContactSubscriptionTypes": {
@@ -49432,6 +50618,9 @@ The table below shows the operators you can use to define how you want to search
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ContactTags": {
         "docs": "An object containing tags meta data about the tags that a contact has. Up to 10 will be displayed here. Use the url to get more.",
@@ -49459,6 +50648,9 @@ The table below shows the operators you can use to define how you want to search
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ContactUnarchived": {
         "docs": "unarchived contact object",
@@ -49480,6 +50672,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<literal<"contact">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "Contacts": {
         "docs": "The list of contacts (users or leads) involved in this conversation. This will only contain one customer unless more were added via the group conversation feature.",
@@ -49492,6 +50687,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "",
             "type": "optional<literal<"contact.list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ContentSourcesList": {
@@ -49506,6 +50704,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<integer>",
           },
           "type": "optional<literal<"content_source.list">>",
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ConversationAttachmentFiles": {
@@ -49524,6 +50725,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ConversationFirstContactReply": {
         "docs": "An object containing information on the first users message. For a contact initiated message this will represent the users original message.",
@@ -49540,6 +50744,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ConversationList": {
@@ -49558,6 +50765,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "Always conversation.list",
             "type": "optional<literal<"conversation.list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ConversationPart": {
@@ -49609,6 +50819,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<integer>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ConversationPartAuthor": {
         "docs": "The object who initiated the conversation, which can be a Contact, Admin or Team. Bots and campaigns send messages on behalf of Admins or Teams. For Twitter, this will be blank.",
@@ -49636,6 +50849,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ConversationParts": {
         "docs": "A list of Conversation Part objects for each part message in the conversation. This is only returned when Retrieving a Conversation, and ignored when Listing all Conversations. There is a limit of 500 parts.",
@@ -49652,6 +50868,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "",
             "type": "optional<literal<"conversation_part.list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ConversationRating": {
@@ -49671,6 +50890,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<string>",
           },
           "teammate": "optional<Reference>",
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ConversationSource": {
@@ -49709,6 +50931,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "The URL where the conversation was started. For Twitter, Email, and Bots, this will be blank.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "ConversationStatistics": {
@@ -49791,6 +51016,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ConversationTeammates": {
         "docs": "The list of teammates who participated in the conversation (wrote at least one conversation part).",
@@ -49803,6 +51031,9 @@ The table below shows the operators you can use to define how you want to search
             "docs": "The type of the object - \`admin.list\`.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "CreateArticleRequest": {
@@ -49838,6 +51069,9 @@ The table below shows the operators you can use to define how you want to search
           },
           "translated_content": "optional<ArticleTranslatedContent>",
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "CreateArticleRequestState": {
         "docs": "Whether the article will be \`published\` or will be a \`draft\`. Defaults to draft. For multilingual articles, this will be the state of the default language's content.",
@@ -49845,6 +51079,9 @@ The table below shows the operators you can use to define how you want to search
           "published",
           "draft",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "CreateContactRequestTwo": "unknown",
       "CreateDataEventRequestTwo": "unknown",
@@ -49889,6 +51126,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "CreateOrUpdateTagRequest": {
         "docs": "You can create or update an existing tag.",
@@ -49902,6 +51142,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "CreatePhoneSwitchRequest": {
         "docs": "You can create an phone switch",
@@ -49912,10 +51155,14 @@ The table below shows the operators you can use to define how you want to search
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "CreateTicketReplyWithCommentRequest": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "ContactReplyTicketRequest",
           "AdminReplyTicketRequest",
@@ -49949,6 +51196,9 @@ The table below shows the operators you can use to define how you want to search
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "CreateTicketTypeRequestCategory": {
         "docs": "Category of the Ticket Type.",
@@ -49960,6 +51210,9 @@ The table below shows the operators you can use to define how you want to search
           },
           "Tracker",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "CursorPages": {
         "docs": "Cursor-based pagination is a technique used in the Intercom API to navigate through large amounts of data.
@@ -49984,6 +51237,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "type": "optional<literal<"pages">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "CustomAttributes": {
         "docs": "An object containing the different custom attributes associated to the conversation as key-value pairs. For relationship attributes the value will be a list of custom object instance models.",
@@ -49992,6 +51248,7 @@ A "cursor" or pointer is used to keep track of the current position in the resul
       "CustomAttributesValue": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "string",
           "optional<customObjectInstances.CustomObjectInstance>",
@@ -50000,6 +51257,7 @@ A "cursor" or pointer is used to keep track of the current position in the resul
       "CustomerRequest": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "CustomerRequestIntercomUserId",
           "CustomerRequestUserId",
@@ -50014,6 +51272,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "CustomerRequestUserId": {
         "docs": undefined,
@@ -50022,6 +51283,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "docs": "The external_id you have defined for the contact who is being added as a participant.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "DataAttributeList": {
@@ -50035,6 +51299,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "docs": "The type of the object",
             "type": "optional<literal<"list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "DataEventList": {
@@ -50053,12 +51320,18 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "type": "optional<literal<"event.list">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "DataEventListPages": {
         "docs": "Pagination",
         "properties": {
           "next": "optional<string>",
           "since": "optional<string>",
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "DataEventSummary": {
@@ -50085,6 +51358,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "DataEventSummaryItem": {
         "docs": "This will return a summary of a data event for the App.",
@@ -50109,6 +51385,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "docs": "The name of the event",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "DataExportCsv": {
@@ -50219,6 +51498,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "DeletedArticleObject": {
         "docs": "Response returned when an object is deleted",
@@ -50235,6 +51517,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "docs": "The type of object which was deleted. - article",
             "type": "optional<literal<"article">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "DeletedCollectionObject": {
@@ -50253,6 +51538,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "type": "optional<literal<"collection">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "DeletedCompanyObject": {
         "docs": "Response returned when an object is deleted",
@@ -50269,6 +51557,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "docs": "The type of object which was deleted. - \`company\`",
             "type": "optional<literal<"company">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "DeletedObject": {
@@ -50287,6 +51578,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "type": "optional<literal<"news-item">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "Email": {
         "docs": undefined,
@@ -50295,6 +51589,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "docs": "The email you have defined for the contact who is being added as a participant.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "Error": {
@@ -50319,6 +51616,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ErrorErrorsItem": {
         "docs": undefined,
@@ -50335,6 +51635,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "docs": "Optional. Human readable description of the error.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "File": {
@@ -50366,6 +51669,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "type": "optional<integer>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "GroupContent": {
         "docs": "The Content of a Group.",
@@ -50382,6 +51688,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "docs": "The type of object - \`group_content\` .",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "GroupTranslatedContent": {
@@ -50540,6 +51849,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "type": "optional<GroupContent>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "IntercomVersion": {
         "default": "2.11",
@@ -50615,6 +51927,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
           },
           "Unstable",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "LinkedObject": {
         "docs": "A linked conversation or ticket.",
@@ -50631,6 +51946,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "docs": "ticket or conversation",
             "type": "optional<LinkedObjectType>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "LinkedObjectList": {
@@ -50653,6 +51971,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "type": "optional<literal<"list">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "LinkedObjectType": {
         "docs": "ticket or conversation",
@@ -50660,6 +51981,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
           "ticket",
           "conversation",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "MultipleFilterSearchRequest": {
         "docs": "Search using Intercoms Search APIs with more than one filter.",
@@ -50670,6 +51994,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
           },
           "value": "optional<MultipleFilterSearchRequestValue>",
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "MultipleFilterSearchRequestOperator": {
         "docs": "An operator to allow boolean inspection between multiple fields.",
@@ -50677,10 +52004,14 @@ A "cursor" or pointer is used to keep track of the current position in the resul
           "AND",
           "OR",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "MultipleFilterSearchRequestValue": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           {
             "docs": "Add mutiple filters.",
@@ -50728,6 +52059,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "NewsItemRequestState": {
         "docs": "News items will not be visible to your users in the assigned newsfeeds until they are set live.",
@@ -50735,6 +52069,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
           "draft",
           "live",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "NoteList": {
         "docs": "A paginated list of notes associated with a contact.",
@@ -50753,6 +52090,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "OpenConversationRequest": {
         "docs": "Payload of the request to open a conversation",
@@ -50761,6 +52101,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "docs": "The id of the admin who is performing the action.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "PagesLink": {
@@ -50784,6 +52127,9 @@ Their responses are likely to contain a pages object that hosts pagination links
           "total_pages": "optional<integer>",
           "type": "optional<literal<"pages">>",
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "PaginatedResponse": {
         "docs": "Paginated Response",
@@ -50802,11 +52148,17 @@ Their responses are likely to contain a pages object that hosts pagination links
             "type": "optional<PaginatedResponseType>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "PaginatedResponseDataItem": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
         "union": {
           "news-item": "news.NewsItem",
           "newsfeed": "news.Newsfeed",
@@ -50821,6 +52173,9 @@ Their responses are likely to contain a pages object that hosts pagination links
             "value": "conversation.list",
           },
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "PartAttachment": {
         "docs": "The file attached to a part",
@@ -50854,6 +52209,9 @@ Their responses are likely to contain a pages object that hosts pagination links
             "type": "optional<integer>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "PhoneSwitch": {
         "docs": "Phone Switch Response",
@@ -50867,11 +52225,17 @@ Their responses are likely to contain a pages object that hosts pagination links
             "type": "optional<literal<"phone_call_redirect">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "RedactConversationRequest": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
         "union": {
           "conversation_part": {
             "docs": "Payload of the request to redact a conversation part",
@@ -50895,6 +52259,9 @@ Their responses are likely to contain a pages object that hosts pagination links
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "RedactConversationRequestSource": {
         "docs": "Payload of the request to redact a conversation source",
@@ -50907,6 +52274,9 @@ Their responses are likely to contain a pages object that hosts pagination links
             "docs": "The id of the source.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "Reference": {
@@ -50921,10 +52291,14 @@ Their responses are likely to contain a pages object that hosts pagination links
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "ReplyConversationRequest": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "ContactReplyConversationRequest",
           "AdminReplyConversationRequest",
@@ -50936,10 +52310,14 @@ Their responses are likely to contain a pages object that hosts pagination links
           "pagination": "optional<StartingAfterPaging>",
           "query": "SearchRequestQuery",
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "SearchRequestQuery": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "SingleFilterSearchRequest",
           "MultipleFilterSearchRequest",
@@ -50961,6 +52339,9 @@ Their responses are likely to contain a pages object that hosts pagination links
             "type": "optional<literal<"segment.list">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "Segments": {
         "docs": "A list of segments objects attached to a specific contact.",
@@ -50973,6 +52354,9 @@ Their responses are likely to contain a pages object that hosts pagination links
             "docs": "The type of the object",
             "type": "optional<literal<"list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "SingleFilterSearchRequest": {
@@ -50990,6 +52374,9 @@ Their responses are likely to contain a pages object that hosts pagination links
             "docs": "The value that you want to search on.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "SingleFilterSearchRequestOperator": {
@@ -51018,6 +52405,9 @@ Their responses are likely to contain a pages object that hosts pagination links
             "value": "~",
           },
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "SlaApplied": {
         "docs": "The SLA Applied object contains the details for which SLA has been applied to this conversation.
@@ -51040,6 +52430,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "SlaAppliedSlaStatus": {
         "docs": "SLA statuses:
@@ -51052,6 +52445,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
           "cancelled",
           "active",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "SnoozeConversationRequest": {
         "docs": "Payload of the request to snooze a conversation",
@@ -51064,6 +52460,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "docs": "The time you want the conversation to reopen.",
             "type": "integer",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "SocialProfile": {
@@ -51088,6 +52487,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             },
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "StartingAfterPaging": {
         "docs": undefined,
@@ -51100,6 +52502,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "docs": "The cursor to use in the next request to get the next page of results.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "SubscriptionTypeList": {
@@ -51114,6 +52519,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "type": "optional<literal<"list">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "TagCompanyRequest": {
         "docs": "You can tag a single company or a list of companies.",
@@ -51126,6 +52534,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "docs": "The name of the tag, which will be created if not found.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "TagCompanyRequestCompaniesItem": {
@@ -51140,6 +52551,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "TagMultipleUsersRequest": {
         "docs": "You can tag a list of users.",
@@ -51150,6 +52564,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
           },
           "users": "list<TagMultipleUsersRequestUsersItem>",
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "TagMultipleUsersRequestUsersItem": {
         "docs": undefined,
@@ -51158,6 +52575,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "docs": "The Intercom defined id representing the user.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "Tags": {
@@ -51172,6 +52592,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "type": "optional<literal<"tag.list">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "TeamList": {
         "docs": "This will return a list of team objects for the App.",
@@ -51184,6 +52607,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "docs": "The type of the object",
             "type": "optional<literal<"team.list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "TeamPriorityLevel": {
@@ -51198,6 +52624,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "type": "optional<list<integer>>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "TicketCustomAttributes": {
         "docs": "An object containing the different attributes associated to the ticket as key-value pairs. For the default title and description attributes, the keys are \`_default_title_\` and \`_default_description_\`.",
@@ -51206,6 +52635,7 @@ Important: if there are any canceled sla_events for the conversation - meaning a
       "TicketCustomAttributesValue": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "optional<string>",
           "double",
@@ -51230,6 +52660,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "docs": "Always ticket.list",
             "type": "optional<literal<"ticket.list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "TicketPartAuthor": {
@@ -51258,6 +52691,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "type": "optional<TicketPartAuthorType>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "TicketPartAuthorType": {
         "docs": "The type of the author",
@@ -51267,6 +52703,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
           "team",
           "user",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "TicketParts": {
         "docs": "A list of Ticket Part objects for each note and event in the ticket. There is a limit of 500 parts.",
@@ -51283,6 +52722,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "docs": "",
             "type": "optional<literal<"ticket_part.list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "TicketReply": {
@@ -51322,6 +52764,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "type": "optional<integer>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "TicketReplyPartType": {
         "docs": "Type of the part",
@@ -51330,6 +52775,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
           "comment",
           "quick_reply",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "TicketRequestCustomAttributes": {
         "docs": "The attributes set on the ticket. When setting the default title and description attributes, the attribute keys that should be used are \`_default_title_\` and \`_default_description_\`. When setting ticket type attributes of the list attribute type, the key should be the attribute name and the value of the attribute should be the list item id, obtainable by [listing the ticket type](ref:get_ticket-types). For example, if the ticket type has an attribute called \`priority\` of type \`list\`, the key should be \`priority\` and the value of the attribute should be the guid of the list item (e.g. \`de1825a0-0164-4070-8ca6-13e22462fa7e\`).",
@@ -51338,6 +52786,7 @@ Important: if there are any canceled sla_events for the conversation - meaning a
       "TicketRequestCustomAttributesValue": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "optional<string>",
           "double",
@@ -51421,6 +52870,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "TicketTypeAttributeList": {
         "docs": "A list of attributes associated with a given ticket type.",
@@ -51434,6 +52886,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "TicketTypeList": {
         "docs": "A list of ticket types associated with a given workspace.",
@@ -51446,6 +52901,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "docs": "String representing the object's type. Always has the value \`ticket_type.list\`.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "Translation": {
@@ -51464,6 +52922,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "UntagCompanyRequest": {
         "docs": "You can tag a single company or a list of companies.",
@@ -51476,6 +52937,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "docs": "The name of the tag which will be untagged from the company",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "UntagCompanyRequestCompaniesItem": {
@@ -51493,6 +52957,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "docs": "Always set to true",
             "type": "optional<boolean>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "UpdateArticleRequest": {
@@ -51528,6 +52995,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
           },
           "translated_content": "optional<ArticleTranslatedContent>",
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "UpdateArticleRequestState": {
         "docs": "Whether the article will be \`published\` or will be a \`draft\`. Defaults to draft. For multilingual articles, this will be the state of the default language's content.",
@@ -51535,6 +53005,9 @@ Important: if there are any canceled sla_events for the conversation - meaning a
           "published",
           "draft",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "UpdateTicketTypeRequest": {
         "docs": "The request payload for updating a ticket type.
@@ -51568,6 +53041,9 @@ You can copy the \`icon\` property for your ticket type from [Twemoji Cheatsheet
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "UpdateTicketTypeRequestCategory": {
         "docs": "Category of the Ticket Type.",
@@ -51579,6 +53055,9 @@ You can copy the \`icon\` property for your ticket type from [Twemoji Cheatsheet
           },
           "Tracker",
         ],
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "UpdateVisitorRequestOne": "unknown",
       "Visitor": {
@@ -51706,6 +53185,9 @@ You can copy the \`icon\` property for your ticket type from [Twemoji Cheatsheet
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "VisitorAvatar": {
         "docs": undefined,
@@ -51726,6 +53208,9 @@ You can copy the \`icon\` property for your ticket type from [Twemoji Cheatsheet
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "VisitorCompanies": {
         "docs": undefined,
@@ -51735,6 +53220,9 @@ You can copy the \`icon\` property for your ticket type from [Twemoji Cheatsheet
             "docs": "The type of the object",
             "type": "optional<literal<"company.list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "VisitorDeletedObject": {
@@ -51752,6 +53240,9 @@ You can copy the \`icon\` property for your ticket type from [Twemoji Cheatsheet
             "docs": "Automatically generated identifier for the Visitor.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "VisitorLocationData": {
@@ -51791,6 +53282,9 @@ You can copy the \`icon\` property for your ticket type from [Twemoji Cheatsheet
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "VisitorSegments": {
         "docs": undefined,
@@ -51800,6 +53294,9 @@ You can copy the \`icon\` property for your ticket type from [Twemoji Cheatsheet
             "docs": "The type of the object",
             "type": "optional<literal<"segment.list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "VisitorSocialProfiles": {
@@ -51811,6 +53308,9 @@ You can copy the \`icon\` property for your ticket type from [Twemoji Cheatsheet
             "type": "optional<literal<"social_profile.list">>",
           },
         },
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
       },
       "VisitorTags": {
         "docs": undefined,
@@ -51820,6 +53320,9 @@ You can copy the \`icon\` property for your ticket type from [Twemoji Cheatsheet
             "docs": "The type of the object",
             "type": "optional<literal<"tag.list">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
       "VisitorTagsTagsItem": {
@@ -51837,6 +53340,9 @@ You can copy the \`icon\` property for your ticket type from [Twemoji Cheatsheet
             "docs": "The type of the object",
             "type": "optional<literal<"tag">>",
           },
+        },
+        "source": {
+          "openapi": "intercom/openapi.yml",
         },
       },
     },

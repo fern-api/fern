@@ -60,7 +60,6 @@ from fern_python.generators.sdk.client_generator.request_body_parameters.referen
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 from fern_python.snippet.snippet_writer import SnippetWriter
 from fern_python.snippet.template_utils import TEMPLATE_SENTINEL
-from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 
 
 class SnippetTemplateFactory:
@@ -100,7 +99,7 @@ class SnippetTemplateFactory:
         self,
         expr: AST.Expression,
     ) -> str:
-        snippet = SourceFileFactory.create_snippet()
+        snippet = self._context.source_file_factory.create_snippet()
         snippet.add_expression(expr)
         # For some reason we're appending newlines to snippets, so we need to strip them for tempaltes
         return snippet.to_str(should_format_override=False).strip()
@@ -109,7 +108,7 @@ class SnippetTemplateFactory:
         self,
         expr: AST.Expression,
     ) -> Tuple[str, str]:
-        snippet = SourceFileFactory.create_snippet()
+        snippet = self._context.source_file_factory.create_snippet()
         snippet.add_expression(expr)
         snippet_full = snippet.to_str(should_format_override=False)
         snippet_without_imports = snippet.to_str(should_format_override=False, include_imports=False)
@@ -419,6 +418,7 @@ class SnippetTemplateFactory:
                 example=None,
                 example_expression=AST.Expression(TEMPLATE_SENTINEL),
                 single_union_type=sut,
+                union_naming_version=self._context.custom_config.pydantic_config.union_naming,
             ).generate_snippet_template()
         else:
             get_template_string = lambda snippet_template_str: (
@@ -430,6 +430,7 @@ class SnippetTemplateFactory:
                 example=None,
                 example_expression=AST.Expression(TEMPLATE_SENTINEL),
                 single_union_type=sut,
+                union_naming_version=self._context.custom_config.pydantic_config.union_naming,
             ).generate_snippet_template()
 
         if sut_shape.properties_type == "samePropertiesAsObject":

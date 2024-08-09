@@ -94,15 +94,27 @@ class UniversalBaseModel(pydantic.BaseModel):
         json_encoders = {dt.datetime: serialize_datetime}
 
     def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults: typing.Any = {
+            "by_alias": True,
+            "exclude_unset": True,
+            **kwargs,
+        }
         if IS_PYDANTIC_V2:
             return super().model_dump_json(**kwargs_with_defaults)  # type: ignore # Pydantic v2
         else:
             return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+        kwargs_with_defaults_exclude_unset: typing.Any = {
+            "by_alias": True,
+            "exclude_unset": True,
+            **kwargs,
+        }
+        kwargs_with_defaults_exclude_none: typing.Any = {
+            "by_alias": True,
+            "exclude_none": True,
+            **kwargs,
+        }
 
         if IS_PYDANTIC_V2:
             return deep_union_pydantic_dicts(
@@ -111,7 +123,8 @@ class UniversalBaseModel(pydantic.BaseModel):
             )
         else:
             return deep_union_pydantic_dicts(
-                super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+                super().dict(**kwargs_with_defaults_exclude_unset),
+                super().dict(**kwargs_with_defaults_exclude_none),
             )
 
 
@@ -151,33 +164,27 @@ def update_forward_refs(model: typing.Type["Model"]) -> None:
 AnyCallable = typing.Callable[..., typing.Any]
 
 
-def universal_root_validator(pre: bool = False) -> typing.Callable[[AnyCallable], AnyCallable]:
+def universal_root_validator(
+    pre: bool = False,
+) -> typing.Callable[[AnyCallable], AnyCallable]:
     def decorator(func: AnyCallable) -> AnyCallable:
-        @wraps(func)
-        def validate(*args: typing.Any, **kwargs: typing.Any) -> AnyCallable:
-            if IS_PYDANTIC_V2:
-                wrapped_func = pydantic.model_validator("before" if pre else "after")(func)  # type: ignore # Pydantic v2
-            else:
-                wrapped_func = pydantic.root_validator(pre=pre)(func)  # type: ignore # Pydantic v1
-
-            return wrapped_func(*args, **kwargs)
-
-        return validate
+        if IS_PYDANTIC_V2:
+            return pydantic.model_validator("before" if pre else "after")(func)  # type: ignore # Pydantic v2
+        else:
+            return pydantic.root_validator(pre=pre)(func)  # type: ignore # Pydantic v1
 
     return decorator
 
 
-def universal_field_validator(field_name: str, pre: bool = False) -> typing.Callable[[AnyCallable], AnyCallable]:
+def universal_field_validator(
+    field_name: str, pre: bool = False
+) -> typing.Callable[[AnyCallable], AnyCallable]:
     def decorator(func: AnyCallable) -> AnyCallable:
-        @wraps(func)
-        def validate(*args: typing.Any, **kwargs: typing.Any) -> AnyCallable:
-            if IS_PYDANTIC_V2:
-                wrapped_func = pydantic.field_validator(field_name, mode="before" if pre else "after")(func)  # type: ignore # Pydantic v2
-            else:
-                wrapped_func = pydantic.validator(field_name, pre=pre)(func)
-
-            return wrapped_func(*args, **kwargs)
-
-        return validate
+        if IS_PYDANTIC_V2:
+            return pydantic.field_validator(
+                field_name, mode="before" if pre else "after"
+            )(func)  # type: ignore # Pydantic v2
+        else:
+            return pydantic.validator(field_name, pre=pre)(func)  # type: ignore # Pydantic v1
 
     return decorator

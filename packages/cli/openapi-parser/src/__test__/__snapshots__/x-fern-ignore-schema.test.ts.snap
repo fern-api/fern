@@ -56,6 +56,10 @@ exports[`x-fern-ignore-schema x-fern-ignore-schema parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "x-fern-ignore-schema/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
   },

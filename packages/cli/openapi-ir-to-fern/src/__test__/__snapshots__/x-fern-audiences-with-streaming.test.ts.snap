@@ -77,6 +77,9 @@ exports[`x-fern-sdk-group-name-with-streaming x-fern-sdk-group-name-with-streami
             },
           },
         },
+        "source": {
+          "openapi": "x-fern-sdk-group-name-with-streaming/openapi.yml",
+        },
       },
     },
   },
@@ -96,6 +99,9 @@ exports[`x-fern-sdk-group-name-with-streaming x-fern-sdk-group-name-with-streami
           },
           "streamed": "optional<literal<true>>",
         },
+        "source": {
+          "openapi": "x-fern-sdk-group-name-with-streaming/openapi.yml",
+        },
       },
       "User": {
         "docs": undefined,
@@ -110,6 +116,9 @@ exports[`x-fern-sdk-group-name-with-streaming x-fern-sdk-group-name-with-streami
             },
           },
           "streamed": "optional<literal<false>>",
+        },
+        "source": {
+          "openapi": "x-fern-sdk-group-name-with-streaming/openapi.yml",
         },
       },
     },
@@ -201,6 +210,9 @@ exports[`x-fern-sdk-group-name-with-streaming x-fern-sdk-group-name-with-streami
             },
           },
         },
+        "source": {
+          "openapi": "x-fern-sdk-group-name-with-streaming/openapi.yml",
+        },
       },
     },
   },
@@ -220,6 +232,9 @@ exports[`x-fern-sdk-group-name-with-streaming x-fern-sdk-group-name-with-streami
           },
           "streamed": "optional<literal<true>>",
         },
+        "source": {
+          "openapi": "x-fern-sdk-group-name-with-streaming/openapi.yml",
+        },
       },
       "User": {
         "docs": undefined,
@@ -234,6 +249,9 @@ exports[`x-fern-sdk-group-name-with-streaming x-fern-sdk-group-name-with-streami
             },
           },
           "streamed": "optional<literal<false>>",
+        },
+        "source": {
+          "openapi": "x-fern-sdk-group-name-with-streaming/openapi.yml",
         },
       },
     },

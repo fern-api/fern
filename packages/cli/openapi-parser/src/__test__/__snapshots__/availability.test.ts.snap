@@ -110,6 +110,10 @@ exports[`open api parser availability parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "availability/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -141,6 +145,10 @@ exports[`open api parser availability parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "availability/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -162,8 +170,16 @@ exports[`open api parser availability parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "DeprecatedParam",
+              "source": {
+                "file": "availability/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "availability/openapi.yml",
+            "type": "openapi",
           },
         },
         {
@@ -196,6 +212,10 @@ exports[`open api parser availability parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "availability/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "idempotent": null,
@@ -225,6 +245,10 @@ exports[`open api parser availability parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "availability/openapi.yml",
+            "type": "openapi",
+          },
           "variableReference": null,
         },
         {
@@ -247,6 +271,10 @@ exports[`open api parser availability parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "availability/openapi.yml",
+            "type": "openapi",
+          },
           "variableReference": null,
         },
         {
@@ -260,7 +288,15 @@ exports[`open api parser availability parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "DeprecatedParam",
+            "source": {
+              "file": "availability/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "availability/openapi.yml",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -283,6 +319,10 @@ exports[`open api parser availability parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "availability/openapi.yml",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -317,6 +357,10 @@ exports[`open api parser availability parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "availability/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -347,6 +391,10 @@ exports[`open api parser availability parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "availability/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -367,8 +415,16 @@ exports[`open api parser availability parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "DeprecatedParam",
+              "source": {
+                "file": "availability/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "availability/openapi.yml",
+            "type": "openapi",
           },
         },
         {
@@ -400,6 +456,10 @@ exports[`open api parser availability parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "availability/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -414,12 +474,24 @@ exports[`open api parser availability parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "WholeDeprecatedSettings",
+          "source": {
+            "file": "availability/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "availability/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "availability/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [],
     },
@@ -477,7 +549,15 @@ exports[`open api parser availability parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Settings",
+          "source": {
+            "file": "availability/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "availability/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -492,12 +572,24 @@ exports[`open api parser availability parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "NotDeprecatedSettings",
+          "source": {
+            "file": "availability/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "availability/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "availability/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [],
     },
@@ -615,7 +707,15 @@ exports[`open api parser availability parse open api 1`] = `
               },
             },
           ],
+          "source": {
+            "file": "availability/openapi.yml",
+            "type": "openapi",
+          },
           "type": "object",
+        },
+        "source": {
+          "file": "availability/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -630,12 +730,24 @@ exports[`open api parser availability parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "NotDeprecatedSettings",
+          "source": {
+            "file": "availability/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "availability/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "availability/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [],
     },
@@ -725,7 +837,15 @@ exports[`open api parser availability parse open api 1`] = `
               },
             },
           ],
+          "source": {
+            "file": "availability/openapi.yml",
+            "type": "openapi",
+          },
           "type": "object",
+        },
+        "source": {
+          "file": "availability/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -740,12 +860,24 @@ exports[`open api parser availability parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "NotDeprecatedSettings",
+          "source": {
+            "file": "availability/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "availability/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "availability/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [],
     },
@@ -835,7 +967,15 @@ exports[`open api parser availability parse open api 1`] = `
               },
             },
           ],
+          "source": {
+            "file": "availability/openapi.yml",
+            "type": "openapi",
+          },
           "type": "object",
+        },
+        "source": {
+          "file": "availability/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -850,12 +990,24 @@ exports[`open api parser availability parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "NotDeprecatedSettings",
+          "source": {
+            "file": "availability/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "availability/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "availability/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [],
     },
@@ -925,6 +1077,10 @@ exports[`open api parser availability parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "availability/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Settings": {
@@ -994,6 +1150,10 @@ exports[`open api parser availability parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "availability/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "WholeDeprecatedSettings": {
@@ -1035,6 +1195,10 @@ exports[`open api parser availability parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "availability/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
   },

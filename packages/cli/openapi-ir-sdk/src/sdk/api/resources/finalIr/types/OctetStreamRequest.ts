@@ -4,4 +4,4 @@
 
 import * as FernOpenapiIr from "../../..";
 
-export interface OctetStreamRequest extends FernOpenapiIr.WithDescription {}
+export interface OctetStreamRequest extends FernOpenapiIr.WithDescription, FernOpenapiIr.WithSource {}

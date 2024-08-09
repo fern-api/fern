@@ -1,4 +1,4 @@
-import { Availability, SchemaWithExample, SdkGroupName } from "@fern-api/openapi-ir-sdk";
+import { Availability, SchemaWithExample, SdkGroupName, Source } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { convertSchema } from "./convertSchemas";
 import { SchemaParserContext } from "./SchemaParserContext";
@@ -13,7 +13,8 @@ export function convertArray({
     wrapAsNullable,
     context,
     groupName,
-    example
+    example,
+    source
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -25,6 +26,7 @@ export function convertArray({
     context: SchemaParserContext;
     groupName: SdkGroupName | undefined;
     example: unknown[] | undefined;
+    source: Source;
 }): SchemaWithExample {
     const itemSchema =
         item == null
@@ -36,7 +38,7 @@ export function convertArray({
                   example: undefined,
                   groupName
               })
-            : convertSchema(item, false, context, [...breadcrumbs, "Item"]);
+            : convertSchema(item, false, context, [...breadcrumbs, "Item"], source);
     return wrapArray({
         nameOverride,
         generatedName,

@@ -33,11 +33,15 @@ exports[`rules rules docs 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "rules/openapi.yml",
+      },
     },
     "types": {
       "GetExampleResponse": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "Schema",
           "GetExampleResponseMessage",
@@ -47,6 +51,9 @@ exports[`rules rules docs 1`] = `
         "docs": undefined,
         "properties": {
           "message": "optional<string>",
+        },
+        "source": {
+          "openapi": "rules/openapi.yml",
         },
       },
       "Schema": {
@@ -99,6 +106,9 @@ exports[`rules rules docs 1`] = `
               "multipleOf": 1.1,
             },
           },
+        },
+        "source": {
+          "openapi": "rules/openapi.yml",
         },
       },
       "String": {
@@ -155,11 +165,15 @@ exports[`rules rules simple 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "rules/openapi.yml",
+      },
     },
     "types": {
       "GetExampleResponse": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "Schema",
           "GetExampleResponseMessage",
@@ -169,6 +183,9 @@ exports[`rules rules simple 1`] = `
         "docs": undefined,
         "properties": {
           "message": "optional<string>",
+        },
+        "source": {
+          "openapi": "rules/openapi.yml",
         },
       },
       "Schema": {
@@ -221,6 +238,9 @@ exports[`rules rules simple 1`] = `
               "multipleOf": 1.1,
             },
           },
+        },
+        "source": {
+          "openapi": "rules/openapi.yml",
         },
       },
       "String": {

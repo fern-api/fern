@@ -59,6 +59,17 @@
             "id": {
                 "path": "/users",
                 "method": "GET",
+                "identifierOverride": "endpoint_users.listWithOffsetPaginationHasNextPage"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_with_offset_pagination_has_next_page(\n  page: 1,\n  limit: 1,\n  order: ASC\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
                 "identifierOverride": "endpoint_users.listWithExtendedResults"
             },
             "snippet": {
@@ -140,6 +151,17 @@
             },
             "snippet": {
                 "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_with_offset_step_pagination(\n  page: 1,\n  limit: 1,\n  order: ASC\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifierOverride": "endpoint_users.listWithOffsetPaginationHasNextPage"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_with_offset_pagination_has_next_page(\n  page: 1,\n  limit: 1,\n  order: ASC\n)",
                 "type": "ruby"
             }
         },

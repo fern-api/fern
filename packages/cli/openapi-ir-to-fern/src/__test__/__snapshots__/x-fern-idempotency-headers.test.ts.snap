@@ -45,6 +45,9 @@ exports[`x-fern-idempotency-headers x-fern-idempotency-headers docs 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "x-fern-idempotency-headers/openapi.yml",
+      },
     },
   },
   "rootApiFile": {
@@ -107,6 +110,9 @@ exports[`x-fern-idempotency-headers x-fern-idempotency-headers simple 1`] = `
             "type": "string",
           },
         },
+      },
+      "source": {
+        "openapi": "x-fern-idempotency-headers/openapi.yml",
       },
     },
   },

@@ -1,4 +1,4 @@
-import { NamedFullExample, Webhook, WebhookExampleCall } from "@fern-api/openapi-ir-sdk";
+import { NamedFullExample, Source, Webhook, WebhookExampleCall } from "@fern-api/openapi-ir-sdk";
 import { convertToFullExample } from "../../../../schema/examples/convertToFullExample";
 import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
@@ -8,10 +8,12 @@ import { convertRequest } from "../endpoint/convertRequest";
 
 export function convertWebhookOperation({
     context,
-    operationContext
+    operationContext,
+    source
 }: {
     operationContext: OperationContext;
     context: AbstractOpenAPIV3ParserContext;
+    source: Source;
 }): Webhook | undefined {
     const { document, operation, path, method, baseBreadcrumbs, sdkMethodName } = operationContext;
     const payloadBreadcrumbs = [...baseBreadcrumbs, "Payload"];
@@ -21,7 +23,8 @@ export function convertWebhookOperation({
         context,
         requestBreadcrumbs: payloadBreadcrumbs,
         path,
-        httpMethod: method
+        httpMethod: method,
+        source
     });
 
     if (operation.requestBody == null) {
@@ -38,7 +41,8 @@ export function convertWebhookOperation({
         requestBody: operation.requestBody,
         document,
         context,
-        requestBreadcrumbs: [...baseBreadcrumbs, "Payload"]
+        requestBreadcrumbs: [...baseBreadcrumbs, "Payload"],
+        source
     });
 
     if (convertedPayload == null || convertedPayload.type !== "json") {
@@ -61,7 +65,8 @@ export function convertWebhookOperation({
         generatedPayloadName: getGeneratedTypeName(payloadBreadcrumbs),
         payload: convertedPayload.schema,
         description: operation.description,
-        examples: convertWebhookExamples(convertedPayload.fullExamples)
+        examples: convertWebhookExamples(convertedPayload.fullExamples),
+        source
     };
 }
 

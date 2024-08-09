@@ -56,6 +56,10 @@ exports[`open api parser gen-yml-use-title parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "gen-yml-use-title/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
   },

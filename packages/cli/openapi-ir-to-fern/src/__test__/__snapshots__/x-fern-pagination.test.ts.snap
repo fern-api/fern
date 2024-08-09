@@ -16,6 +16,9 @@ exports[`x-fern-pagination x-fern-pagination docs 1`] = `
             {
               "response": {
                 "body": {
+                  "meta": {
+                    "hasMore": true,
+                  },
                   "users": [
                     {
                       "age": 1,
@@ -30,6 +33,7 @@ exports[`x-fern-pagination x-fern-pagination docs 1`] = `
           ],
           "method": "GET",
           "pagination": {
+            "has-next-page": "$response.meta.hasMore",
             "offset": "$request.pageNumber",
             "results": "$response.users",
             "step": "$request.limit",
@@ -48,8 +52,17 @@ exports[`x-fern-pagination x-fern-pagination docs 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "x-fern-pagination/openapi.yml",
+      },
     },
     "types": {
+      "Meta": {
+        "docs": undefined,
+        "properties": {
+          "hasMore": "optional<boolean>",
+        },
+      },
       "User": {
         "docs": undefined,
         "properties": {
@@ -66,11 +79,18 @@ exports[`x-fern-pagination x-fern-pagination docs 1`] = `
           },
           "name": "optional<string>",
         },
+        "source": {
+          "openapi": "x-fern-pagination/openapi.yml",
+        },
       },
       "UsersResponse": {
         "docs": undefined,
         "properties": {
+          "meta": "optional<Meta>",
           "users": "optional<list<User>>",
+        },
+        "source": {
+          "openapi": "x-fern-pagination/openapi.yml",
         },
       },
     },
@@ -101,6 +121,9 @@ exports[`x-fern-pagination x-fern-pagination simple 1`] = `
             {
               "response": {
                 "body": {
+                  "meta": {
+                    "hasMore": true,
+                  },
                   "users": [
                     {
                       "age": 1,
@@ -115,6 +138,7 @@ exports[`x-fern-pagination x-fern-pagination simple 1`] = `
           ],
           "method": "GET",
           "pagination": {
+            "has-next-page": "$response.meta.hasMore",
             "offset": "$request.pageNumber",
             "results": "$response.users",
             "step": "$request.limit",
@@ -133,8 +157,17 @@ exports[`x-fern-pagination x-fern-pagination simple 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "x-fern-pagination/openapi.yml",
+      },
     },
     "types": {
+      "Meta": {
+        "docs": undefined,
+        "properties": {
+          "hasMore": "optional<boolean>",
+        },
+      },
       "User": {
         "docs": undefined,
         "properties": {
@@ -151,11 +184,18 @@ exports[`x-fern-pagination x-fern-pagination simple 1`] = `
           },
           "name": "optional<string>",
         },
+        "source": {
+          "openapi": "x-fern-pagination/openapi.yml",
+        },
       },
       "UsersResponse": {
         "docs": undefined,
         "properties": {
+          "meta": "optional<Meta>",
           "users": "optional<list<User>>",
+        },
+        "source": {
+          "openapi": "x-fern-pagination/openapi.yml",
         },
       },
     },

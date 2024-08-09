@@ -4,7 +4,8 @@ imports:
 
 types:
   NamedFullExample:
-    extends: commons.WithDescription
+    extends:
+      - commons.WithDescription
     properties:
       name: optional<string>
       value: unknown
@@ -18,6 +19,7 @@ types:
     extends: 
       - commons.WithDescription
       - commons.WithAvailability
+      - commons.WithSource
     properties:
       authed: boolean
       internal: optional<boolean>
@@ -63,6 +65,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSource
     properties:
       statusCode: commons.StatusCode
       schema: SchemaWithExample
@@ -75,7 +78,9 @@ types:
       json: JsonRequestWithExample
 
   JsonRequestWithExample:
-    extends: commons.WithDescription
+    extends:
+      - commons.WithDescription
+      - commons.WithSource
     properties:
       schema: SchemaWithExample
       contentType: optional<string>
@@ -94,7 +99,9 @@ types:
         docs: Checks if `x-fern-streaming` is present and is true.
 
   JsonResponseWithExample:
-    extends: commons.WithDescription
+    extends:
+      - commons.WithDescription
+      - commons.WithSource
     properties:
       schema: SchemaWithExample
       responseProperty: optional<string>
@@ -104,6 +111,7 @@ types:
     extends: 
       - commons.WithDescription
       - commons.WithAvailability
+      - commons.WithSource
     properties:
       name: string
       schema: SchemaWithExample
@@ -113,6 +121,7 @@ types:
     extends: 
       - commons.WithDescription
       - commons.WithAvailability
+      - commons.WithSource
     properties:
       name: string
       schema: SchemaWithExample
@@ -126,6 +135,7 @@ types:
     extends: 
       - commons.WithDescription
       - commons.WithAvailability
+      - commons.WithSource
     properties:
       name: string
       schema: SchemaWithExample
@@ -194,6 +204,7 @@ types:
       - commons.WithName
       - commons.WithSdkGroupName
       - commons.WithAvailability
+      - commons.WithSource
     properties:
       default: optional<finalIr.EnumValue>
       values: list<finalIr.EnumValue>
@@ -214,6 +225,7 @@ types:
       - commons.WithName
       - commons.WithSdkGroupName
       - commons.WithAvailability
+      - commons.WithSource
     properties:
       allOf: list<finalIr.ReferencedSchema>
       properties: list<ObjectPropertyWithExample>
@@ -251,6 +263,7 @@ types:
       - commons.WithName
       - commons.WithSdkGroupName
       - commons.WithAvailability
+      - commons.WithSource
     properties:
       discriminantProperty: string
       commonProperties: list<CommonPropertyWithExample>
@@ -267,6 +280,7 @@ types:
       - commons.WithName
       - commons.WithSdkGroupName
       - commons.WithAvailability
+      - commons.WithSource
     properties:
       schemas: list<SchemaWithExample>
 

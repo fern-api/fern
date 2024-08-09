@@ -34,7 +34,7 @@ export async function generateWorkspace({
     version: string | undefined;
     groupName: string | undefined;
     shouldLogS3Url: boolean;
-    token: FernToken;
+    token: FernToken | undefined;
     useLocalDocker: boolean;
     keepDocker: boolean;
     absolutePathToPreview: AbsoluteFilePath | undefined;
@@ -79,6 +79,9 @@ export async function generateWorkspace({
             context
         });
     } else {
+        if (!token) {
+            return context.failAndThrow("Please run fern login");
+        }
         await runRemoteGenerationForAPIWorkspace({
             projectConfig,
             organization,
