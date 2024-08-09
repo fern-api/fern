@@ -19,6 +19,7 @@ import {
     ONE_OF_SERIALIZER_CLASS_NAME,
     STRING_ENUM_SERIALIZER_CLASS_NAME
 } from "../AsIs";
+import { ClassReference } from "../ast";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
 import { CsharpProject } from "../project";
 import { CORE_DIRECTORY_NAME } from "../project/CsharpProject";
@@ -31,7 +32,7 @@ export abstract class AbstractCsharpGeneratorContext<
     public readonly project: CsharpProject;
     public readonly csharpTypeMapper: CsharpTypeMapper;
     public publishConfig: FernGeneratorExec.NugetGithubPublishInfo | undefined;
-    private allNamespaceSegmentsCache?: Set<string>;
+    private allNamespaceSegmentsAndTypes?: Set<string | ClassReference>;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -76,18 +77,22 @@ export abstract class AbstractCsharpGeneratorContext<
         });
     }
 
-    public getAllNamespaceSegments(): Set<string> {
-        if (this.allNamespaceSegmentsCache == null) {
-            const namespaces: string[] = [];
+    public getAllNamespaceSegmentsAndTypes(): Set<string | ClassReference> {
+        if (this.allNamespaceSegmentsAndTypes == null) {
+            const namespaces: (string | ClassReference)[] = [];
             for (const [_, subpackage] of Object.entries(this.ir.subpackages)) {
                 const namespaceSegments = this.getFullNamespaceSegments(subpackage.fernFilepath);
                 if (namespaceSegments != null) {
                     namespaces.push(...namespaceSegments);
                 }
             }
-            this.allNamespaceSegmentsCache = new Set(namespaces);
+            for (const [_, typeDeclaration] of Object.entries(this.ir.types)) {
+                this.csharpTypeMapper.convertToClassReference(typeDeclaration.name);
+                namespaces.push(this.csharpTypeMapper.convertToClassReference(typeDeclaration.name));
+            }
+            this.allNamespaceSegmentsAndTypes = new Set(namespaces);
         }
-        return this.allNamespaceSegmentsCache;
+        return this.allNamespaceSegmentsAndTypes;
     }
 
     public getNamespaceFromFernFilepath(fernFilepath: FernFilepath): string {

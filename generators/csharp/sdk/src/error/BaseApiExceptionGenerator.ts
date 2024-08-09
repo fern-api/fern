@@ -55,7 +55,7 @@ export class BaseApiExceptionGenerator extends FileGenerator<CSharpFile, SdkCust
         return new CSharpFile({
             clazz: class_,
             directory: this.context.getCoreDirectory(),
-            allNamespaceSegments: this.context.getAllNamespaceSegments(),
+            allNamespaceSegmentsAndTypes: this.context.getAllNamespaceSegmentsAndTypes(),
             namespace: this.context.getNamespace()
         });
     }
