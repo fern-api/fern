@@ -12,6 +12,7 @@ export const OffsetPagination: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     page: core.serialization.lazyObject(async () => (await import("../../..")).RequestProperty),
     results: core.serialization.lazyObject(async () => (await import("../../..")).ResponseProperty),
+    hasNextPage: core.serialization.lazyObject(async () => (await import("../../..")).ResponseProperty).optional(),
     step: core.serialization.lazyObject(async () => (await import("../../..")).RequestProperty).optional(),
 });
 
@@ -19,6 +20,7 @@ export declare namespace OffsetPagination {
     interface Raw {
         page: serializers.RequestProperty.Raw;
         results: serializers.ResponseProperty.Raw;
+        hasNextPage?: serializers.ResponseProperty.Raw | null;
         step?: serializers.RequestProperty.Raw | null;
     }
 }

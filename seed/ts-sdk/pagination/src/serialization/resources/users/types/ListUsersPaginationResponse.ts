@@ -12,6 +12,7 @@ export const ListUsersPaginationResponse: core.serialization.ObjectSchema<
     serializers.ListUsersPaginationResponse.Raw,
     SeedPagination.ListUsersPaginationResponse
 > = core.serialization.object({
+    hasNextPage: core.serialization.boolean().optional(),
     page: Page.optional(),
     totalCount: core.serialization.property("total_count", core.serialization.number()),
     data: core.serialization.list(User),
@@ -19,6 +20,7 @@ export const ListUsersPaginationResponse: core.serialization.ObjectSchema<
 
 export declare namespace ListUsersPaginationResponse {
     interface Raw {
+        hasNextPage?: boolean | null;
         page?: Page.Raw | null;
         total_count: number;
         data: User.Raw[];

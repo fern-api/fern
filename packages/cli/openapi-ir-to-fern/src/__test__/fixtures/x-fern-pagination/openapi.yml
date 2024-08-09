@@ -29,6 +29,7 @@ paths:
         offset: $request.pageNumber
         results: $response.users
         step: $request.limit
+        has-next-page: $response.meta.hasMore
       operationId: list
       summary: List
       description: ""
@@ -50,9 +51,15 @@ paths:
             type: integer
 components:
   schemas:
+    Meta: 
+      properties: 
+        hasMore: 
+          type: boolean
     UsersResponse:
       type: object
       properties:
+        meta:   
+          $ref: "#/components/schemas/Meta"
         users:
           type: array
           items:
