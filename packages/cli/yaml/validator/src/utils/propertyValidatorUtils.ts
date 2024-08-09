@@ -1,4 +1,5 @@
 import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
+import { PrimitiveTypeV1 } from "@fern-api/ir-sdk";
 import { isInlineRequestBody, isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
 
 export const REQUEST_PREFIX = "$request.";
@@ -208,7 +209,7 @@ export function resolveResponseType({
     });
 }
 
-export function maybePrimitiveType(resolvedType: ResolvedType | undefined): string | undefined {
+export function maybePrimitiveType(resolvedType: ResolvedType | undefined): PrimitiveTypeV1 | undefined {
     if (resolvedType?._type === "primitive") {
         return resolvedType.primitive.v1;
     }

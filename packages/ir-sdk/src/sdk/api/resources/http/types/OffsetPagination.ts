@@ -13,6 +13,8 @@ import * as FernIr from "../../..";
 export interface OffsetPagination {
     page: FernIr.RequestProperty;
     results: FernIr.ResponseProperty;
+    /** A response property that indicates whether there is a next page or not. */
+    hasNextPage: FernIr.ResponseProperty | undefined;
     /** The step size used to increment the page offset between every new page. */
     step: FernIr.RequestProperty | undefined;
 }

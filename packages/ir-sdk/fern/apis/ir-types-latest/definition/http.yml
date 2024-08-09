@@ -281,6 +281,9 @@ types:
     properties:
       page: RequestProperty
       results: ResponseProperty
+      hasNextPage: 
+        docs: A response property that indicates whether there is a next page or not.
+        type: optional<ResponseProperty>
       step:
         docs: |
           The step size used to increment the page offset between every new page.

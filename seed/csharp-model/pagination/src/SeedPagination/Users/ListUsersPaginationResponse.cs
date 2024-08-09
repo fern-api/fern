@@ -6,6 +6,9 @@ namespace SeedPagination;
 
 public record ListUsersPaginationResponse
 {
+    [JsonPropertyName("hasNextPage")]
+    public bool? HasNextPage { get; set; }
+
     [JsonPropertyName("page")]
     public Page? Page { get; set; }
 

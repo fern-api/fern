@@ -266,6 +266,49 @@ func (c *Client) ListWithOffsetStepPagination(
 	return response, nil
 }
 
+func (c *Client) ListWithOffsetPaginationHasNextPage(
+	ctx context.Context,
+	request *fern.ListWithOffsetPaginationHasNextPageRequest,
+	opts ...option.RequestOption,
+) (*fern.ListUsersPaginationResponse, error) {
+	options := core.NewRequestOptions(opts...)
+
+	baseURL := ""
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
+	endpointURL := baseURL + "/users"
+
+	queryParams, err := core.QueryValues(request)
+	if err != nil {
+		return nil, err
+	}
+	if len(queryParams) > 0 {
+		endpointURL += "?" + queryParams.Encode()
+	}
+
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+
+	var response *fern.ListUsersPaginationResponse
+	if err := c.caller.Call(
+		ctx,
+		&core.CallParams{
+			URL:         endpointURL,
+			Method:      http.MethodGet,
+			MaxAttempts: options.MaxAttempts,
+			Headers:     headers,
+			Client:      options.HTTPClient,
+			Response:    &response,
+		},
+	); err != nil {
+		return nil, err
+	}
+	return response, nil
+}
+
 func (c *Client) ListWithExtendedResults(
 	ctx context.Context,
 	request *fern.ListUsersExtendedRequest,

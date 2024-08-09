@@ -18,6 +18,7 @@ export interface OffsetPaginationPropertyComponents {
     offset: string[];
     results: string[];
     step: string[] | undefined;
+    hasNextPage: string[] | undefined;
 }
 
 export function getPaginationPropertyComponents(
@@ -28,7 +29,11 @@ export function getPaginationPropertyComponents(
             type: "offset",
             offset: getRequestPropertyComponents(endpointPagination.offset),
             results: getResponsePropertyComponents(endpointPagination.results),
-            step: endpointPagination.step != null ? getRequestPropertyComponents(endpointPagination.step) : undefined
+            step: endpointPagination.step != null ? getRequestPropertyComponents(endpointPagination.step) : undefined,
+            hasNextPage:
+                endpointPagination["has-next-page"] != null
+                    ? getRequestPropertyComponents(endpointPagination["has-next-page"])
+                    : undefined
         };
     }
     return {

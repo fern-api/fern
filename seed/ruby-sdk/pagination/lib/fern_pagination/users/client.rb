@@ -188,6 +188,43 @@ module SeedPaginationClient
       SeedPaginationClient::Users::ListUsersPaginationResponse.from_json(json_object: response.body)
     end
 
+    # @param page [Integer] Defaults to first page
+    # @param limit [Integer] The maxiumum number of elements to return.
+    #  This is also used as the step size in this
+    #  paginated endpoint.
+    # @param order [SeedPaginationClient::Users::Order]
+    # @param request_options [SeedPaginationClient::RequestOptions]
+    # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
+    # @example
+    #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+    #  pagination.users.list_with_offset_pagination_has_next_page(
+    #    page: 1,
+    #    limit: 1,
+    #    order: ASC
+    #  )
+    def list_with_offset_pagination_has_next_page(page: nil, limit: nil, order: nil, request_options: nil)
+      response = @request_client.conn.get do |req|
+        req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        req.params = {
+          **(request_options&.additional_query_parameters || {}),
+          "page": page,
+          "limit": limit,
+          "order": order
+        }.compact
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
+        req.url "#{@request_client.get_url(request_options: request_options)}/users"
+      end
+      SeedPaginationClient::Users::ListUsersPaginationResponse.from_json(json_object: response.body)
+    end
+
     # @param cursor [String]
     # @param request_options [SeedPaginationClient::RequestOptions]
     # @return [SeedPaginationClient::Users::ListUsersExtendedResponse]
@@ -428,6 +465,45 @@ module SeedPaginationClient
     #    order: ASC
     #  )
     def list_with_offset_step_pagination(page: nil, limit: nil, order: nil, request_options: nil)
+      Async do
+        response = @request_client.conn.get do |req|
+          req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+          req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          req.params = {
+            **(request_options&.additional_query_parameters || {}),
+            "page": page,
+            "limit": limit,
+            "order": order
+          }.compact
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
+          req.url "#{@request_client.get_url(request_options: request_options)}/users"
+        end
+        SeedPaginationClient::Users::ListUsersPaginationResponse.from_json(json_object: response.body)
+      end
+    end
+
+    # @param page [Integer] Defaults to first page
+    # @param limit [Integer] The maxiumum number of elements to return.
+    #  This is also used as the step size in this
+    #  paginated endpoint.
+    # @param order [SeedPaginationClient::Users::Order]
+    # @param request_options [SeedPaginationClient::RequestOptions]
+    # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
+    # @example
+    #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+    #  pagination.users.list_with_offset_pagination_has_next_page(
+    #    page: 1,
+    #    limit: 1,
+    #    order: ASC
+    #  )
+    def list_with_offset_pagination_has_next_page(page: nil, limit: nil, order: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?

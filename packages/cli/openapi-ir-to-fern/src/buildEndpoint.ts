@@ -72,7 +72,8 @@ export function buildEndpoint({
             pagination = {
                 offset: endpoint.pagination.offset,
                 step: endpoint.pagination.step,
-                results: endpoint.pagination.results
+                results: endpoint.pagination.results,
+                "has-next-page": endpoint.pagination.hasNextPage
             };
         }
     }
