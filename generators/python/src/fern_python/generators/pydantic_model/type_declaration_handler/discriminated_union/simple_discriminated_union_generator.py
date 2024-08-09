@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import List, Optional, Set, Union
+from typing import List, Literal, Optional, Set, Union
 
 import fern.ir.resources as ir_types
 
@@ -14,7 +14,7 @@ from fern_python.pydantic_codegen.pydantic_field import FernAwarePydanticField
 from fern_python.snippet import SnippetWriter
 
 from ....context import PydanticGeneratorContext
-from ...custom_config import PydanticModelCustomConfig
+from ...custom_config import PydanticModelCustomConfig, UnionNamingVersions
 from ..abc.abstract_type_generator import AbstractTypeGenerator
 
 
@@ -331,6 +331,7 @@ class AbstractDiscriminatedUnionSnippetGenerator(AbstractTypeSnippetGenerator, A
         example: Optional[ir_types.ExampleUnionType],
         use_typeddict_request: bool,
         as_request: bool,
+        union_naming_version: UnionNamingVersions,
         example_expression: Optional[AST.Expression] = None,
         single_union_type: Optional[ir_types.SingleUnionType] = None,
     ):
@@ -344,6 +345,7 @@ class AbstractDiscriminatedUnionSnippetGenerator(AbstractTypeSnippetGenerator, A
         self.sut = single_union_type
         self.as_request = as_request
         self.use_typeddict_request = use_typeddict_request
+        self.union_naming_version: UnionNamingVersions = union_naming_version
 
     def generate_snippet_template(self) -> Union[AST.Expression, None]:
         sut = self.sut
@@ -439,16 +441,19 @@ class AbstractDiscriminatedUnionSnippetGenerator(AbstractTypeSnippetGenerator, A
                     ),
                 ),
                 named_import=get_single_union_type_class_name(
-                    name=name, wire_discriminant_value=wire_discriminant_value
+                    name=name, wire_discriminant_value=wire_discriminant_value, union_naming_version=self.union_naming_version
                 ),
             ),
         )
 
 
+# TODO: For V1 naming, we should take into account if the new name introduces a conflcit with an existing class name
 def get_single_union_type_class_name(
-    name: ir_types.DeclaredTypeName, wire_discriminant_value: ir_types.NameAndWireValue
+    name: ir_types.DeclaredTypeName, wire_discriminant_value: ir_types.NameAndWireValue, union_naming_version: UnionNamingVersions
 ) -> str:
-    return f"{get_union_class_name(name)}_{wire_discriminant_value.name.pascal_case.unsafe_name}"
+    wire_value = wire_discriminant_value.name.pascal_case.unsafe_name
+    union_name = get_union_class_name(name)
+    return f"{union_name}_{wire_value}" if union_naming_version == "v0" else f"{wire_value}{union_name}"
 
 
 def get_union_class_name(name: ir_types.DeclaredTypeName) -> str:
