@@ -13,28 +13,26 @@ from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 
 
 class SourceFileFactory:
-    def __init__(self, *, should_format: bool):
-        self._should_format = should_format
-
+    @staticmethod
     def create(
-        self,
         *,
         project: Project,
         filepath: Filepath,
         generator_exec_wrapper: GeneratorExecWrapper,
         from_src: Optional[bool] = True,
     ) -> SourceFile:
-        self._log_generating_file_update(filepath=filepath, generator_exec_wrapper=generator_exec_wrapper)
+        SourceFileFactory._log_generating_file_update(filepath=filepath, generator_exec_wrapper=generator_exec_wrapper)
         return project.source_file(filepath=filepath, from_src=from_src)
 
-    def create_snippet(self) -> SourceFile:
+    @staticmethod
+    def create_snippet() -> SourceFile:
         return SourceFileImpl(
             module_path=(),
             reference_resolver=ReferenceResolverImpl(
                 module_path_of_source_file=(),
             ),
             dependency_manager=DependencyManager(),
-            should_format=self._should_format,
+            should_format=True,
             should_format_as_snippet=True,
             should_include_header=False,
         )
@@ -57,7 +55,8 @@ class SourceFileFactory:
             string_replacements=string_replacements,
         )
 
-    def _log_generating_file_update(self, *, filepath: Filepath, generator_exec_wrapper: GeneratorExecWrapper) -> None:
+    @staticmethod
+    def _log_generating_file_update(*, filepath: Filepath, generator_exec_wrapper: GeneratorExecWrapper) -> None:
         generator_exec_wrapper.send_update(
             GeneratorUpdate.factory.log(LogUpdate(level=LogLevel.DEBUG, message=f"Generating {filepath}"))
         )

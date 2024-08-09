@@ -92,14 +92,12 @@ class TypeDeclarationSnippetGeneratorBuilder:
                 name=name,
                 snippet_writer=self._snippet_writer,
                 example=example,
-                union_naming_version=self._context.union_naming_version,
             ).generate_snippet()
 
         return PydanticModelDiscriminatedUnionSnippetGenerator(
             name=name,
             snippet_writer=self._snippet_writer,
             example=example,
-            union_naming_version=self._context.union_naming_version,
         ).generate_snippet()
 
     def _get_undiscriminated_union_snippet_generator(

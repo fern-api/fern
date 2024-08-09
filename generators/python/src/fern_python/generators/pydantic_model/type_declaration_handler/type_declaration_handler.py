@@ -5,6 +5,7 @@ import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST, SourceFile
 from fern_python.snippet import SnippetWriter
+from fern_python.source_file_factory import SourceFileFactory
 
 from ...context import PydanticGeneratorContext
 from ..custom_config import PydanticModelCustomConfig
@@ -222,6 +223,6 @@ class TypeDeclarationHandler:
         )
         if expr is None:
             return None, None
-        snippet = self._context.source_file_factory.create_snippet()
+        snippet = SourceFileFactory.create_snippet()
         snippet.add_expression(expr)
         return expr, snippet.to_str()
