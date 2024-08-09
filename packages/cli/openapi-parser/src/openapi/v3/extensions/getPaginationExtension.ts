@@ -16,7 +16,7 @@ declare namespace Raw {
         offset: string;
         results: string;
         step: string | undefined;
-        "has-next-page":  string | undefined;
+        "has-next-page": string | undefined;
     }
 }
 
@@ -37,7 +37,7 @@ export function convertPaginationExtension(
         offset: maybeOffsetPagination.offset,
         results: maybeOffsetPagination.results,
         step: maybeOffsetPagination.step,
-        hasNextPage:  maybeOffsetPagination["has-next-page"]
+        hasNextPage: maybeOffsetPagination["has-next-page"]
     });
 }
 

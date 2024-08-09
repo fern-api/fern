@@ -408,6 +408,10 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "x-fern-pagination/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "User": {
@@ -587,6 +591,10 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "Meta",
+              "source": {
+                "file": "x-fern-pagination/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
