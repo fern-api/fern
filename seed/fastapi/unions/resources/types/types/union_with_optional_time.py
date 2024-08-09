@@ -8,7 +8,6 @@ from ....core.pydantic_utilities import UniversalRootModel
 import typing_extensions
 import pydantic
 from ....core.pydantic_utilities import UniversalBaseModel
-from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -79,6 +78,3 @@ class _UnionWithOptionalTime:
     class Dateimte(UniversalBaseModel):
         type: typing.Literal["dateimte"] = "dateimte"
         value: typing.Optional[dt.datetime] = None
-
-
-update_forward_refs(UnionWithOptionalTime)

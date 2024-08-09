@@ -5,7 +5,6 @@ from .foo import Foo as resources_types_types_foo_Foo
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.pydantic_utilities import UniversalRootModel
 import typing
-from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -55,6 +54,3 @@ class UnionWithSingleElement(UniversalRootModel):
 class _UnionWithSingleElement:
     class Foo(resources_types_types_foo_Foo):
         type: typing.Literal["foo"] = "foo"
-
-
-update_forward_refs(UnionWithSingleElement)

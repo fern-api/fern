@@ -26,7 +26,7 @@ class Tree(UniversalBaseModel):
     )
     """
 
-    nodes: typing.Optional[typing.List[Node]] = None
+    nodes: typing.Optional[typing.List["Node"]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(

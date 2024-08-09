@@ -1,7 +1,3 @@
-using SeedApi.Core;
-
-#nullable enable
-
 namespace SeedApi.Core;
 
 /// <summary>

@@ -5,6 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.7.0] - 2024-08-08
+
+- Improvement: Python circular referencing types are more robust.
+
+## [3.6.0] - 2024-08-08
+
+- Feat: The generator now respects returning nested properties, these can be specified via:
+  
+  In OpenAPI below, we'd like to only return the property `jobId` from the `Job` object we get back from our server to our SDK users:
+  ```yaml
+  my/endpoint:
+    get:
+      x-fern-sdk-return-value: jobId
+      response: Job
+  ```
+  For a similar situation using the Fern definition:
+  ```yaml
+  endpoints:
+    getJob:
+      method: GET
+      path: my/endpoint
+      response:
+        type: Job
+        property: jobId
+  ```
+
+
+- Fix: The underlying content no longer sends empty JSON bodies, instead it'll pass a `None` value to httpx
+
 ## [3.5.1] - 2024-08-05
 
 - Fix: The root type for unions with visitors now has it's parent typed correctly. This allows auto-complete to work once again on the union when it's nested within other pydantic models.

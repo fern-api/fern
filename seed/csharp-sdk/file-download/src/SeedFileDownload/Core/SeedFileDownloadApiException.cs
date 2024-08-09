@@ -1,7 +1,3 @@
-using SeedFileDownload.Core;
-
-#nullable enable
-
 namespace SeedFileDownload.Core;
 
 /// <summary>

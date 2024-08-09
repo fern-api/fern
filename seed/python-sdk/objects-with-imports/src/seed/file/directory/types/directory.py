@@ -42,7 +42,7 @@ class Directory(UniversalBaseModel):
 
     name: str
     files: typing.Optional[typing.List[File]] = None
-    directories: typing.Optional[typing.List[Directory]] = None
+    directories: typing.Optional[typing.List["Directory"]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

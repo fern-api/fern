@@ -3,6 +3,7 @@
 from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
 import typing
+from ..commons.variable_value import VariableValue
 
 
 class ProblemDescriptionBoard_Html(UniversalBaseModel):
@@ -21,8 +22,5 @@ class ProblemDescriptionBoard_TestCaseId(UniversalBaseModel):
 
 
 ProblemDescriptionBoard = typing.Union[
-    ProblemDescriptionBoard_Html,
-    ProblemDescriptionBoard_Variable,
-    ProblemDescriptionBoard_TestCaseId,
+    ProblemDescriptionBoard_Html, ProblemDescriptionBoard_Variable, ProblemDescriptionBoard_TestCaseId
 ]
-from ..commons.variable_value import VariableValue  # noqa: E402

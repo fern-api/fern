@@ -16,9 +16,7 @@ class SubmissionStatusForTestCase_Graded(UniversalBaseModel):
     stdout: str
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -36,9 +34,7 @@ class SubmissionStatusForTestCase_Traced(UniversalBaseModel):
     trace_responses_size: int = pydantic.Field(alias="traceResponsesSize")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -46,7 +42,5 @@ class SubmissionStatusForTestCase_Traced(UniversalBaseModel):
 
 
 SubmissionStatusForTestCase = typing.Union[
-    SubmissionStatusForTestCase_Graded,
-    SubmissionStatusForTestCase_GradedV2,
-    SubmissionStatusForTestCase_Traced,
+    SubmissionStatusForTestCase_Graded, SubmissionStatusForTestCase_GradedV2, SubmissionStatusForTestCase_Traced
 ]

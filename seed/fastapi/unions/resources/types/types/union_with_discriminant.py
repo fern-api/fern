@@ -9,7 +9,6 @@ import typing
 import typing_extensions
 import pydantic
 from ....core.pydantic_utilities import UniversalBaseModel
-from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -80,6 +79,3 @@ class _UnionWithDiscriminant:
     class Bar(UniversalBaseModel):
         type: typing.Literal["bar"] = pydantic.Field(alias="_type", default="bar")
         bar: resources_types_types_bar_Bar
-
-
-update_forward_refs(UnionWithDiscriminant)

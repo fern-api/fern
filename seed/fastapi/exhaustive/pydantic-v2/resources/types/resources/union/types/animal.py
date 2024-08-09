@@ -8,7 +8,6 @@ from ......core.pydantic_utilities import UniversalRootModel
 import typing
 import typing_extensions
 import pydantic
-from ......core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -81,6 +80,3 @@ class _Animal:
 
     class Cat(resources_types_resources_union_types_cat_Cat):
         animal: typing.Literal["cat"] = "cat"
-
-
-update_forward_refs(Animal)

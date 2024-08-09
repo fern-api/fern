@@ -10,7 +10,6 @@ from ....core.pydantic_utilities import UniversalRootModel
 import typing
 import typing_extensions
 import pydantic
-from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -107,6 +106,3 @@ class _Resource:
 
     class Organization(resources_service_types_organization_Organization):
         resource_type: typing.Literal["Organization"] = "Organization"
-
-
-update_forward_refs(Resource)

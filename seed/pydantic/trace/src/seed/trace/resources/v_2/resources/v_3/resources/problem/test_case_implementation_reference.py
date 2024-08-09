@@ -21,9 +21,7 @@ class TestCaseImplementationReference_Implementation(UniversalBaseModel):
     function: TestCaseFunction
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -31,6 +29,5 @@ class TestCaseImplementationReference_Implementation(UniversalBaseModel):
 
 
 TestCaseImplementationReference = typing.Union[
-    TestCaseImplementationReference_TemplateId,
-    TestCaseImplementationReference_Implementation,
+    TestCaseImplementationReference_TemplateId, TestCaseImplementationReference_Implementation
 ]

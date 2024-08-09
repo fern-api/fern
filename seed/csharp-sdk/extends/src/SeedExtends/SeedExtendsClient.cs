@@ -1,6 +1,5 @@
 using System;
 using System.Net.Http;
-using SeedExtends;
 using SeedExtends.Core;
 
 #nullable enable

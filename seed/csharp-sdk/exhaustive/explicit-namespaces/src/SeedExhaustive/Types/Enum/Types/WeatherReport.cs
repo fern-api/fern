@@ -1,7 +1,6 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using SeedExhaustive.Core;
-using SeedExhaustive.Types.Enum;
 
 #nullable enable
 

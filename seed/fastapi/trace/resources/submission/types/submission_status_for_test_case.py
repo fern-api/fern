@@ -10,7 +10,6 @@ import typing
 import typing_extensions
 import pydantic
 from ....core.pydantic_utilities import UniversalBaseModel
-from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -130,6 +129,3 @@ class _SubmissionStatusForTestCase:
 
     class Traced(TracedTestCase):
         type: typing.Literal["traced"] = "traced"
-
-
-update_forward_refs(SubmissionStatusForTestCase)

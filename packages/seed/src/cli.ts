@@ -118,8 +118,6 @@ function addTestCommand(cli: Argv) {
                         keepDocker: argv.keepDocker,
                         scriptRunner: scriptRunner
                     });
-                    scriptRunners.push(scriptRunner);
-                    CONSOLE_LOGGER.info(`${generator.workspaceName} does not support local mode. Running in docker.`);
                 }
 
                 tests.push(

@@ -8,7 +8,6 @@ from ....core.pydantic_utilities import UniversalRootModel
 import typing
 import typing_extensions
 import pydantic
-from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -81,6 +80,3 @@ class _Shape:
 
     class Square(resources_union_types_square_Square):
         type: typing.Literal["square"] = "square"
-
-
-update_forward_refs(Shape)

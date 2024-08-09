@@ -9,13 +9,11 @@ from ...core.pydantic_utilities import update_forward_refs
 
 
 class DebugKeyValuePairs(UniversalBaseModel):
-    key: DebugVariableValue
-    value: DebugVariableValue
+    key: "DebugVariableValue"
+    value: "DebugVariableValue"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:

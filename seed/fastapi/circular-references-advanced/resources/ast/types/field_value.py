@@ -107,7 +107,7 @@ class FieldValue(UniversalRootModel):
             [resources_ast_types_object_value_ObjectValue], T_Result
         ],
         container_value: typing.Callable[
-            [resources_ast_types_container_value_ContainerValue], T_Result
+            ["resources_ast_types_container_value_ContainerValue"], T_Result
         ],
     ) -> T_Result:
         unioned_value = self.get_as_union()
@@ -141,9 +141,5 @@ class _FieldValue:
         value: resources_ast_types_container_value_ContainerValue
 
 
-update_forward_refs(
-    _FieldValue.ContainerValue,
-    ContainerValue=resources_ast_types_container_value_ContainerValue,
-    FieldValue=FieldValue,
-)
+update_forward_refs(_FieldValue.ContainerValue)
 update_forward_refs(FieldValue)

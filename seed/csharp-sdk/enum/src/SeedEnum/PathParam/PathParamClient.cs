@@ -1,6 +1,5 @@
 using System.Net.Http;
 using OneOf;
-using SeedEnum;
 using SeedEnum.Core;
 
 #nullable enable

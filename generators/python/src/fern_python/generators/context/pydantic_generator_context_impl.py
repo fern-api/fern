@@ -139,6 +139,11 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         referenced_types = self.get_referenced_types(type_id)
         return other_type_id in referenced_types
 
+    def does_type_reference_reference_other_type(
+        self, type_reference: ir_types.TypeReference, other_type_id: ir_types.TypeId
+    ) -> bool:
+        return other_type_id in self.get_referenced_types_of_type_reference(type_reference)
+
     def get_referenced_types(self, type_id: ir_types.TypeId) -> Set[ir_types.TypeId]:
         declaration = self.ir.types[type_id]
         return self.get_referenced_types_of_type_declaration(declaration)

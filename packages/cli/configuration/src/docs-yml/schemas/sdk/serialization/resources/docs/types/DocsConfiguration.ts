@@ -14,6 +14,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
         core.serialization.lazyObject(async () => (await import("../../..")).DocsInstance)
     ),
     title: core.serialization.string().optional(),
+    analytics: core.serialization.lazyObject(async () => (await import("../../..")).AnalyticsConfig).optional(),
     tabs: core.serialization
         .record(
             core.serialization.lazy(async () => (await import("../../..")).TabId),
@@ -37,6 +38,10 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
         core.serialization.lazyObject(async () => (await import("../../..")).FooterLinksConfig).optional()
     ),
     experimental: core.serialization.lazyObject(async () => (await import("../../..")).ExperimentalConfig).optional(),
+    defaultLanguage: core.serialization.property(
+        "default-language",
+        core.serialization.lazy(async () => (await import("../../..")).ProgrammingLanguage).optional()
+    ),
     metadata: core.serialization.lazyObject(async () => (await import("../../..")).MetadataConfig).optional(),
     redirects: core.serialization
         .list(core.serialization.lazyObject(async () => (await import("../../..")).RedirectConfig))
@@ -59,6 +64,7 @@ export declare namespace DocsConfiguration {
     interface Raw {
         instances: serializers.DocsInstance.Raw[];
         title?: string | null;
+        analytics?: serializers.AnalyticsConfig.Raw | null;
         tabs?: Record<serializers.TabId.Raw, serializers.TabConfig.Raw> | null;
         versions?: serializers.VersionConfig.Raw[] | null;
         "landing-page"?: serializers.PageConfiguration.Raw | null;
@@ -66,6 +72,7 @@ export declare namespace DocsConfiguration {
         "navbar-links"?: serializers.NavbarLink.Raw[] | null;
         "footer-links"?: serializers.FooterLinksConfig.Raw | null;
         experimental?: serializers.ExperimentalConfig.Raw | null;
+        "default-language"?: serializers.ProgrammingLanguage.Raw | null;
         metadata?: serializers.MetadataConfig.Raw | null;
         redirects?: serializers.RedirectConfig.Raw[] | null;
         logo?: serializers.LogoConfiguration.Raw | null;

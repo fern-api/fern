@@ -21,6 +21,4 @@ class UnionWithTime_Datetime(UniversalBaseModel):
     type: typing.Literal["datetime"] = "datetime"
 
 
-UnionWithTime = typing.Union[
-    UnionWithTime_Value, UnionWithTime_Date, UnionWithTime_Datetime
-]
+UnionWithTime = typing.Union[UnionWithTime_Value, UnionWithTime_Date, UnionWithTime_Datetime]

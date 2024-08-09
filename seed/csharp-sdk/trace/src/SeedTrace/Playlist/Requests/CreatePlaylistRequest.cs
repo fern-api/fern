@@ -1,7 +1,3 @@
-using SeedTrace;
-
-#nullable enable
-
 namespace SeedTrace;
 
 public record CreatePlaylistRequest

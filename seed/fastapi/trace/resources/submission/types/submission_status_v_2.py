@@ -8,7 +8,6 @@ from ....core.pydantic_utilities import UniversalRootModel
 import typing
 import typing_extensions
 import pydantic
-from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -93,6 +92,3 @@ class _SubmissionStatusV2:
 
     class Workspace(WorkspaceSubmissionStatusV2):
         type: typing.Literal["workspace"] = "workspace"
-
-
-update_forward_refs(SubmissionStatusV2)

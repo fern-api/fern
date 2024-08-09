@@ -78,58 +78,102 @@ async function parseAPIConfiguration(
     const apiConfiguration = rawGeneratorsConfiguration.api;
     const apiDefinitions: APIDefinitionLocation[] = [];
     if (apiConfiguration != null) {
-        if (isRawProtobufAPIDefinitionSchema(apiConfiguration)) {
-            return {
-                type: "singleNamespace",
-                definitions: apiDefinitions
-            };
-        }
         if (typeof apiConfiguration === "string") {
             apiDefinitions.push({
-                path: apiConfiguration,
+                schema: {
+                    type: "oss",
+                    path: apiConfiguration
+                },
                 origin: undefined,
                 overrides: undefined,
                 audiences: [],
-                settings: { shouldUseTitleAsName: undefined, shouldUseUndiscriminatedUnionsWithLiterals: undefined }
+                settings: {
+                    shouldUseTitleAsName: undefined,
+                    shouldUseUndiscriminatedUnionsWithLiterals: undefined,
+                    asyncApiMessageNaming: undefined
+                }
+            });
+        } else if (isRawProtobufAPIDefinitionSchema(apiConfiguration)) {
+            apiDefinitions.push({
+                schema: {
+                    type: "protobuf",
+                    root: apiConfiguration.proto.root,
+                    target: apiConfiguration.proto.target,
+                    localGeneration: apiConfiguration.proto["local-generation"] ?? false
+                },
+                origin: undefined,
+                overrides: apiConfiguration.proto.overrides,
+                audiences: [],
+                settings: {
+                    shouldUseTitleAsName: undefined,
+                    shouldUseUndiscriminatedUnionsWithLiterals: undefined,
+                    asyncApiMessageNaming: undefined
+                }
             });
         } else if (Array.isArray(apiConfiguration)) {
             for (const definition of apiConfiguration) {
-                if (isRawProtobufAPIDefinitionSchema(definition)) {
-                    continue;
-                }
                 if (typeof definition === "string") {
                     apiDefinitions.push({
-                        path: definition,
+                        schema: {
+                            type: "oss",
+                            path: definition
+                        },
                         origin: undefined,
                         overrides: undefined,
                         audiences: [],
                         settings: {
                             shouldUseTitleAsName: undefined,
-                            shouldUseUndiscriminatedUnionsWithLiterals: undefined
+                            shouldUseUndiscriminatedUnionsWithLiterals: undefined,
+                            asyncApiMessageNaming: undefined
+                        }
+                    });
+                } else if (isRawProtobufAPIDefinitionSchema(definition)) {
+                    apiDefinitions.push({
+                        schema: {
+                            type: "protobuf",
+                            root: definition.proto.root,
+                            target: definition.proto.target,
+                            localGeneration: definition.proto["local-generation"] ?? false
+                        },
+                        origin: undefined,
+                        overrides: definition.proto.overrides,
+                        audiences: [],
+                        settings: {
+                            shouldUseTitleAsName: undefined,
+                            shouldUseUndiscriminatedUnionsWithLiterals: undefined,
+                            asyncApiMessageNaming: undefined
                         }
                     });
                 } else {
                     apiDefinitions.push({
-                        path: definition.path,
+                        schema: {
+                            type: "oss",
+                            path: definition.path
+                        },
                         origin: definition.origin,
                         overrides: definition.overrides,
                         audiences: definition.audiences,
                         settings: {
                             shouldUseTitleAsName: definition.settings?.["use-title"],
-                            shouldUseUndiscriminatedUnionsWithLiterals: definition.settings?.unions === "v1"
+                            shouldUseUndiscriminatedUnionsWithLiterals: definition.settings?.unions === "v1",
+                            asyncApiMessageNaming: definition.settings?.["message-naming"]
                         }
                     });
                 }
             }
         } else {
             apiDefinitions.push({
-                path: apiConfiguration.path,
+                schema: {
+                    type: "oss",
+                    path: apiConfiguration.path
+                },
                 origin: apiConfiguration.origin,
                 overrides: apiConfiguration.overrides,
                 audiences: apiConfiguration.audiences,
                 settings: {
                     shouldUseTitleAsName: apiConfiguration.settings?.["use-title"],
-                    shouldUseUndiscriminatedUnionsWithLiterals: apiConfiguration.settings?.unions === "v1"
+                    shouldUseUndiscriminatedUnionsWithLiterals: apiConfiguration.settings?.unions === "v1",
+                    asyncApiMessageNaming: apiConfiguration.settings?.["message-naming"]
                 }
             });
         }
@@ -142,37 +186,49 @@ async function parseAPIConfiguration(
 
         if (openapi != null && typeof openapi === "string") {
             apiDefinitions.push({
-                path: openapi,
+                schema: {
+                    type: "oss",
+                    path: openapi
+                },
                 origin: apiOrigin,
                 overrides: openapiOverrides,
                 audiences: [],
                 settings: {
                     shouldUseTitleAsName: settings?.["use-title"],
-                    shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1"
+                    shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1",
+                    asyncApiMessageNaming: undefined
                 }
             });
         } else if (openapi != null) {
             apiDefinitions.push({
-                path: openapi.path,
+                schema: {
+                    type: "oss",
+                    path: openapi.path
+                },
                 origin: openapi.origin,
                 overrides: openapi.overrides,
                 audiences: [],
                 settings: {
                     shouldUseTitleAsName: openapi.settings?.["use-title"],
-                    shouldUseUndiscriminatedUnionsWithLiterals: openapi.settings?.unions === "v1"
+                    shouldUseUndiscriminatedUnionsWithLiterals: openapi.settings?.unions === "v1",
+                    asyncApiMessageNaming: undefined
                 }
             });
         }
 
         if (asyncapi != null) {
             apiDefinitions.push({
-                path: asyncapi,
+                schema: {
+                    type: "oss",
+                    path: asyncapi
+                },
                 origin: apiOrigin,
                 overrides: undefined,
                 audiences: [],
                 settings: {
                     shouldUseTitleAsName: settings?.["use-title"],
-                    shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1"
+                    shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1",
+                    asyncApiMessageNaming: settings?.["message-naming"]
                 }
             });
         }

@@ -9,7 +9,7 @@ from ....core.pydantic_utilities import update_forward_refs
 
 
 class DebugMapValue(UniversalBaseModel):
-    key_value_pairs: typing.List[DebugKeyValuePairs] = pydantic.Field(
+    key_value_pairs: typing.List["DebugKeyValuePairs"] = pydantic.Field(
         alias="keyValuePairs"
     )
 

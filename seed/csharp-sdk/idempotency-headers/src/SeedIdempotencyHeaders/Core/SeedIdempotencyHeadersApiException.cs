@@ -1,7 +1,3 @@
-using SeedIdempotencyHeaders.Core;
-
-#nullable enable
-
 namespace SeedIdempotencyHeaders.Core;
 
 /// <summary>

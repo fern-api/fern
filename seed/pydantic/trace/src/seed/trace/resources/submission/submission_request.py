@@ -14,14 +14,10 @@ from .submission_file_info import SubmissionFileInfo
 class SubmissionRequest_InitializeProblemRequest(UniversalBaseModel):
     type: typing.Literal["initializeProblemRequest"] = "initializeProblemRequest"
     problem_id: ProblemId = pydantic.Field(alias="problemId")
-    problem_version: typing.Optional[int] = pydantic.Field(
-        alias="problemVersion", default=None
-    )
+    problem_version: typing.Optional[int] = pydantic.Field(alias="problemVersion", default=None)
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -32,9 +28,7 @@ class SubmissionRequest_InitializeWorkspaceRequest(UniversalBaseModel):
     type: typing.Literal["initializeWorkspaceRequest"] = "initializeWorkspaceRequest"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -45,19 +39,13 @@ class SubmissionRequest_SubmitV2(UniversalBaseModel):
     type: typing.Literal["submitV2"] = "submitV2"
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
     language: Language
-    submission_files: typing.List[SubmissionFileInfo] = pydantic.Field(
-        alias="submissionFiles"
-    )
+    submission_files: typing.List[SubmissionFileInfo] = pydantic.Field(alias="submissionFiles")
     problem_id: ProblemId = pydantic.Field(alias="problemId")
-    problem_version: typing.Optional[int] = pydantic.Field(
-        alias="problemVersion", default=None
-    )
+    problem_version: typing.Optional[int] = pydantic.Field(alias="problemVersion", default=None)
     user_id: typing.Optional[str] = pydantic.Field(alias="userId", default=None)
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -68,15 +56,11 @@ class SubmissionRequest_WorkspaceSubmit(UniversalBaseModel):
     type: typing.Literal["workspaceSubmit"] = "workspaceSubmit"
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
     language: Language
-    submission_files: typing.List[SubmissionFileInfo] = pydantic.Field(
-        alias="submissionFiles"
-    )
+    submission_files: typing.List[SubmissionFileInfo] = pydantic.Field(alias="submissionFiles")
     user_id: typing.Optional[str] = pydantic.Field(alias="userId", default=None)
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -88,9 +72,7 @@ class SubmissionRequest_Stop(UniversalBaseModel):
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:

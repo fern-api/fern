@@ -47,20 +47,25 @@ class FernAwarePydanticModel:
         docstring: Optional[str] = None,
         snippet: Optional[str] = None,
         include_model_config: Optional[bool] = True,
-        force_update_forward_refs: bool = False,
         # Allow overriding the base model from the unchecked base model, or the typical
         # pydantic base model to the universal root model if needed. This is used instead
         # of `base_models` since that field is used for true `extends` declared within
         # the IR, and used as such when constructing partial classes for validators within FastAPI.
         pydantic_base_model_override: Optional[AST.ClassReference] = None,
+        # Since we create new classes for union members, we need to know the original type name
+        # to appropriately detect circular imports.
+        original_type_id: Optional[ir_types.TypeId] = None,
     ):
         self._class_name = class_name
         self._type_name = type_name
+        self._original_type_id = original_type_id
+
         self._context = context
         self._custom_config = custom_config
         self._source_file = source_file
         self._extends = extends
-        self._force_update_forward_refs = force_update_forward_refs
+
+        self._model_contains_forward_refs = False
 
         models_to_extend = [item for item in base_models] if base_models is not None else []
         extends_crs = (
@@ -68,6 +73,16 @@ class FernAwarePydanticModel:
             if extends is not None
             else []
         )
+        # Acknowledge forward refs for extended models as well
+        for extended_type in extends:
+            type_id_to_reference = self._type_id_for_forward_ref()
+            if type_id_to_reference is not None and context.does_type_reference_other_type(
+                type_id=extended_type.type_id, other_type_id=type_id_to_reference
+            ):
+                # While we don't want to string reference the extended model, we still want to rebuild the model
+                self._model_contains_forward_refs = True
+                break
+
         models_to_extend.extend(extends_crs)
         self._pydantic_model = PydanticModel(
             version=self._custom_config.version,
@@ -90,8 +105,6 @@ class FernAwarePydanticModel:
             include_model_config=include_model_config,
             update_forward_ref_function_reference=self._context.core_utilities.get_update_forward_refs(),
         )
-
-        self._model_contains_forward_refs = False
 
     def to_reference(self) -> LocalClassReference:
         return self._pydantic_model.to_reference()
@@ -121,6 +134,7 @@ class FernAwarePydanticModel:
             default_value=default_value,
         )
         self._pydantic_model.add_field(field)
+
         return field
 
     def add_private_instance_field_unsafe(
@@ -154,10 +168,23 @@ class FernAwarePydanticModel:
             as_request=False,
         )
 
+    def _type_id_for_forward_ref(self) -> Optional[ir_types.TypeId]:
+        type_id_to_reference = None
+        if self._type_name is not None:
+            type_id_to_reference = self._type_name.type_id
+        elif self._original_type_id is not None:
+            type_id_to_reference = self._original_type_id
+
+        return type_id_to_reference
+
     def _must_import_after_current_declaration(self, type_name: ir_types.DeclaredTypeName) -> bool:
-        if self._type_name is None:
-            return False
-        is_circular_reference = self._context.do_types_reference_each_other(self._type_name.type_id, type_name.type_id)
+        type_id_to_reference = self._type_id_for_forward_ref()
+        is_circular_reference = False
+        if type_id_to_reference is not None:
+            is_circular_reference = self._context.does_type_reference_other_type(
+                type_id=type_name.type_id, other_type_id=type_id_to_reference
+            )
+
         if is_circular_reference:
             self._model_contains_forward_refs = True
         return is_circular_reference
@@ -226,8 +253,9 @@ class FernAwarePydanticModel:
         if self._custom_config.include_validators:
             self._pydantic_model.add_partial_class()
             self._get_validators_generator().add_validators()
-        if self._model_contains_forward_refs or self._force_update_forward_refs:
+        if self._model_contains_forward_refs:
             self._pydantic_model.update_forward_refs()
+
         self._pydantic_model.finish()
 
     def _get_validators_generator(self) -> ValidatorsGenerator:

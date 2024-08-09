@@ -8,31 +8,13 @@ import pydantic
 from .error_info import ErrorInfo
 from .running_submission_state import RunningSubmissionState
 from .submission_status_for_test_case import SubmissionStatusForTestCase
-from ..commons.doubly_linked_list_node_value import DoublyLinkedListNodeValue
-from .actual_result import ActualResult
-from .test_case_grade import TestCaseGrade
-from .test_case_result import TestCaseResult
-from ..commons.doubly_linked_list_value import DoublyLinkedListValue
-from .exception_v_2 import ExceptionV2
-from ..commons.node_id import NodeId
-from ..commons.binary_tree_node_value import BinaryTreeNodeValue
-from .test_case_result_with_stdout import TestCaseResultWithStdout
-from .traced_test_case import TracedTestCase
-from .exception_info import ExceptionInfo
-from ..commons.singly_linked_list_node_value import SinglyLinkedListNodeValue
-from ..commons.singly_linked_list_value import SinglyLinkedListValue
-from .test_case_non_hidden_grade import TestCaseNonHiddenGrade
-from .test_case_hidden_grade import TestCaseHiddenGrade
-from ..commons.binary_tree_value import BinaryTreeValue
 
 
 class TestSubmissionStatus_Stopped(UniversalBaseModel):
     type: typing.Literal["stopped"] = "stopped"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -60,6 +42,3 @@ TestSubmissionStatus = typing.Union[
     TestSubmissionStatus_Running,
     TestSubmissionStatus_TestCaseIdToState,
 ]
-from ..commons.variable_value import VariableValue  # noqa: E402
-from ..commons.key_value_pair import KeyValuePair  # noqa: E402
-from ..commons.map_value import MapValue  # noqa: E402

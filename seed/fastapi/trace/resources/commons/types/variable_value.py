@@ -235,9 +235,9 @@ class VariableValue(UniversalRootModel):
         string_value: typing.Callable[[str], T_Result],
         char_value: typing.Callable[[str], T_Result],
         map_value: typing.Callable[
-            [resources_commons_types_map_value_MapValue], T_Result
+            ["resources_commons_types_map_value_MapValue"], T_Result
         ],
-        list_value: typing.Callable[[typing.List[VariableValue]], T_Result],
+        list_value: typing.Callable[[typing.List["VariableValue"]], T_Result],
         binary_tree_value: typing.Callable[
             [resources_commons_types_binary_tree_value_BinaryTreeValue], T_Result
         ],
@@ -341,16 +341,6 @@ class _VariableValue:
         type: typing.Literal["nullValue"] = "nullValue"
 
 
-update_forward_refs(
-    _VariableValue.MapValue,
-    KeyValuePair=KeyValuePair,
-    MapValue=resources_commons_types_map_value_MapValue,
-    VariableValue=VariableValue,
-)
-update_forward_refs(
-    _VariableValue.ListValue,
-    KeyValuePair=KeyValuePair,
-    MapValue=resources_commons_types_map_value_MapValue,
-    VariableValue=VariableValue,
-)
+update_forward_refs(_VariableValue.MapValue)
+update_forward_refs(_VariableValue.ListValue)
 update_forward_refs(VariableValue)

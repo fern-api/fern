@@ -1,7 +1,3 @@
-using SeedLiteral.Core;
-
-#nullable enable
-
 namespace SeedLiteral.Core;
 
 /// <summary>

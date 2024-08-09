@@ -1,7 +1,3 @@
-using SeedExtraProperties.Core;
-
-#nullable enable
-
 namespace SeedExtraProperties.Core;
 
 /// <summary>

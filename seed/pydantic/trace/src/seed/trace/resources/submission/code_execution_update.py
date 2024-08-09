@@ -25,9 +25,7 @@ class CodeExecutionUpdate_BuildingExecutor(UniversalBaseModel):
     status: ExecutionSessionStatus
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -40,9 +38,7 @@ class CodeExecutionUpdate_Running(UniversalBaseModel):
     state: RunningSubmissionState
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -55,9 +51,7 @@ class CodeExecutionUpdate_Errored(UniversalBaseModel):
     error_info: ErrorInfo = pydantic.Field(alias="errorInfo")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -69,9 +63,7 @@ class CodeExecutionUpdate_Stopped(UniversalBaseModel):
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -81,14 +73,10 @@ class CodeExecutionUpdate_Stopped(UniversalBaseModel):
 class CodeExecutionUpdate_Graded(UniversalBaseModel):
     type: typing.Literal["graded"] = "graded"
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
-    test_cases: typing.Dict[str, TestCaseResultWithStdout] = pydantic.Field(
-        alias="testCases"
-    )
+    test_cases: typing.Dict[str, TestCaseResultWithStdout] = pydantic.Field(alias="testCases")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -98,14 +86,10 @@ class CodeExecutionUpdate_Graded(UniversalBaseModel):
 class CodeExecutionUpdate_GradedV2(UniversalBaseModel):
     type: typing.Literal["gradedV2"] = "gradedV2"
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
-    test_cases: typing.Dict[TestCaseId, TestCaseGrade] = pydantic.Field(
-        alias="testCases"
-    )
+    test_cases: typing.Dict[TestCaseId, TestCaseGrade] = pydantic.Field(alias="testCases")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -118,9 +102,7 @@ class CodeExecutionUpdate_WorkspaceRan(UniversalBaseModel):
     run_details: WorkspaceRunDetails = pydantic.Field(alias="runDetails")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -130,21 +112,13 @@ class CodeExecutionUpdate_WorkspaceRan(UniversalBaseModel):
 class CodeExecutionUpdate_Recording(UniversalBaseModel):
     type: typing.Literal["recording"] = "recording"
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
-    test_case_id: typing.Optional[str] = pydantic.Field(
-        alias="testCaseId", default=None
-    )
+    test_case_id: typing.Optional[str] = pydantic.Field(alias="testCaseId", default=None)
     line_number: int = pydantic.Field(alias="lineNumber")
-    lightweight_stack_info: LightweightStackframeInformation = pydantic.Field(
-        alias="lightweightStackInfo"
-    )
-    traced_file: typing.Optional[TracedFile] = pydantic.Field(
-        alias="tracedFile", default=None
-    )
+    lightweight_stack_info: LightweightStackframeInformation = pydantic.Field(alias="lightweightStackInfo")
+    traced_file: typing.Optional[TracedFile] = pydantic.Field(alias="tracedFile", default=None)
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -155,14 +129,10 @@ class CodeExecutionUpdate_Recorded(UniversalBaseModel):
     type: typing.Literal["recorded"] = "recorded"
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
     trace_responses_size: int = pydantic.Field(alias="traceResponsesSize")
-    test_case_id: typing.Optional[str] = pydantic.Field(
-        alias="testCaseId", default=None
-    )
+    test_case_id: typing.Optional[str] = pydantic.Field(alias="testCaseId", default=None)
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -175,9 +145,7 @@ class CodeExecutionUpdate_InvalidRequest(UniversalBaseModel):
     cause: InvalidRequestCause
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -189,9 +157,7 @@ class CodeExecutionUpdate_Finished(UniversalBaseModel):
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:

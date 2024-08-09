@@ -140,9 +140,9 @@ else:
 
 
 def encode_by_type(o: typing.Any) -> typing.Any:
-    encoders_by_class_tuples: typing.Dict[
-        typing.Callable[[typing.Any], typing.Any], typing.Tuple[typing.Any, ...]
-    ] = defaultdict(tuple)
+    encoders_by_class_tuples: typing.Dict[typing.Callable[[typing.Any], typing.Any], typing.Tuple[typing.Any, ...]] = (
+        defaultdict(tuple)
+    )
     for type_, encoder in encoders_by_type.items():
         encoders_by_class_tuples[encoder] += (type_,)
 
@@ -153,11 +153,11 @@ def encode_by_type(o: typing.Any) -> typing.Any:
             return encoder(o)
 
 
-def update_forward_refs(model: typing.Type["Model"], **localns: typing.Any) -> None:
+def update_forward_refs(model: typing.Type["Model"]) -> None:
     if IS_PYDANTIC_V2:
-        model.model_rebuild(force=True, raise_errors=False)  # type: ignore # Pydantic v2
+        model.model_rebuild(raise_errors=False)  # type: ignore # Pydantic v2
     else:
-        model.update_forward_refs(**localns)
+        model.update_forward_refs()
 
 
 # Mirrors Pydantic's internal typing
@@ -171,9 +171,7 @@ def universal_root_validator(
         @wraps(func)
         def validate(*args: typing.Any, **kwargs: typing.Any) -> AnyCallable:
             if IS_PYDANTIC_V2:
-                wrapped_func = pydantic.model_validator("before" if pre else "after")(
-                    func
-                )  # type: ignore # Pydantic v2
+                wrapped_func = pydantic.model_validator("before" if pre else "after")(func)  # type: ignore # Pydantic v2
             else:
                 wrapped_func = pydantic.root_validator(pre=pre)(func)  # type: ignore # Pydantic v1
 
@@ -184,16 +182,12 @@ def universal_root_validator(
     return decorator
 
 
-def universal_field_validator(
-    field_name: str, pre: bool = False
-) -> typing.Callable[[AnyCallable], AnyCallable]:
+def universal_field_validator(field_name: str, pre: bool = False) -> typing.Callable[[AnyCallable], AnyCallable]:
     def decorator(func: AnyCallable) -> AnyCallable:
         @wraps(func)
         def validate(*args: typing.Any, **kwargs: typing.Any) -> AnyCallable:
             if IS_PYDANTIC_V2:
-                wrapped_func = pydantic.field_validator(
-                    field_name, mode="before" if pre else "after"
-                )(func)  # type: ignore # Pydantic v2
+                wrapped_func = pydantic.field_validator(field_name, mode="before" if pre else "after")(func)  # type: ignore # Pydantic v2
             else:
                 wrapped_func = pydantic.validator(field_name, pre=pre)(func)
 

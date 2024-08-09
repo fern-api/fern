@@ -1,7 +1,3 @@
-using SeedExamples.Core;
-
-#nullable enable
-
 namespace SeedExamples.Core;
 
 /// <summary>

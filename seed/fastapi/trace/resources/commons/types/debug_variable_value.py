@@ -273,8 +273,8 @@ class DebugVariableValue(UniversalRootModel):
         double_value: typing.Callable[[float], T_Result],
         string_value: typing.Callable[[str], T_Result],
         char_value: typing.Callable[[str], T_Result],
-        map_value: typing.Callable[[DebugMapValue], T_Result],
-        list_value: typing.Callable[[typing.List[DebugVariableValue]], T_Result],
+        map_value: typing.Callable[["DebugMapValue"], T_Result],
+        list_value: typing.Callable[[typing.List["DebugVariableValue"]], T_Result],
         binary_tree_node_value: typing.Callable[[BinaryTreeNodeAndTreeValue], T_Result],
         singly_linked_list_node_value: typing.Callable[
             [SinglyLinkedListNodeAndListValue], T_Result
@@ -388,16 +388,6 @@ class _DebugVariableValue:
         type: typing.Literal["genericValue"] = "genericValue"
 
 
-update_forward_refs(
-    _DebugVariableValue.MapValue,
-    DebugKeyValuePairs=DebugKeyValuePairs,
-    DebugMapValue=DebugMapValue,
-    DebugVariableValue=DebugVariableValue,
-)
-update_forward_refs(
-    _DebugVariableValue.ListValue,
-    DebugKeyValuePairs=DebugKeyValuePairs,
-    DebugMapValue=DebugMapValue,
-    DebugVariableValue=DebugVariableValue,
-)
+update_forward_refs(_DebugVariableValue.MapValue)
+update_forward_refs(_DebugVariableValue.ListValue)
 update_forward_refs(DebugVariableValue)

@@ -137,6 +137,10 @@ export class Class extends AstNode {
         this.annotations.push(annotation);
     }
 
+    public getNamespace(): string {
+        return this.namespace;
+    }
+
     public write(writer: Writer): void {
         if (!this.isNestedClass) {
             writer.writeLine(`namespace ${this.namespace};`);

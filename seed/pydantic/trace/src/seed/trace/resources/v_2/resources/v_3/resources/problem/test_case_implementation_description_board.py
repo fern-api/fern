@@ -17,6 +17,5 @@ class TestCaseImplementationDescriptionBoard_ParamId(UniversalBaseModel):
 
 
 TestCaseImplementationDescriptionBoard = typing.Union[
-    TestCaseImplementationDescriptionBoard_Html,
-    TestCaseImplementationDescriptionBoard_ParamId,
+    TestCaseImplementationDescriptionBoard_Html, TestCaseImplementationDescriptionBoard_ParamId
 ]

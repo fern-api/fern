@@ -17,6 +17,4 @@ class CreateProblemResponse_Error(UniversalBaseModel):
     type: typing.Literal["error"] = "error"
 
 
-CreateProblemResponse = typing.Union[
-    CreateProblemResponse_Success, CreateProblemResponse_Error
-]
+CreateProblemResponse = typing.Union[CreateProblemResponse_Success, CreateProblemResponse_Error]

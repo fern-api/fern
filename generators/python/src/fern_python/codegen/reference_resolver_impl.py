@@ -97,8 +97,13 @@ class ReferenceResolverImpl(ReferenceResolver):
             )
         )
 
-        # Here we string-reference a type reference if the import is marked for `if TYPE_CHECKING`
-        return f'"{resolved_reference}"' if reference.import_if_type_checking else resolved_reference
+        # Here we string-reference a type reference if the import is marked for `if TYPE_CHECKING` or if the import
+        # is deferred until after the current declaration (e.g. for circular references when defining Pydantic models).
+        return (
+            f'"{resolved_reference}"'
+            if reference.import_if_type_checking or reference.must_import_after_current_declaration
+            else resolved_reference
+        )
 
     def resolve_import(self, import_: AST.ReferenceImport) -> ResolvedImport:
         if self._original_import_to_resolved_import is None:

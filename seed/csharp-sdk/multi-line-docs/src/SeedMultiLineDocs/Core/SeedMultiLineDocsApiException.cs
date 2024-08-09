@@ -1,7 +1,3 @@
-using SeedMultiLineDocs.Core;
-
-#nullable enable
-
 namespace SeedMultiLineDocs.Core;
 
 /// <summary>

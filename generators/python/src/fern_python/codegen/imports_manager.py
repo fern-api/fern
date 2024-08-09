@@ -69,7 +69,14 @@ class ImportsManager:
             del self._import_to_statements_that_must_precede_it[import_]
 
         # write all the imports that must be un-type checked (e.g. for circular references)
-        if len(self._if_type_checking_imports.items()) > 0:
+        # to ensure we're not writing `if TYPE_CHECKING` without any imports, we first resolve
+        # all the imports to see if the preamble should be written.
+        include_type_checking_imports = False
+        for import_, _ in self._if_type_checking_imports.items():
+            ensure_valid_reference = reference_resolver.resolve_import(import_)
+            if ensure_valid_reference.import_ is not None:
+                include_type_checking_imports = True
+        if len(self._if_type_checking_imports.items()) > 0 and include_type_checking_imports:
             self._write_import(import_=TYPING_REFERENCE_IMPORT, writer=writer, reference_resolver=reference_resolver)
             writer.write("if ")
             writer.write_node(AST.TypeHint.type_checking())

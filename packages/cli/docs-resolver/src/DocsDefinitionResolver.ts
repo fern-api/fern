@@ -255,7 +255,8 @@ export class DocsDefinitionResolver {
             redirects: this.parsedDocsConfig.redirects,
             integrations: this.parsedDocsConfig.integrations,
             footerLinks: this.parsedDocsConfig.footerLinks,
-
+            defaultLanguage: this.parsedDocsConfig.defaultLanguage,
+            analyticsConfig: this.parsedDocsConfig.analyticsConfig,
             // deprecated
             logo: undefined,
             logoV2: undefined,
@@ -369,7 +370,9 @@ export class DocsDefinitionResolver {
                     keywords: undefined,
                     smartCasing: false,
                     disableExamples: false,
-                    readme: undefined
+                    readme: undefined,
+                    version: undefined,
+                    packageName: undefined
                 });
                 const apiDefinitionId = await this.registerApi({ ir, snippetsConfig });
                 const api = convertIrToApiDefinition(ir, apiDefinitionId);

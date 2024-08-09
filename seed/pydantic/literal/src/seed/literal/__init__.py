@@ -3,11 +3,4 @@
 from .resources import SendRequest, SomeAliasedLiteral, SomeLiteral, inlined, reference
 from .send_response import SendResponse
 
-__all__ = [
-    "SendRequest",
-    "SendResponse",
-    "SomeAliasedLiteral",
-    "SomeLiteral",
-    "inlined",
-    "reference",
-]
+__all__ = ["SendRequest", "SendResponse", "SomeAliasedLiteral", "SomeLiteral", "inlined", "reference"]

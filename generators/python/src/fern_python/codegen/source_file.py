@@ -36,7 +36,7 @@ class SourceFile(ClassParent):
         ...
 
     @abstractmethod
-    def to_str(self, include_imports: Optional[bool] = True) -> str:
+    def to_str(self, include_imports: Optional[bool] = True, should_format_override: Optional[bool] = None) -> str:
         ...
 
     @abstractmethod
@@ -165,9 +165,9 @@ class SourceFileImpl(SourceFile):
     def add_footer_expression(self, expression: AST.Expression) -> None:
         self._footer_statements.append(TopLevelStatement(node=expression))
 
-    def to_str(self, include_imports: Optional[bool] = True) -> str:
+    def to_str(self, include_imports: Optional[bool] = True, should_format_override: Optional[bool] = None) -> str:
         writer = self._prepare_for_writing(include_imports)
-        return writer.to_str()
+        return writer.to_str(should_format_override)
 
     def write_to_file(self, *, filepath: str) -> None:
         writer = self._prepare_for_writing()

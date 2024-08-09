@@ -8,7 +8,6 @@ import typing
 import typing_extensions
 import pydantic
 from ....core.pydantic_utilities import UniversalBaseModel
-from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -79,6 +78,3 @@ class _UnionWithUnknown:
 
     class Unknown(UniversalBaseModel):
         type: typing.Literal["unknown"] = "unknown"
-
-
-update_forward_refs(UnionWithUnknown)

@@ -11,7 +11,6 @@ from ........core.pydantic_utilities import UniversalRootModel
 import typing
 import typing_extensions
 import pydantic
-from ........core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -140,6 +139,3 @@ class _FunctionSignature:
 
     class VoidThatTakesActualResult(VoidFunctionSignatureThatTakesActualResult):
         type: typing.Literal["voidThatTakesActualResult"] = "voidThatTakesActualResult"
-
-
-update_forward_refs(FunctionSignature)

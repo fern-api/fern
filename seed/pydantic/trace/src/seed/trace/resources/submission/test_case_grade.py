@@ -14,9 +14,7 @@ class TestCaseGrade_Hidden(UniversalBaseModel):
     passed: bool
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -26,16 +24,12 @@ class TestCaseGrade_Hidden(UniversalBaseModel):
 class TestCaseGrade_NonHidden(UniversalBaseModel):
     type: typing.Literal["nonHidden"] = "nonHidden"
     passed: bool
-    actual_result: typing.Optional[VariableValue] = pydantic.Field(
-        alias="actualResult", default=None
-    )
+    actual_result: typing.Optional[VariableValue] = pydantic.Field(alias="actualResult", default=None)
     exception: typing.Optional[ExceptionV2] = None
     stdout: str
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:

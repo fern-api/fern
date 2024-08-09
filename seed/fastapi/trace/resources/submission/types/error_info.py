@@ -15,7 +15,6 @@ from ....core.pydantic_utilities import UniversalRootModel
 import typing
 import typing_extensions
 import pydantic
-from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -148,6 +147,3 @@ class _ErrorInfo:
 
     class InternalError(resources_submission_types_internal_error_InternalError):
         type: typing.Literal["internalError"] = "internalError"
-
-
-update_forward_refs(ErrorInfo)

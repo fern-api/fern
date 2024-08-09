@@ -19,9 +19,7 @@ class SubmissionTypeState_Test(UniversalBaseModel):
     status: TestSubmissionStatus
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -33,15 +31,11 @@ class SubmissionTypeState_Workspace(UniversalBaseModel):
     status: WorkspaceSubmissionStatus
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
             extra = pydantic.Extra.allow
 
 
-SubmissionTypeState = typing.Union[
-    SubmissionTypeState_Test, SubmissionTypeState_Workspace
-]
+SubmissionTypeState = typing.Union[SubmissionTypeState_Test, SubmissionTypeState_Workspace]

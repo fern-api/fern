@@ -18,6 +18,4 @@ class UnionWithDiscriminant_Bar(UniversalBaseModel):
     type: typing.Literal["bar"] = pydantic.Field(alias="_type", default="bar")
 
 
-UnionWithDiscriminant = typing.Union[
-    UnionWithDiscriminant_Foo, UnionWithDiscriminant_Bar
-]
+UnionWithDiscriminant = typing.Union[UnionWithDiscriminant_Foo, UnionWithDiscriminant_Bar]

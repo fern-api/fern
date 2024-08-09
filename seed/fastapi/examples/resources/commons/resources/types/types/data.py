@@ -7,7 +7,6 @@ import typing
 import typing_extensions
 import pydantic
 from ......core.pydantic_utilities import UniversalBaseModel
-from ......core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -74,6 +73,3 @@ class _Data:
     class Base64(UniversalBaseModel):
         type: typing.Literal["base64"] = "base64"
         value: str
-
-
-update_forward_refs(Data)

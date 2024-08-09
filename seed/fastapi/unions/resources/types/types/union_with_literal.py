@@ -5,7 +5,6 @@ import typing
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.pydantic_utilities import UniversalRootModel
 from ....core.pydantic_utilities import UniversalBaseModel
-from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -48,6 +47,3 @@ class _UnionWithLiteral:
     class Fern(UniversalBaseModel):
         type: typing.Literal["fern"] = "fern"
         value: typing.Literal["fern"]
-
-
-update_forward_refs(UnionWithLiteral)

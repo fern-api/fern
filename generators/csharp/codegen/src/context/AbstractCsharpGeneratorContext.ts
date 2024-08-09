@@ -1,6 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/generator-commons";
 import {
+    FernFilepath,
     IntermediateRepresentation,
     Name,
     TypeDeclaration,
@@ -30,6 +31,7 @@ export abstract class AbstractCsharpGeneratorContext<
     public readonly project: CsharpProject;
     public readonly csharpTypeMapper: CsharpTypeMapper;
     public publishConfig: FernGeneratorExec.NugetGithubPublishInfo | undefined;
+    private allNamespaceSegmentsCache?: Set<string>;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -72,6 +74,30 @@ export abstract class AbstractCsharpGeneratorContext<
             namespace: this.getCoreNamespace(),
             name: CONSTANTS_CLASS_NAME
         });
+    }
+
+    public getAllNamespaceSegments(): Set<string> {
+        if (this.allNamespaceSegmentsCache == null) {
+            const namespaces: string[] = [];
+            for (const [_, subpackage] of Object.entries(this.ir.subpackages)) {
+                const namespaceSegments = this.getFullNamespaceSegments(subpackage.fernFilepath);
+                if (namespaceSegments != null) {
+                    namespaces.push(...namespaceSegments);
+                }
+            }
+            this.allNamespaceSegmentsCache = new Set(namespaces);
+        }
+        return this.allNamespaceSegmentsCache;
+    }
+
+    public getNamespaceFromFernFilepath(fernFilepath: FernFilepath): string {
+        return this.getFullNamespaceSegments(fernFilepath).join(".");
+    }
+
+    abstract getChildNamespaceSegments(fernFilepath: FernFilepath): string[];
+
+    public getFullNamespaceSegments(fernFilepath: FernFilepath): string[] {
+        return [this.getNamespace(), ...this.getChildNamespaceSegments(fernFilepath)];
     }
 
     public getStringEnumSerializerClassReference(): csharp.ClassReference {

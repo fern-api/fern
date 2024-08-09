@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using SeedExhaustive.Core;
-using SeedExhaustive.Endpoints.Params;
 
 #nullable enable
 

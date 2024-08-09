@@ -7,21 +7,15 @@ from .parameter_id import ParameterId
 import pydantic
 from .....core.pydantic_utilities import IS_PYDANTIC_V2
 from .parameter import Parameter
-from .function_implementation_for_multiple_languages import (
-    FunctionImplementationForMultipleLanguages,
-)
+from .function_implementation_for_multiple_languages import FunctionImplementationForMultipleLanguages
 
 
 class AssertCorrectnessCheck_DeepEquality(UniversalBaseModel):
     type: typing.Literal["deepEquality"] = "deepEquality"
-    expected_value_parameter_id: ParameterId = pydantic.Field(
-        alias="expectedValueParameterId"
-    )
+    expected_value_parameter_id: ParameterId = pydantic.Field(alias="expectedValueParameterId")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -30,21 +24,15 @@ class AssertCorrectnessCheck_DeepEquality(UniversalBaseModel):
 
 class AssertCorrectnessCheck_Custom(UniversalBaseModel):
     type: typing.Literal["custom"] = "custom"
-    additional_parameters: typing.List[Parameter] = pydantic.Field(
-        alias="additionalParameters"
-    )
+    additional_parameters: typing.List[Parameter] = pydantic.Field(alias="additionalParameters")
     code: FunctionImplementationForMultipleLanguages
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
             extra = pydantic.Extra.allow
 
 
-AssertCorrectnessCheck = typing.Union[
-    AssertCorrectnessCheck_DeepEquality, AssertCorrectnessCheck_Custom
-]
+AssertCorrectnessCheck = typing.Union[AssertCorrectnessCheck_DeepEquality, AssertCorrectnessCheck_Custom]

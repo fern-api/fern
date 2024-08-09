@@ -180,9 +180,11 @@ class VariableType(UniversalRootModel):
         string_type: typing.Callable[[], T_Result],
         char_type: typing.Callable[[], T_Result],
         list_type: typing.Callable[
-            [resources_commons_types_list_type_ListType], T_Result
+            ["resources_commons_types_list_type_ListType"], T_Result
         ],
-        map_type: typing.Callable[[resources_commons_types_map_type_MapType], T_Result],
+        map_type: typing.Callable[
+            ["resources_commons_types_map_type_MapType"], T_Result
+        ],
         binary_tree_type: typing.Callable[[], T_Result],
         singly_linked_list_type: typing.Callable[[], T_Result],
         doubly_linked_list_type: typing.Callable[[], T_Result],
@@ -254,16 +256,6 @@ class _VariableType:
         type: typing.Literal["doublyLinkedListType"] = "doublyLinkedListType"
 
 
-update_forward_refs(
-    _VariableType.ListType,
-    ListType=resources_commons_types_list_type_ListType,
-    MapType=resources_commons_types_map_type_MapType,
-    VariableType=VariableType,
-)
-update_forward_refs(
-    _VariableType.MapType,
-    ListType=resources_commons_types_list_type_ListType,
-    MapType=resources_commons_types_map_type_MapType,
-    VariableType=VariableType,
-)
+update_forward_refs(_VariableType.ListType)
+update_forward_refs(_VariableType.MapType)
 update_forward_refs(VariableType)

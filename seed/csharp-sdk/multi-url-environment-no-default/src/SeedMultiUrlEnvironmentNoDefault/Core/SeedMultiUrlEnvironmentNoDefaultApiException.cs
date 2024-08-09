@@ -1,7 +1,3 @@
-using SeedMultiUrlEnvironmentNoDefault.Core;
-
-#nullable enable
-
 namespace SeedMultiUrlEnvironmentNoDefault.Core;
 
 /// <summary>

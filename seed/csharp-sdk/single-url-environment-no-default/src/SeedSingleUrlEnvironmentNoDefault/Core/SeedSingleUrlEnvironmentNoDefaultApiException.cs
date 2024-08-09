@@ -1,7 +1,3 @@
-using SeedSingleUrlEnvironmentNoDefault.Core;
-
-#nullable enable
-
 namespace SeedSingleUrlEnvironmentNoDefault.Core;
 
 /// <summary>

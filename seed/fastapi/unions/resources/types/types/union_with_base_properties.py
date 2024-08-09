@@ -8,7 +8,6 @@ import typing
 import typing_extensions
 import pydantic
 from ....core.pydantic_utilities import UniversalBaseModel
-from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -119,6 +118,3 @@ class _UnionWithBaseProperties:
 
     class Foo(resources_types_types_foo_Foo):
         type: typing.Literal["foo"] = "foo"
-
-
-update_forward_refs(UnionWithBaseProperties)

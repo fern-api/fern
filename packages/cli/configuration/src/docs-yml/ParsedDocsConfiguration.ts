@@ -28,6 +28,8 @@ export interface ParsedDocsConfiguration {
     colors: DocsV1Write.ColorsConfigV3 | undefined;
     typography: TypographyConfig | undefined;
     layout: WithoutQuestionMarks<DocsV1Write.DocsLayoutConfig> | undefined;
+    defaultLanguage: DocsV1Write.ProgrammingLanguage | undefined;
+    analyticsConfig: DocsV1Write.AnalyticsConfig | undefined;
 
     /* integrations */
     integrations: DocsV1Write.IntegrationsConfig | undefined;

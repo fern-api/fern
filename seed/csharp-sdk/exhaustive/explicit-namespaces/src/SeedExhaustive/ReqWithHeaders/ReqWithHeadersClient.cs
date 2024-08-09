@@ -1,6 +1,5 @@
 using System.Net.Http;
 using SeedExhaustive.Core;
-using SeedExhaustive.ReqWithHeaders;
 
 #nullable enable
 

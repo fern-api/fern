@@ -10,7 +10,6 @@ from ........core.pydantic_utilities import UniversalRootModel
 import typing
 import typing_extensions
 import pydantic
-from ........core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -99,6 +98,3 @@ class _TestCaseFunction:
 
     class Custom(VoidFunctionDefinition):
         type: typing.Literal["custom"] = "custom"
-
-
-update_forward_refs(TestCaseFunction)

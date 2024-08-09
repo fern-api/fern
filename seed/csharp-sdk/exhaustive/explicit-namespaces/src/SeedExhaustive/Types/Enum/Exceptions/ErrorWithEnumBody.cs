@@ -1,5 +1,4 @@
 using SeedExhaustive.Core;
-using SeedExhaustive.Types.Enum;
 
 #nullable enable
 

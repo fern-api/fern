@@ -9,7 +9,7 @@ from ....core.pydantic_utilities import update_forward_refs
 
 
 class ListType(UniversalBaseModel):
-    value_type: VariableType = pydantic.Field(alias="valueType")
+    value_type: "VariableType" = pydantic.Field(alias="valueType")
     is_fixed_length: typing.Optional[bool] = pydantic.Field(
         alias="isFixedLength", default=None
     )

@@ -2,12 +2,13 @@
 
 from . import a, ast
 from .a import A
-from .ast import ContainerValue, FieldValue, ObjectValue, PrimitiveValue
+from .ast import ContainerValue, FieldValue, JsonLike, ObjectValue, PrimitiveValue
 
 __all__ = [
     "A",
     "ContainerValue",
     "FieldValue",
+    "JsonLike",
     "ObjectValue",
     "PrimitiveValue",
     "a",

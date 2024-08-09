@@ -1,7 +1,3 @@
-using SeedAliasExtends.Core;
-
-#nullable enable
-
 namespace SeedAliasExtends.Core;
 
 /// <summary>
