@@ -4,6 +4,10 @@
 
 import * as FernOpenapiIr from "../../..";
 
+/**
+ * Note that this config is expected to be "unresolved", for example, the OAS extension takes in an endpoint as `GET https://example.com/token`
+ * whereas within the openapi-ir-to-fern package, we expect to consume and resolve this to a package path in the fern definition.
+ */
 export type OauthSecurityScheme =
     | FernOpenapiIr.OauthSecurityScheme.ClientCredentials
     | FernOpenapiIr.OauthSecurityScheme.Unrecognized;
