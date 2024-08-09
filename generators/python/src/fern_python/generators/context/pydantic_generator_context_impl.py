@@ -21,6 +21,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         allow_leveraging_defaults: bool,
         use_typeddict_requests: bool,
         use_str_enums: bool,
+        skip_formatting: bool,
         reserved_names: Optional[Set[str]] = None,
     ):
         super().__init__(
@@ -30,6 +31,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
             use_typeddict_requests=use_typeddict_requests,
             type_declaration_referencer=type_declaration_referencer,
             use_str_enums=use_str_enums,
+            skip_formatting=skip_formatting,
         )
         self._type_reference_to_type_hint_converter = TypeReferenceToTypeHintConverter(
             type_declaration_referencer=type_declaration_referencer, context=self

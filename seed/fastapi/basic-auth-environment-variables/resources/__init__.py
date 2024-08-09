@@ -3,4 +3,9 @@
 from . import errors
 from .errors import BadRequest, UnauthorizedRequest, UnauthorizedRequestErrorBody
 
-__all__ = ["BadRequest", "UnauthorizedRequest", "UnauthorizedRequestErrorBody", "errors"]
+__all__ = [
+    "BadRequest",
+    "UnauthorizedRequest",
+    "UnauthorizedRequestErrorBody",
+    "errors",
+]

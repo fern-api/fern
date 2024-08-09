@@ -2,6 +2,7 @@ import os
 from typing import Set
 
 from fern_python.codegen import AST, Filepath, Project
+from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.external_dependencies.pydantic import PYDANTIC_CORE_DEPENDENCY
 from fern_python.generators.pydantic_model.field_metadata import FieldMetadata
 from fern_python.source_file_factory import SourceFileFactory
@@ -129,22 +130,29 @@ class CoreUtilities:
         )
 
     def _construct_type(self, type_of_obj: AST.TypeHint, obj: AST.Expression) -> AST.Expression:
+        def write_value_being_casted(writer: NodeWriter) -> None:
+            writer.write_reference(self.get_construct_type())
+            writer.write("(")
+            writer.write_newline_if_last_line_not()
+            with writer.indent():
+                writer.write("type_ =")
+                AST.Expression(type_of_obj).write(writer=writer)
+                writer.write(", ")
+                writer.write(" # type: ignore")
+                writer.write_newline_if_last_line_not()
+
+                writer.write("object_ =")
+                obj.write(writer=writer)
+                writer.write_newline_if_last_line_not()
+            writer.write(")")
+
         def write(writer: AST.NodeWriter) -> None:
             writer.write_node(
                 AST.TypeHint.invoke_cast(
                     type_casted_to=type_of_obj,
-                    value_being_casted=AST.Expression(
-                        AST.FunctionInvocation(
-                            function_definition=self.get_construct_type(),
-                            kwargs=[("type_", AST.Expression(type_of_obj)), ("object_", obj)],
-                        )
-                    ),
+                    value_being_casted=AST.Expression(AST.CodeWriter(write_value_being_casted)),
                 )
             )
-
-            # mypy gets confused when passing unions for the Type argument
-            # https://github.com/pydantic/pydantic/issues/1847
-            writer.write_line("# type: ignore")
 
         return AST.Expression(AST.CodeWriter(write))
 

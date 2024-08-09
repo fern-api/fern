@@ -88,7 +88,8 @@ def _should_retry(response: httpx.Response) -> bool:
 
 
 def remove_omit_from_dict(
-    original: typing.Dict[str, typing.Optional[typing.Any]], omit: typing.Optional[typing.Any]
+    original: typing.Dict[str, typing.Optional[typing.Any]],
+    omit: typing.Optional[typing.Any],
 ) -> typing.Dict[str, typing.Any]:
     if omit is None:
         return original

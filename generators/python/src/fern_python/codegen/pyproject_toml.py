@@ -231,6 +231,9 @@ asyncio_mode = "auto"
 [tool.mypy]
 plugins = ["pydantic.mypy"]
 
+[tool.ruff]
+line-length = 120
+
 """
 
     @dataclass(frozen=True)
