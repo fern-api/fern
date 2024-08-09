@@ -256,7 +256,6 @@ export class DocsDefinitionResolver {
             integrations: this.parsedDocsConfig.integrations,
             footerLinks: this.parsedDocsConfig.footerLinks,
             defaultLanguage: this.parsedDocsConfig.defaultLanguage,
-
             // deprecated
             logo: undefined,
             logoV2: undefined,

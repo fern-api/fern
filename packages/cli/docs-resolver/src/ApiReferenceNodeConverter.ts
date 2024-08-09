@@ -1,4 +1,6 @@
 import { docsYml } from "@fern-api/configuration";
+import { PlaygroundSettings } from "@fern-api/configuration/src/docs-yml/schemas";
+// import { PlaygroundSettings } from "@fern-api/configuration/src/docs-yml/schemas";
 import { isNonNullish } from "@fern-api/core-utils";
 import { APIV1Read, FernNavigation, titleCase, visitDiscriminatedUnion } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, relative, RelativeFilePath } from "@fern-api/fs-utils";
@@ -83,7 +85,7 @@ export class ApiReferenceNodeConverter {
             title: this.apiSection.title,
             apiDefinitionId: this.apiDefinitionId,
             overviewPageId: this.#overviewPageId,
-            disableLongScrolling: this.apiSection.paginated,
+            paginated: this.apiSection.paginated,
             slug: this.#slug.get(),
             icon: this.apiSection.icon,
             hidden: this.apiSection.hidden,
@@ -100,7 +102,8 @@ export class ApiReferenceNodeConverter {
             children: this.#children,
             availability: undefined,
             pointsTo,
-            noindex: undefined
+            noindex: undefined,
+            playground: this.#convertPlaygroundSettings(this.apiSection.playground)
         };
     }
 
@@ -211,7 +214,8 @@ export class ApiReferenceNodeConverter {
                 availability: undefined,
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
-                noindex: undefined
+                noindex: undefined,
+                playground: this.#convertPlaygroundSettings(pkg.playground)
             };
         } else {
             this.taskContext.logger.warn(
@@ -236,7 +240,8 @@ export class ApiReferenceNodeConverter {
                 availability: undefined,
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
-                noindex: undefined
+                noindex: undefined,
+                playground: this.#convertPlaygroundSettings(pkg.playground)
             };
         }
     }
@@ -296,7 +301,8 @@ export class ApiReferenceNodeConverter {
             availability: undefined,
             apiDefinitionId: this.apiDefinitionId,
             pointsTo: undefined,
-            noindex: undefined
+            noindex: undefined,
+            playground: this.#convertPlaygroundSettings(section.playground)
         };
     }
 
@@ -338,7 +344,8 @@ export class ApiReferenceNodeConverter {
                 availability: undefined,
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
-                noindex: undefined
+                noindex: undefined,
+                playground: undefined
             };
         }
 
@@ -350,7 +357,8 @@ export class ApiReferenceNodeConverter {
                 title: undefined,
                 icon: undefined,
                 slug: undefined,
-                hidden: undefined
+                hidden: undefined,
+                playground: undefined
             },
             apiDefinitionPackageId,
             parentSlug,
@@ -391,7 +399,8 @@ export class ApiReferenceNodeConverter {
                 title: endpointItem.title ?? endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
                 slug: endpointSlug.get(),
                 icon: endpointItem.icon,
-                hidden: endpointItem.hidden
+                hidden: endpointItem.hidden,
+                playground: this.#convertPlaygroundSettings(endpointItem.playground)
             };
         }
 
@@ -421,7 +430,8 @@ export class ApiReferenceNodeConverter {
                 icon: endpointItem.icon,
                 hidden: endpointItem.hidden,
                 apiDefinitionId: this.apiDefinitionId,
-                availability: FernNavigation.utils.convertAvailability(webSocket.availability)
+                availability: FernNavigation.utils.convertAvailability(webSocket.availability),
+                playground: this.#convertPlaygroundSettings(endpointItem.playground)
             };
         }
 
@@ -524,7 +534,8 @@ export class ApiReferenceNodeConverter {
                 title: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
                 slug: endpointSlug.get(),
                 icon: undefined,
-                hidden: undefined
+                hidden: undefined,
+                playground: undefined
             });
         });
 
@@ -545,7 +556,8 @@ export class ApiReferenceNodeConverter {
                 icon: undefined,
                 hidden: undefined,
                 apiDefinitionId: this.apiDefinitionId,
-                availability: FernNavigation.utils.convertAvailability(webSocket.availability)
+                availability: FernNavigation.utils.convertAvailability(webSocket.availability),
+                playground: undefined
             });
         });
 
@@ -599,7 +611,8 @@ export class ApiReferenceNodeConverter {
                     availability: undefined,
                     apiDefinitionId: this.apiDefinitionId,
                     pointsTo: FernNavigation.utils.followRedirects(subpackageChildren),
-                    noindex: undefined
+                    noindex: undefined,
+                    playground: undefined
                 });
             }
         });
@@ -631,6 +644,24 @@ export class ApiReferenceNodeConverter {
 
         // if an endpoint, websocket, webhook, or subpackage is not visited, add it to the additional children list
         return this.#convertApiDefinitionPackage(pkg, parentSlug);
+    }
+
+    #convertPlaygroundSettings(playgroundSettings?: PlaygroundSettings): FernNavigation.PlaygroundSettings | undefined {
+        if (playgroundSettings) {
+            return {
+                allowedEnvironments:
+                    playgroundSettings.allowedEnvironments &&
+                    playgroundSettings.allowedEnvironments.map((environmentId) =>
+                        FernNavigation.EnvironmentId(environmentId)
+                    ),
+                button:
+                    playgroundSettings.button && playgroundSettings.button.href
+                        ? { href: FernNavigation.Url(playgroundSettings.button.href) }
+                        : undefined
+            };
+        } else {
+            return undefined;
+        }
     }
 
     private mergeEndpointPairs(children: FernNavigation.ApiPackageChild[]): FernNavigation.ApiPackageChild[] {

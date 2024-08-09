@@ -498,6 +498,9 @@ types:
         availability: in-development
         type: optional<boolean>
         docs: If true, the API reference will be paginated rather than displayed in a single page (long-scrolling).
+      playground:
+        type: optional<PlaygroundSettings>
+        docs: Settings for the api playground that affects all endpoints.
 
   ApiReferenceLayoutItem:
     docs: |
@@ -531,6 +534,9 @@ types:
       icon: optional<string>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
+      playground:
+        type: optional<PlaygroundSettings>
+        docs: Settings for the api playground that affects all endpoints.
 
   ApiReferencePackageConfiguration:
     discriminated: false
@@ -550,6 +556,9 @@ types:
       icon: optional<string>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
+      playground:
+        type: optional<PlaygroundSettings>
+        docs: Settings for the api playground that is applied only to descendants of this api package.
 
   ApiReferenceEndpointConfiguration:
     properties:
@@ -558,6 +567,9 @@ types:
       slug: optional<string>
       icon: optional<string>
       hidden: optional<boolean>
+      playground:
+        type: optional<PlaygroundSettings>
+        docs: Settings for the api playground that affect this endpoint specifically.
 
   LinkConfiguration:
     properties:
@@ -855,3 +867,15 @@ types:
           If `disable-stream-toggle` is set to true, the stream toggle will be disabled.
 
           This behavior is unstable and may change in the future.
+
+  PlaygroundSettings:
+    properties:
+      allowedEnvironments:
+        type: optional<list<string>>
+        docs: A list of environment IDs that are allowed to be used in the playground.
+          If not provided, all environments are allowed. And if the provided list is empty, the playground should be disabled.
+      button: optional<PlaygroundButtonSettings>
+
+  PlaygroundButtonSettings:
+    properties:
+      href: optional<string>

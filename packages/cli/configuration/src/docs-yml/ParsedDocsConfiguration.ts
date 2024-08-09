@@ -2,7 +2,7 @@ import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { Audiences } from "../commons";
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
-import { DocsInstance, ExperimentalConfig, VersionAvailability } from "./schemas";
+import { DocsInstance, ExperimentalConfig, PlaygroundSettings, VersionAvailability } from "./schemas";
 
 export interface ParsedDocsConfiguration {
     instances: DocsInstance[];
@@ -223,6 +223,7 @@ export declare namespace DocsNavigationItem {
         alphabetized: boolean;
         flattened: boolean;
         paginated: boolean;
+        playground: PlaygroundSettings | undefined;
     }
 
     export interface Link {
@@ -266,6 +267,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         hidden: boolean | undefined;
         icon: string | undefined;
         skipUrlSlug: boolean | undefined;
+        playground: PlaygroundSettings | undefined;
     }
     export interface Package {
         type: "package";
@@ -277,6 +279,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         hidden: boolean | undefined;
         icon: string | undefined;
         skipUrlSlug: boolean | undefined;
+        playground: PlaygroundSettings | undefined;
     }
 
     export interface Endpoint {
@@ -286,6 +289,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         icon: string | undefined;
         slug: string | undefined;
         hidden: boolean | undefined;
+        playground: PlaygroundSettings | undefined;
     }
 
     export interface Item {

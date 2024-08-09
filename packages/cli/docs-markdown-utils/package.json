@@ -27,7 +27,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/fdr-sdk": "0.98.18-aaf13f7f5",
+    "@fern-api/fdr-sdk": "0.98.20-8f01e01fd",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "gray-matter": "^4.0.3",
