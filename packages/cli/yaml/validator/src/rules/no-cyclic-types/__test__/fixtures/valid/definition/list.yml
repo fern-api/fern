@@ -1,0 +1,4 @@
+types:
+  Node:
+    properties:
+      foo: list<Node>

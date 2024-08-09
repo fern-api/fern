@@ -6,6 +6,7 @@ import { NoComplexQueryParamsRule } from "./rules/no-complex-query-params";
 import { NoConflictingEndpointParametersRule } from "./rules/no-conflicting-endpoint-parameters";
 import { NoConflictingEndpointPathsRule } from "./rules/no-conflicting-endpoint-paths";
 import { NoConflictingRequestWrapperPropertiesRule } from "./rules/no-conflicting-request-wrapper-properties";
+import { NoCyclicTypesRule } from "./rules/no-cyclic-types/no-cyclic-types";
 import { NoDuplicateDeclarationsRule } from "./rules/no-duplicate-declarations";
 import { NoDuplicateEnumValuesRule } from "./rules/no-duplicate-enum-values";
 import { NoDuplicateExampleNamesRule } from "./rules/no-duplicate-example-names";
@@ -49,6 +50,7 @@ export function getAllRules(): Rule[] {
         NoDuplicateDeclarationsRule,
         NoUndefinedErrorReferenceRule,
         NoCircularImportsRule,
+        NoCyclicTypesRule,
         ValidFieldNamesRule,
         NoDuplicateFieldNamesRule,
         NoObjectSinglePropertyKeyRule,
