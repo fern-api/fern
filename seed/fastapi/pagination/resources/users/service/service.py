@@ -95,13 +95,18 @@ class AbstractUsersService(AbstractFernService):
         page: typing.Optional[int] = None,
         limit: typing.Optional[int] = None,
         order: typing.Optional[Order] = None,
-    ) -> ListUsersPaginationResponse:
-        ...
+    ) -> ListUsersPaginationResponse: ...
 
     @abc.abstractmethod
+<<<<<<< HEAD
     def list_with_extended_results(self, *, cursor: typing.Optional[uuid.UUID] = None) -> ListUsersExtendedResponse:
         ...
 >>>>>>> 9355dcb0fd (add test definition)
+=======
+    def list_with_extended_results(
+        self, *, cursor: typing.Optional[uuid.UUID] = None
+    ) -> ListUsersExtendedResponse: ...
+>>>>>>> bb549f4937 ((feat, python): move to ruff for formatting (#4219))
 
     @abc.abstractmethod
     def list_usernames(
@@ -425,12 +430,16 @@ class AbstractUsersService(AbstractFernService):
 
     @classmethod
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 8e516d4440 ((feat, python): move to ruff for formatting (#4219))
     def __init_list_with_offset_pagination_has_next_page(
         cls, router: fastapi.APIRouter
     ) -> None:
         endpoint_function = inspect.signature(
             cls.list_with_offset_pagination_has_next_page
         )
+<<<<<<< HEAD
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(
             endpoint_function.parameters.items()
@@ -441,19 +450,31 @@ class AbstractUsersService(AbstractFernService):
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
 >>>>>>> f5b9bd2cb7 (add test definition)
+=======
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(
+            endpoint_function.parameters.items()
+        ):
+>>>>>>> 8e516d4440 ((feat, python): move to ruff for formatting (#4219))
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "page":
                 new_parameters.append(
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 8e516d4440 ((feat, python): move to ruff for formatting (#4219))
                     parameter.replace(
                         default=fastapi.Query(
                             default=None, description="Defaults to first page"
                         )
                     )
+<<<<<<< HEAD
 =======
                     parameter.replace(default=fastapi.Query(default=None, description="Defaults to first page"))
 >>>>>>> f5b9bd2cb7 (add test definition)
+=======
+>>>>>>> 8e516d4440 ((feat, python): move to ruff for formatting (#4219))
                 )
             elif parameter_name == "limit":
                 new_parameters.append(
@@ -466,12 +487,18 @@ class AbstractUsersService(AbstractFernService):
                 )
             elif parameter_name == "order":
 <<<<<<< HEAD
+<<<<<<< HEAD
                 new_parameters.append(
                     parameter.replace(default=fastapi.Query(default=None))
                 )
 =======
                 new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
 >>>>>>> f5b9bd2cb7 (add test definition)
+=======
+                new_parameters.append(
+                    parameter.replace(default=fastapi.Query(default=None))
+                )
+>>>>>>> 8e516d4440 ((feat, python): move to ruff for formatting (#4219))
             else:
                 new_parameters.append(parameter)
         setattr(
@@ -482,12 +509,18 @@ class AbstractUsersService(AbstractFernService):
 
         @functools.wraps(cls.list_with_offset_pagination_has_next_page)
 <<<<<<< HEAD
+<<<<<<< HEAD
         def wrapper(
             *args: typing.Any, **kwargs: typing.Any
         ) -> ListUsersPaginationResponse:
 =======
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> ListUsersPaginationResponse:
 >>>>>>> f5b9bd2cb7 (add test definition)
+=======
+        def wrapper(
+            *args: typing.Any, **kwargs: typing.Any
+        ) -> ListUsersPaginationResponse:
+>>>>>>> 8e516d4440 ((feat, python): move to ruff for formatting (#4219))
             try:
                 return cls.list_with_offset_pagination_has_next_page(*args, **kwargs)
             except FernHTTPException as e:
@@ -501,17 +534,24 @@ class AbstractUsersService(AbstractFernService):
         # this is necessary for FastAPI to find forward-ref'ed type hints.
         # https://github.com/tiangolo/fastapi/pull/5077
 <<<<<<< HEAD
+<<<<<<< HEAD
         wrapper.__globals__.update(
             cls.list_with_offset_pagination_has_next_page.__globals__
         )
 =======
         wrapper.__globals__.update(cls.list_with_offset_pagination_has_next_page.__globals__)
 >>>>>>> f5b9bd2cb7 (add test definition)
+=======
+        wrapper.__globals__.update(
+            cls.list_with_offset_pagination_has_next_page.__globals__
+        )
+>>>>>>> 8e516d4440 ((feat, python): move to ruff for formatting (#4219))
 
         router.get(
             path="/users",
             response_model=ListUsersPaginationResponse,
             description=AbstractUsersService.list_with_offset_pagination_has_next_page.__doc__,
+<<<<<<< HEAD
 <<<<<<< HEAD
             **get_route_args(
                 cls.list_with_offset_pagination_has_next_page, default_tag="users"
@@ -519,6 +559,11 @@ class AbstractUsersService(AbstractFernService):
 =======
             **get_route_args(cls.list_with_offset_pagination_has_next_page, default_tag="users"),
 >>>>>>> f5b9bd2cb7 (add test definition)
+=======
+            **get_route_args(
+                cls.list_with_offset_pagination_has_next_page, default_tag="users"
+            ),
+>>>>>>> 8e516d4440 ((feat, python): move to ruff for formatting (#4219))
         )(wrapper)
 
     @classmethod

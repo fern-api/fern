@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+<<<<<<< HEAD
 ## [3.9.0] - 2024-08-09
 
 - Feat: A new configuration is introduced to make discriminated union member naming more Pythonic. With V1 union naming, member names change from `<UnionName>_<DiscriminantValue>` to `<DiscriminantValue><UnionName>`. Concretely, union members previously named `Chat_User` will now be named `UserChat` under the new configuration.
@@ -16,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
           union_naming: "v1" # Other valid option is: "v0"
   ```
 
+=======
+>>>>>>> bb549f4937 ((feat, python): move to ruff for formatting (#4219))
 ## [3.8.0] - 2024-08-09
 
 - Improvement: generated SDKs now use ruff for linting and formatting, instead of Black.
