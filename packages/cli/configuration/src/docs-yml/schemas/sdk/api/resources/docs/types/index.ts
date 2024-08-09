@@ -59,6 +59,7 @@ export * from "./JsConfigOptions";
 export * from "./JsRemoteConfig";
 export * from "./JsFileConfig";
 export * from "./JsFileConfigSettings";
+export * from "./JsInlineConfig";
 export * from "./JsScriptStrategy";
 export * from "./MetadataConfig";
 export * from "./TwitterCardSetting";
