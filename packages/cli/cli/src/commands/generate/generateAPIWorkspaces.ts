@@ -1,4 +1,4 @@
-import { createOrganizationIfDoesNotExist } from "@fern-api/auth";
+import { createOrganizationIfDoesNotExist, FernToken, FernUserToken } from "@fern-api/auth";
 import { Values } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
@@ -34,18 +34,22 @@ export async function generateAPIWorkspaces({
     preview: boolean;
     mode: GenerationMode | undefined;
 }): Promise<void> {
-    const token = await cliContext.runTask(async (context) => {
-        return askToLogin(context);
-    });
+    let token: FernToken | undefined = undefined;
 
-    if (token.type === "user") {
-        await cliContext.runTask(async (context) => {
-            await createOrganizationIfDoesNotExist({
-                organization: project.config.organization,
-                token,
-                context
-            });
+    if (!useLocalDocker) {
+        const currentToken = await cliContext.runTask(async (context) => {
+            return askToLogin(context);
         });
+        if (currentToken.type === "user") {
+            await cliContext.runTask(async (context) => {
+                await createOrganizationIfDoesNotExist({
+                    organization: project.config.organization,
+                    token: currentToken,
+                    context
+                });
+            });
+        }
+        token = currentToken;
     }
 
     cliContext.instrumentPostHogEvent({
