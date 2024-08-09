@@ -409,12 +409,18 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
         },
       ],
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 0c1487606b (fix)
       "source": {
         "file": "x-fern-pagination/openapi.yml",
         "type": "openapi",
       },
+<<<<<<< HEAD
 =======
 >>>>>>> cc42781fd5 (add next page property to ir)
+=======
+>>>>>>> 0c1487606b (fix)
       "type": "object",
     },
     "User": {
@@ -595,12 +601,18 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
               "nameOverride": null,
               "schema": "Meta",
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 0c1487606b (fix)
               "source": {
                 "file": "x-fern-pagination/openapi.yml",
                 "type": "openapi",
               },
+<<<<<<< HEAD
 =======
 >>>>>>> cc42781fd5 (add next page property to ir)
+=======
+>>>>>>> 0c1487606b (fix)
               "type": "reference",
             },
           },
